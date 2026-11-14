@@ -2,61 +2,80 @@
   "fictional": true,
   "area_acres": 15,
   "setting": "Canadian forest lake, wooded hill and protected wetland",
+  "units": "metres; x east, y south, origin at the north-west corner of the map",
+  "provenance": {
+    "authors": "Eco Hamlet contributors",
+    "created": "2026",
+    "revision": "1.1.0",
+    "source": "Invented for discussion. No cadastral, topographic or environmental survey is represented.",
+    "licence": "CC BY 4.0"
+  },
+  "map": { "width_m": 357, "height_m": 232 },
+  "terrain": {
+    "lake_level_m": 100,
+    "rise_from_shore_per_m": 0.03,
+    "features": [
+      { "type": "hill", "x": 205, "y": -20, "height_m": 12, "radius_x_m": 85, "radius_y_m": 55 },
+      { "type": "hollow", "x": 312, "y": 205, "height_m": -3, "radius_x_m": 35, "radius_y_m": 28 }
+    ],
+    "contour_interval_m": 2,
+    "max_building_slope_pct": 15,
+    "note": "A smooth invented surface for illustration. Real siting needs a topographic survey, soils and hydrology."
+  },
+  "lake": {
+    "name": "Lake",
+    "shoreline": [[80, 0], [92, 20], [95, 42], [87, 64], [80, 86], [82, 108], [89, 128], [87, 150], [79, 172], [73, 196], [77, 232]]
+  },
+  "parcel": {
+    "polygon": [[80, 0], [92, 20], [95, 42], [87, 64], [80, 86], [82, 108], [89, 128], [87, 150], [79, 172], [73, 196], [77, 232], [345.2, 232], [345.2, 0]],
+    "note": "Drawn to the water's edge for simplicity. Many Canadian shorelines include a shore road allowance or Crown land: check title and survey."
+  },
+  "wetland": {
+    "name": "Protected wetland",
+    "polygon": [[262, 178], [285, 166], [312, 163], [335, 170], [352, 182], [357, 195], [357, 232], [268, 232], [256, 214], [255, 195]]
+  },
+  "no_build": {
+    "shoreline_setback_m": 30,
+    "wetland_buffer_m": 30,
+    "applies_to": "buildings, porches, ramps, parking, crane pads and lanes",
+    "note": "Placeholder values. 30 m is a common minimum in Canadian municipal plans, but requirements vary by province, municipality and wetland significance and can be much larger. Confirm with the planning authority and the conservation authority or provincial regulator."
+  },
+  "circulation": {
+    "lanes": [
+      { "id": "access", "name": "Access lane from the public road", "kind": "vehicle", "width_m": 6, "points": [[345.2, 116], [330, 116]] },
+      { "id": "emergency", "name": "Emergency and construction lane", "kind": "emergency", "width_m": 6, "points": [[302, 116], [290, 100], [262, 91], [230, 89], [195, 88], [160, 88], [136, 90]], "turnaround": true },
+      { "id": "south-spur", "name": "Emergency and construction spur", "kind": "emergency", "width_m": 6, "points": [[180, 88], [176, 110], [168, 132], [150, 140], [138, 138]], "turnaround": true }
+    ],
+    "parking": {
+      "polygon": [[300, 104], [330, 104], [330, 128], [300, 128]],
+      "spaces": 14,
+      "accessible_spaces": 2,
+      "note": "Shared parking at the edge of the site; homes are reached on foot. Accessible spaces and an accessible drop-off sit nearest the lodge ramp."
+    },
+    "trails": [
+      { "id": "shore-trail", "name": "Shore trail (existing-trail concept, no clearing)", "width_m": 1.2, "points": [[136, 90], [118, 92], [100, 95]], "note": "A narrow trail inside the buffer may need approval; no structures." }
+    ],
+    "max_entrance_to_lane_m": 45,
+    "note": "Lane widths, turnarounds and the distance limit are placeholders. Confirm fire department access requirements, gradients, load ratings and winter maintenance."
+  },
+  "crane": {
+    "max_reach_m": 24,
+    "note": "Placeholder reach from the crane standing point to the module centre. Real limits depend on crane, outriggers, module weight, ground bearing and the lift plan. No lifts over the wetland or shoreline buffers."
+  },
   "buildings": [
-    {
-      "id": "a",
-      "name": "Cabin A",
-      "use": "permanent",
-      "x": 420,
-      "y": 205
-    },
-    {
-      "id": "b",
-      "name": "Cabin B",
-      "use": "permanent",
-      "x": 570,
-      "y": 285
-    },
-    {
-      "id": "c",
-      "name": "Cabin C",
-      "use": "permanent",
-      "x": 340,
-      "y": 340
-    },
-    {
-      "id": "d",
-      "name": "Cabin D",
-      "use": "seasonal",
-      "x": 680,
-      "y": 185
-    },
-    {
-      "id": "e",
-      "name": "Cabin E",
-      "use": "seasonal",
-      "x": 740,
-      "y": 345
-    },
-    {
-      "id": "f",
-      "name": "Cabin F",
-      "use": "community rental",
-      "x": 520,
-      "y": 430
-    },
-    {
-      "id": "lodge",
-      "name": "Common lodge",
-      "use": "shared",
-      "x": 560,
-      "y": 525
-    }
+    { "id": "a", "name": "Cabin A", "use": "permanent", "model": "cabin-a", "x_m": 150, "y_m": 70, "rotation_deg": 0, "crane_pad": [150, 88] },
+    { "id": "b", "name": "Cabin B", "use": "permanent", "model": "cabin-a", "x_m": 203.6, "y_m": 101.8, "rotation_deg": 0, "crane_pad": [203.6, 88] },
+    { "id": "c", "name": "Cabin C", "use": "permanent", "model": "cabin-a", "x_m": 130, "y_m": 121.4, "rotation_deg": 0, "crane_pad": [138, 138], "moved": "Moved 8.6 m east of the Phase 1 position to clear the 30 m shoreline setback." },
+    { "id": "d", "name": "Cabin D", "use": "seasonal", "model": "cabin-a", "x_m": 242.9, "y_m": 66.1, "rotation_deg": 0, "crane_pad": [243, 89.6] },
+    { "id": "e", "name": "Cabin E", "use": "seasonal", "model": "cabin-a", "x_m": 232, "y_m": 110, "rotation_deg": 0, "crane_pad": [232, 89.2], "moved": "Moved west of the Phase 1 position to make room for the lodge beside the shared parking." },
+    { "id": "f", "name": "Cabin F", "use": "community rental", "model": "cabin-a", "x_m": 172, "y_m": 152, "rotation_deg": 0, "crane_pad": [168, 132], "moved": "Moved within crane reach of the south spur." },
+    { "id": "lodge", "name": "Common lodge", "use": "shared", "model": "lodge", "x_m": 268, "y_m": 112, "rotation_deg": 0, "crane_pad": [275, 94.2], "moved": "Moved beside the shared parking so the main entry ramp meets the arrival point." }
   ],
   "ecology": [
     "lakefront buffer",
     "protected wetland",
     "native forest"
   ],
-  "access": "vehicle arrival at shared parking; final walk with accessible service and emergency route to be resolved"
+  "access": "vehicle arrival at shared parking; final walk with accessible service and emergency route to be resolved",
+  "trees": { "count": 170, "seed": 11, "clearance_m": 4, "note": "Indicative canopy only, not a tree survey. Clearing is limited to footprints, lanes and crane pads." }
 }

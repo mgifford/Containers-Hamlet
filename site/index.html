@@ -1,1 +1,464 @@
-<!doctype html><html lang="en-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Explore a fictional off-grid Canadian lakeside eco hamlet and download open, editable container cabin concepts."><title>Eco Hamlet | A different way to live, together</title><link rel="stylesheet" href="style.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="#top">ECO HAMLET</a><nav aria-label="Main navigation"><a href="#explore">Explore</a><a href="#home">Cabin</a><a href="#principles">Principles</a><a href="#downloads">Downloads</a></nav></header><main id="main"><section class="hero" id="top"><div><p class="eyebrow">A fictional Canadian lakeside community</p><h1>A different way to live, together.</h1><p>Imagine small, carefully placed homes beside a lake, shared infrastructure, a protected wetland and a community land trust. Built off-site, assembled with minimal disturbance, and designed to belong to the forest.</p><a class="action" href="#explore">Explore the concept</a></div><img src="assets/site-plan.svg" alt="Illustrated property plan with a lake, wooded hillside, cabins, shared lodge, wetland and footpaths."></section><section id="explore"><p class="eyebrow">The landscape</p><h2>Fifteen acres, one shared vision</h2><p>Explore six proposed homes and a common lodge. The property is invented for discussion, not a surveyed or available parcel.</p><div class="map"><object id="site-map" data="assets/site-plan.svg" type="image/svg+xml" aria-label="Interactive conceptual site plan"><img src="assets/site-plan.svg" alt="Concept site plan with six cabins and a common lodge."></object></div><div class="selector" aria-label="Select a building"><button data-choice="a">Cabin A</button><button data-choice="b">Cabin B</button><button data-choice="c">Cabin C</button><button data-choice="d">Cabin D</button><button data-choice="e">Cabin E</button><button data-choice="f">Cabin F</button><button data-choice="lodge">Common lodge</button></div><p class="selection" id="selected" role="status">Select a building to explore its proposed role.</p></section><section id="home"><p class="eyebrow">Open architectural concepts</p><h2>Cabin A: The Retreat</h2><p>A single 40-foot high-cube container, with an independent screened porch. The shell, internal zones and exterior insulation are illustrated conceptually. This is not a buildable design.</p><div class="tabs" role="group" aria-label="Cabin drawing views"><button class="active" data-view="floor-plan" aria-pressed="true">Floor plan</button><button data-view="elevations" aria-pressed="false">Elevations</button><button data-view="section" aria-pressed="false">Envelope section</button></div><figure><img id="drawing" src="models/cabin-a/floor-plan.svg" alt="Concept floor plan with sleeping, bathroom, kitchen and living zones and a screened porch."><figcaption id="drawing-caption">Conceptual floor plan. Dimensions and openings need professional review.</figcaption></figure><p>The downloadable OBJ file provides a basic 3D massing model for Blender or other compatible software. Interior walk-through and true cutaway geometry are planned for Phase 2, not falsely represented as complete here.</p></section><section id="principles"><p class="eyebrow">Construction and stewardship</p><h2>Build elsewhere. Disturb less.</h2><div class="cards"><article><h3>Reuse and repair</h3><p>Inspect reclaimed containers, use traceable salvaged materials, and favour replaceable cladding and reversible connections.</p></article><article><h3>Off-site fabrication</h3><p>Fabricate and fit out modules before delivery; plan lifting, transport and safe assembly before clearing the site.</p></article><article><h3>Outside insulation</h3><p>Study continuous external insulation, moisture management and ventilated rainscreens. Consider spray foam only where justified.</p></article><article><h3>Living landscape</h3><p>Protect the wetland and shoreline. Explore native green walls and engineered living roofs without shading solar panels.</p></article><article><h3>Community land trust</h3><p>Explore permanent, seasonal and optional rental homes on leased sites, with collective stewardship of shared infrastructure.</p></article><article><h3>Accessible by design</h3><p>Provide usable paths, drop-off and emergency access, accessible homes, and bug-screened outdoor gathering spaces.</p></article></div></section><section id="downloads"><p class="eyebrow">Open resources</p><h2>Download, adapt, improve</h2><p>These original conceptual assets are reusable under CC BY 4.0; website software is MIT licensed. Files are editable but not engineered drawings.</p><ul><li><a href="assets/site-plan.svg" download>Fictional site plan (SVG)</a></li><li><a href="models/cabin-a/floor-plan.svg" download>Cabin A floor plan (SVG)</a></li><li><a href="models/cabin-a/elevations.svg" download>Cabin A elevations (SVG)</a></li><li><a href="models/cabin-a/section.svg" download>Cabin A envelope section (SVG)</a></li><li><a href="models/cabin-a/cabin-a.obj" download>Cabin A massing geometry (OBJ)</a></li><li><a href="data/cabin-a.json" download>Cabin specification (JSON)</a></li><li><a href="data/site.json" download>Site data (JSON)</a></li></ul><p><strong>Disclaimer:</strong> Concept only. No real site, approved zoning, structural analysis, energy modelling, code review or ground lease is provided.</p></section></main><footer>Eco Hamlet concept • Original design assets CC BY 4.0 • Fictional, not for construction</footer><script src="script.js" defer></script></body></html>
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore a fictional off-grid Canadian lakeside eco hamlet and download open, editable container cabin and common lodge concepts.">
+<meta name="color-scheme" content="light dark">
+<title>Eco Hamlet | A different way to live, together</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script src="js/data.js" defer></script>
+<script src="js/model.js" defer></script>
+<script src="js/render.js" defer></script>
+<script src="script.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="#top">ECO HAMLET</a>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="#explore">Site</a></li>
+      <li><a href="#home">Cabin</a></li>
+      <li><a href="#inside">Inside</a></li>
+      <li><a href="#lodge">Lodge</a></li>
+      <li><a href="#principles">Principles</a></li>
+      <li><a href="#materials">Materials</a></li>
+      <li><a href="#downloads">Downloads</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main" tabindex="-1">
+
+<section class="hero" id="top" aria-labelledby="top-title">
+  <div>
+    <p class="eyebrow">A fictional Canadian lakeside community</p>
+    <h1 id="top-title">A different way to live, together.</h1>
+    <p>Imagine small, carefully placed homes beside a lake, shared infrastructure, a protected wetland and a community land trust. Built off-site, assembled with minimal disturbance, and designed to belong to the forest.</p>
+    <p class="notice"><strong>Concept only.</strong> A vision and recruitment prototype, not an existing property, lease offer, engineering design or building permit package.</p>
+    <a class="action" href="#explore">Explore the concept</a>
+  </div>
+  <div class="hero-image">
+<!-- gen:hero-image -->
+<img src="models/cabin-a/axonometric.svg" width="805" height="502" alt="Cabin A seen from the south-west: a long timber-clad container home with solar panels on the roof, a screened porch, a long access ramp and a planted trellis at the west end." decoding="async">
+<!-- /gen:hero-image -->
+  </div>
+</section>
+
+<section id="explore" aria-labelledby="explore-title">
+  <p class="eyebrow">The landscape</p>
+  <h2 id="explore-title">Fifteen acres, one shared vision</h2>
+  <p>Explore six proposed homes and a common lodge. The property is invented for discussion, not a surveyed or available parcel. Everything on the map is drawn to scale in metres from one data file, and the siting checks below are recalculated whenever that file changes.</p>
+  <div class="map-layout">
+    <div class="map-wrap">
+    <div class="map" id="site-map">
+<!-- gen:site-map -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 232" class="site-map-svg" role="img" aria-labelledby="map-title map-desc"><title id="map-title">Fictional 15-acre Eco Hamlet site plan</title><desc id="map-desc">Fictional 15-acre (6.07 ha) parcel drawn to scale in metres, north up. A lake lies along the west boundary and a protected wetland in the south-east corner. Hatched no-build zones show a 30 m shoreline setback and a 30 m wetland buffer (placeholder values). A wooded hill rises to the north. Vehicles arrive from the east at shared parking beside the common lodge; a gravel emergency and construction lane with a south spur runs west past the homes, with crane standing points beside each building. Buildings: Cabin A (permanent, 54.5 m from the shoreline); Cabin B (permanent, 110.7 m from the shoreline); Cabin C (permanent, 34.7 m from the shoreline); Cabin D (seasonal, 143 m from the shoreline); Cabin E (seasonal, 137.3 m from the shoreline); Cabin F (community rental, 78.1 m from the shoreline); Common lodge (shared, 169.2 m from the shoreline). Not surveyed; not for construction.</desc><defs><pattern id="map-hatch" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="3" fill="#f3e3c3" fill-opacity="0.55"/><path d="M0 0V3" stroke="#a5552d" stroke-width="0.55"/></pattern><pattern id="map-marsh" width="7" height="6" patternUnits="userSpaceOnUse"><rect width="7" height="6" fill="#9cc3a7"/><path d="M1.5 4.5l1-2 1 2M4.5 2.2l1-1.6 1 1.6" fill="none" stroke="#4f7d64" stroke-width="0.45"/></pattern><clipPath id="map-land"><path d="M80 0L92 20L95 42L87 64L80 86L82 108L89 128L87 150L79 172L73 196L77 232L345.2 232L345.2 0Z"/></clipPath></defs><rect width="357" height="232" fill="#dfe8cf"/><rect x="345.2" width="11.8" height="232" fill="#d3dcc4"/><g id="map-layer-contours" class="layer layer-contours" fill="none" stroke="#9fb791" stroke-width="0.45"><path d="M96 61.6C98.5 65.3 105.2 76.3 111 84C116.7 91.7 125.5 102 130.5 108C135.5 114 138.2 116.5 141.1 120C143.9 123.5 146.1 126 147.5 129C148.9 132 149 134.5 149.5 138C150.1 141.5 151.6 144.5 150.9 150C150.2 155.5 147.1 163.5 145.3 171C143.4 178.5 140 184.8 139.8 195C139.5 205.2 143 225.8 143.7 232"/><path d="M82 0C83.1 2 85.3 7 88.5 12C91.7 17 94.9 22.5 101.2 30C107.4 37.5 119.9 50.9 126 57.3C132.1 63.7 132.8 63.8 138 68.2C143.2 72.7 150.3 78.9 156.9 84C163.6 89.1 171.2 94 177.9 99C184.6 104 192.1 110 197 114C201.8 118 204.5 120.5 207 123C209.5 125.5 210.8 126.5 212.1 129C213.5 131.5 214.3 134.5 215.1 138C216 141.5 218.7 140.5 217.4 150C216.1 159.5 208.5 181.3 207.5 195C206.5 208.7 210.7 225.8 211.3 232"/><path d="M296.4 201C297.1 201 299.7 200.8 300.8 201C301.9 201.2 302.3 201.5 303 202C303.7 202.5 304.7 203.2 305.1 204C305.6 204.8 305.8 206 305.5 207C305.2 208 304.1 209.3 303.2 210C302.3 210.7 301 210.8 300 211C299 211.2 298 211.2 297 211C296 210.9 294.7 210.7 293.8 210C292.9 209.3 291.8 208 291.5 207C291.2 206 291.2 205 292 204C292.8 203 295.7 201.5 296.4 201C297.1 200.5 295.6 201 296.4 201Z"/><path d="M101.5 0C102.8 2 105.6 7.5 108.9 12C112.3 16.5 117.7 22.9 121.5 27C125.4 31.1 127.3 32.8 132 36.8C136.7 40.8 144.5 46.8 150 50.8C155.5 54.7 160 57.4 165 60.3C170 63.2 168.3 62.8 180 68.3C191.7 73.7 223.9 87.9 235.1 93C246.3 98.1 243.6 97 247.1 99C250.7 101 253.3 102.7 256.6 105C260 107.3 263.3 109.6 267 112.6C270.7 115.6 275.9 120.3 278.8 123C281.6 125.7 282.5 126.5 284.1 129C285.8 131.5 286.8 135 288.7 138C290.6 141 292.8 144 295.5 147C298.2 150 299.5 151.6 304.8 156C310 160.4 322.3 169.6 327 173.6C331.7 177.6 331.1 177.5 333 180.1C334.9 182.6 337 185.5 338.5 189C340 192.5 341.4 198 342 201C342.7 204 342.5 205 342.5 207C342.4 209 342.4 210.5 341.8 213C341.1 215.5 339.6 219.5 338.4 222C337.2 224.5 335.8 226.3 334.5 228C333.3 229.7 331.7 231.3 331.1 232"/><path d="M119.9 0C120.9 1.5 124.1 6.5 126 9C127.9 11.5 127.8 11.7 131.3 15C134.8 18.3 141.9 25.1 147 29.1C152.1 33 155.5 35.2 162 38.7C168.5 42.2 179 47.3 186 50.2C193 53.2 197.5 54.5 204 56.4C210.5 58.3 218.5 60.2 225 61.6C231.5 63 231.5 63 243 64.8C254.5 66.5 283.8 70.3 294.2 72C304.6 73.7 301.8 73.8 305.3 75C308.8 76.2 311.2 77 315 79.5C318.8 82 324.5 86.7 328.1 90C331.6 93.3 332 93 336.2 99C340.4 105 350.3 121 353.3 126C356.4 131 354 126.2 354.6 129C355.2 131.8 356.6 140.4 357 142.7"/><path d="M138.3 0C139.5 1.5 143.3 6.4 145.7 9C148.2 11.6 149.7 12.9 153 15.4C156.3 17.9 161.4 21.5 165.4 24C169.4 26.5 173.1 28.4 177 30.2C180.9 32 185 33.6 189 35C193 36.4 196.5 37.4 201 38.5C205.5 39.6 211 40.7 216 41.5C221 42.3 226.5 42.9 231 43.3C235.5 43.7 238.5 43.8 243 43.8C247.5 43.8 252.5 43.7 258 43.3C263.5 42.8 270.5 42 276 41.1C281.5 40.3 284.5 39.9 291 38.3C297.5 36.6 306.5 34.4 315 31.4C323.5 28.4 335 23.1 342 20.5C349 17.8 354.5 16.3 357 15.5" stroke-width="0.9"/><path d="M158.2 0C159.3 1 162.3 4.2 164.4 6C166.6 7.8 168.4 9.2 171 10.8C173.6 12.5 177 14.4 180 15.9C183 17.4 185.5 18.5 189 19.8C192.5 21.1 197.5 22.7 201 23.7C204.5 24.7 206.5 25.1 210 25.7C213.5 26.3 218 26.9 222 27.3C226 27.6 230 27.7 234 27.7C238 27.7 242.5 27.4 246 27C249.5 26.7 252 26.3 255 25.8C258 25.3 260.5 24.8 264 23.9C267.5 23 272 21.7 276 20.3C280 18.9 284.8 17 288 15.6C291.2 14.2 292.5 13.6 295.4 12C298.3 10.4 302.4 8 305.3 6C308.2 4 311.7 1 313 0"/><path d="M183.8 0C185.7 1 191.6 4.5 195 6C198.4 7.5 200.5 8.1 204 9C207.5 9.9 212 10.8 216 11.3C220 11.8 224 12 228 11.9C232 11.9 236 11.6 240 11C244 10.5 248.5 9.5 252 8.6C255.5 7.7 257.7 7 261 5.5C264.3 4.1 270 0.9 271.8 0"/><text x="231" y="43.3" font-size="4" fill="#5e7a52" stroke="#dfe8cf" stroke-width="1.2" paint-order="stroke" font-family="system-ui, sans-serif" text-anchor="middle">110 m</text></g><g id="map-layer-buffers" class="layer layer-buffers" clip-path="url(#map-land)"><path d="M115 0L119.5 8L121.4 14L124.7 38L124.9 44L123.9 50L115.3 74L110.5 90L111.7 102L117.9 120L119 128L116.4 156L108 180L103.4 198L107 232L0 232L0 0Z" fill="url(#map-hatch)"/><path d="M231.9 232L228.5 226L226.3 218L225 196L225.4 190L227.1 184L235.5 164L240 157.6L246 152.6L272 139L276 137.4L282 136.1L310 133.1L316 133.3L320 134.1L344 141.4L350 144L357 148.8L357 232Z" fill="url(#map-hatch)"/><path d="M115 0L119.5 8L121.4 14L124.7 38L124.9 44L123.9 50L115.3 74L110.5 90L111.7 102L117.9 120L119 128L116.4 156L108 180L103.4 198L107 232" fill="none" stroke="#a5552d" stroke-width="0.8" stroke-dasharray="3 2"/><path d="M231.9 232L228.5 226L226.3 218L225 196L225.4 190L227.1 184L235.5 164L240 157.6L246 152.6L272 139L276 137.4L282 136.1L310 133.1L316 133.3L320 134.1L344 141.4L350 144L357 148.8" fill="none" stroke="#a5552d" stroke-width="0.8" stroke-dasharray="3 2"/></g><path d="M262 178C267 173.2 276.7 168.5 285 166C293.3 163.5 303.7 162.3 312 163C320.3 163.7 328.3 166.8 335 170C341.7 173.2 348.3 177.8 352 182C355.7 186.2 356.2 186.7 357 195C357.8 203.3 371.8 225.8 357 232C342.2 238.2 284.8 235 268 232C251.2 229 258.2 220.2 256 214C253.8 207.8 254 201 255 195C256 189 257 182.8 262 178Z" fill="url(#map-marsh)" stroke="#4f7d64" stroke-width="0.8"/><path d="M80 0L92 20L95 42L87 64L80 86L82 108L89 128L87 150L79 172L73 196L77 232L0 232L0 0Z" fill="#8ebdcc"/><path d="M80 0C82 3.3 89.5 13 92 20C94.5 27 95.8 34.7 95 42C94.2 49.3 89.5 56.7 87 64C84.5 71.3 80.8 78.7 80 86C79.2 93.3 80.5 101 82 108C83.5 115 88.2 121 89 128C89.8 135 88.7 142.7 87 150C85.3 157.3 81.3 164.3 79 172C76.7 179.7 73.3 186 73 196C72.7 206 76.3 226 77 232" fill="none" stroke="#e4dfb3" stroke-width="3.5"/><path d="M80 0C82 3.3 89.5 13 92 20C94.5 27 95.8 34.7 95 42C94.2 49.3 89.5 56.7 87 64C84.5 71.3 80.8 78.7 80 86C79.2 93.3 80.5 101 82 108C83.5 115 88.2 121 89 128C89.8 135 88.7 142.7 87 150C85.3 157.3 81.3 164.3 79 172C76.7 179.7 73.3 186 73 196C72.7 206 76.3 226 77 232" fill="none" stroke="#4d8ba0" stroke-width="0.8"/><path d="M77 232L345.2 232L345.2 0L80 0" fill="none" stroke="#7a3b2e" stroke-width="0.9" stroke-dasharray="8 2 1.5 2"/><g id="map-layer-trees" class="layer layer-trees"><g fill="#4f8062" fill-opacity="0.85"><circle cx="182.6" cy="122.9" r="4.9"/><circle cx="210.7" cy="197.4" r="4.7"/><circle cx="160.8" cy="111.4" r="5.6"/><circle cx="149.9" cy="155.5" r="5.1"/><circle cx="149.4" cy="195.9" r="5.5"/><circle cx="274.5" cy="73.7" r="4.9"/><circle cx="349" cy="68.9" r="3.6"/><circle cx="265.4" cy="80.6" r="4.7"/><circle cx="179.2" cy="170.3" r="3.4"/><circle cx="229.9" cy="10.5" r="4.4"/><circle cx="226.6" cy="228.4" r="4.4"/><circle cx="166.4" cy="81.9" r="3.3"/><circle cx="107.2" cy="128.7" r="4.2"/><circle cx="300.7" cy="37.2" r="3.5"/><circle cx="225" cy="144.7" r="3.6"/><circle cx="304.5" cy="146.1" r="4.4"/><circle cx="328" cy="136.2" r="4.4"/><circle cx="109.9" cy="119.4" r="3.2"/><circle cx="314.4" cy="70" r="4.3"/><circle cx="194.4" cy="119.3" r="3.5"/><circle cx="199.8" cy="144.3" r="5.7"/><circle cx="343.2" cy="138.8" r="4.9"/><circle cx="204.6" cy="113" r="3.5"/><circle cx="232.7" cy="151" r="6"/><circle cx="253.7" cy="31.3" r="3.6"/><circle cx="330.4" cy="87.4" r="5.3"/><circle cx="233.4" cy="16.5" r="4"/><circle cx="268" cy="1.2" r="4.4"/><circle cx="224.4" cy="0.2" r="4.6"/><circle cx="175.4" cy="37.8" r="5.5"/><circle cx="218.8" cy="163.3" r="5.5"/><circle cx="149" cy="123.6" r="3.3"/><circle cx="149" cy="168.4" r="4.4"/><circle cx="120.7" cy="136.6" r="4.2"/><circle cx="87.5" cy="158.7" r="4.1"/><circle cx="225.7" cy="191.5" r="5.3"/><circle cx="290" cy="23.2" r="3.4"/><circle cx="265.6" cy="50.1" r="3.5"/><circle cx="122.4" cy="22.5" r="5.7"/><circle cx="228.1" cy="167.2" r="4.8"/><circle cx="270" cy="163.9" r="4.3"/><circle cx="272.7" cy="52.6" r="3.8"/><circle cx="201.2" cy="224.1" r="5.6"/><circle cx="185.6" cy="203.3" r="3.4"/><circle cx="188.5" cy="178.3" r="3.9"/><circle cx="350.8" cy="32.2" r="5.7"/><circle cx="168.6" cy="215.1" r="6"/><circle cx="138.8" cy="107.3" r="4.4"/><circle cx="203.9" cy="53.7" r="5.8"/><circle cx="320.3" cy="134.3" r="4.5"/><circle cx="354.5" cy="80.8" r="4.8"/><circle cx="194.1" cy="60" r="4.6"/><circle cx="337.5" cy="70" r="4.5"/><circle cx="145.3" cy="29.6" r="3.9"/><circle cx="264.6" cy="37.1" r="3.8"/><circle cx="154.2" cy="181.6" r="4.9"/><circle cx="253.6" cy="19.7" r="3.6"/><circle cx="320.2" cy="88.9" r="5.2"/><circle cx="203.6" cy="181.8" r="5.9"/><circle cx="158.4" cy="52.2" r="4.1"/><circle cx="255.2" cy="163.3" r="3.3"/><circle cx="264.6" cy="28.4" r="3.5"/><circle cx="89.9" cy="150.8" r="4"/><circle cx="115.3" cy="166.1" r="5.3"/><circle cx="217.9" cy="226" r="4.7"/><circle cx="288.5" cy="127.1" r="4.3"/><circle cx="102.6" cy="208.8" r="3.5"/><circle cx="188.7" cy="44.1" r="5.1"/><circle cx="99.9" cy="69.6" r="3.5"/><circle cx="326" cy="97" r="5.7"/><circle cx="122.7" cy="80.4" r="4.9"/><circle cx="283.2" cy="164.3" r="5"/><circle cx="80.8" cy="186.3" r="4.5"/><circle cx="167.8" cy="72.2" r="4.9"/><circle cx="251" cy="107.6" r="4.3"/><circle cx="150.4" cy="224.1" r="4.1"/><circle cx="343.3" cy="95.8" r="4.2"/><circle cx="315.1" cy="34.9" r="5.7"/><circle cx="93.6" cy="14.2" r="4"/><circle cx="186.4" cy="145" r="5.3"/><circle cx="332.4" cy="44.6" r="4.4"/><circle cx="184.9" cy="75.6" r="5.9"/><circle cx="139.2" cy="177.7" r="3.7"/><circle cx="86.3" cy="216.2" r="4"/><circle cx="91.4" cy="0.1" r="3.6"/><circle cx="174.6" cy="9.2" r="5.1"/><circle cx="252" cy="156" r="4.7"/><circle cx="232.3" cy="27" r="4.1"/><circle cx="339.2" cy="13" r="4"/><circle cx="140.2" cy="219.4" r="4.9"/><circle cx="167.2" cy="34.2" r="5"/><circle cx="114.2" cy="63.7" r="3.4"/><circle cx="121.2" cy="193.6" r="5.7"/><circle cx="102.9" cy="101.7" r="4.4"/><circle cx="339.9" cy="37.2" r="3.2"/><circle cx="294.8" cy="160.7" r="3.6"/><circle cx="230.9" cy="139.2" r="5.4"/><circle cx="100.9" cy="30" r="5.6"/><circle cx="170.7" cy="203.7" r="5.2"/><circle cx="294.4" cy="87.5" r="5"/><circle cx="348.8" cy="47.3" r="3.4"/><circle cx="116.8" cy="113.4" r="4.1"/><circle cx="131.3" cy="28.4" r="5.1"/><circle cx="155.7" cy="58.4" r="3.5"/><circle cx="301.2" cy="25.4" r="4.2"/><circle cx="290.8" cy="49.4" r="4.8"/><circle cx="206" cy="152" r="5.5"/><circle cx="197.3" cy="134.9" r="3.7"/><circle cx="157.3" cy="94.7" r="3.8"/><circle cx="235" cy="193.3" r="3.5"/><circle cx="340.3" cy="159.5" r="3.7"/><circle cx="154" cy="18.8" r="5"/><circle cx="168.7" cy="231.1" r="4.2"/><circle cx="210.9" cy="221.8" r="4.7"/><circle cx="303.8" cy="81" r="3.4"/><circle cx="345" cy="147" r="3.5"/><circle cx="244.6" cy="157.9" r="4.3"/><circle cx="143.4" cy="19.2" r="5.4"/><circle cx="122.4" cy="216.7" r="5.3"/><circle cx="94.9" cy="155.2" r="4"/><circle cx="323.7" cy="46.7" r="3.2"/><circle cx="340.9" cy="44.1" r="3.6"/><circle cx="356.8" cy="148.9" r="3.9"/><circle cx="104.8" cy="167.8" r="5.1"/><circle cx="245.2" cy="230.9" r="5.3"/><circle cx="128.4" cy="166.3" r="3.2"/><circle cx="187" cy="27.4" r="4.8"/><circle cx="107.2" cy="192.4" r="4.6"/><circle cx="264.4" cy="139.1" r="5.6"/><circle cx="105.2" cy="40.9" r="3.4"/><circle cx="248" cy="143.3" r="6"/><circle cx="209.9" cy="19.3" r="5"/><circle cx="323.6" cy="32.2" r="3.5"/><circle cx="354.8" cy="48" r="3.8"/><circle cx="303.2" cy="14.9" r="5.9"/><circle cx="295.8" cy="139.1" r="5.1"/><circle cx="139.1" cy="169" r="3.9"/><circle cx="338.6" cy="102.8" r="5.6"/><circle cx="83.4" cy="168.4" r="4.2"/><circle cx="200.8" cy="194.7" r="5.6"/><circle cx="296.2" cy="72.6" r="5.3"/><circle cx="115.7" cy="147.6" r="3.8"/><circle cx="270.1" cy="44.8" r="4"/><circle cx="297.6" cy="62.9" r="5.5"/><circle cx="109.9" cy="183.4" r="4.9"/><circle cx="356.5" cy="124.4" r="3.9"/><circle cx="103.5" cy="112.9" r="4"/><circle cx="102.3" cy="148.6" r="4.4"/><circle cx="171.6" cy="80.3" r="3.2"/><circle cx="223.5" cy="124.9" r="5.6"/><circle cx="130.1" cy="77.8" r="4.6"/><circle cx="165.4" cy="3.5" r="5.4"/><circle cx="334.9" cy="3.1" r="4.1"/><circle cx="323.7" cy="6.3" r="4"/><circle cx="220.8" cy="212.2" r="3.9"/><circle cx="111.6" cy="222.7" r="4.9"/><circle cx="80.9" cy="201.1" r="5.9"/><circle cx="127.7" cy="113" r="5.5"/><circle cx="255.5" cy="52" r="5.2"/><circle cx="139.6" cy="190.1" r="3.6"/><circle cx="159.2" cy="222.5" r="3.9"/><circle cx="315.3" cy="0.5" r="3.3"/><circle cx="146.1" cy="184.8" r="3.2"/><circle cx="281.9" cy="19.3" r="4.5"/><circle cx="121.5" cy="50.7" r="4"/><circle cx="128.8" cy="95.3" r="3.7"/><circle cx="95.3" cy="229.6" r="3.5"/><circle cx="89.1" cy="89.7" r="4.7"/><circle cx="254.7" cy="11.9" r="5.8"/><circle cx="348.9" cy="123.6" r="4.1"/></g><g fill="#3f6d52" fill-opacity="0.7"><circle cx="181.4" cy="123.9" r="3"/><circle cx="209.5" cy="198.3" r="2.9"/><circle cx="159.4" cy="112.5" r="3.4"/><circle cx="148.7" cy="156.5" r="3.2"/><circle cx="148" cy="197" r="3.4"/><circle cx="273.2" cy="74.7" r="3.1"/><circle cx="348.1" cy="69.6" r="2.2"/><circle cx="264.3" cy="81.5" r="2.9"/><circle cx="178.4" cy="171" r="2.1"/><circle cx="228.8" cy="11.4" r="2.8"/><circle cx="225.5" cy="229.3" r="2.7"/><circle cx="165.6" cy="82.5" r="2.1"/><circle cx="106.2" cy="129.5" r="2.6"/><circle cx="299.9" cy="37.9" r="2.2"/><circle cx="224.1" cy="145.4" r="2.2"/><circle cx="303.4" cy="147" r="2.7"/><circle cx="326.9" cy="137.1" r="2.7"/><circle cx="109.1" cy="120" r="2"/><circle cx="313.3" cy="70.8" r="2.7"/><circle cx="193.5" cy="120" r="2.2"/><circle cx="198.4" cy="145.4" r="3.5"/><circle cx="342" cy="139.8" r="3"/><circle cx="203.8" cy="113.7" r="2.1"/><circle cx="231.2" cy="152.2" r="3.7"/><circle cx="252.8" cy="32.1" r="2.2"/><circle cx="329.1" cy="88.4" r="3.3"/><circle cx="232.4" cy="17.3" r="2.5"/><circle cx="266.9" cy="2.1" r="2.7"/><circle cx="223.3" cy="1.1" r="2.8"/><circle cx="174" cy="38.9" r="3.4"/><circle cx="217.4" cy="164.4" r="3.4"/><circle cx="148.1" cy="124.3" r="2.1"/><circle cx="147.9" cy="169.3" r="2.7"/><circle cx="119.7" cy="137.4" r="2.6"/><circle cx="86.5" cy="159.5" r="2.5"/><circle cx="224.3" cy="192.6" r="3.3"/><circle cx="289.2" cy="23.8" r="2.1"/><circle cx="264.8" cy="50.8" r="2.2"/><circle cx="120.9" cy="23.7" r="3.5"/><circle cx="226.9" cy="168.2" r="3"/><circle cx="269" cy="164.8" r="2.7"/><circle cx="271.8" cy="53.3" r="2.3"/><circle cx="199.8" cy="225.2" r="3.5"/><circle cx="184.7" cy="203.9" r="2.1"/><circle cx="187.5" cy="179" r="2.4"/><circle cx="349.4" cy="33.4" r="3.5"/><circle cx="167.1" cy="216.3" r="3.7"/><circle cx="137.7" cy="108.2" r="2.7"/><circle cx="202.5" cy="54.9" r="3.6"/><circle cx="319.1" cy="135.2" r="2.8"/><circle cx="353.3" cy="81.7" r="3"/><circle cx="192.9" cy="61" r="2.9"/><circle cx="336.4" cy="70.9" r="2.8"/><circle cx="144.3" cy="30.3" r="2.4"/><circle cx="263.7" cy="37.8" r="2.4"/><circle cx="153" cy="182.6" r="3"/><circle cx="252.7" cy="20.4" r="2.2"/><circle cx="318.9" cy="90" r="3.2"/><circle cx="202.1" cy="183" r="3.7"/><circle cx="157.4" cy="53" r="2.5"/><circle cx="254.4" cy="163.9" r="2.1"/><circle cx="263.7" cy="29.1" r="2.1"/><circle cx="88.9" cy="151.6" r="2.5"/><circle cx="114" cy="167.2" r="3.3"/><circle cx="216.7" cy="226.9" r="2.9"/><circle cx="287.4" cy="128" r="2.7"/><circle cx="101.7" cy="209.5" r="2.2"/><circle cx="187.4" cy="45.1" r="3.1"/><circle cx="99" cy="70.3" r="2.2"/><circle cx="324.5" cy="98.2" r="3.6"/><circle cx="121.5" cy="81.4" r="3"/><circle cx="282" cy="165.3" r="3.1"/><circle cx="79.7" cy="187.2" r="2.8"/><circle cx="166.5" cy="73.1" r="3.1"/><circle cx="250" cy="108.4" r="2.7"/><circle cx="149.4" cy="224.9" r="2.5"/><circle cx="342.2" cy="96.6" r="2.6"/><circle cx="313.7" cy="36.1" r="3.6"/><circle cx="92.6" cy="15" r="2.5"/><circle cx="185.1" cy="146.1" r="3.3"/><circle cx="331.3" cy="45.4" r="2.7"/><circle cx="183.4" cy="76.7" r="3.7"/><circle cx="138.2" cy="178.4" r="2.3"/><circle cx="85.3" cy="217" r="2.5"/><circle cx="90.5" cy="0.9" r="2.2"/><circle cx="173.3" cy="10.3" r="3.2"/><circle cx="250.8" cy="156.9" r="2.9"/><circle cx="231.3" cy="27.9" r="2.6"/><circle cx="338.2" cy="13.8" r="2.5"/><circle cx="138.9" cy="220.4" r="3"/><circle cx="165.9" cy="35.2" r="3.1"/><circle cx="113.4" cy="64.3" r="2.1"/><circle cx="119.8" cy="194.8" r="3.5"/><circle cx="101.7" cy="102.6" r="2.7"/><circle cx="339" cy="37.8" r="2"/><circle cx="293.9" cy="161.5" r="2.3"/><circle cx="229.5" cy="140.3" r="3.3"/><circle cx="99.5" cy="31.2" r="3.5"/><circle cx="169.4" cy="204.7" r="3.2"/><circle cx="293.2" cy="88.5" r="3.1"/><circle cx="348" cy="48" r="2.1"/><circle cx="115.8" cy="114.2" r="2.5"/><circle cx="130" cy="29.4" r="3.2"/><circle cx="154.8" cy="59.1" r="2.2"/><circle cx="300.1" cy="26.2" r="2.6"/><circle cx="289.6" cy="50.4" r="3"/><circle cx="204.6" cy="153.1" r="3.4"/><circle cx="196.4" cy="135.7" r="2.3"/><circle cx="156.4" cy="95.5" r="2.3"/><circle cx="234.1" cy="194.1" r="2.2"/><circle cx="339.4" cy="160.3" r="2.3"/><circle cx="152.8" cy="19.8" r="3.1"/><circle cx="167.6" cy="232" r="2.6"/><circle cx="209.7" cy="222.8" r="2.9"/><circle cx="303" cy="81.7" r="2.1"/><circle cx="344.1" cy="147.7" r="2.2"/><circle cx="243.6" cy="158.7" r="2.7"/><circle cx="142.1" cy="20.3" r="3.4"/><circle cx="121.1" cy="217.8" r="3.3"/><circle cx="93.9" cy="156" r="2.5"/><circle cx="322.9" cy="47.4" r="2"/><circle cx="340" cy="44.8" r="2.2"/><circle cx="355.9" cy="149.6" r="2.4"/><circle cx="103.5" cy="168.8" r="3.2"/><circle cx="243.9" cy="232" r="3.3"/><circle cx="127.6" cy="166.9" r="2"/><circle cx="185.8" cy="28.4" r="3"/><circle cx="106.1" cy="193.3" r="2.9"/><circle cx="263" cy="140.3" r="3.5"/><circle cx="104.3" cy="41.6" r="2.1"/><circle cx="246.5" cy="144.5" r="3.7"/><circle cx="208.7" cy="20.3" r="3.1"/><circle cx="322.7" cy="32.9" r="2.2"/><circle cx="353.8" cy="48.7" r="2.4"/><circle cx="301.7" cy="16.1" r="3.7"/><circle cx="294.5" cy="140.1" r="3.2"/><circle cx="138.1" cy="169.8" r="2.4"/><circle cx="337.2" cy="103.9" r="3.5"/><circle cx="82.3" cy="169.2" r="2.6"/><circle cx="199.4" cy="195.8" r="3.5"/><circle cx="294.9" cy="73.7" r="3.3"/><circle cx="114.8" cy="148.4" r="2.4"/><circle cx="269.1" cy="45.6" r="2.5"/><circle cx="296.2" cy="64" r="3.4"/><circle cx="108.7" cy="184.4" r="3"/><circle cx="355.5" cy="125.2" r="2.4"/><circle cx="102.5" cy="113.7" r="2.5"/><circle cx="101.2" cy="149.4" r="2.7"/><circle cx="170.8" cy="81" r="2"/><circle cx="222.1" cy="126" r="3.5"/><circle cx="129" cy="78.7" r="2.9"/><circle cx="164" cy="4.6" r="3.4"/><circle cx="333.9" cy="3.9" r="2.5"/><circle cx="322.7" cy="7.1" r="2.5"/><circle cx="219.8" cy="213" r="2.4"/><circle cx="110.4" cy="223.7" r="3"/><circle cx="79.4" cy="202.3" r="3.7"/><circle cx="126.3" cy="114.1" r="3.4"/><circle cx="254.2" cy="53.1" r="3.2"/><circle cx="138.7" cy="190.8" r="2.3"/><circle cx="158.2" cy="223.3" r="2.4"/><circle cx="314.5" cy="1.2" r="2"/><circle cx="145.3" cy="185.4" r="2"/><circle cx="280.8" cy="20.2" r="2.8"/><circle cx="120.5" cy="51.5" r="2.5"/><circle cx="127.9" cy="96.1" r="2.3"/><circle cx="94.4" cy="230.3" r="2.1"/><circle cx="87.9" cy="90.6" r="2.9"/><circle cx="253.2" cy="13.1" r="3.6"/><circle cx="347.9" cy="124.4" r="2.6"/></g></g><g id="map-layer-access" class="layer layer-access" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M300 104L330 104L330 128L300 128Z" fill="#e9dfc5" stroke="#9b8a6a" stroke-width="0.8"/><path d="M345.2 116L330 116" stroke="#9b8a6a" stroke-width="7"/><path d="M345.2 116L330 116" stroke="#e9dfc5" stroke-width="6"/><path d="M302 116L290 100L262 91L230 89L195 88L160 88L136 90" stroke="#b7ad85" stroke-width="7"/><path d="M302 116L290 100L262 91L230 89L195 88L160 88L136 90" stroke="#e4e0bd" stroke-width="6"/><path d="M302 116L290 100L262 91L230 89L195 88L160 88L136 90" stroke="#a69b6b" stroke-width="0.4" stroke-dasharray="2 2"/><circle cx="136" cy="90" r="9" fill="#e4e0bd" stroke="#b7ad85" stroke-width="0.8"/><path d="M180 88L176 110L168 132L150 140L138 138" stroke="#b7ad85" stroke-width="7"/><path d="M180 88L176 110L168 132L150 140L138 138" stroke="#e4e0bd" stroke-width="6"/><path d="M180 88L176 110L168 132L150 140L138 138" stroke="#a69b6b" stroke-width="0.4" stroke-dasharray="2 2"/><circle cx="138" cy="138" r="9" fill="#e4e0bd" stroke="#b7ad85" stroke-width="0.8"/><path d="M160.4 73.7L160.4 88" stroke="#bfae86" stroke-width="2.6"/><path d="M160.4 73.7L160.4 88" stroke="#f3ecd8" stroke-width="1.8"/><path d="M214 105.5L214.5 88.6" stroke="#bfae86" stroke-width="2.6"/><path d="M214 105.5L214.5 88.6" stroke="#f3ecd8" stroke-width="1.8"/><path d="M140.4 125.1L138.2 138" stroke="#bfae86" stroke-width="2.6"/><path d="M140.4 125.1L138.2 138" stroke="#f3ecd8" stroke-width="1.8"/><path d="M253.3 69.8L252 90.4" stroke="#bfae86" stroke-width="2.6"/><path d="M253.3 69.8L252 90.4" stroke="#f3ecd8" stroke-width="1.8"/><path d="M242.4 113.7L243.9 89.9" stroke="#bfae86" stroke-width="2.6"/><path d="M242.4 113.7L243.9 89.9" stroke="#f3ecd8" stroke-width="1.8"/><path d="M182.4 155.7L168 132" stroke="#bfae86" stroke-width="2.6"/><path d="M182.4 155.7L168 132" stroke="#f3ecd8" stroke-width="1.8"/><path d="M286.3 112.8L294.8 106.4" stroke="#bfae86" stroke-width="2.6"/><path d="M286.3 112.8L294.8 106.4" stroke="#f3ecd8" stroke-width="1.8"/><path d="M258.9 124.6L269 93.2" stroke="#bfae86" stroke-width="2.6"/><path d="M258.9 124.6L269 93.2" stroke="#f3ecd8" stroke-width="1.8"/><path d="M136 90L118 92L100 95" stroke="#8a6a48" stroke-width="0.8" stroke-dasharray="2.5 1.5"/></g><g id="map-layer-construction" class="layer layer-construction" fill="none"><circle cx="150" cy="88" r="24" stroke="#b45e1c" stroke-width="0.5" stroke-dasharray="1.5 1.5"/><rect x="146" y="84" width="8" height="8" stroke="#b45e1c" stroke-width="0.9" fill="#f6e2cf" fill-opacity="0.6"/><path d="M147.5 85.5l5 5m0 -5l-5 5" stroke="#b45e1c" stroke-width="0.7"/><circle cx="203.6" cy="88" r="24" stroke="#b45e1c" stroke-width="0.5" stroke-dasharray="1.5 1.5"/><rect x="199.6" y="84" width="8" height="8" stroke="#b45e1c" stroke-width="0.9" fill="#f6e2cf" fill-opacity="0.6"/><path d="M201.1 85.5l5 5m0 -5l-5 5" stroke="#b45e1c" stroke-width="0.7"/><circle cx="138" cy="138" r="24" stroke="#b45e1c" stroke-width="0.5" stroke-dasharray="1.5 1.5"/><rect x="134" y="134" width="8" height="8" stroke="#b45e1c" stroke-width="0.9" fill="#f6e2cf" fill-opacity="0.6"/><path d="M135.5 135.5l5 5m0 -5l-5 5" stroke="#b45e1c" stroke-width="0.7"/><circle cx="243" cy="89.6" r="24" stroke="#b45e1c" stroke-width="0.5" stroke-dasharray="1.5 1.5"/><rect x="239" y="85.6" width="8" height="8" stroke="#b45e1c" stroke-width="0.9" fill="#f6e2cf" fill-opacity="0.6"/><path d="M240.5 87.1l5 5m0 -5l-5 5" stroke="#b45e1c" stroke-width="0.7"/><circle cx="232" cy="89.2" r="24" stroke="#b45e1c" stroke-width="0.5" stroke-dasharray="1.5 1.5"/><rect x="228" y="85.2" width="8" height="8" stroke="#b45e1c" stroke-width="0.9" fill="#f6e2cf" fill-opacity="0.6"/><path d="M229.5 86.7l5 5m0 -5l-5 5" stroke="#b45e1c" stroke-width="0.7"/><circle cx="168" cy="132" r="24" stroke="#b45e1c" stroke-width="0.5" stroke-dasharray="1.5 1.5"/><rect x="164" y="128" width="8" height="8" stroke="#b45e1c" stroke-width="0.9" fill="#f6e2cf" fill-opacity="0.6"/><path d="M165.5 129.5l5 5m0 -5l-5 5" stroke="#b45e1c" stroke-width="0.7"/><circle cx="275" cy="94.2" r="24" stroke="#b45e1c" stroke-width="0.5" stroke-dasharray="1.5 1.5"/><rect x="271" y="90.2" width="8" height="8" stroke="#b45e1c" stroke-width="0.9" fill="#f6e2cf" fill-opacity="0.6"/><path d="M272.5 91.7l5 5m0 -5l-5 5" stroke="#b45e1c" stroke-width="0.7"/></g><g id="map-buildings" class="buildings"><g id="map-building-a" class="building" data-building="a"><path class="part part-building" d="M143.7 68.6L156.3 68.6L156.3 71.4L143.7 71.4Z" fill="#b58a62" stroke="#274c3b" stroke-width="0.7"/><path class="part part-porch" d="M146.9 71.4L151 71.4L151 74.7L146.9 74.7Z" fill="#d9c7a5" stroke="#274c3b" stroke-width="0.4"/><path class="part part-ramp" d="M150.8 73L160.4 73L160.4 74.5L150.8 74.5Z" fill="#cdb48e" stroke="#274c3b" stroke-width="0.4"/><path class="part part-trellis" d="M143.3 68.7L143.5 68.7L143.5 71.3L143.3 71.3Z" fill="#6e5a3d" stroke="#274c3b" stroke-width="0.4"/><text x="150" y="66.1" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6.5" font-weight="700" fill="#1d392c" stroke="#f6f5ee" stroke-width="1.4" paint-order="stroke">A</text><circle class="hit" cx="150" cy="70" r="11" fill="transparent"/></g><g id="map-building-b" class="building" data-building="b"><path class="part part-building" d="M197.3 100.4L209.9 100.4L209.9 103.2L197.3 103.2Z" fill="#b58a62" stroke="#274c3b" stroke-width="0.7"/><path class="part part-porch" d="M200.5 103.2L204.6 103.2L204.6 106.5L200.5 106.5Z" fill="#d9c7a5" stroke="#274c3b" stroke-width="0.4"/><path class="part part-ramp" d="M204.4 104.8L214 104.8L214 106.3L204.4 106.3Z" fill="#cdb48e" stroke="#274c3b" stroke-width="0.4"/><path class="part part-trellis" d="M196.9 100.5L197.1 100.5L197.1 103.1L196.9 103.1Z" fill="#6e5a3d" stroke="#274c3b" stroke-width="0.4"/><text x="203.6" y="97.9" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6.5" font-weight="700" fill="#1d392c" stroke="#f6f5ee" stroke-width="1.4" paint-order="stroke">B</text><circle class="hit" cx="203.6" cy="101.8" r="11" fill="transparent"/></g><g id="map-building-c" class="building" data-building="c"><path class="part part-building" d="M123.7 120L136.3 120L136.3 122.8L123.7 122.8Z" fill="#b58a62" stroke="#274c3b" stroke-width="0.7"/><path class="part part-porch" d="M126.9 122.8L131 122.8L131 126.1L126.9 126.1Z" fill="#d9c7a5" stroke="#274c3b" stroke-width="0.4"/><path class="part part-ramp" d="M130.8 124.4L140.4 124.4L140.4 125.9L130.8 125.9Z" fill="#cdb48e" stroke="#274c3b" stroke-width="0.4"/><path class="part part-trellis" d="M123.3 120.1L123.5 120.1L123.5 122.7L123.3 122.7Z" fill="#6e5a3d" stroke="#274c3b" stroke-width="0.4"/><text x="130" y="117.5" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6.5" font-weight="700" fill="#1d392c" stroke="#f6f5ee" stroke-width="1.4" paint-order="stroke">C</text><circle class="hit" cx="130" cy="121.4" r="11" fill="transparent"/></g><g id="map-building-d" class="building" data-building="d"><path class="part part-building" d="M236.6 64.7L249.2 64.7L249.2 67.5L236.6 67.5Z" fill="#b58a62" stroke="#274c3b" stroke-width="0.7"/><path class="part part-porch" d="M239.8 67.5L243.9 67.5L243.9 70.8L239.8 70.8Z" fill="#d9c7a5" stroke="#274c3b" stroke-width="0.4"/><path class="part part-ramp" d="M243.7 69.1L253.3 69.1L253.3 70.6L243.7 70.6Z" fill="#cdb48e" stroke="#274c3b" stroke-width="0.4"/><path class="part part-trellis" d="M236.2 64.8L236.4 64.8L236.4 67.4L236.2 67.4Z" fill="#6e5a3d" stroke="#274c3b" stroke-width="0.4"/><text x="242.9" y="62.2" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6.5" font-weight="700" fill="#1d392c" stroke="#f6f5ee" stroke-width="1.4" paint-order="stroke">D</text><circle class="hit" cx="242.9" cy="66.1" r="11" fill="transparent"/></g><g id="map-building-e" class="building" data-building="e"><path class="part part-building" d="M225.7 108.6L238.3 108.6L238.3 111.4L225.7 111.4Z" fill="#b58a62" stroke="#274c3b" stroke-width="0.7"/><path class="part part-porch" d="M228.9 111.4L233 111.4L233 114.7L228.9 114.7Z" fill="#d9c7a5" stroke="#274c3b" stroke-width="0.4"/><path class="part part-ramp" d="M232.8 113L242.4 113L242.4 114.5L232.8 114.5Z" fill="#cdb48e" stroke="#274c3b" stroke-width="0.4"/><path class="part part-trellis" d="M225.3 108.7L225.5 108.7L225.5 111.3L225.3 111.3Z" fill="#6e5a3d" stroke="#274c3b" stroke-width="0.4"/><text x="232" y="106.1" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6.5" font-weight="700" fill="#1d392c" stroke="#f6f5ee" stroke-width="1.4" paint-order="stroke">E</text><circle class="hit" cx="232" cy="110" r="11" fill="transparent"/></g><g id="map-building-f" class="building" data-building="f"><path class="part part-building" d="M165.7 150.6L178.3 150.6L178.3 153.4L165.7 153.4Z" fill="#b58a62" stroke="#274c3b" stroke-width="0.7"/><path class="part part-porch" d="M168.9 153.4L173 153.4L173 156.7L168.9 156.7Z" fill="#d9c7a5" stroke="#274c3b" stroke-width="0.4"/><path class="part part-ramp" d="M172.8 155L182.4 155L182.4 156.5L172.8 156.5Z" fill="#cdb48e" stroke="#274c3b" stroke-width="0.4"/><path class="part part-trellis" d="M165.3 150.7L165.5 150.7L165.5 153.3L165.3 153.3Z" fill="#6e5a3d" stroke="#274c3b" stroke-width="0.4"/><text x="172" y="148.1" text-anchor="middle" font-family="system-ui, sans-serif" font-size="6.5" font-weight="700" fill="#1d392c" stroke="#f6f5ee" stroke-width="1.4" paint-order="stroke">F</text><circle class="hit" cx="172" cy="152" r="11" fill="transparent"/></g><g id="map-building-lodge" class="building" data-building="lodge"><path class="part part-building" d="M261.7 106.4L274.3 106.4L274.3 117.6L261.7 117.6Z" fill="#8a694d" stroke="#274c3b" stroke-width="0.7"/><path class="part part-porch" d="M257.8 108.8L261.7 108.8L261.7 115.2L257.8 115.2Z" fill="#d9c7a5" stroke="#274c3b" stroke-width="0.4"/><path class="part part-porch" d="M274.3 110.2L277 110.2L277 113.8L274.3 113.8Z" fill="#d9c7a5" stroke="#274c3b" stroke-width="0.4"/><path class="part part-ramp" d="M276.7 112L286.3 112L286.3 113.5L276.7 113.5Z" fill="#cdb48e" stroke="#274c3b" stroke-width="0.4"/><path class="part part-ramp" d="M258.2 115L259.7 115L259.7 124.6L258.2 124.6Z" fill="#cdb48e" stroke="#274c3b" stroke-width="0.4"/><path class="part part-trellis" d="M262.4 117.9L266.4 117.9L266.4 118L262.4 118Z" fill="#6e5a3d" stroke="#274c3b" stroke-width="0.4"/><text x="268" y="103.9" text-anchor="middle" font-family="system-ui, sans-serif" font-size="5.5" font-weight="700" fill="#1d392c" stroke="#f6f5ee" stroke-width="1.4" paint-order="stroke">LODGE</text><circle class="hit" cx="268" cy="112" r="15" fill="transparent"/></g></g><g font-family="system-ui, sans-serif" fill="#1d392c" stroke="#f6f5ee" stroke-width="1.2" paint-order="stroke"><text x="10" y="16" font-size="9" font-weight="800" letter-spacing="1">ECO HAMLET</text><text x="10" y="25" font-size="5">Fictional 15-acre site • not surveyed</text><text x="18" y="118" font-size="8" fill="#1f4f60" stroke="#8ebdcc">LAKE</text><text x="286" y="200" font-size="6.5" font-weight="700">WETLAND</text><text x="286" y="207" font-size="4.5">protected</text><text x="296" y="99" font-size="5" font-weight="700">PARKING</text><text x="318" y="112" font-size="4.5">ARRIVAL →</text><text x="100" y="48" font-size="4.5" fill="#7d3a18">30 m shoreline setback</text><text x="214" y="154" font-size="4.5" fill="#7d3a18">30 m wetland buffer</text><text x="98" y="101" font-size="4" fill="#5a4026">shore trail</text><text x="306" y="14" font-size="6" fill="#3d6b53" font-weight="700">HILL</text></g><g aria-hidden="true" font-family="system-ui, sans-serif"><circle cx="346" cy="29" r="11" fill="#f6f5ee" fill-opacity="0.85"/><path d="M341 34l5 -16l5 16l-5 -4z" fill="#1d392c"/><text x="346" y="42" font-size="6" text-anchor="middle" font-weight="700" fill="#1d392c">N</text></g><g font-family="system-ui, sans-serif" font-size="4.5" fill="#1d392c"><rect x="12" y="222" width="25" height="2" fill="#1d392c"/><rect x="37" y="222" width="25" height="2" fill="#fff" stroke="#1d392c" stroke-width="0.4"/><text x="12" y="220">0</text><text x="37" y="220" text-anchor="middle">25</text><text x="62" y="220" text-anchor="middle">50 m</text></g></svg>
+<!-- /gen:site-map -->
+    </div>
+    <p class="small map-link"><a href="assets/site-plan.svg">Open the site plan full size</a> (SVG with key), to zoom in on labels.</p>
+    </div>
+    <div class="map-panel">
+      <fieldset class="layers" data-enhance hidden>
+        <legend>Map layers</legend>
+        <label><input type="checkbox" data-layer="contours" checked> Contours (2 m)</label>
+        <label><input type="checkbox" data-layer="buffers" checked> No-build zones</label>
+        <label><input type="checkbox" data-layer="trees" checked> Tree canopy</label>
+        <label><input type="checkbox" data-layer="access" checked> Lanes, parking and paths</label>
+        <label><input type="checkbox" data-layer="construction" checked> Crane standing points and reach</label>
+      </fieldset>
+      <div class="selector" role="group" aria-labelledby="selector-label" data-enhance hidden>
+        <p id="selector-label" class="label">Select a building</p>
+        <button type="button" data-choice="a" aria-pressed="false">Cabin A</button>
+        <button type="button" data-choice="b" aria-pressed="false">Cabin B</button>
+        <button type="button" data-choice="c" aria-pressed="false">Cabin C</button>
+        <button type="button" data-choice="d" aria-pressed="false">Cabin D</button>
+        <button type="button" data-choice="e" aria-pressed="false">Cabin E</button>
+        <button type="button" data-choice="f" aria-pressed="false">Cabin F</button>
+        <button type="button" data-choice="lodge" aria-pressed="false">Common lodge</button>
+      </div>
+      <p class="selection" id="selected" role="status" data-enhance hidden>Select a building to explore its proposed role.</p>
+      <div id="building-details" class="details" data-enhance hidden></div>
+    </div>
+  </div>
+  <h3>Map key</h3>
+  <ul class="legend">
+    <li><span class="swatch sw-buffer"></span> No-build zone: 30 m from the shoreline and the wetland (placeholder values)</li>
+    <li><span class="swatch sw-wetland"></span> Protected wetland</li>
+    <li><span class="swatch sw-lake"></span> Lake</li>
+    <li><span class="swatch sw-lane"></span> Emergency and construction lane (gravel or grass-pave)</li>
+    <li><span class="swatch sw-access"></span> Access lane and shared parking</li>
+    <li><span class="swatch sw-path"></span> Accessible path from each ramp to a lane</li>
+    <li><span class="swatch sw-crane"></span> Crane standing point, with dashed reach circle</li>
+    <li><span class="swatch sw-home"></span> Home, porch and ramp, at true scale</li>
+    <li><span class="swatch sw-parcel"></span> Property line (fictional)</li>
+  </ul>
+  <h3>Siting checks</h3>
+<!-- gen:site-checks -->
+<div class="table-wrap" role="region" aria-label="Siting checks" tabindex="0">
+<table class="checks">
+  <caption>Siting checks, computed from the site data. Limits: shoreline setback 30 m, wetland buffer 30 m, ground slope 15%, crane reach 24 m, ramp foot to lane 45 m. All limits are placeholders.</caption>
+  <thead><tr><th scope="col">Building</th><th scope="col">Use</th><th scope="col">To shoreline</th><th scope="col">To wetland</th><th scope="col">Ground slope</th><th scope="col">Crane reach</th><th scope="col">Ramp foot to lane</th><th scope="col">Result</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Cabin A</th><td>permanent</td><td>54.5 m</td><td>145.0 m</td><td>8.7%</td><td>18.0 m</td><td>11.3 m</td><td><span class="ok">Pass</span></td></tr>
+    <tr><th scope="row">Cabin B</th><td>permanent</td><td>110.7 m</td><td>86.3 m</td><td>5.6%</td><td>13.8 m</td><td>14.0 m</td><td><span class="ok">Pass</span></td></tr>
+    <tr><th scope="row">Cabin C</th><td>permanent</td><td>34.7 m</td><td>132.3 m</td><td>4.2%</td><td>18.4 m</td><td>10.1 m</td><td><span class="ok">Pass</span><br><span class="note">Moved 8.6 m east of the Phase 1 position to clear the 30 m shoreline setback.</span></td></tr>
+    <tr><th scope="row">Cabin D</th><td>seasonal</td><td>143.0 m</td><td>100.5 m</td><td>8.8%</td><td>23.5 m</td><td>17.6 m</td><td><span class="ok">Pass</span></td></tr>
+    <tr><th scope="row">Cabin E</th><td>seasonal</td><td>137.3 m</td><td>65.4 m</td><td>5.1%</td><td>20.8 m</td><td>20.9 m</td><td><span class="ok">Pass</span><br><span class="note">Moved west of the Phase 1 position to make room for the lodge beside the shared parking.</span></td></tr>
+    <tr><th scope="row">Cabin F</th><td>community rental</td><td>78.1 m</td><td>81.8 m</td><td>3.1%</td><td>20.4 m</td><td>24.8 m</td><td><span class="ok">Pass</span><br><span class="note">Moved within crane reach of the south spur.</span></td></tr>
+    <tr><th scope="row">Common lodge</th><td>shared</td><td>169.2 m</td><td>48.4 m</td><td>4.2%</td><td>19.1 m</td><td>7.6 m</td><td><span class="ok">Pass</span><br><span class="note">Moved beside the shared parking so the main entry ramp meets the arrival point.</span></td></tr>
+  </tbody>
+</table>
+</div>
+<p class="small">Parcel area 15 acres (6.07 ha), computed from the boundary polygon. Distances are measured from the nearest part of each building, porch, ramp or trellis.</p>
+<!-- /gen:site-checks -->
+</section>
+
+<section id="home" aria-labelledby="home-title">
+  <p class="eyebrow">Open architectural concepts</p>
+  <h2 id="home-title">Cabin A: The Retreat</h2>
+  <p>A single 40-foot high-cube container, with an independent screened porch. The shell, internal zones, openings and exterior insulation are generated from one parametric data file, so the plan, elevations, section, 3D model and the explorer below always agree. This is not a buildable design.</p>
+<!-- gen:cabin-a-facts -->
+<dl class="facts">
+  <div><dt>Overall size</dt><dd>12.59 × 2.83 m outside the rainscreen (35.6 m² footprint)</dd></div>
+  <div><dt>Modules</dt><dd>1 × 40-foot high-cube ISO container, 12.192 × 2.438 × 2.896 m</dd></div>
+  <div><dt>Clear floor area</dt><dd>26.7 m² inside the lining, plus 11.2 m² of porch and deck</dd></div>
+  <div><dt>Clear height</dt><dd>2.65 m in the modules</dd></div>
+  <div><dt>Floor above grade</dt><dd>0.64 m on piles, so step-free access needs 9.63 m of ramp at 1:15 per entrance</dd></div>
+  <div><dt>Exterior wall</dt><dd>280 mm: lining, steel, 150 mm external insulation, ventilated cavity, timber rainscreen</dd></div>
+  <div><dt>Roof PV (concept)</dt><dd>10 modules, about 4.2 kWp, drawn flat; sizing needs measured solar resource and winter loads</dd></div>
+</dl>
+<!-- /gen:cabin-a-facts -->
+  <div class="drawings" data-drawings="cabin-a">
+<!-- gen:cabin-a-drawings -->
+<fieldset class="segmented" data-enhance hidden>
+    <legend>Drawing</legend>
+    <label><input type="radio" name="cabin-a-view" value="floor-plan" checked> Floor plan</label>
+    <label><input type="radio" name="cabin-a-view" value="elevations"> Elevations</label>
+    <label><input type="radio" name="cabin-a-view" value="section"> Envelope section</label>
+  </fieldset>
+  <figure class="drawing" data-view="floor-plan" id="cabin-a-floor-plan">
+    <img src="models/cabin-a/floor-plan.svg" width="979" height="755" alt="Cabin A floor plan, north up, with rooms, doors, windows, porch and ramp. Room sizes are listed in the table below." loading="lazy" decoding="async">
+    <figcaption>Floor plan cut 1.2 m above the floor. Dimensions and openings need professional review. <a href="models/cabin-a/floor-plan.svg">Open full size<span class="visually-hidden">: Cabin A floor plan</span></a> (SVG, 17 KB).</figcaption>
+  </figure>
+  <figure class="drawing" data-view="elevations" id="cabin-a-elevations">
+    <img src="models/cabin-a/elevations.svg" width="1040" height="1080" alt="Cabin A south, north, east and west elevations: timber-clad modules on piles with solar panels, porch and ramp." loading="lazy" decoding="async">
+    <figcaption>Four elevations at the same scale as the plan. Not engineered. <a href="models/cabin-a/elevations.svg">Open full size<span class="visually-hidden">: Cabin A elevations</span></a> (SVG, 72 KB).</figcaption>
+  </figure>
+  <figure class="drawing" data-view="section" id="cabin-a-section">
+    <img src="models/cabin-a/section.svg" width="1435" height="820" alt="Cabin A cross-section with a to-scale wall build-up: lining, steel, external insulation, ventilated cavity and timber rainscreen." loading="lazy" decoding="async">
+    <figcaption>Section and wall build-up. Not a specified assembly; not for construction. <a href="models/cabin-a/section.svg">Open full size<span class="visually-hidden">: Cabin A envelope section</span></a> (SVG, 16 KB).</figcaption>
+  </figure>
+<!-- /gen:cabin-a-drawings -->
+  </div>
+  <h3>Rooms</h3>
+<!-- gen:cabin-a-rooms -->
+<div class="table-wrap" role="region" aria-label="Cabin A rooms, clear dimensions inside the lining" tabindex="0">
+<table>
+  <caption>Cabin A rooms, clear dimensions inside the lining</caption>
+  <thead><tr><th scope="col">Room</th><th scope="col">Clear size</th><th scope="col">Area</th><th scope="col">Use</th><th scope="col">Accessibility notes</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Sleeping</th><td>3.03 × 2.27 m</td><td>6.9 m²</td><td>Bedroom with a double bed, wardrobe and windows to the south and west (lake side).</td><td>About 0.9 m clear beside the bed and 1.0 m at its foot. A 1.5 m turning circle does not fit with this layout: an accessible variant needs a smaller bed, a longer room or a different arrangement.</td></tr>
+    <tr><th scope="row">Living</th><td>3.60 × 2.27 m</td><td>8.2 m²</td><td>Main entry from the north path, sliding glass doors to the screened porch, bench seating and a table.</td><td>Step-free route from the porch ramp through the sliding door (threshold to be designed). Entry door clear width target 0.86 m or more.</td></tr>
+    <tr><th scope="row">Kitchenette</th><td>2.85 × 2.27 m</td><td>6.5 m²</td><td>Single counter run on the south wall with a window over the sink, refrigerator at the end of the run, open to living.</td><td>About 1.6 m clear between the counter and the north wall. Counter height, knee space and controls to be designed for seated use.</td></tr>
+    <tr><th scope="row">Bathroom</th><td>2.27 × 2.27 m</td><td>5.2 m²</td><td>Roll-in shower along the east wall, toilet, wall-hung vanity and a high window for privacy.</td><td>2.27 x 2.27 m clear; a 1.5 m turning circle overlaps the curbless shower area. Grab bars, fixture clearances and controls must be checked against CSA B651 and the applicable building code.</td></tr>
+  </tbody>
+</table>
+</div>
+<!-- /gen:cabin-a-rooms -->
+  <p>The downloadable OBJ file is generated from the same data as the drawings and opens in Blender or FreeCAD. It includes the envelope layers, framed openings, fixtures, porch, ramp, trellis and piles as named objects.</p>
+</section>
+
+<section id="inside" aria-labelledby="inside-title">
+  <p class="eyebrow">Interior and cutaway</p>
+  <h2 id="inside-title">Look inside</h2>
+  <p>Remove the roof, cut the walls, turn the model and visit each room. The view is drawn in your browser from the same data as the drawings: no WebGL, no plug-ins and nothing downloaded beyond this page.</p>
+  <div class="explorer" id="explorer">
+    <figure class="explorer-figure">
+      <div class="explorer-canvas" id="explorer-canvas">
+<!-- gen:explorer-fallback -->
+<img src="models/cabin-a/cutaway.svg" width="805" height="477" alt="Cabin A cutaway with the roof removed and walls cut at 1.2 m, showing Sleeping, Living, Kitchenette and Bathroom from the south-west." loading="lazy" decoding="async">
+<!-- /gen:explorer-fallback -->
+      </div>
+      <figcaption id="explorer-caption">Cabin A, walls cut at 1.2 m, seen from the south-west.</figcaption>
+    </figure>
+    <div class="explorer-controls" data-enhance hidden>
+      <fieldset class="segmented">
+        <legend>Building</legend>
+        <label><input type="radio" name="ex-building" value="cabin-a" checked> Cabin A</label>
+        <label><input type="radio" name="ex-building" value="lodge"> Common lodge</label>
+      </fieldset>
+      <fieldset class="segmented">
+        <legend>Cutaway</legend>
+        <label><input type="radio" name="ex-mode" value="exterior"> Exterior</label>
+        <label><input type="radio" name="ex-mode" value="roof"> Roof off</label>
+        <label><input type="radio" name="ex-mode" value="near"> Near walls off</label>
+        <label><input type="radio" name="ex-mode" value="cut" checked> Cut at 1.2 m</label>
+      </fieldset>
+      <fieldset class="segmented">
+        <legend>View from</legend>
+        <label><input type="radio" name="ex-view" value="sw" checked> South-west</label>
+        <label><input type="radio" name="ex-view" value="se"> South-east</label>
+        <label><input type="radio" name="ex-view" value="ne"> North-east</label>
+        <label><input type="radio" name="ex-view" value="nw"> North-west</label>
+      </fieldset>
+      <fieldset class="segmented">
+        <legend>Roof option</legend>
+        <label><input type="radio" name="ex-roof" value="pv" checked> Solar array</label>
+        <label><input type="radio" name="ex-roof" value="biosolar"> Green roof with raised solar</label>
+      </fieldset>
+      <fieldset class="checks">
+        <legend>Show</legend>
+        <label><input type="checkbox" name="ex-show" value="fixture" checked> Furniture and fixtures</label>
+        <label><input type="checkbox" name="ex-show" value="porch" checked> Porches and ramps</label>
+        <label><input type="checkbox" name="ex-show" value="trellis" checked> Trellis and planting</label>
+      </fieldset>
+    </div>
+    <div class="rooms-nav" data-enhance hidden>
+      <h3 id="rooms-title">Rooms</h3>
+      <ul class="room-buttons" id="room-buttons" aria-labelledby="rooms-title"></ul>
+      <p class="visually-hidden" id="room-status" role="status"></p>
+      <div class="room-info" id="room-info"><p>Choose a room to highlight it and read about its size, use and accessibility.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="lodge" aria-labelledby="lodge-title">
+  <p class="eyebrow">Shared infrastructure</p>
+  <h2 id="lodge-title">The common lodge</h2>
+  <p>Two reclaimed containers act as service cores either side of a 6 m timber-framed gathering hall with clerestory windows. The north module holds the shared kitchen, pantry, laundry and a mechanical and battery room that opens only to the outside. The south module holds a workshop and tool library, a washroom, a universal washroom with an adult-size change table, and a boot room. Ramps lead to both the entry and the screened porch.</p>
+  <div class="lodge-image">
+<!-- gen:lodge-image -->
+<img src="models/lodge/axonometric.svg" width="1154" height="678" alt="The common lodge seen from the south-west: two timber-clad modules either side of a taller hall with clerestory windows, solar panels, a screened porch, an entry canopy and two ramps." loading="lazy" decoding="async">
+<!-- /gen:lodge-image -->
+  </div>
+<!-- gen:lodge-facts -->
+<dl class="facts">
+  <div><dt>Overall size</dt><dd>12.59 × 11.27 m outside the rainscreen (141.8 m² footprint)</dd></div>
+  <div><dt>Modules</dt><dd>2 × 40-foot high-cube ISO container, 12.192 × 2.438 × 2.896 m</dd></div>
+  <div><dt>Clear floor area</dt><dd>124.4 m² inside the lining, plus 29.2 m² of porch and deck</dd></div>
+  <div><dt>Clear height</dt><dd>2.65 m in the modules; 3.92 m in the hall</dd></div>
+  <div><dt>Floor above grade</dt><dd>0.64 m on piles, so step-free access needs 9.63 m of ramp at 1:15 per entrance</dd></div>
+  <div><dt>Exterior wall</dt><dd>280 mm: lining, steel, 150 mm external insulation, ventilated cavity, timber rainscreen</dd></div>
+  <div><dt>Roof PV (concept)</dt><dd>25 modules, about 10.5 kWp, drawn flat; sizing needs measured solar resource and winter loads</dd></div>
+</dl>
+<!-- /gen:lodge-facts -->
+  <div class="drawings" data-drawings="lodge">
+<!-- gen:lodge-drawings -->
+<fieldset class="segmented" data-enhance hidden>
+    <legend>Drawing</legend>
+    <label><input type="radio" name="lodge-view" value="floor-plan" checked> Floor plan</label>
+    <label><input type="radio" name="lodge-view" value="elevations"> Elevations</label>
+    <label><input type="radio" name="lodge-view" value="section"> Envelope section</label>
+  </fieldset>
+  <figure class="drawing" data-view="floor-plan" id="lodge-floor-plan">
+    <img src="models/lodge/floor-plan.svg" width="1494" height="1302" alt="Common lodge floor plan, north up, with rooms, doors, windows, porch and ramp. Room sizes are listed in the table below." loading="lazy" decoding="async">
+    <figcaption>Floor plan cut 1.2 m above the floor. Dimensions and openings need professional review. <a href="models/lodge/floor-plan.svg">Open full size<span class="visually-hidden">: Common lodge floor plan</span></a> (SVG, 30 KB).</figcaption>
+  </figure>
+  <figure class="drawing" data-view="elevations" id="lodge-elevations">
+    <img src="models/lodge/elevations.svg" width="2134" height="1267" alt="Common lodge south, north, east and west elevations: timber-clad modules on piles with solar panels, porch and ramp." loading="lazy" decoding="async">
+    <figcaption>Four elevations at the same scale as the plan. Not engineered. <a href="models/lodge/elevations.svg">Open full size<span class="visually-hidden">: Common lodge elevations</span></a> (SVG, 182 KB).</figcaption>
+  </figure>
+  <figure class="drawing" data-view="section" id="lodge-section">
+    <img src="models/lodge/section.svg" width="1685" height="820" alt="Common lodge cross-section with a to-scale wall build-up: lining, steel, external insulation, ventilated cavity and timber rainscreen." loading="lazy" decoding="async">
+    <figcaption>Section and wall build-up. Not a specified assembly; not for construction. <a href="models/lodge/section.svg">Open full size<span class="visually-hidden">: Common lodge envelope section</span></a> (SVG, 34 KB).</figcaption>
+  </figure>
+<!-- /gen:lodge-drawings -->
+  </div>
+  <h3>Rooms</h3>
+<!-- gen:lodge-rooms -->
+<div class="table-wrap" role="region" aria-label="Common lodge rooms, clear dimensions inside the lining" tabindex="0">
+<table>
+  <caption>Common lodge rooms, clear dimensions inside the lining</caption>
+  <thead><tr><th scope="col">Room</th><th scope="col">Clear size</th><th scope="col">Area</th><th scope="col">Use</th><th scope="col">Accessibility notes</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Shared kitchen</th><td>5.48 × 2.27 m</td><td>12.5 m²</td><td>Community kitchen with a 4.2 m wide servery opening to the hall.</td><td>About 1.6 m clear in front of the counter. Include a lowered work section with knee space and front-mounted controls.</td></tr>
+    <tr><th scope="row">Pantry and cold storage</th><td>1.90 × 2.27 m</td><td>4.3 m²</td><td>Shared bulk food storage reached from the kitchen.</td><td>Reachable shelving between 0.4 m and 1.2 m for frequently used items.</td></tr>
+    <tr><th scope="row">Laundry</th><td>1.90 × 2.27 m</td><td>4.3 m²</td><td>Shared washer and dryer, reached from the hall.</td><td>Front-loading machines on a raised plinth; 1.5 m clear in front.</td></tr>
+    <tr><th scope="row">Mechanical and battery room</th><td>2.37 × 2.27 m</td><td>5.4 m²</td><td>Heat pump, water storage, PV inverter and battery storage. Exterior door only; no door to the occupied building.</td><td>Service space; not a public room.</td></tr>
+    <tr><th scope="row">Gathering hall</th><td>11.91 × 6.00 m</td><td>71.5 m²</td><td>Shared meals, meetings, workshops and events. Clerestory windows on both sides; glazed doors to the screened porch on the west and the main entry on the east.</td><td>Step-free from both ramps. Plan seating with wheelchair spaces dispersed, a hearing loop for meetings and good daylight without glare.</td></tr>
+    <tr><th scope="row">Workshop and tool library</th><td>4.43 × 2.27 m</td><td>10.1 m²</td><td>Shared tools, repair bench and bicycle maintenance. Supports the repair-first approach to the buildings.</td><td>Adjustable-height bench section; 1.2 m wide double door to the hall.</td></tr>
+    <tr><th scope="row">Washroom with shower</th><td>1.90 × 2.27 m</td><td>4.3 m²</td><td>Toilet, sink and shower for guests and work days.</td><td>Not designed as the accessible washroom; see the universal washroom.</td></tr>
+    <tr><th scope="row">Universal washroom</th><td>2.35 × 2.27 m</td><td>5.3 m²</td><td>Single-user, all-gender accessible washroom with an adult-size change table.</td><td>2.35 x 2.27 m clear; 1.0 m door (consider a power operator). Turning space, transfer space, grab bars and the change table to be designed to CSA B651 and the applicable code.</td></tr>
+    <tr><th scope="row">Boot room</th><td>2.97 × 2.27 m</td><td>6.8 m²</td><td>Winter entry with bench, boot drying and a separate exterior door to the east.</td><td>Bench at 0.45 m with clear floor space beside it.</td></tr>
+  </tbody>
+</table>
+</div>
+<!-- /gen:lodge-rooms -->
+  <p><a href="#inside" data-explore="lodge">Explore the lodge in the cutaway viewer</a></p>
+</section>
+
+<section id="principles" aria-labelledby="principles-title">
+  <p class="eyebrow">Construction and stewardship</p>
+  <h2 id="principles-title">Build elsewhere. Disturb less.</h2>
+  <div class="cards">
+    <article><h3>Reuse and repair</h3><p>Inspect reclaimed containers, use traceable salvaged materials, and favour replaceable cladding and reversible connections.</p></article>
+    <article><h3>Off-site fabrication</h3><p>Fabricate and fit out modules before delivery; plan lifting, transport and safe assembly before clearing the site.</p></article>
+    <article><h3>Outside insulation</h3><p>Study continuous external insulation, moisture management and ventilated rainscreens. Consider spray foam only where justified.</p></article>
+    <article><h3>Living landscape</h3><p>Protect the wetland and shoreline. Explore native green walls and engineered living roofs without shading solar panels.</p></article>
+    <article><h3>Community land trust</h3><p>Explore permanent, seasonal and optional rental homes on leased sites, with collective stewardship of shared infrastructure.</p></article>
+    <article><h3>Accessible by design</h3><p>Provide usable paths, drop-off and emergency access, accessible homes, and bug-screened outdoor gathering spaces.</p></article>
+  </div>
+  <h3>How it would be built</h3>
+  <p>Each topic below is a direction for professional design, not a specification. Full notes are in the <a href="https://github.com/mgifford/Containers-Hamlet-/blob/main/docs/build-strategy.md">build strategy</a>.</p>
+  <div class="disclosures">
+    <details>
+      <summary>Off-site fabrication</summary>
+      <p>Cut and reinforce openings, install the external envelope, windows, services and interior fit-out in a workshop, under engineering review. Test each module before it travels. Site work shrinks to foundations, lifting, connections and commissioning.</p>
+    </details>
+    <details>
+      <summary>Crane access and lift planning</summary>
+      <p>Each building has a crane standing point on the gravel emergency lane, checked against a placeholder reach of 24 m. Lifts never swing over the wetland or shoreline buffers. Route surveys, dimensional permits, lifting points, ground bearing under outriggers and a written lift plan come before any tree is cut.</p>
+    </details>
+    <details>
+      <summary>Low-disturbance foundations</summary>
+      <p>Helical piles are shown as a placeholder. The real choice depends on soils, frost, bedrock and groundwater, and piles are not automatically appropriate near wetlands or on rock. Piles bear on the steel through the floor insulation, which creates thermal bridges to be detailed.</p>
+    </details>
+    <details>
+      <summary>External insulation, moisture and fire reviews</summary>
+      <p>The steel stays inside a continuous layer of external insulation under a ventilated timber rainscreen, so the shell stays warm and dry. Air, vapour and water control, condensation on steel, thermal bridges at piles and openings, combustible cladding, and spatial separation between buildings all need review by an envelope consultant and a fire protection engineer.</p>
+    </details>
+    <details>
+      <summary>Spray foam, only where assessed</summary>
+      <p>Spray foam is not part of the base assembly. It may be considered for difficult junctions only after weighing blowing agents, repairability, fire protection, worker exposure and end-of-life impacts.</p>
+    </details>
+    <details>
+      <summary>Solar-friendly green roofs</summary>
+      <p>The default roof carries a solar array. The alternative is a biosolar roof: an extensive green roof with the panels raised above low planting so vegetation never shades them, and a gravel strip at the edges for maintenance and fire separation. A green roof is never assumed: saturated weight, snow, drainage, waterproofing, maintenance and fire must be engineered. On the lodge, the taller hall would shade the north module, so that roof gets no panels.</p>
+    </details>
+    <details>
+      <summary>Independent living-wall trellises</summary>
+      <p>Climbing plants grow on free-standing trellises 350 mm from the rainscreen, on their own footings. Roots, moisture and maintenance stay off the envelope, and the planting shades west and south walls in summer.</p>
+    </details>
+    <details>
+      <summary>Screened porches</summary>
+      <p>Every home has a bug-screened outdoor room on its own timber frame and piles, 20 mm clear of the rainscreen, so it can be repaired or replaced without touching the envelope. The deck sits at floor level so the porch is also the landing at the top of the ramp.</p>
+    </details>
+    <details>
+      <summary>Step-free access</summary>
+      <p>Raised floors protect the steel from snow and ground moisture but cost ramp length: with the floor 0.64 m above grade, each entrance needs about 9.6 m of ramp at 1:15 plus landings. The model calculates this from the data, so lowering the floor or regrading a path shows its effect immediately. Ramps, thresholds and clearances must be designed to CSA B651 and the applicable code.</p>
+    </details>
+  </div>
+</section>
+
+<section id="materials" aria-labelledby="materials-title">
+  <p class="eyebrow">Provenance and reuse</p>
+  <h2 id="materials-title">Material passport and reviews</h2>
+  <p>A material passport records where each component comes from, what must be checked before it is reused, how it is connected and how it comes apart again. These are drafts: every documentation status is "Not started".</p>
+  <h3>Model provenance</h3>
+<!-- gen:provenance -->
+<dl class="facts">
+  <div><dt>Cabin A</dt><dd>Original concept geometry. No third-party plans, models or drawings are used. Parametric. All drawings, the OBJ model and the browser explorer are generated from this file by tools/build.mjs. Revision 1.1.0. Verification: None. Not reviewed by an architect, engineer, building official or accessibility consultant..</dd></div>
+  <div><dt>Lodge</dt><dd>Original concept geometry. No third-party plans, models or drawings are used. Parametric. All drawings, the OBJ model and the browser explorer are generated from this file by tools/build.mjs. Revision 1.1.0. Verification: None. Not reviewed by an architect, engineer, building official or accessibility consultant..</dd></div>
+  <div><dt>Site</dt><dd>Invented for discussion. No cadastral, topographic or environmental survey is represented. Terrain, buffers, contours and checks are computed by tools/build.mjs. Revision 1.1.0. Verification: none.</dd></div>
+</dl>
+<!-- /gen:provenance -->
+  <h3>Material passports</h3>
+<!-- gen:passport -->
+<div class="table-wrap" role="region" aria-label="Cabin A material passport (draft)" tabindex="0">
+<table class="passport">
+  <caption>Cabin A material passport (draft). Volumes are summed from the model geometry for every part using that material, rounded; they are not a bill of quantities.</caption>
+  <thead><tr><th scope="col">Component</th><th scope="col">Material</th><th scope="col">Modelled volume</th><th scope="col">Source</th><th scope="col">Condition assessment</th><th scope="col">Connections and disassembly</th><th scope="col">End of life</th><th scope="col">Documentation</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Container shell</th><td>Weathering steel, corrugated walls and roof, steel cross-members</td><td>8.83 m³</td><td>Reclaimed ISO container (one-trip or used)</td><td>Required before purchase: corrosion, deformation, weld repairs, CSC plate history, prior cargo, and coatings tested for hazardous substances.</td><td>Welded original structure; new openings cut and reinforced; bolted lifting and foundation connections where feasible. Module can be lifted and relocated as a unit.</td><td>Reuse as a module, otherwise steel recycling.</td><td>Not started</td></tr>
+    <tr><th scope="row">Container floor deck</th><td>Original hardwood plywood deck on steel cross-members</td><td>8.83 m³</td><td>Comes with the container</td><td>Original container floors are often treated with pesticides. Test, then replace or encapsulate before occupancy.</td><td>Screwed to cross-members Removable panels</td><td>Hazardous-waste route if treatment is confirmed</td><td>Not started</td></tr>
+    <tr><th scope="row">External insulation</th><td>Wood fibre board, mineral wool or documented reclaimed board (TBD)</td><td>22.68 m³</td><td>New or reclaimed (TBD)</td><td>Reclaimed board: verify type, blowing agent, contamination and fire classification.</td><td>Mechanically fixed through battens; no adhesives on the steel Unscrew battens and lift off boards</td><td>Reuse; wood fibre can be composted or recovered when uncontaminated</td><td>Not started</td></tr>
+    <tr><th scope="row">Rainscreen cladding and battens</th><td>Durable timber boards on timber battens</td><td>1.86 m³</td><td>Prefer local reclaimed or certified timber</td><td>Reclaimed boards: check for nails, lead paint and rot.</td><td>Exposed screws for replacement Board-by-board replacement</td><td>Reuse, then biomass recovery</td><td>Not started</td></tr>
+    <tr><th scope="row">Windows and doors</th><td>Triple-glazed units in timber or fibreglass frames (TBD)</td><td>0.56 m³</td><td>New or salvaged units of known performance</td><td>Salvaged units: verify seal integrity, labelled performance and safety glazing.</td><td>Installed in the insulation layer on brackets (outie) Units removable without cutting steel</td><td>Glass and frame separation</td><td>Not started</td></tr>
+    <tr><th scope="row">Porch, ramp and trellis</th><td>Timber frame, decking, insect screen and steel connectors</td><td>6.87 m³</td><td>Local timber; reclaimed where structurally graded</td><td>Grade reclaimed members for structural use.</td><td>Bolted, independent of the container Fully demountable</td><td>Reuse, then biomass recovery</td><td>Not started</td></tr>
+    <tr><th scope="row">PV modules</th><td>Crystalline silicon modules on aluminium rails</td><td>1.03 m³</td><td>New or tested second-life modules</td><td>Second-life modules: flash test and insulation resistance test.</td><td>Clamped to rails; no roof penetrations through the membrane where avoidable Clamp release</td><td>Module take-back or recycling</td><td>Not started</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="table-wrap" role="region" aria-label="Lodge material passport (draft)" tabindex="0">
+<table class="passport">
+  <caption>Lodge material passport (draft). Volumes are summed from the model geometry for every part using that material, rounded; they are not a bill of quantities.</caption>
+  <thead><tr><th scope="col">Component</th><th scope="col">Material</th><th scope="col">Modelled volume</th><th scope="col">Source</th><th scope="col">Condition assessment</th><th scope="col">Connections and disassembly</th><th scope="col">End of life</th><th scope="col">Documentation</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Two container shells</th><td>Weathering steel, corrugated walls and roof, steel cross-members</td><td>17.31 m³</td><td>Reclaimed ISO containers</td><td>Required before purchase: corrosion, deformation, CSC plate history, prior cargo, coatings and floor treatment.</td><td>Large openings toward the hall need engineered steel framing and transfer beams. Modules can be lifted out once the hall roof is removed.</td><td>Reuse as modules, otherwise steel recycling.</td><td>Not started</td></tr>
+    <tr><th scope="row">Hall frame and roof</th><td>Glulam or reclaimed heavy timber, insulated timber roof and floor cassettes</td><td>58.15 m³</td><td>Local certified or graded reclaimed timber</td><td>Grade reclaimed members; check for preservatives and lead paint.</td><td>Bolted steel connectors for disassembly Cassettes and frames unbolt in reverse order</td><td>Reuse, then biomass recovery</td><td>Not started</td></tr>
+    <tr><th scope="row">External insulation and rainscreen</th><td>Wood fibre or mineral wool (TBD); timber rainscreen</td><td>42.67 m³</td><td>New or documented reclaimed</td><td>Verify type, contamination and fire classification of any reclaimed board.</td><td>Mechanically fixed through battens Board-by-board</td><td>Reuse or material recovery</td><td>Not started</td></tr>
+    <tr><th scope="row">Battery storage</th><td>Battery chemistry TBD (prefer chemistries with lower thermal runaway risk)</td><td>1.15 m³</td><td>New, certified system</td><td>Certified listing; installation per manufacturer and code.</td><td>Separate fire-rated room with exterior access Licensed removal</td><td>Manufacturer take-back or certified recycler</td><td>Not started</td></tr>
+  </tbody>
+</table>
+</div>
+<!-- /gen:passport -->
+  <h3>Reviews required</h3>
+  <p>Nothing on this site has been reviewed by a professional. These are the reviews a real project would need before construction.</p>
+<!-- gen:reviews -->
+<div class="table-wrap" role="region" aria-label="Cabin A: reviews required before anything is built" tabindex="0">
+<table>
+  <caption>Cabin A: reviews required before anything is built</caption>
+  <thead><tr><th scope="col">Topic</th><th scope="col">Reviewer</th><th scope="col">Status</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Structure: cut openings, lifting points, snow, wind and seismic loads, porch and roof options</th><td>Structural engineer (P.Eng.)</td><td>Not started</td></tr>
+    <tr><th scope="row">Foundations: soils, frost, pile type and depth, wetland and shoreline proximity</th><td>Geotechnical engineer</td><td>Not started</td></tr>
+    <tr><th scope="row">Envelope: air, vapour and moisture control, condensation on steel, thermal bridges</th><td>Building envelope consultant</td><td>Not started</td></tr>
+    <tr><th scope="row">Fire: separations, cladding, spray foam (if any), PV and battery safety, wildland interface</th><td>Fire protection engineer and building official</td><td>Not started</td></tr>
+    <tr><th scope="row">Accessibility: ramp, thresholds, door clearances, bathroom and kitchen</th><td>Accessibility consultant; CSA B651 and applicable code</td><td>Not started</td></tr>
+    <tr><th scope="row">Mechanical and electrical: heating, ventilation, water, wastewater, PV</th><td>Mechanical and electrical engineers; electrical safety authority</td><td>Not started</td></tr>
+    <tr><th scope="row">Code and zoning compliance for the actual site</th><td>Architect or qualified designer; municipal building department</td><td>Not started</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="table-wrap" role="region" aria-label="Lodge: reviews required before anything is built" tabindex="0">
+<table>
+  <caption>Lodge: reviews required before anything is built</caption>
+  <thead><tr><th scope="col">Topic</th><th scope="col">Reviewer</th><th scope="col">Status</th></tr></thead>
+  <tbody>
+    <tr><th scope="row">Occupancy classification: a shared gathering hall may be treated as an assembly occupancy, with higher fire, egress and accessibility requirements</th><td>Architect and municipal building department</td><td>Not started</td></tr>
+    <tr><th scope="row">Structure: large openings in the modules, hall frame, snow drift at roof steps, lifting</th><td>Structural engineer (P.Eng.)</td><td>Not started</td></tr>
+    <tr><th scope="row">Fire: separations, battery room, egress, firefighting access and water supply</th><td>Fire protection engineer and fire department</td><td>Not started</td></tr>
+    <tr><th scope="row">Accessibility: ramps, entrances, universal washroom, kitchen, assembly seating</th><td>Accessibility consultant; CSA B651 and applicable code</td><td>Not started</td></tr>
+    <tr><th scope="row">Water, wastewater and food handling for shared meals</th><td>Public health unit and wastewater approvals authority</td><td>Not started</td></tr>
+  </tbody>
+</table>
+</div>
+<!-- /gen:reviews -->
+</section>
+
+<section id="downloads" aria-labelledby="downloads-title">
+  <p class="eyebrow">Open resources</p>
+  <h2 id="downloads-title">Download, adapt, improve</h2>
+  <p>These original conceptual assets are reusable under CC BY 4.0; website software is MIT licensed. Files are editable but not engineered drawings. To change a design, edit the JSON source and run <code>node tools/build.mjs</code>: every drawing, model and table on this page is regenerated from it.</p>
+<!-- gen:downloads -->
+<h3>Site</h3>
+<ul class="downloads">
+  <li><a href="assets/site-plan.svg" download>Fictional site plan with no-build zones</a> <span class="meta">(SVG, 34 KB)</span></li>
+  <li><a href="data/site.json" download>Site data: terrain, buffers, lanes, buildings</a> <span class="meta">(JSON, 5 KB)</span></li>
+  <li><a href="data/site-analysis.json" download>Computed siting checks</a> <span class="meta">(JSON, 9 KB)</span></li>
+</ul>
+<h3>Cabin A: The Retreat</h3>
+<ul class="downloads">
+  <li><a href="models/cabin-a/floor-plan.svg" download>Floor plan</a> <span class="meta">(SVG, 17 KB)</span></li>
+  <li><a href="models/cabin-a/elevations.svg" download>Elevations</a> <span class="meta">(SVG, 72 KB)</span></li>
+  <li><a href="models/cabin-a/section.svg" download>Section and wall build-up</a> <span class="meta">(SVG, 16 KB)</span></li>
+  <li><a href="models/cabin-a/axonometric.svg" download>Exterior axonometric</a> <span class="meta">(SVG, 51 KB)</span></li>
+  <li><a href="models/cabin-a/cutaway.svg" download>Cutaway axonometric</a> <span class="meta">(SVG, 36 KB)</span></li>
+  <li><a href="models/cabin-a/cabin-a.obj" download>3D geometry for Blender or FreeCAD</a> <span class="meta">(OBJ, metres, Y up, 59 KB)</span></li>
+  <li><a href="models/cabin-a/cabin-a.mtl" download>Material colours for the OBJ</a> <span class="meta">(MTL, 2 KB)</span></li>
+  <li><a href="data/cabin-a.json" download>Parametric source data</a> <span class="meta">(JSON, 16 KB)</span></li>
+</ul>
+<h3>Common lodge</h3>
+<ul class="downloads">
+  <li><a href="models/lodge/floor-plan.svg" download>Floor plan</a> <span class="meta">(SVG, 30 KB)</span></li>
+  <li><a href="models/lodge/elevations.svg" download>Elevations</a> <span class="meta">(SVG, 182 KB)</span></li>
+  <li><a href="models/lodge/section.svg" download>Section and wall build-up</a> <span class="meta">(SVG, 34 KB)</span></li>
+  <li><a href="models/lodge/axonometric.svg" download>Exterior axonometric</a> <span class="meta">(SVG, 127 KB)</span></li>
+  <li><a href="models/lodge/cutaway.svg" download>Cutaway axonometric</a> <span class="meta">(SVG, 75 KB)</span></li>
+  <li><a href="models/lodge/lodge.obj" download>3D geometry for Blender or FreeCAD</a> <span class="meta">(OBJ, metres, Y up, 154 KB)</span></li>
+  <li><a href="models/lodge/lodge.mtl" download>Material colours for the OBJ</a> <span class="meta">(MTL, 2 KB)</span></li>
+  <li><a href="data/lodge.json" download>Parametric source data</a> <span class="meta">(JSON, 20 KB)</span></li>
+</ul>
+<!-- /gen:downloads -->
+  <p><strong>Disclaimer:</strong> Concept only. No real site, approved zoning, structural analysis, energy modelling, code review or ground lease is provided.</p>
+</section>
+
+</main>
+<footer class="site-footer">
+  <p>Eco Hamlet concept • Original design assets <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> • Code <a href="https://opensource.org/license/mit">MIT</a> • Fictional, not for construction</p>
+  <p>No tracking, cookies, forms or third-party requests. <a href="https://github.com/mgifford/Containers-Hamlet-">Source on GitHub</a></p>
+</footer>
+</body>
+</html>

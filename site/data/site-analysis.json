@@ -1,0 +1,345 @@
+{
+  "generated_by": "tools/build.mjs",
+  "fictional": true,
+  "area_m2": 60692,
+  "area_acres": 15,
+  "area_ha": 6.07,
+  "no_build": {
+    "shoreline_setback_m": 30,
+    "wetland_buffer_m": 30,
+    "applies_to": "buildings, porches, ramps, parking, crane pads and lanes",
+    "note": "Placeholder values. 30 m is a common minimum in Canadian municipal plans, but requirements vary by province, municipality and wetland significance and can be much larger. Confirm with the planning authority and the conservation authority or provincial regulator."
+  },
+  "buildings": [
+    {
+      "id": "a",
+      "name": "Cabin A",
+      "use": "permanent",
+      "model": "cabin-a",
+      "x_m": 150,
+      "y_m": 70,
+      "rotation_deg": 0,
+      "footprint_m2": 35.64,
+      "clear_floor_area_m2": 26.7,
+      "ground_elevation_m": 104.5,
+      "slope_pct": 8.7,
+      "shoreline_m": 54.5,
+      "wetland_m": 145,
+      "inside_parcel": true,
+      "crane_reach_m": 18,
+      "entrance_to_lane_m": 11.3,
+      "moved": null,
+      "checks": [
+        {
+          "ok": true,
+          "label": "54.5 m from the shoreline (setback 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "145 m from the wetland (buffer 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "Inside the parcel"
+        },
+        {
+          "ok": true,
+          "label": "Ground slope 8.7% (limit 15%)"
+        },
+        {
+          "ok": true,
+          "label": "Crane reach 18 m (limit 24 m)"
+        },
+        {
+          "ok": true,
+          "label": "Ramp foot 11.3 m from an emergency or access lane (limit 45 m)"
+        }
+      ],
+      "ok": true,
+      "nearest_building_m": 44.8
+    },
+    {
+      "id": "b",
+      "name": "Cabin B",
+      "use": "permanent",
+      "model": "cabin-a",
+      "x_m": 203.6,
+      "y_m": 101.8,
+      "rotation_deg": 0,
+      "footprint_m2": 35.64,
+      "clear_floor_area_m2": 26.7,
+      "ground_elevation_m": 104.7,
+      "slope_pct": 5.6,
+      "shoreline_m": 110.7,
+      "wetland_m": 86.3,
+      "inside_parcel": true,
+      "crane_reach_m": 13.8,
+      "entrance_to_lane_m": 14,
+      "moved": null,
+      "checks": [
+        {
+          "ok": true,
+          "label": "110.7 m from the shoreline (setback 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "86.3 m from the wetland (buffer 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "Inside the parcel"
+        },
+        {
+          "ok": true,
+          "label": "Ground slope 5.6% (limit 15%)"
+        },
+        {
+          "ok": true,
+          "label": "Crane reach 13.8 m (limit 24 m)"
+        },
+        {
+          "ok": true,
+          "label": "Ramp foot 14 m from an emergency or access lane (limit 45 m)"
+        }
+      ],
+      "ok": true,
+      "nearest_building_m": 11.6
+    },
+    {
+      "id": "c",
+      "name": "Cabin C",
+      "use": "permanent",
+      "model": "cabin-a",
+      "x_m": 130,
+      "y_m": 121.4,
+      "rotation_deg": 0,
+      "footprint_m2": 35.64,
+      "clear_floor_area_m2": 26.7,
+      "ground_elevation_m": 101.6,
+      "slope_pct": 4.2,
+      "shoreline_m": 34.7,
+      "wetland_m": 132.3,
+      "inside_parcel": true,
+      "crane_reach_m": 18.4,
+      "entrance_to_lane_m": 10.1,
+      "moved": "Moved 8.6 m east of the Phase 1 position to clear the 30 m shoreline setback.",
+      "checks": [
+        {
+          "ok": true,
+          "label": "34.7 m from the shoreline (setback 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "132.3 m from the wetland (buffer 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "Inside the parcel"
+        },
+        {
+          "ok": true,
+          "label": "Ground slope 4.2% (limit 15%)"
+        },
+        {
+          "ok": true,
+          "label": "Crane reach 18.4 m (limit 24 m)"
+        },
+        {
+          "ok": true,
+          "label": "Ramp foot 10.1 m from an emergency or access lane (limit 45 m)"
+        }
+      ],
+      "ok": true,
+      "nearest_building_m": 35.2
+    },
+    {
+      "id": "d",
+      "name": "Cabin D",
+      "use": "seasonal",
+      "model": "cabin-a",
+      "x_m": 242.9,
+      "y_m": 66.1,
+      "rotation_deg": 0,
+      "footprint_m2": 35.64,
+      "clear_floor_area_m2": 26.7,
+      "ground_elevation_m": 107.9,
+      "slope_pct": 8.8,
+      "shoreline_m": 143,
+      "wetland_m": 100.5,
+      "inside_parcel": true,
+      "crane_reach_m": 23.5,
+      "entrance_to_lane_m": 17.6,
+      "moved": null,
+      "checks": [
+        {
+          "ok": true,
+          "label": "143 m from the shoreline (setback 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "100.5 m from the wetland (buffer 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "Inside the parcel"
+        },
+        {
+          "ok": true,
+          "label": "Ground slope 8.8% (limit 15%)"
+        },
+        {
+          "ok": true,
+          "label": "Crane reach 23.5 m (limit 24 m)"
+        },
+        {
+          "ok": true,
+          "label": "Ramp foot 17.6 m from an emergency or access lane (limit 45 m)"
+        }
+      ],
+      "ok": true,
+      "nearest_building_m": 36.8
+    },
+    {
+      "id": "e",
+      "name": "Cabin E",
+      "use": "seasonal",
+      "model": "cabin-a",
+      "x_m": 232,
+      "y_m": 110,
+      "rotation_deg": 0,
+      "footprint_m2": 35.64,
+      "clear_floor_area_m2": 26.7,
+      "ground_elevation_m": 105.2,
+      "slope_pct": 5.1,
+      "shoreline_m": 137.3,
+      "wetland_m": 65.4,
+      "inside_parcel": true,
+      "crane_reach_m": 20.8,
+      "entrance_to_lane_m": 20.9,
+      "moved": "Moved west of the Phase 1 position to make room for the lodge beside the shared parking.",
+      "checks": [
+        {
+          "ok": true,
+          "label": "137.3 m from the shoreline (setback 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "65.4 m from the wetland (buffer 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "Inside the parcel"
+        },
+        {
+          "ok": true,
+          "label": "Ground slope 5.1% (limit 15%)"
+        },
+        {
+          "ok": true,
+          "label": "Crane reach 20.8 m (limit 24 m)"
+        },
+        {
+          "ok": true,
+          "label": "Ramp foot 20.9 m from an emergency or access lane (limit 45 m)"
+        }
+      ],
+      "ok": true,
+      "nearest_building_m": 11.6
+    },
+    {
+      "id": "f",
+      "name": "Cabin F",
+      "use": "community rental",
+      "model": "cabin-a",
+      "x_m": 172,
+      "y_m": 152,
+      "rotation_deg": 0,
+      "footprint_m2": 35.64,
+      "clear_floor_area_m2": 26.7,
+      "ground_elevation_m": 102.7,
+      "slope_pct": 3.1,
+      "shoreline_m": 78.1,
+      "wetland_m": 81.8,
+      "inside_parcel": true,
+      "crane_reach_m": 20.4,
+      "entrance_to_lane_m": 24.8,
+      "moved": "Moved within crane reach of the south spur.",
+      "checks": [
+        {
+          "ok": true,
+          "label": "78.1 m from the shoreline (setback 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "81.8 m from the wetland (buffer 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "Inside the parcel"
+        },
+        {
+          "ok": true,
+          "label": "Ground slope 3.1% (limit 15%)"
+        },
+        {
+          "ok": true,
+          "label": "Crane reach 20.4 m (limit 24 m)"
+        },
+        {
+          "ok": true,
+          "label": "Ramp foot 24.8 m from an emergency or access lane (limit 45 m)"
+        }
+      ],
+      "ok": true,
+      "nearest_building_m": 35.2
+    },
+    {
+      "id": "lodge",
+      "name": "Common lodge",
+      "use": "shared",
+      "model": "lodge",
+      "x_m": 268,
+      "y_m": 112,
+      "rotation_deg": 0,
+      "footprint_m2": 141.84,
+      "clear_floor_area_m2": 124.42,
+      "ground_elevation_m": 106,
+      "slope_pct": 4.2,
+      "shoreline_m": 169.2,
+      "wetland_m": 48.4,
+      "inside_parcel": true,
+      "crane_reach_m": 19.1,
+      "entrance_to_lane_m": 7.6,
+      "moved": "Moved beside the shared parking so the main entry ramp meets the arrival point.",
+      "checks": [
+        {
+          "ok": true,
+          "label": "169.2 m from the shoreline (setback 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "48.4 m from the wetland (buffer 30 m)"
+        },
+        {
+          "ok": true,
+          "label": "Inside the parcel"
+        },
+        {
+          "ok": true,
+          "label": "Ground slope 4.2% (limit 15%)"
+        },
+        {
+          "ok": true,
+          "label": "Crane reach 19.1 m (limit 24 m)"
+        },
+        {
+          "ok": true,
+          "label": "Ramp foot 7.6 m from an emergency or access lane (limit 45 m)"
+        }
+      ],
+      "ok": true,
+      "nearest_building_m": 15.4
+    }
+  ],
+  "issues": []
+}
