@@ -1,0 +1,62 @@
+{
+  "fictional": true,
+  "area_acres": 15,
+  "setting": "Canadian forest lake, wooded hill and protected wetland",
+  "buildings": [
+    {
+      "id": "a",
+      "name": "Cabin A",
+      "use": "permanent",
+      "x": 420,
+      "y": 205
+    },
+    {
+      "id": "b",
+      "name": "Cabin B",
+      "use": "permanent",
+      "x": 570,
+      "y": 285
+    },
+    {
+      "id": "c",
+      "name": "Cabin C",
+      "use": "permanent",
+      "x": 340,
+      "y": 340
+    },
+    {
+      "id": "d",
+      "name": "Cabin D",
+      "use": "seasonal",
+      "x": 680,
+      "y": 185
+    },
+    {
+      "id": "e",
+      "name": "Cabin E",
+      "use": "seasonal",
+      "x": 740,
+      "y": 345
+    },
+    {
+      "id": "f",
+      "name": "Cabin F",
+      "use": "community rental",
+      "x": 520,
+      "y": 430
+    },
+    {
+      "id": "lodge",
+      "name": "Common lodge",
+      "use": "shared",
+      "x": 560,
+      "y": 525
+    }
+  ],
+  "ecology": [
+    "lakefront buffer",
+    "protected wetland",
+    "native forest"
+  ],
+  "access": "vehicle arrival at shared parking; final walk with accessible service and emergency route to be resolved"
+}

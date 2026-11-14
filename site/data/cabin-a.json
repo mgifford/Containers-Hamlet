@@ -1,0 +1,30 @@
+{
+  "name": "Cabin A: The Retreat",
+  "status": "concept only",
+  "module": {
+    "type": "40-foot high-cube ISO container",
+    "external_length_m": 12.192,
+    "external_width_m": 2.438,
+    "external_height_m": 2.896
+  },
+  "screened_porch": {
+    "length_m": 3.66,
+    "depth_m": 3.05,
+    "structure": "independent timber frame concept"
+  },
+  "interior_zones": [
+    "sleeping",
+    "bathroom",
+    "kitchenette",
+    "living"
+  ],
+  "design_intent": [
+    "off-site fabrication",
+    "continuous external insulation",
+    "repairable rainscreen",
+    "selective spray foam subject to review",
+    "optional independent green wall trellis",
+    "PV-compatible roof design"
+  ],
+  "drawing_accuracy": "diagrammatic; dimensions and openings require professional verification"
+}
