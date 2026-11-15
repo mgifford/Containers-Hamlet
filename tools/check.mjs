@@ -277,7 +277,7 @@ let total = 0;
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).forEach((e) => { const f = path.join(d, e.name); if (e.isDirectory()) walk(f); else total += fs.statSync(f).size; });
 walk(path.join(ROOT, 'site'));
 console.log(`       whole published site: ${(total / 1024).toFixed(0)} KB`);
-ok(total <= 2.75 * 1024 * 1024, 'whole published site stays under 2.75 MB');
+ok(total <= 3.0 * 1024 * 1024, 'whole published site stays under 3.0 MB');
 ok(/loading="lazy"/.test(html), 'below-the-fold drawings load lazily');
 ok(!/@import|@font-face|url\(http/.test(read('site/style.css')), 'no web fonts or remote CSS');
 

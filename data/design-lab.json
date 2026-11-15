@@ -145,7 +145,16 @@
               "end_m": 12,
               "accessibility": "Sliding door to the screened porch; 0.9 m clear route."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [],
@@ -466,7 +475,16 @@
               "end_m": 6,
               "accessibility": "A sofa bed or Murphy bed keeps the room flexible."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [],
@@ -795,7 +813,16 @@
               "end_m": 12,
               "accessibility": "Deep veranda connection."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [],
@@ -1095,7 +1122,16 @@
               "end_m": 12,
               "accessibility": "Entry storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m2",
@@ -1214,7 +1250,16 @@
               "end_m": 12,
               "accessibility": "Desk and storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [
@@ -1571,7 +1616,16 @@
               "end_m": 12,
               "accessibility": "Entry and utility storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m2",
@@ -1680,7 +1734,16 @@
               "end_m": 12,
               "accessibility": "Desk and storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [],
@@ -1993,7 +2056,16 @@
               "end_m": 12,
               "accessibility": "Table for six."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m2",
@@ -2102,7 +2174,16 @@
               "end_m": 12,
               "accessibility": "Entry storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [],
@@ -2406,7 +2487,16 @@
               "end_m": 12,
               "accessibility": "Opens to the courtyard."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m2",
@@ -2515,7 +2605,16 @@
               "end_m": 12,
               "accessibility": "Entry storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m3",
@@ -2624,7 +2723,16 @@
               "end_m": 12,
               "accessibility": "Desk and storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [
@@ -3001,7 +3109,16 @@
               "end_m": 12,
               "accessibility": "Opens to the court."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m2",
@@ -3110,7 +3227,16 @@
               "end_m": 12,
               "accessibility": "Entry storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m3",
@@ -3219,7 +3345,16 @@
               "end_m": 12,
               "accessibility": "Entry storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [],
@@ -3503,7 +3638,16 @@
               "end_m": 12,
               "accessibility": "Opens to the gathering room."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m2",
@@ -3612,7 +3756,16 @@
               "end_m": 12,
               "accessibility": "Entry storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m3",
@@ -3721,7 +3874,16 @@
               "end_m": 12,
               "accessibility": "Material store."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [
@@ -4095,7 +4257,16 @@
               "end_m": 12,
               "accessibility": "Second accessible toilet close to the hall."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m2",
@@ -4218,7 +4389,16 @@
               "end_m": 12,
               "accessibility": "Benches and a separate exterior door."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         },
         {
           "id": "m3",
@@ -4341,7 +4521,16 @@
               "end_m": 12,
               "accessibility": "Dry goods, cleaning and event storage."
             }
-          ]
+          ],
+          "solar": {
+            "enabled": true,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "season_mode": "year-round",
+            "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
+            "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
+            "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
+          }
         }
       ],
       "connections": [

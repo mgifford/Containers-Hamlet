@@ -10,8 +10,8 @@ Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 
 - Gallery: `/design-lab/` — nine homes and a common lodge, grouped by one, two, three containers and the shared lodge. Every design has a five-view architectural page: exterior, plan, cutaway, porch/deck detail and winter study, plus a seasonal summer/winter comparison, approximate window exposure and an envelope wall section. The vegetation guide at `site/design-lab/vegetation/` covers the four planting systems.
 - Editor: `/design-lab/editor/` — three fully editable presets: Woodland Retreat, L-Shaped Haven and Woodland Courtyard. The common lodge is a developed concept with five views and a comparison entry, but is not editable yet.
-- Six further homes and the common lodge are clearly labelled **inspiration only**, with source JSON, five generated views and comparison entries.
-- The editor supports independent module position and rotation, 20/40-foot modules, openings, screened porches, decks, independent climbing-plant trellises, living walls, edible planter walls, evergreen privacy screens, timber connectors, interior room bands, rigid-board/mineral-wool/wood-fibre/spray-foam/hybrid exterior assemblies with wall sections, roof/floor insulation, thermal-bridge mitigation, rainscreen and air/vapour strategy, window performance, shading, HRV/ERV, cold-climate heat pump, cladding, roof and colour, material intent, a summer/winter view, approximate window exposure, click a module on the plan to select it, undo/redo, reset, JSON import/export, SVG exports, a design summary, a ZIP bundle and an illustrative hamlet preview.
+- Six further homes and the common lodge are clearly labelled **inspiration only**, with source JSON, five generated views, solar tilt/azimuth and comparison entries.
+- The editor supports independent module position and rotation, 20/40-foot modules, openings, screened porches, decks, independent climbing-plant trellises, living walls, edible planter walls, evergreen privacy screens, timber connectors, interior room bands, rigid-board/mineral-wool/wood-fibre/spray-foam/hybrid exterior assemblies with wall sections, roof/floor insulation, thermal-bridge mitigation, rainscreen and air/vapour strategy, window performance, shading, HRV/ERV, cold-climate heat pump, cladding, roof and colour, material intent, a summer/winter view, 39° due-south tilted solar with winter-60°/summer-30° options, approximate window exposure, click a module on the plan to select it, undo/redo, reset, JSON import/export, SVG exports, a design summary, a ZIP bundle and an illustrative hamlet preview.
 - No login, account, upload, backend, WebGL or third-party runtime request. Designs stay in the browser until downloaded. The architectural gallery uses no auto-advancing carousel; keyboard buttons, arrow keys and a show-all alternative are available.
 - Editor warnings cover invalid geometry, engineering concerns, accessibility concerns and items needing professional review. They are not a building code assessment.
 
@@ -23,11 +23,11 @@ Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 196 main-site static checks
-   node tools/check-design-lab.mjs   # 581 Design Lab schema, geometry, envelope, vegetation, gallery and comparison checks
+   node tools/check.mjs       # 197 main-site static checks
+   node tools/check-design-lab.mjs   # 634 Design Lab schema, geometry, envelope, vegetation, solar, gallery and comparison checks
    npm install
    npm run test:browser       # 62 main-site browser checks
-   npm run test:design-lab    # 99 Design Lab browser checks
+   npm run test:design-lab    # 102 Design Lab browser checks
    ```
 
    The build refuses data that cannot be built or that breaks a site rule, such as a home inside the shoreline setback, an overlapping container module, a porch beyond its face, or a concept with no valid editable presets. See [`docs/data-model.md`](docs/data-model.md) and [`docs/design-lab.md`](docs/design-lab.md).
@@ -48,7 +48,7 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed. The whole published site is about 2757 KB, under the revised 2.75 MB budget.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed. The whole published site is about 2873 KB, under the revised 3.0 MB budget.
 
 ## The fictional landscape
 

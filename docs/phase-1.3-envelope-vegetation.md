@@ -97,19 +97,34 @@ Supplier pages describe proprietary products and performance claims; they are no
 | A privacy screen achieves a privacy score. | Not supported; no privacy score is calculated. |
 | The plants will survive and the irrigation will work. | Not established; species, climate, water, maintenance and fire need local review. |
 
+## Solar tilt and azimuth
+
+Roof-mounted solar is now configured per module and drawn as a tilted array. The default is:
+
+- **39° tilt**, due south (**180° azimuth**), year-round fixed. This is within the 36–39° year-round range and matches the SolarCalculator.CA Ottawa report's 39° optimal fixed angle.
+- **Winter ≈60°** for the lower winter sun and better snow shedding.
+- **Summer ≈30°** for the higher summer sun.
+- Face true south within a few degrees; confirm magnetic declination, local shading and roof geometry.
+
+The editor exposes tilt, azimuth and a year-round/winter/summer strategy. Selecting winter or summer sets the tilt preset to 60° or 30°; the user can then fine-tune it. The editor and architecture pages include a **solar section diagram** showing the tilt, azimuth, roof line and snow/wind review note. The exterior and winter views show the tilted array and label `PV 39° / 180°`; the plan adds a solar azimuth/tilt arrow.
+
+Source: [SolarCalculator.CA — Ottawa, Ontario](https://solarcalculator.ca/report/Ontario/Ottawa/). The report is for a 100 kWp fixed system and reports 39° optimal; the brief gives a 36–39° year-round range, winter ≈60° and summer ≈30°. The source notes losses, assumptions and the need for a local installer's site-specific report.
+
+No energy production, snow-shedding, wind-uplift, structural or code performance is calculated. Roof structure, mounting, fire access, rapid shutdown, snow guards and electrical design require professional review.
+
 ## F. Validation
 
 | Check | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | 126 generated files current |
-| `node tools/check.mjs` | 196 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 581 passed, 0 failed |
+| `node tools/build.mjs --check` | 127 generated files current |
+| `node tools/check.mjs` | 197 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 634 passed, 0 failed |
 | `node tools/browser-check.mjs` | 62 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 99 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 102 passed, 0 failed |
 | Main first view | 400 KB uncompressed / 98 KB gzipped |
-| Whole published site | 2757 KB (under the revised 2.75 MB budget) |
+| Whole published site | 2873 KB (under the revised 3.0 MB budget) |
 
-The whole-site budget was raised from 2.5 MB to 2.75 MB for the extra wall sections, seasonal/envelope sections and vegetation guide. The main first view remains unchanged at about 400 KB.
+The whole-site budget was raised from 2.5 MB to 3.0 MB for the extra wall sections, seasonal/envelope sections and vegetation guide. The main first view remains unchanged at about 400 KB.
 
 Screenshots: [`screenshots/phase-1.3-envelope-vegetation/`](screenshots/phase-1.3-envelope-vegetation/).
 
@@ -119,6 +134,7 @@ Screenshots: [`screenshots/phase-1.3-envelope-vegetation/`](screenshots/phase-1.
 - [Summer/winter and exposure](screenshots/phase-1.3-envelope-vegetation/architecture-seasonal.jpg)
 - [Vegetation guide](screenshots/phase-1.3-envelope-vegetation/vegetation-guide.jpg)
 - [Rainscreen/trellis/living-wall comparison](screenshots/phase-1.3-envelope-vegetation/vegetation-comparison.jpg)
+- [Solar tilt section](screenshots/phase-1.3-envelope-vegetation/solar-section.jpg)
 
 Tests cover:
 

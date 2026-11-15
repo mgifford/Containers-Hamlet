@@ -141,6 +141,12 @@ export function generate() {
   put('site/design-lab/compare/index.html', comparePage(designProfiles, designLab.concepts));
   put('site/design-lab/vegetation/index.html', vegetationPage(designLab.concepts));
   put('site/design-lab/systems/vegetation-comparison.svg', vegetationComparisonSVG());
+  const solarTilts = Array.from(new Set(designLab.concepts.flatMap((c) => c.modules.filter((m) => m.solar && m.solar.enabled).map((m) => m.solar.tilt_deg))));
+  solarTilts.forEach((tilt) => {
+    let found = null;
+    designLab.concepts.some((c) => { const m = c.modules.find((x) => x.solar && x.solar.enabled && x.solar.tilt_deg === tilt); if (m) { found = { c: c, m: m }; return true; } return false; });
+    if (found) put(`site/design-lab/systems/solar-${tilt}.svg`, DesignModel.solarSectionSVG(found.c, found.m.id, { idPrefix: `system-solar-${tilt}`, title: `Solar tilt · ${tilt}°` }));
+  });
   ['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'].forEach((assembly) => {
     const concept = designLab.concepts.find((c) => c.envelope && c.envelope.assembly === assembly) || designLab.concepts[0];
     put(`site/design-lab/systems/wall-${assembly}.svg`, DesignModel.wallSectionSVG(concept, concept.modules[0].id, { idPrefix: `system-wall-${assembly}`, title: 'Exterior wall section · ' + DesignModel.ENVELOPE_LABEL[assembly] }));

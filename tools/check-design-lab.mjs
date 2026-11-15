@@ -137,6 +137,25 @@ ok(!Schema.validateSchema(badEnv).ok, 'unknown envelope assemblies are rejected'
 const badVeg = JSON.parse(JSON.stringify(data.concepts[0])); badVeg.vegetation[0].offset_m = 0.1;
 ok(!Schema.validateSchema(badVeg).ok, 'vegetation closer than 300 mm is rejected');
 
+section('Solar tilt and azimuth');
+for (const c of data.concepts) {
+  const solarModules = c.modules.filter((m) => m.solar && m.solar.enabled);
+  ok(c.modules.every((m) => m.solar && m.solar.tilt_deg >= 0 && m.solar.tilt_deg <= 75 && m.solar.azimuth_deg >= 0 && m.solar.azimuth_deg <= 360), `${c.id}: every module has a valid solar configuration`);
+  ok(solarModules.every((m) => m.solar.tilt_deg === 39 && m.solar.azimuth_deg === 180), `${c.id}: solar defaults to 39° due south`);
+  if (solarModules.length) {
+    const sec = Model.solarSectionSVG(c, solarModules[0].id, { idPrefix: 'test-solar-' + c.id });
+    ok(sec === Model.solarSectionSVG(c, solarModules[0].id, { idPrefix: 'test-solar-' + c.id }) && /role="img"/.test(sec) && /39°/.test(sec) && /180/.test(sec) && /CC BY-SA 4\.0/.test(sec), `${c.id}: solar section is deterministic, accessible and shows the tilt/azimuth`);
+    const ext = Model.renderAxo(c, { idPrefix: 'test-solar-ext-' + c.id });
+    ok(new RegExp('PV ' + solarModules[0].solar.tilt_deg + '°').test(ext), `${c.id}: exterior labels the tilted PV array`);
+    ok(/solar 39° \/ 180°/.test(Model.renderPlan(c, { idPrefix: 'test-solar-plan-' + c.id })), `${c.id}: plan labels the solar azimuth and tilt`);
+  }
+}
+ok(exists('site/design-lab/systems/solar-39.svg'), 'shared 39° solar section exists');
+const badSolar = JSON.parse(JSON.stringify(data.concepts[0])); badSolar.modules[0].solar.tilt_deg = 90;
+ok(!Schema.validateSchema(badSolar).ok, 'solar tilt above 75° is rejected');
+const badAzimuth = JSON.parse(JSON.stringify(data.concepts[0])); badAzimuth.modules[0].solar.azimuth_deg = 400;
+ok(!Schema.validateSchema(badAzimuth).ok, 'solar azimuth outside 0–360° is rejected');
+
 section('Shared data model and migration');
 const base = data.concepts[0];
 const badSchema = JSON.parse(JSON.stringify(base)); badSchema.schema = 'wrong/schema';

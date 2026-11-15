@@ -13,3 +13,9 @@
 The wall sections and comparison diagram are original schematics, not supplier drawings. No café or supplier photographs are bundled.
 
 See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetation.md).
+
+## Solar
+
+- `solar-section.jpg`: explanatory tilted-array section showing 39°, due south and the year-round/winter/summer angles.
+- `editor-solar.jpg`: per-module solar tilt, azimuth, strategy and solar section.
+- `architecture-solar.jpg`: solar section and tilt/azimuth note on an architectural page.

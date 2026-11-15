@@ -406,6 +406,51 @@
     return out.join('');
   }
 
+  function solarSectionSVG(input, moduleId, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(input);
+    var m = moduleById(d, moduleId) || d.modules[0];
+    var solar = m.solar || {};
+    var tilt = Math.max(0, Math.min(75, solar.tilt_deg || 39));
+    var W = 1040, H = 400;
+    var baseY = 270, roofX0 = 120, roofX1 = 900;
+    var run = 210;
+    var rise = run * Math.tan(tilt * Math.PI / 180);
+    var x0 = 280, y0 = baseY, x1 = x0 + run, y1 = baseY - rise;
+    var pre = opts.idPrefix || 'solar-section';
+    var out = [];
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d">');
+    out.push('<title id="' + pre + '-t">' + esc(opts.title || (d.name + ' solar tilt section')) + '</title>');
+    out.push('<desc id="' + pre + '-d">' + esc('Explanatory section of a roof-mounted solar array tilted ' + tilt + ' degrees, facing azimuth ' + (solar.azimuth_deg || 180) + ' degrees. Conceptual only; snow shedding, shading, wind uplift, roof structure and electrical design need professional review.') + '</desc>');
+    out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
+    out.push('<text x="34" y="44" font-family="system-ui, sans-serif" font-size="23" font-weight="800" fill="#1d392c">' + esc(opts.title || 'Solar tilt and azimuth') + '</text>');
+    out.push('<text x="34" y="66" font-family="system-ui, sans-serif" font-size="13" fill="#3f5a4c">' + esc((m.id) + ' · ' + tilt + '° tilt · ' + (solar.azimuth_deg || 180) + '° azimuth · ' + (solar.season_mode || 'year-round') + ' strategy') + '</text>');
+    // roof and interior
+    out.push('<line x1="' + roofX0 + '" y1="' + baseY + '" x2="' + roofX1 + '" y2="' + baseY + '" stroke="#253a33" stroke-width="3"/>');
+    out.push('<rect x="' + roofX0 + '" y="' + baseY + '" width="' + (roofX1 - roofX0) + '" height="42" fill="#e9e2ce" stroke="#7d8b73"/>');
+    out.push('<text x="' + (roofX0 + 12) + '" y="' + (baseY + 28) + '" font-family="system-ui, sans-serif" font-size="11" fill="#3f5a4c">container roof / structure</text>');
+    // panel
+    out.push('<line x1="' + x0 + '" y1="' + y0 + '" x2="' + x1 + '" y2="' + y1 + '" stroke="#245a73" stroke-width="8"/>');
+    out.push('<line x1="' + x0 + '" y1="' + (y0 + 12) + '" x2="' + x1 + '" y2="' + (y1 + 12) + '" stroke="#9fc9d6" stroke-width="2"/>');
+    out.push('<line x1="' + x0 + '" y1="' + y0 + '" x2="' + x0 + '" y2="' + (y0 + 22) + '" stroke="#536b63" stroke-width="2"/>');
+    out.push('<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x1 + '" y2="' + (y1 + 22) + '" stroke="#536b63" stroke-width="2"/>');
+    out.push('<line x1="' + x0 + '" y1="' + y0 + '" x2="' + x0 + '" y2="' + baseY + '" stroke="#536b63" stroke-width="2" stroke-dasharray="4 3"/>');
+    out.push('<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x1 + '" y2="' + baseY + '" stroke="#536b63" stroke-width="2" stroke-dasharray="4 3"/>');
+    out.push('<text x="' + (x0 + 10) + '" y="' + (y1 - 12) + '" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#245a73">solar array</text>');
+    // angle arc
+    out.push('<path d="M' + (x0 + 60) + ' ' + y0 + ' A60 60 0 0 0 ' + n(x0 + 60 * Math.cos(-tilt * Math.PI / 180)) + ' ' + n(y0 + 60 * Math.sin(-tilt * Math.PI / 180)) + '" fill="none" stroke="#b45e1c" stroke-width="2"/>');
+    out.push('<text x="' + (x0 + 66) + '" y="' + (y0 - 10) + '" font-family="system-ui, sans-serif" font-size="18" font-weight="800" fill="#b45e1c">' + tilt + '°</text>');
+    // direction arrow
+    out.push('<line x1="' + (x1 + 120) + '" y1="' + (baseY - 70) + '" x2="' + (x1 + 120) + '" y2="' + (baseY + 30) + '" stroke="#3f5f8a" stroke-width="2" stroke-dasharray="5 4"/>');
+    out.push('<text x="' + (x1 + 126) + '" y="' + (baseY - 78) + '" font-family="system-ui, sans-serif" font-size="12" fill="#3f5f8a">azimuth ' + (solar.azimuth_deg || 180) + '°</text>');
+    // labels and options
+    out.push('<text x="34" y="' + (H - 56) + '" font-family="system-ui, sans-serif" font-size="12" fill="#1d392c">Year-round 36–39° · winter ~60° for low sun and snow shedding · summer ~30° · face true south within a few degrees.</text>');
+    out.push('<text x="34" y="' + (H - 36) + '" font-family="system-ui, sans-serif" font-size="11" fill="#3f5a4c">Ottawa reference: SolarCalculator.CA reports 39° optimal fixed tilt. No energy production, snow-shedding or code compliance is claimed.</text>');
+    out.push('<text x="34" y="' + (H - 12) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Conceptual solar section · roof structure, wind uplift, shading, snow and electrical design require professional review · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
+    out.push('</svg>');
+    return out.join('');
+  }
+
   /* ---------------- plan drawing ---------------- */
 
   var ZC = { sleeping: '#c8d7ea', bathroom: '#b9d9d2', kitchen: '#ead7b3', living: '#d8dfbf', dining: '#e5cfa7', work: '#cdc6de', storage: '#ddd4c2', circulation: '#eee8d9' };
@@ -431,7 +476,7 @@
     var desc = 'Dimensioned concept plan for ' + d.name + '. ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + ', ' + Schema.summary(d).nominalFootprint_m2 + ' square metres nominal footprint. ' + Schema.summary(d).zoneCount + ' interior zones and ' + Schema.summary(d).openingCount + ' openings. Dimensions are nominal container sizes, not verified construction dimensions.';
     out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + '>');
     out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
-    out.push('<defs><pattern id="' + pre + '-porch" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#d8e6d3"/><path d="M0 7L7 0" stroke="#6b9277" stroke-width="0.8"/></pattern><pattern id="' + pre + '-deck" width="9" height="5" patternUnits="userSpaceOnUse"><rect width="9" height="5" fill="#d9c3a1"/><path d="M0 2.5H9" stroke="#9a7750" stroke-width="0.7"/></pattern><pattern id="' + pre + '-link" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#e4d7bf"/><path d="M0 6L6 0" stroke="#9a8765" stroke-width="0.7"/></pattern></defs>');
+    out.push('<defs><marker id="' + pre + '-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#245a73"/></marker><pattern id="' + pre + '-porch" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#d8e6d3"/><path d="M0 7L7 0" stroke="#6b9277" stroke-width="0.8"/></pattern><pattern id="' + pre + '-deck" width="9" height="5" patternUnits="userSpaceOnUse"><rect width="9" height="5" fill="#d9c3a1"/><path d="M0 2.5H9" stroke="#9a7750" stroke-width="0.7"/></pattern><pattern id="' + pre + '-link" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#e4d7bf"/><path d="M0 6L6 0" stroke="#9a8765" stroke-width="0.7"/></pattern></defs>');
     out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
     // ground hint
     out.push('<rect x="18" y="18" width="' + (W - 36) + '" height="' + (H - 36) + '" fill="none" stroke="#d8d4c4" stroke-width="1"/>');
@@ -513,6 +558,14 @@
       var mx = Math.min.apply(null, mp.map(function (q) { return q[0]; }));
       var my = Math.min.apply(null, mp.map(function (q) { return q[1]; }));
       out.push(text(mx + 2, my - 26, m.id.toUpperCase() + ' · ' + m.type, 10, ' font-weight="800" stroke="#faf8f2" stroke-width="2.6" paint-order="stroke"'));
+      if (m.roof.solar && m.solar && m.solar.enabled) {
+        var sc = P(m.position_m);
+        var sa = (m.solar.azimuth_deg || 180) * DEG;
+        var sv = [Math.sin(sa), Math.cos(sa)];
+        var sx = sc[0] + sv[0] * 40, sy = sc[1] + sv[1] * 40;
+        out.push('<line x1="' + n(sc[0]) + '" y1="' + n(sc[1]) + '" x2="' + n(sx) + '" y2="' + n(sy) + '" stroke="#245a73" stroke-width="2.2" marker-end="url(#' + pre + '-arrow)"/>');
+        out.push(text(sx + 4, sy + 4, 'solar ' + n(m.solar.tilt_deg, 0) + '° / ' + n(m.solar.azimuth_deg, 0) + '°', 8, ' fill="#245a73" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
+      }
       out.push('<path class="plan-module-hit" data-module-id="' + esc(m.id) + '" d="' + path(moduleCorners(m)) + '" fill="transparent" pointer-events="all"/>');
     });
     planLabels.forEach(function (label) { out.push(label); });
@@ -831,6 +884,38 @@
         s += '<path d="M' + polyScreen(q, S) + 'Z" fill="' + (o.type === 'window' ? '#9fd3e0' : '#5d432c') + '" stroke="#2d3a35" stroke-width="0.8"/>';
       });
     }
+    if (!cut && m.roof.solar && m.solar && m.solar.enabled) {
+      var tilt = Math.max(0, Math.min(75, m.solar.tilt_deg || 39));
+      var az = (m.solar.azimuth_deg || 180) * Math.PI / 180;
+      var fw = [Math.sin(az), Math.cos(az)];
+      var rot = (m.rotation_deg || 0) * Math.PI / 180;
+      var f = [fw[0] * Math.cos(-rot) - fw[1] * Math.sin(-rot), fw[0] * Math.sin(-rot) + fw[1] * Math.cos(-rot)];
+      var p = [-f[1], f[0]];
+      var pl = Math.min(4.2, (Math.abs(p[0]) > 0.5 ? m.nominal.length_m : m.nominal.width_m) * 0.8);
+      var pd = Math.min(1.55, (Math.abs(f[1]) > 0.5 ? m.nominal.width_m : m.nominal.length_m) * 0.62);
+      var rise = pd * Math.tan(tilt * Math.PI / 180);
+      var z0 = m.nominal.height_m + 0.08, z1 = z0 + rise;
+      var corners = [
+        [f[0] * pd / 2 + p[0] * pl / 2, f[1] * pd / 2 + p[1] * pl / 2, z0],
+        [f[0] * pd / 2 - p[0] * pl / 2, f[1] * pd / 2 - p[1] * pl / 2, z0],
+        [-f[0] * pd / 2 - p[0] * pl / 2, -f[1] * pd / 2 - p[1] * pl / 2, z1],
+        [-f[0] * pd / 2 + p[0] * pl / 2, -f[1] * pd / 2 + p[1] * pl / 2, z1]
+      ].map(function (q) { var t = transform(m, [q[0], q[1]]); return [t[0], t[1], q[2]]; });
+      var flat = [[corners[0][0], corners[0][1], z0], [corners[1][0], corners[1][1], z0], [corners[2][0], corners[2][1], z0], [corners[3][0], corners[3][1], z0]];
+      s += '<path d="M' + polyScreen(flat, S) + 'Z" fill="#245a73" fill-opacity="0.85" stroke="#123b4d" stroke-width="1"/>';
+      s += '<path d="M' + polyScreen(corners, S) + 'Z" fill="#2f6d88" fill-opacity="0.9" stroke="#123b4d" stroke-width="1.2"/>';
+      var front = [[corners[0][0], corners[0][1], corners[0][2]], [corners[1][0], corners[1][1], corners[1][2]], [corners[1][0], corners[1][1], corners[1][2] - 0.08], [corners[0][0], corners[0][1], corners[0][2] - 0.08]];
+      s += '<path d="M' + polyScreen(front, S) + 'Z" fill="#123b4d" stroke="#0d2a36" stroke-width="1"/>';
+      for (var pi = 1; pi < 5; pi++) {
+        var t = pi / 5;
+        var a1 = [corners[0][0] + (corners[1][0] - corners[0][0]) * t, corners[0][1] + (corners[1][1] - corners[0][1]) * t, corners[0][2]];
+        var a2 = [corners[3][0] + (corners[2][0] - corners[3][0]) * t, corners[3][1] + (corners[2][1] - corners[3][1]) * t, corners[3][2]];
+        s += '<line x1="' + n(S(a1)[0]) + '" y1="' + n(S(a1)[1]) + '" x2="' + n(S(a2)[0]) + '" y2="' + n(S(a2)[1]) + '" stroke="#9fc9d6" stroke-width="0.7"/>';
+      }
+      [corners[2], corners[3]].forEach(function (q) { var r = S([q[0], q[1], m.nominal.height_m + 0.02]); var tq = S(q); s += '<line x1="' + n(r[0]) + '" y1="' + n(r[1]) + '" x2="' + n(tq[0]) + '" y2="' + n(tq[1]) + '" stroke="#536b63" stroke-width="1.1"/>'; });
+      var pc = S([(corners[0][0] + corners[2][0]) / 2, (corners[0][1] + corners[2][1]) / 2, z0 + 0.2]);
+      s += '<text x="' + n(pc[0]) + '" y="' + n(pc[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#eaf6f9" stroke="#123b4d" stroke-width="2.2" paint-order="stroke">PV ' + n(tilt, 0) + '° / ' + n(m.solar.azimuth_deg, 0) + '°</text>';
+    }
     return s;
   }
 
@@ -932,6 +1017,7 @@
       glazing_ratio: thermal.glazing_ratio,
       thermal: thermal,
       envelope: { assembly: d.envelope.assembly, layers: d.envelope.layers, version: d.envelope.version },
+      solar: d.modules.filter(function (m) { return m.solar && m.solar.enabled; }).map(function (m) { return { id: m.id, tilt_deg: m.solar.tilt_deg, azimuth_deg: m.solar.azimuth_deg, season_mode: m.solar.season_mode, mounting: m.solar.mounting }; }),
       vegetation: (d.vegetation || []).map(function (v) { return { id: v.id, type: v.type, name: v.name, module: v.module, face: v.face, length_m: v.length_m, height_m: v.height_m, seasonal_foliage: v.seasonal_foliage, irrigation: v.irrigation, maintenance: v.maintenance }; }),
       exposure: exposureProfile(d),
       accessibility: accessibility,
@@ -951,7 +1037,7 @@
     moduleCorners: moduleCorners, connectionCorners: connectionCorners, porchCorners: porchCorners, deckCorners: deckCorners,
     openingSegment: openingSegment, faceNormalWorld: faceNormalWorld, faceLength: faceLength,
     polygonsOverlap: polygonsOverlap, overlapArea: overlapArea, bounds: bounds,
-    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, exposureProfile: exposureProfile, designProfile: designProfile, envelopeFor: envelopeFor, wallSectionSVG: wallSectionSVG, ENVELOPE_LABEL: ENVELOPE_LABEL, VEG_LABEL: VEG_LABEL,
+    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, exposureProfile: exposureProfile, designProfile: designProfile, envelopeFor: envelopeFor, wallSectionSVG: wallSectionSVG, solarSectionSVG: solarSectionSVG, ENVELOPE_LABEL: ENVELOPE_LABEL, VEG_LABEL: VEG_LABEL,
     renderPlan: planSVG, renderAxo: axoSVG, describe: describe,
     summary: Schema.summary, canonicalize: Schema.canonicalize
   };

@@ -28,7 +28,7 @@
 - the page with its scripts blocked, including all seven home briefs and view diagrams
 - same-origin requests, no third-party requests and all local links
 
-`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 196 static checks; the main browser suite runs 62 checks. `tools/check-design-lab.mjs` adds 581 schema, geometry, envelope, vegetation, five-view, gallery and comparison checks, and `tools/design-lab-check.mjs` adds 99 browser checks for the gallery, editor, architectural slideshow, vegetation guide and comparison.
+`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 197 static checks; the main browser suite runs 62 checks. `tools/check-design-lab.mjs` adds 634 schema, geometry, envelope, vegetation, solar, five-view, gallery and comparison checks, and `tools/design-lab-check.mjs` adds 102 browser checks for the gallery, editor, architectural slideshow, vegetation guide and comparison.
 
 ## Manual testing still required
 
@@ -66,6 +66,7 @@ The architectural slideshow is a progressive enhancement over a static list of a
 - **Drawing types.** Plan, cutaway and porch detail are labelled geometry-backed drawings; exterior and winter images are labelled illustrative studies. Colour is not the only distinction.
 - **Comparison.** The two side-by-side panels and all-concepts table use native selects, buttons and a caption/scope table. Without JavaScript the default pair and the table remain.
 - **Thermal explanations.** The editor gives plain-language explanations of overheating, heat loss, condensation and moisture without claiming code compliance or certified performance.
+- **Solar.** Solar tilt and azimuth are native number fields; the strategy is a native select. The solar section is a keyboard-scrollable labelled group. The exterior view labels `PV 39° / 180°`; the plan adds a solar arrow and text. No energy or snow-shedding claim is made.
 - **Envelope and vegetation.** The wall-section container is keyboard-scrollable and labelled; assembly and planting controls are native selects, numbers, text fields and buttons. Seasonal and exposure panels use headings, lists and a caption/scope table. The wall section is a complex image with a text title/desc and a layer legend; the exposure panel repeats the approximate areas as text.
 - **Tested.** Browser checks cover no autoplay, keyboard movement, Show all, image loading, no-JavaScript fallback, envelope/vegetation persistence, seasonal changes, 320 px, dark scheme, forced colours, reduced motion, gallery-to-editor navigation and axe-core. Manual screen-reader testing is still required.
 

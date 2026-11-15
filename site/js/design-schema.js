@@ -26,6 +26,7 @@
   var ROOFS = ['solar', 'green', 'biosolar', 'membrane'];
   var ENVELOPE_ASSEMBLIES = ['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'];
   var VEGETATION_TYPES = ['trellis', 'living-wall', 'edible-wall', 'privacy-screen'];
+  var SOLAR_SEASONS = ['year-round', 'winter', 'summer'];
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function isNum(v) { return typeof v === 'number' && Number.isFinite(v); }
@@ -93,6 +94,7 @@
       m.insulation = Object.assign({ thickness_mm: 150, type: 'wood-fibre or documented reclaimed board' }, m.insulation || {});
       m.cladding = Object.assign({ type: 'timber', colour: '#8a6a4a' }, m.cladding || {});
       m.roof = Object.assign({ type: 'solar', solar: true, green: false }, m.roof || {});
+      m.solar = Object.assign({ enabled: !!m.roof.solar, tilt_deg: 39, azimuth_deg: 180, season_mode: 'year-round', mounting: 'fixed tilt, due south; snow-shedding; roof structure and wind uplift need review', source: 'SolarCalculator.CA Ottawa: 39° optimal fixed tilt; brief range 36–39° year-round, winter ~60°, summer ~30°, due south.', note: 'True south; confirm magnetic declination, shading, snow shedding and structural fixing.' }, m.solar || {});
       m.structure = Object.assign({ openings_reinforced: true, wall_removal: 'none', cantilever_m: 0, notes: '' }, m.structure || {});
     });
     d.site = Object.assign({ homesite: 'a', rotation_deg: 0, note: 'Illustrative placement only; not part of the published community layout.' }, d.site || {});
@@ -160,6 +162,13 @@
       if (!m.insulation || !isNum(m.insulation.thickness_mm) || m.insulation.thickness_mm < 50 || m.insulation.thickness_mm > 300) err('Module ' + m.id + ' insulation must be 50–300 mm.');
       if (!m.cladding || CLADDING.indexOf(m.cladding.type) < 0) err('Module ' + m.id + ' needs a known cladding type.');
       if (!m.roof || ROOFS.indexOf(m.roof.type) < 0) err('Module ' + m.id + ' needs a known roof type.');
+      if (!m.solar || typeof m.solar !== 'object') err('Module ' + m.id + ' needs a solar configuration object.');
+      if (m.solar) {
+        if (!isNum(m.solar.tilt_deg) || m.solar.tilt_deg < 0 || m.solar.tilt_deg > 75) err('Module ' + m.id + ' solar tilt must be 0–75 degrees.');
+        if (!isNum(m.solar.azimuth_deg) || m.solar.azimuth_deg < 0 || m.solar.azimuth_deg > 360) err('Module ' + m.id + ' solar azimuth must be 0–360 degrees.');
+        if (SOLAR_SEASONS.indexOf(m.solar.season_mode) < 0) err('Module ' + m.id + ' solar season must be year-round, winter or summer.');
+        if (m.solar.enabled && !m.roof.solar) warnings.push({ code: 'solar-roof', message: 'Module ' + m.id + ' has solar enabled but no solar roof type.' });
+      }
       if (!Array.isArray(m.openings)) err('Module ' + m.id + ' openings must be an array.');
       (m.openings || []).forEach(function (o) {
         if (!o.id) err('An opening on ' + m.id + ' has no id.');
@@ -283,5 +292,5 @@
     };
   }
 
-  return { SCHEMA: SCHEMA, LEGACY_SCHEMA: LEGACY_SCHEMA, MODULE_TYPES: MODULE_TYPES, FACES: FACES, OPENING_TYPES: OPENING_TYPES, ZONE_TYPES: ZONE_TYPES, CLADDING: CLADDING, ROOFS: ROOFS, ENVELOPE_ASSEMBLIES: ENVELOPE_ASSEMBLIES, VEGETATION_TYPES: VEGETATION_TYPES, clone: clone, canonicalize: canonicalize, validateSchema: validateSchema, migrateV01: migrateV01, summary: summary, moduleDefaults: moduleDefaults, newId: newId, requiredIds: requiredIds, round: round };
+  return { SCHEMA: SCHEMA, LEGACY_SCHEMA: LEGACY_SCHEMA, MODULE_TYPES: MODULE_TYPES, FACES: FACES, OPENING_TYPES: OPENING_TYPES, ZONE_TYPES: ZONE_TYPES, CLADDING: CLADDING, ROOFS: ROOFS, ENVELOPE_ASSEMBLIES: ENVELOPE_ASSEMBLIES, VEGETATION_TYPES: VEGETATION_TYPES, SOLAR_SEASONS: SOLAR_SEASONS, clone: clone, canonicalize: canonicalize, validateSchema: validateSchema, migrateV01: migrateV01, summary: summary, moduleDefaults: moduleDefaults, newId: newId, requiredIds: requiredIds, round: round };
 });

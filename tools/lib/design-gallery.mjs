@@ -47,6 +47,7 @@ ${items.map((c) => {
           <div><dt>Outdoor living</dt><dd>${esc(c.features.outdoor)}</dd></div>
           ${c.trellises && c.trellises.length ? `<div><dt>Trellis</dt><dd>${esc(c.trellises.map((t) => t.face + ' face, ' + n(t.length_m) + ' m long').join('; '))}</dd></div>` : ''}
           <div><dt>Solar / roof</dt><dd>${esc(c.features.solar)}${c.features.green_roof ? ' ' + esc(c.features.green_roof) : ''}</dd></div>
+          ${c.modules.some((m) => m.solar && m.solar.enabled) ? `<div><dt>Solar tilt</dt><dd>${c.modules.filter((m) => m.solar && m.solar.enabled).map((m) => `${m.id}: ${m.solar.tilt_deg}° / ${m.solar.azimuth_deg}° ${m.solar.season_mode}`).join('; ')}</dd></div>` : ''}
           <div><dt>Accessibility</dt><dd>${esc(c.features.accessibility)}</dd></div>
           <div><dt>Environmental</dt><dd>${esc(c.features.environment)}</dd></div>
         </dl>

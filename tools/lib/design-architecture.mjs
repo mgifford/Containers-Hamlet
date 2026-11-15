@@ -115,6 +115,12 @@ ${slides}
     <p class="small">Condensation, fire, moisture, fastening, structural penetrations and maintenance all need project review. The designer does not claim this assembly is compliant or moisture-safe.</p>
   </section>
 
+  <section class="solar-section" aria-labelledby="solar-title">
+    <h2 id="solar-title">Solar tilt and azimuth</h2>
+    ${(() => { const sm = c.modules.find((m) => m.solar && m.solar.enabled) || c.modules[0]; return `<p><strong>${sm.solar.tilt_deg}° tilt</strong> · ${sm.solar.azimuth_deg}° azimuth · ${esc(sm.solar.season_mode)} strategy. ${esc(sm.solar.note || '')}</p><img src="../../systems/solar-${sm.solar.tilt_deg}.svg" width="1040" height="400" alt="Explanatory solar section with a ${sm.solar.tilt_deg} degree tilted array facing azimuth ${sm.solar.azimuth_deg} degrees." loading="eager" decoding="async">`; })()}
+    <p class="small">Ottawa reference: the year-round fixed range is 36–39° (SolarCalculator.CA reports 39° optimal), winter is about 60° and summer about 30°, facing true south within a few degrees. No energy production, snow-shedding, wind-uplift or code compliance is calculated.</p>
+  </section>
+
   <section class="vegetation-section" aria-labelledby="vegetation-title">
     <h2 id="vegetation-title">Vegetation systems</h2>
     ${(c.trellises && c.trellises.length) || (c.vegetation && c.vegetation.length) ? `<ul>

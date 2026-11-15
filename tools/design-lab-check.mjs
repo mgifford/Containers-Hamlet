@@ -92,13 +92,14 @@ try {
     imgs: [...document.querySelectorAll('[data-slide] img')].every((i) => i.alt.length > 30),
     seasonal: document.querySelectorAll('.season-pair img').length,
     wall: !!document.querySelector('.assembly-section img'),
-    veg: !!document.querySelector('.vegetation-section')
+    veg: !!document.querySelector('.vegetation-section'),
+    solar: !!document.querySelector('.solar-section img')
   }));
   ok(archState.slides === 5 && archState.current === 1 && archState.visible === 1 && archState.controls, 'architecture: five slides, one current and visible controls');
   ok(archState.geometry === 3 && archState.illustrative === 2, 'architecture: three geometry-backed drawings and two illustrative studies are labelled');
   ok(archState.caps && archState.imgs && (await arch.page.evaluate(() => document.querySelector('[data-slide].is-current img').naturalWidth > 0)), 'architecture: every view has a descriptive caption and alt text');
-  ok(archState.seasonal === 2 && archState.wall && archState.veg, 'architecture: seasonal pair, wall section and vegetation notes are present');
-  ok(await arch.page.evaluate(() => [...document.querySelectorAll('.season-pair img, .assembly-section img')].every((i) => i.naturalWidth > 0)), 'architecture: seasonal and wall-section images load');
+  ok(archState.seasonal === 2 && archState.wall && archState.veg && archState.solar, 'architecture: seasonal pair, wall section, solar section and vegetation notes are present');
+  ok(await arch.page.evaluate(() => [...document.querySelectorAll('.season-pair img, .assembly-section img, .solar-section img')].every((i) => i.naturalWidth > 0)), 'architecture: seasonal, wall-section and solar images load');
   await arch.page.waitForTimeout(900);
   ok(/View 1 of 5/.test(await arch.page.textContent('[data-slide-status]')), 'architecture: does not advance automatically');
   await arch.page.focus('[data-slide-viewport]');
@@ -230,10 +231,17 @@ try {
   section('Editor: envelope, season and vegetation');
   ok(await page.evaluate(() => !!document.querySelector('#env-assembly') && !!document.querySelector('#wall-section svg')), 'envelope controls and an explanatory wall section are available');
   const wallBefore = await page.evaluate(() => document.querySelector('#wall-section').innerHTML);
+  await page.selectOption('#m-0-solar-season', 'winter');
+  await page.waitForTimeout(250);
   await page.selectOption('#env-assembly', 'wood-fibre');
   await page.waitForTimeout(300);
   const wallAfter = await page.evaluate(() => document.querySelector('#wall-section').innerHTML);
   ok(wallBefore !== wallAfter && /Wood fibre/i.test(await page.evaluate(() => document.querySelector('#wall-section').textContent)), 'changing the assembly rebuilds the wall section');
+  ok(await page.evaluate(() => !!document.querySelector('#solar-section svg')), 'solar tilt section is available');
+  await page.fill('#m-0-solar-tilt', '60');
+  await page.locator('#m-0-solar-tilt').blur();
+  await page.waitForTimeout(300);
+  ok(/60°/.test(await page.textContent('#solar-section')) && /PV 60°/.test(await page.evaluate(() => document.querySelector('#exterior').innerHTML)), 'changing solar tilt updates the section and exterior array label');
   const summerExterior = await page.evaluate(() => document.querySelector('#exterior').innerHTML);
   await page.selectOption('#season', 'winter');
   await page.waitForTimeout(300);
@@ -313,6 +321,8 @@ try {
     await d.saveAs(file);
     return file;
   }
+  await page.selectOption('#m-0-solar-season', 'winter');
+  await page.waitForTimeout(250);
   await page.selectOption('#env-assembly', 'wood-fibre');
   await page.waitForTimeout(250);
   await page.fill('#env-thickness', '180');
@@ -328,6 +338,7 @@ try {
   ok(parsed.thermal && parsed.thermal.roof_insulation_mm === 360 && /double glazed/i.test(parsed.thermal.window_performance), 'thermal envelope choices persist in the exported JSON');
   ok(parsed.envelope && parsed.envelope.assembly === 'wood-fibre' && parsed.envelope.layers.some((l) => l.role === 'insulation'), 'envelope assembly and layers persist in the exported JSON');
   ok(parsed.vegetation && parsed.vegetation.length >= 1 && parsed.vegetation.every((v) => v.plant_type && v.irrigation && v.support && v.offset_m >= 0.3), 'vegetation and planting metadata persist in the exported JSON');
+  ok(parsed.modules.some((m) => m.solar && m.solar.tilt_deg === 60 && m.solar.season_mode === 'winter'), 'solar tilt, azimuth and season persist in the exported JSON');
   const wallFile = await downloadFile('#export-wall', 'wall.svg');
   ok(/^<svg|^<\?xml/.test(fs.readFileSync(wallFile, 'utf8').trim()), 'wall section SVG exports');
   const planFile = await downloadFile('#export-plan', 'plan.svg');
@@ -337,7 +348,7 @@ try {
   ok(fs.readFileSync(zipFile).toString('latin1').includes('design.json') && fs.readFileSync(zipFile).toString('latin1').includes('-porch.svg') && fs.readFileSync(zipFile).toString('latin1').includes('-winter.svg') && fs.readFileSync(zipFile).toString('latin1').includes('-wall.svg'), 'ZIP contains the editable JSON, outdoor/winter views and wall section');
   await page.setInputFiles('#import-file', jsonFile);
   await page.waitForTimeout(500);
-  ok(/Imported design/.test(await page.textContent('#status')) && (await page.inputValue('#thermal-roof')) === '360' && (await page.inputValue('#env-assembly')) === 'wood-fibre' && (await page.evaluate(() => document.querySelectorAll('.vegetation-card').length)) >= 1, 'exported JSON reopens through Import with thermal, envelope and vegetation values');
+  ok(/Imported design/.test(await page.textContent('#status')) && (await page.inputValue('#thermal-roof')) === '360' && (await page.inputValue('#env-assembly')) === 'wood-fibre' && (await page.evaluate(() => document.querySelectorAll('.vegetation-card').length)) >= 1, 'exported JSON reopens through Import with thermal, envelope, vegetation and solar values');
   const legacy = { schema: 'containers-hamlet-editor/v0.1', name: 'Legacy pair', preset: 'pair', modules: 2, module: { length_m: 12.192, width_m: 2.438, nominal: true }, envelope: { external_insulation_mm: 150, cladding: 'timber', roof: 'solar' }, porch: { depth_m: 3, start_m: 3, length_m: 4, screened: true }, openings: [{ id: 'W-N', face: 'north', position_m: 4, width_m: 1.2 }, { id: 'W-S', face: 'south', position_m: 8, width_m: 1.2 }], status: 'concept only', professional_review_required: true };
   const legacyFile = path.join(TMP, 'legacy.json');
   fs.writeFileSync(legacyFile, JSON.stringify(legacy));

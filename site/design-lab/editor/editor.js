@@ -160,9 +160,12 @@
         field('Cladding', selectInput('modules.' + i + '.cladding.type', m.cladding.type, idBase + '-clad', Object.keys(CLAD_LABEL).map(function (k) { return option(k, CLAD_LABEL[k], m.cladding.type); }).join(''))) +
         field('Cladding colour', selectInput('modules.' + i + '.cladding.colour', m.cladding.colour, idBase + '-colour', COLOURS.map(function (c) { return option(c[0], c[1], m.cladding.colour); }).join(''))) +
         field('Roof', selectInput('modules.' + i + '.roof.type', m.roof.type, idBase + '-roof', Object.keys(ROOF_LABEL).map(function (k) { return option(k, ROOF_LABEL[k], m.roof.type); }).join(''))) +
+        field('Solar tilt (degrees)', numberInput('modules.' + i + '.solar.tilt_deg', m.solar.tilt_deg, idBase + '-solar-tilt', ' step="1" min="0" max="75"')) +
+        field('Solar azimuth (degrees)', numberInput('modules.' + i + '.solar.azimuth_deg', m.solar.azimuth_deg, idBase + '-solar-az', ' step="5" min="0" max="360"')) +
+        field('Solar strategy', selectInput('modules.' + i + '.solar.season_mode', m.solar.season_mode, idBase + '-solar-season', option('year-round', 'Year-round fixed (39°)', m.solar.season_mode) + option('winter', 'Winter (60°)', m.solar.season_mode) + option('summer', 'Summer (30°)', m.solar.season_mode))) +
         field('Structural wall removal', selectInput('modules.' + i + '.structure.wall_removal', m.structure.wall_removal, idBase + '-wall', option('none', 'No large removal', m.structure.wall_removal) + option('partial', 'Partial wall removal', m.structure.wall_removal) + option('large', 'Large structural removal', m.structure.wall_removal))) +
         field('Conceptual cantilever (m)', numberInput('modules.' + i + '.structure.cantilever_m', m.structure.cantilever_m || 0, idBase + '-cant', ' step="0.1" min="0" max="2"')) +
-        '</div>' +
+        '</div>' + checkbox('modules.' + i + '.solar.enabled', m.solar.enabled, idBase + '-solar-enabled', 'Solar array enabled') +
         '<button type="button" class="secondary" data-action="select-module" data-module="' + esc(m.id) + '">Select module for openings and rooms</button>' +
         '</fieldset>';
     }).join('');
@@ -173,6 +176,7 @@
     $('homesite').innerHTML = SITE.buildings.map(function (b) { return option(b.id, b.name + (b.short_name ? ' · ' + b.short_name : ''), d.site.homesite); }).join('');
     $('site-rotation').value = d.site.rotation_deg || 0;
     $('season').value = state.season;
+    renderSolarSection();
     renderOpenings();
     renderZones();
     renderPorches();
@@ -266,6 +270,14 @@
       field('Thermal bridge mitigation', selectInput('thermal.thermal_bridge_mitigation', t.thermal_bridge_mitigation, 'thermal-bridge', option('continuous external insulation and thermal breaks at openings and pile caps', 'Continuous + breaks', t.thermal_bridge_mitigation) + option('partial mitigation; junctions to be reviewed', 'Partial mitigation', t.thermal_bridge_mitigation) + option('not decided', 'Not decided', t.thermal_bridge_mitigation))) +
       field('Heating', selectInput('thermal.heating', t.heating, 'thermal-heat', option('cold-climate air-source heat pump', 'Cold-climate heat pump', t.heating) + option('heat pump with backup', 'Heat pump + backup', t.heating) + option('not decided', 'Not decided', t.heating))) +
       '</div>' + checkbox('thermal.rainscreen_ventilation', t.rainscreen_ventilation, 'thermal-rainscreen', 'Ventilated rainscreen and replaceable cladding') + checkbox('thermal.heat_recovery_ventilation', t.heat_recovery_ventilation, 'thermal-hrv', 'Heat-recovery ventilation (HRV/ERV)');
+  }
+
+  function renderSolarSection() {
+    var panel = $('solar-section');
+    var m = currentModule();
+    if (!panel || !m) return;
+    if (!m.solar.enabled) { panel.innerHTML = '<p class="small">Solar is disabled for this module. Choose a solar roof, then enable the array.</p>'; return; }
+    panel.innerHTML = Model.solarSectionSVG(state.design, m.id, { idPrefix: 'editor-solar' });
   }
 
   function renderEnvelope() {
@@ -453,6 +465,7 @@
       ['Thermal envelope', (d.thermal.roof_insulation_mm || '–') + ' mm roof / ' + (d.thermal.floor_insulation_mm || '–') + ' mm floor / ' + d.thermal.window_performance],
       ['Envelope assembly', (Model.ENVELOPE_LABEL[d.envelope.assembly] || d.envelope.assembly) + ' · ' + d.envelope.layers.filter(function (l) { return l.role === 'insulation'; }).reduce(function (t, l) { return t + l.thickness_mm; }, 0) + ' mm insulation'],
       ['Vegetation', d.vegetation.length + ' separate system' + (d.vegetation.length === 1 ? '' : 's')],
+      ['Solar', d.modules.filter(function (m) { return m.solar.enabled; }).map(function (m) { return m.id + ': ' + m.solar.tilt_deg + '° / ' + m.solar.azimuth_deg + '° ' + m.solar.season_mode; }).join(' · ') || 'No solar array enabled'],
       ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green/biosolar ' : '') || 'Membrane'],
       ['Insulation', 'Up to ' + s.maxInsulation_mm + ' mm external'],
       ['Status', assessment.ok ? 'No invalid geometry; professional review required' : 'Invalid geometry; drawings disabled'],
@@ -557,6 +570,7 @@
     m.roof.type = type;
     m.roof.solar = type === 'solar' || type === 'biosolar';
     m.roof.green = type === 'green' || type === 'biosolar';
+    if (m.solar) m.solar.enabled = !!m.roof.solar;
   }
 
   function onFieldInput(event) {
@@ -565,11 +579,16 @@
     var path = el.getAttribute('data-path');
     if (!path) return;
     if (!state.editBase) state.editBase = clone(state.design);
+    if (/^modules\.\d+\.solar\./.test(path)) renderSolarSection();
     var value = el.type === 'checkbox' ? el.checked : el.value;
     if (path.indexOf('.roof.type') >= 0) {
       var parts = path.split('.');
       var mi = Number(parts[1]);
       applyRoof(state.design.modules[mi], value);
+    } else if (/^modules\.\d+\.solar\.season_mode$/.test(path)) {
+      var si = Number(path.split('.')[1]);
+      state.design.modules[si].solar.season_mode = value;
+      state.design.modules[si].solar.tilt_deg = value === 'winter' ? 60 : value === 'summer' ? 30 : 39;
     } else if (path.indexOf('.type') >= 0 && /^modules\.\d+\.type$/.test(path)) {
       var idx = Number(path.split('.')[1]);
       var m = state.design.modules[idx];
@@ -594,7 +613,7 @@
     if (!path) return;
     if (state.editBase && JSON.stringify(state.editBase) !== JSON.stringify(state.design)) pushHistory(state.editBase);
     state.editBase = null;
-    if (path.indexOf('.type') >= 0 || path.indexOf('.roof.type') >= 0) {
+    if (path.indexOf('.type') >= 0 || path.indexOf('.roof.type') >= 0 || /^modules\.\d+\.solar\./.test(path)) {
       renderControls();
       renderVisuals();
     }
