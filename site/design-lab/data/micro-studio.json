@@ -1,0 +1,219 @@
+{
+  "id": "micro-studio",
+  "name": "Micro Studio",
+  "group": "One container",
+  "editable": false,
+  "visual_seed": 23,
+  "tagline": "Twenty feet of shelter, with most of the living outdoors.",
+  "description": "A 20-foot container holds a compact bath, kitchenette and sleeping/living room. The screened porch and deck are almost as large as the interior, making the outdoors part of the home.",
+  "primary_view_deg": 180,
+  "modules": [
+    {
+      "id": "m1",
+      "type": "20ft",
+      "nominal": {
+        "length_m": 6.058,
+        "width_m": 2.438,
+        "height_m": 2.896
+      },
+      "position_m": [
+        0,
+        0
+      ],
+      "rotation_deg": 0,
+      "insulation": {
+        "thickness_mm": 150,
+        "type": "wood-fibre or documented reclaimed board"
+      },
+      "cladding": {
+        "type": "mixed",
+        "colour": "#6f6a5d"
+      },
+      "roof": {
+        "type": "solar",
+        "solar": true,
+        "green": false
+      },
+      "structure": {
+        "openings_reinforced": true,
+        "wall_removal": "none",
+        "cantilever_m": 0,
+        "notes": ""
+      },
+      "openings": [
+        {
+          "id": "m1-s1",
+          "face": "south",
+          "type": "sliding-door",
+          "position_m": 3.1,
+          "width_m": 1.8,
+          "height_m": 2.1,
+          "sill_m": 0,
+          "name": "Porch doors"
+        },
+        {
+          "id": "m1-n1",
+          "face": "north",
+          "type": "window",
+          "position_m": 2,
+          "width_m": 1.2,
+          "height_m": 1.2,
+          "sill_m": 0.9,
+          "name": "North window"
+        },
+        {
+          "id": "m1-e1",
+          "face": "east",
+          "type": "window",
+          "position_m": 1.2,
+          "width_m": 0.8,
+          "height_m": 1.2,
+          "sill_m": 0.9,
+          "name": "East window"
+        }
+      ],
+      "zones": [
+        {
+          "id": "m1-z1",
+          "name": "Bathroom",
+          "type": "bathroom",
+          "start_m": 0,
+          "end_m": 1.8,
+          "accessibility": "Compact wet room; turning space is tight."
+        },
+        {
+          "id": "m1-z2",
+          "name": "Kitchenette",
+          "type": "kitchen",
+          "start_m": 1.8,
+          "end_m": 3.6,
+          "accessibility": "One counter run with a bar sink."
+        },
+        {
+          "id": "m1-z3",
+          "name": "Sleeping and living",
+          "type": "living",
+          "start_m": 3.6,
+          "end_m": 6,
+          "accessibility": "A sofa bed or Murphy bed keeps the room flexible."
+        }
+      ]
+    }
+  ],
+  "connections": [],
+  "porches": [
+    {
+      "id": "p1",
+      "module": "m1",
+      "face": "south",
+      "start_m": 1.6,
+      "length_m": 3.2,
+      "depth_m": 2.4,
+      "screened": true,
+      "roof": true,
+      "note": "Compact screened porch."
+    }
+  ],
+  "decks": [
+    {
+      "id": "d1",
+      "porch": "p1",
+      "projection_m": 1.6,
+      "note": "Deck extension."
+    }
+  ],
+  "foundation": {
+    "type": "Screw piles or piers (concept)",
+    "clearance_m": 0.45,
+    "note": "Placeholder."
+  },
+  "features": {
+    "interior_uses": [
+      "Wet room",
+      "Kitchenette",
+      "Sleeping/living"
+    ],
+    "outdoor": "3.2 × 2.4 m screened porch plus 1.6 m deck",
+    "solar": "Small solar array",
+    "green_roof": "Not included",
+    "accessibility": "Too small for a 1.5 m turning circle; a seasonal studio, not an accessible permanent home.",
+    "environment": "Smallest footprint and material use; the deck reduces pressure on the interior."
+  },
+  "materials": [
+    {
+      "component": "Container modules",
+      "material": "Reclaimed 40 ft / 20 ft ISO high-cube steel containers",
+      "source": "Documented salvage; inspect structure, coatings, prior cargo and floor treatment",
+      "disclosure": "Reuse avoids new steel but adds transport, reinforcement and insulation. Not automatically lower impact than timber."
+    },
+    {
+      "component": "External insulation",
+      "material": "Wood-fibre or mineral-wool board (TBD)",
+      "source": "New or documented reclaimed board",
+      "disclosure": "Continuous external insulation reduces thermal bridging. Thickness and moisture performance need hygrothermal review."
+    },
+    {
+      "component": "Rainscreen",
+      "material": "Reclaimed or certified timber battens and boards",
+      "source": "Local salvage or certified timber",
+      "disclosure": "Replaceable, repairable, but needs durable species, ventilation and fire review."
+    },
+    {
+      "component": "Porch, deck and connector",
+      "material": "Timber frame, decking, insect screen and steel connectors",
+      "source": "Graded reclaimed timber where safe",
+      "disclosure": "Separate from the container envelope so it can be repaired or removed."
+    },
+    {
+      "component": "Roof",
+      "material": "Membrane, PV modules and optional extensive green roof",
+      "source": "Certified modules; engineered green-roof system",
+      "disclosure": "Green roofs add saturated weight and maintenance. PV output depends on orientation, shading and snow."
+    }
+  ],
+  "provenance": {
+    "authors": "Containers Hamlet contributors",
+    "created": "2026",
+    "revision": "1.3.0",
+    "method": "Original concept schema and geometry for Containers Hamlet Design Lab. Not a measured, engineered or permit-ready design.",
+    "source": "Original 20-foot studio concept.",
+    "verification": "None. No architect, engineer, building official or accessibility consultant has reviewed this concept."
+  },
+  "schema": "containers-hamlet-design/v1.0",
+  "status": "concept only; not reviewed; not for construction",
+  "units": "metres",
+  "professional_review_required": true,
+  "licence": {
+    "code": "AGPL-3.0-or-later",
+    "content": "CC BY-SA 4.0",
+    "note": "Editor source code is AGPL-3.0-or-later. Original concept documentation, diagrams and sample data are CC BY-SA 4.0."
+  },
+  "authorship": {
+    "name": "Containers Hamlet contributors",
+    "tool": "Containers Hamlet Design Lab",
+    "version": "1.3.0"
+  },
+  "trellises": [
+    {
+      "id": "t1",
+      "module": "m1",
+      "face": "east",
+      "start_m": 0.3,
+      "length_m": 1.8,
+      "offset_m": 0.35,
+      "height_m": 3,
+      "note": "Compact trellis on the east end."
+    }
+  ],
+  "material_intent": {
+    "reclaimed_containers": true,
+    "reused_timber": true,
+    "replaceable_cladding": true,
+    "continuous_external_insulation": true,
+    "selective_spray_foam": false,
+    "reversible_connections": true,
+    "modular_porch": true,
+    "solar_ready": true,
+    "green_roof_investigated": false
+  }
+}

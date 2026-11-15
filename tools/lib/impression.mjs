@@ -72,7 +72,7 @@ export function renderImpression(site) {
   out.push(`<rect y="388" width="${W}" height="${H - 388}" fill="url(#imp-water)"/>`);
   // sun reflection
   out.push(`<path d="M360 390L500 390L560 760L300 760Z" fill="#f4dfb7" fill-opacity="0.13"/>`);
-  for (let i = 0; i < 28; i++) {
+  for (let i = 0; i < 22; i++) {
     const y = 400 + rnd() * 330;
     const x = 30 + rnd() * (W - 120);
     const w = 30 + rnd() * 170;
@@ -91,7 +91,7 @@ export function renderImpression(site) {
   out.push(`<path d="M946 760Q986 656 1064 606T1184 566" fill="none" stroke="#d4c49b" stroke-width="4" stroke-opacity="0.6" stroke-dasharray="8 5"/>`);
 
   // forest behind the home: conifers and birch, back to front
-  for (let i = 0; i < 36; i++) {
+  for (let i = 0; i < 30; i++) {
     const x = 820 + rnd() * 580;
     const base = 500 + rnd() * 120;
     const h = 46 + rnd() * 110;
@@ -143,8 +143,8 @@ export function renderImpression(site) {
   out.push(`</g>`);
 
   // midground trees at the point edge, overlapping the home a little
-  for (let i = 0; i < 14; i++) {
-    const t = i / 14;
+  for (let i = 0; i < 10; i++) {
+    const t = i / 10;
     const x = 820 + t * 220;
     const y = 570 + t * 150;
     out.push(conifer(x, y, 34 + rnd() * 52, i % 3 === 0 ? '#28452f' : '#34563a', 0.95));
