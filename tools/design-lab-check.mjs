@@ -93,13 +93,14 @@ try {
     seasonal: document.querySelectorAll('.season-pair img').length,
     wall: !!document.querySelector('.assembly-section img'),
     veg: !!document.querySelector('.vegetation-section'),
-    solar: !!document.querySelector('.solar-section img')
+    solar: !!document.querySelector('.solar-section img'),
+    foundation: !!document.querySelector('.foundation-section img')
   }));
   ok(archState.slides === 5 && archState.current === 1 && archState.visible === 1 && archState.controls, 'architecture: five slides, one current and visible controls');
   ok(archState.geometry === 3 && archState.illustrative === 2, 'architecture: three geometry-backed drawings and two illustrative studies are labelled');
   ok(archState.caps && archState.imgs && (await arch.page.evaluate(() => document.querySelector('[data-slide].is-current img').naturalWidth > 0)), 'architecture: every view has a descriptive caption and alt text');
-  ok(archState.seasonal === 2 && archState.wall && archState.veg && archState.solar, 'architecture: seasonal pair, wall section, solar section and vegetation notes are present');
-  ok(await arch.page.evaluate(() => [...document.querySelectorAll('.season-pair img, .assembly-section img, .solar-section img')].every((i) => i.naturalWidth > 0)), 'architecture: seasonal, wall-section and solar images load');
+  ok(archState.seasonal === 2 && archState.wall && archState.veg && archState.solar && archState.foundation, 'architecture: seasonal pair, wall, solar, foundation and vegetation sections are present');
+  ok(await arch.page.evaluate(() => [...document.querySelectorAll('.season-pair img, .assembly-section img, .solar-section img, .foundation-section img')].every((i) => i.naturalWidth > 0)), 'architecture: seasonal, wall-section, solar and foundation images load');
   await arch.page.waitForTimeout(900);
   ok(/View 1 of 5/.test(await arch.page.textContent('[data-slide-status]')), 'architecture: does not advance automatically');
   await arch.page.focus('[data-slide-viewport]');
@@ -231,6 +232,11 @@ try {
   section('Editor: envelope, season and vegetation');
   ok(await page.evaluate(() => !!document.querySelector('#env-assembly') && !!document.querySelector('#wall-section svg')), 'envelope controls and an explanatory wall section are available');
   const wallBefore = await page.evaluate(() => document.querySelector('#wall-section').innerHTML);
+  await page.selectOption('#foundation-system', 'ground-screws');
+  await page.waitForTimeout(250);
+  await page.fill('#foundation-clearance', '0.9');
+  await page.locator('#foundation-clearance').blur();
+  await page.waitForTimeout(250);
   await page.selectOption('#m-0-solar-season', 'winter');
   await page.waitForTimeout(250);
   await page.selectOption('#env-assembly', 'wood-fibre');
@@ -242,6 +248,14 @@ try {
   await page.locator('#m-0-solar-tilt').blur();
   await page.waitForTimeout(300);
   ok(/60°/.test(await page.textContent('#solar-section')) && /PV 60°/.test(await page.evaluate(() => document.querySelector('#exterior').innerHTML)), 'changing solar tilt updates the section and exterior array label');
+  ok(await page.evaluate(() => !!document.querySelector('#foundation-section svg')), 'foundation section is available');
+  await page.fill('#foundation-clearance', '0.9');
+  await page.locator('#foundation-clearance').blur();
+  await page.waitForTimeout(300);
+  ok(/0.9 m clearance/.test(await page.textContent('#foundation-section')), 'changing foundation clearance updates the section');
+  await page.selectOption('#foundation-system', 'ground-screws');
+  await page.waitForTimeout(300);
+  ok(/ground-screws|Ground screws/i.test(await page.textContent('#foundation-section')), 'changing foundation system updates the section');
   const summerExterior = await page.evaluate(() => document.querySelector('#exterior').innerHTML);
   await page.selectOption('#season', 'winter');
   await page.waitForTimeout(300);
@@ -321,6 +335,11 @@ try {
     await d.saveAs(file);
     return file;
   }
+  await page.selectOption('#foundation-system', 'ground-screws');
+  await page.waitForTimeout(250);
+  await page.fill('#foundation-clearance', '0.9');
+  await page.locator('#foundation-clearance').blur();
+  await page.waitForTimeout(250);
   await page.selectOption('#m-0-solar-season', 'winter');
   await page.waitForTimeout(250);
   await page.selectOption('#env-assembly', 'wood-fibre');
@@ -339,6 +358,7 @@ try {
   ok(parsed.envelope && parsed.envelope.assembly === 'wood-fibre' && parsed.envelope.layers.some((l) => l.role === 'insulation'), 'envelope assembly and layers persist in the exported JSON');
   ok(parsed.vegetation && parsed.vegetation.length >= 1 && parsed.vegetation.every((v) => v.plant_type && v.irrigation && v.support && v.offset_m >= 0.3), 'vegetation and planting metadata persist in the exported JSON');
   ok(parsed.modules.some((m) => m.solar && m.solar.tilt_deg === 60 && m.solar.season_mode === 'winter'), 'solar tilt, azimuth and season persist in the exported JSON');
+  ok(parsed.foundation && parsed.foundation.system === 'ground-screws' && parsed.foundation.clearance_m === 0.9 && parsed.foundation.no_compaction, 'foundation system, clearance and no-compaction persist in the exported JSON');
   const wallFile = await downloadFile('#export-wall', 'wall.svg');
   ok(/^<svg|^<\?xml/.test(fs.readFileSync(wallFile, 'utf8').trim()), 'wall section SVG exports');
   const planFile = await downloadFile('#export-plan', 'plan.svg');
@@ -369,6 +389,18 @@ try {
   await shot(vegPage.page, 'vegetation-full', true);
   await vegPage.context.close();
 
+  section('Ground and footbridge');
+  const ground = await open('design-lab/ground/');
+  ok(ground.errors.length === 0, `ground guide: no console errors${ground.errors.length ? ': ' + ground.errors.join(' | ') : ''}`);
+  const groundState = await ground.page.evaluate(() => ({ rows: document.querySelectorAll('tbody tr').length, bridge: !!document.querySelector('.system-figure img'), text: document.body.textContent, links: [...document.querySelectorAll('.source-list a')].map((a) => a.href) }));
+  ok(groundState.rows >= 10 && groundState.bridge && /footbridge/i.test(groundState.text), 'ground guide: foundation options and footbridge are present');
+  ok(await ground.page.evaluate(() => document.querySelector('.system-figure img').naturalWidth > 0), 'ground guide: footbridge diagram loads');
+  ok(groundState.links.some((u) => /wcl\.org\.uk/.test(u)) && groundState.links.some((u) => /technometalpost/.test(u)) && groundState.links.some((u) => /naturalbuildingcollective/.test(u)) && groundState.links.some((u) => /solidearthtech/.test(u)) && groundState.links.some((u) => /houzz/.test(u)), 'ground guide: supplied sources are linked');
+  await axe(ground.page, 'ground guide');
+  await shot(ground.page, 'ground-top');
+  await shot(ground.page, 'ground-full', true);
+  await ground.context.close();
+
   section('Responsive and preferences');
   const smallGallery = await open('design-lab/', { viewport: { width: 320, height: 640 } });
   await smallGallery.page.waitForTimeout(250);
@@ -398,6 +430,14 @@ try {
   const darkCompare = await open('design-lab/compare/', { colorScheme: 'dark' });
   await axe(darkCompare.page, 'comparison in dark scheme');
   await darkCompare.context.close();
+  const smallGround = await open('design-lab/ground/', { viewport: { width: 320, height: 640 } });
+  await smallGround.page.waitForTimeout(300);
+  ok(await smallGround.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'ground guide has no horizontal scrolling at 320 px');
+  await axe(smallGround.page, 'ground guide at 320 px');
+  await smallGround.context.close();
+  const darkGround = await open('design-lab/ground/', { colorScheme: 'dark' });
+  await axe(darkGround.page, 'ground guide in dark scheme');
+  await darkGround.context.close();
   const smallVeg = await open('design-lab/vegetation/', { viewport: { width: 320, height: 640 } });
   await smallVeg.page.waitForTimeout(250);
   ok(await smallVeg.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'vegetation guide has no horizontal scrolling at 320 px');

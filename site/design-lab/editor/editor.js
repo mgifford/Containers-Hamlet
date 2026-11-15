@@ -177,6 +177,7 @@
     $('site-rotation').value = d.site.rotation_deg || 0;
     $('season').value = state.season;
     renderSolarSection();
+    renderFoundation();
     renderOpenings();
     renderZones();
     renderPorches();
@@ -270,6 +271,34 @@
       field('Thermal bridge mitigation', selectInput('thermal.thermal_bridge_mitigation', t.thermal_bridge_mitigation, 'thermal-bridge', option('continuous external insulation and thermal breaks at openings and pile caps', 'Continuous + breaks', t.thermal_bridge_mitigation) + option('partial mitigation; junctions to be reviewed', 'Partial mitigation', t.thermal_bridge_mitigation) + option('not decided', 'Not decided', t.thermal_bridge_mitigation))) +
       field('Heating', selectInput('thermal.heating', t.heating, 'thermal-heat', option('cold-climate air-source heat pump', 'Cold-climate heat pump', t.heating) + option('heat pump with backup', 'Heat pump + backup', t.heating) + option('not decided', 'Not decided', t.heating))) +
       '</div>' + checkbox('thermal.rainscreen_ventilation', t.rainscreen_ventilation, 'thermal-rainscreen', 'Ventilated rainscreen and replaceable cladding') + checkbox('thermal.heat_recovery_ventilation', t.heat_recovery_ventilation, 'thermal-hrv', 'Heat-recovery ventilation (HRV/ERV)');
+  }
+
+  function renderFoundation() {
+    var f = state.design.foundation;
+    var panel = $('foundation-controls');
+    if (!panel) return;
+    var labels = { 'helical-piles': 'Engineered helical piles', 'ground-screws': 'Ground screws (light structures)', 'concrete-piers': 'Concrete piers', 'timber-posts': 'Timber posts (decks)', 'bedrock-anchors': 'Bedrock anchors' };
+    panel.innerHTML = '<div class="field-grid">' +
+      field('System', selectInput('', f.system, 'foundation-system', Object.keys(labels).map(function (k) { return option(k, labels[k], f.system); }).join(''))) +
+      field('Floor clearance (m)', numberInput('', f.clearance_m, 'foundation-clearance', ' step="0.05" min="0" max="2"')) +
+      '</div>' +
+      checkbox('', f.no_compaction, 'foundation-no-compaction', 'No fill, no slab and no compaction') +
+      checkbox('', f.independent_deck, 'foundation-independent-deck', 'Independent decks and porches') +
+      '<p class="small">' + esc(f.note) + '</p>';
+    $('foundation-section').innerHTML = Model.foundationSectionSVG(state.design, { idPrefix: 'editor-foundation' });
+  }
+
+  function applyFoundationChoice() {
+    var system = $('foundation-system').value;
+    var clearance = Math.max(0, Math.min(2, Number($('foundation-clearance').value) || 0.6));
+    var noCompaction = $('foundation-no-compaction').checked;
+    var independentDeck = $('foundation-independent-deck').checked;
+    mutate(function () {
+      state.design.foundation.system = system;
+      state.design.foundation.clearance_m = clearance;
+      state.design.foundation.no_compaction = noCompaction;
+      state.design.foundation.independent_deck = independentDeck;
+    }, 'Foundation changed. Recheck soil, frost uplift, corrosion, lateral capacity, slope stability, permits and conservation-authority requirements.');
   }
 
   function renderSolarSection() {
@@ -466,6 +495,7 @@
       ['Envelope assembly', (Model.ENVELOPE_LABEL[d.envelope.assembly] || d.envelope.assembly) + ' · ' + d.envelope.layers.filter(function (l) { return l.role === 'insulation'; }).reduce(function (t, l) { return t + l.thickness_mm; }, 0) + ' mm insulation'],
       ['Vegetation', d.vegetation.length + ' separate system' + (d.vegetation.length === 1 ? '' : 's')],
       ['Solar', d.modules.filter(function (m) { return m.solar.enabled; }).map(function (m) { return m.id + ': ' + m.solar.tilt_deg + '° / ' + m.solar.azimuth_deg + '° ' + m.solar.season_mode; }).join(' · ') || 'No solar array enabled'],
+      ['Foundation', d.foundation.system + ' · ' + d.foundation.clearance_m + ' m clearance · ' + (d.foundation.no_compaction ? 'no compaction' : 'compaction unresolved')],
       ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green/biosolar ' : '') || 'Membrane'],
       ['Insulation', 'Up to ' + s.maxInsulation_mm + ' mm external'],
       ['Status', assessment.ok ? 'No invalid geometry; professional review required' : 'Invalid geometry; drawings disabled'],
@@ -1030,6 +1060,7 @@
     $('add-connection').addEventListener('click', addConnection);
     $('add-vegetation').addEventListener('click', addVegetation);
     $('envelope-controls').addEventListener('change', applyEnvelopeChoice);
+    $('foundation-controls').addEventListener('change', applyFoundationChoice);
     $('season').addEventListener('change', function () { state.season = $('season').value; renderVisuals(); announce('Season switched to ' + state.season + '. The plan and cutaway are unchanged.'); });
     $('apply-colour').addEventListener('click', function () {
       var colour = $('default-colour').value;

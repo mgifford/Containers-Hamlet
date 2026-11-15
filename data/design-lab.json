@@ -180,9 +180,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Type, depth, frost and rock need geotechnical review."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -510,9 +515,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
-        "clearance_m": 0.45,
-        "note": "Placeholder."
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
+        "clearance_m": 0.6,
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -848,9 +858,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Placeholder; rock and shoreline review required."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -1316,9 +1331,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Placeholder."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -1769,9 +1789,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Two independent foundations; frost and rock review required."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -2209,9 +2234,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Adjacent modules need a shared foundation strategy."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -2797,9 +2827,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Three independent foundations; geotechnical review required."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -3380,9 +3415,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Placeholder."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -3929,9 +3969,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Placeholder."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "features": {
         "interior_uses": [
@@ -4624,9 +4669,14 @@
         }
       ],
       "foundation": {
-        "type": "Screw piles or piers (concept)",
+        "system": "helical-piles",
+        "type": "Engineered helical piles with adjustable brackets",
         "clearance_m": 0.6,
-        "note": "Placeholder; the hall and three modules need a coordinated foundation strategy."
+        "no_compaction": true,
+        "independent_deck": true,
+        "frost_design": "Engineered pile depth and uplift resistance below frost; geotechnical review required.",
+        "ground_disturbance": "Point loads only; no slab, fill or grade change. Use matting, root protection and a construction sequence reviewed by an arborist.",
+        "note": "Elevated floor on engineered helical piles. Confirm soil, bedrock, frost uplift, corrosion, lateral capacity, slope stability and permit requirements before construction."
       },
       "thermal": {
         "wall_insulation_strategy": "continuous external wood-fibre board + mineral wool (200 mm) with thermal breaks and a ventilated rainscreen",

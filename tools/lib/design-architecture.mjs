@@ -60,6 +60,7 @@ export function architecturePage(c, sizes, profile) {
     <a href="../../index.html">Design gallery</a>
     <a href="../../editor/">Editor</a>
     <a href="../../vegetation/">Vegetation</a>
+    <a href="../../ground/">Ground</a>
     <a href="../../compare/">Compare</a>
     <a href="../../../index.html#design-lab">Design on the main site</a>
     <a href="../../../index.html">Main site</a>
@@ -113,6 +114,13 @@ ${slides}
     <h3>Layers</h3>
     <ul class="assembly-layers">${c.envelope.layers.map((l) => `<li>${esc(l.material)} — ${l.thickness_mm} mm (${esc(l.role)})</li>`).join('')}</ul>
     <p class="small">Condensation, fire, moisture, fastening, structural penetrations and maintenance all need project review. The designer does not claim this assembly is compliant or moisture-safe.</p>
+  </section>
+
+  <section class="foundation-section" aria-labelledby="foundation-title">
+    <h2 id="foundation-title">Foundation and ground</h2>
+    <p><strong>${esc(c.foundation.system)}</strong> · ${c.foundation.clearance_m} m clearance · ${c.foundation.no_compaction ? 'no compaction intent' : 'compaction unresolved'} · independent decks: ${c.foundation.independent_deck ? 'yes' : 'no'}.</p>
+    <img src="../../systems/foundation-${esc(c.foundation.system)}.svg" width="1040" height="430" alt="Elevated ${esc(c.foundation.system)} foundation section with piles, floor, no fill and a root protection zone." loading="eager" decoding="async">
+    <p class="small">${esc(c.foundation.note)} Geotechnical, frost-uplift, corrosion, lateral, slope, permit and conservation-authority review are required. No fill, slab or compaction is the intent; the construction sequence still needs an arborist and erosion-control plan.</p>
   </section>
 
   <section class="solar-section" aria-labelledby="solar-title">

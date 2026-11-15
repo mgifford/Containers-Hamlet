@@ -278,6 +278,13 @@
     if (conditioned > 0 && glazingArea / conditioned > 0.28) warn('glazing-ratio', 'Glazing is about ' + Math.round(glazingArea / conditioned * 100) + '% of the nominal conditioned area. Large glazed areas can overheat in summer and lose heat in winter; model shading and window performance before deciding.', 'engineering');
     if (d.thermal && /none|not decided/i.test(d.thermal.external_shading)) warn('no-shading', 'External shading is not resolved. West and south glazing need a summer overheating strategy.', 'engineering');
     if (d.thermal && d.thermal.heat_recovery_ventilation === false) warn('no-hrv', 'No heat-recovery ventilation is selected. Winter ventilation and moisture control need a designed strategy.', 'engineering');
+    if (d.foundation) {
+      warn('foundation-geotech', 'Foundation type, soil, bedrock, groundwater, frost depth, uplift and lateral capacity need geotechnical and structural review for the ' + d.foundation.system + ' option.', 'engineering');
+      if (d.foundation.clearance_m < 0.45) warn('foundation-clearance', 'The floor clearance is below 450 mm; ventilation, inspection, snow, water and maintenance access need review.', 'engineering');
+      if (!d.foundation.no_compaction) warn('foundation-compaction', 'No-compaction is not confirmed; root protection, fill, grading and construction access need an arborist and erosion-control plan.', 'engineering');
+      if (!d.foundation.independent_deck) warn('foundation-deck', 'Decks and porches are not marked independent; connecting them to the container frame can transfer movement and loads.', 'engineering');
+      if (d.foundation.system === 'ground-screws' || d.foundation.system === 'timber-posts') warn('foundation-light-system', 'Ground screws and timber posts are best for light decks, boardwalks or porches; a house needs an engineered primary foundation.', 'engineering');
+    }
     if (d.envelope) {
       warn('envelope-condensation', 'The ' + (ENVELOPE_LABEL[d.envelope.assembly] || d.envelope.assembly) + ' assembly keeps insulation outboard, but air/vapour control, thermal bridges and condensation at steel and openings still need a building-envelope review.', 'engineering');
       warn('envelope-fire', d.envelope.fire + '.', 'engineering');
@@ -447,6 +454,49 @@
     out.push('<text x="34" y="' + (H - 56) + '" font-family="system-ui, sans-serif" font-size="12" fill="#1d392c">Year-round 36–39° · winter ~60° for low sun and snow shedding · summer ~30° · face true south within a few degrees.</text>');
     out.push('<text x="34" y="' + (H - 36) + '" font-family="system-ui, sans-serif" font-size="11" fill="#3f5a4c">Ottawa reference: SolarCalculator.CA reports 39° optimal fixed tilt. No energy production, snow-shedding or code compliance is claimed.</text>');
     out.push('<text x="34" y="' + (H - 12) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Conceptual solar section · roof structure, wind uplift, shading, snow and electrical design require professional review · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  function foundationSectionSVG(input, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(input);
+    var f = d.foundation;
+    var W = 1040, H = 430;
+    var ground = 210, floor = 135, pileBottom = 370;
+    var pre = opts.idPrefix || 'foundation-section';
+    var labels = { 'helical-piles': 'Engineered helical piles', 'ground-screws': 'Ground screws', 'concrete-piers': 'Concrete piers', 'timber-posts': 'Timber posts on pads', 'bedrock-anchors': 'Bedrock anchors' };
+    var out = [];
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d">');
+    out.push('<title id="' + pre + '-t">' + esc(opts.title || (d.name + ' foundation section')) + '</title>');
+    out.push('<desc id="' + pre + '-d">' + esc('Conceptual elevated foundation section: ' + (labels[f.system] || f.system) + ', ' + f.clearance_m + ' metre clearance, no slab, no fill and no compaction. Piles, frost depth, uplift, corrosion, lateral capacity and permits require professional design.') + '</desc>');
+    out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
+    out.push('<text x="34" y="42" font-family="system-ui, sans-serif" font-size="23" font-weight="800" fill="#1d392c">' + esc(opts.title || 'Elevated foundation and no-compaction section') + '</text>');
+    out.push('<text x="34" y="64" font-family="system-ui, sans-serif" font-size="13" fill="#3f5a4c">' + esc((labels[f.system] || f.system) + ' · ' + f.clearance_m + ' m clearance · independent deck: ' + (f.independent_deck ? 'yes' : 'no') + ' · no compaction: ' + (f.no_compaction ? 'yes' : 'no')) + '</text>');
+    // ground
+    out.push('<rect x="70" y="' + ground + '" width="760" height="' + (H - ground - 20) + '" fill="#e4e9dd"/>');
+    out.push('<line x1="70" y1="' + ground + '" x2="830" y2="' + ground + '" stroke="#6f7b63" stroke-width="2"/>');
+    out.push('<text x="82" y="' + (ground + 18) + '" font-family="system-ui, sans-serif" font-size="11" fill="#3f5a4c">existing grade · no fill · no compaction</text>');
+    // floor
+    out.push('<rect x="180" y="' + floor + '" width="500" height="22" fill="#8a6a4a" stroke="#3a342d" stroke-width="1.2"/>');
+    out.push('<text x="190" y="' + (floor - 9) + '" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1d392c">elevated floor / independent deck</text>');
+    // piles
+    [[230, 230], [370, 370], [510, 510], [650, 650]].forEach(function (x) {
+      out.push('<line x1="' + x[0] + '" y1="' + floor + '" x2="' + x[1] + '" y2="' + pileBottom + '" stroke="#5d6f6a" stroke-width="7"/>');
+      out.push('<rect x="' + (x[1] - 18) + '" y="' + (floor + 12) + '" width="36" height="10" fill="#455955"/>');
+      out.push('<path d="M' + (x[1] - 18) + ' ' + (pileBottom - 12) + 'h36l-10 12h-16z" fill="#455955"/>');
+      out.push('<path d="M' + (x[1] - 16) + ' ' + (pileBottom - 4) + 'q16 18 32 0" fill="none" stroke="#455955" stroke-width="3"/>');
+    });
+    // frost line
+    out.push('<line x1="70" y1="300" x2="830" y2="300" stroke="#8f5a21" stroke-width="1.5" stroke-dasharray="6 4"/>');
+    out.push('<text x="82" y="294" font-family="system-ui, sans-serif" font-size="11" fill="#8f5a21">frost depth to be confirmed · pile depth and uplift engineered</text>');
+    // root zone
+    out.push('<path d="M760 210 C720 180 700 150 735 120 C760 100 800 130 800 160" fill="none" stroke="#3f704b" stroke-width="2"/>');
+    out.push('<text x="738" y="104" font-family="system-ui, sans-serif" font-size="10" fill="#31573f">root protection zone</text>');
+    // notes
+    out.push('<text x="34" y="' + (H - 48) + '" font-family="system-ui, sans-serif" font-size="12" fill="#1d392c">Point loads, no slab, no fill and no grade change. Matting and an arborist-reviewed sequence protect roots during construction.</text>');
+    out.push('<text x="34" y="' + (H - 28) + '" font-family="system-ui, sans-serif" font-size="11" fill="#3f5a4c">Geotechnical review, frost uplift, corrosion, lateral capacity, slope stability, building permit and conservation-authority approval are required.</text>');
+    out.push('<text x="34" y="' + (H - 8) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Conceptual foundation section · not a construction detail · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
     out.push('</svg>');
     return out.join('');
   }
@@ -849,13 +899,25 @@
   function moduleDraw(d, m, cut, S, winter) {
     var colour = m.cladding.colour || CC[m.cladding.type] || '#9a7350';
     var ins = m.insulation.thickness_mm / 1000;
-    var zTop = cut ? 1.2 : m.nominal.height_m;
+    var baseZ = d.foundation ? Math.max(0, d.foundation.clearance_m || 0) : 0;
+    var zTop = baseZ + (cut ? 1.2 : m.nominal.height_m);
     var L = m.nominal.length_m + 2 * (ins + 0.03), W = m.nominal.width_m + 2 * (ins + 0.03);
-    var faces = boxFaces(m.position_m[0], m.position_m[1], L, W, 0, zTop, m.rotation_deg || 0);
+    var faces = boxFaces(m.position_m[0], m.position_m[1], L, W, baseZ, zTop, m.rotation_deg || 0);
     var s = '';
     // shadow
     var base = moduleCorners(m).map(function (p) { return [p[0] + 0.35, p[1] + 0.35, 0]; });
     s += '<path d="M' + polyScreen(base, S) + 'Z" fill="#9eae8d" fill-opacity="0.55"/>';
+    if (baseZ > 0.05) {
+      var pilePts = moduleCorners(m).concat([
+        [(moduleCorners(m)[0][0] + moduleCorners(m)[1][0]) / 2, (moduleCorners(m)[0][1] + moduleCorners(m)[1][1]) / 2],
+        [(moduleCorners(m)[2][0] + moduleCorners(m)[3][0]) / 2, (moduleCorners(m)[2][1] + moduleCorners(m)[3][1]) / 2]
+      ]);
+      pilePts.forEach(function (pp) {
+        var g = S([pp[0], pp[1], 0]), t = S([pp[0], pp[1], baseZ]);
+        s += '<line x1="' + n(g[0]) + '" y1="' + n(g[1]) + '" x2="' + n(t[0]) + '" y2="' + n(t[1]) + '" stroke="#5d6f6a" stroke-width="4"/>';
+        s += '<circle cx="' + n(g[0]) + '" cy="' + n(g[1]) + '" r="3" fill="#455955"/>';
+      });
+    }
     faces.filter(visible).forEach(function (f) {
       var fill = f.name === 'top' ? (cut ? '#e6dfcd' : winter ? '#e4e9e5' : '#4b4a44') : colour;
       if (f.name === 'north' || f.name === 'west') fill = shade(colour, 0.78);
@@ -867,7 +929,7 @@
       // zone floors
       (m.zones || []).forEach(function (z) {
         var zx0 = -m.nominal.length_m / 2 + z.start_m, zx1 = -m.nominal.length_m / 2 + z.end_m;
-        var poly = [[zx0, -m.nominal.width_m / 2], [zx1, -m.nominal.width_m / 2], [zx1, m.nominal.width_m / 2], [zx0, m.nominal.width_m / 2]].map(function (q) { return transform(m, q); }).map(function (q) { return [q[0], q[1], 0.26]; });
+        var poly = [[zx0, -m.nominal.width_m / 2], [zx1, -m.nominal.width_m / 2], [zx1, m.nominal.width_m / 2], [zx0, m.nominal.width_m / 2]].map(function (q) { return transform(m, q); }).map(function (q) { return [q[0], q[1], baseZ + 0.26]; });
         s += '<path d="M' + polyScreen(poly, S) + 'Z" fill="' + (ZC[z.type] || '#e8e2d2') + '" stroke="#6d7b65" stroke-width="0.7"/>';
         var c = S(transform(m, [(zx0 + zx1) / 2, 0]).concat([0.3]));
         s += '<text x="' + n(c[0]) + '" y="' + n(c[1]) + '" font-family="system-ui, sans-serif" font-size="10" text-anchor="middle" fill="#1d392c" stroke="#faf8f2" stroke-width="2.5" paint-order="stroke">' + esc(z.name) + '</text>';
@@ -879,7 +941,7 @@
         if (nrm[0] + nrm[1] <= 0) return;
         var seg = openingSegment(m, o);
         var a = seg[0], b = seg[1];
-        var z0 = (o.sill_m || 0) + 0.06, z1 = z0 + o.height_m;
+        var z0 = baseZ + (o.sill_m || 0) + 0.06, z1 = z0 + o.height_m;
         var q = [[a[0] + nrm[0] * 0.03, a[1] + nrm[1] * 0.03, z0], [b[0] + nrm[0] * 0.03, b[1] + nrm[1] * 0.03, z0], [b[0] + nrm[0] * 0.03, b[1] + nrm[1] * 0.03, z1], [a[0] + nrm[0] * 0.03, a[1] + nrm[1] * 0.03, z1]];
         s += '<path d="M' + polyScreen(q, S) + 'Z" fill="' + (o.type === 'window' ? '#9fd3e0' : '#5d432c') + '" stroke="#2d3a35" stroke-width="0.8"/>';
       });
@@ -894,7 +956,7 @@
       var pl = Math.min(4.2, (Math.abs(p[0]) > 0.5 ? m.nominal.length_m : m.nominal.width_m) * 0.8);
       var pd = Math.min(1.55, (Math.abs(f[1]) > 0.5 ? m.nominal.width_m : m.nominal.length_m) * 0.62);
       var rise = pd * Math.tan(tilt * Math.PI / 180);
-      var z0 = m.nominal.height_m + 0.08, z1 = z0 + rise;
+      var z0 = baseZ + m.nominal.height_m + 0.08, z1 = z0 + rise;
       var corners = [
         [f[0] * pd / 2 + p[0] * pl / 2, f[1] * pd / 2 + p[1] * pl / 2, z0],
         [f[0] * pd / 2 - p[0] * pl / 2, f[1] * pd / 2 - p[1] * pl / 2, z0],
@@ -912,7 +974,7 @@
         var a2 = [corners[3][0] + (corners[2][0] - corners[3][0]) * t, corners[3][1] + (corners[2][1] - corners[3][1]) * t, corners[3][2]];
         s += '<line x1="' + n(S(a1)[0]) + '" y1="' + n(S(a1)[1]) + '" x2="' + n(S(a2)[0]) + '" y2="' + n(S(a2)[1]) + '" stroke="#9fc9d6" stroke-width="0.7"/>';
       }
-      [corners[2], corners[3]].forEach(function (q) { var r = S([q[0], q[1], m.nominal.height_m + 0.02]); var tq = S(q); s += '<line x1="' + n(r[0]) + '" y1="' + n(r[1]) + '" x2="' + n(tq[0]) + '" y2="' + n(tq[1]) + '" stroke="#536b63" stroke-width="1.1"/>'; });
+      [corners[2], corners[3]].forEach(function (q) { var r = S([q[0], q[1], baseZ + m.nominal.height_m + 0.02]); var tq = S(q); s += '<line x1="' + n(r[0]) + '" y1="' + n(r[1]) + '" x2="' + n(tq[0]) + '" y2="' + n(tq[1]) + '" stroke="#536b63" stroke-width="1.1"/>'; });
       var pc = S([(corners[0][0] + corners[2][0]) / 2, (corners[0][1] + corners[2][1]) / 2, z0 + 0.2]);
       s += '<text x="' + n(pc[0]) + '" y="' + n(pc[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#eaf6f9" stroke="#123b4d" stroke-width="2.2" paint-order="stroke">PV ' + n(tilt, 0) + '° / ' + n(m.solar.azimuth_deg, 0) + '°</text>';
     }
@@ -1037,7 +1099,7 @@
     moduleCorners: moduleCorners, connectionCorners: connectionCorners, porchCorners: porchCorners, deckCorners: deckCorners,
     openingSegment: openingSegment, faceNormalWorld: faceNormalWorld, faceLength: faceLength,
     polygonsOverlap: polygonsOverlap, overlapArea: overlapArea, bounds: bounds,
-    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, exposureProfile: exposureProfile, designProfile: designProfile, envelopeFor: envelopeFor, wallSectionSVG: wallSectionSVG, solarSectionSVG: solarSectionSVG, ENVELOPE_LABEL: ENVELOPE_LABEL, VEG_LABEL: VEG_LABEL,
+    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, exposureProfile: exposureProfile, designProfile: designProfile, envelopeFor: envelopeFor, wallSectionSVG: wallSectionSVG, solarSectionSVG: solarSectionSVG, foundationSectionSVG: foundationSectionSVG, ENVELOPE_LABEL: ENVELOPE_LABEL, VEG_LABEL: VEG_LABEL,
     renderPlan: planSVG, renderAxo: axoSVG, describe: describe,
     summary: Schema.summary, canonicalize: Schema.canonicalize
   };

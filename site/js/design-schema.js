@@ -27,6 +27,7 @@
   var ENVELOPE_ASSEMBLIES = ['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'];
   var VEGETATION_TYPES = ['trellis', 'living-wall', 'edible-wall', 'privacy-screen'];
   var SOLAR_SEASONS = ['year-round', 'winter', 'summer'];
+  var FOUNDATION_SYSTEMS = ['helical-piles', 'ground-screws', 'concrete-piers', 'timber-posts', 'bedrock-anchors'];
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function isNum(v) { return typeof v === 'number' && Number.isFinite(v); }
@@ -83,6 +84,7 @@
     d.envelope.layers = Array.isArray(d.envelope.layers) ? d.envelope.layers : [];
     d.vegetation = Array.isArray(d.vegetation) ? d.vegetation : [];
     d.vegetation.forEach(function (v) { v.offset_m = isNum(v.offset_m) ? v.offset_m : 0.5; v.separation_m = isNum(v.separation_m) ? v.separation_m : v.offset_m; v.height_m = isNum(v.height_m) ? v.height_m : 2.5; v.length_m = isNum(v.length_m) ? v.length_m : 2; v.start_m = isNum(v.start_m) ? v.start_m : 0; });
+    d.foundation = Object.assign({ system: 'helical-piles', type: 'Engineered helical piles with adjustable brackets', clearance_m: 0.6, no_compaction: true, independent_deck: true, frost_design: 'Engineered pile depth and uplift resistance below frost; geotechnical review required.', ground_disturbance: 'Point loads only; no slab, fill or grade change. Use matting and root protection during construction.', note: 'Elevated floor on engineered piles. Confirm soil, frost uplift, corrosion, lateral capacity and permits.' }, d.foundation || {});
     d.connections.forEach(function (c) { c.glazed = !!c.glazed; c.door_type = c.door_type || 'none'; c.glazing_area_m2 = isNum(c.glazing_area_m2) ? c.glazing_area_m2 : 0; });
     d.materials = Array.isArray(d.materials) ? d.materials : [];
     d.modules.forEach(function (m) {
@@ -145,6 +147,13 @@
       if (![v.start_m, v.length_m, v.height_m, v.offset_m].every(isNum) || v.length_m <= 0 || v.height_m <= 0 || v.offset_m < 0.3) err('Vegetation ' + v.id + ' has invalid dimensions or separation.');
       ['plant_type', 'mature_height_m', 'seasonal_foliage', 'irrigation', 'maintenance', 'support'].forEach(function (k) { if (v[k] === undefined || v[k] === '') err('Vegetation ' + v.id + ' is missing ' + k + '.'); });
     });
+    if (!d.foundation || typeof d.foundation !== 'object') err('foundation must be an object.');
+    if (d.foundation) {
+      if (FOUNDATION_SYSTEMS.indexOf(d.foundation.system) < 0) err('Unknown foundation system.');
+      if (!isNum(d.foundation.clearance_m) || d.foundation.clearance_m < 0 || d.foundation.clearance_m > 2) err('Foundation clearance must be 0–2 m.');
+      if (typeof d.foundation.no_compaction !== 'boolean') err('Foundation no-compaction flag is required.');
+      if (typeof d.foundation.independent_deck !== 'boolean') err('Foundation independent-deck flag is required.');
+    }
     if (!d.provenance || !d.licence) warnings.push({ code: 'provenance', message: 'Provenance or licence metadata is missing; it will be added on export.' });
     var ids = requiredIds(d);
     var dup = ids.filter(function (id, i) { return ids.indexOf(id) !== i; });
@@ -292,5 +301,5 @@
     };
   }
 
-  return { SCHEMA: SCHEMA, LEGACY_SCHEMA: LEGACY_SCHEMA, MODULE_TYPES: MODULE_TYPES, FACES: FACES, OPENING_TYPES: OPENING_TYPES, ZONE_TYPES: ZONE_TYPES, CLADDING: CLADDING, ROOFS: ROOFS, ENVELOPE_ASSEMBLIES: ENVELOPE_ASSEMBLIES, VEGETATION_TYPES: VEGETATION_TYPES, SOLAR_SEASONS: SOLAR_SEASONS, clone: clone, canonicalize: canonicalize, validateSchema: validateSchema, migrateV01: migrateV01, summary: summary, moduleDefaults: moduleDefaults, newId: newId, requiredIds: requiredIds, round: round };
+  return { SCHEMA: SCHEMA, LEGACY_SCHEMA: LEGACY_SCHEMA, MODULE_TYPES: MODULE_TYPES, FACES: FACES, OPENING_TYPES: OPENING_TYPES, ZONE_TYPES: ZONE_TYPES, CLADDING: CLADDING, ROOFS: ROOFS, ENVELOPE_ASSEMBLIES: ENVELOPE_ASSEMBLIES, VEGETATION_TYPES: VEGETATION_TYPES, SOLAR_SEASONS: SOLAR_SEASONS, FOUNDATION_SYSTEMS: FOUNDATION_SYSTEMS, clone: clone, canonicalize: canonicalize, validateSchema: validateSchema, migrateV01: migrateV01, summary: summary, moduleDefaults: moduleDefaults, newId: newId, requiredIds: requiredIds, round: round };
 });

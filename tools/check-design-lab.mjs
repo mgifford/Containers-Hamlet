@@ -156,6 +156,30 @@ ok(!Schema.validateSchema(badSolar).ok, 'solar tilt above 75° is rejected');
 const badAzimuth = JSON.parse(JSON.stringify(data.concepts[0])); badAzimuth.modules[0].solar.azimuth_deg = 400;
 ok(!Schema.validateSchema(badAzimuth).ok, 'solar azimuth outside 0–360° is rejected');
 
+section('Foundations and footbridge');
+for (const c of data.concepts) {
+  const f = c.foundation;
+  ok(f && Schema.FOUNDATION_SYSTEMS.indexOf(f.system) >= 0 && f.clearance_m >= 0.45 && f.clearance_m <= 2, `${c.id}: elevated foundation configuration`);
+  const sec = Model.foundationSectionSVG(c, { idPrefix: 'test-foundation-' + c.id });
+  ok(sec === Model.foundationSectionSVG(c, { idPrefix: 'test-foundation-' + c.id }) && /role="img"/.test(sec) && /<title id=/.test(sec) && /<desc id=/.test(sec) && /no compaction/.test(sec) && /CC BY-SA 4\.0/.test(sec), `${c.id}: foundation section is deterministic and accessible`);
+  ok(new RegExp(f.clearance_m + ' m clearance').test(sec), `${c.id}: foundation section shows the clearance`);
+  const ext = Model.renderAxo(c, { idPrefix: 'test-foundation-ext-' + c.id });
+  ok(/stroke="#5d6f6a"/.test(ext), `${c.id}: exterior draws the elevated piles`);
+  const warnings = Model.assess(c).warnings.map((w) => w.code);
+  ok(warnings.indexOf('foundation-geotech') >= 0 && warnings.indexOf('foundation-compaction') < 0, `${c.id}: foundation geotechnical warning is present and no-compaction is recorded`);
+}
+ok(exists('site/design-lab/systems/foundation-helical-piles.svg'), 'shared helical-pile foundation section exists');
+const ground = read('site/design-lab/ground/index.html');
+ok(/Ontario-appropriate options/.test(ground) && /Engineered helical piles/.test(ground) && /Ground screws/.test(ground) && /Concrete piers/.test(ground) && /Timber posts/.test(ground) && /Bedrock anchors/.test(ground), 'ground page documents the five foundation options');
+ok(/not compacted/.test(ground) && /root-protection zone/i.test(ground) && /No fill/.test(ground), 'ground page explains no-compaction and root protection');
+ok(/small footbridge/.test(ground) && /8 m clear-span/.test(ground) && /conservation authority/.test(ground) && /Ontario Building Code/.test(ground), 'ground page documents the footbridge and Ontario approvals');
+ok(/wcl\.org\.uk/.test(ground) && /technometalpost\.com/.test(ground) && /naturalbuildingcollective\.com/.test(ground) && /solidearthtech\.com/.test(ground) && /houzz/.test(ground), 'ground page cites the supplied sources');
+ok(exists('site/design-lab/systems/footbridge.svg') && /role="img"/.test(read('site/design-lab/systems/footbridge.svg')) && /8 metre clear-span/.test(read('site/design-lab/systems/footbridge.svg')), 'original footbridge diagram exists');
+const badFoundation = JSON.parse(JSON.stringify(data.concepts[0])); badFoundation.foundation.system = 'magic-pad';
+ok(!Schema.validateSchema(badFoundation).ok, 'unknown foundation systems are rejected');
+const badClearance = JSON.parse(JSON.stringify(data.concepts[0])); badClearance.foundation.clearance_m = 3;
+ok(!Schema.validateSchema(badClearance).ok, 'foundation clearance above 2 m is rejected');
+
 section('Shared data model and migration');
 const base = data.concepts[0];
 const badSchema = JSON.parse(JSON.stringify(base)); badSchema.schema = 'wrong/schema';

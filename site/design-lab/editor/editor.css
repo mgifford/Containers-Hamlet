@@ -111,3 +111,5 @@ button.secondary:hover { background: var(--surface); color: var(--link); }
 .exposure-grid div { border: 1px solid var(--border); border-radius: .4rem; padding: .45rem .55rem; background: var(--surface); }
 .exposure-grid dt { font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 800; }
 .exposure-grid dd { margin: .1rem 0 0; }
+
+#foundation-controls .field-grid { grid-template-columns: 1fr; }

@@ -6,6 +6,7 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 - **Architecture pages:** `/design-lab/architecture/<id>/` — five views per design, seasonal pair, approximate exposure and envelope section
 - **Editor:** `/design-lab/editor/`
 - **Vegetation guide:** `/design-lab/vegetation/` — four systems, evidence and sources
+- **Ground guide:** `/design-lab/ground/` — Ontario foundation options, no-compaction and a footbridge concept
 - **Comparison:** `/design-lab/compare/`
 - **Schema:** `containers-hamlet-design/v1.0`
 - **Legacy import:** `containers-hamlet-editor/v0.1` (the supplied starter schema)
@@ -25,6 +26,8 @@ It is not a generic home builder. The container is the core of every design; tim
 - Versioned exterior envelope assemblies: rigid board, mineral wool, wood fibre, exterior closed-cell spray foam and hybrid, with an explanatory wall section and warnings.
 - Vegetation systems: freestanding trellis, modular living wall, edible planter wall and evergreen privacy screen; each records plant type, mature height, seasonal foliage, irrigation, maintenance, separation and support.
 - Summer/winter view control, approximate window exposure by world-facing side, and qualitative shading/privacy/maintenance notes.
+- Elevated foundation options: engineered helical piles (default), ground screws, concrete piers, timber posts on pads and bedrock anchors, with an elevated no-compaction section, root-protection notes and geotechnical/frost/permit warnings.
+- A separate 1.2 m × 8 m pedestrian footbridge study with helical-pile/ground-screw abutments, clear-span/no-fill intent and conservation-authority/permit notes.
 - Per-module tilted solar: default 39° due south (year-round 36–39°), winter ≈60° and summer ≈30° options, with a solar section diagram and PV label in the exterior/winter views.
 - Solar tilt, azimuth and strategy persist in JSON; the plan shows the solar arrow and tilt/azimuth label.
 - Interior room bands: sleeping, bathroom, kitchen, living, dining, workspace, storage and circulation.
@@ -123,6 +126,7 @@ Each concept or edited design is one JSON object:
 - Trellises are independent vertical planes with their own offset, length and height, clear of the rainscreen. They are not attached to the steel shell.
 - `thermal` records conceptual envelope choices. `wall_insulation_strategy` and module insulation describe the wall; roof/floor thicknesses, bridge mitigation, rainscreen, air/vapour control, window performance, shading, HRV/ERV and heating are design-level. These are prompts for review, not energy or code claims.
 - `envelope` is a versioned, design-level assembly (`version: "1.0"`, `assembly`, `layers`, `thermal_breaks`, `rainscreen`, `air_vapour_control`, `fire`, `fastening`, `penetrations`, `maintenance`). It is conceptual; the wall section is not a construction detail.
+- `foundation` records the system, clearance, no-compaction intent, independent deck, frost/geotechnical notes and ground-disturbance assumptions.
 - `solar` records `enabled`, `tilt_deg`, `azimuth_deg`, `season_mode`, mounting, source and review notes for each module.
 - `vegetation` records independently supported systems with `type` (trellis, living-wall, edible-wall, privacy-screen), module/face/start/length/height, plant type, mature height, seasonal foliage, irrigation, maintenance, separation, support and notes.
 - `material_intent` records conceptual choices (reclaimed containers, reused timber, replaceable cladding, continuous external insulation, selective spray foam, reversible connections, modular porch/deck, solar-ready, green-roof investigation). These are prompts for discussion, not verified environmental claims.
@@ -142,6 +146,9 @@ Each concept or edited design is one JSON object:
 - `site/design-lab/data/<id>.json`
 - `site/design-lab/architecture/<id>/index.html`
 - `site/design-lab/vegetation/index.html`
+- `site/design-lab/ground/index.html`
+- `site/design-lab/systems/foundation-<system>.svg`
+- `site/design-lab/systems/footbridge.svg`
 - `site/design-lab/systems/wall-<assembly>.svg`
 - `site/design-lab/systems/vegetation-comparison.svg`
 - `site/design-lab/compare/index.html`
@@ -200,8 +207,8 @@ Every design has a five-view page under `site/design-lab/architecture/<id>/`. Th
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 634 schema, geometry, envelope, vegetation, solar, five-view, gallery, comparison, licence and privacy checks
-node tools/design-lab-check.mjs      # 102 browser checks: gallery, carousel keyboard, editor, envelope/vegetation persistence, seasonal views, comparison, 320 px, axe
+node tools/check-design-lab.mjs      # 692 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery, comparison, licence and privacy checks
+node tools/design-lab-check.mjs      # 114 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 
 The main site checks and browser checks continue to run separately.
@@ -219,7 +226,7 @@ The existing Cabin A and lodge data remain under their existing provenance. The 
 ## Known limitations
 
 - Six homes and the common lodge are inspiration-only.
-- Envelope, planting, irrigation, fire and moisture performance are qualitative; no hygrothermal or structural calculation is performed.
+- Envelope, planting, irrigation, fire, moisture, foundation and bridge performance are qualitative; no hygrothermal, geotechnical or structural calculation is performed.
 - No visual drag manipulation; numeric and keyboard controls are the editable route.
 - No full 3D walkthrough, BIM, IFC or DXF.
 - No structural, energy, fire, acoustic, cost or code calculation.

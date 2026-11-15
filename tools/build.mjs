@@ -18,6 +18,7 @@ import { galleryCards } from './lib/design-gallery.mjs';
 import { architecturePage } from './lib/design-architecture.mjs';
 import { vegetationPage } from './lib/design-vegetation.mjs';
 import { vegetationComparisonSVG } from './lib/design-systems.mjs';
+import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
@@ -140,7 +141,14 @@ export function generate() {
   designLab.concepts.forEach((concept) => put(`site/design-lab/architecture/${concept.id}/index.html`, architecturePage(concept, designViews[concept.id], profileById[concept.id]).replace(/[ \t]+$/gm, '')));
   put('site/design-lab/compare/index.html', comparePage(designProfiles, designLab.concepts));
   put('site/design-lab/vegetation/index.html', vegetationPage(designLab.concepts));
+  put('site/design-lab/ground/index.html', groundPage(designLab.concepts));
+  put('site/design-lab/systems/footbridge.svg', footbridgeSVG());
   put('site/design-lab/systems/vegetation-comparison.svg', vegetationComparisonSVG());
+  const foundationSystems = Array.from(new Set(designLab.concepts.map((c) => c.foundation.system)));
+  foundationSystems.forEach((system) => {
+    const concept = designLab.concepts.find((c) => c.foundation.system === system);
+    if (concept) put(`site/design-lab/systems/foundation-${system}.svg`, DesignModel.foundationSectionSVG(concept, { idPrefix: `system-foundation-${system}`, title: `Foundation · ${system}` }));
+  });
   const solarTilts = Array.from(new Set(designLab.concepts.flatMap((c) => c.modules.filter((m) => m.solar && m.solar.enabled).map((m) => m.solar.tilt_deg))));
   solarTilts.forEach((tilt) => {
     let found = null;

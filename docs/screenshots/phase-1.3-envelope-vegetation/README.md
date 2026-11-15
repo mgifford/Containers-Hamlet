@@ -19,3 +19,11 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 - `solar-section.jpg`: explanatory tilted-array section showing 39°, due south and the year-round/winter/summer angles.
 - `editor-solar.jpg`: per-module solar tilt, azimuth, strategy and solar section.
 - `architecture-solar.jpg`: solar section and tilt/azimuth note on an architectural page.
+
+## Foundations and access
+
+- `ground-options.jpg`: Ontario-appropriate foundation options and evidence status.
+- `foundation-section.jpg`: elevated helical-pile section with no fill, no compaction and root protection.
+- `editor-foundation.jpg`: foundation system, clearance and no-compaction controls.
+- `editor-elevated.jpg`: elevated house exterior with visible piles.
+- `footbridge.jpg`: conceptual 8 m clear-span footbridge on independent abutments.

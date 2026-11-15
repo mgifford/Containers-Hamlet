@@ -2,16 +2,16 @@
 
 Six individual woodland retreats that happen to share a community.
 
-A fictional 13.5-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.3 adds a **Container Home Design Studio**: nine container homes plus a café-inspired common lodge, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls and a side-by-side comparison tool. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
+A fictional 13.5-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.3 adds a **Container Home Design Studio**: nine container homes plus a café-inspired common lodge, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls, elevated helical-pile foundations, a small footbridge study and a side-by-side comparison tool. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
 
-Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, all drawings, downloads, the cutaway explorer and the validation workflow. The new editor uses a separate, versioned multi-container schema and never overwrites the existing architectural data. See [`docs/phase-1.3.md`](docs/phase-1.3.md), the [gallery/thermal extension](docs/phase-1.3-extension.md) and the [envelope/vegetation extension](docs/phase-1.3-envelope-vegetation.md) for the audit, changes, tests, screenshots and limitations.
+Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, all drawings, downloads, the cutaway explorer and the validation workflow. The new editor uses a separate, versioned multi-container schema and never overwrites the existing architectural data. See [`docs/phase-1.3.md`](docs/phase-1.3.md), the [gallery/thermal extension](docs/phase-1.3-extension.md) the [envelope/vegetation extension](docs/phase-1.3-envelope-vegetation.md) and the [foundations and access study](docs/foundations-and-access.md) for the audit, changes, tests, screenshots and limitations.
 
 ## Design Lab
 
-- Gallery: `/design-lab/` — nine homes and a common lodge, grouped by one, two, three containers and the shared lodge. Every design has a five-view architectural page: exterior, plan, cutaway, porch/deck detail and winter study, plus a seasonal summer/winter comparison, approximate window exposure and an envelope wall section. The vegetation guide at `site/design-lab/vegetation/` covers the four planting systems.
+- Gallery: `/design-lab/` — nine homes and a common lodge, grouped by one, two, three containers and the shared lodge. Every design has a five-view architectural page: exterior, plan, cutaway, porch/deck detail and winter study, plus a seasonal summer/winter comparison, approximate window exposure, an envelope wall section, a solar section and an elevated foundation section. The vegetation guide at `site/design-lab/vegetation/` covers the four planting systems.
 - Editor: `/design-lab/editor/` — three fully editable presets: Woodland Retreat, L-Shaped Haven and Woodland Courtyard. The common lodge is a developed concept with five views and a comparison entry, but is not editable yet.
 - Six further homes and the common lodge are clearly labelled **inspiration only**, with source JSON, five generated views, solar tilt/azimuth and comparison entries.
-- The editor supports independent module position and rotation, 20/40-foot modules, openings, screened porches, decks, independent climbing-plant trellises, living walls, edible planter walls, evergreen privacy screens, timber connectors, interior room bands, rigid-board/mineral-wool/wood-fibre/spray-foam/hybrid exterior assemblies with wall sections, roof/floor insulation, thermal-bridge mitigation, rainscreen and air/vapour strategy, window performance, shading, HRV/ERV, cold-climate heat pump, cladding, roof and colour, material intent, a summer/winter view, 39° due-south tilted solar with winter-60°/summer-30° options, approximate window exposure, click a module on the plan to select it, undo/redo, reset, JSON import/export, SVG exports, a design summary, a ZIP bundle and an illustrative hamlet preview.
+- The editor supports independent module position and rotation, 20/40-foot modules, openings, screened porches, decks, independent climbing-plant trellises, living walls, edible planter walls, evergreen privacy screens, timber connectors, interior room bands, rigid-board/mineral-wool/wood-fibre/spray-foam/hybrid exterior assemblies with wall sections, roof/floor insulation, thermal-bridge mitigation, rainscreen and air/vapour strategy, window performance, shading, HRV/ERV, cold-climate heat pump, cladding, roof and colour, material intent, a summer/winter view, 39° due-south tilted solar with winter-60°/summer-30° options, elevated helical-pile foundations with no-compaction intent, approximate window exposure, click a module on the plan to select it, undo/redo, reset, JSON import/export, SVG exports, a design summary, a ZIP bundle and an illustrative hamlet preview.
 - No login, account, upload, backend, WebGL or third-party runtime request. Designs stay in the browser until downloaded. The architectural gallery uses no auto-advancing carousel; keyboard buttons, arrow keys and a show-all alternative are available.
 - Editor warnings cover invalid geometry, engineering concerns, accessibility concerns and items needing professional review. They are not a building code assessment.
 
@@ -23,11 +23,11 @@ Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 197 main-site static checks
-   node tools/check-design-lab.mjs   # 634 Design Lab schema, geometry, envelope, vegetation, solar, gallery and comparison checks
+   node tools/check.mjs       # 199 main-site static checks
+   node tools/check-design-lab.mjs   # 692 Design Lab schema, geometry, envelope, vegetation, solar, foundation, gallery and comparison checks
    npm install
    npm run test:browser       # 62 main-site browser checks
-   npm run test:design-lab    # 102 Design Lab browser checks
+   npm run test:design-lab    # 114 Design Lab browser checks
    ```
 
    The build refuses data that cannot be built or that breaks a site rule, such as a home inside the shoreline setback, an overlapping container module, a porch beyond its face, or a concept with no valid editable presets. See [`docs/data-model.md`](docs/data-model.md) and [`docs/design-lab.md`](docs/design-lab.md).
@@ -46,9 +46,9 @@ The site includes:
 - material passports, provenance and a review register
 - downloadable site, terrain, home, drawing and 3D assets
 - a long-form community, construction and adaptability narrative
-- a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems and its comparison tool
+- a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed. The whole published site is about 2873 KB, under the revised 3.0 MB budget.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed. The whole published site is about 2989 KB, under the revised 3.0 MB budget.
 
 ## The fictional landscape
 
@@ -133,7 +133,7 @@ Third-party plans are **not bundled** because free download is not the same as a
 
 - A generic home builder; the project remains container-focused.
 - Direct drag-and-drop manipulation of every component (numeric/keyboard controls and click-to-select are the current route).
-- A structural, energy, hygrothermal, fire, acoustic, carbon, cost or life-cycle calculator; the thermal/envelope panels are qualitative and the drawing areas are approximate.
+- A structural, geotechnical, energy, hygrothermal, fire, acoustic, carbon, cost or life-cycle calculator; the foundation, thermal and envelope panels are qualitative and require professional design.
 - A full 3D walkthrough, BIM/IFC/DXF export or construction documents.
 - Public repository write access or a design submission service.
 - Rental booking, financial modelling, legal lease templates or real property mapping.
@@ -150,5 +150,5 @@ Six homes and the common lodge remain inspiration-only. The editor supports one 
 - Add structural, envelope, fire, transport and accessibility review workflows with named reviewers.
 - Add a contributor submission process through pull requests, without public write access.
 - Test with screen readers and disabled people, and with architects, engineers and builders.
-- Extend the existing Design Lab editor with direct manipulation, a proper hygrothermal/energy model, planting and irrigation design, more housing variants and a professional review workflow without pretending to be a code or engineering check.
+- Extend the existing Design Lab editor with direct manipulation, a proper hygrothermal/energy model, geotechnical/foundation and bridge design, planting and irrigation design, more housing variants and a professional review workflow without pretending to be a code or engineering check.
 EOF
