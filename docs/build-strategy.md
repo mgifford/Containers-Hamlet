@@ -30,7 +30,7 @@ The notes below expand the principles above. The parametric model already expres
 
 ### Crane access and lift planning
 
-- Each building has a crane standing point on the gravel emergency and construction lane (`crane_pad` in `data/site.json`), checked against a placeholder reach of 24 m to the module centre.
+- Each building has a temporary crane mat beside the narrow emergency and construction track (`crane_pad` in `data/site.json`), checked against a placeholder reach of 24 m to the module centre. The mat is reinforced temporary ground protection, not a permanent pad.
 - No lifts or slews over the wetland or shoreline buffers; standing points are checked to be outside them.
 - Before any clearing: a route survey, dimensional and weight permits, lifting points engineered into the module, ground bearing checks under outriggers, overhead hazards, and a written lift plan by a qualified person.
 - Lanes double as fire department access. Width, turnarounds, gradients and winter load capacity must be confirmed with the fire department.
@@ -92,3 +92,44 @@ Record any use in the material passport.
 - The site plan generates a path from each ramp foot to the nearest lane, and the build checks that distance.
 - Alternatives such as a graded path or a lower floor should be compared case by case, with their effects on drainage, roots and snow.
 - Design to CSA B651 and the applicable building code with an accessibility consultant.
+
+
+## Phase 1.2: landscape-led siting, access and views
+
+Phase 1.2 moves the design from a flat 15-acre diagram to a fictional 13.5-acre Canadian Shield site. The construction principles do not change; the site assumptions become more explicit.
+
+### Terrain and building benches
+
+- The terrain is a seeded formula: a base rise from the lake, Gaussian ridges and hollows, deterministic roughness, and a small levelled bench under each building.
+- Each bench is limited to 1.6 m of cut or fill in the checks. This is a planning assumption, not a grading design. Real foundations need a geotechnical investigation, bedrock and groundwater assessment, erosion and sediment control, and a survey.
+- Homes are not placed in water, wetland or drainage channels, and are kept outside illustrative rock buffers. The buffers are not legal setbacks.
+- The height model and its hash are exported so reviewers can see when the fictional surface changes.
+
+### Forest, rock and wetland
+
+- Woodland stands, rock outcrops and natural clearings are mapped as indicative landscape features, not a forest inventory or geotechnical survey.
+- Tree scatter is deterministic and excludes water, wetland, rocks, clearings, paths, lanes, parking, crane mats and building footprints. No tree removal is proposed beyond those areas.
+- The beaver meadow is protected, not drained or sprayed. The two seasonal drainage channels are left in place; paths that cross them need a culvert or step-over detail.
+- Rock outcrops are treated as habitat and landscape features, not as free foundation. Blasting or drilling is not assumed.
+
+### Access and construction traffic
+
+- One entrance from the fictional public road leads to a shared parking area and an accessible drop-off at the lodge. There are no private driveways.
+- Residents walk the final distance. Walking paths branch from a spine and approach each home's entry from a non-view side.
+- A single narrow emergency, construction and maintenance track loops through the woods, with two short spurs and reinforced-turf turnarounds. It crosses the ridge drainage channel twice on proposed culverts. It is not the daily route to any home.
+- Module delivery uses the track and temporary crane matting. No permanent crane pad is built, and no lift swings over the wetland or shoreline buffer.
+- The layout distinguishes daily circulation from delivery and emergency access. Widths, gradients, turning radii, load ratings, water supply and winter maintenance must be confirmed with the fire authority; a walking trail is not assumed to be sufficient for emergency response.
+
+### Views, privacy and winter
+
+- Each home has its own orientation. The analysis derives the principal facade from the screened porch, compares it with the named landscape target, and samples the canopy in that view cone.
+- The aim is not visual isolation. Some roofs may be glimpsed, especially after leaf-off. The page says so.
+- Winter screening is considered in the home briefs: conifer stands hold their needles, deciduous stands open the view, and low winter sun reaches the south and west porches.
+- Exterior lighting is restrained to low, shielded path and entry fixtures. No floodlights, no light spill into the wetland or neighbouring homes.
+
+### Restoration and monitoring
+
+- Stage construction to minimise the area and time of disturbance. Protect retained trees and soils before equipment arrives.
+- Reuse topsoil, control erosion, remove temporary matting and plant native ground cover, shrubs and trees.
+- Monitor establishment, drainage, erosion and wetland condition for at least three years, and adapt maintenance.
+- Treat the wetland, shoreline and rock outcrops as the reason for the project, not as obstacles to be engineered away.

@@ -1,22 +1,22 @@
 # Data model and generator
 
-Every drawing, model and table on the site comes from three JSON files:
+Every drawing, model, map, view diagram and table on the site comes from three JSON files:
 
 | File | Describes |
 |---|---|
-| `data/cabin-a.json` | Cabin A: one container module |
+| `data/cabin-a.json` | Cabin A: one container module, screened porch and ramp |
 | `data/lodge.json` | Common lodge: two container modules and a timber hall |
-| `data/site.json` | Terrain, water, wetland, buffers, lanes, parking, crane limits and building positions |
+| `data/site.json` | Fictional terrain, water, wetland, drainage, woodland, rock, clearings, access, views and building placements |
 
 Edit these, then run:
 
 ```sh
-node tools/build.mjs          # regenerate drawings, models, data copies and page fragments
+node tools/build.mjs          # regenerate drawings, models, maps, view diagrams, data copies and page fragments
 node tools/check.mjs          # static checks (no install needed)
 npm install && node tools/browser-check.mjs   # browser and accessibility checks
 ```
 
-The build stops with an error if the data describes something impossible, or if it breaks a site rule. Examples: two solids that intersect, an opening that crosses a partition, a cabin inside the shoreline setback, a crane pad in the wetland buffer.
+The build stops with an error if the data describes something impossible, or if it breaks a site rule. Examples: two solids that intersect, an opening that crosses a partition, a home inside the shoreline setback, a crane mat on a rock outcrop, a building bench requiring more than 1.6 m of cut or fill, or a walking path through the wet meadow.
 
 ## Building coordinates
 
@@ -30,7 +30,7 @@ Metres. `x` runs east along the containers, `y` runs south across them, `z` is u
 - **`rooms`**: listed in order from west to east within a bay. `end_m` is the room's east boundary. `boundary: "partition"` builds a partition wall there, with an optional `door` (`from_m`/`to_m` measured from the bay's north edge). The last room in a bay runs to the east wall. Clear sizes and areas are computed inside the lining.
 - **`fixtures`**: placed relative to a room corner (`nw`, `ne`, `sw`, `se`) with `at: [dx, dy]`, `size: [x, y, height]` and an optional `elevation_m`.
 - **`openings`**: `bay`, `face` (`north`, `south`, `east`, `west`), `type` (`window`, `door`, `sliding-door`, `opening`), `from_m`/`to_m` along the face, and `sill_m`/`head_m` above the finished floor. Along north and south faces, positions are measured from the west end. Along east and west faces they are measured from the bay's north edge. Doors can set `swing` (`in`/`out`) and `hinge` (`east`, `west`, `north`, `south` or `both` for a pair).
-- **`porches`**: `side`, `from_m`, `length_m` and `depth_m`, plus deck, post and roof sizes, `screened`, and an optional `screen_door`. Each porch stands on its own piles.
+- **`porches`**: `side`, `from_m`, `length_m` and `depth_m`, plus deck, post and roof sizes, `screened`, and an optional `screen_door`. Each porch stands on its own piles. The model stores placed porch bounds as `x0/x1/y0/y1`.
 - **`ramps`**: start from a porch `side`. The run length is computed as floor height above grade × `slope_ratio`, so changing the floor height or the foundation clearance changes the ramp.
 - **`trellis`**: a free-standing trellis on one face at `offset_m` from the rainscreen.
 - **`roof`**: named `options`. Each lists `pv_bays` and `green_bays`. PV over a green roof is raised above the planting automatically, and the module count is fitted to the roof.
@@ -50,16 +50,46 @@ Run `node tools/build.mjs`. The plan, the elevations, the 3D model and the explo
 
 Metres, with `x` east and `y` south from the north-west corner of the map. The site plan's SVG `viewBox` is in metres, so a vector editor shows real distances.
 
-- **`terrain`**: lake level, the ground rise from the shore, and Gaussian `hill`/`hollow` features. Contours are traced from this surface, and `max_building_slope_pct` is checked at each building's centre and corners.
-- **`lake.shoreline`**, **`wetland.polygon`**, **`parcel.polygon`**: the parcel area is computed from its polygon.
-- **`no_build`**: `shoreline_setback_m` and `wetland_buffer_m`. Buffers are drawn as true distance isolines and enforced for buildings, porches, ramps, trellises, lanes, parking and crane pads.
-- **`circulation`**: `lanes` (polylines with widths), `parking`, `trails` (not checked against buffers; see the note in the file) and `max_entrance_to_lane_m`. Footpaths from each ramp foot to the nearest lane are generated.
-- **`crane.max_reach_m`**: checked from each building's `crane_pad` to its centre.
-- **`buildings`**: `model` (which building file), `x_m`/`y_m` (centre of the main volume) and `rotation_deg` (clockwise).
+- **`map`**: `width_m` and `height_m`.
+- **`terrain`**: `lake_level_m`, `rise_from_shore_per_m`, Gaussian `hill`/`hollow`/`ridge` features, and seeded `roughness` components. The seed is recorded so every generated surface is reproducible. `contour_interval_m`, `max_building_slope_pct` and `building_pads` control contours and siting checks.
+- **`building_pads`**: an illustrative levelled bench under each building, blended into the natural surface. `radius_m`, `blend_m` and `max_cut_fill_m`. This is a design assumption, not permission to excavate.
+- **`lake.shoreline`**, **`wetland.polygon`**, **`parcel.polygon`**: the shoreline is a polyline; the parcel includes the water's edge. The parcel area is computed from its polygon and must be about 13.5 acres.
+- **`drainage`**: seasonal channels with a width. Buildings must stay outside `no_build.drainage_buffer_m`; walking paths may cross only where a crossing is recorded.
+- **`woodland.stands`**: indicative stand polygons with `type` (`conifer`, `mixed`, `deciduous`) and `conifer_share`. Used for map tint, tree species and the view canopy observation.
+- **`rocks`**: outcrop polygons with an illustrative buffer.
+- **`clearings`**: shared natural openings. Each building also has a generated `clearing_radius_m` around it.
+- **`no_build`**: shoreline, wetland, drainage and rock buffers, plus `applies_to`. Buffers are drawn as true distance isolines or buffer corridors and enforced for buildings, porches, ramps, trellises, lanes, parking and crane pads. Lanes and paths stay out of the shoreline and wetland buffers; a track may cross a seasonal drainage channel on a recorded culvert. They are **not** legal setbacks.
+- **`circulation`**: `entrance`, `lanes` (polylines with widths and kinds), `parking`, `dropoff`, `trails`, and `max_entrance_to_lane_m`. Footpaths and the emergency track are checked against the buffers and building footprints.
+- **`crane.max_reach_m`**: checked from each building's `crane_pad` to its centre. The pad is treated as temporary matting, not a permanent road.
+- **`buildings`**: `id`, `name`, `short_name`, `use`, `model`, `x_m`/`y_m` (centre of the main volume), `rotation_deg` (clockwise), `crane_pad`, `clearing_radius_m`, `clearing_note`, `character`, `orientation`, `views` and `design_note`.
+- **`landmarks`**: named points used as view targets (`north-ridge`, `south-knoll`, `east-rock`, glades).
+- **`trees`**: deterministic scatter count, seed, clearance and conifer/deciduous mix. Indicative canopy only, not a tree survey.
 
-### Example: test a bigger shoreline setback
+### Views
 
-Set `"shoreline_setback_m": 60` and run the build. It stops and lists every building and lane now inside the setback. Move them (or reduce the number) and the map, buffers and siting table regenerate.
+Each building's `views.main` names a `target` (`lake`, `wetland`, `landmark` or `clearing`) and a declared `azimuth_deg`. The analysis:
+
+1. Derives the principal facade from the first screened porch and the building's rotation.
+2. Finds the nearest point on the named target.
+3. Computes the bearing and distance from the building centre.
+4. Checks the bearing against the principal facade within `55°`.
+5. Samples three rays through a ±22° cone and reports the share of woodland, conifer and open ground, plus a qualitative description. This is an observation, not a privacy score or sightline study.
+6. Lists neighbouring buildings inside the 120 m view cone with their approximate bearings, so the page can say what may be glimpsed.
+
+`views.secondary`, `views.nearby`, `views.path` and `views.winter` are written descriptions. The analysis checks that a winter note exists.
+
+### Example: move and rotate a home
+
+Change `x_m`, `y_m` or `rotation_deg` in a `buildings` entry. The map, porch and ramp footprints, paths, siting table, view diagram and home brief all follow. The building's architectural definition does not change.
+
+### Example: add a different housing model
+
+1. Create `data/my-cabin.json` using the same schema.
+2. Add it to `BUILDINGS` and `DATA_FILES` in `tools/build.mjs`.
+3. Reference it from a homesite: `"model": "my-cabin"`.
+4. Run the build. The drawings, OBJ, MTL, explorer data and downloads are generated from the new file.
+
+The landscape system does not assume a single footprint. The current page uses Cabin A for all six homes as a placeholder and says so.
 
 ## Outputs
 
@@ -70,9 +100,17 @@ Set `"shoreline_setback_m": 60` and run the build. It stops and lists every buil
 | `models/<id>/section.svg` | vertical cut at `section_x_m`, plus the wall build-up |
 | `models/<id>/axonometric.svg`, `cutaway.svg` | isometric view, exterior and cut |
 | `models/<id>/<id>.obj` + `.mtl` | all solids except room floor zones; Y up, +X east, +Z south |
-| `site/assets/site-plan.svg` | site data and analysis |
-| `site/data/site-analysis.json` | computed siting checks |
-| `site/js/data.js` | geometry data for the in-browser explorer |
-| `site/index.html` fragments | facts, room tables, siting table, passports, reviews, downloads |
+| `site/assets/site-plan.svg` | site data, terrain, access, views and analysis |
+| `site/assets/views/<id>.svg` | plan-centred view diagram for each home and the lodge |
+| `site/assets/lake-impression.svg` | original concept illustration |
+| `site/data/site-analysis.json` | computed siting, access, view and terrain observations |
+| `site/data/terrain.json` | seeded 5 m elevation grid and hash |
+| `site/data/homes.json` | home briefs, placements, orientations and computed observations |
+| `site/js/data.js` | compact geometry and site data for the in-browser explorer and map |
+| `site/index.html` fragments | facts, home briefs, map, tables, passports, reviews, downloads |
 
 The browser explorer runs the same `model.js` and `render.js` as the generator, so it cannot drift from the drawings.
+
+## Reproducibility
+
+`terrain.seed` fixes the roughness phases. `trees.seed` fixes the tree scatter. The build writes an FNV hash of the 5 m elevation grid into `site/data/site-analysis.json` and `site/data/terrain.json`. The static checks rebuild the grid and compare it with the hash, so an accidental change to the surface is visible in review.

@@ -1,6 +1,6 @@
 /*
- * Eco Hamlet page behaviour. Progressive enhancement only: without this
- * script every drawing, table and download is still present.
+ * Containers Hamlet page behaviour. Progressive enhancement only: without this
+ * script every drawing, home brief, table and download is still present.
  * No tracking, storage, cookies or network requests. MIT licence.
  */
 (function () {
@@ -12,10 +12,11 @@
   var Render = window.EcoRender;
   doc.documentElement.classList.add('js');
 
-  var USES = {
-    a: 'Cabin A: permanent residence', b: 'Cabin B: permanent residence', c: 'Cabin C: permanent residence',
-    d: 'Cabin D: seasonal residence', e: 'Cabin E: seasonal residence', f: 'Cabin F: community-operated rental',
-    lodge: 'Common lodge: shared kitchen, gathering space and services'
+  var USE_LABEL = {
+    permanent: 'Permanent home',
+    seasonal: 'Seasonal home',
+    'community rental': 'Community rental home',
+    shared: 'Shared community building'
   };
 
   function $(sel, root) { return (root || doc).querySelector(sel); }
@@ -28,6 +29,13 @@
   }
   function reveal(root) { $$('[data-enhance]', root).forEach(function (n) { n.hidden = false; }); }
   function fixed(v, d) { return Number(v).toFixed(d); }
+  function useLabel(use) { return USE_LABEL[use] || use; }
+  function targetName(target) {
+    if (!target) return 'the forest';
+    if (target.type === 'lake') return 'Heron Lake';
+    if (target.type === 'wetland') return 'the beaver meadow';
+    return (target.id || 'the forest').replace(/-/g, ' ');
+  }
 
   /* ---------- drawing switchers ---------- */
   $$('.drawings').forEach(function (block) {
@@ -48,54 +56,115 @@
   var status = $('#selected');
   var details = $('#building-details');
   var siteInfo = DATA && DATA.site ? DATA.site.buildings : [];
+  var byId = {};
+  siteInfo.forEach(function (b) { byId[b.id] = b; });
 
   function detailsFor(id) {
-    var b = siteInfo.filter(function (x) { return x.id === id; })[0];
-    if (!b) return;
+    var b = byId[id];
+    if (!b || !details) return;
     details.textContent = '';
-    details.appendChild(el('h3', {}, b.name));
-    var model = b.model === 'lodge' ? 'Common lodge concept' : (b.id === 'a' ? 'Cabin A concept' : 'Uses the Cabin A concept; a site-specific variant has not been designed');
-    details.appendChild(el('p', {}, model + '. ' + fixed(b.clear_floor_area_m2, 1) + ' m² clear floor area, ' + fixed(b.footprint_m2, 1) + ' m² footprint.'));
-    var ul = el('ul');
-    b.checks.forEach(function (c) { ul.appendChild(el('li', {}, (c.ok ? 'Pass: ' : 'Fails: ') + c.label)); });
-    details.appendChild(el('p', {}, 'Siting checks against the placeholder limits:'));
-    details.appendChild(ul);
-    if (b.moved) details.appendChild(el('p', { class: 'note' }, b.moved));
-    var p = el('p');
-    var a1 = el('a', { href: b.model === 'lodge' ? '#lodge' : '#home' }, b.model === 'lodge' ? 'Lodge drawings' : 'Cabin A drawings');
-    var a2 = el('a', { href: '#inside', 'data-explore': b.model }, 'Look inside');
-    p.appendChild(a1); p.appendChild(doc.createTextNode(' • ')); p.appendChild(a2);
+    details.appendChild(el('h3', {}, b.name + (b.short_name ? ' · ' + b.short_name : '')));
+    details.appendChild(el('p', {}, useLabel(b.use) + ' using the ' + (b.model === 'lodge' ? 'common lodge' : 'Cabin A') + ' concept. ' + fixed(b.clear_floor_area_m2, 1) + ' m² clear floor area, ' + fixed(b.footprint_m2, 1) + ' m² footprint.'));
+    var dl = el('dl', { class: 'detail-facts' });
+    function row(k, v) {
+      var d = el('div');
+      d.appendChild(el('dt', {}, k));
+      d.appendChild(el('dd', {}, v));
+      dl.appendChild(d);
+    }
+    if (b.orientation) row('Orientation', b.orientation.reason || '');
+    if (b.views_text && b.views_text.main) {
+      row('Main view', b.views_text.main.description + (b.views ? ' Bearing ' + fixed(b.views.main_bearing_deg, 0) + '°, ' + fixed(b.views.main_distance_m, 0) + ' m to ' + targetName(b.views.main_target) + '. ' + b.views.canopy_description + '.' : ''));
+    }
+    if (b.views_text && b.views_text.nearby) row('Nearby homes', b.views_text.nearby + (b.views && b.views.neighbours_in_view.length ? ' In the view cone: ' + b.views.neighbours_in_view.map(function (n) { return n.name + ' at ' + fixed(n.distance_m, 0) + ' m'; }).join(', ') + '.' : ' No other building is inside the principal view cone.'));
+    if (b.views_text && b.views_text.path) row('Path and entry', b.views_text.path);
+    if (b.views_text && b.views_text.winter) row('Winter', b.views_text.winter);
+    if (b.checks) row('Siting', (b.ok ? 'All illustrative checks pass' : 'One or more illustrative checks fail') + ': ' + fixed(b.shoreline_m, 0) + ' m from the shoreline, ' + fixed(b.wetland_m, 0) + ' m from the wetland, ' + fixed(b.pad.max_m, 2) + ' m maximum bench cut or fill, ' + fixed(b.crane_reach_m, 0) + ' m crane reach.');
+    details.appendChild(dl);
+    var p = el('p', { class: 'detail-links' });
+    var brief = el('a', { href: '#home-' + b.id, 'data-home-link': b.id }, 'Read the full home brief');
+    var inside = el('a', { href: '#inside', 'data-explore': b.model }, 'Look inside');
+    var drawings = el('a', { href: b.model === 'lodge' ? '#lodge' : '#cabin' }, b.model === 'lodge' ? 'Lodge drawings' : 'Cabin drawings');
+    p.appendChild(brief); p.appendChild(doc.createTextNode(' • ')); p.appendChild(inside); p.appendChild(doc.createTextNode(' • ')); p.appendChild(drawings);
     details.appendChild(p);
   }
 
   function choose(id) {
-    status.textContent = USES[id] + '. Conceptual placement; no land rights or building permissions are implied.';
-    $$('[data-choice]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-choice') === id)); });
+    var b = byId[id];
+    if (!b) return;
+    if (status) status.textContent = b.name + ', ' + useLabel(b.use).toLowerCase() + '. ' + (b.views_text && b.views_text.main ? b.views_text.main.description : '') + ' Conceptual placement; no land rights or building permissions are implied.';
+    $$('[data-choice]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.getAttribute('data-choice') === id)); });
     if (mapSvg) $$('.building', mapSvg).forEach(function (g) { g.classList.toggle('selected', g.getAttribute('data-building') === id); });
     detailsFor(id);
   }
 
   if (status && mapSvg && siteInfo.length) {
-    $$('[data-choice]').forEach(function (b) {
-      b.addEventListener('click', function () { choose(b.getAttribute('data-choice')); });
+    $$('[data-choice]').forEach(function (button) {
+      button.addEventListener('click', function () { choose(button.getAttribute('data-choice')); });
     });
     /* Pointer shortcut: the buttons beside the map are the keyboard and screen reader route. */
     $$('.building', mapSvg).forEach(function (g) {
       g.addEventListener('click', function () {
         var id = g.getAttribute('data-building');
         choose(id);
-        var btn = $('[data-choice="' + id + '"]');
-        if (btn) btn.focus({ preventScroll: true });
+        var button = $('[data-choice="' + id + '"]');
+        if (button) button.focus({ preventScroll: true });
       });
     });
-    $$('[data-layer]').forEach(function (cb) {
-      cb.addEventListener('change', function () {
-        var layer = mapSvg.querySelector('#map-layer-' + cb.getAttribute('data-layer'));
-        if (layer) layer.style.display = cb.checked ? '' : 'none';
+    $$('[data-layer]').forEach(function (checkbox) {
+      var layer = mapSvg.querySelector('#map-layer-' + checkbox.getAttribute('data-layer'));
+      if (layer) layer.style.display = checkbox.checked ? '' : 'none';
+      checkbox.addEventListener('change', function () {
+        if (layer) layer.style.display = checkbox.checked ? '' : 'none';
       });
     });
     reveal($('#explore'));
   }
+
+  /* ---------- home dossiers ---------- */
+  var homeRadios = $$('input[name="home-choice"]');
+  var homeArticles = $$('.home-dossiers .home');
+  function showHome(id, scroll) {
+    homeArticles.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('data-home') === id); });
+    homeRadios.forEach(function (r) { r.checked = r.value === id; });
+    if (scroll) {
+      var article = doc.getElementById('home-' + id);
+      if (article) article.scrollIntoView({ block: 'start' });
+    }
+  }
+  if (homeRadios.length && homeArticles.length) {
+    var initial = $('input[name="home-choice"]:checked');
+    showHome(initial ? initial.value : homeArticles[0].getAttribute('data-home'));
+    homeRadios.forEach(function (r) {
+      r.addEventListener('change', function () {
+        if (!r.checked) return;
+        showHome(r.value);
+        if (byId[r.value]) choose(r.value);
+      });
+    });
+    $$('[data-select-home]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var id = button.getAttribute('data-select-home');
+        showHome(id);
+        choose(id);
+        var map = doc.getElementById('explore');
+        if (map) map.scrollIntoView({ block: 'start' });
+        var choice = $('[data-choice="' + id + '"]');
+        if (choice) choice.focus({ preventScroll: true });
+        if (status) status.textContent = (byId[id] ? byId[id].name : 'Home') + ' selected on the map.';
+      });
+    });
+    reveal($('#homes'));
+  }
+  doc.addEventListener('click', function (e) {
+    var link = e.target.closest ? e.target.closest('[data-home-link]') : null;
+    if (!link) return;
+    e.preventDefault();
+    var id = link.getAttribute('data-home-link');
+    showHome(id, true);
+    var radio = $('input[name="home-choice"][value="' + id + '"]');
+    if (radio) radio.focus({ preventScroll: true });
+  });
 
   /* ---------- cutaway explorer ---------- */
   var canvas = $('#explorer-canvas');

@@ -4,35 +4,53 @@
 
 ## How the site is built for access
 
-- **Progressive enhancement.** Without JavaScript, every drawing is shown, every table is present and a static cutaway replaces the explorer. Controls that need the script stay `hidden` until it runs.
-- **Native controls first.** Drawing and explorer options are native radio buttons and checkboxes in `fieldset`s with `legend`s. Building and room choices are `button`s with `aria-pressed`. There are no custom widgets that need their own keyboard handling.
-- **One route per action.** On the site map, the seven buttons beside the map are the keyboard and screen reader route. Clicking a building on the map is a pointer shortcut to the same action.
-- **Text alternatives.** Each generated SVG has `role="img"` and is labelled by a `<title>` and a generated `<desc>` (dimensions, rooms, layout). On the page, images have short `alt` text, and the room, siting, passport and review tables carry the detail. The explorer's SVG gets a new `aria-label` and visible caption on every change. Room selections are announced through a `role="status"` message.
-- **No information by colour alone.** Pressed and checked states add a ✓ glyph, bold text and a border. No-build zones are hatched as well as coloured, and screens and buffers are dashed.
-- **Focus.** Every focus stop has a 3 px outline (a light colour on the dark header and footer). The skip link moves focus to `main`.
-- **Reflow and spacing.** No horizontal scrolling at 320 px, including with WCAG text-spacing overrides. Wide tables scroll inside a focusable, labelled region. Interactive targets are at least 24 px, and most are 40 to 44 px.
+- **Progressive enhancement.** Without JavaScript, every drawing is shown, every home brief is present, every view diagram is present, every table is present and a static cutaway replaces the explorer. Controls that need the script stay `hidden` until it runs.
+- **Native controls first.** Drawing, explorer and home options are native radio buttons and checkboxes in `fieldset`s with `legend`s. Building and room choices are `button`s with `aria-pressed`. There are no custom widgets that need their own keyboard handling.
+- **One route per action.** On the site map, the seven buttons beside the map are the keyboard and screen reader route. Clicking a building on the map is a pointer shortcut to the same action. The home selector and the map share the same data, so choosing a home in either place announces the same information.
+- **Text alternatives.** Each generated SVG has `role="img"` and is labelled by a `<title>` and a generated `<desc>` (dimensions, rooms, layout or view geometry). The map has a long generated description covering the lake, wetland, woodland, rock, buffers, access, view directions and each building. On the page, images have descriptive `alt` text, and the home briefs, siting table, passport and review tables carry the detail. The explorer's SVG gets a new `aria-label` and visible caption on every change. Room and building selections are announced through a `role="status"` message.
+- **Home briefs.** Each home has a structured brief with a view diagram, setting, orientation, main and secondary views, nearby buildings, path, winter conditions, screened porch, design note and siting summary. The briefs are native radio tabs with the script and all seven are visible without it.
+- **No information by colour alone.** Pressed and checked states add a ✓ glyph, bold text and a border. No-build zones are hatched as well as coloured, rock is hatched, screens and buffers are dashed, view arrows are labelled with their target, and every map layer has a text key.
+- **Focus.** Every focus stop has a 3 px outline (a light colour on the dark header and footer). The skip link moves focus to `main`. "Show on the map" moves focus to the matching map button.
+- **Reflow and spacing.** No horizontal scrolling at 320 px, including with WCAG text-spacing overrides. Wide tables and the map scroll or shrink inside labelled regions. Interactive targets are at least 24 px, and most are 40 to 44 px.
 - **Motion.** Nothing animates. Smooth scrolling is used only under `prefers-reduced-motion: no-preference`.
-- **Colour schemes.** Light and dark schemes meet contrast requirements. Drawings keep a light "paper" background in both, and keep their colours in forced-colours mode (`forced-color-adjust: none`), where interactive states switch to system colours.
-- **Low-vision zoom.** Every drawing and the site plan link to the full-size SVG, which stays sharp at any zoom.
+- **Colour schemes.** Light and dark schemes meet contrast requirements. Drawings, view diagrams and the concept illustration keep a light "paper" background in both, and keep their colours in forced-colours mode (`forced-color-adjust: none`), where interactive states switch to system colours.
+- **Low-vision zoom.** Every drawing, the site plan and every view diagram link or resolve to a full-size SVG, which stays sharp at any zoom.
 
 ## Automated testing (CI)
 
 `tools/browser-check.mjs` runs axe-core (WCAG 2.0 to 2.2, A and AA) on five page states. It also checks:
 
 - a full Tab walk: visible focus on every stop, nothing obscured, no keyboard trap
-- keyboard operation of every control
+- keyboard operation of every control, including the home tabs, map layers and "Show on the map"
+- the view diagram's alt text and actual image load
 - reflow and text spacing at 320 px, and the 24 px target size
 - reduced motion, forced colours and dark mode
-- the page with its scripts blocked
+- the page with its scripts blocked, including all seven home briefs and view diagrams
+- same-origin requests, no third-party requests and all local links
 
-`tools/check.mjs` checks the SVG titles and descriptions, heading order, labels, unique ids, image dimensions, links and the absence of third-party requests.
+`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. As of Phase 1.2 it runs 140 static checks; the browser suite runs 62 checks.
+
+## Manual testing still required
+
+Automated tools find only part of the issues. Before calling the site accessible, a person should:
+
+1. **Screen reader, desktop.** With VoiceOver (macOS) or NVDA (Windows), read the page from the top. Confirm the skip link, headings, map description, home tabs, home briefs, view diagram alt text, drawings, tables and downloads are understandable in reading order. Check that dynamic map, home and explorer updates are announced once, not twice.
+2. **Screen reader, mobile.** With VoiceOver (iOS) or TalkBack (Android), check the map, home tabs and explorer controls at 390 px and at 200% text.
+3. **Keyboard only.** Tab through the page without a pointer. Confirm the skip link, map selector, layer toggles, home tabs, drawing tabs, explorer, "Show on the map" and downloads are operable, with visible focus and no trap. Confirm focus does not jump to a hidden home brief.
+4. **Zoom and reflow.** At 400% browser zoom / 320 CSS px, check that nothing is clipped, the map remains readable through the full-size SVG, and the table scroll regions are labelled and keyboard-scrollable.
+5. **Forced colours and dark mode.** Confirm map layers, view arrows, home tabs and explorer states remain distinguishable and that no text disappears.
+6. **Reduced motion.** Confirm no smooth scrolling or other motion when the preference is set.
+7. **Voice control and switch access.** Check that visible labels match accessible names for the map, home and explorer controls.
+8. **Disabled people.** Test with people who use these technologies and with people with cognitive, low-vision and motor disabilities. Their experience, not this checklist, decides whether the site is usable.
+
+Record the browser, assistive technology, version, page state and result in the pull request or an issue. Do not include personal information.
 
 ## Known limitations and work still needed
 
 - **No assistive technology testing yet.** The site has not been tested with screen readers (NVDA, JAWS, VoiceOver, TalkBack), voice control, magnification software or switch access, or by disabled people. Automated tools find only part of the issues.
-- **Drawings are complex images.** The text alternatives give the key facts; they do not replace the drawing. A structured, navigable description of the floor plan (room by room, wall by wall) would help non-visual users more.
-- **The site map's labels are small on narrow screens.** The full-size SVG link mitigates this but does not solve it.
-- **Explorer labels** can overlap at some viewpoints.
+- **The map is dense.** Labels are small on narrow screens. The full-size SVG, the text description, the home briefs and the siting table mitigate this but do not replace the map.
+- **View diagrams are geometric.** They show the principal view cone, target and nearby buildings; they do not prove what a person will see through vegetation, in winter or at eye height.
+- **Drawings are complex images.** The text alternatives give the key facts; they do not replace the drawing. A structured, room-by-room navigable description would help non-visual users more.
 - **SVG text inside images** is not translated by browser translation tools.
 
 Please report barriers through a GitHub issue. Do not include personal information.

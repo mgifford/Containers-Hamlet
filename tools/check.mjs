@@ -8,9 +8,10 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { createRequire } from 'node:module';
 import { generate, ROOT } from './build.mjs';
-import { analyseSite } from './lib/site.mjs';
+import { analyseSite, terrainGrid, terrainHash, angularDiff } from './lib/site.mjs';
 import { parseOBJ } from './lib/obj.mjs';
 import { SCALE } from './lib/drawings.mjs';
+import { pointInPolygon } from './lib/geo.mjs';
 
 const require = createRequire(import.meta.url);
 const EcoModel = require('../site/js/model.js');
@@ -54,22 +55,67 @@ for (const spec of [cabin, lodge]) {
 ok(near(analysis.area_acres, site.area_acres, 0.2), `parcel polygon is ${analysis.area_acres} acres (declared ${site.area_acres})`);
 
 /* ------------------------------------------------------------------ */
+section('Terrain and landscape');
+ok(near(analysis.area_acres, 13.5, 0.06), `the fictional parcel is ${analysis.area_acres} acres (target 13.5)`);
+ok(near(analysis.area_ha, 5.46, 0.03), `the fictional parcel is ${analysis.area_ha} ha (target 5.46)`);
+const g1 = terrainGrid(site, 5);
+const g2 = terrainGrid(site, 5);
+ok(JSON.stringify(g1) === JSON.stringify(g2), 'the terrain grid is reproducible from the seed');
+ok(terrainHash(g1) === analysis.terrain_hash, `the site-analysis terrain hash ${analysis.terrain_hash} matches a fresh grid`);
+ok(g1.nx > 60 && g1.ny > 40 && g1.values.length === g1.ny, `the exported height grid is ${g1.nx} x ${g1.ny} at ${g1.step_m} m`);
+for (const f of ['site/data/terrain.json', 'site/data/homes.json', 'site/assets/views/a.svg', 'site/assets/views/lodge.svg', 'site/assets/lake-impression.svg']) ok(exists(f), `${f} is generated`);
+const terrainFile = JSON.parse(read('site/data/terrain.json'));
+ok(terrainFile.hash === analysis.terrain_hash && terrainFile.grid.values.length === g1.ny, 'the downloadable elevation grid matches the analysis');
+for (const [name, poly] of [['lake shoreline', site.lake.shoreline], ['wetland', site.wetland.polygon], ['parcel', site.parcel.polygon]]) {
+  ok(poly.length >= 3 && poly.every(([x, y]) => x >= 0 && x <= site.map.width_m && y >= 0 && y <= site.map.height_m), `${name} polygon has valid vertices inside the map`);
+}
+ok(site.woodland.stands.length >= 3 && site.rocks.length >= 3 && site.clearings.length >= 2, 'woodland, rock and clearing data are present');
+ok(site.drainage.length >= 2 && site.drainage.every((d) => d.points.length > 2), 'seasonal drainage channels are recorded');
+ok(analysis.potential_areas.count > 0 && analysis.potential_areas.points.every(([x, y]) => pointInPolygon([x, y], site.parcel.polygon)), `${analysis.potential_areas.count} potential building cells are inside the parcel`);
+
+section('Homes, views and orientation');
+ok(analysis.buildings.length === 7, 'six homes and one common lodge are placed');
+ok(analysis.buildings.filter((b) => b.id !== 'lodge').length === 6, 'the target of six homes is met by the fictional landscape');
+ok(new Set(analysis.buildings.map((b) => b.rotation_deg)).size >= 4, 'homes have independently different orientations');
+ok(analysis.buildings.every((b) => { const src = site.buildings.find((x) => x.id === b.id); return b.views && b.views.main_target && src.views && src.views.winter; }), 'every building has a view target and a winter note');
+ok(analysis.buildings.every((b) => b.views.alignment_deg <= analysis.view_tolerance_deg), 'every principal view is within tolerance of its named landscape target');
+ok(analysis.buildings.every((b) => Math.abs(angularDiff(b.views.declared_azimuth_deg, b.principal_azimuth_deg)) <= 2), 'each declared view azimuth matches the modelled principal facade');
+ok(analysis.buildings.every((b) => b.views.canopy && b.views.canopy_description), 'every home has a canopy observation, not a privacy score');
+ok(analysis.buildings.every((b) => b.views.neighbours_in_view.every((n) => n.distance_m > 35)), 'no neighbour is inside a principal view cone closer than 35 m');
+const briefs = JSON.parse(read('site/data/homes.json'));
+ok(briefs.buildings.length === 7 && briefs.buildings.every((b) => b.views && b.analysis && b.character), 'the home briefs JSON carries placements, views and analysis');
+
 section('Siting rules are enforced');
 ok(analysis.buildings.every((b) => b.ok), 'every building passes its siting checks');
 const clone = (o) => JSON.parse(JSON.stringify(o));
 const s1 = clone(site);
-s1.buildings.find((b) => b.id === 'c').x_m = 121.4; // Phase 1 position
+Object.assign(s1.buildings.find((b) => b.id === 'c'), { x_m: 72, y_m: 135 });
 const a1 = analyseSite(s1, models);
-ok(a1.issues.some((i) => /Cabin C/.test(i.message) && /shoreline/.test(i.message)), 'Cabin C at its Phase 1 position is rejected for the shoreline setback');
+ok(a1.issues.some((i) => /Cabin C/.test(i.message) && /shoreline/.test(i.message)), 'a home moved into the shoreline setback is rejected');
 const s2 = clone(site);
-Object.assign(s2.buildings.find((b) => b.id === 'e'), { x_m: 300, y_m: 200 });
+Object.assign(s2.buildings.find((b) => b.id === 'e'), { x_m: 200, y_m: 190 });
 ok(analyseSite(s2, models).issues.some((i) => /Cabin E/.test(i.message) && /wetland/.test(i.message)), 'a cabin moved into the wetland is rejected');
 const s3 = clone(site);
-s3.circulation.lanes.push({ id: 'bad', name: 'Phase 1 arrival route', kind: 'vehicle', width_m: 6, points: [[357, 211], [300, 205], [250, 200]] });
-ok(analyseSite(s3, models).issues.some((i) => /Phase 1 arrival route/.test(i.message) && /wetland/.test(i.message)), 'the Phase 1 arrival route through the wetland is rejected');
+s3.circulation.lanes.push({ id: 'bad', name: 'Route through the meadow', kind: 'vehicle', width_m: 6, points: [[300, 205], [250, 200], [220, 195]] });
+ok(analyseSite(s3, models).issues.some((i) => /Route through the meadow/.test(i.message) && /wetland/.test(i.message)), 'a route through the wet meadow is rejected');
 const s4 = clone(site);
 s4.no_build.shoreline_setback_m = 60;
 ok(analyseSite(s4, models).issues.some((i) => /shoreline/.test(i.message)), 'raising the shoreline setback to 60 m flags buildings (buffers are configurable)');
+const s5 = clone(site);
+s5.buildings = s5.buildings.filter((b) => b.id !== 'f');
+ok(analyseSite(s5, models).buildings.length === 6 && analyseSite(s5, models).issues.every((i) => i.level !== 'error'), 'removing a home yields a valid six-building hamlet (fewer than six homes does not break the app)');
+const s6 = clone(site);
+s6.buildings.find((b) => b.id === 'a').model = 'not-a-model';
+ok(analyseSite(s6, models).issues.some((i) => /unknown building model/.test(i.message)), 'an unknown architectural model is reported');
+const s7 = clone(site);
+Object.assign(s7.buildings.find((b) => b.id === 'a'), { x_m: s7.buildings.find((b) => b.id === 'b').x_m, y_m: s7.buildings.find((b) => b.id === 'b').y_m });
+ok(analyseSite(s7, models).issues.some((i) => /overlap/.test(i.message)), 'two buildings on the same spot are rejected');
+const s8 = clone(site);
+s8.circulation.trails.push({ id: 'bad-path', name: 'Path through the meadow', kind: 'walking', width_m: 1.4, points: [[210, 190], [220, 195]], note: '' });
+ok(analyseSite(s8, models).issues.some((i) => /Path through the meadow/.test(i.message) && /wetland/.test(i.message)), 'a walking path through the wet meadow is rejected');
+const s9 = clone(site);
+s9.buildings.find((b) => b.id === 'a').views.main.target = { type: 'landmark', id: 'east-rock' };
+ok(analyseSite(s9, models).issues.some((i) => /Cabin A/.test(i.message) && /view target/.test(i.message)), 'a view that does not face its named feature is rejected');
 
 /* ------------------------------------------------------------------ */
 section('Geometry and dimensional consistency');
@@ -212,10 +258,13 @@ const code = ['site/script.js', 'site/js/model.js', 'site/js/render.js'].map(rea
 const banned = ['fetch(', 'XMLHttpRequest', 'sendBeacon', 'document.cookie', 'localStorage', 'sessionStorage', 'geolocation', 'http://', 'https://', 'WebSocket', 'import('];
 const found = banned.filter((b) => code.includes(b));
 ok(found.length === 0, `scripts make no network requests and store nothing${found.length ? ' (found ' + found.join(', ') + ')' : ''}`);
+const dataText = ['data/site.json', 'data/cabin-a.json', 'data/lodge.json'].map(read).join('\n');
+ok(!/(latitude|longitude|\"lat\"\s*:|\"lng\"\s*:|\"lon\"\s*:|geojson|\bkml\b|EPSG|UTM zone)/i.test(dataText), 'the fictional data contains no real-world coordinates, KML or GeoJSON');
+ok(!/https?:\/\//.test(dataText), 'the fictional data does not reference remote maps or imagery');
 
 /* ------------------------------------------------------------------ */
 section('Page weight (sustainability budget)');
-const initial = ['index.html', 'style.css', 'script.js', 'js/data.js', 'js/model.js', 'js/render.js', 'assets/favicon.svg', 'models/cabin-a/axonometric.svg'];
+const initial = ['index.html', 'style.css', 'script.js', 'js/data.js', 'js/model.js', 'js/render.js', 'assets/favicon.svg', 'assets/lake-impression.svg'];
 const bytes = (p) => fs.statSync(path.join(ROOT, 'site', p)).size;
 const gz = (p) => zlib.gzipSync(fs.readFileSync(path.join(ROOT, 'site', p)), { level: 9 }).length;
 const raw = initial.reduce((s, p) => s + bytes(p), 0);

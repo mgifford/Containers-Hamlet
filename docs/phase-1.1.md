@@ -1,5 +1,7 @@
 # Phase 1.1: audit, changes and remaining assumptions
 
+> Historical record. Phase 1.2 replaced the 15-acre site geometry, building placements and public narrative. This document is kept so the earlier audit and decisions remain visible. See [`phase-1.2.md`](phase-1.2.md) for the current site.
+
 This document answers the brief in [`implementation-prompt.md`](implementation-prompt.md): audit the Phase 1 starter, deliver Phase 1.1, and document changed files and remaining assumptions. Nothing here makes the concept engineered, code-compliant or permit-ready.
 
 ## 1. Audit of the Phase 1 starter
