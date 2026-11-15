@@ -1,0 +1,70 @@
+/* Containers Hamlet Design Lab. Uses the main site's tokens and controls. */
+.lab-page { --lab-paper: #faf8f2; }
+.lab-page .site-header nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 0.25em; }
+.lab-main { max-width: 1240px; margin: auto; padding: 0 1.2rem; }
+.lab-hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr); gap: 2rem; align-items: center; padding: 3.2rem 0 2.2rem; border-bottom: 1px solid var(--border); }
+.lab-hero h1 { font-size: clamp(2.1rem, 4.4vw, 3.7rem); line-height: 1.05; margin: 0.35rem 0 0.8rem; }
+.lab-hero .lead { font-size: 1.08rem; max-width: 64ch; }
+.lab-hero-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1rem 1.2rem; }
+.lab-hero-panel h2 { font-size: 1.1rem; margin: 0 0 0.4rem; }
+.lab-hero-panel ol { padding-left: 1.2rem; margin: 0.4rem 0; }
+.lab-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; margin: 1.1rem 0; }
+.lab-main section { padding: 2.2rem 0; border-bottom: 1px solid var(--border); }
+.lab-main section:last-of-type { border-bottom: 0; }
+.lab-main h2 { margin-top: 0.2rem; }
+.lab-main h3 { margin-top: 1.6rem; }
+.lab-main h4 { margin: 0.2rem 0 0.5rem; font-size: 1.35rem; }
+.lab-note { background: var(--notice); border-left: 4px solid var(--focus); padding: 0.7rem 0.9rem; max-width: 78ch; }
+.lab-meta { color: var(--muted); font-size: 0.9rem; }
+.lab-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.8rem; padding: 0; list-style: none; }
+.lab-steps li { background: var(--surface); border: 1px solid var(--border); border-radius: 0.7rem; padding: 0.8rem 1rem; }
+.lab-steps strong { display: block; margin-bottom: 0.2rem; }
+.concept-groups { display: grid; gap: 2.4rem; }
+.concept-group > h3 { margin: 0 0 0.3rem; font-size: 1.6rem; }
+.concept-group > p { margin-top: 0; }
+.concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1.1rem; }
+.concept-card { background: var(--surface); border: 1px solid var(--border); border-radius: 0.9rem; overflow: hidden; display: flex; flex-direction: column; }
+.concept-card-media { background: var(--paper); border-bottom: 1px solid var(--border); }
+.concept-card-media img { display: block; width: 100%; height: auto; }
+.concept-card-body { padding: 0.9rem 1rem 1rem; display: flex; flex-direction: column; flex: 1; }
+.concept-badge { display: inline-block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 800; border: 1px solid var(--border); border-radius: 999px; padding: 0.15rem 0.55rem; margin-bottom: 0.4rem; }
+.concept-badge.editable { border-color: var(--ok); color: var(--ok); }
+.concept-card .tagline { font-weight: 600; margin: 0.2rem 0 0.55rem; }
+.concept-card p { margin: 0.35rem 0; }
+.concept-facts { display: grid; gap: 0.35rem; margin: 0.6rem 0 0.8rem; font-size: 0.9rem; }
+.concept-facts > div { display: grid; grid-template-columns: minmax(7rem, 0.4fr) minmax(0, 1fr); gap: 0.5rem; border-top: 1px solid var(--border); padding-top: 0.3rem; }
+.concept-facts dt { font-weight: 700; }
+.concept-facts dd { margin: 0; }
+.concept-card details { margin: 0.4rem 0 0.7rem; border: 1px solid var(--border); border-radius: 0.6rem; padding: 0 0.7rem; }
+.concept-card details > summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+.concept-view-stack { display: grid; gap: 0.6rem; }
+.concept-view-stack figure { margin: 0; }
+.concept-view-stack img { display: block; width: 100%; height: auto; border: 1px solid var(--border); background: var(--paper); }
+.concept-view-stack figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+.concept-files { padding-left: 1.1rem; font-size: 0.9rem; }
+.concept-files li { margin: 0.2rem 0; }
+.concept-card .card-actions { margin-top: auto; padding-top: 0.5rem; }
+.concept-card .card-actions .action { width: 100%; text-align: center; }
+.lab-footer { margin-top: 1rem; }
+
+@media (max-width: 850px) {
+  .lab-hero { grid-template-columns: 1fr; }
+  .concept-facts > div { grid-template-columns: 1fr; gap: 0.1rem; }
+}
+@media (max-width: 750px) {
+  .concept-grid, .lab-steps { grid-template-columns: 1fr; }
+}
+@media (prefers-color-scheme: dark) {
+  .lab-page { --lab-paper: #1b2621; }
+  .lab-hero-panel, .concept-card, .lab-steps li { background: var(--surface); }
+  .concept-card-media, .concept-view-stack img { background: #faf8f2; }
+}
+@media (forced-colors: active) {
+  .concept-card, .lab-hero-panel, .lab-steps li { border: 1px solid CanvasText; }
+  .concept-card-media img, .concept-view-stack img { forced-color-adjust: none; }
+}
+@media print {
+  .lab-page .site-header nav, .lab-actions, .concept-card .card-actions, details { display: none !important; }
+  .concept-grid { display: block; }
+  .concept-card { break-inside: avoid; margin-bottom: 1rem; }
+}

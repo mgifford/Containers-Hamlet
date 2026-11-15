@@ -114,3 +114,16 @@ The browser explorer runs the same `model.js` and `render.js` as the generator, 
 ## Reproducibility
 
 `terrain.seed` fixes the roughness phases. `trees.seed` fixes the tree scatter. The build writes an FNV hash of the 5 m elevation grid into `site/data/site-analysis.json` and `site/data/terrain.json`. The static checks rebuild the grid and compare it with the hash, so an accidental change to the surface is visible in review.
+
+
+## Design Lab schema
+
+Phase 1.3 adds a separate versioned schema for the Container Home Design Studio. It is documented in [`design-lab.md`](design-lab.md) and implemented in `site/js/design-schema.js` / `site/js/design-model.js`.
+
+- **`containers-hamlet-design/v1.0`** supports one to three explicit module objects, each with position, rotation, insulation, cladding, roof, openings, zones and structural warnings.
+- Porches, decks and timber connectors are separate components.
+- `containers-hamlet-editor/v0.1` (the supplied prototype) is migrated with a report of defaulted or unmapped information.
+- `tools/lib/design-adapter.mjs` maps Cabin A into the Design Lab schema and a compatible design back to a Cabin A proposal. It never writes `data/cabin-a.json` and reports everything it cannot represent.
+- The Design Lab does not replace the authoritative Cabin A or lodge data. Its generated views and downloads are copies.
+
+All Design Lab views derive from the same design object. The plan, exterior and cutaway cannot drift from one another.

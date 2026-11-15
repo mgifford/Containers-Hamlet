@@ -229,7 +229,7 @@ ok([...strip.matchAll(/<fieldset\b[^>]*>\s*<legend>/g)].length === (strip.match(
 ok(!/<form\b|<iframe\b|<object\b|<embed\b/.test(strip), 'no forms, iframes, objects or embeds');
 const refs = [...strip.matchAll(/\s(?:href|src)="([^"]+)"/g)].map((x) => x[1]);
 const external = refs.filter((r) => /^https?:/.test(r));
-const allowed = /^https:\/\/(creativecommons\.org|opensource\.org|github\.com)\//;
+const allowed = /^https:\/\/(creativecommons\.org|opensource\.org|github\.com|www\.gnu\.org)\//;
 ok(external.every((r) => allowed.test(r)), `external links go only to licence pages and the source repository (${external.length})`);
 ok(![...strip.matchAll(/<(script|link)\b[^>]*>/g)].some((x) => /(src|href)="https?:/.test(x[0])), 'no third-party scripts, styles or fonts');
 const local = refs.filter((r) => !/^(https?:|mailto:|#)/.test(r));
@@ -247,7 +247,8 @@ section('Licences and attribution');
 ok(/MIT License/.test(read('LICENSE')), 'LICENSE is MIT');
 ok(/Creative Commons Attribution 4\.0/.test(read('CONTENT-LICENSE.md')), 'CONTENT-LICENSE.md is CC BY 4.0');
 const generatedAssets = [...files.keys()].filter((p) => /\.(svg|obj|mtl)$/.test(p));
-ok(generatedAssets.every((p) => /CC BY 4\.0/.test(files.get(p))), `every generated drawing and model (${generatedAssets.length}) carries the CC BY 4.0 notice`);
+const assetLicensed = (p) => /CC BY 4\.0/.test(files.get(p)) || (p.startsWith('site/design-lab/') && /CC BY-SA 4\.0/.test(files.get(p)));
+ok(generatedAssets.every(assetLicensed), `every generated drawing and model (${generatedAssets.length}) carries its CC BY 4.0 or CC BY-SA 4.0 notice`);
 ok(['site/script.js', 'site/js/model.js', 'site/js/render.js', 'tools/build.mjs'].every((p) => /MIT/.test(read(p))), 'code files state the MIT licence');
 ok(/creativecommons\.org\/licenses\/by\/4\.0/.test(html) && /MIT/.test(html), 'page footer links both licences');
 ok(/not for construction/i.test(html) && /Disclaimer/.test(html), 'page keeps the concept-only disclaimer');

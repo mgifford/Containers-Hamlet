@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Design and customise a container home for the fictional Containers Hamlet: one, two or three modules, windows, screened porches, decks, rooms, roof, insulation and hamlet preview.">
+<meta name="color-scheme" content="light dark">
+<title>Container Home Editor | Containers Hamlet Design Lab</title>
+<link rel="stylesheet" href="../../style.css">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="editor.css">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body class="lab-page editor-page">
+<a class="skip" href="#main">Skip to editor</a>
+<header class="site-header">
+  <a class="brand" href="../../index.html">CONTAINERS HAMLET</a>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="../../index.html#explore">Hamlet</a></li>
+      <li><a href="../../index.html#homes">Homes</a></li>
+      <li><a href="../index.html">Design gallery</a></li>
+      <li><a href="index.html" aria-current="page">Editor</a></li>
+      <li><a href="../../index.html#downloads">Downloads</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="main" class="editor-main" tabindex="-1">
+
+<section class="editor-hero" aria-labelledby="editor-title">
+  <p class="eyebrow">Container Home Design Studio · Editor</p>
+  <h1 id="editor-title">Design your container home.</h1>
+  <p class="lead">Start with a one-, two- or three-container preset, then move modules, change windows and doors, add a screened porch, deck or climbing-plant trellis, choose roof and cladding options, and shape the rooms inside. The plan, exterior and roof-off cutaway update from the same model.</p>
+  <p class="lab-note"><strong>Concept only.</strong> The editor does not calculate structure, fire, energy or code compliance. It only blocks geometry that breaks its own explicit rules. Every design needs professional review.</p>
+  <div class="toolbar" role="group" aria-label="Design actions">
+    <label class="toolbar-field">Starting design
+      <select id="preset"></select>
+    </label>
+    <button type="button" id="undo" disabled>Undo</button>
+    <button type="button" id="redo" disabled>Redo</button>
+    <button type="button" id="reset" class="secondary">Reset preset</button>
+    <button type="button" id="import-button">Import JSON</button>
+    <input id="import-file" type="file" accept=".json,application/json" aria-label="Import design JSON" hidden>
+    <button type="button" id="export-json">Download JSON</button>
+  </div>
+  <p id="status" class="status" role="status" aria-live="polite">Loading the Design Lab…</p>
+  <noscript><p class="lab-note">The editor needs JavaScript. You can still browse the <a href="../index.html">nine concept cards</a> and download their source files.</p></noscript>
+</section>
+
+<div class="editor-layout">
+  <form id="controls" class="editor-controls" aria-label="Design controls">
+    <section class="control-block" aria-labelledby="design-controls-title">
+      <h2 id="design-controls-title">Design</h2>
+      <label>Design name<input id="design-name" type="text" maxlength="80" autocomplete="off" data-path="name"></label>
+      <label>Primary view direction (degrees from north)<input id="primary-view" type="number" min="0" max="359" step="1" data-path="primary_view_deg"></label>
+      <p class="small">The primary view is the direction the main windows and porch are trying to face. It is used for the plan arrow and the hamlet preview; it does not promise privacy.</p>
+    </section>
+
+    <section class="control-block" aria-labelledby="modules-title">
+      <h2 id="modules-title">Containers</h2>
+      <p class="small">One to three modules. Every module has its own type, position, rotation, insulation, cladding and roof. Move a module by changing its position; the other modules stay put.</p>
+      <div id="module-controls"></div>
+      <div class="button-row">
+        <button type="button" id="add-module">Add container</button>
+        <button type="button" id="remove-module" class="secondary">Remove selected</button>
+      </div>
+      <label>Arrangement preset
+        <select id="arrangement">
+          <option value="single">Single module</option>
+          <option value="parallel">Two parallel modules</option>
+          <option value="adjacent">Two adjacent modules</option>
+          <option value="l-shape">Two-module L</option>
+          <option value="courtyard">Three-module courtyard</option>
+        </select>
+      </label>
+      <button type="button" id="apply-arrangement">Apply arrangement</button>
+    </section>
+
+    <section class="control-block" aria-labelledby="openings-title">
+      <h2 id="openings-title">Windows and doors</h2>
+      <label>Module<select id="opening-target"></select></label>
+      <div id="opening-controls"></div>
+      <div class="button-row">
+        <button type="button" id="add-opening">Add opening</button>
+        <button type="button" id="remove-opening" class="secondary">Remove selected opening</button>
+      </div>
+      <p class="small">Positions are the centre of the opening, measured from the west end of a north or south face, or from the north end of an east or west face. The editor blocks openings within 150 mm of a container end.</p>
+    </section>
+
+    <section class="control-block" aria-labelledby="outdoor-title">
+      <h2 id="outdoor-title">Outdoor living</h2>
+      <div id="porch-controls"></div>
+      <div class="button-row">
+        <button type="button" id="add-porch">Add porch</button>
+        <button type="button" id="remove-porch" class="secondary">Remove last porch</button>
+      </div>
+      <div id="deck-controls"></div>
+      <button type="button" id="add-deck">Add deck</button>
+      <div id="trellis-controls"></div>
+      <button type="button" id="add-trellis">Add climbing-plant trellis</button>
+      <div id="connection-controls"></div>
+      <button type="button" id="add-connection">Add timber connector</button>
+    </section>
+
+    <section class="control-block" aria-labelledby="zones-title">
+      <h2 id="zones-title">Interior rooms</h2>
+      <label>Module<select id="zone-target"></select></label>
+      <div id="zone-controls"></div>
+      <div class="button-row">
+        <button type="button" id="add-zone">Add room zone</button>
+        <button type="button" id="remove-zone" class="secondary">Remove selected room</button>
+      </div>
+      <p class="small">Room zones are conceptual bands along the container. They do not model partitions, door swings, fixtures or structural walls.</p>
+    </section>
+
+    <section class="control-block" aria-labelledby="envelope-title">
+      <h2 id="envelope-title">Roof and exterior</h2>
+      <p class="small">Roof, cladding and insulation are edited on each container above. The global roof palette and colour choices are intentionally muted for the woodland setting.</p>
+      <label>Default cladding colour
+        <select id="default-colour">
+          <option value="#8a6a4a">Weathered timber</option>
+          <option value="#6f6a5d">Charcoal timber</option>
+          <option value="#7a5a3d">Warm cedar</option>
+          <option value="#6f5a41">Moss brown</option>
+          <option value="#8c8578">Pale salvaged metal</option>
+        </select>
+      </label>
+      <button type="button" id="apply-colour">Apply colour to all containers</button>
+      <fieldset class="checks">
+        <legend>Material intent</legend>
+        <label><input type="checkbox" id="mi-reclaimed" data-path="material_intent.reclaimed_containers"> Reclaimed containers</label>
+        <label><input type="checkbox" id="mi-timber" data-path="material_intent.reused_timber"> Reused or certified timber where graded</label>
+        <label><input type="checkbox" id="mi-cladding" data-path="material_intent.replaceable_cladding"> Replaceable cladding</label>
+        <label><input type="checkbox" id="mi-insulation" data-path="material_intent.continuous_external_insulation"> Continuous external insulation</label>
+        <label><input type="checkbox" id="mi-foam" data-path="material_intent.selective_spray_foam"> Selective spray foam under investigation</label>
+        <label><input type="checkbox" id="mi-reversible" data-path="material_intent.reversible_connections"> Reversible connections</label>
+        <label><input type="checkbox" id="mi-porch" data-path="material_intent.modular_porch"> Modular porch and deck</label>
+        <label><input type="checkbox" id="mi-solar" data-path="material_intent.solar_ready"> Solar-ready roof</label>
+        <label><input type="checkbox" id="mi-green" data-path="material_intent.green_roof_investigated"> Green roof under investigation</label>
+      </fieldset>
+    </section>
+  </form>
+
+  <div class="editor-output">
+    <section class="view-block" aria-labelledby="plan-title">
+      <h2 id="plan-title">Dimensioned concept plan</h2>
+      <div id="plan" class="view-svg"></div>
+      <p class="view-caption">Nominal container geometry. Dimensions are not verified clearances. Openings are shown as blue windows and brown doors.</p>
+    </section>
+
+    <div class="view-grid">
+      <section class="view-block" aria-labelledby="exterior-title">
+        <h2 id="exterior-title">Exterior concept</h2>
+        <div id="exterior" class="view-svg"></div>
+      </section>
+      <section class="view-block" aria-labelledby="cutaway-title">
+        <h2 id="cutaway-title">Roof-off cutaway</h2>
+        <div id="cutaway" class="view-svg"></div>
+      </section>
+    </div>
+
+    <section class="view-block assessment" aria-labelledby="checks-title">
+      <h2 id="checks-title">Design checks</h2>
+      <p id="assessment-status" class="status" role="status" aria-live="polite"></p>
+      <div id="warning-list"></div>
+      <p class="small">These checks are limited to the editor's explicit geometry rules and a set of review prompts. They are not a building code, structural, fire, energy or accessibility assessment.</p>
+    </section>
+
+    <section class="view-block" aria-labelledby="hamlet-title">
+      <h2 id="hamlet-title">Preview in the hamlet</h2>
+      <p>Place the design at a fictional homesite to see its approximate footprint and orientation against the terrain, shoreline, wetland, rocks, paths and existing homes. This preview is illustrative. It does not add the design to the published community layout.</p>
+      <div class="field-grid hamlet-controls">
+        <label>Fictional homesite<select id="homesite" data-path="site.homesite"></select></label>
+        <label>Preview rotation (degrees)<input id="site-rotation" type="number" min="0" max="359" step="1" data-path="site.rotation_deg"></label>
+      </div>
+      <div id="site-preview" class="site-preview" role="img" aria-label="Illustrative site preview"></div>
+      <p id="site-status" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="view-block" aria-labelledby="summary-title">
+      <h2 id="summary-title">Design summary</h2>
+      <div id="summary" class="summary-grid"></div>
+    </section>
+
+    <section class="view-block downloads" aria-labelledby="downloads-title">
+      <h2 id="downloads-title">Download and reopen</h2>
+      <p>Your design stays in this browser. Download the JSON to reopen it here later, or take the SVG views and summary into another tool. The JSON import accepts both this schema and the earlier <code>containers-hamlet-editor/v0.1</code> prototype.</p>
+      <div class="button-row">
+        <button type="button" id="export-plan">Download plan SVG</button>
+        <button type="button" id="export-exterior">Download exterior SVG</button>
+        <button type="button" id="export-cutaway">Download cutaway SVG</button>
+        <button type="button" id="export-summary">Download summary</button>
+        <button type="button" id="export-zip">Download all as ZIP</button>
+      </div>
+      <p id="export-status" class="status" role="status" aria-live="polite"></p>
+      <p class="small">Licence: Design Lab code AGPL-3.0-or-later; original concept data, documentation and drawings CC BY-SA 4.0. Exported JSON includes provenance and a professional-review warning. No personal information is collected.</p>
+    </section>
+  </div>
+</div>
+</main>
+<footer class="site-footer">
+  <p>Containers Hamlet Design Lab · Concept only · Code <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · Original content <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0</a></p>
+  <p><a href="../index.html">Design gallery</a> · <a href="../../index.html">Containers Hamlet</a> · <a href="https://github.com/mgifford/Containers-Hamlet/tree/main/site/design-lab">Design Lab source</a></p>
+</footer>
+<script src="../../js/design-schema.js"></script>
+<script src="../../js/design-model.js"></script>
+<script src="../concepts.js"></script>
+<script src="../site-data.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>

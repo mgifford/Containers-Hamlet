@@ -185,6 +185,13 @@ fieldset.segmented input:focus-visible { outline: none; }
 .room-info h4 { font-size: 1.15rem; margin: 0.6rem 0 0.3rem; }
 
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.preset-cards { margin: 1.4rem 0 1.2rem; }
+.preset-cards article { display: flex; flex-direction: column; }
+.preset-cards img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 0.5rem; margin-bottom: 0.7rem; background: var(--paper); }
+.preset-cards h3 { margin: 0.2rem 0 0.5rem; }
+.preset-cards p:last-child { margin-top: auto; }
+.actions-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1rem 0; }
+
 .cards article { background: var(--surface); border: 1px solid var(--border); padding: 1rem; border-radius: 0.7rem; }
 .cards h3 { margin-top: 0; }
 .disclosures details { border: 1px solid var(--border); border-radius: 0.6rem; background: var(--surface); margin: 0.5rem 0; padding: 0 1rem; }

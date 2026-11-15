@@ -21,6 +21,8 @@ jobs:
         run: node tools/build.mjs --check
       - name: Static checks
         run: node tools/check.mjs
+      - name: Design Lab schema, gallery and editor checks
+        run: node tools/check-design-lab.mjs
   browser:
     name: Accessibility in the browser
     runs-on: ubuntu-latest
@@ -34,6 +36,8 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: axe-core, keyboard, reflow, motion, colour schemes, no-JS
         run: node tools/browser-check.mjs screenshots
+      - name: Design Lab browser checks
+        run: node tools/design-lab-check.mjs screenshots
       - uses: actions/upload-artifact@v7
         if: always()
         with:

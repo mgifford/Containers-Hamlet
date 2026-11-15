@@ -28,7 +28,7 @@
 - the page with its scripts blocked, including all seven home briefs and view diagrams
 - same-origin requests, no third-party requests and all local links
 
-`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. As of Phase 1.2 it runs 140 static checks; the browser suite runs 62 checks.
+`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 167 static checks; the main browser suite runs 62 checks. `tools/check-design-lab.mjs` adds 260 schema, geometry and page checks, and `tools/design-lab-check.mjs` adds 53 browser checks for the gallery and editor.
 
 ## Manual testing still required
 
@@ -54,3 +54,24 @@ Record the browser, assistive technology, version, page state and result in the 
 - **SVG text inside images** is not translated by browser translation tools.
 
 Please report barriers through a GitHub issue. Do not include personal information.
+
+
+## Design Lab accessibility
+
+The gallery is a static page: all nine concepts, their facts, three views, source files and licence links are present without JavaScript. Every gallery image has descriptive alt text and dimensions; the containing `<details>` elements are native and keyboard operable.
+
+The editor adds:
+
+- native labelled inputs, selects and checkboxes, grouped in fieldsets with legends;
+- visible focus on every control and button;
+- keyboard-operable add/remove, undo/redo, preset, export and import actions;
+- `role="status"` messages for loading, imports, exports, undo/redo and assessment changes;
+- three generated SVG views, each with `role="img"`, a `<title>` and a `<desc>`;
+- a hamlet preview with a text label describing the homesite, conflicts and the fact that it is illustrative;
+- a no-JavaScript message and a link back to the static gallery;
+- 320 px reflow, dark mode and forced-colours support, with drawings retaining their colours;
+- reduced-motion support (no animations).
+
+The editor does **not** yet support screen-reader or disabled-user testing, direct visual dragging, or a full keyboard Tab-walk test for every generated control. That work remains manual. The hamlet preview is explicitly illustrative and is not a privacy or sightline assessment.
+
+The Design Lab's physical building accessibility is a separate question from WCAG. The editor's accessibility prompts (door widths, bathroom zones, door swings) are design review reminders, not a CSA B651 or building-code assessment. A qualified accessibility consultant must review any real home.

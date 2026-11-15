@@ -25,6 +25,8 @@ jobs:
         run: node tools/build.mjs --check
       - name: Static checks
         run: node tools/check.mjs
+      - name: Design Lab checks
+        run: node tools/check-design-lab.mjs
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
         with:
