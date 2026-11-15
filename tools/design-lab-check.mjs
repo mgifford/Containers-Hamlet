@@ -394,6 +394,7 @@ try {
   ok(ground.errors.length === 0, `ground guide: no console errors${ground.errors.length ? ': ' + ground.errors.join(' | ') : ''}`);
   const groundState = await ground.page.evaluate(() => ({ rows: document.querySelectorAll('tbody tr').length, bridge: !!document.querySelector('.system-figure img'), text: document.body.textContent, links: [...document.querySelectorAll('.source-list a')].map((a) => a.href) }));
   ok(groundState.rows >= 10 && groundState.bridge && /footbridge/i.test(groundState.text), 'ground guide: foundation options and footbridge are present');
+  await ground.page.waitForTimeout(300);
   ok(await ground.page.evaluate(() => document.querySelector('.system-figure img').naturalWidth > 0), 'ground guide: footbridge diagram loads');
   ok(groundState.links.some((u) => /wcl\.org\.uk/.test(u)) && groundState.links.some((u) => /technometalpost/.test(u)) && groundState.links.some((u) => /naturalbuildingcollective/.test(u)) && groundState.links.some((u) => /solidearthtech/.test(u)) && groundState.links.some((u) => /houzz/.test(u)), 'ground guide: supplied sources are linked');
   await axe(ground.page, 'ground guide');
