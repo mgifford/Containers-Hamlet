@@ -207,7 +207,7 @@ Every design has a five-view page under `site/design-lab/architecture/<id>/`. Th
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 692 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery, comparison, licence and privacy checks
+node tools/check-design-lab.mjs      # 697 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery, comparison, licence and privacy checks
 node tools/design-lab-check.mjs      # 114 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 

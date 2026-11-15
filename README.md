@@ -2,7 +2,7 @@
 
 Six individual woodland retreats that happen to share a community.
 
-A fictional 13.5-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.3 adds a **Container Home Design Studio**: nine container homes plus a café-inspired common lodge, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls, elevated helical-pile foundations, a small footbridge study and a side-by-side comparison tool. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
+A fictional 13.5-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.3 adds a **Container Home Design Studio**: nine container homes plus a green, yellow-framed café lodge under one south-facing shed roof, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls, elevated helical-pile foundations, a small footbridge study and a side-by-side comparison tool. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
 
 Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, all drawings, downloads, the cutaway explorer and the validation workflow. The new editor uses a separate, versioned multi-container schema and never overwrites the existing architectural data. See [`docs/phase-1.3.md`](docs/phase-1.3.md), the [gallery/thermal extension](docs/phase-1.3-extension.md) the [envelope/vegetation extension](docs/phase-1.3-envelope-vegetation.md) and the [foundations and access study](docs/foundations-and-access.md) for the audit, changes, tests, screenshots and limitations.
 
@@ -24,7 +24,7 @@ Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
    node tools/check.mjs       # 199 main-site static checks
-   node tools/check-design-lab.mjs   # 692 Design Lab schema, geometry, envelope, vegetation, solar, foundation, gallery and comparison checks
+   node tools/check-design-lab.mjs   # 697 Design Lab schema, geometry, envelope, vegetation, solar, foundation, gallery and comparison checks
    npm install
    npm run test:browser       # 62 main-site browser checks
    npm run test:design-lab    # 114 Design Lab browser checks
@@ -48,7 +48,7 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed. The whole published site is about 2989 KB, under the revised 3.0 MB budget.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed. The whole published site is about 2995 KB, under the revised 3.0 MB budget.
 
 ## The fictional landscape
 

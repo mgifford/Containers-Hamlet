@@ -1,6 +1,6 @@
 # Phase 1.3 extension: architectural galleries, thermal comfort and a common lodge
 
-> A further extension adds configurable exterior insulation assemblies, wall sections and living vegetation systems. See [`phase-1.3-envelope-vegetation.md`](phase-1.3-envelope-vegetation.md). Current counts are 199 main static, 692 Design Lab static, 62 main browser and 114 Design Lab browser checks; whole site 2989 KB under a revised 3.0 MB budget.
+> A further extension adds configurable exterior insulation assemblies, wall sections and living vegetation systems. See [`phase-1.3-envelope-vegetation.md`](phase-1.3-envelope-vegetation.md). Current counts are 199 main static, 697 Design Lab static, 62 main browser and 114 Design Lab browser checks; whole site 2995 KB under a revised 3.0 MB budget.
 
 This extension builds on the Phase 1.3 Container Home Design Studio. It adds a five-view architectural gallery for every developed design, a café-inspired common lodge concept, thermal-envelope options, and a side-by-side comparison tool. It keeps the project container-first and does not turn it into a generic architecture application.
 
@@ -42,7 +42,7 @@ Programme:
 - an 8 × 3 m screened veranda, a covered west entrance and two decks;
 - large landscape-facing windows, a green/biosolar roof on the north module, solar on the other modules, and a separate trellis.
 
-The central hall is modelled as a glazed timber connection, with `glazed`, `door_type` and `glazing_area_m2` fields. It is intended to use **insulated sliding or folding doors**, not an uninsulated glazed garage door. The thermal panel and comparison flag the large glazing, condensation, solar-gain and door-performance risks. The design does not claim that the glazing meets a required thermal performance.
+The central hall is modelled as a glazed timber connection with yellow mullions, with `glazed`, `door_type` and `glazing_area_m2` fields. The single shed roof is 5°; the 39° solar array is mounted only on its south slope and is aligned to true south independently of the building rotation. No north-side array is drawn. It is intended to use **insulated sliding or folding doors**, not an uninsulated glazed garage door. The reference palette is deep green containers with yellow frames and a large glazed café frontage. The thermal panel and comparison flag the large glazing, condensation, solar-gain and door-performance risks. The design does not claim that the glazing meets a required thermal performance.
 
 The common lodge is currently **inspiration only**, like the six further homes. The three editable presets remain Woodland Retreat, L-Shaped Haven and Woodland Courtyard. The lodge has source JSON, five views and a comparison entry.
 
@@ -122,6 +122,7 @@ Screenshots: [`screenshots/phase-1.3-extension/`](screenshots/phase-1.3-extensio
 - [Common Lodge five-view page](screenshots/phase-1.3-extension/architecture-top.jpg)
 - [Show-all/non-carousel alternative](screenshots/phase-1.3-extension/architecture-all.jpg)
 - [Common Lodge plan](screenshots/phase-1.3-extension/lodge-plan.jpg), [exterior](screenshots/phase-1.3-extension/lodge-ext.jpg), [winter](screenshots/phase-1.3-extension/lodge-winter.jpg), [porch detail](screenshots/phase-1.3-extension/lodge-porch.jpg)
+- [Common Lodge architecture page](screenshots/phase-1.3-envelope-vegetation/lodge-architecture.jpg)
 - [Thermal-envelope controls](screenshots/phase-1.3-extension/editor-thermal.jpg)
 - [Comparison](screenshots/phase-1.3-extension/compare-top.jpg)
 - [Architecture page at mobile width](screenshots/phase-1.3-extension/architecture-mobile.jpg)

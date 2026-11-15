@@ -125,7 +125,7 @@ ${slides}
 
   <section class="solar-section" aria-labelledby="solar-title">
     <h2 id="solar-title">Solar tilt and azimuth</h2>
-    ${(() => { const sm = c.modules.find((m) => m.solar && m.solar.enabled) || c.modules[0]; return `<p><strong>${sm.solar.tilt_deg}° tilt</strong> · ${sm.solar.azimuth_deg}° azimuth · ${esc(sm.solar.season_mode)} strategy. ${esc(sm.solar.note || '')}</p><img src="../../systems/solar-${sm.solar.tilt_deg}.svg" width="1040" height="400" alt="Explanatory solar section with a ${sm.solar.tilt_deg} degree tilted array facing azimuth ${sm.solar.azimuth_deg} degrees." loading="eager" decoding="async">`; })()}
+    ${(() => { const sm = c.solar_array || (c.modules.find((m) => m.solar && m.solar.enabled) || c.modules[0]).solar; return `<p><strong>${sm.tilt_deg}° tilt</strong> · ${sm.azimuth_deg}° azimuth · ${esc(sm.season_mode)} strategy. ${esc(sm.note || '')}</p>${c.roof_form ? `<p class="small">Roof: one ${c.roof_form.pitch_deg}° south-facing shed roof. Solar is mounted only on the south slope; the north slope has no array. Array azimuth is true south, independent of building rotation.</p>` : ''}<img src="../../systems/solar-${sm.tilt_deg}.svg" width="1040" height="400" alt="Explanatory solar section with a ${sm.tilt_deg} degree tilted array facing azimuth ${sm.azimuth_deg} degrees." loading="eager" decoding="async">`; })()}
     <p class="small">Ottawa reference: the year-round fixed range is 36–39° (SolarCalculator.CA reports 39° optimal), winter is about 60° and summer about 30°, facing true south within a few degrees. No energy production, snow-shedding, wind-uplift or code compliance is calculated.</p>
   </section>
 

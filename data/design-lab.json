@@ -4160,8 +4160,8 @@
       "group": "Common lodge",
       "editable": false,
       "visual_seed": 113,
-      "tagline": "A caf\u00e9-inspired container hall for shared meals, work and gathering.",
-      "description": "Three reused 40-foot containers frame a large timber-framed gathering hall. The north wing holds the shared kitchen, pantry, laundry and accessible washrooms; the central hall is the shared dining and gathering space; the south wing holds the workshop, meeting room and boot room; the west wing holds the caf\u00e9 servery, office and a universal washroom. Insulated sliding/folding glazing and a screened veranda connect the hall to the forest. The existing authoritative lodge model is preserved separately; this is an additional Design Lab concept.",
+      "tagline": "A green container caf\u00e9-lodge under one south-facing shed roof.",
+      "description": "Three reused 40-foot containers in deep green, with yellow-framed glazing and a tall glazed central hall, frame a community lodge beside the water. One south-facing shed roof covers the whole building; the solar array is mounted only on the south slope and is aligned to true south independently of the building. The north wing holds the shared kitchen, pantry, laundry and accessible washrooms; the central hall is the shared dining and gathering space; the south wing holds the workshop, meeting room and boot room; the west wing holds the caf\u00e9 servery, office and a universal washroom. A screened veranda and covered entrance connect the hall to the forest. The existing authoritative lodge model is preserved separately; this is an additional Design Lab concept.",
       "primary_view_deg": 180,
       "modules": [
         {
@@ -4182,8 +4182,8 @@
             "type": "wood-fibre board + mineral wool"
           },
           "cladding": {
-            "type": "timber",
-            "colour": "#6a5a43"
+            "type": "metal",
+            "colour": "#2f7d5f"
           },
           "roof": {
             "type": "biosolar",
@@ -4304,14 +4304,15 @@
             }
           ],
           "solar": {
-            "enabled": true,
+            "enabled": false,
             "tilt_deg": 39,
             "azimuth_deg": 180,
             "season_mode": "year-round",
             "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
             "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
             "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
-          }
+          },
+          "frame_colour": "#e5b21c"
         },
         {
           "id": "m2",
@@ -4331,8 +4332,8 @@
             "type": "wood-fibre board + mineral wool"
           },
           "cladding": {
-            "type": "timber",
-            "colour": "#776a54"
+            "type": "metal",
+            "colour": "#2f7d5f"
           },
           "roof": {
             "type": "solar",
@@ -4436,14 +4437,15 @@
             }
           ],
           "solar": {
-            "enabled": true,
+            "enabled": false,
             "tilt_deg": 39,
             "azimuth_deg": 180,
             "season_mode": "year-round",
             "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
             "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
             "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
-          }
+          },
+          "frame_colour": "#e5b21c"
         },
         {
           "id": "m3",
@@ -4463,8 +4465,8 @@
             "type": "wood-fibre board + mineral wool"
           },
           "cladding": {
-            "type": "timber",
-            "colour": "#6a5a43"
+            "type": "metal",
+            "colour": "#276b55"
           },
           "roof": {
             "type": "green",
@@ -4568,14 +4570,15 @@
             }
           ],
           "solar": {
-            "enabled": true,
+            "enabled": false,
             "tilt_deg": 39,
             "azimuth_deg": 180,
             "season_mode": "year-round",
             "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
             "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
             "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
-          }
+          },
+          "frame_colour": "#e5b21c"
         }
       ],
       "connections": [
@@ -4596,7 +4599,8 @@
           "glazed": true,
           "door_type": "insulated-sliding",
           "glazing_area_m2": 42,
-          "note": "Large central gathering hall with insulated sliding/folding glazed doors and a screened veranda beyond. Not a glazed garage door."
+          "note": "Large central glazed hall with yellow-framed insulated sliding/folding doors; the single shed roof sits above.",
+          "frame_colour": "#e5b21c"
         },
         {
           "id": "c2",
@@ -4717,10 +4721,10 @@
           "Storage"
         ],
         "outdoor": "8.0 \u00d7 3.0 m screened veranda, covered west entrance, decks",
-        "solar": "Solar on the north and west modules; green roof on the north module",
+        "solar": "A single 39\u00b0 south-facing array on the 5\u00b0 south slope of the shed roof; no north-side array. True south, independent of building rotation.",
         "green_roof": "Green/biosolar roof on the north module; weight, drainage and fire review required",
         "accessibility": "Step-free hall and veranda intended; two accessible washrooms, one with an adult-size change table; door widths, turning spaces and counter heights need verification.",
-        "environment": "Three reused modules and a timber hall share one envelope and one gathering space; large glazing and a green roof increase the technical review."
+        "environment": "Three reused green containers and a glazed timber hall share one shallow south-facing shed roof; only the south slope carries solar. Large glazing and a green roof increase the technical review."
       },
       "materials": [
         {
@@ -4758,7 +4762,7 @@
         "authors": "Containers Hamlet contributors",
         "created": "2026",
         "revision": "1.3.0",
-        "method": "Original caf\u00e9-inspired container lodge concept for Design Lab. No caf\u00e9 photographs are bundled or reproduced; the design follows the written brief only.",
+        "method": "Original green container caf\u00e9-lodge concept inspired by the supplied reference photographs; no photograph or proprietary design is reproduced. Single south-facing shed roof with solar only on the south slope.",
         "source": "Brief and generic container/caf\u00e9 typology. The existing authoritative lodge model remains data/lodge.json.",
         "verification": "None. No architect, engineer, accessibility consultant or building official has reviewed this concept."
       },
@@ -4887,7 +4891,25 @@
           "support": "independent posts and root barrier",
           "notes": "Set clear of the container and services; do not rely on the screen for structural support."
         }
-      ]
+      ],
+      "roof_form": {
+        "type": "south-shed",
+        "pitch_deg": 5,
+        "overhang_m": 0.5,
+        "solar_side": "south",
+        "colour": "#2f6b57",
+        "note": "One south-facing shed roof, low at the south eave and high at the north ridge. Solar only on the south slope; no north-side array."
+      },
+      "solar_array": {
+        "enabled": true,
+        "tilt_deg": 39,
+        "azimuth_deg": 180,
+        "season_mode": "year-round",
+        "side": "south",
+        "mounting": "tilted racks on the 5\u00b0 south shed slope; panels at 39\u00b0 from horizontal",
+        "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; 36\u201339\u00b0 year-round, winter \u224860\u00b0, summer \u224830\u00b0, due south.",
+        "note": "Array is aligned to true south regardless of building rotation; it sits only on the south roof slope. Snow shedding, wind uplift, roof structure and electrical design need review."
+      }
     }
   ]
 }
