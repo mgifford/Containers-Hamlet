@@ -20,6 +20,7 @@
       <li><a href="../../index.html#explore">Hamlet</a></li>
       <li><a href="../../index.html#homes">Homes</a></li>
       <li><a href="../index.html">Design gallery</a></li>
+      <li><a href="../vegetation/">Vegetation</a></li>
       <li><a href="../compare/">Compare</a></li>
       <li><a href="index.html" aria-current="page">Editor</a></li>
       <li><a href="../../index.html#downloads">Downloads</a></li>
@@ -36,6 +37,9 @@
   <div class="toolbar" role="group" aria-label="Design actions">
     <label class="toolbar-field">Starting design
       <select id="preset"></select>
+    </label>
+    <label class="toolbar-field">Season
+      <select id="season"><option value="summer">Summer</option><option value="winter">Winter</option></select>
     </label>
     <button type="button" id="undo" disabled>Undo</button>
     <button type="button" id="redo" disabled>Redo</button>
@@ -102,8 +106,21 @@
       </details>
     </section>
 
+    <section class="control-block" aria-labelledby="envelope-title">
+      <h2 id="envelope-title">Envelope assembly</h2>
+      <p class="small">Exterior insulation keeps usable interior space in the container. This is a conceptual assembly, not a construction detail, code check or moisture analysis.</p>
+      <div id="envelope-controls"></div>
+      <div id="wall-section" class="wall-section" tabindex="0" role="group" aria-label="Envelope wall section diagram. Scroll horizontally if needed."></div>
+      <button type="button" id="download-wall">Download wall section SVG</button>
+      <details>
+        <summary>What the assembly does and does not prove</summary>
+        <p>Continuous exterior insulation can keep the steel shell warmer and reduce thermal bridging, but it also creates long fasteners, thicker walls, fire and moisture details, and maintenance access questions. A ventilated rainscreen helps drying but does not make an assembly moisture-safe.</p>
+        <p>Closed-cell spray foam, rigid board, wood fibre, mineral wool and hybrid assemblies have different vapour, fire, environmental and installation implications. The editor records the intent and warnings; it does not choose a compliant assembly.</p>
+      </details>
+    </section>
+
     <section class="control-block" aria-labelledby="outdoor-title">
-      <h2 id="outdoor-title">Outdoor living</h2>
+      <h2 id="outdoor-title">Outdoor living and vegetation</h2>
       <div id="porch-controls"></div>
       <div class="button-row">
         <button type="button" id="add-porch">Add porch</button>
@@ -115,6 +132,9 @@
       <button type="button" id="add-trellis">Add climbing-plant trellis</button>
       <div id="connection-controls"></div>
       <button type="button" id="add-connection">Add timber connector</button>
+      <div id="vegetation-controls"></div>
+      <button type="button" id="add-vegetation">Add vegetation system</button>
+      <p class="small">Living walls, edible planter walls and privacy screens are independently supported and held clear of the rainscreen. Plant selection, irrigation, fire and maintenance need local review.</p>
     </section>
 
     <section class="control-block" aria-labelledby="zones-title">
@@ -128,8 +148,8 @@
       <p class="small">Room zones are conceptual bands along the container. They do not model partitions, door swings, fixtures or structural walls.</p>
     </section>
 
-    <section class="control-block" aria-labelledby="envelope-title">
-      <h2 id="envelope-title">Roof and exterior</h2>
+    <section class="control-block" aria-labelledby="roof-title">
+      <h2 id="roof-title">Roof and exterior</h2>
       <p class="small">Roof, cladding and insulation are edited on each container above. The global roof palette and colour choices are intentionally muted for the woodland setting.</p>
       <label>Default cladding colour
         <select id="default-colour">
@@ -174,6 +194,12 @@
       </section>
     </div>
 
+    <section class="view-block exposure-block" aria-labelledby="exposure-title">
+      <h2 id="exposure-title">Season and window exposure</h2>
+      <div id="exposure"></div>
+      <p class="small">Approximate window areas and qualitative vegetation screening only. No energy savings, daylight factor, privacy score or code compliance is calculated.</p>
+    </section>
+
     <section class="view-block assessment" aria-labelledby="checks-title">
       <h2 id="checks-title">Design checks</h2>
       <p id="assessment-status" class="status" role="status" aria-live="polite"></p>
@@ -206,6 +232,7 @@
         <button type="button" id="export-cutaway">Download cutaway SVG</button>
         <button type="button" id="export-porch">Download porch/deck SVG</button>
         <button type="button" id="export-winter">Download winter SVG</button>
+        <button type="button" id="export-wall">Download wall section SVG</button>
         <button type="button" id="export-summary">Download summary</button>
         <button type="button" id="export-zip">Download all as ZIP</button>
       </div>

@@ -110,7 +110,7 @@ export function toCabinAProposal(design, template) {
   }
   report.compatible = true;
   report.preserved = ['single 40-foot module', 'external insulation thickness', 'openings (face, position, width, height, sill)', 'first porch dimensions and screening'];
-  report.unmapped = ['fixtures (the template fixture list is retained but not revalidated)', 'ramps', 'trellis', 'roof options other than the template default', 'room use text and detailed accessibility notes', 'decks and connectors', 'material intent choices', 'material passport detail', 'reviews'];
+  report.unmapped = ['fixtures (the template fixture list is retained but not revalidated)', 'ramps', 'trellis', 'roof options other than the template default', 'room use text and detailed accessibility notes', 'decks and connectors', 'material intent choices', 'envelope assembly detail', 'vegetation systems', 'material passport detail', 'reviews'];
   report.notes.push('The proposal is a copy for review. It is not written to data/cabin-a.json.');
   report.notes.push('Existing rooms and fixtures are retained from the template and may no longer match the edited openings or porch. Review before use.');
   return { spec, report };

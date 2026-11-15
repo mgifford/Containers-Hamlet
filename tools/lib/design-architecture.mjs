@@ -23,7 +23,7 @@ function slide(c, kind, title, src, size) {
         </figure>`;
 }
 
-export function architecturePage(c, sizes) {
+export function architecturePage(c, sizes, profile) {
   const slides = [
     slide(c, 'exterior', 'Exterior architectural view', `../../views/${c.id}-exterior.svg`, sizes.exterior),
     slide(c, 'plan', 'Dimensioned concept floor plan', `../../views/${c.id}-plan.svg`, sizes.plan),
@@ -59,6 +59,7 @@ export function architecturePage(c, sizes) {
   <nav aria-label="Design Lab">
     <a href="../../index.html">Design gallery</a>
     <a href="../../editor/">Editor</a>
+    <a href="../../vegetation/">Vegetation</a>
     <a href="../../compare/">Compare</a>
     <a href="../../../index.html#design-lab">Design on the main site</a>
     <a href="../../../index.html">Main site</a>
@@ -87,6 +88,42 @@ ${slides}
     </div>
     <p class="slide-help">The five views share one model. The plan, cutaway and porch detail are geometry-backed drawings; the exterior and winter images are illustrative studies. No slide advances automatically.</p>
   </div>
+  <section class="seasonal-section" aria-labelledby="seasonal-title">
+    <h2 id="seasonal-title">Summer and winter</h2>
+    <p>Both views use the same building and vegetation geometry. Evergreen systems remain visible in winter; deciduous climbers and edible planting are shown as dormant. No energy, daylight or privacy score is calculated.</p>
+    <div class="season-pair">
+      <figure><img src="../../views/${c.id}-exterior.svg" width="1040" height="700" alt="Summer exterior of ${esc(c.name)} with vegetation and seasonal foliage." loading="eager" decoding="async"><figcaption><span class="badge illustrative">Illustrative study</span> Summer: planting, shade and outdoor use.</figcaption></figure>
+      <figure><img src="../../views/${c.id}-winter.svg" width="1040" height="700" alt="Winter exterior of ${esc(c.name)} showing evergreen screening and dormant deciduous planting." loading="eager" decoding="async"><figcaption><span class="badge illustrative">Illustrative study</span> Winter: evergreen screening, dormant deciduous planting and snow.</figcaption></figure>
+    </div>
+    <h3>Approximate window exposure</h3>
+    <table class="exposure-table"><caption>Approximate glazing area by world-facing side. Not an energy or daylight model.</caption><thead><tr><th scope="col">Side</th><th scope="col">Approximate glazing</th></tr></thead><tbody>
+      ${['north','east','south','west'].map((f) => `<tr><th scope="row">${f}</th><td>${profile.exposure.glazing_by_face[f]} m²</td></tr>`).join('')}
+      <tr><th scope="row">Total</th><td>${profile.exposure.glazing_total_m2} m²</td></tr>
+    </tbody></table>
+    ${profile.exposure.shading.length ? `<h3>Shading and seasonal notes</h3><ul>${profile.exposure.shading.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+    ${profile.exposure.privacy.length ? `<h3>Privacy and screening</h3><ul>${profile.exposure.privacy.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+    ${profile.exposure.maintenance.length ? `<h3>Maintenance</h3><ul>${profile.exposure.maintenance.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+    <p class="small">${esc(profile.exposure.note)}</p>
+  </section>
+
+  <section class="assembly-section" aria-labelledby="assembly-title">
+    <h2 id="assembly-title">Envelope assembly</h2>
+    <p><strong>${esc((c.envelope && c.envelope.assembly) || 'unknown')}</strong> · version ${esc((c.envelope && c.envelope.version) || '—')}. The diagram is explanatory, not a construction detail; it is not code-compliant or moisture-safe without engineering review.</p>
+    <img src="../../systems/wall-${esc(c.envelope.assembly)}.svg" width="1040" height="560" alt="Explanatory wall section for the ${esc(c.envelope.assembly)} assembly: steel container wall, air and vapour control, insulation, thermal break, ventilated cavity and cladding, with vegetation clearance." loading="eager" decoding="async">
+    <h3>Layers</h3>
+    <ul class="assembly-layers">${c.envelope.layers.map((l) => `<li>${esc(l.material)} — ${l.thickness_mm} mm (${esc(l.role)})</li>`).join('')}</ul>
+    <p class="small">Condensation, fire, moisture, fastening, structural penetrations and maintenance all need project review. The designer does not claim this assembly is compliant or moisture-safe.</p>
+  </section>
+
+  <section class="vegetation-section" aria-labelledby="vegetation-title">
+    <h2 id="vegetation-title">Vegetation systems</h2>
+    ${(c.trellises && c.trellises.length) || (c.vegetation && c.vegetation.length) ? `<ul>
+      ${(c.trellises || []).map((t) => `<li><strong>Freestanding trellis</strong> on the ${esc(t.face)} face, ${t.length_m} × ${t.height_m} m; independent support; ${esc(t.note || '')}</li>`).join('')}
+      ${(c.vegetation || []).map((v) => `<li><strong>${esc({ 'living-wall': 'Modular living wall', 'edible-wall': 'Edible planter wall', 'privacy-screen': 'Evergreen privacy screen' }[v.type] || v.type)}</strong> on the ${esc(v.face)} face, ${v.length_m} × ${v.height_m} m; ${esc(v.seasonal_foliage)}; clearance ${v.offset_m} m; ${esc(v.support)}; irrigation: ${esc(v.irrigation)}; maintenance: ${esc(v.maintenance)}.</li>`).join('')}
+    </ul>` : '<p>No vegetation system is recorded for this concept.</p>'}
+    <p class="small">Planting is independently supported where practical. Fire, moisture, structural loads, irrigation, plant selection and maintenance require professional review. <a href="../../vegetation/">Compare the four vegetation systems</a>.</p>
+  </section>
+
   <section class="architecture-facts" aria-labelledby="facts-title">
     <h2 id="facts-title">Concept facts</h2>
     <dl class="fact-grid">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>

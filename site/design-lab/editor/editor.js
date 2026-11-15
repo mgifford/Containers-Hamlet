@@ -32,6 +32,7 @@
     selectedModule: null,
     selectedOpening: null,
     selectedZone: null,
+    season: 'summer',
     editBase: null,
     arrangement: 'single'
   };
@@ -171,6 +172,7 @@
     $('zone-target').innerHTML = moduleOptions;
     $('homesite').innerHTML = SITE.buildings.map(function (b) { return option(b.id, b.name + (b.short_name ? ' · ' + b.short_name : ''), d.site.homesite); }).join('');
     $('site-rotation').value = d.site.rotation_deg || 0;
+    $('season').value = state.season;
     renderOpenings();
     renderZones();
     renderPorches();
@@ -178,6 +180,8 @@
     renderTrellises();
     renderConnections();
     renderThermal();
+    renderEnvelope();
+    renderVegetation();
   }
 
   function renderOpenings() {
@@ -264,6 +268,99 @@
       '</div>' + checkbox('thermal.rainscreen_ventilation', t.rainscreen_ventilation, 'thermal-rainscreen', 'Ventilated rainscreen and replaceable cladding') + checkbox('thermal.heat_recovery_ventilation', t.heat_recovery_ventilation, 'thermal-hrv', 'Heat-recovery ventilation (HRV/ERV)');
   }
 
+  function renderEnvelope() {
+    var d = state.design;
+    var env = d.envelope;
+    var panel = $('envelope-controls');
+    if (!panel) return;
+    var labels = Model.ENVELOPE_LABEL || {};
+    var assemblyOptions = Object.keys(labels).map(function (k) { return option(k, labels[k], env.assembly); }).join('');
+    var mm = env.layers.filter(function (l) { return l.role === 'insulation'; }).reduce(function (t, l) { return t + l.thickness_mm; }, 0);
+    var bridge = /continuous/i.test(env.thermal_breaks) ? 'continuous' : /partial/i.test(env.thermal_breaks) ? 'partial' : 'not decided';
+    var air = /exterior-insulated/i.test(env.air_vapour_control) ? 'exterior' : /interior/i.test(env.air_vapour_control) ? 'interior' : 'not decided';
+    var fire = /review/i.test(env.fire) ? 'review' : 'not decided';
+    panel.innerHTML = '<div class="field-grid">' +
+      field('Assembly', selectInput('', env.assembly, 'env-assembly', assemblyOptions)) +
+      field('Insulation (mm)', numberInput('', mm, 'env-thickness', ' step="10" min="60" max="300"')) +
+      field('Rainscreen cavity (mm)', numberInput('', env.rainscreen.cavity_mm || 25, 'env-cavity', ' step="5" min="15" max="60"')) +
+      field('Thermal breaks', selectInput('', bridge, 'env-bridge', option('continuous', 'Continuous', bridge) + option('partial', 'Partial mitigation', bridge) + option('not decided', 'Not decided', bridge))) +
+      field('Air and vapour', selectInput('', air, 'env-air', option('exterior', 'Exterior insulated', air) + option('interior', 'Interior vapour retarder', air) + option('not decided', 'Not decided', air))) +
+      field('Fire review', selectInput('', fire, 'env-fire', option('review', 'Fire review', fire) + option('not decided', 'Not decided', fire))) +
+      '</div>' +
+      '<p class="small">The layers below are conceptual. Long fasteners, fire, moisture, maintenance and structural penetrations need engineering review.</p>';
+    $('wall-section').innerHTML = Model.wallSectionSVG(d, state.selectedModule, { idPrefix: 'editor-wall' });
+  }
+
+  function applyEnvelopeChoice() {
+    var assembly = $('env-assembly').value;
+    var mm = Math.max(60, Math.min(300, Number($('env-thickness').value) || 150));
+    var cavity = Math.max(15, Math.min(60, Number($('env-cavity').value) || 25));
+    var bridge = $('env-bridge').value;
+    var air = $('env-air').value;
+    var fire = $('env-fire').value;
+    var cladding = currentModule() ? currentModule().cladding.type : 'timber';
+    mutate(function () {
+      var env = Model.envelopeFor(assembly, mm, cladding);
+      env.rainscreen.cavity_mm = cavity;
+      env.thermal_breaks = bridge === 'continuous' ? 'continuous external insulation with thermal washers and stainless fasteners; breaks at openings, pile caps and service penetrations' : bridge === 'partial' ? 'partial thermal-break mitigation; junctions to be reviewed' : 'thermal-break strategy not decided';
+      env.air_vapour_control = air === 'exterior' ? 'exterior-insulated, vapour-open assembly with a sealed interior air barrier; joints and service penetrations to be detailed' : air === 'interior' ? 'interior vapour-retarder with sealed service penetrations (to be detailed)' : 'air and vapour control strategy not decided';
+      env.fire = fire === 'review' ? 'combustible insulation, cladding and cavity need a fire review; cavity barriers, cladding classification and separation are not resolved' : 'fire strategy not decided';
+      state.design.envelope = env;
+      state.design.thermal.wall_insulation_strategy = env.layers.filter(function (l) { return l.role === 'insulation'; }).map(function (l) { return l.material; }).join(' + ') + ' (' + mm + ' mm) with thermal breaks and a ventilated rainscreen';
+      state.design.thermal.thermal_bridge_mitigation = env.thermal_breaks;
+      state.design.thermal.air_vapour_control = env.air_vapour_control;
+      state.design.thermal.rainscreen_ventilation = !!env.rainscreen.ventilated;
+      state.design.modules.forEach(function (m) { m.insulation.thickness_mm = mm; m.insulation.type = env.layers.filter(function (l) { return l.role === 'insulation'; }).map(function (l) { return l.material; }).join(' + '); });
+    }, 'Envelope assembly updated. The wall section and warnings have changed; professional review is still required.');
+  }
+
+  function renderVegetation() {
+    var d = state.design;
+    var panel = $('vegetation-controls');
+    if (!panel) return;
+    if (!d.vegetation.length) { panel.innerHTML = '<p>No living wall, edible planter wall or evergreen privacy screen. The climbing-plant trellis is in the outdoor controls above.</p>'; return; }
+    panel.innerHTML = d.vegetation.map(function (v, i) {
+      var base = 'vegetation-' + i;
+      var labels = Model.VEG_LABEL || {};
+      return '<fieldset class="vegetation-card"><legend>' + esc(labels[v.type] || v.type) + ' · ' + esc(v.id) + '</legend><div class="field-grid">' +
+        field('System', selectInput('vegetation.' + i + '.type', v.type, base + '-type', Object.keys(labels).filter(function (k) { return k !== 'trellis'; }).map(function (k) { return option(k, labels[k], v.type); }).join(''))) +
+        field('Module', selectInput('vegetation.' + i + '.module', v.module, base + '-module', d.modules.map(function (m) { return option(m.id, m.id, v.module); }).join(''))) +
+        field('Face', selectInput('vegetation.' + i + '.face', v.face, base + '-face', Object.keys(FACE_LABEL).map(function (k) { return option(k, FACE_LABEL[k], v.face); }).join(''))) +
+        field('Start (m)', numberInput('vegetation.' + i + '.start_m', v.start_m, base + '-start', ' step="0.1" min="0"')) +
+        field('Length (m)', numberInput('vegetation.' + i + '.length_m', v.length_m, base + '-length', ' step="0.1" min="0.5"')) +
+        field('Height (m)', numberInput('vegetation.' + i + '.height_m', v.height_m, base + '-height', ' step="0.1" min="0.5" max="6"')) +
+        field('Clearance (m)', numberInput('vegetation.' + i + '.offset_m', v.offset_m, base + '-offset', ' step="0.05" min="0.3" max="2"')) +
+        field('Plant type', textInput('vegetation.' + i + '.plant_type', v.plant_type, base + '-plant')) +
+        field('Mature height (m)', numberInput('vegetation.' + i + '.mature_height_m', v.mature_height_m, base + '-mature', ' step="0.1" min="0.5" max="8"')) +
+        field('Seasonal foliage', selectInput('vegetation.' + i + '.seasonal_foliage', v.seasonal_foliage, base + '-foliage', option('evergreen', 'Evergreen', v.seasonal_foliage) + option('deciduous', 'Deciduous', v.seasonal_foliage) + option('mixed', 'Mixed', v.seasonal_foliage))) +
+        field('Irrigation', selectInput('vegetation.' + i + '.irrigation', v.irrigation, base + '-irrigation', option('drip with recirculation', 'Drip / recirculating', v.irrigation) + option('drip and hand watering', 'Drip and hand watering', v.irrigation) + option('establishment watering only', 'Establishment only', v.irrigation) + option('none', 'None / not decided', v.irrigation))) +
+        field('Support', textInput('vegetation.' + i + '.support', v.support, base + '-support')) +
+        field('Maintenance', textInput('vegetation.' + i + '.maintenance', v.maintenance, base + '-maintenance', ' class="wide"')) +
+        '</div><button type="button" class="secondary" data-action="remove-vegetation" data-index="' + i + '">Remove this system</button></fieldset>';
+    }).join('');
+  }
+
+  function addVegetation() {
+    var m = currentModule();
+    if (!m) return;
+    var type = 'living-wall';
+    mutate(function () {
+      state.design.vegetation.push({ id: nextId('v', state.design.vegetation), type: type, name: 'Modular living wall', module: m.id, face: 'south', start_m: 1, length_m: Math.min(3, m.nominal.length_m - 1), height_m: 2.6, offset_m: 0.5, plant_type: 'sedum, native ferns and mosses', mature_height_m: 2.6, seasonal_foliage: 'evergreen', irrigation: 'drip with recirculation', maintenance: 'Quarterly module and irrigation checks; replace failed modules', separation_m: 0.5, support: 'independent galvanised frame on screw piles', notes: 'Independently supported; clear of the rainscreen.' });
+    }, 'Vegetation system added. Confirm plant selection, irrigation, fire separation and maintenance.');
+  }
+
+  function renderExposure() {
+    var panel = $('exposure');
+    if (!panel) return;
+    var e = Model.exposureProfile(state.design);
+    var face = ['north', 'east', 'south', 'west'].map(function (k) { return '<div><dt>' + k + '</dt><dd>' + n(e.glazing_by_face[k]) + ' m² glazing</dd></div>'; }).join('');
+    panel.innerHTML = '<dl class="exposure-grid">' + face + '<div><dt>Total</dt><dd>' + n(e.glazing_total_m2) + ' m² approximate</dd></div></dl>' +
+      (e.privacy.length ? '<h3>Privacy and screening</h3><ul>' + e.privacy.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+      (e.shading.length ? '<h3>Shading and seasonal notes</h3><ul>' + e.shading.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+      (e.maintenance.length ? '<h3>Maintenance</h3><ul>' + e.maintenance.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') +
+      '<p class="small">' + esc(e.note) + '</p>';
+  }
+
   function renderTrellises() {
     var d = state.design;
     var panel = $('trellis-controls');
@@ -310,19 +407,22 @@
     var summary = Schema.summary(d);
     try {
       $('plan').innerHTML = Model.renderPlan(d, { idPrefix: 'editor-plan' });
-      $('exterior').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-exterior' });
+      $('exterior').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-exterior', season: state.season === 'winter' ? 'winter' : undefined });
       $('cutaway').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-cutaway', mode: 'cutaway' });
     } catch (err) {
       announce('The view could not be drawn: ' + err.message);
     }
     renderWarnings(assessment);
     renderSummary(d, summary, assessment);
+    renderExposure();
     renderHamlet(d);
     $('export-plan').disabled = !assessment.ok;
     $('export-exterior').disabled = !assessment.ok;
     $('export-cutaway').disabled = !assessment.ok;
     $('export-porch').disabled = !assessment.ok;
     $('export-winter').disabled = !assessment.ok;
+    $('download-wall').disabled = !assessment.ok;
+    $('export-wall').disabled = !assessment.ok;
     $('export-zip').disabled = !assessment.ok;
     $('export-summary').disabled = !assessment.ok;
   }
@@ -351,6 +451,8 @@
       ['Screened porch', n(s.screenedPorch_m2) + ' m²'],
       ['Trellises', s.trellisCount || 0],
       ['Thermal envelope', (d.thermal.roof_insulation_mm || '–') + ' mm roof / ' + (d.thermal.floor_insulation_mm || '–') + ' mm floor / ' + d.thermal.window_performance],
+      ['Envelope assembly', (Model.ENVELOPE_LABEL[d.envelope.assembly] || d.envelope.assembly) + ' · ' + d.envelope.layers.filter(function (l) { return l.role === 'insulation'; }).reduce(function (t, l) { return t + l.thickness_mm; }, 0) + ' mm insulation'],
+      ['Vegetation', d.vegetation.length + ' separate system' + (d.vegetation.length === 1 ? '' : 's')],
       ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green/biosolar ' : '') || 'Membrane'],
       ['Insulation', 'Up to ' + s.maxInsulation_mm + ' mm external'],
       ['Status', assessment.ok ? 'No invalid geometry; professional review required' : 'Invalid geometry; drawings disabled'],
@@ -681,6 +783,7 @@
     if (action === 'remove-porch') { removePorch(Number(button.getAttribute('data-index'))); return; }
     if (action === 'remove-deck') { mutate(function () { state.design.decks.splice(Number(button.getAttribute('data-index')), 1); }, 'Deck removed. Undo is available.'); return; }
     if (action === 'remove-trellis') { mutate(function () { state.design.trellises.splice(Number(button.getAttribute('data-index')), 1); }, 'Trellis removed. Undo is available.'); return; }
+    if (action === 'remove-vegetation') { mutate(function () { state.design.vegetation.splice(Number(button.getAttribute('data-index')), 1); }, 'Vegetation system removed. Undo is available.'); return; }
     if (action === 'remove-connection') { mutate(function () { state.design.connections.splice(Number(button.getAttribute('data-index')), 1); }, 'Connector removed. Undo is available.'); }
   }
 
@@ -764,7 +867,7 @@
   }
   function exportSummary() { download(slug(state.design.name) + '-summary.md', summaryText(), 'text/markdown'); $('export-status').textContent = 'Downloaded the design summary.'; }
   function exportSVG(kind) {
-    var svg = kind === 'plan' ? Model.renderPlan(state.design, { idPrefix: 'export-plan' }) : Model.renderAxo(state.design, { idPrefix: 'export-' + kind, mode: kind === 'cutaway' ? 'cutaway' : undefined, focus: kind === 'porch' ? 'outdoor' : undefined, season: kind === 'winter' ? 'winter' : undefined });
+    var svg = kind === 'wall' ? Model.wallSectionSVG(state.design, state.selectedModule, { idPrefix: 'export-wall' }) : kind === 'plan' ? Model.renderPlan(state.design, { idPrefix: 'export-plan' }) : Model.renderAxo(state.design, { idPrefix: 'export-' + kind, mode: kind === 'cutaway' ? 'cutaway' : undefined, focus: kind === 'porch' ? 'outdoor' : undefined, season: kind === 'winter' ? 'winter' : undefined });
     download(slug(state.design.name) + '-' + kind + '.svg', '<?xml version="1.0" encoding="UTF-8"?>\n' + svg, 'image/svg+xml');
     $('export-status').textContent = 'Downloaded the ' + kind + ' SVG.';
   }
@@ -817,6 +920,7 @@
       { name: base + '-cutaway.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-cutaway', mode: 'cutaway' }) },
       { name: base + '-porch.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-porch', focus: 'outdoor' }) },
       { name: base + '-winter.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-winter', season: 'winter' }) },
+      { name: base + '-wall.svg', data: Model.wallSectionSVG(state.design, state.selectedModule, { idPrefix: 'zip-wall' }) },
       { name: base + '-summary.md', data: summaryText() },
       { name: 'NOTICE.txt', data: 'Containers Hamlet Design Lab\n\nConcept only. Not engineered, not permit-ready and not a building code assessment.\nEditor code: AGPL-3.0-or-later. Original concept data, drawings and documentation: CC BY-SA 4.0.\nNo personal information is included. The design remains the responsibility of its author and requires professional review before construction.\n' }
     ];
@@ -905,6 +1009,9 @@
     $('add-deck').addEventListener('click', addDeck);
     $('add-trellis').addEventListener('click', addTrellis);
     $('add-connection').addEventListener('click', addConnection);
+    $('add-vegetation').addEventListener('click', addVegetation);
+    $('envelope-controls').addEventListener('change', applyEnvelopeChoice);
+    $('season').addEventListener('change', function () { state.season = $('season').value; renderVisuals(); announce('Season switched to ' + state.season + '. The plan and cutaway are unchanged.'); });
     $('apply-colour').addEventListener('click', function () {
       var colour = $('default-colour').value;
       mutate(function () { state.design.modules.forEach(function (m) { m.cladding.colour = colour; }); }, 'Cladding colour applied to all containers.');
@@ -943,6 +1050,8 @@
     $('export-cutaway').addEventListener('click', function () { exportSVG('cutaway'); });
     $('export-porch').addEventListener('click', function () { exportSVG('porch'); });
     $('export-winter').addEventListener('click', function () { exportSVG('winter'); });
+    $('download-wall').addEventListener('click', function () { exportSVG('wall'); });
+    $('export-wall').addEventListener('click', function () { exportSVG('wall'); });
     $('export-summary').addEventListener('click', exportSummary);
     $('export-zip').addEventListener('click', exportZip);
     $('import-button').addEventListener('click', function () { $('import-file').click(); });

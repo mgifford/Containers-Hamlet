@@ -24,6 +24,8 @@
   var ZONE_TYPES = ['sleeping', 'bathroom', 'kitchen', 'living', 'dining', 'work', 'storage', 'circulation'];
   var CLADDING = ['timber', 'metal', 'mixed'];
   var ROOFS = ['solar', 'green', 'biosolar', 'membrane'];
+  var ENVELOPE_ASSEMBLIES = ['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'];
+  var VEGETATION_TYPES = ['trellis', 'living-wall', 'edible-wall', 'privacy-screen'];
 
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function isNum(v) { return typeof v === 'number' && Number.isFinite(v); }
@@ -52,6 +54,7 @@
     (design.porches || []).forEach(function (p) { ids.push(p.id); });
     (design.decks || []).forEach(function (d) { ids.push(d.id); });
     (design.trellises || []).forEach(function (t) { ids.push(t.id); });
+    (design.vegetation || []).forEach(function (v) { ids.push(v.id); });
     (design.connections || []).forEach(function (c) { ids.push(c.id); });
     return ids;
   }
@@ -67,6 +70,18 @@
     d.material_intent = Object.assign({ reclaimed_containers: true, reused_timber: true, replaceable_cladding: true, continuous_external_insulation: true, selective_spray_foam: false, reversible_connections: true, modular_porch: true, solar_ready: true, green_roof_investigated: false }, d.material_intent || {});
     d.thermal = Object.assign({ wall_insulation_strategy: 'continuous external insulation with thermal breaks at openings, pile caps and service penetrations',
       thermal_bridge_mitigation: 'continuous external insulation and thermal breaks at openings and pile caps', roof_insulation_mm: 250, floor_insulation_mm: 200, rainscreen_ventilation: true, air_vapour_control: 'exterior-insulated, vapour-open assembly; sealed interior air barrier (to be detailed)', window_performance: 'triple glazed, low-e, argon, thermally broken frames', external_shading: 'fixed overhang and deciduous planting', heat_recovery_ventilation: true, heating: 'cold-climate air-source heat pump', notes: 'Conceptual thermal intent only. No energy or code calculation.' }, d.thermal || {});
+    d.envelope = Object.assign({ version: '1.0', assembly: 'mineral-wool', layers: [
+      { material: 'steel container wall', thickness_mm: 3, role: 'structure' },
+      { material: 'air and vapour control layer', thickness_mm: 1, role: 'air/vapour' },
+      { material: 'mineral wool', thickness_mm: 150, role: 'insulation' },
+      { material: 'continuous thermal break / insulation', thickness_mm: 10, role: 'thermal break' },
+      { material: 'ventilated drained cavity', thickness_mm: 25, role: 'rainscreen' },
+      { material: 'timber cladding', thickness_mm: 20, role: 'cladding' }
+    ], thermal_breaks: 'continuous external insulation with thermal washers and stainless fasteners; breaks at openings, pile caps and service penetrations', rainscreen: { ventilated: true, cavity_mm: 25, drained: true }, air_vapour_control: 'exterior-insulated, vapour-open assembly with a sealed interior air barrier; joints and service penetrations to be detailed', fire: 'combustible insulation, cladding and cavity need a fire review; cavity barriers, cladding classification and separation are not resolved', fastening: 'long fasteners pass through the insulation into the steel frame; pull-out, corrosion, thermal bridging and water shedding need engineering review', penetrations: 'openings, cladding rails, planter brackets and service penetrations need structural and waterproofing review', maintenance: 'inspect cladding, sealant, cavity, fasteners and vegetation twice a year and after severe weather', notes: 'Conceptual assembly only. Not code-compliant or moisture-safe until reviewed by a building-envelope engineer.' }, d.envelope || {});
+    d.envelope.rainscreen = Object.assign({ ventilated: true, cavity_mm: 25, drained: true }, d.envelope.rainscreen || {});
+    d.envelope.layers = Array.isArray(d.envelope.layers) ? d.envelope.layers : [];
+    d.vegetation = Array.isArray(d.vegetation) ? d.vegetation : [];
+    d.vegetation.forEach(function (v) { v.offset_m = isNum(v.offset_m) ? v.offset_m : 0.5; v.separation_m = isNum(v.separation_m) ? v.separation_m : v.offset_m; v.height_m = isNum(v.height_m) ? v.height_m : 2.5; v.length_m = isNum(v.length_m) ? v.length_m : 2; v.start_m = isNum(v.start_m) ? v.start_m : 0; });
     d.connections.forEach(function (c) { c.glazed = !!c.glazed; c.door_type = c.door_type || 'none'; c.glazing_area_m2 = isNum(c.glazing_area_m2) ? c.glazing_area_m2 : 0; });
     d.materials = Array.isArray(d.materials) ? d.materials : [];
     d.modules.forEach(function (m) {
@@ -109,6 +124,25 @@
       if (typeof d.thermal.external_shading !== 'string' || d.thermal.external_shading.length < 3) err('External shading description is required.');
       if (typeof d.thermal.heating !== 'string' || d.thermal.heating.length < 3) err('Heating description is required.');
     }
+    if (!d.envelope || typeof d.envelope !== 'object') err('envelope must be an object.');
+    if (d.envelope) {
+      if (d.envelope.version !== '1.0') err('Envelope version must be 1.0.');
+      if (ENVELOPE_ASSEMBLIES.indexOf(d.envelope.assembly) < 0) err('Unknown envelope assembly.');
+      if (!Array.isArray(d.envelope.layers) || d.envelope.layers.length < 3) err('Envelope layers must be an array of at least three layers.');
+      (d.envelope.layers || []).forEach(function (l) {
+        if (!l.material || !l.role || !isNum(l.thickness_mm) || l.thickness_mm <= 0) err('An envelope layer needs material, role and positive thickness.');
+      });
+      if (!d.envelope.rainscreen || typeof d.envelope.rainscreen.ventilated !== 'boolean') err('Envelope rainscreen configuration is required.');
+    }
+    if (!Array.isArray(d.vegetation)) err('vegetation must be an array.');
+    (d.vegetation || []).forEach(function (v) {
+      if (!v.id) err('A vegetation component has no id.');
+      if (VEGETATION_TYPES.indexOf(v.type) < 0) err('Vegetation ' + v.id + ' has an unknown type.');
+      if (!(d.modules || []).some(function (m) { return m.id === v.module; })) err('Vegetation ' + v.id + ' references an unknown module.');
+      if (FACES.indexOf(v.face) < 0) err('Vegetation ' + v.id + ' has an unknown face.');
+      if (![v.start_m, v.length_m, v.height_m, v.offset_m].every(isNum) || v.length_m <= 0 || v.height_m <= 0 || v.offset_m < 0.3) err('Vegetation ' + v.id + ' has invalid dimensions or separation.');
+      ['plant_type', 'mature_height_m', 'seasonal_foliage', 'irrigation', 'maintenance', 'support'].forEach(function (k) { if (v[k] === undefined || v[k] === '') err('Vegetation ' + v.id + ' is missing ' + k + '.'); });
+    });
     if (!d.provenance || !d.licence) warnings.push({ code: 'provenance', message: 'Provenance or licence metadata is missing; it will be added on export.' });
     var ids = requiredIds(d);
     var dup = ids.filter(function (id, i) { return ids.indexOf(id) !== i; });
@@ -164,7 +198,7 @@
       if (c.door_type && ['none','insulated-sliding','folding','garage'].indexOf(c.door_type) < 0) err('Connection ' + c.id + ' has an unknown door type.');
       if (!isNum(c.glazing_area_m2) || c.glazing_area_m2 < 0) err('Connection ' + c.id + ' has an invalid glazing area.');
     });
-    return { ok: errors.length === 0, errors: errors, warnings: warnings, unknownKeys: Object.keys(d).filter(function (k) { return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal'].indexOf(k) < 0; }) };
+    return { ok: errors.length === 0, errors: errors, warnings: warnings, unknownKeys: Object.keys(d).filter(function (k) { return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal','envelope','vegetation'].indexOf(k) < 0; }) };
   }
 
   /* Migrate the supplied prototype's v0.1 JSON. Nothing is dropped silently:
@@ -249,5 +283,5 @@
     };
   }
 
-  return { SCHEMA: SCHEMA, LEGACY_SCHEMA: LEGACY_SCHEMA, MODULE_TYPES: MODULE_TYPES, FACES: FACES, OPENING_TYPES: OPENING_TYPES, ZONE_TYPES: ZONE_TYPES, CLADDING: CLADDING, ROOFS: ROOFS, clone: clone, canonicalize: canonicalize, validateSchema: validateSchema, migrateV01: migrateV01, summary: summary, moduleDefaults: moduleDefaults, newId: newId, requiredIds: requiredIds, round: round };
+  return { SCHEMA: SCHEMA, LEGACY_SCHEMA: LEGACY_SCHEMA, MODULE_TYPES: MODULE_TYPES, FACES: FACES, OPENING_TYPES: OPENING_TYPES, ZONE_TYPES: ZONE_TYPES, CLADDING: CLADDING, ROOFS: ROOFS, ENVELOPE_ASSEMBLIES: ENVELOPE_ASSEMBLIES, VEGETATION_TYPES: VEGETATION_TYPES, clone: clone, canonicalize: canonicalize, validateSchema: validateSchema, migrateV01: migrateV01, summary: summary, moduleDefaults: moduleDefaults, newId: newId, requiredIds: requiredIds, round: round };
 });

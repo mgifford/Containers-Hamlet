@@ -85,10 +85,11 @@ ok(exists('site/design-lab/THIRD-PARTY-NOTICES.md'), 'third-party notices file i
 section('Architectural galleries and comparison');
 for (const c of data.concepts) {
   const page = read(`site/design-lab/architecture/${c.id}/index.html`);
-  ok(/data-slideshow/.test(page) && (page.match(/<img /g) || []).length === 5, `${c.id}: five-image architectural page exists`);
+  ok(/data-slideshow/.test(page) && (page.match(/<img /g) || []).length >= 5 && (page.match(/class="slide"/g) || []).length === 5, `${c.id}: five-image architectural page exists`);
   ok((page.match(/class="slide"/g) || []).length === 5 && /data-slide-prev/.test(page) && /data-slide-next/.test(page) && /data-slide-all/.test(page), `${c.id}: slideshow has five slides and visible controls`);
   ok(/data-title="Exterior architectural view"/.test(page) && /data-title="Dimensioned concept floor plan"/.test(page) && /data-title="Interior roof-off cutaway"/.test(page) && /data-title="Screened porch or deck view"/.test(page) && /data-title="Winter exterior view"/.test(page), `${c.id}: gallery has all five required views`);
   ok(/Geometry-backed drawing/.test(page) && /Illustrative study/.test(page) && /<noscript>/.test(page), `${c.id}: distinguishes drawing types and explains the no-JS fallback`);
+  ok(/Summer and winter/.test(page) && /Approximate window exposure/.test(page) && /Envelope assembly/.test(page) && /Vegetation systems/.test(page), `${c.id}: seasonal, exposure, envelope and vegetation sections are present`);
   ok(!/setInterval|setTimeout/.test(read('site/design-lab/architecture.js')), `${c.id}: slideshow has no auto-advance timer`);
 }
 ok(exists('site/design-lab/architecture.css') && exists('site/design-lab/architecture.js') && !/<script[^>]+src="https?:/i.test(read('site/design-lab/architecture.css')), 'architectural gallery styles and script are local');
@@ -101,6 +102,40 @@ ok(exists('site/design-lab/compare.css') && exists('site/design-lab/compare.js')
 
 const lodge = data.concepts.find((c) => c.id === 'common-lodge');
 ok(lodge && lodge.features.interior_uses.includes('Shared kitchen') && lodge.features.interior_uses.includes('Shared dining') && lodge.features.interior_uses.includes('Workshop') && lodge.features.interior_uses.includes('Meeting room') && lodge.modules.some((m) => m.zones.some((z) => z.type === 'bathroom')) && lodge.porches.some((p) => p.screened) && lodge.connections.some((c) => c.glazed && c.door_type === 'insulated-sliding'), 'common lodge combines shared kitchen/dining, workshop/meeting, accessible washrooms, a glazed hall and a screened veranda');
+
+section('Envelope assemblies and vegetation systems');
+for (const c of data.concepts) {
+  const env = c.envelope;
+  ok(env && env.version === '1.0' && Schema.ENVELOPE_ASSEMBLIES.indexOf(env.assembly) >= 0 && env.layers.length >= 4, `${c.id}: versioned envelope assembly with layers`);
+  const wall1 = Model.wallSectionSVG(c, c.modules[0].id, { idPrefix: 'test-wall-' + c.id });
+  const wall2 = Model.wallSectionSVG(c, c.modules[0].id, { idPrefix: 'test-wall-' + c.id });
+  ok(wall1 === wall2 && /role="img"/.test(wall1) && /<title id=/.test(wall1) && /<desc id=/.test(wall1) && /CC BY-SA 4\.0/.test(wall1), `${c.id}: wall section is deterministic and accessible`);
+  ok(!/<[^>]+\bfill="[^"]*"[^>]*\bfill="/.test(wall1), `${c.id}: wall section has no duplicate XML attributes`);
+  const summer = Model.renderAxo(c, { idPrefix: 'test-summer-' + c.id });
+  const winter = Model.renderAxo(c, { idPrefix: 'test-winter-' + c.id, season: 'winter' });
+  ok(summer !== winter, `${c.id}: summer and winter views differ`);
+  const exp = Model.exposureProfile(c);
+  ok(['north','east','south','west'].every((f) => typeof exp.glazing_by_face[f] === 'number') && exp.glazing_total_m2 >= 0 && /No energy savings/.test(exp.note), `${c.id}: approximate window exposure has no energy or privacy score`);
+  (c.vegetation || []).forEach((v) => {
+    ok(Schema.VEGETATION_TYPES.indexOf(v.type) >= 0 && v.offset_m >= 0.3 && /independent|piles|posts|footing/i.test(v.support), `${c.id} ${v.id}: vegetation is independently supported and clear of the wall`);
+  });
+  const warnings = Model.assess(c).warnings.map((w) => w.code);
+  ok(warnings.indexOf('envelope-condensation') >= 0 && warnings.indexOf('envelope-fire') >= 0 && warnings.indexOf('envelope-moisture') >= 0 && warnings.indexOf('envelope-fastening') >= 0 && warnings.indexOf('envelope-penetrations') >= 0 && warnings.indexOf('envelope-maintenance') >= 0, `${c.id}: envelope condensation, fire, moisture, fastening, penetration and maintenance warnings are present`);
+}
+const vegTypes = new Set();
+data.concepts.forEach((c) => { if ((c.trellises || []).length) vegTypes.add('trellis'); (c.vegetation || []).forEach((v) => vegTypes.add(v.type)); });
+ok(['trellis', 'living-wall', 'edible-wall', 'privacy-screen'].every((t) => vegTypes.has(t)), 'all four vegetation systems have examples');
+ok(['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'].every((a) => data.concepts.some((c) => c.envelope.assembly === a)), 'all five envelope assemblies have examples');
+ok(['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'].every((a) => exists(`site/design-lab/systems/wall-${a}.svg`)), 'shared wall sections exist for all five assemblies');
+ok(exists('site/design-lab/systems/vegetation-comparison.svg') && /Rainscreen · trellis · modular living wall/.test(read('site/design-lab/systems/vegetation-comparison.svg')), 'original rainscreen/trellis/living-wall comparison diagram exists');
+const vegPage = read('site/design-lab/vegetation/index.html');
+ok(/Four systems/.test(vegPage) && /Freestanding climbing-plant trellis/.test(vegPage) && /Modular living wall/.test(vegPage) && /Edible herb and perennial planter wall/.test(vegPage) && /Evergreen privacy screen/.test(vegPage), 'vegetation guide has all four systems');
+ok(/ecohome\.net/.test(vegPage) && /gsky\.com/.test(vegPage) && /livewall\.com/.test(vegPage) && /wallemi\.com/.test(vegPage) && /buildingscience\.com/.test(vegPage) && /rdh\.com/.test(vegPage), 'vegetation guide cites supplier and building-science sources');
+ok(/No energy savings, privacy score, carbon figure or code compliance is claimed/.test(vegPage), 'vegetation guide does not claim invented performance');
+const badEnv = JSON.parse(JSON.stringify(data.concepts[0])); badEnv.envelope.assembly = 'not-real';
+ok(!Schema.validateSchema(badEnv).ok, 'unknown envelope assemblies are rejected');
+const badVeg = JSON.parse(JSON.stringify(data.concepts[0])); badVeg.vegetation[0].offset_m = 0.1;
+ok(!Schema.validateSchema(badVeg).ok, 'vegetation closer than 300 mm is rejected');
 
 section('Shared data model and migration');
 const base = data.concepts[0];

@@ -1,5 +1,7 @@
 # Phase 1.3 extension: architectural galleries, thermal comfort and a common lodge
 
+> A further extension adds configurable exterior insulation assemblies, wall sections and living vegetation systems. See [`phase-1.3-envelope-vegetation.md`](phase-1.3-envelope-vegetation.md). Current counts are 196 main static, 581 Design Lab static, 62 main browser and 99 Design Lab browser checks; whole site 2757 KB under a revised 2.75 MB budget.
+
 This extension builds on the Phase 1.3 Container Home Design Studio. It adds a five-view architectural gallery for every developed design, a café-inspired common lodge concept, thermal-envelope options, and a side-by-side comparison tool. It keeps the project container-first and does not turn it into a generic architecture application.
 
 The existing authoritative `data/cabin-a.json` and `data/lodge.json` remain unchanged. The common lodge in this extension is an additional Design Lab concept, not a replacement for the authoritative lodge model or its drawings.

@@ -40,3 +40,35 @@
   .slide, .fact-grid div { border: 1px solid CanvasText; }
   .slide img { forced-color-adjust: none; }
 }
+
+/* Seasonal comparison, envelope and vegetation systems */
+.season-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0; }
+.season-pair figure { margin: 0; border: 1px solid var(--border); border-radius: .6rem; overflow: hidden; background: var(--surface); }
+.season-pair img { display: block; width: 100%; height: auto; }
+.season-pair figcaption { padding: .7rem .8rem; font-size: .88rem; }
+.seasonal-section, .assembly-section, .vegetation-section { margin: 2rem 0; padding: 1rem; border: 1px solid var(--border); border-radius: .9rem; background: var(--surface); }
+.exposure-table { width: 100%; border-collapse: collapse; margin: .7rem 0; }
+.exposure-table caption { text-align: left; font-weight: 700; padding: .4rem 0; }
+.exposure-table th, .exposure-table td { text-align: left; padding: .4rem .5rem; border-top: 1px solid var(--border); }
+.assembly-section img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: .5rem; background: var(--paper); margin: .7rem 0; }
+.assembly-layers { padding-left: 1.2rem; }
+.system-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1rem 0; }
+.system-card { border: 1px solid var(--border); border-radius: .8rem; padding: 1rem; background: var(--surface); }
+.system-card h3 { margin-top: 0; }
+.system-card h4 { margin: .8rem 0 .25rem; font-size: .95rem; }
+.system-card ul { padding-left: 1.15rem; }
+.system-figure { margin: 1rem 0; border: 1px solid var(--border); border-radius: .8rem; overflow: hidden; background: var(--surface); }
+.system-figure img { display: block; width: 100%; height: auto; }
+.system-figure figcaption { padding: .7rem 1rem; font-size: .88rem; }
+.source-list li { margin-bottom: .5rem; }
+@media (max-width: 700px) {
+  .season-pair, .system-grid { grid-template-columns: 1fr; }
+  .seasonal-section, .assembly-section, .vegetation-section { padding: .8rem; }
+}
+@media (prefers-color-scheme: dark) {
+  .assembly-section img { background: #121713; }
+}
+@media (forced-colors: active) {
+  .season-pair figure, .seasonal-section, .assembly-section, .vegetation-section, .system-card, .system-figure { border: 1px solid CanvasText; }
+  .season-pair img, .system-figure img { forced-color-adjust: none; }
+}

@@ -126,4 +126,4 @@ Phase 1.3 adds a separate versioned schema for the Container Home Design Studio.
 - `tools/lib/design-adapter.mjs` maps Cabin A into the Design Lab schema and a compatible design back to a Cabin A proposal. It never writes `data/cabin-a.json` and reports everything it cannot represent.
 - The Design Lab does not replace the authoritative Cabin A or lodge data. Its generated views and downloads are copies.
 
-All five Design Lab views derive from the same design object: plan, exterior, cutaway, porch/deck detail and winter study cannot drift from one another. The `thermal` object and glazed-connection fields are part of the same JSON source and are preserved through export/import.
+All five Design Lab views derive from the same design object: plan, exterior, cutaway, porch/deck detail and winter study cannot drift from one another. The `thermal`, versioned `envelope`, `vegetation` and glazed-connection fields are part of the same JSON source and are preserved through export/import. The wall section is generated from `envelope`; summer/winter exterior views use the same geometry and vegetation.

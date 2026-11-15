@@ -24,6 +24,15 @@
     var a = deg * DEG, c = Math.cos(a), s = Math.sin(a);
     return [p[0] * c - p[1] * s, p[0] * s + p[1] * c];
   }
+  function worldFace(m, face) {
+    var v = { north: [0, -1], south: [0, 1], east: [1, 0], west: [-1, 0] }[face] || [0, 1];
+    var a = (m.rotation_deg || 0) * Math.PI / 180;
+    var x = v[0] * Math.cos(a) - v[1] * Math.sin(a);
+    var y = v[0] * Math.sin(a) + v[1] * Math.cos(a);
+    if (Math.abs(x) >= Math.abs(y)) return x >= 0 ? 'east' : 'west';
+    return y >= 0 ? 'south' : 'north';
+  }
+
   function transform(module, local) {
     var r = rotatePoint(local, module.rotation_deg || 0);
     return [module.position_m[0] + r[0], module.position_m[1] + r[1]];
@@ -53,6 +62,8 @@
   function deckCorners(m, p, d) { return outdoorRect(m, p.face, p.start_m, p.length_m, d.projection_m, p.depth_m); }
   function connectionCorners(c) { return rectCorners(c.position_m[0], c.position_m[1], c.length_m, c.width_m, c.rotation_deg || 0); }
   function trellisCorners(m, t) { return outdoorRect(m, t.face, t.start_m, t.length_m, 0.12, t.offset_m); }
+  function vegetationDepth(v) { return v.type === 'edible-wall' ? 0.4 : v.type === 'privacy-screen' ? 0.28 : 0.18; }
+  function vegetationCorners(m, v) { return outdoorRect(m, v.face, v.start_m, v.length_m, vegetationDepth(v), v.offset_m); }
 
   function moduleById(d, id) { return (d.modules || []).filter(function (m) { return m.id === id; })[0]; }
   function porchById(d, id) { return (d.porches || []).filter(function (p) { return p.id === id; })[0]; }
@@ -141,6 +152,7 @@
     d.porches.forEach(function (p) { var m = moduleById(d, p.module); if (m) polys.push(porchCorners(m, p)); });
     d.decks.forEach(function (dk) { var p = porchById(d, dk.porch); if (p) { var m = moduleById(d, p.module); if (m) polys.push(deckCorners(m, p, dk)); } });
     (d.trellises || []).forEach(function (t) { var m = moduleById(d, t.module); if (m) polys.push(trellisCorners(m, t)); });
+    (d.vegetation || []).forEach(function (v) { var m = moduleById(d, v.module); if (m) polys.push(vegetationCorners(m, v)); });
     var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     polys.forEach(function (poly) { poly.forEach(function (pt) { minX = Math.min(minX, pt[0]); minY = Math.min(minY, pt[1]); maxX = Math.max(maxX, pt[0]); maxY = Math.max(maxY, pt[1]); }); });
     return { minX: minX, minY: minY, maxX: maxX, maxY: maxY, width: maxX - minX, height: maxY - minY };
@@ -225,6 +237,16 @@
       if (t.offset_m < 0.25) warn('trellis-offset', 'Trellis ' + t.id + ' is less than 250 mm from the rainscreen; roots, moisture and maintenance need clearance.', 'engineering');
       if (t.height_m > 3.5) warn('trellis-height', 'Trellis ' + t.id + ' is taller than 3.5 m; wind, fixing and maintenance need review.', 'engineering');
     });
+    (d.vegetation || []).forEach(function (v) {
+      var m = moduleById(d, v.module);
+      if (!m) return;
+      if (v.start_m < 0 || v.start_m + v.length_m > faceLength(m, v.face) + 0.01) err('vegetation-bounds', 'Vegetation ' + v.id + ' extends beyond the container face.');
+      if (v.offset_m < 0.3) warn('vegetation-separation', 'Vegetation ' + v.id + ' is less than 300 mm from the wall; roots, moisture, maintenance and fire need clearance.', 'engineering');
+      else if (v.offset_m < 0.45) warn('vegetation-clearance', 'Vegetation ' + v.id + ' is close to the wall; confirm the independent support and maintenance gap.', 'engineering');
+      if (!/independent|piles|posts|footing/i.test(v.support || '')) warn('vegetation-support', 'Vegetation ' + v.id + ' must be independently supported; do not fix a planted wall to the container shell.', 'engineering');
+      if (/none|no irrigation/i.test(v.irrigation || '')) warn('vegetation-irrigation', 'Vegetation ' + v.id + ' has no irrigation strategy; establishment, drought and maintenance need a plan.', 'accessibility');
+      warn('vegetation-fire', 'Vegetation ' + v.id + ' adds a combustible or living layer close to the cladding; fire, irrigation and maintenance need review.', 'engineering');
+    });
     d.connections.forEach(function (c) {
       var poly = connectionCorners(c);
       d.modules.forEach(function (m) {
@@ -256,6 +278,15 @@
     if (conditioned > 0 && glazingArea / conditioned > 0.28) warn('glazing-ratio', 'Glazing is about ' + Math.round(glazingArea / conditioned * 100) + '% of the nominal conditioned area. Large glazed areas can overheat in summer and lose heat in winter; model shading and window performance before deciding.', 'engineering');
     if (d.thermal && /none|not decided/i.test(d.thermal.external_shading)) warn('no-shading', 'External shading is not resolved. West and south glazing need a summer overheating strategy.', 'engineering');
     if (d.thermal && d.thermal.heat_recovery_ventilation === false) warn('no-hrv', 'No heat-recovery ventilation is selected. Winter ventilation and moisture control need a designed strategy.', 'engineering');
+    if (d.envelope) {
+      warn('envelope-condensation', 'The ' + (ENVELOPE_LABEL[d.envelope.assembly] || d.envelope.assembly) + ' assembly keeps insulation outboard, but air/vapour control, thermal bridges and condensation at steel and openings still need a building-envelope review.', 'engineering');
+      warn('envelope-fire', d.envelope.fire + '.', 'engineering');
+      warn('envelope-moisture', 'Rainscreen drainage, drying, ground clearance and moisture management are not proven by this configuration.', 'engineering');
+      warn('envelope-fastening', d.envelope.fastening + '.', 'engineering');
+      warn('envelope-penetrations', d.envelope.penetrations + '.', 'engineering');
+      warn('envelope-maintenance', d.envelope.maintenance + '.', 'engineering');
+      if (d.envelope.assembly === 'spray-foam') warn('envelope-spray-foam', 'Exterior closed-cell spray foam needs protection from UV and fire, a compatible substrate, controlled thickness and a moisture strategy; do not assume it is vapour-safe.', 'engineering');
+    }
     if (d.connections.some(function (c) { return c.glazed && (c.glazing_area_m2 || 0) > 12; })) warn('large-glazed-hall', 'A large glazed hall or veranda needs insulated sliding/folding doors, thermal breaks and a condensation strategy. Do not assume a glazed garage door is suitable.', 'engineering');
     return { errors: errors, warnings: warnings, ok: errors.length === 0 };
   }
@@ -269,6 +300,110 @@
     geo.errors.forEach(function (e) { items.push({ category: 'invalid', code: e.code, message: e.message }); });
     geo.warnings.forEach(function (w) { items.push({ category: w.severity || 'engineering', code: w.code, message: w.message }); });
     return { ok: items.filter(function (i) { return i.category === 'invalid'; }).length === 0, items: items, warnings: geo.warnings };
+  }
+
+  var ENVELOPE_LABEL = { 'rigid-board': 'Rigid board', 'mineral-wool': 'Mineral wool', 'wood-fibre': 'Wood fibre', 'spray-foam': 'Exterior closed-cell spray foam', 'hybrid': 'Hybrid wood fibre + mineral wool' };
+  var VEG_LABEL = { 'trellis': 'Freestanding trellis', 'living-wall': 'Modular living wall', 'edible-wall': 'Edible planter wall', 'privacy-screen': 'Evergreen privacy screen' };
+
+  function envelopeFor(assembly, thickness, cladding) {
+    assembly = ENVELOPE_LABEL[assembly] ? assembly : 'mineral-wool';
+    thickness = Math.max(60, Math.min(300, thickness || 150));
+    cladding = cladding || 'timber';
+    var layers = [
+      { material: 'steel container wall', thickness_mm: 3, role: 'structure' },
+      { material: 'air and vapour control layer', thickness_mm: 1, role: 'air/vapour' }
+    ];
+    if (assembly === 'hybrid') {
+      layers.push({ material: 'wood-fibre board', thickness_mm: Math.round(thickness / 2), role: 'insulation' });
+      layers.push({ material: 'mineral wool', thickness_mm: thickness - Math.round(thickness / 2), role: 'insulation' });
+    } else if (assembly === 'spray-foam') {
+      layers.push({ material: 'exterior closed-cell spray foam (protected, fire-reviewed)', thickness_mm: thickness, role: 'insulation' });
+    } else {
+      layers.push({ material: assembly === 'rigid-board' ? 'rigid mineral or phenolic board (TBD)' : assembly === 'wood-fibre' ? 'wood-fibre board' : 'mineral wool', thickness_mm: thickness, role: 'insulation' });
+    }
+    layers.push({ material: 'continuous thermal break / insulation', thickness_mm: 10, role: 'thermal break' });
+    layers.push({ material: 'ventilated drained cavity', thickness_mm: 25, role: 'rainscreen' });
+    layers.push({ material: cladding + ' cladding', thickness_mm: 20, role: 'cladding' });
+    return {
+      version: '1.0', assembly: assembly, layers: layers,
+      thermal_breaks: 'continuous external insulation with thermal washers and stainless fasteners; breaks at openings, pile caps and service penetrations',
+      rainscreen: { ventilated: true, cavity_mm: 25, drained: true },
+      air_vapour_control: 'exterior-insulated, vapour-open assembly with a sealed interior air barrier; joints and service penetrations to be detailed',
+      fire: 'combustible insulation, cladding and cavity need a fire review; cavity barriers, cladding classification and separation are not resolved',
+      fastening: 'long fasteners pass through the insulation into the steel frame; pull-out, corrosion, thermal bridging and water shedding need engineering review',
+      penetrations: 'openings, cladding rails, planter brackets and service penetrations need structural and waterproofing review',
+      maintenance: 'inspect cladding, sealant, cavity, fasteners and vegetation twice a year and after severe weather',
+      notes: 'Conceptual assembly only. Not code-compliant or moisture-safe until reviewed by a building-envelope engineer.'
+    };
+  }
+
+  function wallSectionSVG(input, moduleId, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(input);
+    var m = moduleById(d, moduleId) || d.modules[0];
+    var env = d.envelope;
+    var layers = env.layers.slice();
+    var total = layers.reduce(function (t, l) { return t + l.thickness_mm; }, 0);
+    var pre = opts.idPrefix || 'wall-section';
+    var W = 1040, H = 640;
+    var x0 = 90, y0 = 140, wallH = 170;
+    var scale = Math.min(4.1, 760 / Math.max(1, total));
+    var x = x0;
+    var colours = { structure: '#7c8585', 'air/vapour': '#d7e2e6', insulation: '#d8bd87', 'thermal break': '#b7c9c0', rainscreen: '#dbe6d7', cladding: '#8a6a4a' };
+    var out = [];
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d">');
+    var titleText = opts.title || (d.name + ' envelope wall section');
+    out.push('<title id="' + pre + '-t">' + esc(titleText) + '</title>');
+    out.push('<desc id="' + pre + '-d">' + esc('Explanatory wall section for the ' + (ENVELOPE_LABEL[env.assembly] || env.assembly) + ' assembly on ' + m.id + '. ' + total + ' millimetres of layers. Numbered bands correspond to the legend below. Conceptual only; not a construction detail or a code or moisture assessment.') + '</desc>');
+    out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
+    out.push('<text x="34" y="48" font-family="system-ui, sans-serif" font-size="24" font-weight="800" fill="#1d392c">' + esc(opts.title || (d.name + ' · wall section')) + '</text>');
+    out.push('<text x="34" y="72" font-family="system-ui, sans-serif" font-size="14" fill="#3f5a4c">' + esc((ENVELOPE_LABEL[env.assembly] || env.assembly) + ' · ' + total + ' mm · ' + m.id + ' · conceptual assembly') + '</text>');
+    layers.forEach(function (l, i) {
+      var w = Math.max(16, l.thickness_mm * scale);
+      var fill = colours[l.role] || '#e7dfce';
+      out.push('<rect x="' + n(x) + '" y="' + y0 + '" width="' + n(w) + '" height="' + wallH + '" fill="' + fill + '" stroke="#435a4a" stroke-width="1.2"/>');
+      if (l.role === 'insulation') {
+        for (var yy = y0 + 10; yy < y0 + wallH; yy += 12) out.push('<line x1="' + n(x + 2) + '" y1="' + n(yy) + '" x2="' + n(x + w - 2) + '" y2="' + n(yy) + '" stroke="#a88952" stroke-width="0.7" opacity="0.55"/>');
+      }
+      if (l.role === 'rainscreen') {
+        for (var xx = x + 6; xx < x + w; xx += 9) out.push('<line x1="' + n(xx) + '" y1="' + n(y0 + 4) + '" x2="' + n(xx) + '" y2="' + n(y0 + wallH - 4) + '" stroke="#78927c" stroke-width="0.8"/>');
+      }
+      out.push('<text x="' + n(x + w / 2) + '" y="' + (y0 + 16) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#1d392c">' + (i + 1) + '</text>');
+      x += w;
+    });
+    // fasteners through the insulation
+    for (var fy = y0 + 44; fy < y0 + wallH; fy += 58) {
+      out.push('<line x1="' + (x0 - 36) + '" y1="' + fy + '" x2="' + n(x0 + 4) + '" y2="' + fy + '" stroke="#7b4a2b" stroke-width="4"/>');
+      out.push('<circle cx="' + (x0 - 36) + '" cy="' + fy + '" r="3" fill="#7b4a2b"/>');
+    }
+    // exterior face and vegetation offset
+    out.push('<line x1="' + n(x) + '" y1="' + y0 + '" x2="' + n(x) + '" y2="' + (y0 + wallH) + '" stroke="#253a33" stroke-width="2"/>');
+    out.push('<line x1="' + n(x + 44) + '" y1="' + y0 + '" x2="' + n(x + 44) + '" y2="' + (y0 + wallH) + '" stroke="#4f7d64" stroke-width="3" stroke-dasharray="6 4"/>');
+    out.push('<text x="' + n(x + 52) + '" y="' + (y0 + 14) + '" font-family="system-ui, sans-serif" font-size="10" fill="#31573f">vegetation clearance</text>');
+    out.push('<text x="' + n(x + 52) + '" y="' + (y0 + 29) + '" font-family="system-ui, sans-serif" font-size="10" fill="#31573f">independent support</text>');
+    // dimension line
+    out.push('<line x1="' + x0 + '" y1="' + (y0 + wallH + 34) + '" x2="' + n(x) + '" y2="' + (y0 + wallH + 34) + '" stroke="#435a4a" stroke-width="1"/>');
+    out.push('<text x="' + n((x0 + x) / 2) + '" y="' + (y0 + wallH + 50) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#1d392c">wall build-up ' + total + ' mm · nominal · fasteners pass through insulation</text>');
+    // legend
+    out.push('<text x="34" y="365" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#1d392c">Layers</text>');
+    for (var i = 0; i < layers.length; i++) {
+      var l = layers[i];
+      var yy2 = 386 + i * 21;
+      out.push('<text x="34" y="' + yy2 + '" font-family="system-ui, sans-serif" font-size="11" fill="#1d392c"><tspan font-weight="800">' + (i + 1) + '.</tspan> ' + esc(l.material) + ' · ' + l.thickness_mm + ' mm · ' + esc(l.role) + '</text>');
+    }
+    var notes = [
+      'Condensation: air/vapour control, thermal breaks, ventilation and drying need a building-envelope review.',
+      'Fire: insulation, cladding and cavity need a fire review; do not assume this assembly is acceptable.',
+      'Moisture: drained/ventilated rainscreen and ground clearance need detailing; planting adds water and load.',
+      'Fastening/penetrations: long fasteners, cladding rails and planter brackets need structural and waterproofing review.',
+      'Maintenance: inspect cladding, sealant, cavity, fasteners and vegetation regularly.'
+    ];
+    out.push('<g font-family="system-ui, sans-serif" font-size="10.5" fill="#3f5a4c">');
+    notes.forEach(function (note, i) { out.push('<text x="34" y="' + (522 + i * 15) + '">' + esc('• ' + note) + '</text>'); });
+    out.push('</g>');
+    out.push('<text x="34" y="' + (H - 12) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Conceptual wall section · not a construction detail · not code-compliant or moisture-safe without engineering review · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
+    out.push('</svg>');
+    return out.join('');
   }
 
   /* ---------------- plan drawing ---------------- */
@@ -338,6 +473,16 @@
       out.push('<path d="' + path(poly) + '" fill="#cfe0c2" fill-opacity="0.75" stroke="#4f7d64" stroke-width="1" stroke-dasharray="3 2"/>');
       var c = P([(poly[0][0] + poly[2][0]) / 2, (poly[0][1] + poly[2][1]) / 2]);
       planLabels.push(text(c[0] - 22, c[1] + 3, 'trellis', 8, ' fill="#31573f" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
+    });
+    // vegetation systems (trellis is handled above for backward compatibility)
+    (d.vegetation || []).forEach(function (v) {
+      var m = moduleById(d, v.module);
+      if (!m) return;
+      var poly = vegetationCorners(m, v);
+      var fill = v.type === 'living-wall' ? '#6f9d5b' : v.type === 'edible-wall' ? '#b9a45a' : '#315d43';
+      out.push('<path d="' + path(poly) + '" fill="' + fill + '" fill-opacity="0.78" stroke="#31573f" stroke-width="1.2"/>');
+      var c = P([(poly[0][0] + poly[2][0]) / 2, (poly[0][1] + poly[2][1]) / 2]);
+      planLabels.push(text(c[0] - 34, c[1] + 3, VEG_LABEL[v.type] || v.type, 8.5, ' fill="#1d392c" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
     });
     // modules
     d.modules.forEach(function (m) {
@@ -491,14 +636,14 @@
     var seed = (d.visual_seed || 23) + (opts.seed || 0);
     var rnd = (function (a) { return function () { a = (a + 0x6d2b79f5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })(seed);
     var trees = [];
-    for (var i = 0; i < 22; i++) {
+    for (var i = 0; i < 16; i++) {
       var tx = minX + 1 + rnd() * (maxX - minX - 2), ty = minY + 1 + rnd() * (maxY - minY - 2);
       var inside = d.modules.some(function (m) { return pointInPoly([tx, ty], moduleCorners(m)); });
       if (inside) continue;
       var dd = Math.hypot(tx - (b.minX + b.maxX) / 2, ty - (b.minY + b.maxY) / 2);
       if (dd < Math.max(5, b.width / 2 + 1)) continue;
       trees.push({ x: tx, y: ty, h: 3.5 + rnd() * 4.5, type: rnd() < 0.7 ? 'conifer' : 'deciduous', depth: tx + ty });
-      if (winter && trees.length >= 9) break;
+      if (winter && trees.length >= 7) break;
     }
     var objects = [];
     d.connections.forEach(function (c) {
@@ -540,6 +685,46 @@
         var s = '<path d="M' + polyScreen(low, S) + 'Z" fill="#9ab886" fill-opacity="0.3" stroke="#4f7d64" stroke-width="0.8"/>';
         s += '<path d="M' + polyScreen(high, S) + 'Z" fill="#6f9d5b" fill-opacity="0.28" stroke="#4f7d64" stroke-width="0.8"/>';
         for (var k = 0; k < poly.length; k++) s += '<path d="M' + n(S(low[k])[0]) + ' ' + n(S(low[k])[1]) + 'L' + n(S(high[k])[0]) + ' ' + n(S(high[k])[1]) + '" stroke="#4f7d64" stroke-width="0.9"/>';
+        return s;
+      } });
+    });
+    (d.vegetation || []).forEach(function (v) {
+      var m = moduleById(d, v.module);
+      if (!m) return;
+      var poly = vegetationCorners(m, v);
+      var z0 = 0.25, z1 = Math.max(0.8, v.height_m);
+      var low = poly.map(function (p) { return [p[0], p[1], z0]; });
+      var high = poly.map(function (p) { return [p[0], p[1], z1]; });
+      var depth = (poly[0][0] + poly[2][0]) / 2 + (poly[0][1] + poly[2][1]) / 2;
+      objects.push({ kind: 'vegetation', depth: 1000 + depth, draw: function () {
+        var s = '';
+        if (v.type === 'privacy-screen') {
+          var posts = [0, 0.33, 0.66, 1];
+          posts.forEach(function (t) { var p = [low[0][0] + (low[1][0] - low[0][0]) * t, low[0][1] + (low[1][1] - low[0][1]) * t, 0]; var q = S(p); s += '<line x1="' + n(q[0]) + '" y1="' + n(q[1]) + '" x2="' + n(q[0]) + '" y2="' + n(q[1] - z1 * 1.28) + '" stroke="#5b4a35" stroke-width="4"/>'; });
+          for (var pe = 0; pe < 4; pe++) {
+            s += '<path d="M' + polyScreen([low[pe], low[(pe + 1) % 4], high[(pe + 1) % 4], high[pe]], S) + 'Z" fill="' + (winter ? '#315d43' : '#3f704b') + '" fill-opacity="0.92" stroke="#25452f" stroke-width="0.9"/>';
+          }
+          s += '<path d="M' + polyScreen(high, S) + 'Z" fill="' + (winter ? '#315d43' : '#3f704b') + '" fill-opacity="0.8" stroke="#25452f" stroke-width="1"/>';
+        } else {
+          var fill = v.type === 'living-wall' ? '#6f9d5b' : '#b9a45a';
+          if (winter && v.seasonal_foliage === 'deciduous') fill = '#8b7a55';
+          if (winter && v.type === 'living-wall') fill = '#5b7d55';
+          for (var e = 0; e < 4; e++) {
+            s += '<path d="M' + polyScreen([low[e], low[(e + 1) % 4], high[(e + 1) % 4], high[e]], S) + 'Z" fill="' + fill + '" fill-opacity="0.9" stroke="#31573f" stroke-width="1"/>';
+          }
+          s += '<path d="M' + polyScreen(high, S) + 'Z" fill="' + fill + '" fill-opacity="0.65" stroke="#31573f" stroke-width="0.8"/>';
+          for (var k = 0; k < 6; k++) {
+            var t = k / 5;
+            var a = [high[0][0] + (high[1][0] - high[0][0]) * t, high[0][1] + (high[1][1] - high[0][1]) * t, z1 + 0.12];
+            var q = S(a);
+            if (winter && v.seasonal_foliage === 'deciduous') {
+              s += '<line x1="' + n(q[0]) + '" y1="' + n(q[1]) + '" x2="' + n(q[0] - 3) + '" y2="' + n(q[1] - 12) + '" stroke="#7b6344" stroke-width="1.5"/><line x1="' + n(q[0]) + '" y1="' + n(q[1]) + '" x2="' + n(q[0] + 4) + '" y2="' + n(q[1] - 9) + '" stroke="#7b6344" stroke-width="1.2"/>';
+            } else {
+              var plant = v.type === 'living-wall' ? (winter ? '#5b7d55' : '#3f704b') : '#4f7d64';
+              s += '<circle cx="' + n(q[0]) + '" cy="' + n(q[1]) + '" r="6" fill="' + plant + '"/><circle cx="' + n(q[0] + 5) + '" cy="' + n(q[1] + 2) + '" r="4" fill="' + plant + '" opacity="0.8"/>';
+            }
+          }
+        }
         return s;
       } });
     });
@@ -649,9 +834,42 @@
     return s;
   }
 
+  function exposureProfile(input) {
+    var d = Schema.canonicalize(input);
+    var byFace = { north: 0, east: 0, south: 0, west: 0 };
+    d.modules.forEach(function (m) {
+      m.openings.forEach(function (o) {
+        if (o.type === 'window' || o.type === 'sliding-door') { var wf = worldFace(m, o.face); byFace[wf] = (byFace[wf] || 0) + o.width_m * o.height_m; }
+      });
+    });
+    var total = Object.keys(byFace).reduce(function (t, k) { return t + byFace[k]; }, 0);
+    var shading = [], privacy = [], maintenance = [];
+    if (d.thermal && d.thermal.external_shading) shading.push('External shading intent: ' + d.thermal.external_shading + '.');
+    d.trellises.forEach(function (t) {
+      var tm = moduleById(d, t.module); shading.push('Freestanding trellis on the ' + (tm ? worldFace(tm, t.face) : t.face) + ' face: seasonal climber shading is not calculated.');
+      maintenance.push('Trellis ' + t.id + ': prune, secure and inspect the independent frame.');
+    });
+    (d.vegetation || []).forEach(function (v) {
+      var label = VEG_LABEL[v.type] || v.type;
+      var vm = moduleById(d, v.module); shading.push(label + ' on the ' + (vm ? worldFace(vm, v.face) : v.face) + ' face (' + v.seasonal_foliage + '): approximate screening, not an energy or daylight calculation.');
+      if (v.type === 'privacy-screen' || v.type === 'living-wall') privacy.push(label + ' is ' + v.length_m + ' m long and ' + v.height_m + ' m high; visual privacy is not scored.');
+      maintenance.push(label + ' ' + v.id + ': ' + v.maintenance + '; irrigation: ' + v.irrigation + '.');
+    });
+    if (d.connections.some(function (c) { return c.glazed; })) shading.push('The glazed hall is a large solar-gain and heat-loss surface; insulated sliding/folding doors and shading need review.');
+    return {
+      glazing_by_face: { north: +byFace.north.toFixed(1), east: +byFace.east.toFixed(1), south: +byFace.south.toFixed(1), west: +byFace.west.toFixed(1) },
+      glazing_total_m2: +total.toFixed(1),
+      shading: shading,
+      privacy: privacy,
+      maintenance: maintenance,
+      note: 'Approximate window areas and qualitative screening only. No energy savings, daylight factor, privacy score or code compliance is calculated.'
+    };
+  }
+
   function thermalProfile(input) {
     var d = Schema.canonicalize(input);
-    var wall = Math.round(d.modules.reduce(function (t, m) { return t + m.insulation.thickness_mm; }, 0) / Math.max(1, d.modules.length));
+    var envWall = d.envelope && d.envelope.layers ? d.envelope.layers.filter(function (l) { return l.role === 'insulation'; }).reduce(function (t, l) { return t + l.thickness_mm; }, 0) : 0;
+    var wall = envWall || Math.round(d.modules.reduce(function (t, m) { return t + m.insulation.thickness_mm; }, 0) / Math.max(1, d.modules.length));
     var glazing = d.modules.reduce(function (t, m) { return t + m.openings.filter(function (o) { return o.type === 'window' || o.type === 'sliding-door'; }).reduce(function (u, o) { return u + o.width_m * o.height_m; }, 0); }, 0) + d.connections.reduce(function (t, c) { return t + (c.glazed ? c.glazing_area_m2 || 0 : 0); }, 0);
     var conditioned = d.modules.reduce(function (t, m) { return t + m.nominal.length_m * m.nominal.width_m; }, 0) + d.connections.filter(function (c) { return c.glazed; }).reduce(function (t, c) { return t + c.length_m * c.width_m; }, 0);
     var porch = d.porches.reduce(function (t, p) { return t + p.length_m * p.depth_m; }, 0);
@@ -673,6 +891,7 @@
     if (ratio <= 0.2) strengths.push('The window area is relatively moderate for the nominal floor area.');
     return {
       wall_insulation_mm: wall,
+      assembly: d.envelope ? d.envelope.assembly : 'unknown',
       roof_insulation_mm: d.thermal.roof_insulation_mm,
       floor_insulation_mm: d.thermal.floor_insulation_mm,
       window_performance: d.thermal.window_performance,
@@ -712,6 +931,9 @@
       glazing_m2: thermal.glazing_m2,
       glazing_ratio: thermal.glazing_ratio,
       thermal: thermal,
+      envelope: { assembly: d.envelope.assembly, layers: d.envelope.layers, version: d.envelope.version },
+      vegetation: (d.vegetation || []).map(function (v) { return { id: v.id, type: v.type, name: v.name, module: v.module, face: v.face, length_m: v.length_m, height_m: v.height_m, seasonal_foliage: v.seasonal_foliage, irrigation: v.irrigation, maintenance: v.maintenance }; }),
+      exposure: exposureProfile(d),
       accessibility: accessibility,
       structural: structural,
       assessment_ok: assessment.ok
@@ -729,7 +951,7 @@
     moduleCorners: moduleCorners, connectionCorners: connectionCorners, porchCorners: porchCorners, deckCorners: deckCorners,
     openingSegment: openingSegment, faceNormalWorld: faceNormalWorld, faceLength: faceLength,
     polygonsOverlap: polygonsOverlap, overlapArea: overlapArea, bounds: bounds,
-    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, designProfile: designProfile,
+    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, exposureProfile: exposureProfile, designProfile: designProfile, envelopeFor: envelopeFor, wallSectionSVG: wallSectionSVG, ENVELOPE_LABEL: ENVELOPE_LABEL, VEG_LABEL: VEG_LABEL,
     renderPlan: planSVG, renderAxo: axoSVG, describe: describe,
     summary: Schema.summary, canonicalize: Schema.canonicalize
   };
