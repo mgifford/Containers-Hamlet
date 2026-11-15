@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare two container-home concepts side by side: container count, approximate floor and porch areas, glazing, envelope options, accessibility, thermal strengths and risks, and structural review prompts.">
+  <title>Compare container concepts · Containers Hamlet Design Lab</title>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../compare.css">
+</head>
+<body class="lab-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Containers Hamlet</a>
+  <nav aria-label="Design Lab">
+    <a href="../index.html">Design gallery</a>
+    <a href="../editor/">Editor</a>
+    <a href="../compare/">Compare</a>
+    <a href="../../../index.html#design-lab">Design on the main site</a>
+    <a href="../../../index.html">Main site</a>
+  </nav>
+</header>
+<main id="main" class="lab-main">
+  <p class="eyebrow">Design comparison</p>
+  <h1>Compare two container concepts</h1>
+  <p class="lede">Compare container count, approximate conditioned and porch areas, glazing, envelope intentions, accessibility considerations, thermal strengths and risks, and the structural items that need engineering review. The comparison uses the same geometry and envelope data as the drawings. It does not invent cost, carbon, energy or code figures.</p>
+  <form class="compare-controls" id="compare-controls">
+    <label for="compare-a">Concept A</label>
+    <select id="compare-a" name="a"><option value="woodland-retreat" selected>Woodland Retreat</option><option value="micro-studio">Micro Studio</option><option value="lakeside-hideaway">Lakeside Hideaway</option><option value="forest-courtyard">Forest Courtyard</option><option value="l-shaped-haven">L-Shaped Haven</option><option value="open-plan">Open Plan</option><option value="woodland-courtyard">Woodland Courtyard</option><option value="family-lodge">Family Lodge</option><option value="gathering-house">Gathering House</option><option value="common-lodge">Common Lodge</option></select>
+    <label for="compare-b">Concept B</label>
+    <select id="compare-b" name="b"><option value="woodland-retreat">Woodland Retreat</option><option value="micro-studio">Micro Studio</option><option value="lakeside-hideaway">Lakeside Hideaway</option><option value="forest-courtyard">Forest Courtyard</option><option value="l-shaped-haven">L-Shaped Haven</option><option value="open-plan">Open Plan</option><option value="woodland-courtyard">Woodland Courtyard</option><option value="family-lodge">Family Lodge</option><option value="gathering-house">Gathering House</option><option value="common-lodge" selected>Common Lodge</option></select>
+    <button type="button" id="compare-swap">Swap A and B</button>
+  </form>
+  <noscript><p class="notice">JavaScript is off. The default comparison and the full table remain available; the selectors and Swap button need JavaScript.</p></noscript>
+  <p class="status" id="compare-status" role="status" aria-live="polite">Comparing Woodland Retreat and Common Lodge.</p>
+  <div class="compare-grid" id="compare-grid">
+    <article class="compare-panel" data-compare-panel="woodland-retreat">
+    <img src="../views/woodland-retreat-exterior.svg" alt="Exterior concept of Woodland Retreat" width="1040" height="700" loading="lazy" decoding="async">
+    <div class="compare-panel-body">
+      <p class="eyebrow">One container · 1 container</p>
+      <h2>Woodland Retreat</h2>
+      <p>A single 40-foot room in the trees, with the porch turned to the view.</p>
+      <dl class="compare-facts">
+        <div><dt>Container count</dt><dd>1 × 40ft</dd></div>
+        <div><dt>Nominal conditioned footprint</dt><dd>29.7 m² modules plus glazed hall</dd></div>
+        <div><dt>Screened porch area</dt><dd>13.4 m²</dd></div>
+        <div><dt>Porch and deck area</dt><dd>13.4 m²</dd></div>
+        <div><dt>Glazing area</dt><dd>10.2 m² · 34.2% of nominal conditioned area</dd></div>
+      </dl>
+      <h3>Envelope options</h3>
+      <dl class="compare-facts">
+        <div><dt>Walls</dt><dd>150 mm average continuous external insulation</dd></div>
+        <div><dt>Roof</dt><dd>250 mm · ventilated rainscreen</dd></div>
+        <div><dt>Floor</dt><dd>200 mm</dd></div>
+        <div><dt>Windows and doors</dt><dd>triple glazed, low-e, argon, thermally broken frames</dd></div>
+        <div><dt>Shading</dt><dd>fixed overhang and deciduous planting</dd></div>
+        <div><dt>Air and vapour</dt><dd>exterior-insulated, vapour-open assembly; sealed interior air barrier (to be detailed)</dd></div>
+        <div><dt>Thermal bridges</dt><dd>continuous external insulation with thermal breaks at openings, pile caps and service penetrations</dd></div>
+        <div><dt>Ventilation</dt><dd>Heat-recovery ventilation (HRV/ERV) intent</dd></div>
+        <div><dt>Heating</dt><dd>cold-climate air-source heat pump</dd></div>
+      </dl>
+      <h3>Thermal strengths</h3>
+      <ul><li>Continuous external wall insulation (150 mm average) reduces thermal bridging.</li><li>Roof insulation is 250 mm in the concept.</li><li>Floor insulation is 200 mm in the concept.</li><li>Triple glazing and thermally broken frames are the stated intent.</li><li>External shading is part of the intent: fixed overhang and deciduous planting.</li><li>Heat-recovery ventilation is included as an intent, supporting winter ventilation and moisture control.</li><li>A cold-climate heat pump is the stated heating intent; sizing and backup are not calculated.</li><li>The rainscreen is ventilated and the cladding replaceable.</li><li>Thermal-bridge intent: continuous external insulation with thermal breaks at openings, pile caps and service penetrations.</li></ul>
+      <h3>Thermal risks</h3>
+      <ul><li>Glazing is about 34% of nominal conditioned area; summer overheating and winter heat loss need modelling.</li></ul>
+      <h3>Accessibility considerations</h3>
+      <ul><li>Step-free porch route is intended; bathroom and sleeping turning space need redesign.</li><li>Bathroom Bathroom is 2.1 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</li><li>Door swings, circulation widths, furniture and fixture clearances have not been verified.</li></ul>
+      <h3>Structural / installation review</h3>
+      <ul><li>m1 is about 2.8 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</li><li>A 40-foot module requires oversize transport planning, route surveys and permits.</li><li>PV and green roofs add dead load, snow drift, drainage and fire requirements. Roof structure and waterproofing need engineering review.</li></ul>
+      <p class="small"><strong>No cost, carbon, energy or code-compliance figures are calculated.</strong> Areas are approximate nominal geometry. Thermal notes are qualitative design prompts, not performance claims.</p>
+      <p class="compare-links"><a class="action" href="../architecture/woodland-retreat/">Five-view architectural gallery</a> <a class="action secondary" href="../editor/?preset=woodland-retreat">Open in editor</a></p>
+    </div>
+  </article>
+    <article class="compare-panel" data-compare-panel="common-lodge">
+    <img src="../views/common-lodge-exterior.svg" alt="Exterior concept of Common Lodge" width="1040" height="700" loading="lazy" decoding="async">
+    <div class="compare-panel-body">
+      <p class="eyebrow">Common lodge · 3 containers</p>
+      <h2>Common Lodge</h2>
+      <p>A café-inspired container hall for shared meals, work and gathering.</p>
+      <dl class="compare-facts">
+        <div><dt>Container count</dt><dd>3 × 40ft + 40ft + 40ft</dd></div>
+        <div><dt>Nominal conditioned footprint</dt><dd>215.2 m² modules plus glazed hall</dd></div>
+        <div><dt>Screened porch area</dt><dd>24 m²</dd></div>
+        <div><dt>Porch and deck area</dt><dd>32 m²</dd></div>
+        <div><dt>Glazing area</dt><dd>70.2 m² · 32.6% of nominal conditioned area</dd></div>
+      </dl>
+      <h3>Envelope options</h3>
+      <dl class="compare-facts">
+        <div><dt>Walls</dt><dd>200 mm average continuous external insulation</dd></div>
+        <div><dt>Roof</dt><dd>350 mm · ventilated rainscreen</dd></div>
+        <div><dt>Floor</dt><dd>250 mm</dd></div>
+        <div><dt>Windows and doors</dt><dd>triple glazed, low-e, argon, thermally broken frames</dd></div>
+        <div><dt>Shading</dt><dd>fixed overhang, covered veranda and deciduous planting</dd></div>
+        <div><dt>Air and vapour</dt><dd>exterior-insulated, vapour-open assembly; sealed interior air barrier (to be detailed)</dd></div>
+        <div><dt>Thermal bridges</dt><dd>continuous external insulation with thermal breaks at openings, pile caps and service penetrations</dd></div>
+        <div><dt>Ventilation</dt><dd>Heat-recovery ventilation (HRV/ERV) intent</dd></div>
+        <div><dt>Heating</dt><dd>cold-climate air-source heat pump</dd></div>
+      </dl>
+      <h3>Thermal strengths</h3>
+      <ul><li>Continuous external wall insulation (200 mm average) reduces thermal bridging.</li><li>Roof insulation is 350 mm in the concept.</li><li>Floor insulation is 250 mm in the concept.</li><li>Triple glazing and thermally broken frames are the stated intent.</li><li>External shading is part of the intent: fixed overhang, covered veranda and deciduous planting.</li><li>Heat-recovery ventilation is included as an intent, supporting winter ventilation and moisture control.</li><li>A cold-climate heat pump is the stated heating intent; sizing and backup are not calculated.</li><li>The rainscreen is ventilated and the cladding replaceable.</li><li>Thermal-bridge intent: continuous external insulation with thermal breaks at openings, pile caps and service penetrations.</li><li>The central hall/veranda is modelled with insulated sliding/folding glazing intent, not an uninsulated garage door.</li></ul>
+      <h3>Thermal risks</h3>
+      <ul><li>Glazing is about 33% of nominal conditioned area; summer overheating and winter heat loss need modelling.</li><li>Green or biosolar roof adds saturated load, drainage and maintenance complexity; it is not a substitute for roof insulation.</li></ul>
+      <h3>Accessibility considerations</h3>
+      <ul><li>Step-free hall and veranda intended; two accessible washrooms, one with an adult-size change table; door widths, turning spaces and counter heights need verification.</li><li>Bathroom U. WC is 2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</li><li>Bathroom A. WC is 1.5 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</li><li>Bathroom A. WC is 2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</li><li>Door swings, circulation widths, furniture and fixture clearances have not been verified.</li></ul>
+      <h3>Structural / installation review</h3>
+      <ul><li>m1 has a green or biosolar roof. Saturated weight, snow, drainage, waterproofing and fire need engineering review.</li><li>m1 is about 2.9 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</li><li>m2 is about 2.9 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</li><li>m3 has a green or biosolar roof. Saturated weight, snow, drainage, waterproofing and fire need engineering review.</li><li>m3 is about 2.9 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</li><li>More than one container means a staged lift and a crane/installation review.</li><li>A 40-foot module requires oversize transport planning, route surveys and permits.</li><li>PV and green roofs add dead load, snow drift, drainage and fire requirements. Roof structure and waterproofing need engineering review.</li></ul>
+      <p class="small"><strong>No cost, carbon, energy or code-compliance figures are calculated.</strong> Areas are approximate nominal geometry. Thermal notes are qualitative design prompts, not performance claims.</p>
+      <p class="compare-links"><a class="action" href="../architecture/common-lodge/">Five-view architectural gallery</a> </p>
+    </div>
+  </article>
+  </div>
+  <details class="all-concepts" open>
+    <summary>All ten concepts at a glance</summary>
+    <div class="table-wrap"><table>
+    <caption>All ten concepts at a glance. Areas are approximate nominal geometry; thermal notes are qualitative.</caption>
+    <thead><tr><th scope="col">Concept</th><th scope="col">Containers</th><th scope="col">Conditioned m²</th><th scope="col">Screened porch m²</th><th scope="col">Glazing m²</th><th scope="col">Envelope</th><th scope="col">Thermal strengths and risks</th><th scope="col">Accessibility</th><th scope="col">Structural review</th></tr></thead>
+    <tbody><tr><th scope="row"><a href="../architecture/woodland-retreat/">Woodland Retreat</a></th><td>1 × 40ft</td><td>29.7</td><td>13.4</td><td>10.2 (34.2%)</td><td>150 / 250 / 200 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. Glazing is about 34% of nominal conditioned area; summer overheating and winter heat loss need modelling.</td><td>Step-free porch route is intended; bathroom and sleeping turning space need redesign. Bathroom Bathroom is 2.1 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 is about 2.8 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</td></tr><tr><th scope="row"><a href="../architecture/micro-studio/">Micro Studio</a></th><td>1 × 20ft</td><td>14.8</td><td>7.7</td><td>6.2 (41.8%)</td><td>150 / 250 / 200 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. Glazing is about 42% of nominal conditioned area; summer overheating and winter heat loss need modelling.</td><td>Too small for a 1.5 m turning circle; a seasonal studio, not an accessible permanent home. Bathroom Bathroom is 1.8 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 is about 2.8 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</td></tr><tr><th scope="row"><a href="../architecture/lakeside-hideaway/">Lakeside Hideaway</a></th><td>1 × 40ft</td><td>29.7</td><td>18</td><td>10.9 (36.7%)</td><td>150 / 300 / 250 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. Glazing is about 37% of nominal conditioned area; summer overheating and winter heat loss need modelling.</td><td>Step-free veranda intended; bathroom is compact. Bathroom Bathroom is 2.2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 has a green or biosolar roof. Saturated weight, snow, drainage, waterproofing and fire need engineering review.</td></tr><tr><th scope="row"><a href="../architecture/forest-courtyard/">Forest Courtyard</a></th><td>2 × 40ft + 40ft</td><td>59.4</td><td>0</td><td>19.8 (33.4%)</td><td>150 / 250 / 200 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. Glazing is about 33% of nominal conditioned area; summer overheating and winter heat loss need modelling.</td><td>Courtyard route can be step-free; the bathroom remains compact. Bathroom Bathroom is 2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 is about 2.8 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</td></tr><tr><th scope="row"><a href="../architecture/l-shaped-haven/">L-Shaped Haven</a></th><td>2 × 40ft + 40ft</td><td>59.4</td><td>12.3</td><td>13 (21.9%)</td><td>150 / 250 / 200 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. </td><td>Step-free porch; sleeping and bath need accessible variants. Bathroom Bathroom is 2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 is about 2.8 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</td></tr><tr><th scope="row"><a href="../architecture/open-plan/">Open Plan</a></th><td>2 × 40ft + 40ft</td><td>59.4</td><td>13.5</td><td>15.6 (26.3%)</td><td>150 / 250 / 200 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. </td><td>Wider interior helps circulation, but the bathroom still needs an accessible layout. Bathroom Bathroom is 2.2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 assumes a large structural wall removal. Engineered framing and transfer beams are required.</td></tr><tr><th scope="row"><a href="../architecture/woodland-courtyard/">Woodland Courtyard</a></th><td>3 × 40ft + 40ft + 40ft</td><td>89.2</td><td>18</td><td>26.6 (29.9%)</td><td>150 / 300 / 250 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. Glazing is about 30% of nominal conditioned area; summer overheating and winter heat loss need modelling.</td><td>Courtyard can be step-free; bathrooms and sleeping rooms need accessible variants. Bathroom Bathroom is 2.2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 has a green or biosolar roof. Saturated weight, snow, drainage, waterproofing and fire need engineering review.</td></tr><tr><th scope="row"><a href="../architecture/family-lodge/">Family Lodge</a></th><td>3 × 40ft + 40ft + 40ft</td><td>89.2</td><td>24</td><td>19.8 (22.2%)</td><td>150 / 300 / 250 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. Green or biosolar roof adds saturated load, drainage and maintenance complexity; it is not a substitute for roof insulation.</td><td>Long shared porch can be step-free; sleeping and bath need accessible variants. Bathroom Bathroom is 2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 has a green or biosolar roof. Saturated weight, snow, drainage, waterproofing and fire need engineering review.</td></tr><tr><th scope="row"><a href="../architecture/gathering-house/">Gathering House</a></th><td>3 × 40ft + 40ft + 40ft</td><td>89.2</td><td>0</td><td>23.7 (26.6%)</td><td>150 / 250 / 200 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (150 mm average) reduces thermal bridging. Green or biosolar roof adds saturated load, drainage and maintenance complexity; it is not a substitute for roof insulation.</td><td>Gathering room can be a step-free shared space; sleeping and bath need accessible variants. Bathroom Bathroom is 2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 is about 2.8 m wide and 3.3 m high after insulation and roof. Oversize transport permits and route surveys are likely.</td></tr><tr><th scope="row"><a href="../architecture/common-lodge/">Common Lodge</a></th><td>3 × 40ft + 40ft + 40ft</td><td>215.2</td><td>24</td><td>70.2 (32.6%)</td><td>200 / 350 / 250 mm wall / roof / floor; triple glazed, low-e, argon, thermally broken frames</td><td>Continuous external wall insulation (200 mm average) reduces thermal bridging. Glazing is about 33% of nominal conditioned area; summer overheating and winter heat loss need modelling.</td><td>Step-free hall and veranda intended; two accessible washrooms, one with an adult-size change table; door widths, turning spaces and counter heights need verification. Bathroom U. WC is 2 m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.</td><td>m1 has a green or biosolar roof. Saturated weight, snow, drainage, waterproofing and fire need engineering review.</td></tr></tbody>
+  </table></div>
+  </details>
+  <p class="small">The comparison is qualitative. It does not calculate heating load, energy use, carbon, cost, structural capacity or code compliance. Existing authoritative Cabin A and lodge models are unchanged.</p>
+</main>
+<footer class="site-footer"><p><a href="../../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>
+<script src="../../js/design-schema.js"></script>
+<script src="../../js/design-model.js"></script>
+<script src="../concepts.js"></script>
+<script src="../compare.js"></script>
+</body>
+</html>

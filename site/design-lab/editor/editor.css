@@ -99,3 +99,5 @@ button.secondary:hover { background: var(--surface); color: var(--link); }
 }
 
 .plan-module-hit { cursor: pointer; }
+
+#thermal-controls .field-grid { grid-template-columns: 1fr; }

@@ -2,17 +2,17 @@
 
 Six individual woodland retreats that happen to share a community.
 
-A fictional 13.5-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.3 adds a **Container Home Design Studio**: a nine-concept gallery and a browser-based editor for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
+A fictional 13.5-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.3 adds a **Container Home Design Studio**: nine container homes plus a café-inspired common lodge, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor and a side-by-side comparison tool. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
 
-Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, all drawings, downloads, the cutaway explorer and the validation workflow. The new editor uses a separate, versioned multi-container schema and never overwrites the existing architectural data. See [`docs/phase-1.3.md`](docs/phase-1.3.md) for the audit, changes, tests, screenshots and limitations.
+Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, all drawings, downloads, the cutaway explorer and the validation workflow. The new editor uses a separate, versioned multi-container schema and never overwrites the existing architectural data. See [`docs/phase-1.3.md`](docs/phase-1.3.md) and the [Phase 1.3 extension](docs/phase-1.3-extension.md) for the audit, changes, tests, screenshots and limitations.
 
 ## Design Lab
 
-- Gallery: `/design-lab/` — nine container concepts, grouped by one, two or three modules.
-- Editor: `/design-lab/editor/` — three fully editable presets: Woodland Retreat, L-Shaped Haven and Woodland Courtyard.
-- Six further concepts are clearly labelled **inspiration only**, with source JSON and three generated views.
-- The editor supports independent module position and rotation, 20/40-foot modules, openings, screened porches, decks, independent climbing-plant trellises, timber connectors, interior room bands, external insulation, cladding, roof and colour, material intent, click a module on the plan to select it, undo/redo, reset, JSON import/export, SVG exports, a design summary, a ZIP bundle and an illustrative hamlet preview.
-- No login, account, upload, backend, WebGL or third-party runtime request. Designs stay in the browser until downloaded.
+- Gallery: `/design-lab/` — nine homes and a common lodge, grouped by one, two, three containers and the shared lodge. Every design has a five-view architectural page: exterior, plan, cutaway, porch/deck detail and winter study.
+- Editor: `/design-lab/editor/` — three fully editable presets: Woodland Retreat, L-Shaped Haven and Woodland Courtyard. The common lodge is a developed concept with five views and a comparison entry, but is not editable yet.
+- Six further homes and the common lodge are clearly labelled **inspiration only**, with source JSON, five generated views and comparison entries.
+- The editor supports independent module position and rotation, 20/40-foot modules, openings, screened porches, decks, independent climbing-plant trellises, timber connectors, interior room bands, continuous external wall insulation, roof/floor insulation, thermal-bridge mitigation, rainscreen and air/vapour strategy, window performance, shading, HRV/ERV, cold-climate heat pump, cladding, roof and colour, material intent, click a module on the plan to select it, undo/redo, reset, JSON import/export, SVG exports, a design summary, a ZIP bundle and an illustrative hamlet preview.
+- No login, account, upload, backend, WebGL or third-party runtime request. Designs stay in the browser until downloaded. The architectural gallery uses no auto-advancing carousel; keyboard buttons, arrow keys and a show-all alternative are available.
 - Editor warnings cover invalid geometry, engineering concerns, accessibility concerns and items needing professional review. They are not a building code assessment.
 
 ## Start
@@ -23,11 +23,11 @@ Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 167 main-site static checks
-   node tools/check-design-lab.mjs   # 260 Design Lab schema, geometry and page checks
+   node tools/check.mjs       # 190 main-site static checks
+   node tools/check-design-lab.mjs   # 491 Design Lab schema, geometry, gallery and comparison checks
    npm install
    npm run test:browser       # 62 main-site browser checks
-   npm run test:design-lab    # 53 Design Lab browser checks
+   npm run test:design-lab    # 80 Design Lab browser checks
    ```
 
    The build refuses data that cannot be built or that breaks a site rule, such as a home inside the shoreline setback, an overlapping container module, a porch beyond its face, or a concept with no valid editable presets. See [`docs/data-model.md`](docs/data-model.md) and [`docs/design-lab.md`](docs/design-lab.md).
@@ -46,9 +46,9 @@ The site includes:
 - material passports, provenance and a review register
 - downloadable site, terrain, home, drawing and 3D assets
 - a long-form community, construction and adaptability narrative
-- a **Design** section that introduces the Design Lab and its three editable presets
+- a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal options and its comparison tool
 
-No tracking, forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed. The whole published site is about 2536 KB, under the 2.5 MB budget.
 
 ## The fictional landscape
 
@@ -117,7 +117,7 @@ Some neighbouring buildings may be visible. The layout aims for privacy through 
 
 ## Accessibility
 
-The website targets WCAG 2.2 AA and is tested in CI with axe-core and scripted keyboard, reflow, text-spacing, motion and colour-scheme checks. The Design Lab gallery is static; the editor uses native form controls, labelled inputs, visible focus, live status messages, undo/redo and keyboard-operable actions. Every generated view has a title and description; the hamlet preview has a text alternative. It has not yet been tested with screen readers or by disabled people. See [`docs/accessibility.md`](docs/accessibility.md).
+The website targets WCAG 2.2 AA and is tested in CI with axe-core and scripted keyboard, reflow, text-spacing, motion and colour-scheme checks. The Design Lab gallery and architectural slideshows are progressive enhancements over static HTML; the editor uses native form controls, labelled inputs, visible focus, live status messages, undo/redo and keyboard-operable actions. The slideshow has no auto-advance, visible Previous/Next and Show-all controls, arrow-key support, descriptive captions and a non-carousel alternative. Every generated view has a title and description; the hamlet preview has a text alternative. It has not yet been tested with screen readers or by disabled people. See [`docs/accessibility.md`](docs/accessibility.md).
 
 ## Licence
 
@@ -127,28 +127,28 @@ The website targets WCAG 2.2 AA and is tested in CI with axe-core and scripted k
 - Original Design Lab documentation, diagrams, concept data and generated views: **CC BY-SA 4.0** (`site/design-lab/CONTENT-LICENSE.md`).
 - Third-party notices: `site/design-lab/THIRD-PARTY-NOTICES.md`.
 
-Third-party plans are **not bundled** because free download is not the same as an open redistribution licence. Attribution required for adapted content. Contributors must confirm rights and provenance.
+Third-party plans are **not bundled** because free download is not the same as an open redistribution licence. No café photographs are bundled or published: redistribution rights were not confirmed, so they were used only as private reference. The Common Lodge is an original interpretation of the written brief, not a reproduction of a photographed building or interior. Attribution required for adapted content. Contributors must confirm rights and provenance.
 
 ## What Phase 1.3 deliberately leaves out
 
 - A generic home builder; the project remains container-focused.
-- Direct drag-and-drop manipulation of every component (numeric/keyboard controls are the current editable route).
-- A structural, energy, fire, acoustic or life-cycle calculator.
+- Direct drag-and-drop manipulation of every component (numeric/keyboard controls and click-to-select are the current route).
+- A structural, energy, fire, acoustic, carbon, cost or life-cycle calculator; the thermal panel is qualitative and the drawing areas are approximate.
 - A full 3D walkthrough, BIM/IFC/DXF export or construction documents.
 - Public repository write access or a design submission service.
 - Rental booking, financial modelling, legal lease templates or real property mapping.
 - Final housing designs or a claim that every configuration is buildable.
 - A backend service.
 
-Six concepts remain inspiration-only. The editor supports one to three containers; more would need a different structural and transport story.
+Six homes and the common lodge remain inspiration-only. The editor supports one to three containers; more would need a different structural and transport story.
 
 ## Next
 
-- Add the six remaining gallery concepts to the editable set, one at a time.
+- Add the six remaining homes and the common lodge to the editable set, one at a time.
 - Add a fully accessible 1.5 m turning-circle variant and verify it against CSA B651.
 - Add a direct-manipulation plan editor with complete keyboard equivalents and undo/redo.
 - Add structural, envelope, fire, transport and accessibility review workflows with named reviewers.
 - Add a contributor submission process through pull requests, without public write access.
 - Test with screen readers and disabled people, and with architects, engineers and builders.
-- Extend the existing Design Lab editor with direct manipulation, more housing variants and a professional review workflow without pretending to be a code or engineering check.
+- Extend the existing Design Lab editor with direct manipulation, a proper thermal model, more housing variants and a professional review workflow without pretending to be a code or engineering check.
 EOF

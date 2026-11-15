@@ -60,8 +60,9 @@ try {
   let { context, page, errors, foreign } = await open('design-lab/');
   ok(errors.length === 0, `gallery: no console errors${errors.length ? ': ' + errors.join(' | ') : ''}`);
   const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card').length, editable: document.querySelectorAll('.concept-badge.editable').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
-  ok(count.cards === 9 && count.editable === 3 && count.inspiration === 6 && count.headings === 1, 'gallery shows nine cards, three editable and six inspiration-only');
+  ok(count.cards === 10 && count.editable === 3 && count.inspiration === 7 && count.headings === 1, 'gallery shows ten cards, three editable, six inspiration-only homes and the lodge');
   await page.locator('#gallery').scrollIntoViewIfNeeded();
+  await page.evaluate(async () => { for (const img of document.querySelectorAll('.concept-card-media img')) { img.scrollIntoView({ block: 'center' }); await new Promise((r) => setTimeout(r, 60)); } window.scrollTo(0, 0); });
   await page.waitForTimeout(800);
   const imgs = await page.evaluate(() => [...document.querySelectorAll('.concept-card-media img')].map((i) => ({ w: i.naturalWidth, alt: i.alt })));
   ok(imgs.every((i) => i.w > 0 && i.alt.length > 20), 'every gallery illustration loads with descriptive alt text');
@@ -75,6 +76,88 @@ try {
   for (const h of hrefs) { const r = await page.request.get(new URL(h, BASE + 'design-lab/').href); if (r.status() !== 200) broken.push(h); }
   ok(broken.length === 0, `gallery: all ${hrefs.length} local links return 200${broken.length ? ': ' + broken.join(', ') : ''}`);
   await context.close();
+
+  section('Architectural gallery and accessible slideshow');
+  let arch = await open('design-lab/architecture/common-lodge/');
+  ok(arch.errors.length === 0, `architecture: no console errors${arch.errors.length ? ': ' + arch.errors.join(' | ') : ''}`);
+  const archState = await arch.page.evaluate(() => ({
+    slides: document.querySelectorAll('[data-slide]').length,
+    current: document.querySelectorAll('.slide.is-current').length,
+    visible: [...document.querySelectorAll('[data-slide]')].filter((e) => e.offsetParent !== null).length,
+    controls: !!document.querySelector('[data-slide-controls]') && document.querySelector('[data-slide-controls]').offsetParent !== null,
+    status: document.querySelector('[data-slide-status]').textContent,
+    geometry: document.querySelectorAll('.badge.geometry').length,
+    illustrative: document.querySelectorAll('.badge.illustrative').length,
+    caps: [...document.querySelectorAll('[data-slide] figcaption')].every((e) => e.textContent.trim().length > 70),
+    imgs: [...document.querySelectorAll('[data-slide] img')].every((i) => i.alt.length > 30)
+  }));
+  ok(archState.slides === 5 && archState.current === 1 && archState.visible === 1 && archState.controls, 'architecture: five slides, one current and visible controls');
+  ok(archState.geometry === 3 && archState.illustrative === 2, 'architecture: three geometry-backed drawings and two illustrative studies are labelled');
+  ok(archState.caps && archState.imgs && (await arch.page.evaluate(() => document.querySelector('[data-slide].is-current img').naturalWidth > 0)), 'architecture: every view has a descriptive caption and alt text');
+  await arch.page.waitForTimeout(900);
+  ok(/View 1 of 5/.test(await arch.page.textContent('[data-slide-status]')), 'architecture: does not advance automatically');
+  await arch.page.focus('[data-slide-viewport]');
+  await arch.page.keyboard.press('ArrowRight');
+  await arch.page.waitForTimeout(150);
+  ok(/View 2 of 5/.test(await arch.page.textContent('[data-slide-status]')), 'architecture: Right Arrow advances a view');
+  await arch.page.keyboard.press('ArrowLeft');
+  await arch.page.waitForTimeout(150);
+  ok(/View 1 of 5/.test(await arch.page.textContent('[data-slide-status]')), 'architecture: Left Arrow returns a view');
+  await arch.page.click('[data-slide-all]');
+  await arch.page.waitForTimeout(150);
+  const allShown = await arch.page.evaluate(() => ({ count: [...document.querySelectorAll('[data-slide]')].filter((e) => e.offsetParent !== null).length, expanded: document.querySelector('[data-slide-all]').getAttribute('aria-expanded') }));
+  ok(allShown.count === 5 && allShown.expanded === 'true', 'architecture: Show all views exposes the non-carousel alternative');
+  await arch.page.waitForTimeout(500);
+  ok(await arch.page.evaluate(() => [...document.querySelectorAll('[data-slide] img')].every((i) => i.naturalWidth > 0)), 'architecture: all five views load when the non-carousel alternative is shown');
+  await arch.page.click('[data-slide-all]');
+  await arch.page.waitForTimeout(150);
+  await axe(arch.page, 'architecture');
+  await shot(arch.page, 'architecture-top');
+  await shot(arch.page, 'architecture-full', true);
+  const archHrefs = await arch.page.evaluate(() => [...new Set([...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')).filter((h) => !/^(https?:|#|mailto:)/.test(h)))]);
+  const archBroken = [];
+  for (const h of archHrefs) { const r = await arch.page.request.get(new URL(h, BASE + 'design-lab/architecture/common-lodge/').href); if (r.status() !== 200) archBroken.push(h); }
+  ok(archBroken.length === 0, `architecture: all ${archHrefs.length} local links return 200${archBroken.length ? ': ' + archBroken.join(', ') : ''}`);
+  await arch.context.close();
+
+  const nojsArch = await open('design-lab/architecture/woodland-retreat/', { javaScriptEnabled: false });
+  const nojsState = await nojsArch.page.evaluate(() => ({ visible: [...document.querySelectorAll('[data-slide]')].filter((e) => e.offsetParent !== null).length, controls: !!document.querySelector('[data-slide-controls]') && document.querySelector('[data-slide-controls]').offsetParent !== null, note: /JavaScript is off/.test(document.body.textContent) }));
+  ok(nojsState.visible === 5 && nojsState.controls === false && nojsState.note, 'architecture: no-JavaScript fallback shows all five views and explains itself');
+  await nojsArch.context.close();
+
+  section('Gallery-to-editor navigation');
+  const fromArch = await open('design-lab/architecture/woodland-retreat/');
+  await Promise.all([
+    fromArch.page.waitForURL('**/design-lab/editor/?preset=woodland-retreat'),
+    fromArch.page.click('a[href*="editor/?preset=woodland-retreat"]')
+  ]);
+  await fromArch.page.waitForSelector('#preset');
+  ok(/design-lab\/editor/.test(fromArch.page.url()) && (await fromArch.page.inputValue('#preset')) === 'woodland-retreat', 'architectural gallery links to the matching editable preset');
+  await fromArch.context.close();
+
+  section('Design comparison');
+  let compare = await open('design-lab/compare/');
+  ok(compare.errors.length === 0, `compare: no console errors${compare.errors.length ? ': ' + compare.errors.join(' | ') : ''}`);
+  const compareState = await compare.page.evaluate(() => ({ options: document.querySelectorAll('#compare-a option').length, panels: document.querySelectorAll('.compare-panel').length, rows: document.querySelectorAll('.all-concepts tbody tr').length, text: document.body.textContent }));
+  ok(compareState.options === 10 && compareState.panels === 2 && compareState.rows === 10, 'compare: two side-by-side panels and all ten concepts in the table');
+  ok(!/\b(kWh|kgCO2|cost \$|\$\d)/i.test(compareState.text), 'compare: no invented energy, carbon or cost figures');
+  await compare.page.selectOption('#compare-a', 'common-lodge');
+  await compare.page.waitForTimeout(250);
+  ok(/Common Lodge/.test(await compare.page.textContent('#compare-grid .compare-panel h2')), 'compare: changing Concept A updates the side-by-side view');
+  const beforeSwap = [await compare.page.inputValue('#compare-a'), await compare.page.inputValue('#compare-b')];
+  await compare.page.click('#compare-swap');
+  await compare.page.waitForTimeout(200);
+  const afterSwap = [await compare.page.inputValue('#compare-a'), await compare.page.inputValue('#compare-b')];
+  ok(afterSwap[0] === beforeSwap[1] && afterSwap[1] === beforeSwap[0], 'compare: Swap A and B exchanges the two concepts');
+  await axe(compare.page, 'compare');
+  await shot(compare.page, 'compare-top');
+  await shot(compare.page, 'compare-full', true);
+  await compare.context.close();
+
+  const nojsCompare = await open('design-lab/compare/', { javaScriptEnabled: false });
+  const nojsCompareState = await nojsCompare.page.evaluate(() => ({ panels: document.querySelectorAll('.compare-panel').length, rows: document.querySelectorAll('.all-concepts tbody tr').length, note: /JavaScript is off/.test(document.body.textContent) }));
+  ok(nojsCompareState.panels === 2 && nojsCompareState.rows === 10 && nojsCompareState.note, 'compare: no-JavaScript fallback keeps the default comparison and table');
+  await nojsCompare.context.close();
 
   section('Editor: initial state and accessibility');
   ({ context, page, errors, foreign } = await open('design-lab/editor/'));
@@ -203,17 +286,22 @@ try {
     await d.saveAs(file);
     return file;
   }
+  await page.fill('#thermal-roof', '360');
+  await page.locator('#thermal-roof').blur();
+  await page.selectOption('#thermal-window', 'double glazed, low-e, thermally broken frames');
+  await page.waitForTimeout(200);
   const jsonFile = await downloadFile('#export-json', 'design.json');
   const parsed = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
   ok(parsed.schema === 'containers-hamlet-design/v1.0' && parsed.modules.length === 2, 'exported JSON carries the v1 schema and both modules');
+  ok(parsed.thermal && parsed.thermal.roof_insulation_mm === 360 && /double glazed/i.test(parsed.thermal.window_performance), 'thermal envelope choices persist in the exported JSON');
   const planFile = await downloadFile('#export-plan', 'plan.svg');
   ok(/^<svg|^<\?xml/.test(fs.readFileSync(planFile, 'utf8').trim()), 'exported plan is an SVG');
   const zipFile = await downloadFile('#export-zip', 'design.zip');
   ok(fs.readFileSync(zipFile).subarray(0, 4).toString('hex') === '504b0304', 'ZIP download has a valid ZIP signature');
-  ok(fs.readFileSync(zipFile).toString('latin1').includes('design.json'), 'ZIP contains the editable JSON');
+  ok(fs.readFileSync(zipFile).toString('latin1').includes('design.json') && fs.readFileSync(zipFile).toString('latin1').includes('-porch.svg') && fs.readFileSync(zipFile).toString('latin1').includes('-winter.svg'), 'ZIP contains the editable JSON and both outdoor/winter views');
   await page.setInputFiles('#import-file', jsonFile);
   await page.waitForTimeout(500);
-  ok(/Imported design/.test(await page.textContent('#status')), 'exported JSON reopens through Import');
+  ok(/Imported design/.test(await page.textContent('#status')) && (await page.inputValue('#thermal-roof')) === '360', 'exported JSON reopens through Import with its thermal values');
   const legacy = { schema: 'containers-hamlet-editor/v0.1', name: 'Legacy pair', preset: 'pair', modules: 2, module: { length_m: 12.192, width_m: 2.438, nominal: true }, envelope: { external_insulation_mm: 150, cladding: 'timber', roof: 'solar' }, porch: { depth_m: 3, start_m: 3, length_m: 4, screened: true }, openings: [{ id: 'W-N', face: 'north', position_m: 4, width_m: 1.2 }, { id: 'W-S', face: 'south', position_m: 8, width_m: 1.2 }], status: 'concept only', professional_review_required: true };
   const legacyFile = path.join(TMP, 'legacy.json');
   fs.writeFileSync(legacyFile, JSON.stringify(legacy));
@@ -235,6 +323,22 @@ try {
   ok(smallWidth <= 320, `editor has no horizontal scrolling at 320 px (${smallWidth}px)`);
   await axe(small.page, 'editor at 320 px');
   await small.context.close();
+  const smallArch = await open('design-lab/architecture/woodland-retreat/', { viewport: { width: 320, height: 640 } });
+  await smallArch.page.waitForTimeout(300);
+  ok(await smallArch.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'architecture gallery has no horizontal scrolling at 320 px');
+  await axe(smallArch.page, 'architecture at 320 px');
+  await smallArch.context.close();
+  const smallCompare = await open('design-lab/compare/', { viewport: { width: 320, height: 640 } });
+  await smallCompare.page.waitForTimeout(300);
+  ok(await smallCompare.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'comparison has no horizontal scrolling at 320 px');
+  await axe(smallCompare.page, 'comparison at 320 px');
+  await smallCompare.context.close();
+  const darkArch = await open('design-lab/architecture/woodland-retreat/', { colorScheme: 'dark' });
+  await axe(darkArch.page, 'architecture in dark scheme');
+  await darkArch.context.close();
+  const darkCompare = await open('design-lab/compare/', { colorScheme: 'dark' });
+  await axe(darkCompare.page, 'comparison in dark scheme');
+  await darkCompare.context.close();
   const darkGallery = await open('design-lab/', { colorScheme: 'dark' });
   await axe(darkGallery.page, 'gallery in dark scheme');
   await darkGallery.context.close();

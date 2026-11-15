@@ -251,6 +251,12 @@
     warn('professional', 'This concept has not been reviewed by an architect, engineer, accessibility consultant or building official. It is not an Ontario Building Code compliance assessment.', 'review');
     warn('foundation', 'Foundation type, frost depth, bedrock, groundwater and wetland proximity need geotechnical review.', 'review');
     warn('fire', 'Spatial separation, cladding, roof coverings, PV and battery safety and wildfire interface need fire review.', 'review');
+    var glazingArea = d.modules.reduce(function (t, m) { return t + m.openings.filter(function (o) { return o.type === 'window' || o.type === 'sliding-door'; }).reduce(function (u, o) { return u + o.width_m * o.height_m; }, 0); }, 0) + d.connections.reduce(function (t, c) { return t + (c.glazed ? c.glazing_area_m2 || 0 : 0); }, 0);
+    var conditioned = d.modules.reduce(function (t, m) { return t + m.nominal.length_m * m.nominal.width_m; }, 0) + d.connections.filter(function (c) { return c.glazed; }).reduce(function (t, c) { return t + c.length_m * c.width_m; }, 0);
+    if (conditioned > 0 && glazingArea / conditioned > 0.28) warn('glazing-ratio', 'Glazing is about ' + Math.round(glazingArea / conditioned * 100) + '% of the nominal conditioned area. Large glazed areas can overheat in summer and lose heat in winter; model shading and window performance before deciding.', 'engineering');
+    if (d.thermal && /none|not decided/i.test(d.thermal.external_shading)) warn('no-shading', 'External shading is not resolved. West and south glazing need a summer overheating strategy.', 'engineering');
+    if (d.thermal && d.thermal.heat_recovery_ventilation === false) warn('no-hrv', 'No heat-recovery ventilation is selected. Winter ventilation and moisture control need a designed strategy.', 'engineering');
+    if (d.connections.some(function (c) { return c.glazed && (c.glazing_area_m2 || 0) > 12; })) warn('large-glazed-hall', 'A large glazed hall or veranda needs insulated sliding/folding doors, thermal breaks and a condensation strategy. Do not assume a glazed garage door is suitable.', 'engineering');
     return { errors: errors, warnings: warnings, ok: errors.length === 0 };
   }
 
@@ -282,9 +288,10 @@
     var oy = (H - b.height * scale) / 2 + 10 - b.minY * scale;
     var P = function (p) { return [ox + p[0] * scale, oy + p[1] * scale]; };
     var path = function (poly, close) { var q = poly.map(P); return 'M' + q.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + (close === false ? '' : 'Z'); };
-    var text = function (x, y, s, size, extra) { return '<text x="' + n(x) + '" y="' + n(y) + '" font-size="' + (size || 12) + '" font-family="system-ui, sans-serif" fill="#1d392c"' + (extra || '') + '>' + esc(s) + '</text>'; };
+    var text = function (x, y, s, size, extra) { var a = 'x="' + n(x) + '" y="' + n(y) + '" font-size="' + (size || 12) + '" font-family="system-ui, sans-serif"'; if (!/fill=/.test(extra || '')) a += ' fill="#1d392c"'; return '<text ' + a + (extra || '') + '>' + esc(s) + '</text>'; };
     var pre = opts.idPrefix || 'plan';
     var out = [];
+    var planLabels = [];
     var title = d.name + ' concept plan';
     var desc = 'Dimensioned concept plan for ' + d.name + '. ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + ', ' + Schema.summary(d).nominalFootprint_m2 + ' square metres nominal footprint. ' + Schema.summary(d).zoneCount + ' interior zones and ' + Schema.summary(d).openingCount + ' openings. Dimensions are nominal container sizes, not verified construction dimensions.';
     out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + '>');
@@ -295,9 +302,17 @@
     out.push('<rect x="18" y="18" width="' + (W - 36) + '" height="' + (H - 36) + '" fill="none" stroke="#d8d4c4" stroke-width="1"/>');
     // connections
     d.connections.forEach(function (c) {
-      out.push('<path d="' + path(connectionCorners(c)) + '" fill="url(#' + pre + '-link)" stroke="#7b6a4d" stroke-width="1.5"/>');
+      var poly = connectionCorners(c);
+      out.push('<path d="' + path(poly) + '" fill="' + (c.glazed ? '#cfe8ec' : 'url(#' + pre + '-link)') + '" fill-opacity="' + (c.glazed ? '0.82' : '1') + '" stroke="' + (c.glazed ? '#2d6b78' : '#7b6a4d') + '" stroke-width="1.5"/>');
+      if (c.glazed) {
+        for (var gi = 0; gi < poly.length; gi++) {
+          var a = P(poly[gi]), b = P(poly[(gi + 1) % poly.length]);
+          out.push('<line x1="' + n(a[0]) + '" y1="' + n(a[1]) + '" x2="' + n(b[0]) + '" y2="' + n(b[1]) + '" stroke="#2d6b78" stroke-width="3.2" stroke-dasharray="7 2"/>');
+        }
+      }
       var cp = P(c.position_m);
-      out.push(text(cp[0] - 24, cp[1] + 4, 'timber link', 10, ' fill="#5c4c34"'));
+      planLabels.push(text(cp[0] - 30, cp[1] + 4, c.glazed ? 'glazed hall' : c.screened ? 'screened link' : 'timber link', 10, ' fill="' + (c.glazed ? '#1f4f60' : '#5c4c34') + '" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
+      if (c.door_type && c.door_type !== 'none') planLabels.push(text(cp[0] - 30, cp[1] + 15, c.door_type.replace(/-/g, ' '), 8, ' fill="#1f4f60" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
     });
     // decks
     d.decks.forEach(function (dk) {
@@ -312,8 +327,8 @@
       var poly = porchCorners(m, p);
       out.push('<path d="' + path(poly) + '" fill="url(#' + pre + '-porch)" stroke="#4f7d64" stroke-width="1.8"/>');
       var c = P([(poly[0][0] + poly[2][0]) / 2, (poly[0][1] + poly[2][1]) / 2]);
-      out.push(text(c[0] - 34, c[1] - 2, (p.screened ? 'screened porch' : 'covered porch'), 10, ' fill="#31573f"'));
-      out.push(text(c[0] - 34, c[1] + 12, n(p.length_m) + ' × ' + n(p.depth_m) + ' m', 10, ' fill="#31573f"'));
+      planLabels.push(text(c[0] - 34, c[1] - 2, (p.screened ? 'screened porch' : 'covered porch'), 10, ' fill="#31573f" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
+      planLabels.push(text(c[0] - 34, c[1] + 12, n(p.length_m) + ' × ' + n(p.depth_m) + ' m', 10, ' fill="#31573f" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
     });
     // trellises
     (d.trellises || []).forEach(function (t) {
@@ -322,7 +337,7 @@
       var poly = trellisCorners(m, t);
       out.push('<path d="' + path(poly) + '" fill="#cfe0c2" fill-opacity="0.75" stroke="#4f7d64" stroke-width="1" stroke-dasharray="3 2"/>');
       var c = P([(poly[0][0] + poly[2][0]) / 2, (poly[0][1] + poly[2][1]) / 2]);
-      out.push(text(c[0] - 22, c[1] + 3, 'trellis', 8, ' fill="#31573f"'));
+      planLabels.push(text(c[0] - 22, c[1] + 3, 'trellis', 8, ' fill="#31573f" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
     });
     // modules
     d.modules.forEach(function (m) {
@@ -349,10 +364,13 @@
         var nrm = faceNormalWorld(m, o.face), off = 12;
         out.push(text(mid[0] + nrm[0] * off - 8, mid[1] + nrm[1] * off + 4, o.id, 8.5, ' fill="' + colour + '" font-weight="700"'));
       });
-      var mc = P(m.position_m);
-      out.push(text(mc[0] - 30, mc[1] - 26, m.id.toUpperCase() + ' · ' + m.type + ' container', 11, ' font-weight="800"'));
+      var mp = moduleCorners(m).map(P);
+      var mx = Math.min.apply(null, mp.map(function (q) { return q[0]; }));
+      var my = Math.min.apply(null, mp.map(function (q) { return q[1]; }));
+      out.push(text(mx + 2, my - 26, m.id.toUpperCase() + ' · ' + m.type, 10, ' font-weight="800" stroke="#faf8f2" stroke-width="2.6" paint-order="stroke"'));
       out.push('<path class="plan-module-hit" data-module-id="' + esc(m.id) + '" d="' + path(moduleCorners(m)) + '" fill="transparent" pointer-events="all"/>');
     });
+    planLabels.forEach(function (label) { out.push(label); });
     // dimensions
     var topY = oy + b.minY * scale - 30;
     var leftX = ox + b.minX * scale - 30;
@@ -362,6 +380,11 @@
     out.push(text(leftX - 8, oy + (b.minY + b.maxY) / 2 * scale, n(b.height) + ' m', 12, ' text-anchor="end"'));
     // primary view arrow
     var centre = [ox + (b.minX + b.maxX) / 2 * scale, oy + (b.minY + b.maxY) / 2 * scale];
+    if (d.porches.length) {
+      var biggest = d.porches.slice().sort(function (a, b) { return b.length_m * b.depth_m - a.length_m * a.depth_m; })[0];
+      var pm = moduleById(d, biggest.module);
+      if (pm) { var pp = porchCorners(pm, biggest); centre = P([(pp[0][0] + pp[2][0]) / 2, (pp[0][1] + pp[2][1]) / 2]); }
+    }
     var az = (d.primary_view_deg || 180) * DEG;
     var vx = Math.sin(az), vy = -Math.cos(az);
     out.push('<line x1="' + n(centre[0]) + '" y1="' + n(centre[1]) + '" x2="' + n(centre[0] + vx * 74) + '" y2="' + n(centre[1] + vy * 74) + '" stroke="#3f5f8a" stroke-width="2" stroke-dasharray="5 4"/>');
@@ -417,6 +440,8 @@
     var d = Schema.canonicalize(design);
     var b = bounds(d);
     var cut = opts.mode === 'cutaway';
+    var winter = opts.season === 'winter';
+    var focus = opts.focus === 'outdoor';
     var extend = 9;
     var minX = b.minX - extend, maxX = b.maxX + extend, minY = b.minY - extend, maxY = b.maxY + extend;
     var W = 1040, H = 700;
@@ -428,17 +453,40 @@
     var ox = (W - (maxSX - minSX) * scale) / 2 - minSX * scale;
     var oy = (H - (maxSY - minSY) * scale) / 2 - minSY * scale + 24;
     var S = function (p) { var q = project(p); return [ox + q[0] * scale, oy + q[1] * scale]; };
-    var pre = opts.idPrefix || (cut ? 'cutaway' : 'exterior');
-    var title = d.name + (cut ? ' roof-off cutaway' : ' exterior concept');
-    var desc = (cut ? 'Roof-off cutaway' : 'Exterior axonometric') + ' of ' + d.name + ', ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + '. The view is generated from the same multi-container geometry as the plan and uses no WebGL. Conceptual only.';
+    var viewBox = '0 0 ' + W + ' ' + H;
+    if (focus) {
+      var focusPolys = [];
+      d.porches.forEach(function (p) { var m = moduleById(d, p.module); if (m) { focusPolys.push(porchCorners(m, p)); focusPolys.push(moduleCorners(m)); } });
+      d.decks.forEach(function (dk) { var p = porchById(d, dk.porch), m = p && moduleById(d, p.module); if (m) focusPolys.push(deckCorners(m, p, dk)); });
+      (d.trellises || []).forEach(function (t) { var m = moduleById(d, t.module); if (m) focusPolys.push(trellisCorners(m, t)); });
+      if (focusPolys.length) {
+        var fminX = Infinity, fminY = Infinity, fmaxX = -Infinity, fmaxY = -Infinity;
+        focusPolys.forEach(function (poly) {
+          poly.forEach(function (p) {
+            [0, 3.2].forEach(function (z) {
+              var q = S([p[0], p[1], z]);
+              fminX = Math.min(fminX, q[0]); fmaxX = Math.max(fmaxX, q[0]);
+              fminY = Math.min(fminY, q[1]); fmaxY = Math.max(fmaxY, q[1]);
+            });
+          });
+        });
+        var pad = 34;
+        var fx = Math.max(0, fminX - pad), fy = Math.max(0, fminY - pad);
+        var fw = Math.max(260, fmaxX - fminX + pad * 2), fh = Math.max(220, fmaxY - fminY + pad * 2);
+        viewBox = n(fx) + ' ' + n(fy) + ' ' + n(fw) + ' ' + n(fh);
+      }
+    }
+    var pre = opts.idPrefix || (cut ? 'cutaway' : winter ? 'winter' : focus ? 'outdoor' : 'exterior');
+    var title = d.name + (cut ? ' roof-off cutaway' : focus ? ' porch and deck detail' : winter ? ' winter exterior concept' : ' exterior concept');
+    var desc = (cut ? 'Roof-off cutaway' : focus ? 'Screened porch and deck detail' : winter ? 'Winter exterior axonometric' : 'Exterior axonometric') + ' of ' + d.name + ', ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + '. The view is generated from the same multi-container geometry as the plan and uses no WebGL. Conceptual only.';
     var out = [];
-    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + '>');
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + viewBox + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + '>');
     out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
-    out.push('<defs><linearGradient id="' + pre + '-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eef0e4"/><stop offset="1" stop-color="#dce4d0"/></linearGradient></defs>');
+    out.push('<defs><linearGradient id="' + pre + '-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + (winter ? '#e6edf1' : '#eef0e4') + '"/><stop offset="1" stop-color="' + (winter ? '#f3f5f2' : '#dce4d0') + '"/></linearGradient></defs>');
     out.push('<rect width="' + W + '" height="' + H + '" fill="url(#' + pre + '-sky)"/>');
     // ground
     var g = corners.map(function (p) { return S([p[0], p[1], -0.15]); });
-    out.push('<path d="M' + g.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="#cdd8bc" stroke="#a8b698" stroke-width="1.5"/>');
+    out.push('<path d="M' + g.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="' + (winter ? '#e4e9e5' : '#cdd8bc') + '" stroke="' + (winter ? '#c2cdc8' : '#a8b698') + '" stroke-width="1.5"/>');
     // rocks and trees (deterministic, outside the footprint)
     var seed = (d.visual_seed || 23) + (opts.seed || 0);
     var rnd = (function (a) { return function () { a = (a + 0x6d2b79f5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })(seed);
@@ -450,6 +498,7 @@
       var dd = Math.hypot(tx - (b.minX + b.maxX) / 2, ty - (b.minY + b.maxY) / 2);
       if (dd < Math.max(5, b.width / 2 + 1)) continue;
       trees.push({ x: tx, y: ty, h: 3.5 + rnd() * 4.5, type: rnd() < 0.7 ? 'conifer' : 'deciduous', depth: tx + ty });
+      if (winter && trees.length >= 9) break;
     }
     var objects = [];
     d.connections.forEach(function (c) {
@@ -461,6 +510,12 @@
           s += '<path d="M' + polyScreen(f.pts, S) + 'Z" fill="' + (isTop ? '#8d7a5d' : '#c0aa86') + '" stroke="#5e4d38" stroke-width="0.8"/>';
         });
         if (c.screened) s += '<path d="M' + polyScreen(faces[2].pts, S) + 'Z" fill="#6b9277" fill-opacity="0.18" stroke="#4f7d64" stroke-width="1"/>';
+        if (c.glazed) {
+          faces.filter(visible).forEach(function (f) {
+            if (f.name === 'top' || f.name === 'bottom') return;
+            s += '<path d="M' + polyScreen(f.pts, S) + 'Z" fill="#bfe4ea" fill-opacity="0.72" stroke="#23616e" stroke-width="1.3"/>';
+          });
+        }
         return s;
       } });
     });
@@ -508,24 +563,36 @@
     });
     d.modules.forEach(function (m) {
       var centreDepth = m.position_m[0] + m.position_m[1];
-      objects.push({ kind: 'module', depth: centreDepth, draw: function () { return moduleDraw(d, m, cut, S); } });
+      objects.push({ kind: 'module', depth: centreDepth, draw: function () { return moduleDraw(d, m, cut, S, winter); } });
     });
     // trees behind, objects, trees in front
     var drawTree = function (t) {
       var base = S([t.x, t.y, 0]), top = S([t.x, t.y, t.h]);
       var h = base[1] - top[1], w = h * 0.32;
+      if (winter && t.type !== 'conifer') {
+        return '<g stroke="#5b5144" stroke-width="1.6" stroke-linecap="round">' +
+          '<path d="M' + n(base[0]) + ' ' + n(base[1]) + 'L' + n(base[0]) + ' ' + n(base[1] - h * 0.72) + '"/>' +
+          '<path d="M' + n(base[0]) + ' ' + n(base[1] - h * 0.45) + 'L' + n(base[0] - w * 0.65) + ' ' + n(base[1] - h * 0.68) + '"/>' +
+          '<path d="M' + n(base[0]) + ' ' + n(base[1] - h * 0.52) + 'L' + n(base[0] + w * 0.7) + ' ' + n(base[1] - h * 0.75) + '"/>' +
+          '<path d="M' + n(base[0]) + ' ' + n(base[1] - h * 0.62) + 'L' + n(base[0] - w * 0.55) + ' ' + n(base[1] - h * 0.86) + '"/>' +
+          '<path d="M' + n(base[0]) + ' ' + n(base[1] - h * 0.56) + 'L' + n(base[0] + w * 0.5) + ' ' + n(base[1] - h * 0.86) + '"/>' +
+          '</g>';
+      }
       if (t.type === 'conifer') {
-        return '<g fill="#3d5d48" fill-opacity="0.92"><path d="M' + n(base[0]) + ' ' + n(base[1]) + 'L' + n(base[0] + w) + ' ' + n(base[1] - h * 0.55) + 'L' + n(base[0] + w * 0.5) + ' ' + n(base[1] - h * 0.55) + 'L' + n(base[0] + w * 0.8) + ' ' + n(base[1] - h * 0.8) + 'L' + n(base[0] + w * 0.35) + ' ' + n(base[1] - h * 0.8) + 'L' + n(base[0]) + ' ' + n(base[1] - h) + 'L' + n(base[0] - w * 0.35) + ' ' + n(base[1] - h * 0.8) + 'L' + n(base[0] - w * 0.8) + ' ' + n(base[1] - h * 0.8) + 'L' + n(base[0] - w * 0.5) + ' ' + n(base[1] - h * 0.55) + 'L' + n(base[0] - w) + ' ' + n(base[1] - h * 0.55) + 'Z"/></g>';
+        var tree = '<g fill="#3d5d48" fill-opacity="0.92"><path d="M' + n(base[0]) + ' ' + n(base[1]) + 'L' + n(base[0] + w) + ' ' + n(base[1] - h * 0.55) + 'L' + n(base[0] + w * 0.5) + ' ' + n(base[1] - h * 0.55) + 'L' + n(base[0] + w * 0.8) + ' ' + n(base[1] - h * 0.8) + 'L' + n(base[0] + w * 0.35) + ' ' + n(base[1] - h * 0.8) + 'L' + n(base[0]) + ' ' + n(base[1] - h) + 'L' + n(base[0] - w * 0.35) + ' ' + n(base[1] - h * 0.8) + 'L' + n(base[0] - w * 0.8) + ' ' + n(base[1] - h * 0.8) + 'L' + n(base[0] - w * 0.5) + ' ' + n(base[1] - h * 0.55) + 'L' + n(base[0] - w) + ' ' + n(base[1] - h * 0.55) + 'Z"/></g>';
+        if (winter) tree += '<g fill="#f4f6f3" fill-opacity="0.8"><path d="M' + n(base[0]) + ' ' + n(base[1] - h * 0.95) + 'l' + n(w * 0.28) + ' ' + n(h * 0.16) + 'l-' + n(w * 0.56) + ' 0Z"/></g>';
+        return tree;
       }
       return '<g fill="#78935f" fill-opacity="0.92"><circle cx="' + n(base[0]) + '" cy="' + n(base[1] - h * 0.7) + '" r="' + n(w * 1.1) + '"/><circle cx="' + n(base[0] - w * 0.6) + '" cy="' + n(base[1] - h * 0.55) + '" r="' + n(w * 0.8) + '"/><circle cx="' + n(base[0] + w * 0.55) + '" cy="' + n(base[1] - h * 0.58) + '" r="' + n(w * 0.75) + '"/></g>';
     };
-    trees.filter(function (t) { return t.depth <= (b.minX + b.maxX + b.minY + b.maxY) / 2; }).forEach(function (t) { out.push(drawTree(t)); });
+    if (!focus) trees.filter(function (t) { return t.depth <= (b.minX + b.maxX + b.minY + b.maxY) / 2; }).forEach(function (t) { out.push(drawTree(t)); });
     objects.sort(function (a, c) { return a.depth - c.depth; }).forEach(function (o) { out.push(o.draw()); });
-    trees.filter(function (t) { return t.depth > (b.minX + b.maxX + b.minY + b.maxY) / 2; }).forEach(function (t) { out.push(drawTree(t)); });
+    if (!focus) trees.filter(function (t) { return t.depth > (b.minX + b.maxX + b.minY + b.maxY) / 2; }).forEach(function (t) { out.push(drawTree(t)); });
     // labels
-    var label = cut ? 'Roof-off cutaway · interior zones visible' : 'Exterior concept · timber, glass and screened outdoor rooms';
+    var label = cut ? 'Roof-off cutaway · interior zones visible' : focus ? 'Screened porch and deck detail · cropped from the same geometry' : winter ? 'Winter concept · same geometry, winter setting' : 'Exterior concept · timber, glass and screened outdoor rooms';
     out.push('<text x="30" y="46" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#1d392c">' + esc(d.name) + '</text>');
     out.push('<text x="30" y="68" font-family="system-ui, sans-serif" font-size="12" fill="#40583f">' + esc(label) + '</text>');
+    if (focus) out.push('<text x="' + (parseFloat(viewBox.split(' ')[0]) + 20) + '" y="' + (parseFloat(viewBox.split(' ')[1]) + 24) + '" font-family="system-ui, sans-serif" font-size="16" font-weight="800" fill="#1d392c">Screened porch and deck detail</text>');
     out.push('<g aria-hidden="true"><circle cx="' + (W - 44) + '" cy="44" r="22" fill="#fffdf7" fill-opacity="0.9" stroke="#b9c3b2"/><path d="M' + (W - 44) + ' 28l6 30l-6 -8l-6 8z" fill="#1d392c"/><text x="' + (W - 44) + '" y="76" text-anchor="middle" font-size="10" font-weight="700" font-family="system-ui, sans-serif" fill="#1d392c">N</text></g>');
     out.push('<text x="30" y="' + (H - 18) + '" font-family="system-ui, sans-serif" font-size="10" fill="#5e6a58">Illustrative concept · generated from the same geometry as the plan · not for construction · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
     out.push('</svg>');
@@ -541,7 +608,7 @@
     return inside;
   }
 
-  function moduleDraw(d, m, cut, S) {
+  function moduleDraw(d, m, cut, S, winter) {
     var colour = m.cladding.colour || CC[m.cladding.type] || '#9a7350';
     var ins = m.insulation.thickness_mm / 1000;
     var zTop = cut ? 1.2 : m.nominal.height_m;
@@ -552,10 +619,10 @@
     var base = moduleCorners(m).map(function (p) { return [p[0] + 0.35, p[1] + 0.35, 0]; });
     s += '<path d="M' + polyScreen(base, S) + 'Z" fill="#9eae8d" fill-opacity="0.55"/>';
     faces.filter(visible).forEach(function (f) {
-      var fill = f.name === 'top' ? (cut ? '#e6dfcd' : '#4b4a44') : colour;
+      var fill = f.name === 'top' ? (cut ? '#e6dfcd' : winter ? '#e4e9e5' : '#4b4a44') : colour;
       if (f.name === 'north' || f.name === 'west') fill = shade(colour, 0.78);
       if (f.name === 'south' || f.name === 'east') fill = shade(colour, 0.95);
-      if (f.name === 'top') fill = cut ? '#e6dfcd' : '#4b4a44';
+      if (f.name === 'top') fill = cut ? '#e6dfcd' : winter ? '#e4e9e5' : '#4b4a44';
       s += '<path d="M' + polyScreen(f.pts, S) + 'Z" fill="' + fill + '" stroke="#3a342d" stroke-width="0.8"/>';
     });
     if (cut) {
@@ -582,6 +649,75 @@
     return s;
   }
 
+  function thermalProfile(input) {
+    var d = Schema.canonicalize(input);
+    var wall = Math.round(d.modules.reduce(function (t, m) { return t + m.insulation.thickness_mm; }, 0) / Math.max(1, d.modules.length));
+    var glazing = d.modules.reduce(function (t, m) { return t + m.openings.filter(function (o) { return o.type === 'window' || o.type === 'sliding-door'; }).reduce(function (u, o) { return u + o.width_m * o.height_m; }, 0); }, 0) + d.connections.reduce(function (t, c) { return t + (c.glazed ? c.glazing_area_m2 || 0 : 0); }, 0);
+    var conditioned = d.modules.reduce(function (t, m) { return t + m.nominal.length_m * m.nominal.width_m; }, 0) + d.connections.filter(function (c) { return c.glazed; }).reduce(function (t, c) { return t + c.length_m * c.width_m; }, 0);
+    var porch = d.porches.reduce(function (t, p) { return t + p.length_m * p.depth_m; }, 0);
+    var screened = d.porches.filter(function (p) { return p.screened; }).reduce(function (t, p) { return t + p.length_m * p.depth_m; }, 0);
+    var ratio = conditioned ? glazing / conditioned : 0;
+    var strengths = [], risks = [];
+    if (wall >= 150) strengths.push('Continuous external wall insulation (' + wall + ' mm average) reduces thermal bridging.'); else risks.push('Wall insulation averages ' + wall + ' mm; thermal bridging and cold spots need review.');
+    if (d.thermal.roof_insulation_mm >= 250) strengths.push('Roof insulation is ' + d.thermal.roof_insulation_mm + ' mm in the concept.'); else risks.push('Roof insulation is ' + d.thermal.roof_insulation_mm + ' mm; winter heat loss and snow-melt risks need review.');
+    if (d.thermal.floor_insulation_mm >= 200) strengths.push('Floor insulation is ' + d.thermal.floor_insulation_mm + ' mm in the concept.'); else risks.push('Floor insulation is ' + d.thermal.floor_insulation_mm + ' mm; cold floors and condensation risk need review.');
+    if (/triple/i.test(d.thermal.window_performance)) strengths.push('Triple glazing and thermally broken frames are the stated intent.'); else risks.push('Window performance is stated as "' + d.thermal.window_performance + '"; verify cold-climate performance and condensation resistance.');
+    if (!/none|not decided/i.test(d.thermal.external_shading)) strengths.push('External shading is part of the intent: ' + d.thermal.external_shading + '.'); else risks.push('External shading is unresolved; west and south glazing may overheat in summer.');
+    if (d.thermal.heat_recovery_ventilation) strengths.push('Heat-recovery ventilation is included as an intent, supporting winter ventilation and moisture control.'); else risks.push('No heat-recovery ventilation is selected; winter ventilation and moisture control need a designed strategy.');
+    if (/heat pump/i.test(d.thermal.heating)) strengths.push('A cold-climate heat pump is the stated heating intent; sizing and backup are not calculated.'); else risks.push('Heating is stated as "' + d.thermal.heating + '"; cold-climate capacity and backup need review.');
+    if (d.thermal.rainscreen_ventilation) strengths.push('The rainscreen is ventilated and the cladding replaceable.'); else risks.push('Rainscreen ventilation is not confirmed.');
+    if (d.thermal.thermal_bridge_mitigation) strengths.push('Thermal-bridge intent: ' + d.thermal.thermal_bridge_mitigation + '.');
+    if (ratio > 0.28) risks.push('Glazing is about ' + Math.round(ratio * 100) + '% of nominal conditioned area; summer overheating and winter heat loss need modelling.');
+    if (d.connections.some(function (c) { return c.glazed; })) strengths.push('The central hall/veranda is modelled with insulated sliding/folding glazing intent, not an uninsulated garage door.');
+    if (d.modules.some(function (m) { return m.roof.green; })) risks.push('Green or biosolar roof adds saturated load, drainage and maintenance complexity; it is not a substitute for roof insulation.');
+    if (ratio <= 0.2) strengths.push('The window area is relatively moderate for the nominal floor area.');
+    return {
+      wall_insulation_mm: wall,
+      roof_insulation_mm: d.thermal.roof_insulation_mm,
+      floor_insulation_mm: d.thermal.floor_insulation_mm,
+      window_performance: d.thermal.window_performance,
+      external_shading: d.thermal.external_shading,
+      heat_recovery_ventilation: !!d.thermal.heat_recovery_ventilation,
+      heating: d.thermal.heating,
+      air_vapour_control: d.thermal.air_vapour_control,
+      thermal_bridge_mitigation: d.thermal.thermal_bridge_mitigation,
+      rainscreen_ventilation: !!d.thermal.rainscreen_ventilation,
+      glazing_m2: +glazing.toFixed(1),
+      conditioned_area_m2: +conditioned.toFixed(1),
+      screened_porch_m2: +screened.toFixed(1),
+      porch_m2: +porch.toFixed(1),
+      glazing_ratio: +(ratio * 100).toFixed(1),
+      strengths: strengths,
+      risks: risks,
+      note: 'Qualitative comparison only. No energy, carbon, cost or code compliance is calculated.'
+    };
+  }
+
+  function designProfile(input) {
+    var d = Schema.canonicalize(input);
+    var assessment = assess(d);
+    var thermal = thermalProfile(d);
+    var structuralCodes = ['wall-removal', 'cantilever', 'crane', 'transport', 'transport-40', 'roof-loads', 'green-roof', 'connection-overlap'];
+    var structural = assessment.items.filter(function (i) { return structuralCodes.indexOf(i.code) >= 0; }).map(function (i) { return i.message; });
+    var accessibility = (d.features && d.features.accessibility ? [d.features.accessibility] : []).concat(assessment.items.filter(function (i) { return i.category === 'accessibility'; }).map(function (i) { return i.message; }));
+    return {
+      id: d.id,
+      name: d.name,
+      editable: !!d.editable,
+      container_count: d.modules.length,
+      types: d.modules.map(function (m) { return m.type; }),
+      conditioned_area_m2: thermal.conditioned_area_m2,
+      screened_porch_m2: thermal.screened_porch_m2,
+      porch_m2: thermal.porch_m2,
+      glazing_m2: thermal.glazing_m2,
+      glazing_ratio: thermal.glazing_ratio,
+      thermal: thermal,
+      accessibility: accessibility,
+      structural: structural,
+      assessment_ok: assessment.ok
+    };
+  }
+
   function describe(design) {
     var s = Schema.summary(design);
     var zones = [];
@@ -593,7 +729,7 @@
     moduleCorners: moduleCorners, connectionCorners: connectionCorners, porchCorners: porchCorners, deckCorners: deckCorners,
     openingSegment: openingSegment, faceNormalWorld: faceNormalWorld, faceLength: faceLength,
     polygonsOverlap: polygonsOverlap, overlapArea: overlapArea, bounds: bounds,
-    validateGeometry: validateGeometry, assess: assess,
+    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, designProfile: designProfile,
     renderPlan: planSVG, renderAxo: axoSVG, describe: describe,
     summary: Schema.summary, canonicalize: Schema.canonicalize
   };

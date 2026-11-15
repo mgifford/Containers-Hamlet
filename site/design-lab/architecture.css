@@ -1,0 +1,42 @@
+/* Containers Hamlet Design Lab. Code licence: AGPL-3.0-or-later. */
+.slideshow { margin: 2rem 0; border: 1px solid var(--border); border-radius: 0.9rem; background: var(--surface); box-shadow: 0 8px 24px rgba(28, 48, 38, 0.06); padding: 1rem; }
+.slide-head { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-start; justify-content: space-between; }
+.slide-head h2 { margin: 0 0 .25rem; font-size: 1.25rem; }
+.slide-status { margin: 0; color: var(--muted); font-weight: 600; }
+.slide-controls { display: none; flex-wrap: wrap; gap: .5rem; }
+.js .slide-controls { display: flex; }
+.slide-controls button { min-height: 44px; }
+.slide-viewport { margin-top: 1rem; outline-offset: 4px; }
+.slide-viewport:focus-visible { outline: 3px solid var(--focus); }
+.slide { margin: 0; border: 1px solid var(--border); border-radius: .6rem; overflow: hidden; background: var(--surface); }
+.slide img { display: block; width: 100%; height: auto; }
+.slide figcaption { margin: 0; padding: .85rem 1rem; font-size: .9rem; line-height: 1.45; background: var(--surface); color: var(--text); }
+.slide figcaption strong { display: inline-block; margin-right: .25rem; }
+.js .slide-viewport .slide:not(.is-current) { display: none; }
+.js .slideshow.is-showing-all .slide-viewport .slide { display: block; margin-bottom: 1rem; }
+.js .slideshow.is-showing-all .slide-controls [data-slide-prev],
+.js .slideshow.is-showing-all .slide-controls [data-slide-next] { display: none; }
+.slide-help { margin: .9rem 0 0; color: var(--muted); font-size: .88rem; }
+.badge.illustrative, .badge.geometry { display: inline-block; margin-bottom: .25rem; }
+.badge.illustrative { background: #f0e2c8; color: #5f4418; }
+.badge.geometry { background: #d7e8d1; color: #254a2c; }
+.architecture-facts { margin: 2rem 0; }
+.fact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: .75rem; margin: 1rem 0; }
+.fact-grid div { border: 1px solid var(--border); border-radius: .5rem; padding: .7rem .8rem; background: var(--surface); }
+.fact-grid dt { font-weight: 800; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.fact-grid dd { margin: .25rem 0 0; }
+.architecture-facts .button-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+.architecture-facts .button-row .action { min-height: 44px; }
+@media (max-width: 600px) {
+  .slideshow { padding: .7rem; }
+  .slide figcaption { padding: .7rem; }
+}
+@media (prefers-color-scheme: dark) {
+  .slide { background: #121713; }
+  .badge.illustrative { background: #4a3a1d; color: #ffe4ad; }
+  .badge.geometry { background: #24452b; color: #c9f2cf; }
+}
+@media (forced-colors: active) {
+  .slide, .fact-grid div { border: 1px solid CanvasText; }
+  .slide img { forced-color-adjust: none; }
+}

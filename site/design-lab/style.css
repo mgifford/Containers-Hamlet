@@ -1,5 +1,7 @@
 /* Containers Hamlet Design Lab. Uses the main site's tokens and controls. */
 .lab-page { --lab-paper: #faf8f2; }
+.lab-page .site-header nav { display: flex; flex-wrap: wrap; gap: 0.25rem 0.9rem; }
+.lab-page .site-header nav a { display: inline-block; min-height: 24px; padding-block: 0.2rem; }
 .lab-page .site-header nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 0.25em; }
 .lab-main { max-width: 1240px; margin: auto; padding: 0 1.2rem; }
 .lab-hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr); gap: 2rem; align-items: center; padding: 3.2rem 0 2.2rem; border-bottom: 1px solid var(--border); }

@@ -11,7 +11,7 @@
 - **Home briefs.** Each home has a structured brief with a view diagram, setting, orientation, main and secondary views, nearby buildings, path, winter conditions, screened porch, design note and siting summary. The briefs are native radio tabs with the script and all seven are visible without it.
 - **No information by colour alone.** Pressed and checked states add a ✓ glyph, bold text and a border. No-build zones are hatched as well as coloured, rock is hatched, screens and buffers are dashed, view arrows are labelled with their target, and every map layer has a text key.
 - **Focus.** Every focus stop has a 3 px outline (a light colour on the dark header and footer). The skip link moves focus to `main`. "Show on the map" moves focus to the matching map button.
-- **Reflow and spacing.** No horizontal scrolling at 320 px, including with WCAG text-spacing overrides. Wide tables and the map scroll or shrink inside labelled regions. Interactive targets are at least 24 px, and most are 40 to 44 px.
+- **Reflow and spacing.** No horizontal scrolling at 320 px, including with WCAG text-spacing overrides. Wide tables, the map and the comparison table scroll or shrink inside labelled regions. Interactive targets are at least 24 px, and most are 40 to 44 px.
 - **Motion.** Nothing animates. Smooth scrolling is used only under `prefers-reduced-motion: no-preference`.
 - **Colour schemes.** Light and dark schemes meet contrast requirements. Drawings, view diagrams and the concept illustration keep a light "paper" background in both, and keep their colours in forced-colours mode (`forced-color-adjust: none`), where interactive states switch to system colours.
 - **Low-vision zoom.** Every drawing, the site plan and every view diagram link or resolve to a full-size SVG, which stays sharp at any zoom.
@@ -28,7 +28,7 @@
 - the page with its scripts blocked, including all seven home briefs and view diagrams
 - same-origin requests, no third-party requests and all local links
 
-`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 167 static checks; the main browser suite runs 62 checks. `tools/check-design-lab.mjs` adds 260 schema, geometry and page checks, and `tools/design-lab-check.mjs` adds 53 browser checks for the gallery and editor.
+`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 190 static checks; the main browser suite runs 62 checks. `tools/check-design-lab.mjs` adds 491 schema, geometry, five-view, gallery and comparison checks, and `tools/design-lab-check.mjs` adds 80 browser checks for the gallery, editor, architectural slideshow and comparison.
 
 ## Manual testing still required
 
@@ -57,6 +57,17 @@ Please report barriers through a GitHub issue. Do not include personal informati
 
 
 ## Design Lab accessibility
+
+The architectural slideshow is a progressive enhancement over a static list of all five figures.
+
+- **No autoplay.** Nothing advances on a timer. The controls are visible only when the script runs; without JavaScript all five figures are shown in order.
+- **Keyboard.** The slide region is focusable. Left/Right move one view, Home/End move to the ends; the visible Previous/Next buttons are native buttons. Show all views exposes the non-carousel alternative.
+- **Announcement.** A polite status announces the current view and total. The images have descriptive `alt` text and visible captions.
+- **Drawing types.** Plan, cutaway and porch detail are labelled geometry-backed drawings; exterior and winter images are labelled illustrative studies. Colour is not the only distinction.
+- **Comparison.** The two side-by-side panels and all-concepts table use native selects, buttons and a caption/scope table. Without JavaScript the default pair and the table remain.
+- **Thermal explanations.** The editor gives plain-language explanations of overheating, heat loss, condensation and moisture without claiming code compliance or certified performance.
+- **Tested.** Browser checks cover no autoplay, keyboard movement, Show all, image loading, no-JavaScript fallback, 320 px, dark scheme, forced colours, reduced motion, gallery-to-editor navigation and axe-core. Manual screen-reader testing is still required.
+
 
 The gallery is a static page: all nine concepts, their facts, three views, source files and licence links are present without JavaScript. Every gallery image has descriptive alt text and dimensions; the containing `<details>` elements are native and keyboard operable.
 
