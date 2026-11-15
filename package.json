@@ -5,7 +5,7 @@
   "description": "Fictional Canadian lakeside eco hamlet: parametric container cabin and lodge concepts, static GitHub Pages site.",
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "scripts": {
     "build": "node tools/build.mjs",

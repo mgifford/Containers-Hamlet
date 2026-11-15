@@ -11,7 +11,7 @@ Phase 1.1 makes the JSON data the single source of truth. Floor plans, elevation
 3. Change the design in `data/site.json`, `data/cabin-a.json` or `data/lodge.json`, then regenerate:
 
    ```sh
-   node tools/build.mjs       # Node 18+, no dependencies
+   node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
    node tools/check.mjs       # 99 static checks
    npm install && node tools/browser-check.mjs   # axe-core, keyboard, reflow, motion, no-JS
    ```

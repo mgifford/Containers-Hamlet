@@ -4,7 +4,7 @@
 //   node tools/build.mjs           regenerate everything
 //   node tools/build.mjs --check   fail if any generated file is out of date
 //
-// No dependencies beyond Node 18+. MIT licence.
+// No dependencies beyond Node.js 22+ (CI pins 26 LTS in .nvmrc). MIT licence.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
