@@ -127,9 +127,9 @@ try {
   await page.focus('[data-choice="c"]');
   await page.keyboard.press('Space');
   ok(await page.getAttribute('[data-choice="c"]', 'aria-pressed') === 'true', 'Space selects Cabin C (aria-pressed)');
-  ok(/Cabin C: permanent residence/.test(await page.textContent('#selected')), 'the status message announces the selection');
+  ok(/Cabin C, permanent home/.test(await page.textContent('#selected')), 'the status message announces the selection');
   ok(await page.evaluate(() => document.querySelector('#map-building-c').classList.contains('selected')), 'the map highlights Cabin C');
-  ok(/34\.7 m from the shoreline/.test(await page.textContent('#building-details')), 'the details panel lists the computed siting checks');
+  ok(/from the shoreline/.test(await page.textContent('#building-details')) && /Main view/.test(await page.textContent('#building-details')), 'the details panel lists the view and computed siting checks');
   await page.focus('[data-choice="lodge"]');
   await page.keyboard.press('Enter');
   ok(await page.getAttribute('[data-choice="c"]', 'aria-pressed') === 'false' && await page.getAttribute('[data-choice="lodge"]', 'aria-pressed') === 'true', 'Enter selects the lodge and releases Cabin C');
@@ -137,6 +137,24 @@ try {
   await page.keyboard.press('Space');
   ok(await page.evaluate(() => getComputedStyle(document.querySelector('#map-layer-trees')).display === 'none'), 'map layer checkbox hides the tree canopy');
   await page.keyboard.press('Space');
+  await page.focus('[data-layer="terrain"]');
+  await page.keyboard.press('Space');
+  ok(await page.evaluate(() => getComputedStyle(document.querySelector('#map-layer-terrain')).display === 'none'), 'map layer checkbox hides the terrain relief');
+  await page.keyboard.press('Space');
+  ok(await page.evaluate(() => getComputedStyle(document.querySelector('#map-layer-potential')).display === 'none'), 'the illustrative potential-building layer starts hidden');
+
+  section('Keyboard: home briefs and view diagrams');
+  ok(await visible(page, '#home-a') && !(await visible(page, '#home-b')), 'the home selector shows one brief at a time');
+  await page.focus('input[name="home-choice"][value="a"]');
+  await page.keyboard.press('ArrowRight');
+  ok(await visible(page, '#home-b') && !(await visible(page, '#home-a')), 'arrow keys move between home briefs');
+  ok(/Cabin B/.test(await page.textContent('#selected')), 'changing the home brief also selects that home on the map');
+  ok(await page.evaluate(async () => { const i = document.querySelector('#home-b .view-diagram img'); if (!i) return false; if (!i.complete) await new Promise((r) => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); }); return i.getAttribute('alt').length > 40 && i.naturalWidth > 0; }), 'the visible view diagram has descriptive alt text and loads');
+  await page.click('#home-b [data-select-home]');
+  ok(await page.getAttribute('[data-choice="b"]', 'aria-pressed') === 'true', '"Show on the map" selects that home');
+  await page.click('[data-choice="a"]');
+  await page.click('#building-details a[data-home-link]');
+  ok(await visible(page, '#home-a') && !(await visible(page, '#home-b')), 'the map details link opens the matching full home brief');
 
   await page.focus('input[name="cabin-a-view"]:checked');
   ok(await visible(page, '#cabin-a-floor-plan') && !(await visible(page, '#cabin-a-elevations')), 'only the chosen drawing is shown');
@@ -165,6 +183,8 @@ try {
   await page.keyboard.press('ArrowRight');
   ok(/Lodge:/.test(await label()) && await page.$('button[data-room="hall"]') !== null, 'building switch loads the lodge and its rooms');
   await shot(page, 'desktop-explorer-lodge');
+  await page.focus('input[name="home-choice"][value="a"]');
+  await page.locator('#homes').screenshot({ path: SHOTS ? path.join(SHOTS, 'desktop-homes.png') : undefined }).catch(() => {});
   await page.click('[data-choice="a"]');
   await page.click('#building-details a[data-explore]');
   ok(/Cabin A:/.test(await label()), '"Look inside" from the map opens that building in the explorer');
@@ -234,6 +254,8 @@ try {
   ok(await visible(page, '#explorer-canvas img'), 'static cutaway image stands in for the explorer');
   ok(await page.evaluate(() => [...document.querySelectorAll('[data-enhance]')].every((e) => e.offsetParent === null)), 'script-only controls stay hidden');
   ok(await page.evaluate(() => document.querySelectorAll('table').length >= 7), 'all data tables are present');
+  ok(await page.evaluate(() => [...document.querySelectorAll('.home')].filter((e) => e.offsetParent !== null).length === 7), 'all seven home briefs are visible without JavaScript');
+  ok(await page.evaluate(() => document.querySelectorAll('.view-diagram img').length === 7), 'all seven view diagrams are present without JavaScript');
   await axe(page, 'no JavaScript');
   await context.close();
 } finally {
