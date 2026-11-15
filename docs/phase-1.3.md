@@ -1,5 +1,7 @@
 # Phase 1.3: Container Home Design Studio
 
+> The Phase 1.3 extension adds five-view architectural galleries, a common lodge concept, thermal-envelope options and comparison. See [`phase-1.3-extension.md`](phase-1.3-extension.md). Current counts are 190 main static, 491 Design Lab static, 62 main browser and 80 Design Lab browser checks; the original Phase 1.3 figures below are retained as a historical record.
+
 This phase integrates the supplied Container Home Design Lab starter into Containers Hamlet, adds a nine-concept container-home gallery, and builds a browser-based editor for three matured presets. The project remains container-first. Timber, glass, screened porches, decks, green roofs and planting are complementary layers, not a move toward a generic home builder.
 
 The authoritative Cabin A and lodge models, drawings, downloads, cutaway explorer and landscape data from Phase 1.2 are preserved. The Design Lab uses a separate, versioned schema and an explicit adapter; it never overwrites the existing architectural data.

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Nine original container-home concepts for a fictional Canadian Shield hamlet, with three editable designs and a browser-based container home editor.">
+<meta name="description" content="Nine original container homes and a common lodge for a fictional Canadian Shield hamlet, with three editable designs, five-view architectural galleries and a browser-based editor.">
 <meta name="color-scheme" content="light dark">
 <title>Design Your Container Home | Containers Hamlet</title>
 <link rel="stylesheet" href="../style.css">
@@ -20,6 +20,7 @@
       <li><a href="../index.html#homes">Homes</a></li>
       <li><a href="index.html" aria-current="page">Design gallery</a></li>
       <li><a href="editor/">Editor</a></li>
+      <li><a href="compare/">Compare</a></li>
       <li><a href="../index.html#downloads">Downloads</a></li>
     </ul>
   </nav>
@@ -30,9 +31,9 @@
   <div>
     <p class="eyebrow">Container Home Design Studio</p>
     <h1 id="lab-title">Design your container home.</h1>
-    <p class="lead">Nine original container-based homes for the fictional Containers Hamlet. Start with one, two or three reused shipping containers, then explore windows, screened porches, decks, insulation, roof options and the rooms inside. The container is the core of the home; timber, glass and planting are the supporting layers.</p>
+    <p class="lead">Nine original container-based homes and a common lodge for the fictional Containers Hamlet. Start with one, two or three reused shipping containers, then explore windows, screened porches, decks, insulation, roof options and the rooms inside. The container is the core of the home; timber, glass and planting are the supporting layers.</p>
     <p class="lab-note"><strong>Concept only.</strong> These are not engineered plans, permit drawings, a building code assessment or a real property offering. Container modifications need structural, envelope, fire, transport and foundation review.</p>
-    <p class="lab-actions"><a class="action" href="editor/">Open the Design Lab editor</a> <a class="action secondary" href="#gallery">Browse the nine concepts</a></p>
+    <p class="lab-actions"><a class="action" href="editor/">Open the Design Lab editor</a> <a class="action secondary" href="#gallery">Browse the concepts</a> <a class="action secondary" href="compare/">Compare two concepts</a></p>
     <p class="lab-meta">No login, account, upload or backend. Designs stay in your browser until you choose to download them.</p>
   </div>
   <aside class="lab-hero-panel" aria-labelledby="editable-title">
@@ -42,7 +43,7 @@
       <li>L-Shaped Haven — two containers</li>
       <li>Woodland Courtyard — three containers</li>
     </ol>
-    <p class="small">The other six are included as inspiration cards with source files and three generated views. They are clearly labelled as not yet editable.</p>
+    <p class="small">The other six homes and the common lodge are included as inspiration cards with source files and generated views. They are clearly labelled as not yet editable.</p>
     <p><a href="editor/?preset=woodland-retreat">Start with the Woodland Retreat</a></p>
   </aside>
 </section>
@@ -54,7 +55,7 @@
     <li><strong>Roof-off cutaway</strong>The same geometry with the roof removed and walls cut at 1.2 m, showing the interior zones.</li>
     <li><strong>Dimensioned concept plan</strong>Nominal container dimensions, openings, porches, decks and room zones. Not verified clearances.</li>
   </ul>
-  <p>All three views for each concept come from one multi-container JSON model. The editable designs can be changed in the <a href="editor/">editor</a>, then exported as JSON, SVG or a ZIP. The source JSON is available for every concept.</p>
+  <p>All five architectural views for each design come from one multi-container JSON model, including a geometry-backed porch/deck detail and a winter study. The editable designs can be changed in the <a href="editor/">editor</a>, then exported as JSON, SVG or a ZIP. The source JSON is available for every concept.</p>
   <p class="small"><strong>Licensing:</strong> Design Lab source code is AGPL-3.0-or-later. Original Design Lab documentation, diagrams and sample concept data are CC BY-SA 4.0. The rest of Containers Hamlet remains MIT (code) and CC BY 4.0 (original content). See <a href="LICENSE.txt">the Design Lab licence</a> and <a href="CONTENT-LICENSE.md">content licence</a>.</p>
 </section>
 
@@ -75,7 +76,7 @@
         <p>One 40-foot high-cube container holds a sleeping room, bath, kitchen and living space. A generous screened porch and a small deck extend the living area into the forest. The long side faces the view; the entry and path stay behind.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>1 × 40ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>29.7 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>29.7 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Sleeping, Bathroom, Kitchen, Living</dd></div>
           <div><dt>Outdoor living</dt><dd>4.4 × 3.05 m screened porch plus 1.2 m deck</dd></div>
           <div><dt>Trellis</dt><dd>west face, 1.8 m long</dd></div>
@@ -97,14 +98,15 @@
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="editor/?preset=woodland-retreat">Customize Woodland Retreat</a>
+          <a class="action" href="architecture/woodland-retreat/">Five-view architectural gallery</a>
+          <a class="action secondary" href="editor/?preset=woodland-retreat">Customize Woodland Retreat</a>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-micro-studio">
       <div class="concept-card-media">
-        <img src="views/micro-studio-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Micro Studio: Twenty feet of shelter, with most of the living outdoors." loading="lazy" decoding="async">
+        <img src="views/micro-studio-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Micro Studio: Twenty feet of shelter, with most of the living outdoors." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge">Inspiration only</span>
@@ -113,7 +115,7 @@
         <p>A 20-foot container holds a compact bath, kitchenette and sleeping/living room. The screened porch and deck are almost as large as the interior, making the outdoors part of the home.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>1 × 20ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>14.8 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>14.8 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Wet room, Kitchenette, Sleeping/living</dd></div>
           <div><dt>Outdoor living</dt><dd>3.2 × 2.4 m screened porch plus 1.6 m deck</dd></div>
           <div><dt>Trellis</dt><dd>east face, 1.8 m long</dd></div>
@@ -135,14 +137,15 @@
           </ul>
         </details>
         <div class="card-actions">
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files and generated views. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/micro-studio/">Five-view architectural gallery</a>
+          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-lakeside-hideaway">
       <div class="concept-card-media">
-        <img src="views/lakeside-hideaway-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Lakeside Hideaway: A protected veranda on the weather side, with a biosolar roof." loading="lazy" decoding="async">
+        <img src="views/lakeside-hideaway-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Lakeside Hideaway: A protected veranda on the weather side, with a biosolar roof." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge">Inspiration only</span>
@@ -151,7 +154,7 @@
         <p>A 40-foot container turned so its long side faces the lake, with a deep screened veranda, a biosolar roof and living space opened to the water. The veranda gives shade in summer and a sheltered edge in shoulder seasons.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>1 × 40ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>29.7 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>29.7 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Sleeping, Bathroom, Kitchen, Living</dd></div>
           <div><dt>Outdoor living</dt><dd>6.0 × 3.0 m screened veranda plus 1.0 m deck</dd></div>
           <div><dt>Trellis</dt><dd>south face, 2.4 m long</dd></div>
@@ -173,7 +176,8 @@
           </ul>
         </details>
         <div class="card-actions">
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files and generated views. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/lakeside-hideaway/">Five-view architectural gallery</a>
+          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>
@@ -186,7 +190,7 @@
   <div class="concept-grid">
     <article class="concept-card" id="concept-forest-courtyard">
       <div class="concept-card-media">
-        <img src="views/forest-courtyard-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Forest Courtyard: Two parallel containers around a timber-framed outdoor room." loading="lazy" decoding="async">
+        <img src="views/forest-courtyard-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Forest Courtyard: Two parallel containers around a timber-framed outdoor room." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge">Inspiration only</span>
@@ -195,7 +199,7 @@
         <p>Two 40-foot containers face each other across a timber-framed connecting space. The link creates a sheltered courtyard for meals and work, with sleeping in one module and living in the other.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Living, Kitchen, Bathroom, Two sleeping rooms, Workspace</dd></div>
           <div><dt>Outdoor living</dt><dd>Timber-framed screened courtyard, two covered seating areas, decks</dd></div>
           <div><dt>Trellis</dt><dd>west face, 1.8 m long</dd></div>
@@ -217,14 +221,15 @@
           </ul>
         </details>
         <div class="card-actions">
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files and generated views. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/forest-courtyard/">Five-view architectural gallery</a>
+          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-l-shaped-haven">
       <div class="concept-card-media">
-        <img src="views/l-shaped-haven-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of L-Shaped Haven: Two containers form a sheltered corner without a single long road." loading="lazy" decoding="async">
+        <img src="views/l-shaped-haven-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of L-Shaped Haven: Two containers form a sheltered corner without a single long road." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge editable">Editable</span>
@@ -233,7 +238,7 @@
         <p>One horizontal container holds living and cooking; a second, rotated container holds sleeping and work. The L wraps a sheltered porch and deck, leaving the view open to the south and east.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Living, Kitchen, Bathroom, Two sleeping rooms, Workspace</dd></div>
           <div><dt>Outdoor living</dt><dd>4.4 × 2.8 m screened porch plus 1.2 m deck</dd></div>
           <div><dt>Trellis</dt><dd>west face, 2.0 m long</dd></div>
@@ -255,14 +260,15 @@
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="editor/?preset=l-shaped-haven">Customize L-Shaped Haven</a>
+          <a class="action" href="architecture/l-shaped-haven/">Five-view architectural gallery</a>
+          <a class="action secondary" href="editor/?preset=l-shaped-haven">Customize L-Shaped Haven</a>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-open-plan">
       <div class="concept-card-media">
-        <img src="views/open-plan-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Open Plan: Two adjacent containers become one wider home." loading="lazy" decoding="async">
+        <img src="views/open-plan-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Open Plan: Two adjacent containers become one wider home." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge">Inspiration only</span>
@@ -271,7 +277,7 @@
         <p>Two 40-foot containers sit side by side, with a large structural opening between them to create a wider living space. Sleeping, bath and work occupy the quieter side.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Living, Kitchen, Dining, Sleeping, Bathroom, Workspace</dd></div>
           <div><dt>Outdoor living</dt><dd>4.5 × 3.0 m screened porch plus 1.2 m deck</dd></div>
           <div><dt>Trellis</dt><dd>west face, 1.8 m long</dd></div>
@@ -293,7 +299,8 @@
           </ul>
         </details>
         <div class="card-actions">
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files and generated views. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/open-plan/">Five-view architectural gallery</a>
+          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>
@@ -306,7 +313,7 @@
   <div class="concept-grid">
     <article class="concept-card" id="concept-woodland-courtyard">
       <div class="concept-card-media">
-        <img src="views/woodland-courtyard-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Woodland Courtyard: Three containers hold a quiet courtyard open to the south." loading="lazy" decoding="async">
+        <img src="views/woodland-courtyard-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Woodland Courtyard: Three containers hold a quiet courtyard open to the south." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge editable">Editable</span>
@@ -315,7 +322,7 @@
         <p>A north module holds kitchen and living; two rotated side modules hold sleeping and work. Together they enclose a protected courtyard, with the screened porch facing into it.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>3 × 40ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Kitchen, Dining, Living, Three sleeping rooms, Two bathrooms, Workspaces</dd></div>
           <div><dt>Outdoor living</dt><dd>6.0 × 3.0 m screened courtyard porch plus deck</dd></div>
           <div><dt>Trellis</dt><dd>west face, 2.0 m long</dd></div>
@@ -337,14 +344,15 @@
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="editor/?preset=woodland-courtyard">Customize Woodland Courtyard</a>
+          <a class="action" href="architecture/woodland-courtyard/">Five-view architectural gallery</a>
+          <a class="action secondary" href="editor/?preset=woodland-courtyard">Customize Woodland Courtyard</a>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-family-lodge">
       <div class="concept-card-media">
-        <img src="views/family-lodge-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Family Lodge: A central gathering module between two sleeping wings." loading="lazy" decoding="async">
+        <img src="views/family-lodge-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Family Lodge: A central gathering module between two sleeping wings." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge">Inspiration only</span>
@@ -353,7 +361,7 @@
         <p>A central 40-foot module holds the shared kitchen, dining and living space. Rotated side modules hold sleeping and work, creating a broad sheltered court and a long screened porch. The wings are shown as independent modules; a structural connector is not assumed.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>3 × 40ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Shared kitchen, Dining, Living, Three sleeping rooms, Bathrooms, Workspace</dd></div>
           <div><dt>Outdoor living</dt><dd>8.0 × 3.0 m screened porch plus 1.5 m deck</dd></div>
           <div><dt>Trellis</dt><dd>west face, 2.0 m long</dd></div>
@@ -375,14 +383,15 @@
           </ul>
         </details>
         <div class="card-actions">
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files and generated views. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/family-lodge/">Five-view architectural gallery</a>
+          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-gathering-house">
       <div class="concept-card-media">
-        <img src="views/gathering-house-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Gathering House: Three containers around a large screened shared room." loading="lazy" decoding="async">
+        <img src="views/gathering-house-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Gathering House: Three containers around a large screened shared room." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge">Inspiration only</span>
@@ -391,7 +400,7 @@
         <p>Two parallel containers and one perpendicular container frame a large screened gathering space. The shared room can host meals, workshops and meetings; sleeping and studio space sit in the quieter modules.</p>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>3 × 40ft</dd></div>
-          <div><dt>Approx. footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
+          <div><dt>Container footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
           <div><dt>Interior uses</dt><dd>Kitchen, Dining, Living, Sleeping, Bathrooms, Workshop, Studio</dd></div>
           <div><dt>Outdoor living</dt><dd>Large screened gathering room, covered workshop entry, decks</dd></div>
           <div><dt>Trellis</dt><dd>west face, 2.0 m long</dd></div>
@@ -413,7 +422,53 @@
           </ul>
         </details>
         <div class="card-actions">
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files and generated views. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/gathering-house/">Five-view architectural gallery</a>
+          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+        </div>
+        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+      </div>
+    </article>
+  </div>
+</section>
+<section class="concept-group" aria-labelledby="common-lodge">
+  <h3 id="common-lodge">Common lodge</h3>
+  <p class="small">A café-inspired community building: three reused containers around a generous, accessible shared hall.</p>
+  <div class="concept-grid">
+    <article class="concept-card" id="concept-common-lodge">
+      <div class="concept-card-media">
+        <img src="views/common-lodge-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Common Lodge: A café-inspired container hall for shared meals, work and gathering." loading="eager" decoding="async">
+      </div>
+      <div class="concept-card-body">
+        <span class="concept-badge">Inspiration only</span>
+        <h4>Common Lodge</h4>
+        <p class="tagline">A café-inspired container hall for shared meals, work and gathering.</p>
+        <p>Three reused 40-foot containers frame a large timber-framed gathering hall. The north wing holds the shared kitchen, pantry, laundry and accessible washrooms; the central hall is the shared dining and gathering space; the south wing holds the workshop, meeting room and boot room; the west wing holds the café servery, office and a universal washroom. Insulated sliding/folding glazing and a screened veranda connect the hall to the forest. The existing authoritative lodge model is preserved separately; this is an additional Design Lab concept.</p>
+        <dl class="concept-facts">
+          <div><dt>Containers</dt><dd>3 × 40ft</dd></div>
+          <div><dt>Container footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
+          <div><dt>Interior uses</dt><dd>Shared kitchen, Shared dining, Pantry, Laundry, Universal washroom, Accessible WC, Workshop, Meeting room, Café servery, Office, Storage</dd></div>
+          <div><dt>Outdoor living</dt><dd>8.0 × 3.0 m screened veranda, covered west entrance, decks</dd></div>
+          <div><dt>Trellis</dt><dd>east face, 1.8 m long</dd></div>
+          <div><dt>Solar / roof</dt><dd>Solar on the north and west modules; green roof on the north module Green/biosolar roof on the north module; weight, drainage and fire review required</dd></div>
+          <div><dt>Accessibility</dt><dd>Step-free hall and veranda intended; two accessible washrooms, one with an adult-size change table; door widths, turning spaces and counter heights need verification.</dd></div>
+          <div><dt>Environmental</dt><dd>Three reused modules and a timber hall share one envelope and one gathering space; large glazing and a green roof increase the technical review.</dd></div>
+        </dl>
+        <details>
+          <summary>Views and source files for Common Lodge</summary>
+          <div class="concept-view-stack">
+            <figure><img src="views/common-lodge-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Common Lodge: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/common-lodge-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Common Lodge showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
+          </div>
+          <ul class="concept-files">
+            <li><a href="data/common-lodge.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
+            <li><a href="views/common-lodge-plan.svg" download>Concept plan SVG</a></li>
+            <li><a href="views/common-lodge-exterior.svg" download>Exterior concept SVG</a></li>
+            <li><a href="views/common-lodge-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+          </ul>
+        </details>
+        <div class="card-actions">
+          <a class="action" href="architecture/common-lodge/">Five-view architectural gallery</a>
+          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
       </div>

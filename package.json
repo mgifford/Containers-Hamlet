@@ -2,7 +2,7 @@
   "name": "containers-hamlet",
   "version": "1.3.0",
   "private": true,
-  "description": "Containers Hamlet: a fictional 13.5-acre Canadian Shield community, a nine-concept container-home gallery, and an accessible browser-based container home editor.",
+  "description": "Containers Hamlet: a fictional 13.5-acre Canadian Shield community, nine container homes and a common lodge, five-view architectural galleries, a thermal-envelope editor and a comparison tool.",
   "license": "MIT",
   "engines": {
     "node": ">=22"

@@ -2,8 +2,10 @@
 
 The Design Lab is a container-first design gallery and editor at `/design-lab/`. It is a separate, explicitly scoped part of Containers Hamlet:
 
-- **Gallery:** `/design-lab/`
+- **Gallery:** `/design-lab/` — nine homes and the common lodge
+- **Architecture pages:** `/design-lab/architecture/<id>/` — five views per design
 - **Editor:** `/design-lab/editor/`
+- **Comparison:** `/design-lab/compare/`
 - **Schema:** `containers-hamlet-design/v1.0`
 - **Legacy import:** `containers-hamlet-editor/v0.1` (the supplied starter schema)
 
@@ -17,15 +19,17 @@ It is not a generic home builder. The container is the core of every design; tim
 - Arrangement presets: single, parallel, adjacent, L-shaped and three-module courtyard.
 - Windows, doors, sliding doors and open passages, with face, centre position, width, height and sill.
 - Screened or covered porches, decks beyond porches, independent climbing-plant trellises, and separate timber connectors.
+- A five-view architectural gallery for every design: exterior, plan, cutaway, porch/deck detail and winter study.
+- Thermal-envelope choices: roof and floor insulation, thermal-bridge mitigation, ventilated rainscreen, air/vapour strategy, window performance, external shading, HRV/ERV and a cold-climate heat pump.
 - Interior room bands: sleeping, bathroom, kitchen, living, dining, workspace, storage and circulation.
 - External insulation thickness, cladding type and colour, roof type (solar, green, biosolar, membrane).
 - Material-intent choices for reuse, repairability, insulation, selective spray foam, connections, modular outdoor rooms, solar and green roofs.
 - Structural warnings fields: large wall removals and conceptual cantilevers.
 - Undo, redo and reset to preset.
-- JSON import/export, plan/exterior/cutaway SVG downloads, a Markdown summary and a ZIP with all available files.
+- JSON import/export, plan/exterior/cutaway/porch/winter SVG downloads, a Markdown summary and a ZIP with all available files.
 - An illustrative hamlet preview with homesite, rotation, footprint, primary view and conflict prompts.
 
-The exported JSON includes a derived `assessment` snapshot so warnings travel with the file. It is not authoritative; the editor recomputes the assessment on import and the reader must not treat the snapshot as a professional review. The editor does **not** calculate structure, fire, energy, acoustics, cost or code compliance. It does not produce construction documents, BIM, IFC or DXF. It does not write to the repository or upload a design. It does not add a customised home to the published community layout.
+The exported JSON includes the `thermal` object and a derived `assessment` snapshot so warnings travel with the file. It is not authoritative; the editor recomputes the assessment on import and the reader must not treat the snapshot as a professional review. The editor does **not** calculate structure, fire, energy, acoustics, cost or code compliance. It does not produce construction documents, BIM, IFC or DXF. It does not write to the repository or upload a design. It does not add a customised home to the published community layout.
 
 ## Schema
 
@@ -73,6 +77,18 @@ Each concept or edited design is one JSON object:
   "trellises": [
     { "id": "t1", "module": "m1", "face": "west", "start_m": 0.3, "length_m": 1.8, "offset_m": 0.35, "height_m": 3.2 }
   ],
+  "thermal": {
+    "wall_insulation_strategy": "continuous external insulation with thermal breaks",
+    "roof_insulation_mm": 250,
+    "floor_insulation_mm": 200,
+    "thermal_bridge_mitigation": "continuous external insulation and thermal breaks at openings and pile caps",
+    "rainscreen_ventilation": true,
+    "air_vapour_control": "exterior-insulated, vapour-open assembly; sealed interior air barrier (to be detailed)",
+    "window_performance": "triple glazed, low-e, argon, thermally broken frames",
+    "external_shading": "fixed overhang and deciduous planting",
+    "heat_recovery_ventilation": true,
+    "heating": "cold-climate air-source heat pump"
+  },
   "site": { "homesite": "a", "rotation_deg": 0 },
   "provenance": { "authors": "Containers Hamlet contributors", "revision": "1.3.0" },
   "licence": { "code": "AGPL-3.0-or-later", "content": "CC BY-SA 4.0" },
@@ -99,24 +115,29 @@ Each concept or edited design is one JSON object:
 - Porches attach to a module face with `start_m`, `length_m` and `depth_m` measured from that face.
 - Decks are an additional projection beyond a porch.
 - Trellises are independent vertical planes with their own offset, length and height, clear of the rainscreen. They are not attached to the steel shell.
+- `thermal` records conceptual envelope choices. `wall_insulation_strategy` and module insulation describe the wall; roof/floor thicknesses, bridge mitigation, rainscreen, air/vapour control, window performance, shading, HRV/ERV and heating are design-level. These are prompts for review, not energy or code claims.
 - `material_intent` records conceptual choices (reclaimed containers, reused timber, replaceable cladding, continuous external insulation, selective spray foam, reversible connections, modular porch/deck, solar-ready, green-roof investigation). These are prompts for discussion, not verified environmental claims.
-- A connection is an explicit rectangle with its own position, length, width and rotation. It is not assumed to follow a module edge.
+- A connection is an explicit rectangle with its own position, length, width and rotation. It is not assumed to follow a module edge. A glazed connection can carry `glazed`, `door_type` (`insulated-sliding`, `folding`, `garage` or `none`) and a conceptual `glazing_area_m2`.
 - Room zones are conceptual bands along a module's length. They do not model partitions, door swings, fixtures or structural walls.
 - The editor's invalid geometry rules cover duplicate ids, one-to-three modules, opening bounds and overlaps, zone bounds and overlaps, porch/deck bounds, module overlap, connector overlap and references. Engineering, accessibility and professional-review prompts do not block editing or JSON export; invalid geometry disables drawing exports.
 
 ## Source of truth
 
-`data/design-lab.json` is the source for the nine gallery concepts. `tools/build.mjs` generates:
+`data/design-lab.json` is the source for the ten gallery designs (nine homes and the common lodge). `tools/build.mjs` generates:
 
 - `site/design-lab/views/<id>-plan.svg`
 - `site/design-lab/views/<id>-exterior.svg`
 - `site/design-lab/views/<id>-cutaway.svg`
+- `site/design-lab/views/<id>-porch.svg`
+- `site/design-lab/views/<id>-winter.svg`
 - `site/design-lab/data/<id>.json`
+- `site/design-lab/architecture/<id>/index.html`
+- `site/design-lab/compare/index.html`
 - `site/design-lab/concepts.js`
 - `site/design-lab/site-data.js`
 - the gallery cards in `site/design-lab/index.html`
 
-`site/js/design-schema.js` and `site/js/design-model.js` are shared by Node and the browser. The same model produces the plan, exterior and cutaway, so they cannot drift.
+`site/js/design-schema.js` and `site/js/design-model.js` are shared by Node and the browser. The same model produces the plan, exterior, cutaway, porch/deck detail and winter study, so they cannot drift.
 
 The existing `data/cabin-a.json` and `data/lodge.json` remain authoritative. The Design Lab does not edit or replace them.
 
@@ -145,24 +166,30 @@ The v0.1 schema had no interior zones, decks, connections or explicit module pos
 ## Adding a concept
 
 1. Add a complete object to `data/design-lab.json` using the schema above.
-2. Set `group` to `One container`, `Two containers` or `Three containers`.
-3. Set `editable: true` only when the concept is one of the three matured presets; otherwise `false`.
+2. Set `group` to `One container`, `Two containers`, `Three containers` or `Common lodge`.
+3. Set `editable: true` only when the concept is one of the three matured presets; otherwise `false`. The common lodge is a developed, non-editable concept.
 4. Run `node tools/build.mjs`. The build stops on invalid geometry.
 5. Run `node tools/check-design-lab.mjs` and `node tools/design-lab-check.mjs`.
 
-The gallery uses the generated three views and source JSON; no hand-drawn image is substituted for geometry.
+The gallery uses the generated exterior and source JSON; each architectural page uses all five generated views. No hand-drawn image is substituted for geometry.
 
 ## Editing and export
 
 Clicking a module on the plan is a pointer shortcut for selecting it; the module buttons and the opening/room selectors provide the keyboard route. Dragging modules on the plan is not implemented. The editor keeps history in memory. It does not use local storage, cookies or a backend. Closing the page loses unsaved work; download the JSON to reopen it later. The JSON import accepts v1.0 and v0.1.
 
-The ZIP contains the JSON, plan, exterior, cutaway, a Markdown summary and a notice. The summary includes a warning snapshot and provenance. The exported files remain concept material under CC BY-SA 4.0; the editor code is AGPL-3.0-or-later.
+The ZIP contains the JSON, plan, exterior, cutaway, porch/deck, winter, a Markdown summary and a notice. The summary includes a warning snapshot and provenance. The exported files remain concept material under CC BY-SA 4.0; the editor code is AGPL-3.0-or-later. No café photographs are bundled or redistributed.
+
+## Architectural galleries and comparison
+
+Every design has a five-view page under `site/design-lab/architecture/<id>/`. The page is a progressive enhancement: without JavaScript all five figures are visible; with JavaScript the same figures become a slideshow with visible Previous/Next and Show-all controls, Left/Right/Home/End keyboard support, a polite live status and no auto-advance. The plan, cutaway and porch detail are labelled **geometry-backed drawings**; the exterior and winter images are labelled **illustrative studies**.
+
+`/design-lab/compare/` compares two concepts. It reports container count, nominal conditioned area (modules plus glazed hall), screened porch area, porch/deck area, approximate glazing area and ratio, envelope choices, accessibility notes, qualitative thermal strengths and risks, and structural/installation review items. It does not calculate cost, carbon, energy or code compliance. The all-concepts table and default pair remain available without JavaScript.
 
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 260 schema, geometry, gallery, licence, privacy checks
-node tools/design-lab-check.mjs      # 53 browser checks: gallery, keyboard, editor, exports, imports, 320 px, axe
+node tools/check-design-lab.mjs      # 491 schema, geometry, five-view, gallery, comparison, licence and privacy checks
+node tools/design-lab-check.mjs      # 80 browser checks: gallery, carousel keyboard, editor, thermal persistence, comparison, 320 px, axe
 ```
 
 The main site checks and browser checks continue to run separately.
@@ -173,12 +200,13 @@ The main site checks and browser checks continue to run separately.
 - Original Design Lab documentation, diagrams, concept data and generated views: **CC BY-SA 4.0**. See `site/design-lab/CONTENT-LICENSE.md`.
 - Core Containers Hamlet code: **MIT**; core original content: **CC BY 4.0**. Those licences do not extend to the Design Lab files.
 - Third-party notices: `site/design-lab/THIRD-PARTY-NOTICES.md`.
+- No café photographs are bundled or published. Redistribution rights were not confirmed; the lodge is an original interpretation of the written brief.
 
 The existing Cabin A and lodge data remain under their existing provenance. The adapter does not relicense or overwrite them.
 
 ## Known limitations
 
-- Six concepts are inspiration-only.
+- Six homes and the common lodge are inspiration-only.
 - No visual drag manipulation; numeric and keyboard controls are the editable route.
 - No full 3D walkthrough, BIM, IFC or DXF.
 - No structural, energy, fire, acoustic, cost or code calculation.

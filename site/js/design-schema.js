@@ -65,6 +65,9 @@
     d.decks = Array.isArray(d.decks) ? d.decks : [];
     d.trellises = Array.isArray(d.trellises) ? d.trellises : [];
     d.material_intent = Object.assign({ reclaimed_containers: true, reused_timber: true, replaceable_cladding: true, continuous_external_insulation: true, selective_spray_foam: false, reversible_connections: true, modular_porch: true, solar_ready: true, green_roof_investigated: false }, d.material_intent || {});
+    d.thermal = Object.assign({ wall_insulation_strategy: 'continuous external insulation with thermal breaks at openings, pile caps and service penetrations',
+      thermal_bridge_mitigation: 'continuous external insulation and thermal breaks at openings and pile caps', roof_insulation_mm: 250, floor_insulation_mm: 200, rainscreen_ventilation: true, air_vapour_control: 'exterior-insulated, vapour-open assembly; sealed interior air barrier (to be detailed)', window_performance: 'triple glazed, low-e, argon, thermally broken frames', external_shading: 'fixed overhang and deciduous planting', heat_recovery_ventilation: true, heating: 'cold-climate air-source heat pump', notes: 'Conceptual thermal intent only. No energy or code calculation.' }, d.thermal || {});
+    d.connections.forEach(function (c) { c.glazed = !!c.glazed; c.door_type = c.door_type || 'none'; c.glazing_area_m2 = isNum(c.glazing_area_m2) ? c.glazing_area_m2 : 0; });
     d.materials = Array.isArray(d.materials) ? d.materials : [];
     d.modules.forEach(function (m) {
       m.openings = Array.isArray(m.openings) ? m.openings : [];
@@ -97,6 +100,15 @@
     if (!Array.isArray(d.porches)) err('porches must be an array.');
     if (!Array.isArray(d.decks)) err('decks must be an array.');
     if (!Array.isArray(d.trellises)) err('trellises must be an array.');
+    if (!d.thermal || typeof d.thermal !== 'object') err('thermal must be an object.');
+    if (d.thermal) {
+      if (!isNum(d.thermal.roof_insulation_mm) || d.thermal.roof_insulation_mm < 50 || d.thermal.roof_insulation_mm > 600) err('Roof insulation must be 50–600 mm.');
+      if (!isNum(d.thermal.floor_insulation_mm) || d.thermal.floor_insulation_mm < 50 || d.thermal.floor_insulation_mm > 500) err('Floor insulation must be 50–500 mm.');
+      if (typeof d.thermal.air_vapour_control !== 'string' || d.thermal.air_vapour_control.length < 4) err('Air and vapour control strategy is required.');
+      if (typeof d.thermal.window_performance !== 'string' || d.thermal.window_performance.length < 4) err('Window performance description is required.');
+      if (typeof d.thermal.external_shading !== 'string' || d.thermal.external_shading.length < 3) err('External shading description is required.');
+      if (typeof d.thermal.heating !== 'string' || d.thermal.heating.length < 3) err('Heating description is required.');
+    }
     if (!d.provenance || !d.licence) warnings.push({ code: 'provenance', message: 'Provenance or licence metadata is missing; it will be added on export.' });
     var ids = requiredIds(d);
     var dup = ids.filter(function (id, i) { return ids.indexOf(id) !== i; });
@@ -149,8 +161,10 @@
       if (!(d.modules || []).some(function (m) { return m.id === c.from; }) || !(d.modules || []).some(function (m) { return m.id === c.to; })) err('Connection ' + c.id + ' references an unknown module.');
       if (!Array.isArray(c.position_m) || c.position_m.length !== 2 || !c.position_m.every(isNum)) err('Connection ' + c.id + ' needs a position.');
       if (![c.length_m, c.width_m].every(isNum) || c.length_m <= 0 || c.width_m <= 0) err('Connection ' + c.id + ' has invalid dimensions.');
+      if (c.door_type && ['none','insulated-sliding','folding','garage'].indexOf(c.door_type) < 0) err('Connection ' + c.id + ' has an unknown door type.');
+      if (!isNum(c.glazing_area_m2) || c.glazing_area_m2 < 0) err('Connection ' + c.id + ' has an invalid glazing area.');
     });
-    return { ok: errors.length === 0, errors: errors, warnings: warnings, unknownKeys: Object.keys(d).filter(function (k) { return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent'].indexOf(k) < 0; }) };
+    return { ok: errors.length === 0, errors: errors, warnings: warnings, unknownKeys: Object.keys(d).filter(function (k) { return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal'].indexOf(k) < 0; }) };
   }
 
   /* Migrate the supplied prototype's v0.1 JSON. Nothing is dropped silently:

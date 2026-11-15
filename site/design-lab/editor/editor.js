@@ -177,6 +177,7 @@
     renderDecks();
     renderTrellises();
     renderConnections();
+    renderThermal();
   }
 
   function renderOpenings() {
@@ -248,6 +249,21 @@
     }).join('');
   }
 
+  function renderThermal() {
+    var t = state.design.thermal;
+    var panel = $('thermal-controls');
+    if (!panel) return;
+    panel.innerHTML = '<div class="field-grid">' +
+      field('Roof insulation (mm)', numberInput('thermal.roof_insulation_mm', t.roof_insulation_mm, 'thermal-roof', ' step="10" min="50" max="600"')) +
+      field('Floor insulation (mm)', numberInput('thermal.floor_insulation_mm', t.floor_insulation_mm, 'thermal-floor', ' step="10" min="50" max="500"')) +
+      field('Window performance', selectInput('thermal.window_performance', t.window_performance, 'thermal-window', option('triple glazed, low-e, argon, thermally broken frames', 'Triple glazed', t.window_performance) + option('double glazed, low-e, thermally broken frames', 'Double glazed', t.window_performance) + option('not decided', 'Not decided', t.window_performance))) +
+      field('External shading', selectInput('thermal.external_shading', t.external_shading, 'thermal-shade', option('fixed overhang and deciduous planting', 'Overhang + planting', t.external_shading) + option('seasonal shutters or screens', 'Seasonal screens', t.external_shading) + option('none or not decided', 'None / not decided', t.external_shading))) +
+      field('Air and vapour control', selectInput('thermal.air_vapour_control', t.air_vapour_control, 'thermal-air', option('exterior-insulated, vapour-open assembly; sealed interior air barrier (to be detailed)', 'Exterior insulated', t.air_vapour_control) + option('interior vapour-retarder with sealed service penetrations (to be detailed)', 'Interior vapour retarder', t.air_vapour_control) + option('not decided', 'Not decided', t.air_vapour_control))) +
+      field('Thermal bridge mitigation', selectInput('thermal.thermal_bridge_mitigation', t.thermal_bridge_mitigation, 'thermal-bridge', option('continuous external insulation and thermal breaks at openings and pile caps', 'Continuous + breaks', t.thermal_bridge_mitigation) + option('partial mitigation; junctions to be reviewed', 'Partial mitigation', t.thermal_bridge_mitigation) + option('not decided', 'Not decided', t.thermal_bridge_mitigation))) +
+      field('Heating', selectInput('thermal.heating', t.heating, 'thermal-heat', option('cold-climate air-source heat pump', 'Cold-climate heat pump', t.heating) + option('heat pump with backup', 'Heat pump + backup', t.heating) + option('not decided', 'Not decided', t.heating))) +
+      '</div>' + checkbox('thermal.rainscreen_ventilation', t.rainscreen_ventilation, 'thermal-rainscreen', 'Ventilated rainscreen and replaceable cladding') + checkbox('thermal.heat_recovery_ventilation', t.heat_recovery_ventilation, 'thermal-hrv', 'Heat-recovery ventilation (HRV/ERV)');
+  }
+
   function renderTrellises() {
     var d = state.design;
     var panel = $('trellis-controls');
@@ -279,8 +295,11 @@
         field('Length (m)', numberInput('connections.' + i + '.length_m', c.length_m, base + '-length', ' step="0.1" min="0.5"')) +
         field('Width (m)', numberInput('connections.' + i + '.width_m', c.width_m, base + '-width', ' step="0.1" min="0.5"')) +
         field('Rotation (degrees)', numberInput('connections.' + i + '.rotation_deg', c.rotation_deg || 0, base + '-rot', ' step="1"')) +
+        field('Glazing area (m², concept)', numberInput('connections.' + i + '.glazing_area_m2', c.glazing_area_m2 || 0, base + '-glazing-area', ' step="0.5" min="0"')) +
+        field('Glazed door type', selectInput('connections.' + i + '.door_type', c.door_type || 'none', base + '-door', option('none', 'No glazed door', c.door_type) + option('insulated-sliding', 'Insulated sliding doors', c.door_type) + option('folding', 'Insulated folding doors', c.door_type) + option('garage', 'Glazed garage door (review)', c.door_type))) +
         '</div>' + checkbox('connections.' + i + '.roof', c.roof, base + '-roof', 'Covered') +
         checkbox('connections.' + i + '.screened', c.screened, base + '-screened', 'Screened') +
+        checkbox('connections.' + i + '.glazed', c.glazed, base + '-glazed', 'Glazed enclosure') +
         '<button type="button" class="secondary" data-action="remove-connection" data-index="' + i + '">Remove this connector</button></fieldset>';
     }).join('');
   }
@@ -302,6 +321,8 @@
     $('export-plan').disabled = !assessment.ok;
     $('export-exterior').disabled = !assessment.ok;
     $('export-cutaway').disabled = !assessment.ok;
+    $('export-porch').disabled = !assessment.ok;
+    $('export-winter').disabled = !assessment.ok;
     $('export-zip').disabled = !assessment.ok;
     $('export-summary').disabled = !assessment.ok;
   }
@@ -329,6 +350,7 @@
       ['Openings', s.openingCount],
       ['Screened porch', n(s.screenedPorch_m2) + ' m²'],
       ['Trellises', s.trellisCount || 0],
+      ['Thermal envelope', (d.thermal.roof_insulation_mm || '–') + ' mm roof / ' + (d.thermal.floor_insulation_mm || '–') + ' mm floor / ' + d.thermal.window_performance],
       ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green/biosolar ' : '') || 'Membrane'],
       ['Insulation', 'Up to ' + s.maxInsulation_mm + ' mm external'],
       ['Status', assessment.ok ? 'No invalid geometry; professional review required' : 'Invalid geometry; drawings disabled'],
@@ -742,7 +764,7 @@
   }
   function exportSummary() { download(slug(state.design.name) + '-summary.md', summaryText(), 'text/markdown'); $('export-status').textContent = 'Downloaded the design summary.'; }
   function exportSVG(kind) {
-    var svg = kind === 'plan' ? Model.renderPlan(state.design, { idPrefix: 'export-plan' }) : Model.renderAxo(state.design, { idPrefix: 'export-' + kind, mode: kind === 'cutaway' ? 'cutaway' : undefined });
+    var svg = kind === 'plan' ? Model.renderPlan(state.design, { idPrefix: 'export-plan' }) : Model.renderAxo(state.design, { idPrefix: 'export-' + kind, mode: kind === 'cutaway' ? 'cutaway' : undefined, focus: kind === 'porch' ? 'outdoor' : undefined, season: kind === 'winter' ? 'winter' : undefined });
     download(slug(state.design.name) + '-' + kind + '.svg', '<?xml version="1.0" encoding="UTF-8"?>\n' + svg, 'image/svg+xml');
     $('export-status').textContent = 'Downloaded the ' + kind + ' SVG.';
   }
@@ -793,6 +815,8 @@
       { name: base + '-plan.svg', data: Model.renderPlan(state.design, { idPrefix: 'zip-plan' }) },
       { name: base + '-exterior.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-exterior' }) },
       { name: base + '-cutaway.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-cutaway', mode: 'cutaway' }) },
+      { name: base + '-porch.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-porch', focus: 'outdoor' }) },
+      { name: base + '-winter.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-winter', season: 'winter' }) },
       { name: base + '-summary.md', data: summaryText() },
       { name: 'NOTICE.txt', data: 'Containers Hamlet Design Lab\n\nConcept only. Not engineered, not permit-ready and not a building code assessment.\nEditor code: AGPL-3.0-or-later. Original concept data, drawings and documentation: CC BY-SA 4.0.\nNo personal information is included. The design remains the responsibility of its author and requires professional review before construction.\n' }
     ];
@@ -802,7 +826,7 @@
     a.href = url; a.download = base + '-design-lab.zip';
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
-    $('export-status').textContent = 'Downloaded a ZIP with the JSON, plan, exterior, cutaway, summary and notice.';
+    $('export-status').textContent = 'Downloaded a ZIP with the JSON, plan, exterior, cutaway, porch/deck, winter, summary and notice.';
   }
 
   /* ---------------- import ---------------- */
@@ -917,6 +941,8 @@
     $('export-plan').addEventListener('click', function () { exportSVG('plan'); });
     $('export-exterior').addEventListener('click', function () { exportSVG('exterior'); });
     $('export-cutaway').addEventListener('click', function () { exportSVG('cutaway'); });
+    $('export-porch').addEventListener('click', function () { exportSVG('porch'); });
+    $('export-winter').addEventListener('click', function () { exportSVG('winter'); });
     $('export-summary').addEventListener('click', exportSummary);
     $('export-zip').addEventListener('click', exportZip);
     $('import-button').addEventListener('click', function () { $('import-file').click(); });

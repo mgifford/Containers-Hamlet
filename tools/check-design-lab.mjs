@@ -21,10 +21,10 @@ const near = (a, b, t = 0.01) => Math.abs(a - b) <= t;
 
 section('Concept data');
 const data = JSON.parse(read('data/design-lab.json'));
-ok(data.concepts.length === 9, 'nine concepts are present');
-ok(['One container', 'Two containers', 'Three containers'].every((g) => data.concepts.filter((c) => c.group === g).length === 3), 'three concepts in each module-count group');
+ok(data.concepts.length === 10, 'nine home concepts and the common lodge are present');
+ok(['One container', 'Two containers', 'Three containers'].every((g) => data.concepts.filter((c) => c.group === g).length === 3) && data.concepts.filter((c) => c.group === 'Common lodge').length === 1, 'three homes in each module-count group plus the common lodge');
 ok(data.concepts.filter((c) => c.editable).map((c) => c.id).join(',') === 'woodland-retreat,l-shaped-haven,woodland-courtyard', 'the three editable presets are the required ones');
-ok(data.concepts.filter((c) => !c.editable).length === 6, 'six concepts are marked inspiration-only');
+ok(data.concepts.filter((c) => !c.editable).length === 7, 'six home concepts and the lodge are marked inspiration-only');
 ok(data.concepts.every((c) => c.schema === Schema.SCHEMA), 'every concept uses the versioned v1 schema');
 for (const c of data.concepts) {
   const v = Schema.validateSchema(c);
@@ -44,11 +44,16 @@ for (const c of data.concepts) {
   const ext1 = Model.renderAxo(c, { idPrefix: 'concept-' + c.id + '-exterior' });
   const ext2 = Model.renderAxo(c, { idPrefix: 'concept-' + c.id + '-exterior' });
   const cut1 = Model.renderAxo(c, { idPrefix: 'concept-' + c.id + '-cutaway', mode: 'cutaway' });
+  const porch1 = Model.renderAxo(c, { idPrefix: 'concept-' + c.id + '-porch', focus: 'outdoor' });
+  const winter1 = Model.renderAxo(c, { idPrefix: 'concept-' + c.id + '-winter', season: 'winter' });
   ok(plan1 === plan2, `${c.id}: plan SVG is deterministic`);
   ok(ext1 === ext2 && cut1.length > 2000, `${c.id}: exterior and cutaway render deterministically`);
-  for (const [kind, svg] of [['plan', plan1], ['exterior', ext1], ['cutaway', cut1]]) {
+  ok(porch1 === Model.renderAxo(c, { idPrefix: 'concept-' + c.id + '-porch', focus: 'outdoor' }) && winter1 === Model.renderAxo(c, { idPrefix: 'concept-' + c.id + '-winter', season: 'winter' }), `${c.id}: porch and winter views render deterministically`);
+  ok(c.thermal && c.thermal.roof_insulation_mm > 0 && c.thermal.floor_insulation_mm > 0, `${c.id}: thermal envelope values are present`);
+  for (const [kind, svg] of [['plan', plan1], ['exterior', ext1], ['cutaway', cut1], ['porch', porch1], ['winter', winter1]]) {
     ok(/role="img"/.test(svg) && /<title id="/.test(svg) && /<desc id="/.test(svg) && /CC BY-SA 4\.0/.test(svg), `${c.id} ${kind}: accessible SVG with licence notice`);
     ok(!/<script|https?:\/\//i.test(svg.replace(/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/g, '')), `${c.id} ${kind}: no scripts or remote references`);
+    ok(!/<[^>]+\bfill="[^"]*"[^>]*\bfill="/.test(svg), `${c.id} ${kind}: no duplicate XML attributes`);
     ok(exists(`site/design-lab/views/${c.id}-${kind}.svg`), `${c.id} ${kind}: generated file exists`);
     ok(read(`site/design-lab/views/${c.id}-${kind}.svg`) === svg, `${c.id} ${kind}: committed SVG matches a fresh render`);
   }
@@ -61,9 +66,9 @@ for (const c of data.concepts) {
 
 section('Gallery and editor pages');
 const gallery = read('site/design-lab/index.html');
-ok((gallery.match(/class="concept-card"/g) || []).length === 9, 'gallery has nine concept cards');
+ok((gallery.match(/class="concept-card"/g) || []).length === 10, 'gallery has ten concept cards, including the common lodge');
 ok((gallery.match(/class="concept-badge editable"/g) || []).length === 3, 'gallery marks three editable cards');
-ok((gallery.match(/Inspiration only/g) || []).length >= 6, 'gallery labels six inspiration-only cards');
+ok((gallery.match(/Inspiration only/g) || []).length >= 7, 'gallery labels six inspiration-only homes and the lodge');
 ok((gallery.match(/<img /g) || []).length >= 9 && [...gallery.matchAll(/<img [^>]*>/g)].every((m) => /alt="[^"]{12,}"/.test(m[0]) && /width="\d+"/.test(m[0]) && /height="\d+"/.test(m[0])), 'gallery images have alt text, width and height');
 ok(gallery.includes('editor/?preset=woodland-retreat') && gallery.includes('editor/?preset=l-shaped-haven') && gallery.includes('editor/?preset=woodland-courtyard'), 'gallery links to all three editable presets');
 ok(gallery.includes('LICENSE.txt') && gallery.includes('CONTENT-LICENSE.md'), 'gallery links its licences');
@@ -76,6 +81,26 @@ ok(!/<script[^>]+src="https?:/i.test(editor) && !/<link[^>]+href="https?:/i.test
 ok(exists('site/design-lab/LICENSE.txt') && /GNU AFFERO GENERAL PUBLIC LICENSE/.test(read('site/design-lab/LICENSE.txt')) && /Version 3/.test(read('site/design-lab/LICENSE.txt')), 'full AGPL text is included');
 ok(exists('site/design-lab/CONTENT-LICENSE.md') && /CC BY-SA 4\.0/.test(read('site/design-lab/CONTENT-LICENSE.md')), 'Design Lab content licence is present');
 ok(exists('site/design-lab/THIRD-PARTY-NOTICES.md'), 'third-party notices file is present');
+
+section('Architectural galleries and comparison');
+for (const c of data.concepts) {
+  const page = read(`site/design-lab/architecture/${c.id}/index.html`);
+  ok(/data-slideshow/.test(page) && (page.match(/<img /g) || []).length === 5, `${c.id}: five-image architectural page exists`);
+  ok((page.match(/class="slide"/g) || []).length === 5 && /data-slide-prev/.test(page) && /data-slide-next/.test(page) && /data-slide-all/.test(page), `${c.id}: slideshow has five slides and visible controls`);
+  ok(/data-title="Exterior architectural view"/.test(page) && /data-title="Dimensioned concept floor plan"/.test(page) && /data-title="Interior roof-off cutaway"/.test(page) && /data-title="Screened porch or deck view"/.test(page) && /data-title="Winter exterior view"/.test(page), `${c.id}: gallery has all five required views`);
+  ok(/Geometry-backed drawing/.test(page) && /Illustrative study/.test(page) && /<noscript>/.test(page), `${c.id}: distinguishes drawing types and explains the no-JS fallback`);
+  ok(!/setInterval|setTimeout/.test(read('site/design-lab/architecture.js')), `${c.id}: slideshow has no auto-advance timer`);
+}
+ok(exists('site/design-lab/architecture.css') && exists('site/design-lab/architecture.js') && !/<script[^>]+src="https?:/i.test(read('site/design-lab/architecture.css')), 'architectural gallery styles and script are local');
+const compare = read('site/design-lab/compare/index.html');
+ok((compare.match(/<option /g) || []).length === 20 && (compare.match(/class="compare-panel"/g) || []).length === 2, 'comparison page offers ten concepts and two side-by-side panels');
+ok(/Nominal conditioned footprint/.test(compare) && /Screened porch area/.test(compare) && /Glazing area/.test(compare) && /Thermal strengths/.test(compare) && /Thermal risks/.test(compare) && /Accessibility considerations/.test(compare) && /Structural \/ installation review/.test(compare), 'comparison shows area, envelope, thermal, accessibility and structural metrics');
+ok(!/\b(kWh|kgCO2|cost \$|\$\d)/i.test(compare), 'comparison contains no invented energy, carbon or cost figures');
+ok(/All ten concepts/.test(compare) && /<caption>/.test(compare) && /<th scope="col">/.test(compare), 'comparison includes an accessible all-concepts table');
+ok(exists('site/design-lab/compare.css') && exists('site/design-lab/compare.js') && !/fetch\(|localStorage|sessionStorage/.test(read('site/design-lab/compare.js')), 'comparison is local and does not store or transmit data');
+
+const lodge = data.concepts.find((c) => c.id === 'common-lodge');
+ok(lodge && lodge.features.interior_uses.includes('Shared kitchen') && lodge.features.interior_uses.includes('Shared dining') && lodge.features.interior_uses.includes('Workshop') && lodge.features.interior_uses.includes('Meeting room') && lodge.modules.some((m) => m.zones.some((z) => z.type === 'bathroom')) && lodge.porches.some((p) => p.screened) && lodge.connections.some((c) => c.glazed && c.door_type === 'insulated-sliding'), 'common lodge combines shared kitchen/dining, workshop/meeting, accessible washrooms, a glazed hall and a screened veranda');
 
 section('Shared data model and migration');
 const base = data.concepts[0];
