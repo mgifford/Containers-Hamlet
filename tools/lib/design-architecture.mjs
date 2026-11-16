@@ -1,4 +1,6 @@
-// Code: MIT. Generated page content: CC BY-SA 4.0.
+// Code: MIT.
+import { designShellNav } from './design-nav.mjs';
+// // Generated page content: CC BY-SA 4.0.
 const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const n = (v) => (Math.round(v * 10) / 10).toString();
 
@@ -54,25 +56,7 @@ export function architecturePage(c, sizes, profile) {
 </head>
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header">
-  <a class="brand" href="../../../index.html">Containers Hamlet</a>
-  <nav aria-label="Design Lab">
-    <a href="../../index.html">Design gallery</a>
-    <a href="../../editor/">Editor</a>
-    <a href="../../vegetation/">Vegetation</a>
-    <a href="../../ground/">Ground</a>
-    <a href="../../patterns/">Patterns</a>
-    <a href="../../fire/">Fire</a>
-    <a href="../../two-storey/">Two-storey</a>
-    <a href="../../resilience/">Resilience</a>
-    <a href="../../water/">Water</a>
-    <a href="../../compare/">Compare</a>
-    <a href="../../../index.html#design-lab">Design on the main site</a>
-    <a href="../../../living/">Living Here</a>
-    <a href="../../../participate/">Participate</a>
-    <a href="../../../index.html">Main site</a>
-  </nav>
-</header>
+${designShellNav(3, 'gallery')}
 <main id="main" class="lab-main">
   <p class="eyebrow">Architectural gallery · ${esc(c.group)}</p>
   <h1>${esc(c.name)}</h1>

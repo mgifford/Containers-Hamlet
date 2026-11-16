@@ -1,8 +1,10 @@
-// Code: MIT. Content: CC BY-SA 4.0.
+// Code: MIT.
+import { designShellNav } from './design-nav.mjs';
+// Content: CC BY-SA 4.0.
 const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 function nav(current) {
   const links = [['../index.html','Design gallery'],['../editor/','Editor'],['../vegetation/','Vegetation'],['../ground/','Ground'],['../patterns/','Patterns'],['../fire/','Fire'],['../two-storey/','Two-storey'],['../resilience/','Resilience'],['../water/','Water'],['../compare/','Compare']];
-  return `<header class="site-header"><a class="brand" href="../../../index.html">Containers Hamlet</a><nav aria-label="Design Lab">${links.map(([h,l]) => `<a href="${h}"${l === current ? ' aria-current="page"' : ''}>${l}</a>`).join('')}<a href="../../../index.html">Main site</a></nav></header>`;
+  return `${designShellNav(2, 'guides')}`;
 }
 export function waterSVG() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 390" role="img" aria-labelledby="water-t water-d">

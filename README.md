@@ -27,7 +27,7 @@ Phase 1.5 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
    node tools/check-design-lab.mjs   # 722 Design Lab schema, geometry, envelope, vegetation, solar, foundation, gallery and comparison checks
    npm install
    npm run test:browser       # 107 main-site browser checks
-   npm run test:design-lab    # 166 Design Lab browser checks
+   npm run test:design-lab    # 171 Design Lab browser checks
    ```
 
    The build refuses data that cannot be built or that breaks a site rule, such as a home inside the shoreline setback, an overlapping container module, a porch beyond its face, or a concept with no valid editable presets. See [`docs/data-model.md`](docs/data-model.md) and [`docs/design-lab.md`](docs/design-lab.md).
@@ -60,7 +60,7 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 258 KB uncompressed / 62 KB compressed. The whole published site is about 3513 KB, under the revised 3.5 MB budget.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 258 KB uncompressed / 62 KB compressed. The whole published site is about 3516 KB, under the revised 3.5 MB budget.
 
 ## The fictional landscape
 

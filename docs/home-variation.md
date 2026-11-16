@@ -17,15 +17,15 @@ The homes were too similar when every page used the same 40-foot single-containe
 
 ## Budget
 
-Adding the 20-foot model, its generated drawings and the configuration thumbnails raises the whole-site total to **3513 KB**. The deliberate budget is now **3.5 MB**. The initial view is **258 KB / 64 KB**.
+Adding the 20-foot model, its generated drawings and the configuration thumbnails raises the whole-site total to **3516 KB**. The deliberate budget is now **3.5 MB**. The initial view is **259 KB / 64 KB**.
 
 ## Validation
 
 - 289 main static
-- 722 Design Lab static
+- 724 Design Lab static
 - 107 main browser
-- 166 Design Lab browser
-- 203 generated files
+- 171 Design Lab browser
+- 205 generated files
 - CI passes
 
 **Do not merge automatically.**

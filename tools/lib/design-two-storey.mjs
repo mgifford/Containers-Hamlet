@@ -1,4 +1,6 @@
-// Code: MIT. Page/diagram content: CC BY-SA 4.0.
+// Code: MIT.
+import { designShellNav } from './design-nav.mjs';
+// Page/diagram content: CC BY-SA 4.0.
 const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 export function twoStoreySVG() {
@@ -29,24 +31,7 @@ export function twoStoreyPage() {
 </head>
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header">
-  <a class="brand" href="../../../index.html">Containers Hamlet</a>
-  <nav aria-label="Design Lab">
-    <a href="../index.html">Design gallery</a>
-    <a href="../editor/">Editor</a>
-    <a href="../vegetation/">Vegetation</a>
-    <a href="../ground/">Ground</a>
-    <a href="../patterns/">Patterns</a>
-    <a href="../fire/">Fire</a>
-    <a href="../two-storey/" aria-current="page">Two-storey</a>
-    <a href="../resilience/">Resilience</a>
-    <a href="../water/">Water</a>
-    <a href="../compare/">Compare</a>
-    <a href="../../living/">Living Here</a>
-    <a href="../../participate/">Participate</a>
-    <a href="../../../index.html">Main site</a>
-  </nav>
-</header>
+${designShellNav(2, 'guides')}
 <main id="main" class="lab-main">
   <p class="eyebrow">Two-storey containers</p>
   <h1>Three ways to stack. One structural question.</h1>

@@ -3,7 +3,7 @@
 ## Baseline
 
 - Branch: `main` after PR #9 (`45ff2ad`, merge `363f4e6`).
-- Existing build: 192 generated files; 268 main static; 722 Design Lab static; 86 main browser; 166 Design Lab browser.
+- Existing build: 192 generated files; 268 main static; 724 Design Lab static; 86 main browser; 171 Design Lab browser.
 - Existing initial view: 253 KB uncompressed / 63 KB gzipped.
 - Existing whole site: 3,422 KB under the deliberate 3.5 MB budget.
 - Existing authoritative data: `data/site.json`, `data/cabin-a.json`, `data/cabin-20.json`, `data/lodge.json`, `data/design-lab.json`, `data/community.json`.
@@ -56,12 +56,12 @@ Passport volumes come from built primitives (`p.quantities`) and are tested agai
 
 | Check | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | 203 generated files |
+| `node tools/build.mjs --check` | 205 generated files |
 | `node tools/check.mjs` | 285 passed |
 | `node tools/check-design-lab.mjs` | 722 passed |
 | `node tools/browser-check.mjs` | 103 passed |
 | `node tools/design-lab-check.mjs` | 166 passed |
-| Initial view | 258 KB / 64 KB compressed |
+| Initial view | 259 KB / 64 KB compressed |
 | Whole site | 3,502 KB under 3.5 MB |
 
 **Do not merge automatically.**
