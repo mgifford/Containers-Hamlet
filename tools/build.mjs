@@ -107,7 +107,7 @@ export function generate() {
     b: { slug: 'Birch-2-wide', name: 'Birch', configuration: 'Two containers · wide pair' },
     c: { slug: 'Pine-1-simple', name: 'Pine', configuration: 'One container · simple' },
     d: { slug: 'Moss-2-wide', name: 'Moss', configuration: 'Two containers · wide pair' },
-    e: { slug: 'Fern-1-simple', name: 'Fern', configuration: 'One container · simple' },
+    e: { slug: 'Fern-2-wide', name: 'Fern', configuration: 'Two containers · wide pair' },
     f: { slug: 'Juniper-1-simple', name: 'Juniper', configuration: 'One container · simple' },
     lodge: { slug: 'Lodge-3-community', name: 'Common-Lodge', configuration: 'Two containers + hall · community' }
   };
@@ -130,6 +130,7 @@ export function generate() {
     put(`site/homes/${meta.slug}/index.html`, homePage(h, site, meta));
     put(`site/homes/${h.id}/index.html`, legacyHomeRedirect(meta.slug, h.name));
     put(`site/homes/${meta.name}/index.html`, legacyHomeRedirect(meta.slug, h.name));
+    if (h.id === 'e') put('site/homes/Fern-1-simple/index.html', legacyHomeRedirect(meta.slug, h.name));
   });
 
   /* ---------------- Container Home Design Lab ---------------- */
@@ -236,7 +237,7 @@ export function generate() {
   explorerBuildings['cabin-pair'] = strip(pairSpec);
   const data = {
     buildings: explorerBuildings,
-    buildingModels: { a: 'cabin-a', b: 'cabin-pair', c: 'cabin-a', d: 'cabin-pair', e: 'cabin-a', f: 'cabin-a', lodge: 'lodge' },
+    buildingModels: { a: 'cabin-a', b: 'cabin-pair', c: 'cabin-a', d: 'cabin-pair', e: 'cabin-pair', f: 'cabin-a', lodge: 'lodge' },
     homeSlugs: Object.fromEntries(Object.entries(HOME_META).map(([id, m]) => [id, m.slug])),
     site: {
       name: 'Containers Hamlet',

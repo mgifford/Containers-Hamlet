@@ -212,6 +212,9 @@ try {
   await page.check('input[name="ex-building"][value="d"]');
   await page.waitForTimeout(250);
   ok(/Cabin D:/.test(await label()) && await page.$('button[data-room="annex-studio"]') !== null, 'Cabin D opens the two-container model');
+  await page.check('input[name="ex-building"][value="e"]');
+  await page.waitForTimeout(250);
+  ok(/Cabin E:/.test(await label()) && await page.$('button[data-room="annex-studio"]') !== null, 'Fern differs from Juniper with a two-container model');
 
   await page.locator('#homes').screenshot({ path: SHOTS ? path.join(SHOTS, 'desktop-homes.png') : undefined }).catch(() => {});
   await page.click('[data-choice="a"]');
