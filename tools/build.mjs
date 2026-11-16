@@ -23,6 +23,7 @@ import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { modelPage } from './lib/model-pages.mjs';
+import { accessibleHomePage, accessiblePlanSVG } from './lib/accessible-home.mjs';
 import { communityPage, scenariosPage, ownershipPage, costsPage, roadmapPage, livingPage, participatePage, usabilityPage, licensingPage } from './lib/community-pages.mjs';
 import { configurationSVG } from './lib/home-config.mjs';
 import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
@@ -181,6 +182,8 @@ export function generate() {
   put('site/design-lab/two-storey/index.html', twoStoreyPage());
   put('site/design-lab/resilience/index.html', resiliencePage());
   const community = JSON.parse(readText('data/community.json'));
+  put('site/homes/Cedar-Accessible/index.html', accessibleHomePage());
+  put('site/homes/Cedar-Accessible/accessibility-plan.svg', accessiblePlanSVG());
   put('site/community/index.html', communityPage(community));
   put('site/community/scenarios/index.html', scenariosPage(community));
   put('site/community/ownership/index.html', ownershipPage());

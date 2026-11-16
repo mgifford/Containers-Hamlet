@@ -56,7 +56,7 @@ Passport volumes come from built primitives (`p.quantities`) and are tested agai
 
 | Check | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | 201 generated files |
+| `node tools/build.mjs --check` | 203 generated files |
 | `node tools/check.mjs` | 285 passed |
 | `node tools/check-design-lab.mjs` | 722 passed |
 | `node tools/browser-check.mjs` | 103 passed |

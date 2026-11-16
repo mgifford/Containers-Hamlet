@@ -233,7 +233,7 @@ export function livingPage(data) {
 <p>A nominally step-free entrance does not make a compact container home accessible. The current models show specific limitations:</p>
 <ul><li>The Cabin A bathroom does not fit a 1.5 m turning circle with the current layout.</li><li>Juniper's compact bathroom and circulation are not designed for wheelchair use.</li><li>An accessible route must stay clear in winter; a gravel trail can be firm in summer and impassable in ice.</li><li>Doors, thresholds, kitchen work surfaces, storage, controls and emergency egress all need review.</li><li>The lodge has a universal washroom concept, but it is not a substitute for accessible homes or personal care.</li></ul>
 <p>Use CSA B651 and the applicable building code as references, with an accessibility consultant. WCAG applies to this website, not to the physical buildings.</p>
-<p><a href="${prefix}homes/">Review the homes</a> and <a href="${prefix}design-lab/foundations-and-access/">the access study</a>.</p>
+<p><a href="${prefix}homes/">Review the homes</a>, the <a href="${prefix}homes/Cedar-Accessible/">Cedar accessible layout study</a> and <a href="${prefix}design-lab/foundations-and-access/">the access study</a>.</p>
 </section>
 <section aria-labelledby="responsibility-title"><h2 id="responsibility-title">Shared work is real work</h2>
 <p>Snow clearing, water testing, septic maintenance, fire-fuel management, bookkeeping and conflict resolution do not happen by themselves. A small community has fewer people to carry them. The governance page sets out the decision and dispute questions; the roadmap sets out the evidence a real project needs.</p>

@@ -21,7 +21,7 @@ export function arrangementCards() {
   <p class="small">These are the arrangements worth testing beyond the wide pair. They are diagrams and studies, not editable or buildable models. Each card links to the structural, egress or site notes.</p>
   <div class="concept-grid arrangement-grid">
 ${cards.map(([kind, title, copy, href]) => `    <article class="concept-card arrangement-card">
-      <div class="concept-card-media"><img src="arrangements/${kind}.svg" width="520" height="300" alt="${esc(title)} arrangement diagram." loading="lazy" decoding="async"></div>
+      <div class="concept-card-media"><img src="arrangements/${kind}.svg" width="520" height="300" alt="${esc(title)} arrangement diagram." loading="eager" decoding="async"></div>
       <div class="concept-card-body"><span class="concept-badge">Study</span><h4>${esc(title)}</h4><p>${esc(copy)}</p><p class="card-actions"><a class="action secondary" href="${esc(href)}">Read the constraints</a></p></div>
     </article>`).join('\n')}
   </div>

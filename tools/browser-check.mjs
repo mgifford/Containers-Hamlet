@@ -198,6 +198,12 @@ try {
   ok(await page.locator('.map-promo a[href="hamlet/"]').count() === 1, 'the main page has a map preview card linking to the map');
 
   ok(await page.locator('#homes .home-card-image img').first().evaluate((i) => i.getAttribute('loading') === 'lazy'), 'home card diagrams are lazy-loaded');
+  const accessible = await open('homes/Cedar-Accessible/');
+  ok(accessible.errors.length === 0, `Cedar Accessible: no console errors${accessible.errors.length ? ': ' + accessible.errors.join(' | ') : ''}`);
+  ok(await accessible.page.evaluate(() => document.querySelector('.system-figure img').naturalWidth > 0), 'Cedar Accessible plan loads');
+  ok(/single bed/i.test(await accessible.page.textContent('main')) && /double bed/i.test(await accessible.page.textContent('main')), 'Cedar Accessible states the single-vs-double tradeoff');
+  await axe(accessible.page, 'Cedar Accessible');
+  await accessible.context.close();
   const cabin = await open('cabin-a/');
   ok(cabin.errors.length === 0, `Cabin A page: no console errors${cabin.errors.length ? ': ' + cabin.errors.join(' | ') : ''}`);
   const cabinState = await cabin.page.evaluate(() => ({ plan: !!document.querySelector('#plan img'), drawings: document.querySelectorAll('.model-page-figure img').length, rooms: document.querySelectorAll('#rooms table tbody tr').length }));

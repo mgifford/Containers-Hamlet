@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 520" role="img" aria-labelledby="acc-t acc-d">
+<title id="acc-t">Two accessible Cedar layout options</title>
+<desc id="acc-d">Original concept plans. Left: one 40-foot container with a full-width bathroom, open living and kitchen, and a single bedroom with a 1.5 metre transfer side. Right: two 40-foot containers side by side, giving a double bedroom, accessible bathroom, wider living and a work nook. Both show 0.9 metre door openings, step-free porch routes and a 1.5 metre turning circle. These are layout studies, not certified accessible or construction drawings.</desc>
+<rect width="1040" height="520" fill="#faf8f2"/>
+<g font-family="system-ui, sans-serif">
+<text x="30" y="32" font-size="18" font-weight="800" fill="#1d392c">Option A · one 40-ft module</text>
+<text x="30" y="50" font-size="11" fill="#9a4e3a">One-person accessible layout · single bed · 1.5 m turning</text>
+<rect x="30" y="70" width="460" height="108" fill="#f7f5ed" stroke="#274c3b" stroke-width="3"/>
+<path d="M30 178h460" stroke="#8aa184"/>
+<path d="M120 70v108M235 70v108M365 70v108" stroke="#5d6f6a" stroke-width="2"/>
+<text x="42" y="120" font-size="10" font-weight="700" fill="#1d392c">entry / living / kitchen</text>
+<text x="135" y="120" font-size="10" font-weight="700" fill="#1d392c">bath</text>
+<text x="250" y="120" font-size="10" font-weight="700" fill="#1d392c">single bedroom</text>
+<text x="380" y="120" font-size="10" fill="#31573f">storage</text>
+<circle cx="88" cy="145" r="30" fill="none" stroke="#3f5f8a" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text x="88" y="195" text-anchor="middle" font-size="8" fill="#3f5f8a">1.5 m</text>
+<text x="42" y="210" font-size="9" fill="#31573f">0.9 m door · step-free porch · lowered work surface</text>
+<text x="30" y="235" font-size="9" fill="#9a4e3a">A double bed with 1.5 m transfer space does not fit across 2.35 m clear width.</text>
+
+<text x="550" y="32" font-size="18" font-weight="800" fill="#1d392c">Option B · two 40-ft modules</text>
+<text x="550" y="50" font-size="11" fill="#9a4e3a">One-bedroom accessible layout · 5 m combined width</text>
+<rect x="550" y="70" width="460" height="218" fill="#f7f5ed" stroke="#274c3b" stroke-width="3"/>
+<path d="M550 178h460M550 260h460" stroke="#8aa184"/>
+<path d="M675 70v108M800 70v108M920 70v108" stroke="#5d6f6a" stroke-width="2"/>
+<path d="M550 120h460" stroke="#b9c4b3" stroke-width="1"/>
+<text x="562" y="100" font-size="10" font-weight="700" fill="#1d392c">living / dining</text>
+<text x="810" y="100" font-size="10" font-weight="700" fill="#1d392c">kitchen</text>
+<text x="562" y="150" font-size="9" fill="#31573f">wider circulation + work nook</text>
+<text x="680" y="150" font-size="10" font-weight="700" fill="#1d392c">accessible bath</text>
+<text x="810" y="150" font-size="10" font-weight="700" fill="#1d392c">bedroom</text>
+<text x="810" y="166" font-size="9" fill="#31573f">double bed + transfer</text>
+<circle cx="620" cy="220" r="34" fill="none" stroke="#3f5f8a" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text x="620" y="224" text-anchor="middle" font-size="9" fill="#3f5f8a">1.5 m</text>
+<text x="562" y="245" font-size="9" fill="#31573f">0.9 m doors · roll-in shower · step-free porch · clear turning</text>
+<text x="550" y="275" font-size="9" fill="#9a4e3a">Requires a structural opening/transfer frame between the two shells.</text>
+
+<text x="30" y="330" font-size="12" font-weight="800" fill="#1d392c">What both options keep</text>
+<text x="30" y="350" font-size="10" fill="#31573f">Step-free approach · 1.5 m turning in kitchen/living · 0.9 m door leaves · reachable storage · no threshold at the porch</text>
+<text x="30" y="368" font-size="10" fill="#31573f">A firm, drained, snow-cleared route to the parking/drop-off · accessible emergency egress · a place to wait for help</text>
+<text x="30" y="395" font-size="12" font-weight="800" fill="#1d392c">What is not resolved by a drawing</text>
+<text x="30" y="415" font-size="10" fill="#9a4e3a">Structural opening and reinforcement · fire separation/egress · foundation and drainage · door hardware/operable windows ·</text>
+<text x="30" y="433" font-size="10" fill="#9a4e3a">kitchen/bath fixture clearances · winter maintenance · personal care · CSA B651/code review · consultant sign-off</text>
+<text x="30" y="470" font-size="9" fill="#5e6a58">Concept layout study · not certified accessible · not construction drawings · Containers Hamlet · CC BY-SA 4.0</text>
+</g></svg>
