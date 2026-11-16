@@ -101,3 +101,18 @@ button.secondary:hover { background: var(--surface); color: var(--link); }
 .plan-module-hit { cursor: pointer; }
 
 #thermal-controls .field-grid { grid-template-columns: 1fr; }
+
+/* Envelope wall section, vegetation and seasonal exposure */
+.wall-section { margin: .8rem 0; overflow-x: auto; border: 1px solid var(--border); border-radius: .5rem; background: var(--paper); }
+.wall-section svg { display: block; width: 100%; height: auto; min-width: 520px; }
+.vegetation-card { border: 1px solid var(--border); border-radius: .55rem; padding: .55rem .7rem; margin: .6rem 0; background: color-mix(in srgb, var(--surface) 70%, var(--bg)); }
+.vegetation-card .field-grid { grid-template-columns: 1fr; }
+.exposure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .5rem; margin: .8rem 0; }
+.exposure-grid div { border: 1px solid var(--border); border-radius: .4rem; padding: .45rem .55rem; background: var(--surface); }
+.exposure-grid dt { font-size: .74rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 800; }
+.exposure-grid dd { margin: .1rem 0 0; }
+
+#foundation-controls .field-grid { grid-template-columns: 1fr; }
+
+#finish-controls .field-grid { grid-template-columns: 1fr 1fr; }
+@media (max-width: 700px) { #finish-controls .field-grid { grid-template-columns: 1fr; } }

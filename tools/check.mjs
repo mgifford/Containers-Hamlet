@@ -56,8 +56,8 @@ ok(near(analysis.area_acres, site.area_acres, 0.2), `parcel polygon is ${analysi
 
 /* ------------------------------------------------------------------ */
 section('Terrain and landscape');
-ok(near(analysis.area_acres, 13.5, 0.06), `the fictional parcel is ${analysis.area_acres} acres (target 13.5)`);
-ok(near(analysis.area_ha, 5.46, 0.03), `the fictional parcel is ${analysis.area_ha} ha (target 5.46)`);
+ok(near(analysis.area_acres, 15.0, 0.06), `the fictional parcel is ${analysis.area_acres} acres (target 15.0)`);
+ok(near(analysis.area_ha, 6.07, 0.03), `the fictional parcel is ${analysis.area_ha} ha (target 6.07)`);
 const g1 = terrainGrid(site, 5);
 const g2 = terrainGrid(site, 5);
 ok(JSON.stringify(g1) === JSON.stringify(g2), 'the terrain grid is reproducible from the seed');
@@ -72,6 +72,15 @@ for (const [name, poly] of [['lake shoreline', site.lake.shoreline], ['wetland',
 ok(site.woodland.stands.length >= 3 && site.rocks.length >= 3 && site.clearings.length >= 2, 'woodland, rock and clearing data are present');
 ok(site.drainage.length >= 2 && site.drainage.every((d) => d.points.length > 2), 'seasonal drainage channels are recorded');
 ok(analysis.potential_areas.count > 0 && analysis.potential_areas.points.every(([x, y]) => pointInPolygon([x, y], site.parcel.polygon)), `${analysis.potential_areas.count} potential building cells are inside the parcel`);
+
+const homeHtml = read('site/index.html');
+ok(/<h2 id="explore-title">A 15-acre woodland/.test(homeHtml) && /15 acres \(6\.07 ha\)/.test(homeHtml) && !/13\.5|5\.46/.test(homeHtml.replace(/<svg[\s\S]*?<\/svg>/g, '')), 'the public site uses the 15-acre woodland area');
+ok(/class="map-layout"[\s\S]*?<aside class="map-side" id="map-key" tabindex="-1" aria-labelledby="map-key-title">[\s\S]*?<\/aside>[\s\S]*?<\/div>/.test(homeHtml), 'the map key is a sibling of the map inside the map layout');
+ok(/<details|<div id="building-details" class="details" role="region" aria-label="Selected building details" tabindex="0">/.test(homeHtml), 'the selected-building details are a labelled, keyboard-scrollable region');
+ok(/class="skip skip-local" href="#map-key"/.test(homeHtml), 'the map has a local skip link to its key');
+const visibleText = homeHtml.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]+>/g, ' ');
+ok(!/3\.66|12\.59|26\.7\s*m²|35\.6\s*m²/.test(visibleText), 'general descriptions avoid two-decimal dimensions and exact floor areas');
+ok(/~12\.6|~3\.7/.test(visibleText), 'general descriptions use approximate dimensions');
 
 section('Homes, views and orientation');
 ok(analysis.buildings.length === 7, 'six homes and one common lodge are placed');
@@ -277,7 +286,7 @@ let total = 0;
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).forEach((e) => { const f = path.join(d, e.name); if (e.isDirectory()) walk(f); else total += fs.statSync(f).size; });
 walk(path.join(ROOT, 'site'));
 console.log(`       whole published site: ${(total / 1024).toFixed(0)} KB`);
-ok(total <= 2.5 * 1024 * 1024, 'whole published site stays under 2.5 MB');
+ok(total <= 3.0 * 1024 * 1024, 'whole published site stays under 3.0 MB');
 ok(/loading="lazy"/.test(html), 'below-the-fold drawings load lazily');
 ok(!/@import|@font-face|url\(http/.test(read('site/style.css')), 'no web fonts or remote CSS');
 

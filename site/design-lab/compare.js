@@ -31,7 +31,7 @@
       '<div><dt>Nominal conditioned footprint</dt><dd>' + n(p.conditioned_area_m2) + ' m² modules plus glazed hall</dd></div>' +
       '<div><dt>Screened porch area</dt><dd>' + n(p.screened_porch_m2) + ' m²' + (p.screened_porch_m2 ? '' : ' (no screened porch)') + '</dd></div>' +
       '<div><dt>Porch and deck area</dt><dd>' + n(p.porch_m2) + ' m²</dd></div>' +
-      '<div><dt>Glazing area</dt><dd>' + n(p.glazing_m2) + ' m² · ' + n(p.glazing_ratio) + '% of nominal conditioned area</dd></div></dl>' +
+      '<div><dt>Glazing area</dt><dd>' + n(p.glazing_m2) + ' m² · ' + n(p.glazing_ratio) + '% of nominal conditioned area</dd></div>' + (p.solar && p.solar.length ? '<div><dt>Solar</dt><dd>' + p.solar.map((x) => x.id + ': ' + x.tilt_deg + '° / ' + x.azimuth_deg + '° ' + x.season_mode).join('; ') + '</dd></div>' : '') + '</dl>' +
       '<h3>Envelope options</h3><dl class="compare-facts">' +
       '<div><dt>Walls</dt><dd>' + n(t.wall_insulation_mm) + ' mm average continuous external insulation</dd></div>' +
       '<div><dt>Roof</dt><dd>' + n(t.roof_insulation_mm) + ' mm · ' + esc(t.rainscreen_ventilation ? 'ventilated rainscreen' : 'rainscreen not confirmed') + '</dd></div>' +

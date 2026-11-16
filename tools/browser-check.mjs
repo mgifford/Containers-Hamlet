@@ -124,12 +124,20 @@ try {
   await walk.context.close();
 
   section('Keyboard: operating the controls');
+  const detailsHeightBefore = await page.evaluate(() => document.querySelector('#building-details').getBoundingClientRect().height);
   await page.focus('[data-choice="c"]');
   await page.keyboard.press('Space');
   ok(await page.getAttribute('[data-choice="c"]', 'aria-pressed') === 'true', 'Space selects Cabin C (aria-pressed)');
   ok(/Cabin C, permanent home/.test(await page.textContent('#selected')), 'the status message announces the selection');
   ok(await page.evaluate(() => document.querySelector('#map-building-c').classList.contains('selected')), 'the map highlights Cabin C');
   ok(/from the shoreline/.test(await page.textContent('#building-details')) && /Main view/.test(await page.textContent('#building-details')), 'the details panel lists the view and computed siting checks');
+  ok(Math.abs(await page.evaluate(() => document.querySelector('#building-details').getBoundingClientRect().height) - detailsHeightBefore) < 2, 'selecting a building does not resize the details panel');
+  const mapKeyLayout = await page.evaluate(() => { const m = document.querySelector('.map').getBoundingClientRect(); const k = document.querySelector('#map-key').getBoundingClientRect(); return { mapRight: m.right, keyLeft: k.left, mapTop: m.top, keyTop: k.top }; });
+  ok(mapKeyLayout.keyLeft >= mapKeyLayout.mapRight - 2 && Math.abs(mapKeyLayout.keyTop - mapKeyLayout.mapTop) < 80, 'the map key sits beside the map');
+  await page.focus('.skip-local');
+  await page.waitForTimeout(120);
+  const localSkip = await page.evaluate(() => { const e = document.activeElement; const r = e.getBoundingClientRect(); return { cls: e.className, top: r.top, href: e.getAttribute('href') }; });
+  ok(/skip-local/.test(localSkip.cls) && localSkip.href === '#map-key', 'the local skip link is focusable and targets the map key');
   await page.focus('[data-choice="lodge"]');
   await page.keyboard.press('Enter');
   ok(await page.getAttribute('[data-choice="c"]', 'aria-pressed') === 'false' && await page.getAttribute('[data-choice="lodge"]', 'aria-pressed') === 'true', 'Enter selects the lodge and releases Cabin C');

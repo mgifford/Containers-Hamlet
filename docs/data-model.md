@@ -53,7 +53,7 @@ Metres, with `x` east and `y` south from the north-west corner of the map. The s
 - **`map`**: `width_m` and `height_m`.
 - **`terrain`**: `lake_level_m`, `rise_from_shore_per_m`, Gaussian `hill`/`hollow`/`ridge` features, and seeded `roughness` components. The seed is recorded so every generated surface is reproducible. `contour_interval_m`, `max_building_slope_pct` and `building_pads` control contours and siting checks.
 - **`building_pads`**: an illustrative levelled bench under each building, blended into the natural surface. `radius_m`, `blend_m` and `max_cut_fill_m`. This is a design assumption, not permission to excavate.
-- **`lake.shoreline`**, **`wetland.polygon`**, **`parcel.polygon`**: the shoreline is a polyline; the parcel includes the water's edge. The parcel area is computed from its polygon and must be about 13.5 acres.
+- **`lake.shoreline`**, **`wetland.polygon`**, **`parcel.polygon`**: the shoreline is a polyline; the parcel includes the water's edge. The parcel area is computed from its polygon and must be about 15 acres.
 - **`drainage`**: seasonal channels with a width. Buildings must stay outside `no_build.drainage_buffer_m`; walking paths may cross only where a crossing is recorded.
 - **`woodland.stands`**: indicative stand polygons with `type` (`conifer`, `mixed`, `deciduous`) and `conifer_share`. Used for map tint, tree species and the view canopy observation.
 - **`rocks`**: outcrop polygons with an illustrative buffer.
@@ -126,4 +126,4 @@ Phase 1.3 adds a separate versioned schema for the Container Home Design Studio.
 - `tools/lib/design-adapter.mjs` maps Cabin A into the Design Lab schema and a compatible design back to a Cabin A proposal. It never writes `data/cabin-a.json` and reports everything it cannot represent.
 - The Design Lab does not replace the authoritative Cabin A or lodge data. Its generated views and downloads are copies.
 
-All five Design Lab views derive from the same design object: plan, exterior, cutaway, porch/deck detail and winter study cannot drift from one another. The `thermal` object and glazed-connection fields are part of the same JSON source and are preserved through export/import.
+All five Design Lab views derive from the same design object: plan, exterior, cutaway, porch/deck detail and winter study cannot drift from one another. The `thermal`, versioned `envelope`, `vegetation` and glazed-connection fields are part of the same JSON source and are preserved through export/import. The wall section is generated from `envelope`; summer/winter exterior views use the same geometry and vegetation. Each module carries a tilted `solar` configuration (tilt, azimuth, season strategy); the exterior/winter views and plan use it, and the solar section is generated from it.

@@ -24,3 +24,7 @@ Architectural drawings are conceptual and have not been professionally verified.
 ## Photographs and third-party references
 
 No café photographs are included in this package or published on the site. Redistribution rights for the local reference photographs were not confirmed. The Common Lodge is an original interpretation of the written café/lodge brief, not a reproduction of a photographed building, interior or sign. Any future third-party reference image needs a documented licence and attribution before it is added to the repository.
+
+## Referenced suppliers and building science
+
+Ecohome, GSky, LiveWall, Wallemi, Building Science Corporation, RDH and the green-envelope research paper are linked as references only. No supplier diagram, photograph, product design or substantial text is copied. Supplier claims are not independently verified; building-science references are not a review of these concepts.

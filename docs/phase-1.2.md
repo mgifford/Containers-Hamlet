@@ -1,6 +1,6 @@
 # Phase 1.2: audit, landscape, homes and validation
 
-> Historical record. Phase 1.3 adds the Container Home Design Studio and keeps this Phase 1.2 landscape and architectural work intact. See [`phase-1.3.md`](phase-1.3.md).
+> Historical record. Phase 1.3 adds the Container Home Design Studio and keeps this Phase 1.2 landscape and architectural work intact. The site area was later expanded from 13.5 to **15 acres (6.07 ha)**; the figures below are retained as a historical record. See [`phase-1.3.md`](phase-1.3.md).
 
 Containers Hamlet is a fictional 13.5-acre Canadian Shield community of six woodland retreats and one common lodge. Phase 1.2 replaces the flat 15-acre diagram with a written-description landscape, gives each home its own orientation, view, path and brief, and turns the map into an explorable hamlet. It preserves the existing Cabin A and lodge models, drawings, downloads, cutaway explorer and validation workflow.
 

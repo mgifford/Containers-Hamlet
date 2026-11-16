@@ -85,10 +85,11 @@ ok(exists('site/design-lab/THIRD-PARTY-NOTICES.md'), 'third-party notices file i
 section('Architectural galleries and comparison');
 for (const c of data.concepts) {
   const page = read(`site/design-lab/architecture/${c.id}/index.html`);
-  ok(/data-slideshow/.test(page) && (page.match(/<img /g) || []).length === 5, `${c.id}: five-image architectural page exists`);
+  ok(/data-slideshow/.test(page) && (page.match(/<img /g) || []).length >= 5 && (page.match(/class="slide"/g) || []).length === 5, `${c.id}: five-image architectural page exists`);
   ok((page.match(/class="slide"/g) || []).length === 5 && /data-slide-prev/.test(page) && /data-slide-next/.test(page) && /data-slide-all/.test(page), `${c.id}: slideshow has five slides and visible controls`);
   ok(/data-title="Exterior architectural view"/.test(page) && /data-title="Dimensioned concept floor plan"/.test(page) && /data-title="Interior roof-off cutaway"/.test(page) && /data-title="Screened porch or deck view"/.test(page) && /data-title="Winter exterior view"/.test(page), `${c.id}: gallery has all five required views`);
   ok(/Geometry-backed drawing/.test(page) && /Illustrative study/.test(page) && /<noscript>/.test(page), `${c.id}: distinguishes drawing types and explains the no-JS fallback`);
+  ok(/Summer and winter/.test(page) && /Approximate window exposure/.test(page) && /Envelope assembly/.test(page) && /Vegetation systems/.test(page), `${c.id}: seasonal, exposure, envelope and vegetation sections are present`);
   ok(!/setInterval|setTimeout/.test(read('site/design-lab/architecture.js')), `${c.id}: slideshow has no auto-advance timer`);
 }
 ok(exists('site/design-lab/architecture.css') && exists('site/design-lab/architecture.js') && !/<script[^>]+src="https?:/i.test(read('site/design-lab/architecture.css')), 'architectural gallery styles and script are local');
@@ -101,6 +102,113 @@ ok(exists('site/design-lab/compare.css') && exists('site/design-lab/compare.js')
 
 const lodge = data.concepts.find((c) => c.id === 'common-lodge');
 ok(lodge && lodge.features.interior_uses.includes('Shared kitchen') && lodge.features.interior_uses.includes('Shared dining') && lodge.features.interior_uses.includes('Workshop') && lodge.features.interior_uses.includes('Meeting room') && lodge.modules.some((m) => m.zones.some((z) => z.type === 'bathroom')) && lodge.porches.some((p) => p.screened) && lodge.connections.some((c) => c.glazed && c.door_type === 'insulated-sliding'), 'common lodge combines shared kitchen/dining, workshop/meeting, accessible washrooms, a glazed hall and a screened veranda');
+
+section('Envelope assemblies and vegetation systems');
+for (const c of data.concepts) {
+  const env = c.envelope;
+  ok(env && env.version === '1.0' && Schema.ENVELOPE_ASSEMBLIES.indexOf(env.assembly) >= 0 && env.layers.length >= 4, `${c.id}: versioned envelope assembly with layers`);
+  const wall1 = Model.wallSectionSVG(c, c.modules[0].id, { idPrefix: 'test-wall-' + c.id });
+  const wall2 = Model.wallSectionSVG(c, c.modules[0].id, { idPrefix: 'test-wall-' + c.id });
+  ok(wall1 === wall2 && /role="img"/.test(wall1) && /<title id=/.test(wall1) && /<desc id=/.test(wall1) && /CC BY-SA 4\.0/.test(wall1), `${c.id}: wall section is deterministic and accessible`);
+  ok(!/<[^>]+\bfill="[^"]*"[^>]*\bfill="/.test(wall1), `${c.id}: wall section has no duplicate XML attributes`);
+  const summer = Model.renderAxo(c, { idPrefix: 'test-summer-' + c.id });
+  const winter = Model.renderAxo(c, { idPrefix: 'test-winter-' + c.id, season: 'winter' });
+  ok(summer !== winter, `${c.id}: summer and winter views differ`);
+  const exp = Model.exposureProfile(c);
+  ok(['north','east','south','west'].every((f) => typeof exp.glazing_by_face[f] === 'number') && exp.glazing_total_m2 >= 0 && /No energy savings/.test(exp.note), `${c.id}: approximate window exposure has no energy or privacy score`);
+  (c.vegetation || []).forEach((v) => {
+    ok(Schema.VEGETATION_TYPES.indexOf(v.type) >= 0 && v.offset_m >= 0.3 && /independent|piles|posts|footing/i.test(v.support), `${c.id} ${v.id}: vegetation is independently supported and clear of the wall`);
+  });
+  const warnings = Model.assess(c).warnings.map((w) => w.code);
+  ok(warnings.indexOf('envelope-condensation') >= 0 && warnings.indexOf('envelope-fire') >= 0 && warnings.indexOf('envelope-moisture') >= 0 && warnings.indexOf('envelope-fastening') >= 0 && warnings.indexOf('envelope-penetrations') >= 0 && warnings.indexOf('envelope-maintenance') >= 0, `${c.id}: envelope condensation, fire, moisture, fastening, penetration and maintenance warnings are present`);
+}
+const vegTypes = new Set();
+data.concepts.forEach((c) => { if ((c.trellises || []).length) vegTypes.add('trellis'); (c.vegetation || []).forEach((v) => vegTypes.add(v.type)); });
+ok(['trellis', 'living-wall', 'edible-wall', 'privacy-screen'].every((t) => vegTypes.has(t)), 'all four vegetation systems have examples');
+ok(['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'].every((a) => data.concepts.some((c) => c.envelope.assembly === a)), 'all five envelope assemblies have examples');
+ok(['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'].every((a) => exists(`site/design-lab/systems/wall-${a}.svg`)), 'shared wall sections exist for all five assemblies');
+ok(exists('site/design-lab/systems/vegetation-comparison.svg') && /Rainscreen · trellis · modular living wall/.test(read('site/design-lab/systems/vegetation-comparison.svg')), 'original rainscreen/trellis/living-wall comparison diagram exists');
+const vegPage = read('site/design-lab/vegetation/index.html');
+ok(/Four systems/.test(vegPage) && /Freestanding climbing-plant trellis/.test(vegPage) && /Modular living wall/.test(vegPage) && /Edible herb and perennial planter wall/.test(vegPage) && /Evergreen privacy screen/.test(vegPage), 'vegetation guide has all four systems');
+ok(/ecohome\.net/.test(vegPage) && /gsky\.com/.test(vegPage) && /livewall\.com/.test(vegPage) && /wallemi\.com/.test(vegPage) && /buildingscience\.com/.test(vegPage) && /rdh\.com/.test(vegPage), 'vegetation guide cites supplier and building-science sources');
+ok(/No energy savings, privacy score, carbon figure or code compliance is claimed/.test(vegPage), 'vegetation guide does not claim invented performance');
+const badEnv = JSON.parse(JSON.stringify(data.concepts[0])); badEnv.envelope.assembly = 'not-real';
+ok(!Schema.validateSchema(badEnv).ok, 'unknown envelope assemblies are rejected');
+const badVeg = JSON.parse(JSON.stringify(data.concepts[0])); badVeg.vegetation[0].offset_m = 0.1;
+ok(!Schema.validateSchema(badVeg).ok, 'vegetation closer than 300 mm is rejected');
+
+section('Solar tilt and azimuth');
+for (const c of data.concepts) {
+  const solarModules = c.modules.filter((m) => m.solar && m.solar.enabled);
+  ok(c.modules.every((m) => m.solar && m.solar.tilt_deg >= 0 && m.solar.tilt_deg <= 75 && m.solar.azimuth_deg >= 0 && m.solar.azimuth_deg <= 360), `${c.id}: every module has a valid solar configuration`);
+  ok(solarModules.every((m) => m.solar.tilt_deg === 39 && m.solar.azimuth_deg === 180), `${c.id}: solar defaults to 39° due south`);
+  if (solarModules.length) {
+    const sec = Model.solarSectionSVG(c, solarModules[0].id, { idPrefix: 'test-solar-' + c.id });
+    ok(sec === Model.solarSectionSVG(c, solarModules[0].id, { idPrefix: 'test-solar-' + c.id }) && /role="img"/.test(sec) && /39°/.test(sec) && /180/.test(sec) && /CC BY-SA 4\.0/.test(sec), `${c.id}: solar section is deterministic, accessible and shows the tilt/azimuth`);
+    const ext = Model.renderAxo(c, { idPrefix: 'test-solar-ext-' + c.id });
+    ok(new RegExp('PV ' + solarModules[0].solar.tilt_deg + '°').test(ext), `${c.id}: exterior labels the tilted PV array`);
+    ok(/solar 39° \/ 180°/.test(Model.renderPlan(c, { idPrefix: 'test-solar-plan-' + c.id })), `${c.id}: plan labels the solar azimuth and tilt`);
+  }
+}
+ok(exists('site/design-lab/systems/solar-39.svg'), 'shared 39° solar section exists');
+const badSolar = JSON.parse(JSON.stringify(data.concepts[0])); badSolar.modules[0].solar.tilt_deg = 90;
+ok(!Schema.validateSchema(badSolar).ok, 'solar tilt above 75° is rejected');
+const badAzimuth = JSON.parse(JSON.stringify(data.concepts[0])); badAzimuth.modules[0].solar.azimuth_deg = 400;
+ok(!Schema.validateSchema(badAzimuth).ok, 'solar azimuth outside 0–360° is rejected');
+
+section('Foundations and footbridge');
+for (const c of data.concepts) {
+  const f = c.foundation;
+  ok(f && Schema.FOUNDATION_SYSTEMS.indexOf(f.system) >= 0 && f.clearance_m >= 0.45 && f.clearance_m <= 2, `${c.id}: elevated foundation configuration`);
+  const sec = Model.foundationSectionSVG(c, { idPrefix: 'test-foundation-' + c.id });
+  ok(sec === Model.foundationSectionSVG(c, { idPrefix: 'test-foundation-' + c.id }) && /role="img"/.test(sec) && /<title id=/.test(sec) && /<desc id=/.test(sec) && /no compaction/.test(sec) && /CC BY-SA 4\.0/.test(sec), `${c.id}: foundation section is deterministic and accessible`);
+  ok(new RegExp(f.clearance_m + ' m clearance').test(sec), `${c.id}: foundation section shows the clearance`);
+  const ext = Model.renderAxo(c, { idPrefix: 'test-foundation-ext-' + c.id });
+  ok(/stroke="#5d6f6a"/.test(ext), `${c.id}: exterior draws the elevated piles`);
+  const warnings = Model.assess(c).warnings.map((w) => w.code);
+  ok(warnings.indexOf('foundation-geotech') >= 0 && warnings.indexOf('foundation-compaction') < 0, `${c.id}: foundation geotechnical warning is present and no-compaction is recorded`);
+}
+ok(exists('site/design-lab/systems/foundation-helical-piles.svg'), 'shared helical-pile foundation section exists');
+const ground = read('site/design-lab/ground/index.html');
+ok(/Ontario-appropriate options/.test(ground) && /Engineered helical piles/.test(ground) && /Ground screws/.test(ground) && /Concrete piers/.test(ground) && /Timber posts/.test(ground) && /Bedrock anchors/.test(ground), 'ground page documents the five foundation options');
+ok(/not compacted/.test(ground) && /root-protection zone/i.test(ground) && /No fill/.test(ground), 'ground page explains no-compaction and root protection');
+ok(/small footbridge/.test(ground) && /8 m clear-span/.test(ground) && /conservation authority/.test(ground) && /Ontario Building Code/.test(ground), 'ground page documents the footbridge and Ontario approvals');
+ok(/wcl\.org\.uk/.test(ground) && /technometalpost\.com/.test(ground) && /naturalbuildingcollective\.com/.test(ground) && /solidearthtech\.com/.test(ground) && /houzz/.test(ground), 'ground page cites the supplied sources');
+ok(exists('site/design-lab/systems/footbridge.svg') && /role="img"/.test(read('site/design-lab/systems/footbridge.svg')) && /8 metre clear-span/.test(read('site/design-lab/systems/footbridge.svg')), 'original footbridge diagram exists');
+const badFoundation = JSON.parse(JSON.stringify(data.concepts[0])); badFoundation.foundation.system = 'magic-pad';
+ok(!Schema.validateSchema(badFoundation).ok, 'unknown foundation systems are rejected');
+const badClearance = JSON.parse(JSON.stringify(data.concepts[0])); badClearance.foundation.clearance_m = 3;
+ok(!Schema.validateSchema(badClearance).ok, 'foundation clearance above 2 m is rejected');
+
+section('Container patterns, paint and door shelter');
+const micro = data.concepts.find((c) => c.id === 'micro-studio');
+ok(micro.entry_shelter && micro.entry_shelter.enabled && micro.entry_shelter.security_shutters && micro.paint && micro.paint.body === '#2f7d5f', 'Micro Studio carries the door-shelter and paint example');
+const microExt = Model.renderAxo(micro, { idPrefix: 'test-shelter' });
+ok(/2b5c4a/.test(microExt) && !/NaN/.test(microExt), 'the exterior draws the reused-door shutters');
+const microPlan = Model.renderPlan(micro, { idPrefix: 'test-shelter-plan' });
+ok(/entry shelter/.test(microPlan), 'the plan labels the entry shelter');
+const badShelter = JSON.parse(JSON.stringify(micro)); badShelter.entry_shelter.side = 'up';
+ok(!Schema.validateSchema(badShelter).ok, 'invalid shelter sides are rejected');
+const patterns = read('site/design-lab/patterns/index.html');
+ok(/Configurations worth testing/.test(patterns) && /Doors as shelter, shutters and security/.test(patterns) && /Paint and colour/.test(patterns) && /A security checklist, not a promise/.test(patterns), 'patterns guide covers configurations, doors, paint and security');
+ok(/dornob\.com/.test(patterns) && /discovercontainers\.com/.test(patterns) && /instructables\.com/.test(patterns) && /homesteading\.com/.test(patterns) && /morningchores\.com/.test(patterns) && /houzz\.com/.test(patterns) && /stock\.adobe\.com/.test(patterns), 'patterns guide cites every supplied precedent');
+const patternsSvg = read('site/design-lab/systems/container-patterns.svg');
+ok(/role="img"/.test(patternsSvg) && /<title id=/.test(patternsSvg) && /<desc id=/.test(patternsSvg) && /CC BY-SA 4\.0/.test(patternsSvg), 'container-patterns diagram is accessible and licensed');
+
+section('Common Lodge roof and solar orientation');
+const lodgeConcept = data.concepts.find((c) => c.id === 'common-lodge');
+ok(lodgeConcept.roof_form && lodgeConcept.roof_form.type === 'south-shed' && lodgeConcept.roof_form.solar_side === 'south' && lodgeConcept.roof_form.pitch_deg === 5, 'Common Lodge has one south-facing shed roof');
+ok(lodgeConcept.solar_array && lodgeConcept.solar_array.enabled && lodgeConcept.solar_array.side === 'south' && lodgeConcept.solar_array.azimuth_deg === 180 && lodgeConcept.solar_array.tilt_deg === 39, 'Common Lodge solar is 39° and true south on the south slope only');
+ok(lodgeConcept.modules.every((m) => m.solar && m.solar.enabled === false), 'Common Lodge does not add individual north-side module arrays');
+const lodgeExt = Model.renderAxo(lodgeConcept, { idPrefix: 'test-lodge-roof' });
+ok((lodgeExt.match(/PV 39° \/ 180°/g) || []).length === 1, 'Common Lodge exterior draws one south PV array');
+ok(/#2d775a|#256651|#2f6b57/.test(lodgeExt) && /#e5b21c/.test(lodgeExt), 'Common Lodge uses green containers and yellow frames');
+const lodgePlan = Model.renderPlan(lodgeConcept, { idPrefix: 'test-lodge-plan' });
+ok(/shed roof · PV south only/.test(lodgePlan) && /PV 39° \/ 180°/.test(lodgePlan), 'Common Lodge plan labels the south shed roof and PV');
+const badRoof = JSON.parse(JSON.stringify(lodgeConcept)); badRoof.roof_form.solar_side = 'north';
+ok(!Schema.validateSchema(badRoof).ok, 'north-side roof solar is rejected');
+const badArray = JSON.parse(JSON.stringify(lodgeConcept)); badArray.solar_array.side = 'north';
+ok(!Schema.validateSchema(badArray).ok, 'north-side solar array is rejected');
 
 section('Shared data model and migration');
 const base = data.concepts[0];

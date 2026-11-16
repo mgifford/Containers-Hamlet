@@ -29,6 +29,8 @@
   }
   function reveal(root) { $$('[data-enhance]', root).forEach(function (n) { n.hidden = false; }); }
   function fixed(v, d) { return Number(v).toFixed(d); }
+  function r1(v) { return (Math.round((Number(v) + Number.EPSILON) * 10) / 10).toFixed(1); }
+  function approx(v, d) { return '~' + (d === 0 ? Math.round(Number(v)) : r1(v)); }
   function useLabel(use) { return USE_LABEL[use] || use; }
   function targetName(target) {
     if (!target) return 'the forest';
@@ -64,7 +66,7 @@
     if (!b || !details) return;
     details.textContent = '';
     details.appendChild(el('h3', {}, b.name + (b.short_name ? ' · ' + b.short_name : '')));
-    details.appendChild(el('p', {}, useLabel(b.use) + ' using the ' + (b.model === 'lodge' ? 'common lodge' : 'Cabin A') + ' concept. ' + fixed(b.clear_floor_area_m2, 1) + ' m² clear floor area, ' + fixed(b.footprint_m2, 1) + ' m² footprint.'));
+    details.appendChild(el('p', {}, useLabel(b.use) + ' using the ' + (b.model === 'lodge' ? 'common lodge' : 'Cabin A') + ' concept. ' + approx(b.clear_floor_area_m2, 0) + ' m² clear floor area, ' + approx(b.footprint_m2, 0) + ' m² footprint.'));
     var dl = el('dl', { class: 'detail-facts' });
     function row(k, v) {
       var d = el('div');
@@ -79,7 +81,7 @@
     if (b.views_text && b.views_text.nearby) row('Nearby homes', b.views_text.nearby + (b.views && b.views.neighbours_in_view.length ? ' In the view cone: ' + b.views.neighbours_in_view.map(function (n) { return n.name + ' at ' + fixed(n.distance_m, 0) + ' m'; }).join(', ') + '.' : ' No other building is inside the principal view cone.'));
     if (b.views_text && b.views_text.path) row('Path and entry', b.views_text.path);
     if (b.views_text && b.views_text.winter) row('Winter', b.views_text.winter);
-    if (b.checks) row('Siting', (b.ok ? 'All illustrative checks pass' : 'One or more illustrative checks fail') + ': ' + fixed(b.shoreline_m, 0) + ' m from the shoreline, ' + fixed(b.wetland_m, 0) + ' m from the wetland, ' + fixed(b.pad.max_m, 2) + ' m maximum bench cut or fill, ' + fixed(b.crane_reach_m, 0) + ' m crane reach.');
+    if (b.checks) row('Siting', (b.ok ? 'All illustrative checks pass' : 'One or more illustrative checks fail') + ': ' + fixed(b.shoreline_m, 0) + ' m from the shoreline, ' + fixed(b.wetland_m, 0) + ' m from the wetland, ' + approx(b.pad.max_m) + ' m maximum bench cut or fill, ' + fixed(b.crane_reach_m, 0) + ' m crane reach.');
     details.appendChild(dl);
     var p = el('p', { class: 'detail-links' });
     var brief = el('a', { href: '#home-' + b.id, 'data-home-link': b.id }, 'Read the full home brief');

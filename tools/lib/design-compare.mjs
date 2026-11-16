@@ -79,6 +79,9 @@ export function comparePage(profiles, concepts) {
   <nav aria-label="Design Lab">
     <a href="../index.html">Design gallery</a>
     <a href="../editor/">Editor</a>
+    <a href="../vegetation/">Vegetation</a>
+    <a href="../ground/">Ground</a>
+    <a href="../patterns/">Patterns</a>
     <a href="../compare/">Compare</a>
     <a href="../../../index.html#design-lab">Design on the main site</a>
     <a href="../../../index.html">Main site</a>

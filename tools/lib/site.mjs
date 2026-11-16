@@ -522,7 +522,7 @@ export function analyseSite(site, models) {
 
   /* potential building areas: illustrative, not permissions */
   const potential = [];
-  const step = 8;
+  const step = 10;
   for (let y = 12; y < site.map.height_m - 8; y += step) {
     for (let x = 80; x < site.map.width_m - 8; x += step) {
       const p = [x, y];
@@ -544,7 +544,7 @@ export function analyseSite(site, models) {
   const grid = terrainGrid(site, 5);
   return {
     area_m2: Math.round(area),
-    area_acres: +(area / ACRE_M2).toFixed(2),
+    area_acres: +(area / ACRE_M2).toFixed(1),
     area_ha: +(area / 10000).toFixed(2),
     buildings: results,
     issues,

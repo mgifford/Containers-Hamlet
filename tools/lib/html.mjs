@@ -3,6 +3,9 @@
 import { esc, m } from './svg.mjs';
 
 const a2 = (v) => (Math.round(v * 10) / 10).toFixed(1);
+const r1 = (v) => (Math.round((Number(v) + Number.EPSILON) * 10) / 10).toFixed(1);
+const approx = (v, d = 1) => '~' + (d === 0 ? Math.round(Number(v)) : r1(v));
+const dims = (a, b) => `~${r1(a)} × ${r1(b)}`;
 
 export function replaceFragments(html, fragments) {
   let out = html;
@@ -21,11 +24,11 @@ export function factsList(model) {
   const ramp = model.ramps[0];
   const wall = M.wall_layers.reduce((s, l) => s + l.thickness_m, 0) + M.ts + M.li;
   const rows = [
-    ['Overall size', `${m(M.overall.length_m, 2)} × ${m(M.overall.width_m, 2)} m outside the rainscreen (${a2(M.footprint_m2)} m² footprint)`],
+    ['Overall size', `${dims(M.overall.length_m, M.overall.width_m)} m outside the rainscreen (${approx(M.footprint_m2, 0)} m² footprint)`],
     ['Modules', `${modules} × ${esc(spec.module.type)}, ${m(M.L, 3)} × ${m(M.W, 3)} × ${m(M.H, 3)} m`],
-    ['Clear floor area', `${a2(M.clear_floor_area_m2)} m² inside the lining, plus ${a2(M.porch_area_m2)} m² of porch and deck`],
+    ['Clear floor area', `${approx(M.clear_floor_area_m2, 0)} m² inside the lining, plus ${approx(M.porch_area_m2, 0)} m² of porch and deck`],
     ['Clear height', `${m(M.clear_height_m, 2)} m in the modules${model.bays.some((b) => b.type === 'hall') ? `; ${m(model.bays.find((b) => b.type === 'hall').ceiling - M.FFL, 2)} m in the hall` : ''}`],
-    ['Floor above grade', `${m(M.ffl_above_grade_m, 2)} m on piles${ramp ? `, so step-free access needs ${m(ramp.run_m, 2)} m of ramp at 1:${ramp.slope_ratio} per entrance` : ''}`],
+    ['Floor above grade', `${approx(M.ffl_above_grade_m)} m on piles${ramp ? `, so step-free access needs ${m(ramp.run_m, 2)} m of ramp at 1:${ramp.slope_ratio} per entrance` : ''}`],
     ['Exterior wall', `${Math.round(wall * 1000)} mm: lining, steel, ${Math.round(M.wall_layers[0].thickness_m * 1000)} mm external insulation, ventilated cavity, timber rainscreen`],
     ['Roof PV (concept)', `${M.pv.panels} modules, about ${M.pv.kwp} kWp, drawn flat; sizing needs measured solar resource and winter loads`],
   ];
@@ -185,7 +188,7 @@ export function homeDossiers(site, analysis, models, diagrams) {
       ? `Inside the 120 m view cone: ${views.neighbours_in_view.map((n) => `${n.name} at ${a2(n.distance_m)} m, ${a2(n.off_axis_deg)}° off the view axis`).join('; ')}. These are approximate bearings, not a visibility or privacy rating.`
       : 'No other building lies inside the principal 120 m view cone. This is a geometric observation, not a guarantee of privacy.';
     const porchText = porch
-      ? `${m(porch.x1 - porch.x0, 2)} × ${m(porch.y1 - porch.y0, 2)} m screened porch on the ${esc(porch.side)} side of the building, with its own frame and piles.`
+      ? `${dims(porch.x1 - porch.x0, porch.y1 - porch.y0)} m screened porch on the ${esc(porch.side)} side of the building, with its own frame and piles.`
       : 'No screened porch is defined in this concept.';
     const status = r && r.ok ? '<span class="ok">All illustrative siting checks pass</span>' : '<span class="fail">One or more siting checks fail</span>';
     const rows = [
@@ -198,7 +201,7 @@ export function homeDossiers(site, analysis, models, diagrams) {
       ['Winter', esc(v.winter || '')],
       ['Screened outdoor room', `${porchText} This is part of the architectural concept, not an addition.`],
       ['Design note', esc(b.design_note || '')],
-      ['Siting', `${status}: ${r ? `${a2(r.shoreline_m)} m from the shoreline, ${a2(r.wetland_m)} m from the wetland, ${a2(r.pad.max_m)} m maximum bench cut or fill, ${a2(r.crane_reach_m)} m crane reach, ${a2(r.entrance_to_lane_m)} m from ramp foot to lane` : 'not assessed'}. All limits are placeholders; see the siting table.`],
+      ['Siting', `${status}: ${r ? `${a2(r.shoreline_m)} m from the shoreline, ${a2(r.wetland_m)} m from the wetland, ${approx(r.pad.max_m)} m maximum bench cut or fill, ${a2(r.crane_reach_m)} m crane reach, ${a2(r.entrance_to_lane_m)} m from ramp foot to lane` : 'not assessed'}. All limits are placeholders; see the siting table.`],
     ];
     return `  <article class="home" data-home="${esc(b.id)}" id="home-${esc(b.id)}">
     <header class="home-head">
@@ -233,7 +236,7 @@ export function landscapeFacts(site, analysis) {
     ['Homes and lodge', `${homes} homes and one common lodge, placed on small benches and individually oriented`],
     ['Constraints', `${site.no_build.shoreline_setback_m} m shoreline and ${site.no_build.wetland_buffer_m} m wetland buffers, ${site.no_build.drainage_buffer_m} m drainage buffer and ${site.no_build.rock_buffer_m} m rock buffer. All are illustrative planning assumptions, not legal setbacks`],
     ['Access', `${site.circulation.parking.spaces} shared parking spaces (${site.circulation.parking.accessible_spaces} accessible), one accessible drop-off, walking paths and one narrow emergency, construction and maintenance track. No private driveways`],
-    ['Unbuilt areas', `${analysis.potential_areas.count} illustrative 8 m cells meet the project constraints outside the buffers, water, rocks, paths and buildings. They are not available lots`],
+    ['Unbuilt areas', `${analysis.potential_areas.count} illustrative ${analysis.potential_areas.step_m} m cells meet the project constraints outside the buffers, water, rocks, paths and buildings. They are not available lots`],
   ];
   return `<dl class="facts landscape-facts">\n${rows.map(([k, v]) => `  <div><dt>${esc(k)}</dt><dd>${v}</dd></div>`).join('\n')}\n</dl>`;
 }
@@ -249,7 +252,7 @@ export function modelCards(models, images) {
         <h3>${esc(spec.name)}</h3>
         <p>${esc(spec.summary || '')}</p>
         <ul class="plain-list">
-          <li>${a2(model.meta.clear_floor_area_m2)} m² clear floor area inside the lining${porch ? `, plus a ${m(porch.x1 - porch.x0, 2)} × ${m(porch.y1 - porch.y0, 2)} m screened porch` : ''}.</li>
+          <li>${approx(model.meta.clear_floor_area_m2, 0)} m² clear floor area inside the lining${porch ? `, plus a ${dims(porch.x1 - porch.x0, porch.y1 - porch.y0)} m screened porch` : ''}.</li>
           <li>${model.bays.filter((b) => b.type === 'container').length} reused container module${model.bays.filter((b) => b.type === 'container').length === 1 ? '' : 's'}${model.bays.some((b) => b.type === 'hall') ? ' and a timber hall' : ''}.</li>
           <li>Continuous external insulation, ventilated rainscreen and a replaceable envelope. Concept only.</li>
         </ul>
