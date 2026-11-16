@@ -66,3 +66,23 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 - `split-overview.jpg`: the shorter landing page.
 - `split-hamlet.jpg`: the map on its own `/hamlet/` page.
 - `split-cabin-a.jpg`: Cabin A drawings and rooms on `/cabin-a/`.
+
+## Community resilience and water
+
+- `resilience-guide.jpg`: hamlet-scale fire, climate and social capacity.
+- `water-guide.jpg`: rainwater, greywater, blackwater and fire reserve.
+
+## Map discoverability
+
+- `map-wide.jpg`: the wider map with the key below and the selected-building panel.
+- `map-promo.jpg`: the landing-page map preview card.
+
+## Home variation
+
+- `pair-birch.jpg`: Birch with an offset two-container massing.
+- `juniper-compact.jpg`: the 20-foot Juniper home.
+- `map-pair.jpg`: the map showing the offset pair.
+
+## Arrangement gallery and disclosure
+
+- `arrangement-studies.jpg`: stacked, cantilever, L/courtyard and creek-room studies.

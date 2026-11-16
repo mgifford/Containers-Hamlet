@@ -60,13 +60,13 @@ A fire-protection engineer, building official, local fire department, insurer an
 
 | Check | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | 162 generated files current |
-| `node tools/check.mjs` | 246 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 712 passed, 0 failed |
-| `node tools/browser-check.mjs` | 79 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 150 passed, 0 failed |
-| Main first view | 235 KB uncompressed / 62 KB gzipped |
-| Whole published site | 3145 KB (under 3.2 MB) |
+| `node tools/build.mjs --check` | 192 generated files current |
+| `node tools/check.mjs` | 268 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 722 passed, 0 failed |
+| `node tools/browser-check.mjs` | 86 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 166 passed, 0 failed |
+| Main first view | 253 KB uncompressed / 63 KB gzipped |
+| Whole published site | 3422 KB (under 3.5 MB) |
 
 ## Screenshot
 

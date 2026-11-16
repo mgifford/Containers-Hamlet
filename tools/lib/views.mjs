@@ -87,9 +87,11 @@ export function renderViewDiagram(site, models, analysis, b) {
     out.push(`<path d="${'M' + poly.map((p) => `${fmt(p[0], 1)} ${fmt(p[1], 1)}`).join('L')}Z" fill="${bb.id === 'lodge' ? '#8a694d' : '#b58a62'}" stroke="#274c3b" stroke-width="0.6"/>`);
     out.push(`<text x="${fmt(pp[0], 1)}" y="${fmt(pp[1] - 5, 1)}" font-family="system-ui, sans-serif" font-size="8" font-weight="700" fill="#24452f" stroke="#f7f5eb" stroke-width="2" paint-order="stroke" text-anchor="middle">${esc(homeLabel(bb))}</text>`);
   });
-  // home
-  const poly = pl.parts[0].poly.map(to);
-  out.push(`<path d="${'M' + poly.map((p) => `${fmt(p[0], 1)} ${fmt(p[1], 1)}`).join('L')}Z" fill="#b58a62" stroke="#7a3b14" stroke-width="1.6"/>`);
+  // home: show both modules when the site uses the pair configuration
+  pl.parts.filter((p) => p.kind === 'building').forEach((part) => {
+    const poly = part.poly.map(to);
+    out.push(`<path d="${'M' + poly.map((p) => `${fmt(p[0], 1)} ${fmt(p[1], 1)}`).join('L')}Z" fill="#b58a62" stroke="#7a3b14" stroke-width="1.6"/>`);
+  });
   pl.parts.filter((p) => p.kind === 'porch').forEach((p) => {
     out.push(`<path d="${'M' + p.poly.map(to).map((q) => `${fmt(q[0], 1)} ${fmt(q[1], 1)}`).join('L')}Z" fill="#d9c7a5" stroke="#7a3b14" stroke-width="1"/>`);
   });

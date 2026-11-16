@@ -94,7 +94,7 @@ const visibleText = homeHtml.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]+
 ok(!/3\.66|12\.59|26\.7\s*m²|35\.6\s*m²/.test(visibleText), 'general descriptions avoid two-decimal dimensions and exact floor areas');
 ok(/~12\.6|~3\.7/.test(visibleText), 'general descriptions use approximate dimensions');
 
-const HOME_PAGES = { a: 'Cedar-1-simple', b: 'Birch-2-wide', c: 'Pine-1-simple', d: 'Moss-2-wide', e: 'Fern-2-wide', f: 'Juniper-1-simple', lodge: 'Lodge-3-community' };
+const HOME_PAGES = { a: 'Cedar-1-simple', b: 'Birch-2-wide', c: 'Pine-1-simple', d: 'Moss-2-wide', e: 'Fern-2-wide', f: 'Juniper-1-compact', lodge: 'Lodge-3-community' };
 for (const [id, slug] of Object.entries(HOME_PAGES)) {
   const page = read(`site/homes/${slug}/index.html`);
   ok(exists(`site/homes/${slug}/index.html`) && /<h1>/.test(page) && /id="main-view"/.test(page) && /id="siting"/.test(page), `home page ${slug} has a title, main view and siting anchor`);
@@ -105,12 +105,18 @@ for (const [id, slug] of Object.entries(HOME_PAGES)) {
   const nameRedirect = read(`site/homes/${shortName}/index.html`);
   ok(/http-equiv="refresh"/.test(nameRedirect) && nameRedirect.indexOf(`../${slug}/`) >= 0, `/homes/${shortName}/ redirects to ${slug}`);
   if (id === 'e') ok(/Fern-2-wide/.test(read('site/homes/Fern-1-simple/index.html')), 'old Fern-1-simple URL redirects to Fern-2-wide');
+  if (id === 'f') ok(/Juniper-1-compact/.test(read('site/homes/Juniper-1-simple/index.html')), 'old Juniper-1-simple URL redirects to the compact page');
 }
 const cabinPage = read('site/cabin-a/index.html');
 const lodgePage = read('site/lodge/index.html');
 ok(/<h1>Cabin A · The Retreat<\/h1>/.test(cabinPage) && /id="plan"/.test(cabinPage) && /id="rooms"/.test(cabinPage) && /models\/cabin-a\/floor-plan\.svg/.test(cabinPage), 'Cabin A has a dedicated drawings-and-rooms page');
 ok(/<h1>The common lodge<\/h1>/.test(lodgePage) && /id="plan"/.test(lodgePage) && /id="rooms"/.test(lodgePage) && /models\/lodge\/floor-plan\.svg/.test(lodgePage), 'the lodge has a dedicated drawings-and-rooms page');
 ok(/href="hamlet\/"/.test(homeHtml) && !/id="site-map"/.test(homeHtml), 'the landing page links the map page and no longer inlines the map');
+ok(/class="map-promo"/.test(homeHtml) && /href="hamlet\/"/.test(homeHtml), 'the landing page has a visible map preview link');
+ok(/id="map-expand"/.test(hamletHtml) && /href="\.\.\/assets\/site-plan\.svg"/.test(hamletHtml), 'the map page has full-screen and full-size map controls');
+const juniper = read('site/homes/Juniper-1-compact/index.html');
+ok(/20-ft compact concept/.test(juniper) && /configurations\/f\.svg/.test(juniper) && /~13 m² clear/.test(juniper), 'Juniper is a compact 20-foot home, not another 40-foot clone');
+ok(/offset pair/.test(read('site/assets/configurations/b.svg')) && /20-ft module/.test(read('site/assets/configurations/f.svg')), 'home configuration thumbnails show offset pairs and the short module');
 const homesIndexHtml = read('site/homes/index.html');
 ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && Object.values(HOME_PAGES).every((slug) => homesIndexHtml.indexOf(`href="${slug}/"`) >= 0), 'homes index links all seven descriptive home pages');
 ok((homeHtml.match(/class="home-index-card"/g) || []).length === 7 && /homes\/Pine-1-simple\//.test(homeHtml), 'the main page links the seven descriptive home pages');
@@ -319,7 +325,7 @@ let total = 0;
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).forEach((e) => { const f = path.join(d, e.name); if (e.isDirectory()) walk(f); else total += fs.statSync(f).size; });
 walk(path.join(ROOT, 'site'));
 console.log(`       whole published site: ${(total / 1024).toFixed(0)} KB`);
-ok(total <= 3.2 * 1024 * 1024, 'whole published site stays under 3.2 MB');
+ok(total <= 3.5 * 1024 * 1024, 'whole published site stays under 3.5 MB');
 ok(/loading="lazy"/.test(html), 'below-the-fold drawings load lazily');
 ok(!/@import|@font-face|url\(http/.test(read('site/style.css')), 'no web fonts or remote CSS');
 

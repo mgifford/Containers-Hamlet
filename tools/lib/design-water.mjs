@@ -1,0 +1,151 @@
+// Code: MIT. Content: CC BY-SA 4.0.
+const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function nav(current) {
+  const links = [['../index.html','Design gallery'],['../editor/','Editor'],['../vegetation/','Vegetation'],['../ground/','Ground'],['../patterns/','Patterns'],['../fire/','Fire'],['../two-storey/','Two-storey'],['../resilience/','Resilience'],['../water/','Water'],['../compare/','Compare']];
+  return `<header class="site-header"><a class="brand" href="../../../index.html">Containers Hamlet</a><nav aria-label="Design Lab">${links.map(([h,l]) => `<a href="${h}"${l === current ? ' aria-current="page"' : ''}>${l}</a>`).join('')}<a href="../../../index.html">Main site</a></nav></header>`;
+}
+export function waterSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 390" role="img" aria-labelledby="water-t water-d">
+<title id="water-t">Concept water cycle for one home and the hamlet</title>
+<desc id="water-d">Original diagram: rain falls on the roof, passes a first-flush diverter and filter into a cistern. A pump supplies non-potable use and a separate fire reserve. Greywater goes to subsurface irrigation or a treatment system. Blackwater goes to a septic or permitted alternative system. Overflow goes to a rain garden or swale. Potable water needs treatment and testing.</desc>
+<rect width="1040" height="390" fill="#faf8f2"/>
+<rect x="40" y="64" width="250" height="120" rx="8" fill="#eef3e7" stroke="#8aa184"/><path d="M40 96h250" stroke="#8aa184"/><text x="56" y="86" font-family="system-ui" font-size="11" font-weight="700" fill="#1d392c">Rain on the roof</text><text x="56" y="120" font-family="system-ui" font-size="10" fill="#31573f">catchment area × rainfall</text><text x="56" y="138" font-family="system-ui" font-size="10" fill="#31573f">× runoff efficiency</text><text x="56" y="160" font-family="system-ui" font-size="9" fill="#5e6a58">first flush, leaf screen, filter</text>
+<path d="M290 124h60" stroke="#2f6b57" stroke-width="3"/><path d="M350 124l-10-6v12z" fill="#2f6b57"/>
+<rect x="370" y="64" width="220" height="120" rx="8" fill="#e3eef1" stroke="#6b95a2"/><text x="386" y="86" font-family="system-ui" font-size="11" font-weight="700" fill="#1d392c">Cistern + fire reserve</text><text x="386" y="108" font-family="system-ui" font-size="9" fill="#31573f">daily storage: pump, filter, level alarm</text><text x="386" y="124" font-family="system-ui" font-size="9" fill="#31573f">fire reserve: separate, accessible</text><text x="386" y="146" font-family="system-ui" font-size="9" fill="#9a4e3a">overflow to swale/rain garden</text><text x="386" y="166" font-family="system-ui" font-size="9" fill="#5e6a58">freeze protection and drain-down</text>
+<path d="M590 124h60" stroke="#2f6b57" stroke-width="3"/><path d="M650 124l-10-6v12z" fill="#2f6b57"/>
+<rect x="670" y="54" width="300" height="70" rx="8" fill="#f7f5ed" stroke="#b9c4b3"/><text x="686" y="78" font-family="system-ui" font-size="11" font-weight="700" fill="#1d392c">Use</text><text x="686" y="96" font-family="system-ui" font-size="9" fill="#31573f">non-potable: toilet, laundry, garden, wash-down</text><text x="686" y="112" font-family="system-ui" font-size="9" fill="#9a4e3a">potable: treat, test, protect</text>
+<rect x="670" y="142" width="300" height="68" rx="8" fill="#f7f5ed" stroke="#b9c4b3"/><text x="686" y="166" font-family="system-ui" font-size="11" font-weight="700" fill="#1d392c">Greywater</text><text x="686" y="184" font-family="system-ui" font-size="9" fill="#31573f">showers/sinks/laundry → subsurface irrigation</text><text x="686" y="200" font-family="system-ui" font-size="9" fill="#31573f">or permitted treatment; no edible crop contact</text>
+<rect x="370" y="230" width="300" height="76" rx="8" fill="#f2e6dd" stroke="#b9896e"/><text x="386" y="254" font-family="system-ui" font-size="11" font-weight="700" fill="#1d392c">Blackwater</text><text x="386" y="272" font-family="system-ui" font-size="9" fill="#31573f">septic or permitted alternative system</text><text x="386" y="288" font-family="system-ui" font-size="9" fill="#9a4e3a">not a DIY barrel; health unit + Building Code</text>
+<path d="M700 210v20h-80" stroke="#9a4e3a" stroke-width="2" fill="none" stroke-dasharray="5 3"/><path d="M620 210v20" stroke="#9a4e3a" stroke-width="2"/>
+<text x="40" y="340" font-family="system-ui" font-size="9" fill="#5e6a58">Concept only · not a plumbing, treatment, fire-water or sewage design · Containers Hamlet Design Lab · CC BY-SA 4.0</text>
+</svg>`;
+}
+export function waterPage() {
+  return `<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Rainwater harvesting, greywater, blackwater and a separate fire reserve for a small forest hamlet.">
+<title>Water cycle · Containers Hamlet Design Lab</title>
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../architecture.css">
+<link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+<script src="water.js" defer></script>
+</head>
+<body class="lab-page">
+<a class="skip" href="#main">Skip to content</a>
+${nav('Water')}
+<main id="main" class="lab-main">
+  <p class="eyebrow">Rain, greywater, blackwater</p>
+  <h1>Keep the water cycles separate.</h1>
+  <p class="lede">A hamlet can harvest rain, reuse greywater and return blackwater safely, but those are three different systems with three different approvals. A single “water tank” is not a water strategy.</p>
+  <p class="notice"><strong>Not a plumbing, treatment or sewage design.</strong> Ontario Building Code Part 8, the local health unit, fire service and a qualified designer govern the real system. Potable water needs treatment and testing; fire water needs a fire-service connection.</p>
+
+  <section aria-labelledby="cycle-title">
+    <h2 id="cycle-title">The water cycle</h2>
+    <figure class="system-figure"><img src="../systems/water-cycle.svg" width="1040" height="390" alt="Original diagram of roof rainwater passing a first-flush diverter and filter into a cistern and separate fire reserve, then to non-potable use and potable treatment, with greywater to subsurface irrigation and blackwater to septic." loading="eager" decoding="async"><figcaption>Original concept diagram. Not a plumbing or treatment design.</figcaption></figure>
+  </section>
+
+  <section aria-labelledby="rain-title">
+    <h2 id="rain-title">Rainwater harvesting</h2>
+    <p>The first calculation is simple: <strong>catchment area × rainfall × runoff efficiency</strong>. A 36 m² cabin roof at 900 mm/year with 85% capture yields about <strong>27,500 L/year</strong> before first-flush losses. Use local rainfall, not this illustrative number.</p>
+    <ul>
+      <li><strong>Catchment:</strong> roof area and material; a metal roof is easier to keep clean than a rough or coated surface.</li>
+      <li><strong>First flush and filtration:</strong> divert the first rain and screen leaves; a filter is not a potable treatment.</li>
+      <li><strong>Storage:</strong> size for dry spells, fire reserve and overflow — not just the annual total.</li>
+      <li><strong>Freeze protection:</strong> drain-down, frost-protected lines or an indoor tank room; a full outdoor cistern can freeze.</li>
+      <li><strong>Potable use:</strong> filtration, disinfection and testing; do not assume rainwater is safe to drink.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="calc-title">
+    <h2 id="calc-title">Illustrative rainwater calculator</h2>
+    <p>This calculator only does arithmetic. It does not size a real system or approve a potable supply.</p>
+    <form id="water-calc" class="water-calc">
+      <div class="field-grid">
+        <label>Roof catchment (m²)<input id="roof-area" type="number" min="1" max="2000" step="1" value="36"></label>
+        <label>Annual rainfall (mm)<input id="rainfall" type="number" min="100" max="3000" step="10" value="900"></label>
+        <label>Capture efficiency (%)<input id="efficiency" type="number" min="30" max="100" step="1" value="85"></label>
+        <label>Storage (L)<input id="storage" type="number" min="0" max="100000" step="100" value="5000"></label>
+        <label>Residents<input id="people" type="number" min="1" max="30" step="1" value="2"></label>
+        <label>Daily use per person (L)<input id="demand" type="number" min="20" max="400" step="5" value="100"></label>
+        <label>Fire reserve (L)<input id="fire-reserve" type="number" min="0" max="100000" step="500" value="5000"></label>
+      </div>
+      <button type="button" id="calc-water">Calculate</button>
+      <p id="water-result" class="notice" role="status" aria-live="polite">Enter the figures and calculate.</p>
+    </form>
+    <noscript><p>The calculator needs JavaScript. The formula is roof area × rainfall × efficiency; storage days are usable storage ÷ daily demand.</p></noscript>
+  </section>
+
+  <details class="deep-dive"><summary>Greywater details</summary>
+<section aria-labelledby="grey-title">
+    <h2 id="grey-title">Greywater</h2>
+    <p>Greywater is wastewater from showers, baths, sinks and laundry — not toilet water. It can reduce potable demand for subsurface irrigation or be treated for reuse, but it is not automatically allowed and it is not clean water.</p>
+    <ul>
+      <li>Use subsurface irrigation, not spray or surface ponding.</li>
+      <li>Keep it away from edible crops, wells, the lake, wetlands and neighbours.</li>
+      <li>Avoid strong cleaners, bleach, salts, grease and food solids.</li>
+      <li>Provide a bypass to the septic system and a maintenance plan.</li>
+      <li>Confirm the Ontario Building Code, health unit and conservation-authority requirements; do not plumb it into the potable system.</li>
+    </ul>
+  </section>
+</details>
+
+  <details class="deep-dive"><summary>Blackwater and sewage details</summary>
+<section aria-labelledby="black-title">
+    <h2 id="black-title">Blackwater and sewage</h2>
+    <p>Toilet water needs a proper septic system or a permitted alternative. Composting and source-separating toilets can work, but they need a manufacturer's instructions, a management plan, health-unit approval and a place for the finished material.</p>
+    <ul>
+      <li><strong>Septic:</strong> siting, separation distances, soil/permeability, tank sizing, drainfield and reserve area; protect from traffic, frost and flooding.</li>
+      <li><strong>Composting/alternative:</strong> ventilation, leachate, temperature, pathogen reduction, maintenance and approval.</li>
+      <li><strong>Do not mix:</strong> greywater, blackwater, stormwater and fire water need separate paths and labels.</li>
+    </ul>
+  </section>
+</details>
+
+  <details class="deep-dive"><summary>Fire reserve details</summary>
+<section aria-labelledby="fire-water-title">
+    <h2 id="fire-water-title">Fire reserve is not the last litre</h2>
+    <p>A fire reserve should be a <strong>dedicated, accessible volume</strong> with a connection the fire service has tested. It should not be counted as household storage, and it should not depend on a pump that fails in a power outage.</p>
+    <ul>
+      <li>Agree the volume, flow, duration and connection with the fire department.</li>
+      <li>Provide year-round access, a dry hydrant or draft point, and signage.</li>
+      <li>Protect the reserve from contamination and freezing; test it.</li>
+      <li>Keep the daily cistern and fire reserve separate, or guarantee the reserve with a physical reserve and alarm.</li>
+    </ul>
+  </section>
+</details>
+
+  <details class="deep-dive"><summary>Drought and flood operations</summary>
+<section aria-labelledby="drought-title">
+    <h2 id="drought-title">Drought and flood operations</h2>
+    <ul>
+      <li><strong>Drought trigger levels:</strong> agree when irrigation stops, when greywater is prioritised, and when water is trucked in.</li>
+      <li><strong>Fire reserve:</strong> never drawn down for gardens or washing.</li>
+      <li><strong>Flood:</strong> cistern overflow to a swale/rain garden; protect the tank from buoyancy and contamination; keep the septic above flood level.</li>
+      <li><strong>Water quality:</strong> test after flooding, long storage or any treatment change.</li>
+    </ul>
+  </section>
+</details>
+
+  <details class="deep-dive"><summary>Rules and sources</summary>
+<section aria-labelledby="rules-title">
+    <h2 id="rules-title">Rules and sources</h2>
+    <ul>
+      <li><a href="https://www.ontario.ca/document/2024-building-code-compendium/part-8-sewage-systems">Ontario Building Code Part 8 — sewage systems</a>.</li>
+      <li><a href="https://www.ontario.ca/page/firesmart">Ontario FireSmart</a> and <a href="https://firesmartcanada.ca/">FireSmart Canada</a>.</li>
+      <li><a href="https://climatedata.ca/buildings-module-overview/">ClimateData.ca buildings module</a>.</li>
+      <li>Your local health unit, conservation authority, fire department and building official.</li>
+    </ul>
+    <p class="small">No potable-water, sewage, fire-water or plumbing compliance is claimed.</p>
+  </section>
+</details>
+
+  <p><a class="action" href="../resilience/">Community resilience</a> <a class="action secondary" href="../fire/">Fire resilience</a></p>
+</main>
+<footer class="site-footer"><p><a href="../../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>
+</body>
+</html>`;
+}

@@ -225,6 +225,12 @@ export function placeBuilding(model, b) {
   };
   const rect = (x0, y0, x1, y1) => [[x0, y0], [x1, y0], [x1, y1], [x0, y1]].map(to);
   const parts = [{ kind: 'building', poly: rect(M.overall.x0, M.overall.y0, M.overall.x1, M.overall.y1) }];
+  if (b.configuration === 'pair') {
+    // Two-container study shown as an offset pair, not one long rectangle.
+    const dx = (b.pair_offset && b.pair_offset[0]) || 1.9;
+    const dy = (b.pair_offset && b.pair_offset[1]) || (M.Wt + 1.15);
+    parts.push({ kind: 'building', poly: rect(M.overall.x0 + dx, M.overall.y0 + dy, M.overall.x1 + dx, M.overall.y1 + dy) });
+  }
   model.porches.forEach((p) => {
     const roof = model.prims.find((q) => q.porch === p.id && q.cat === 'porch-roof');
     const r = roof ? [roof.min[0], roof.min[1], roof.max[0], roof.max[1]] : [p.x0, p.y0, p.x1, p.y1];
@@ -371,8 +377,9 @@ export function analyseSite(site, models) {
     const r = {
       id: b.id, name: b.name, short_name: b.short_name || b.name, use: b.use, model: b.model,
       x_m: b.x_m, y_m: b.y_m, rotation_deg: b.rotation_deg || 0,
-      footprint_m2: model.meta.footprint_m2,
-      clear_floor_area_m2: model.meta.clear_floor_area_m2,
+      footprint_m2: b.configuration === 'pair' ? 66.3 : model.meta.footprint_m2,
+      clear_floor_area_m2: b.configuration === 'pair' ? 50 : model.meta.clear_floor_area_m2,
+      configuration: b.configuration || 'single',
       ground_elevation_m: +elev(b.x_m, b.y_m).toFixed(1),
       natural_slope_pct: +naturalSlope.toFixed(1),
       pad,

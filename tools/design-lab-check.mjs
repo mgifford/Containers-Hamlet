@@ -59,11 +59,16 @@ try {
   section('Design gallery');
   let { context, page, errors, foreign } = await open('design-lab/');
   ok(errors.length === 0, `gallery: no console errors${errors.length ? ': ' + errors.join(' | ') : ''}`);
-  const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card').length, editable: document.querySelectorAll('.concept-badge.editable').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
-  ok(count.cards === 10 && count.editable === 3 && count.inspiration === 7 && count.headings === 1, 'gallery shows ten cards, three editable, six inspiration-only homes and the lodge');
+  const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card:not(.arrangement-card)').length, editable: document.querySelectorAll('.concept-badge.editable').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
+  ok(count.cards === 10 && count.editable === 3 && count.inspiration === 7 && count.headings === 1, 'gallery shows ten concept cards, three editable, six inspiration-only homes and the lodge');
+  ok(await page.locator('.arrangement-card').count() === 4, 'gallery shows four arrangement studies');
+  ok(await page.locator('.concept-specs').first().evaluate((d) => !d.open), 'technical specification lists start collapsed');
+  await page.locator('.concept-specs').first().locator('summary').click();
+  ok(await page.locator('.concept-specs').first().evaluate((d) => d.open), 'specification disclosure opens by keyboard or pointer');
+
   await page.locator('#gallery').scrollIntoViewIfNeeded();
-  await page.evaluate(async () => { for (const img of document.querySelectorAll('.concept-card-media img')) { img.scrollIntoView({ block: 'center' }); await new Promise((r) => setTimeout(r, 60)); } window.scrollTo(0, 0); });
-  await page.waitForTimeout(800);
+  await page.evaluate(async () => { for (const img of document.querySelectorAll('.concept-card-media img')) { img.scrollIntoView({ block: 'center' }); await new Promise((r) => setTimeout(r, 120)); } window.scrollTo(0, 0); });
+  await page.waitForTimeout(1200);
   const imgs = await page.evaluate(() => [...document.querySelectorAll('.concept-card-media img')].map((i) => ({ w: i.naturalWidth, alt: i.alt })));
   ok(imgs.every((i) => i.w > 0 && i.alt.length > 20), 'every gallery illustration loads with descriptive alt text');
   ok(await visible(page, '#concept-woodland-retreat details'), 'gallery exposes further views and source files');
@@ -446,6 +451,28 @@ try {
   await shot(vegPage.page, 'vegetation-full', true);
   await vegPage.context.close();
 
+  section('Community resilience and water');
+  const resilience = await open('design-lab/resilience/');
+  ok(resilience.errors.length === 0, `resilience page: no console errors${resilience.errors.length ? ': ' + resilience.errors.join(' | ') : ''}`);
+  const resilienceText = await resilience.page.textContent('main');
+  ok(/hamlet-scale system/.test(resilienceText) && /beyond the Ontario guidance/.test(resilienceText) && /Hotter, wetter, drier, smokier/.test(resilienceText) && /community resilience/.test(resilienceText), 'resilience page: fire, climate and community sections are present');
+  await axe(resilience.page, 'resilience page');
+  await shot(resilience.page, 'resilience-guide');
+  await resilience.context.close();
+
+  const water = await open('design-lab/water/');
+  ok(water.errors.length === 0, `water page: no console errors${water.errors.length ? ': ' + water.errors.join(' | ') : ''}`);
+  const waterState = await water.page.evaluate(() => ({ image: !!document.querySelector('.system-figure img'), output: document.querySelector('#water-result').textContent, inputs: document.querySelectorAll('#water-calc input').length }));
+  ok(waterState.image && waterState.inputs === 7 && /Illustrative harvest/.test(waterState.output), 'water page: diagram, seven inputs and calculated result are present');
+  await water.page.fill('#roof-area', '72');
+  await water.page.fill('#people', '4');
+  await water.page.click('#calc-water');
+  await water.page.waitForTimeout(200);
+  ok(/Illustrative harvest/.test(await water.page.textContent('#water-result')) && /L\/year/.test(await water.page.textContent('#water-result')), 'water calculator updates from the inputs');
+  await axe(water.page, 'water page');
+  await shot(water.page, 'water-guide');
+  await water.context.close();
+
   section('Two-storey study');
   const storey = await open('design-lab/two-storey/');
   ok(storey.errors.length === 0, `two-storey study: no console errors${storey.errors.length ? ': ' + storey.errors.join(' | ') : ''}`);
@@ -520,6 +547,22 @@ try {
   const darkCompare = await open('design-lab/compare/', { colorScheme: 'dark' });
   await axe(darkCompare.page, 'comparison in dark scheme');
   await darkCompare.context.close();
+  const smallResilience = await open('design-lab/resilience/', { viewport: { width: 320, height: 640 } });
+  await smallResilience.page.waitForTimeout(300);
+  ok(await smallResilience.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'resilience page has no horizontal scrolling at 320 px');
+  await axe(smallResilience.page, 'resilience page at 320 px');
+  await smallResilience.context.close();
+  const darkResilience = await open('design-lab/resilience/', { colorScheme: 'dark' });
+  await axe(darkResilience.page, 'resilience page in dark scheme');
+  await darkResilience.context.close();
+  const smallWater = await open('design-lab/water/', { viewport: { width: 320, height: 640 } });
+  await smallWater.page.waitForTimeout(300);
+  ok(await smallWater.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'water page has no horizontal scrolling at 320 px');
+  await axe(smallWater.page, 'water page at 320 px');
+  await smallWater.context.close();
+  const darkWater = await open('design-lab/water/', { colorScheme: 'dark' });
+  await axe(darkWater.page, 'water page in dark scheme');
+  await darkWater.context.close();
   const smallStorey = await open('design-lab/two-storey/', { viewport: { width: 320, height: 640 } });
   await smallStorey.page.waitForTimeout(300);
   ok(await smallStorey.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'two-storey study has no horizontal scrolling at 320 px');

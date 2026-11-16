@@ -43,19 +43,38 @@
     p.appendChild(el('a', { href: b.model === 'lodge' ? '../lodge/' : '../cabin-a/' }, b.model === 'lodge' ? 'Lodge drawings' : 'Cabin drawings'));
     details.appendChild(p);
   }
-  function choose(id) {
+  var ALIAS = { cedar: 'a', birch: 'b', pine: 'c', moss: 'd', fern: 'e', juniper: 'f', lodge: 'lodge' };
+  function choose(id, updateUrl) {
     var b = byId[id];
     if (!b) return;
     if (status) status.textContent = b.name + ', ' + useLabel(b.use).toLowerCase() + '. ' + (b.views_text && b.views_text.main ? b.views_text.main.description : '') + ' Conceptual placement; no land rights or building permissions are implied.';
     $$('[data-choice]').forEach(function (button) { button.setAttribute('aria-pressed', String(button.getAttribute('data-choice') === id)); });
     if (mapSvg) $$('.building', mapSvg).forEach(function (g) { g.classList.toggle('selected', g.getAttribute('data-building') === id); });
     detailsFor(id);
+    if (updateUrl !== false) {
+      var alias = Object.keys(ALIAS).filter(function (k) { return ALIAS[k] === id; })[0] || id;
+      try { history.replaceState(null, '', '?building=' + encodeURIComponent(alias)); } catch (e) { /* file:// */ }
+    }
   }
   if (status && mapSvg && siteInfo.length) {
     $$('[data-choice]').forEach(function (button) { button.addEventListener('click', function () { choose(button.getAttribute('data-choice')); }); });
     $$('.building', mapSvg).forEach(function (g) { g.addEventListener('click', function () { var id = g.getAttribute('data-building'); choose(id); var button = $('[data-choice="' + id + '"]'); if (button) button.focus({ preventScroll: true }); }); });
     $$('[data-layer]').forEach(function (checkbox) { var layer = mapSvg.querySelector('#map-layer-' + checkbox.getAttribute('data-layer')); if (layer) layer.style.display = checkbox.checked ? '' : 'none'; checkbox.addEventListener('change', function () { if (layer) layer.style.display = checkbox.checked ? '' : 'none'; }); });
     $$('[data-enhance]').forEach(function (n) { n.hidden = false; });
-    choose(siteInfo[0].id);
+    var requested = new URLSearchParams(location.search).get('building') || location.hash.replace(/^#/, '');
+    var requestedId = ALIAS[String(requested || '').toLowerCase()] || requested;
+    choose(byId[requestedId] ? requestedId : siteInfo[0].id);
+    var expand = $('#map-expand');
+    var mapBox = $('#site-map');
+    if (expand && mapBox && mapBox.requestFullscreen) {
+      expand.addEventListener('click', function () {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else mapBox.requestFullscreen().then(function () { expand.setAttribute('aria-pressed', 'true'); }).catch(function () { expand.setAttribute('aria-pressed', 'false'); });
+      });
+      document.addEventListener('fullscreenchange', function () { expand.setAttribute('aria-pressed', String(!!document.fullscreenElement)); });
+    } else if (expand) {
+      expand.disabled = true;
+      expand.textContent = 'Full screen not available';
+    }
   }
 })();

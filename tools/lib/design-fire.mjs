@@ -59,6 +59,8 @@ export function firePage() {
     <a href="../patterns/">Patterns</a>
     <a href="../fire/" aria-current="page">Fire</a>
     <a href="../two-storey/">Two-storey</a>
+    <a href="../resilience/">Resilience</a>
+    <a href="../water/">Water</a>
     <a href="../compare/">Compare</a>
     <a href="../../../index.html">Main site</a>
   </nav>
@@ -68,6 +70,19 @@ export function firePage() {
   <h1>Steel helps. It is not a fire strategy.</h1>
   <p class="lede">A steel container is noncombustible, but a home burns through its openings, roof edges, vents, decks and contents. In a forest, the site, the ember detail and the ability of firefighters to reach water matter as much as the hull. This page sets out the questions and the limits; it is not a fire-resistance rating or a WUI approval.</p>
   <p class="notice"><strong>Concept only.</strong> No assembly, clearance, water supply or access route here is certified. Confirm the actual site with the local fire department, building official, conservation authority, insurer and a fire-protection engineer.</p>
+
+  <section aria-labelledby="hamlet-fire-title">
+    <h2 id="hamlet-fire-title">From one home to a defendable hamlet</h2>
+    <p>Ontario's <a href="https://www.ontario.ca/page/firesmart">FireSmart guidance</a>, forest-fire danger ratings and outdoor-fire rules are necessary, but they are mostly property and compliance measures. A hamlet needs a <strong>community wildfire protection plan</strong> that links the homes to each other and to the fire service.</p>
+    <ul>
+      <li><strong>Access:</strong> a loop or two-way route, turnaround, bridge load limits, year-round clearance and address signs.</li>
+      <li><strong>Water:</strong> a dedicated fire reserve, dry hydrant/draft point or cistern with a connection the fire service has tested.</li>
+      <li><strong>Fuel:</strong> shaded fuel breaks, limbing, spacing, dead-material removal and a maintenance calendar across parcel boundaries.</li>
+      <li><strong>People:</strong> named roles, a phone tree/radio, evacuation triggers, a meeting point, medication/pet plans and vulnerable-neighbour check-ins.</li>
+      <li><strong>Recovery:</strong> insurance review, document copies, temporary shelter and a rebuilding plan.</li>
+    </ul>
+    <p>Owner-level FireSmart work is necessary but not sufficient. The <a href="../resilience/">community resilience brief</a> sets out the hamlet-scale layers; the <a href="../water/">water page</a> separates domestic storage from a tested fire reserve.</p>
+  </section>
 
   <section aria-labelledby="steel-title">
     <h2 id="steel-title">What the steel hull does and does not do</h2>
@@ -98,7 +113,8 @@ export function firePage() {
     </ul>
   </section>
 
-  <section aria-labelledby="building-title">
+  <details class="deep-dive"><summary>Building measures worth specifying</summary>
+<section aria-labelledby="building-title">
     <h2 id="building-title">Building measures worth specifying</h2>
     <div class="table-wrap" role="region" aria-label="Fire-resilience building measures" tabindex="0"><table>
       <caption>Measures to discuss with the fire-protection engineer and building official.</caption>
@@ -114,8 +130,10 @@ export function firePage() {
       </tbody>
     </table></div>
   </section>
+</details>
 
-  <section aria-labelledby="codes-title">
+  <details class="deep-dive"><summary>Codes, standards and what is actually in force</summary>
+<section aria-labelledby="codes-title">
     <h2 id="codes-title">Codes, standards and what is actually in force</h2>
     <ul>
       <li><a href="https://cbhcc-cchcc.ca/en/2025-national-model-codes-now-available/">2025 National Model Codes</a> are available from the Canadian Board for Harmonized Construction Codes. Model codes are not automatically the law in Ontario; provincial/territorial adoption and amendments govern.</li>
@@ -127,12 +145,15 @@ export function firePage() {
     </ul>
     <p>The current model has no sprinkler, fire-resistance rating, WUI setback, hydrant or water-supply design. Those are open questions, not hidden assumptions.</p>
   </section>
+</details>
 
-  <section aria-labelledby="model-title">
+  <details class="deep-dive"><summary>What the editor can record now</summary>
+<section aria-labelledby="model-title">
     <h2 id="model-title">What the editor can record now</h2>
     <p>The <a href="../editor/">editor</a> now records a fire-resilience intent: roof class, closed eaves, ember-resistant vents, tempered/laminated glazing, noncombustible deck, exterior shutters, defensible-space distance and whether fire access/water is confirmed. It does <strong>not</strong> calculate fire resistance, radiant heat, ember exposure, sprinkler performance or insurance acceptability.</p>
     <p>Use the checklist as a brief for the fire department and insurer. Do not treat a checked box as a code approval.</p>
   </section>
+</details>
 
   <p><a class="action" href="../editor/">Open the editor</a> <a class="action secondary" href="../ground/">Ground and access</a></p>
 </main>

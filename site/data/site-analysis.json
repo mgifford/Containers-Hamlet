@@ -27,6 +27,7 @@
       "rotation_deg": 65,
       "footprint_m2": 35.64,
       "clear_floor_area_m2": 26.7,
+      "configuration": "single",
       "ground_elevation_m": 104.1,
       "natural_slope_pct": 19.6,
       "pad": {
@@ -127,8 +128,9 @@
       "x_m": 220,
       "y_m": 50,
       "rotation_deg": -42,
-      "footprint_m2": 35.64,
-      "clear_floor_area_m2": 26.7,
+      "footprint_m2": 66.3,
+      "clear_floor_area_m2": 50,
+      "configuration": "pair",
       "ground_elevation_m": 121.7,
       "natural_slope_pct": 18.3,
       "pad": {
@@ -254,6 +256,7 @@
       "rotation_deg": 82,
       "footprint_m2": 35.64,
       "clear_floor_area_m2": 26.7,
+      "configuration": "single",
       "ground_elevation_m": 105.3,
       "natural_slope_pct": 5.2,
       "pad": {
@@ -362,8 +365,9 @@
       "x_m": 255,
       "y_m": 145,
       "rotation_deg": 16,
-      "footprint_m2": 35.64,
-      "clear_floor_area_m2": 26.7,
+      "footprint_m2": 66.3,
+      "clear_floor_area_m2": 50,
+      "configuration": "pair",
       "ground_elevation_m": 112.1,
       "natural_slope_pct": 6.9,
       "pad": {
@@ -372,11 +376,11 @@
         "fill_m": 0.23,
         "max_m": 0.23
       },
-      "shoreline_m": 180.6,
+      "shoreline_m": 178.8,
       "wetland_m": 45.6,
       "rock_m": 9.9,
       "rock_name": "South knoll outcrop",
-      "drainage_m": 50.1,
+      "drainage_m": 49.1,
       "drainage_name": "ridge-channel",
       "inside_parcel": true,
       "crane_reach_m": 18.6,
@@ -409,7 +413,7 @@
       "checks": [
         {
           "ok": true,
-          "label": "180.6 m from the shoreline (setback 30 m)"
+          "label": "178.8 m from the shoreline (setback 30 m)"
         },
         {
           "ok": true,
@@ -425,7 +429,7 @@
         },
         {
           "ok": true,
-          "label": "50.1 m from a drainage channel (buffer 10 m)"
+          "label": "49.1 m from a drainage channel (buffer 10 m)"
         },
         {
           "ok": true,
@@ -464,8 +468,9 @@
       "x_m": 235,
       "y_m": 105,
       "rotation_deg": 100,
-      "footprint_m2": 35.64,
-      "clear_floor_area_m2": 26.7,
+      "footprint_m2": 66.3,
+      "clear_floor_area_m2": 50,
+      "configuration": "pair",
       "ground_elevation_m": 108.8,
       "natural_slope_pct": 14.7,
       "pad": {
@@ -476,7 +481,7 @@
       },
       "shoreline_m": 161,
       "wetland_m": 70.9,
-      "rock_m": 49.9,
+      "rock_m": 49.7,
       "rock_name": "South knoll outcrop",
       "drainage_m": 51.8,
       "drainage_name": "ridge-channel",
@@ -538,7 +543,7 @@
         },
         {
           "ok": true,
-          "label": "49.9 m from South knoll outcrop (buffer 8 m)"
+          "label": "49.7 m from South knoll outcrop (buffer 8 m)"
         },
         {
           "ok": true,
@@ -570,38 +575,39 @@
         }
       ],
       "ok": true,
-      "nearest_building_m": 29.1
+      "nearest_building_m": 28
     },
     {
       "id": "f",
       "name": "Cabin F",
       "short_name": "Juniper",
       "use": "seasonal",
-      "model": "cabin-a",
+      "model": "cabin-20",
       "x_m": 120,
       "y_m": 175,
       "rotation_deg": 80,
-      "footprint_m2": 35.64,
-      "clear_floor_area_m2": 26.7,
+      "footprint_m2": 18.27,
+      "clear_floor_area_m2": 12.76,
+      "configuration": "single-20",
       "ground_elevation_m": 103,
-      "natural_slope_pct": 11.3,
+      "natural_slope_pct": 10.3,
       "pad": {
         "target_m": 102.98,
-        "cut_m": 0.58,
-        "fill_m": 0.22,
-        "max_m": 0.58
+        "cut_m": 0.29,
+        "fill_m": 0.16,
+        "max_m": 0.29
       },
-      "shoreline_m": 44.9,
-      "wetland_m": 47,
-      "rock_m": 46.8,
+      "shoreline_m": 45.8,
+      "wetland_m": 46,
+      "rock_m": 49.6,
       "rock_name": "Shore outcrop",
-      "drainage_m": 53.3,
+      "drainage_m": 56.3,
       "drainage_name": "west-channel",
       "inside_parcel": true,
       "crane_reach_m": 14.9,
-      "entrance_to_lane_m": 21.7,
+      "entrance_to_lane_m": 22.1,
       "door_to_trail_m": 3.2,
-      "ramp_to_trail_m": 13,
+      "ramp_to_trail_m": 13.1,
       "principal_facade": "south",
       "principal_azimuth_deg": 260,
       "views": {
@@ -628,11 +634,11 @@
       "checks": [
         {
           "ok": true,
-          "label": "44.9 m from the shoreline (setback 30 m)"
+          "label": "45.8 m from the shoreline (setback 30 m)"
         },
         {
           "ok": true,
-          "label": "47 m from the wetland (buffer 30 m)"
+          "label": "46 m from the wetland (buffer 30 m)"
         },
         {
           "ok": true,
@@ -640,19 +646,19 @@
         },
         {
           "ok": true,
-          "label": "46.8 m from Shore outcrop (buffer 8 m)"
+          "label": "49.6 m from Shore outcrop (buffer 8 m)"
         },
         {
           "ok": true,
-          "label": "53.3 m from a drainage channel (buffer 10 m)"
+          "label": "56.3 m from a drainage channel (buffer 10 m)"
         },
         {
           "ok": true,
-          "label": "Natural ground slope 11.3% (limit 22%)"
+          "label": "Natural ground slope 10.3% (limit 22%)"
         },
         {
           "ok": true,
-          "label": "Building bench cut/fill 0.58 m (limit 1.6 m)"
+          "label": "Building bench cut/fill 0.29 m (limit 1.6 m)"
         },
         {
           "ok": true,
@@ -660,7 +666,7 @@
         },
         {
           "ok": true,
-          "label": "Ramp foot 21.7 m from an emergency or access lane (limit 50 m)"
+          "label": "Ramp foot 22.1 m from an emergency or access lane (limit 50 m)"
         },
         {
           "ok": true,
@@ -668,11 +674,11 @@
         },
         {
           "ok": true,
-          "label": "Ramp foot 13 m from a walking path (limit 18 m)"
+          "label": "Ramp foot 13.1 m from a walking path (limit 18 m)"
         }
       ],
       "ok": true,
-      "nearest_building_m": 47.4
+      "nearest_building_m": 48.5
     },
     {
       "id": "lodge",
@@ -685,6 +691,7 @@
       "rotation_deg": 0,
       "footprint_m2": 141.84,
       "clear_floor_area_m2": 124.42,
+      "configuration": "single",
       "ground_elevation_m": 109.7,
       "natural_slope_pct": 7.8,
       "pad": {
@@ -795,7 +802,7 @@
   ],
   "potential_areas": {
     "step_m": 10,
-    "count": 141,
+    "count": 140,
     "points": [
       [
         110,
@@ -1291,10 +1298,6 @@
       ],
       [
         100,
-        192
-      ],
-      [
-        130,
         192
       ],
       [

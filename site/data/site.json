@@ -1710,7 +1710,12 @@
         "winter": "Birch and maple lose their leaves, opening the glade and the lake glimpse. The pines behind the home still screen the ridge track."
       },
       "design_note": "A two-bedroom variant could use two modules on this wider bench. The current one-module concept is shown as a placeholder for the resident's own brief.",
-      "character": "A ridge-top home that looks into a sunlit birch glade rather than at the water."
+      "character": "A ridge-top home that looks into a sunlit birch glade rather than at the water.",
+      "configuration": "pair",
+      "pair_offset": [
+        1.9,
+        1.15
+      ]
     },
     {
       "id": "c",
@@ -1794,7 +1799,12 @@
         "winter": "The meadow opens completely when the alder drops its leaves, and the low sun reaches the porch. Cedar on the east side screens the lodge."
       },
       "design_note": "A seasonal home might use a smaller, simpler service core and a larger screened room. The wetland view is the reason for this site; the building should stay modest.",
-      "character": "A seasonal camp at the meadow edge, turned toward the beaver meadow and the south knoll."
+      "character": "A seasonal camp at the meadow edge, turned toward the beaver meadow and the south knoll.",
+      "configuration": "pair",
+      "pair_offset": [
+        -1.9,
+        1.15
+      ]
     },
     {
       "id": "e",
@@ -1836,14 +1846,19 @@
         "winter": "Hemlock and cedar keep the lodge screened. Leaf-off opens the lake glimpse and makes the east rock shelf more visible from the path."
       },
       "design_note": "As the community rental, this home needs robust finishes and a locked owner's store. The model can accept a second entrance without changing the landscape.",
-      "character": "A small rental tucked into fern and hemlock, a short walk from the lodge."
+      "character": "A small rental tucked into fern and hemlock, a short walk from the lodge.",
+      "configuration": "pair",
+      "pair_offset": [
+        1.9,
+        -1.15
+      ]
     },
     {
       "id": "f",
       "name": "Cabin F",
       "short_name": "Juniper",
       "use": "seasonal",
-      "model": "cabin-a",
+      "model": "cabin-20",
       "x_m": 120,
       "y_m": 175,
       "rotation_deg": 80,
@@ -1877,7 +1892,8 @@
         "winter": "Cedar and juniper keep the cove private. The lake opens wider in winter, and the low sun reaches the porch through the bare birch."
       },
       "design_note": "This is the smallest-feeling site and may suit a seasonal, one-person or couple's home. A future 20-foot module variant could be tested here without changing the clearing.",
-      "character": "A low, juniper-edged retreat above the southern cove."
+      "character": "A low, juniper-edged retreat above the southern cove.",
+      "configuration": "single-20"
     },
     {
       "id": "lodge",
