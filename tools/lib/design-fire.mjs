@@ -113,7 +113,8 @@ export function firePage() {
     </ul>
   </section>
 
-  <section aria-labelledby="building-title">
+  <details class="deep-dive"><summary>Building measures worth specifying</summary>
+<section aria-labelledby="building-title">
     <h2 id="building-title">Building measures worth specifying</h2>
     <div class="table-wrap" role="region" aria-label="Fire-resilience building measures" tabindex="0"><table>
       <caption>Measures to discuss with the fire-protection engineer and building official.</caption>
@@ -129,8 +130,10 @@ export function firePage() {
       </tbody>
     </table></div>
   </section>
+</details>
 
-  <section aria-labelledby="codes-title">
+  <details class="deep-dive"><summary>Codes, standards and what is actually in force</summary>
+<section aria-labelledby="codes-title">
     <h2 id="codes-title">Codes, standards and what is actually in force</h2>
     <ul>
       <li><a href="https://cbhcc-cchcc.ca/en/2025-national-model-codes-now-available/">2025 National Model Codes</a> are available from the Canadian Board for Harmonized Construction Codes. Model codes are not automatically the law in Ontario; provincial/territorial adoption and amendments govern.</li>
@@ -142,12 +145,15 @@ export function firePage() {
     </ul>
     <p>The current model has no sprinkler, fire-resistance rating, WUI setback, hydrant or water-supply design. Those are open questions, not hidden assumptions.</p>
   </section>
+</details>
 
-  <section aria-labelledby="model-title">
+  <details class="deep-dive"><summary>What the editor can record now</summary>
+<section aria-labelledby="model-title">
     <h2 id="model-title">What the editor can record now</h2>
     <p>The <a href="../editor/">editor</a> now records a fire-resilience intent: roof class, closed eaves, ember-resistant vents, tempered/laminated glazing, noncombustible deck, exterior shutters, defensible-space distance and whether fire access/water is confirmed. It does <strong>not</strong> calculate fire resistance, radiant heat, ember exposure, sprinkler performance or insurance acceptability.</p>
     <p>Use the checklist as a brief for the fire department and insurer. Do not treat a checked box as a code approval.</p>
   </section>
+</details>
 
   <p><a class="action" href="../editor/">Open the editor</a> <a class="action secondary" href="../ground/">Ground and access</a></p>
 </main>

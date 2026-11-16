@@ -40,6 +40,8 @@ ${items.map((c) => {
         <h4>${esc(c.name)}</h4>
         <p class="tagline">${esc(c.tagline)}</p>
         <p>${esc(c.description)}</p>
+        <p class="small"><strong>${esc(containerLabel(c))}</strong> · ${n(s.nominalFootprint_m2)} m² nominal footprint</p>
+        <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
           <div><dt>Containers</dt><dd>${esc(containerLabel(c))}</dd></div>
           <div><dt>Container footprint</dt><dd>${n(s.nominalFootprint_m2)} m² nominal, before external insulation</dd></div>
@@ -50,8 +52,8 @@ ${items.map((c) => {
           ${c.solar_array ? `<div><dt>Solar tilt</dt><dd>South roof slope: ${c.solar_array.tilt_deg}° / ${c.solar_array.azimuth_deg}° ${c.solar_array.season_mode}; no north array</dd></div>` : c.modules.some((m) => m.solar && m.solar.enabled) ? `<div><dt>Solar tilt</dt><dd>${c.modules.filter((m) => m.solar && m.solar.enabled).map((m) => `${m.id}: ${m.solar.tilt_deg}° / ${m.solar.azimuth_deg}° ${m.solar.season_mode}`).join('; ')}</dd></div>` : ''}
           <div><dt>Accessibility</dt><dd>${esc(c.features.accessibility)}</dd></div>
           <div><dt>Environmental</dt><dd>${esc(c.features.environment)}</dd></div>
-        </dl>
-        <details${editable ? ' open' : ''}>
+        </dl></details>
+        <details>
           <summary>Views and source files for ${esc(c.name)}</summary>
           <div class="concept-view-stack">
             <figure><img src="${imgs.plan}" width="1040" height="720" alt="Dimensioned concept plan for ${esc(c.name)}: ${esc(containerLabel(c))}, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>

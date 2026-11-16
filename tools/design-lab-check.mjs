@@ -59,11 +59,16 @@ try {
   section('Design gallery');
   let { context, page, errors, foreign } = await open('design-lab/');
   ok(errors.length === 0, `gallery: no console errors${errors.length ? ': ' + errors.join(' | ') : ''}`);
-  const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card').length, editable: document.querySelectorAll('.concept-badge.editable').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
-  ok(count.cards === 10 && count.editable === 3 && count.inspiration === 7 && count.headings === 1, 'gallery shows ten cards, three editable, six inspiration-only homes and the lodge');
+  const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card:not(.arrangement-card)').length, editable: document.querySelectorAll('.concept-badge.editable').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
+  ok(count.cards === 10 && count.editable === 3 && count.inspiration === 7 && count.headings === 1, 'gallery shows ten concept cards, three editable, six inspiration-only homes and the lodge');
+  ok(await page.locator('.arrangement-card').count() === 4, 'gallery shows four arrangement studies');
+  ok(await page.locator('.concept-specs').first().evaluate((d) => !d.open), 'technical specification lists start collapsed');
+  await page.locator('.concept-specs').first().locator('summary').click();
+  ok(await page.locator('.concept-specs').first().evaluate((d) => d.open), 'specification disclosure opens by keyboard or pointer');
+
   await page.locator('#gallery').scrollIntoViewIfNeeded();
-  await page.evaluate(async () => { for (const img of document.querySelectorAll('.concept-card-media img')) { img.scrollIntoView({ block: 'center' }); await new Promise((r) => setTimeout(r, 60)); } window.scrollTo(0, 0); });
-  await page.waitForTimeout(800);
+  await page.evaluate(async () => { for (const img of document.querySelectorAll('.concept-card-media img')) { img.scrollIntoView({ block: 'center' }); await new Promise((r) => setTimeout(r, 120)); } window.scrollTo(0, 0); });
+  await page.waitForTimeout(1200);
   const imgs = await page.evaluate(() => [...document.querySelectorAll('.concept-card-media img')].map((i) => ({ w: i.naturalWidth, alt: i.alt })));
   ok(imgs.every((i) => i.w > 0 && i.alt.length > 20), 'every gallery illustration loads with descriptive alt text');
   ok(await visible(page, '#concept-woodland-retreat details'), 'gallery exposes further views and source files');

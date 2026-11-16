@@ -15,6 +15,7 @@ import { analyseSite, siteLayers, renderSitePlan, terrainGrid } from './lib/site
 import { renderViewDiagram } from './lib/views.mjs';
 import { renderImpression } from './lib/impression.mjs';
 import { galleryCards } from './lib/design-gallery.mjs';
+import { arrangementCards, arrangementSVG } from './lib/arrangement-studies.mjs';
 import { architecturePage } from './lib/design-architecture.mjs';
 import { vegetationPage } from './lib/design-vegetation.mjs';
 import { vegetationComparisonSVG } from './lib/design-systems.mjs';
@@ -222,7 +223,8 @@ export function generate() {
 
   const galleryPagePath = 'site/design-lab/index.html';
   const galleryTemplate = readText(galleryPagePath);
-  const gallery = galleryCards(designLab.concepts, (c) => DesignSchema.summary(c));
+  const gallery = galleryCards(designLab.concepts, (c) => DesignSchema.summary(c)) + '\n' + arrangementCards();
+  ['stacked','cantilever','courtyard','creek'].forEach((k) => put(`site/design-lab/arrangements/${k}.svg`, arrangementSVG(k)));
   const galleryOut = galleryTemplate.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${gallery}\n<!-- /gen:gallery -->`);
   if (!galleryTemplate.includes('<!-- gen:gallery -->') || !galleryTemplate.includes('<!-- /gen:gallery -->')) issues.push({ level: 'error', message: 'site/design-lab/index.html is missing the gen:gallery markers' });
   put(galleryPagePath, galleryOut);

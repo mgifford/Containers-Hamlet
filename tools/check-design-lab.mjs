@@ -180,6 +180,15 @@ ok(!Schema.validateSchema(badFoundation).ok, 'unknown foundation systems are rej
 const badClearance = JSON.parse(JSON.stringify(data.concepts[0])); badClearance.foundation.clearance_m = 3;
 ok(!Schema.validateSchema(badClearance).ok, 'foundation clearance above 2 m is rejected');
 
+section('Gallery arrangement studies and disclosure');
+const galleryHtml = read('site/design-lab/index.html');
+ok(/Arrangement studies: possible, not offered as engineered models/.test(galleryHtml) && (galleryHtml.match(/class="concept-card arrangement-card"/g) || []).length === 4, 'gallery adds four arrangement studies');
+ok(/arrangements\/stacked\.svg/.test(galleryHtml) && /arrangements\/cantilever\.svg/.test(galleryHtml) && /arrangements\/courtyard\.svg/.test(galleryHtml) && /arrangements\/creek\.svg/.test(galleryHtml), 'arrangement studies link their own diagrams');
+ok(/class="concept-specs"><summary>Dimensions, access and performance/.test(galleryHtml), 'gallery specification lists are collapsed into disclosure panels');
+ok(/<details class="deep-dive"><summary>Building measures worth specifying/.test(read('site/design-lab/fire/index.html')) && /<details class="deep-dive"><summary>Climate stress tests/.test(read('site/design-lab/resilience/index.html')), 'secondary fire and resilience sections are collapsible');
+const arr = read('site/design-lab/arrangements/stacked.svg');
+ok(/role="img"/.test(arr) && /<title id=/.test(arr) && /<desc id=/.test(arr) && /CC BY-SA 4\.0/.test(arr), 'arrangement diagrams are accessible and licensed');
+
 section('Community resilience and water');
 const resilience = read('site/design-lab/resilience/index.html');
 ok(/Resilience is a hamlet-scale system/.test(resilience) && /Forest fire: beyond the Ontario guidance/.test(resilience) && /Hotter, wetter, drier, smokier/.test(resilience) && /How a container hamlet builds community resilience/.test(resilience), 'resilience page covers fire, climate, water and community capacity');

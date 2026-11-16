@@ -44,7 +44,8 @@ ${nav('Resilience')}
     <p>Read the <a href="../fire/">forest fire-resilience guide</a> for building measures and the difference between a steel hull and a fire-resistance rating.</p>
   </section>
 
-  <section aria-labelledby="climate-title">
+  <details class="deep-dive"><summary>Climate stress tests</summary>
+<section aria-labelledby="climate-title">
     <h2 id="climate-title">Hotter, wetter, drier, smokier</h2>
     <p>The design has to work across a wider range, not just a design-day average. These are the stress tests to carry into the next review.</p>
     <div class="table-wrap" role="region" aria-label="Climate stress tests" tabindex="0"><table>
@@ -60,6 +61,7 @@ ${nav('Resilience')}
       </tbody>
     </table></div>
   </section>
+</details>
 
   <section aria-labelledby="water-title">
     <h2 id="water-title">Water is the common thread</h2>
@@ -85,7 +87,8 @@ ${nav('Resilience')}
     </ul>
   </section>
 
-  <section aria-labelledby="indicators-title">
+  <details class="deep-dive"><summary>Resilience indicators</summary>
+<section aria-labelledby="indicators-title">
     <h2 id="indicators-title">Indicators worth tracking</h2>
     <div class="table-wrap" role="region" aria-label="Resilience indicators" tabindex="0"><table>
       <caption>Start with measurable indicators, not a slogan.</caption>
@@ -101,6 +104,7 @@ ${nav('Resilience')}
       </tbody>
     </table></div>
   </section>
+</details>
 
   <p><a class="action" href="../water/">Water cycle</a> <a class="action secondary" href="../fire/">Fire resilience</a> <a class="action secondary" href="../two-storey/">Two-storey study</a></p>
 </main>

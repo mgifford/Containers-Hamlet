@@ -373,3 +373,10 @@ h4 { font-size: 1.05rem; margin: 1.6rem 0 0.5rem; }
 .home-config-figure { max-width: 34rem; margin: 1rem 0; background: var(--surface); border: 1px solid var(--border); border-radius: .8rem; overflow: hidden; }
 .home-config-figure img { display: block; width: 100%; height: auto; }
 .home-config-figure figcaption { padding: .55rem .8rem; font-size: .86rem; }
+
+details.deep-dive { border: 1px solid var(--border); border-radius: .75rem; background: var(--surface); margin: 1.2rem 0; padding: 0 1rem; }
+details.deep-dive > summary { cursor: pointer; font-weight: 800; font-size: 1.05rem; padding: .8rem 0; min-height: 44px; }
+details.deep-dive[open] { padding-bottom: 1rem; }
+details.concept-specs { border: 1px solid var(--border); border-radius: .5rem; padding: 0 .6rem; margin: .5rem 0; }
+details.concept-specs > summary { cursor: pointer; font-weight: 700; min-height: 44px; display: flex; align-items: center; }
+@media print { details.deep-dive, details.concept-specs { border: 0; padding: 0; } details.deep-dive > summary, details.concept-specs > summary { list-style: none; } }

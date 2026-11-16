@@ -68,7 +68,8 @@ export function twoStoreyPage() {
     </table></div>
   </section>
 
-  <section aria-labelledby="structure-title">
+  <details class="deep-dive"><summary>Structure and foundation details</summary>
+<section aria-labelledby="structure-title">
     <h2 id="structure-title">Structure and foundation</h2>
     <ul>
       <li><strong>Load path:</strong> each upper container needs a continuous path through its corner castings, a steel transfer frame or a designed bearing wall to the foundation.</li>
@@ -78,8 +79,10 @@ export function twoStoreyPage() {
       <li><strong>Lift and sequence:</strong> crane reach, rigging, temporary stability and connection access before the second lift.</li>
     </ul>
   </section>
+</details>
 
-  <section aria-labelledby="fire-title">
+  <details class="deep-dive"><summary>Fire separation and egress details</summary>
+<section aria-labelledby="fire-title">
     <h2 id="fire-title">Fire separation and egress</h2>
     <ul>
       <li><strong>Two remote exits:</strong> an upper floor cannot rely on one external stair. Egress windows, a protected stair and a second route need review.</li>
@@ -90,8 +93,10 @@ export function twoStoreyPage() {
     </ul>
     <p class="small">See the <a href="../fire/">forest fire-resilience guide</a>. That page is also a design brief, not a rating.</p>
   </section>
+</details>
 
-  <section aria-labelledby="envelope-title">
+  <details class="deep-dive"><summary>Envelope, services and comfort</summary>
+<section aria-labelledby="envelope-title">
     <h2 id="envelope-title">Envelope, services and comfort</h2>
     <ul>
       <li><strong>Thermal bridging:</strong> the steel frame and floor cassette are thermal bridges; continuous insulation and a thermal break need detail.</li>
@@ -101,8 +106,10 @@ export function twoStoreyPage() {
       <li><strong>Solar:</strong> the upper roof may be the only good array location; structure, wind uplift and fire access still apply.</li>
     </ul>
   </section>
+</details>
 
-  <section aria-labelledby="model-title">
+  <details class="deep-dive"><summary>What would change in the model</summary>
+<section aria-labelledby="model-title">
     <h2 id="model-title">What would change in the model</h2>
     <p>To make a real Look inside two-storey model, the data and renderer need:</p>
     <ul>
@@ -114,6 +121,7 @@ export function twoStoreyPage() {
     </ul>
     <p>None of that is in the current horizontal model. The next step is an engineering brief, not a visual-only stack.</p>
   </section>
+</details>
 
   <section aria-labelledby="decision-title">
     <h2 id="decision-title">My recommendation</h2>

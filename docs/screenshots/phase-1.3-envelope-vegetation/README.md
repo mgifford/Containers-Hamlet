@@ -82,3 +82,7 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 - `pair-birch.jpg`: Birch with an offset two-container massing.
 - `juniper-compact.jpg`: the 20-foot Juniper home.
 - `map-pair.jpg`: the map showing the offset pair.
+
+## Arrangement gallery and disclosure
+
+- `arrangement-studies.jpg`: stacked, cantilever, L/courtyard and creek-room studies.
