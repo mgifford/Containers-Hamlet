@@ -23,19 +23,20 @@ function footer(prefix) {
   return `<footer class="site-footer"><p><a href="${prefix}index.html">Containers Hamlet</a> · <a href="${prefix}homes/">Homes</a> · <a href="${prefix}index.html#downloads">Downloads</a> · CC BY 4.0 content · MIT software</p></footer>`;
 }
 
-export function homesIndexPage(homes) {
+export function homesIndexPage(homes, meta) {
   const cards = homes.map((h) => {
     const a = h.analysis;
+    const m = (meta && meta[h.id]) || { slug: h.id, configuration: '' };
     return `<article class="home-index-card" id="home-${esc(h.id)}">
-      <p class="eyebrow">${esc(useLabel(h.use))}</p>
-      <h2><a href="${esc(h.id)}/">${esc(h.name)} <span>· ${esc(h.short_name || '')}</span></a></h2>
+      <p class="eyebrow">${esc(useLabel(h.use))} · ${esc(m.configuration)}</p>
+      <h2><a href="${esc(m.slug)}/">${esc(h.name)} <span>· ${esc(h.short_name || '')}</span></a></h2>
       <p>${esc(h.character || '')}</p>
       <dl>
         <div><dt>Main view</dt><dd>${esc(h.views && h.views.main ? h.views.main.description : '')}</dd></div>
         <div><dt>Orientation</dt><dd>${esc(h.orientation && h.orientation.reason ? h.orientation.reason : '')}</dd></div>
         <div><dt>Approximate</dt><dd>${approx(a.clear_floor_area_m2, 0)} m² clear · ${approx(a.footprint_m2, 0)} m² footprint</dd></div>
       </dl>
-      <p class="home-index-links"><a href="${esc(h.id)}/">Open ${esc(h.name)} page</a> <a href="${esc(h.id)}/#main-view">Main view</a> <a href="${esc(h.id)}/#siting">Siting</a></p>
+      <p class="home-index-links"><a href="${esc(m.slug)}/">Open ${esc(h.name)} page</a> <a href="${esc(m.slug)}/#main-view">Main view</a> <a href="${esc(m.slug)}/#siting">Siting</a></p>
     </article>`;
   }).join('\n');
   return `<!doctype html>
@@ -65,7 +66,7 @@ ${footer('../')}
 </html>`;
 }
 
-export function homePage(h, site) {
+export function homePage(h, site, meta) {
   const a = h.analysis;
   const v = h.views || {};
   const main = v.main || {};
@@ -74,6 +75,7 @@ export function homePage(h, site) {
   const neighbours = (a.views && a.views.neighbours_in_view && a.views.neighbours_in_view.length)
     ? a.views.neighbours_in_view.map((n) => `${esc(n.name)} at ${approx(n.distance_m, 0)} m`).join('; ')
     : 'No other building inside the principal view cone.';
+  const m = meta || { slug: h.id, configuration: 'Home concept' };
   const isLodge = h.id === 'lodge';
   const concept = isLodge ? 'lodge' : 'cabin';
   const conceptLabel = isLodge ? 'Lodge concept drawings' : 'Cabin A concept drawings';
@@ -93,10 +95,10 @@ export function homePage(h, site) {
 ${nav('../../', 'home')}
 <main id="main" class="home-page" tabindex="-1">
   <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Containers Hamlet</a> / <a href="../">Homes</a> / ${esc(h.name)}</nav>
-  <p class="eyebrow">${esc(useLabel(h.use))} · ${esc(h.model === 'lodge' ? 'common lodge concept' : 'Cabin A concept')}</p>
+  <p class="eyebrow">${esc(useLabel(h.use))} · ${esc(m.configuration)} · ${esc(h.model === 'lodge' ? 'common lodge concept' : 'Cabin A concept')}</p>
   <h1>${esc(h.name)} <span class="home-name">· ${esc(h.short_name || '')}</span></h1>
   <p class="lede">${esc(h.character || '')}</p>
-  <p class="home-share">Share this home: <code>homes/${esc(h.id)}/</code> · <a href="#orientation">orientation</a> · <a href="#main-view">main view</a> · <a href="#siting">siting</a></p>
+  <p class="home-share">Share this home: <code>homes/${esc(m.slug)}/</code> · <a href="#orientation">orientation</a> · <a href="#main-view">main view</a> · <a href="#siting">siting</a></p>
   <nav class="on-page" aria-label="On this page">
     <a href="#orientation">Orientation</a>
     <a href="#main-view">Main view</a>
@@ -170,18 +172,38 @@ ${footer('../../')}
 </html>`;
 }
 
-export function homeCards(homes) {
+export function homeCards(homes, meta) {
   return `<div class="home-index-grid">${homes.map((h) => {
     const a = h.analysis;
+    const m = (meta && meta[h.id]) || { slug: h.id, configuration: '' };
     return `<article class="home-index-card" id="home-${esc(h.id)}">
-      <a class="home-card-image" href="homes/${esc(h.id)}/"><img src="assets/views/${esc(h.id)}.svg" width="280" height="280" alt="${esc(h.name)} view diagram" loading="lazy" decoding="async"></a>
+      <a class="home-card-image" href="homes/${esc(m.slug)}/"><img src="assets/views/${esc(h.id)}.svg" width="280" height="280" alt="${esc(h.name)} view diagram" loading="lazy" decoding="async"></a>
       <div class="home-card-body">
-        <p class="eyebrow">${esc(useLabel(h.use))}</p>
-        <h3><a href="homes/${esc(h.id)}/">${esc(h.name)} <span>· ${esc(h.short_name || '')}</span></a></h3>
+        <p class="eyebrow">${esc(useLabel(h.use))} · ${esc(m.configuration)}</p>
+        <h3><a href="homes/${esc(m.slug)}/">${esc(h.name)} <span>· ${esc(h.short_name || '')}</span></a></h3>
         <p>${esc(h.character || '')}</p>
         <p class="small">${approx(a.clear_floor_area_m2, 0)} m² clear · ${approx(a.footprint_m2, 0)} m² footprint</p>
-        <p class="home-card-links"><a href="homes/${esc(h.id)}/">Open page</a> <a href="homes/${esc(h.id)}/#main-view">Main view</a> <a href="homes/${esc(h.id)}/#siting">Siting</a></p>
+        <p class="home-card-links"><a href="homes/${esc(m.slug)}/">Open page</a> <a href="homes/${esc(m.slug)}/#main-view">Main view</a> <a href="homes/${esc(m.slug)}/#siting">Siting</a></p>
       </div>
     </article>`;
   }).join('\n')}</div>`;
+}
+
+
+export function legacyHomeRedirect(slug, name) {
+  const href = `../${slug}/`;
+  return `<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url=${href}">
+<link rel="canonical" href="${href}">
+<title>${esc(name)} · moved</title>
+</head>
+<body>
+<p>This ${esc(name)} page has moved to <a href="${href}">${esc(name)}</a>.</p>
+</body>
+</html>`;
 }

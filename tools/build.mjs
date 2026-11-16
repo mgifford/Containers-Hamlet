@@ -20,7 +20,8 @@ import { vegetationPage } from './lib/design-vegetation.mjs';
 import { vegetationComparisonSVG } from './lib/design-systems.mjs';
 import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
-import { homesIndexPage, homePage, homeCards } from './lib/home-pages.mjs';
+import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
+import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
@@ -101,6 +102,15 @@ export function generate() {
     hash: analysis.terrain_hash,
   };
   put('site/data/terrain.json', JSON.stringify(terrainPublic, null, 2) + '\n');
+  const HOME_META = {
+    a: { slug: 'Cedar-1-simple', name: 'Cedar', configuration: 'One container · simple' },
+    b: { slug: 'Birch-2-wide', name: 'Birch', configuration: 'Two containers · wide pair' },
+    c: { slug: 'Pine-1-simple', name: 'Pine', configuration: 'One container · simple' },
+    d: { slug: 'Moss-2-wide', name: 'Moss', configuration: 'Two containers · wide pair' },
+    e: { slug: 'Fern-2-wide', name: 'Fern', configuration: 'Two containers · wide pair' },
+    f: { slug: 'Juniper-1-simple', name: 'Juniper', configuration: 'One container · simple' },
+    lodge: { slug: 'Lodge-3-community', name: 'Common-Lodge', configuration: 'Two containers + hall · community' }
+  };
   const homesPublic = {
     generated_by: 'tools/build.mjs',
     fictional: true,
@@ -114,8 +124,14 @@ export function generate() {
     })),
   };
   put('site/data/homes.json', JSON.stringify(homesPublic, null, 2) + '\n');
-  put('site/homes/index.html', homesIndexPage(homesPublic.buildings));
-  homesPublic.buildings.forEach((h) => put(`site/homes/${h.id}/index.html`, homePage(h, site)));
+  put('site/homes/index.html', homesIndexPage(homesPublic.buildings, HOME_META));
+  homesPublic.buildings.forEach((h) => {
+    const meta = HOME_META[h.id] || { slug: h.id, configuration: 'Home concept' };
+    put(`site/homes/${meta.slug}/index.html`, homePage(h, site, meta));
+    put(`site/homes/${h.id}/index.html`, legacyHomeRedirect(meta.slug, h.name));
+    put(`site/homes/${meta.name}/index.html`, legacyHomeRedirect(meta.slug, h.name));
+    if (h.id === 'e') put('site/homes/Fern-1-simple/index.html', legacyHomeRedirect(meta.slug, h.name));
+  });
 
   /* ---------------- Container Home Design Lab ---------------- */
   const designLab = JSON.parse(readText('data/design-lab.json'));
@@ -148,6 +164,8 @@ export function generate() {
   put('site/design-lab/vegetation/index.html', vegetationPage(designLab.concepts));
   put('site/design-lab/ground/index.html', groundPage(designLab.concepts));
   put('site/design-lab/patterns/index.html', patternsPage());
+  put('site/design-lab/fire/index.html', firePage());
+  put('site/design-lab/systems/fire-zones.svg', fireZonesSVG());
   put('site/design-lab/systems/container-patterns.svg', patternsSVG());
   put('site/design-lab/systems/footbridge.svg', footbridgeSVG());
   put('site/design-lab/systems/vegetation-comparison.svg', vegetationComparisonSVG());
@@ -219,7 +237,8 @@ export function generate() {
   explorerBuildings['cabin-pair'] = strip(pairSpec);
   const data = {
     buildings: explorerBuildings,
-    buildingModels: { a: 'cabin-a', b: 'cabin-pair', c: 'cabin-a', d: 'cabin-pair', e: 'cabin-a', f: 'cabin-a', lodge: 'lodge' },
+    buildingModels: { a: 'cabin-a', b: 'cabin-pair', c: 'cabin-a', d: 'cabin-pair', e: 'cabin-pair', f: 'cabin-a', lodge: 'lodge' },
+    homeSlugs: Object.fromEntries(Object.entries(HOME_META).map(([id, m]) => [id, m.slug])),
     site: {
       name: 'Containers Hamlet',
       area_acres: analysis.area_acres,
@@ -307,7 +326,7 @@ export function generate() {
     })(),
     'landscape-facts': landscapeFacts(site, analysis),
     'home-tabs': '',
-    'home-dossiers': homeCards(homesPublic.buildings),
+    'home-dossiers': homeCards(homesPublic.buildings, HOME_META),
     'model-cards': modelCards(BUILDINGS.map((id) => models[id]), {
       'cabin-a': img('cabin-a', 'axonometric.svg', 'Cabin A seen from the south-west: a long timber-clad container home with solar panels, a screened porch, an access ramp and a planted trellis.').replace(' loading="lazy"', ''),
       lodge: img('lodge', 'axonometric.svg', 'The common lodge seen from the south-west: two timber-clad modules either side of a taller hall with clerestory windows, solar panels, a screened porch and two ramps.').replace(' loading="lazy"', ''),

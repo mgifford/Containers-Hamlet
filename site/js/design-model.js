@@ -524,7 +524,7 @@
     var planLabels = [];
     var title = d.name + ' concept plan';
     var desc = 'Dimensioned concept plan for ' + d.name + '. ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + ', ' + Schema.summary(d).nominalFootprint_m2 + ' square metres nominal footprint. ' + Schema.summary(d).zoneCount + ' interior zones and ' + Schema.summary(d).openingCount + ' openings. Dimensions are nominal container sizes, not verified construction dimensions.';
-    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + '>');
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="' + (opts.interactive ? 'group' : 'img') + '" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + ' data-plan-scale="' + n(scale) + '" data-plan-width="' + W + '"' + '>');
     out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
     out.push('<defs><marker id="' + pre + '-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#245a73"/></marker><pattern id="' + pre + '-porch" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#d8e6d3"/><path d="M0 7L7 0" stroke="#6b9277" stroke-width="0.8"/></pattern><pattern id="' + pre + '-deck" width="9" height="5" patternUnits="userSpaceOnUse"><rect width="9" height="5" fill="#d9c3a1"/><path d="M0 2.5H9" stroke="#9a7750" stroke-width="0.7"/></pattern><pattern id="' + pre + '-link" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#e4d7bf"/><path d="M0 6L6 0" stroke="#9a8765" stroke-width="0.7"/></pattern></defs>');
     out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
@@ -584,6 +584,7 @@
       var ins = m.insulation.thickness_mm / 1000 + 0.03;
       var outer = [[-m.nominal.length_m / 2 - ins, -m.nominal.width_m / 2 - ins], [m.nominal.length_m / 2 + ins, -m.nominal.width_m / 2 - ins], [m.nominal.length_m / 2 + ins, m.nominal.width_m / 2 + ins], [-m.nominal.length_m / 2 - ins, m.nominal.width_m / 2 + ins]].map(function (q) { return transform(m, q); });
       out.push('<path d="' + path(outer) + '" fill="#e9e2ce" stroke="#7d8b73" stroke-width="1"/>');
+      if (opts.selectedModule === m.id) out.push('<path class="plan-selected" d="' + path(outer) + '" fill="none" stroke="#b45e1c" stroke-width="4" stroke-dasharray="10 4"/>');
       out.push('<path d="' + path(moduleCorners(m)) + '" fill="#' + (CC[m.cladding.type] || '#9a7350').slice(1) + '" fill-opacity="0.18" stroke="#253a33" stroke-width="2.2"/>');
       (m.zones || []).forEach(function (z) {
         var L = m.nominal.length_m, Wd = m.nominal.width_m;
@@ -616,7 +617,7 @@
         out.push('<line x1="' + n(sc[0]) + '" y1="' + n(sc[1]) + '" x2="' + n(sx) + '" y2="' + n(sy) + '" stroke="#245a73" stroke-width="2.2" marker-end="url(#' + pre + '-arrow)"/>');
         out.push(text(sx + 4, sy + 4, 'solar ' + n(m.solar.tilt_deg, 0) + '° / ' + n(m.solar.azimuth_deg, 0) + '°', 8, ' fill="#245a73" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
       }
-      out.push('<path class="plan-module-hit" data-module-id="' + esc(m.id) + '" d="' + path(moduleCorners(m)) + '" fill="transparent" pointer-events="all"/>');
+      out.push('<path class="plan-module-hit" data-module-id="' + esc(m.id) + '" d="' + path(moduleCorners(m)) + '" fill="transparent" pointer-events="all" tabindex="0" role="button" aria-pressed="' + (opts.selectedModule === m.id ? 'true' : 'false') + '" aria-describedby="plan-keyboard-help" aria-label="Module ' + esc(m.id) + ', ' + esc(m.type) + ', at ' + n(m.position_m[0]) + ', ' + n(m.position_m[1]) + ' metres. Select, then drag or use arrow keys to move; R rotates."/>');
     });
     planLabels.forEach(function (label) { out.push(label); });
     if (d.entry_shelter && d.entry_shelter.enabled) {
@@ -770,7 +771,7 @@
     var title = d.name + (cut ? ' roof-off cutaway' : focus ? ' porch and deck detail' : winter ? ' winter exterior concept' : ' exterior concept');
     var desc = (cut ? 'Roof-off cutaway' : focus ? 'Screened porch and deck detail' : winter ? 'Winter exterior axonometric' : 'Exterior axonometric') + ' of ' + d.name + ', ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + '. The view is generated from the same multi-container geometry as the plan and uses no WebGL. Conceptual only.';
     var out = [];
-    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + viewBox + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + '>');
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + viewBox + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + ' data-plan-scale="' + n(scale) + '" data-plan-width="' + W + '"' + '>');
     out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
     out.push('<defs><linearGradient id="' + pre + '-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + (winter ? '#e6edf1' : '#eef0e4') + '"/><stop offset="1" stop-color="' + (winter ? '#f3f5f2' : '#dce4d0') + '"/></linearGradient></defs>');
     out.push('<rect width="' + W + '" height="' + H + '" fill="url(#' + pre + '-sky)"/>');

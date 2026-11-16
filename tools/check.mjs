@@ -64,7 +64,7 @@ const exHomes = (explorerHtml.match(/name="ex-building"/g) || []).length;
 ok(exHomes === 7 && ['a','b','c','d','e','f','lodge'].every((id) => explorerHtml.indexOf(`name="ex-building" value="${id}"`) >= 0), 'Look inside offers all seven buildings');
 ok(!/name="ex-roof" value="biosolar"/.test(explorerHtml), 'the biosolar roof option is removed from the explorer');
 ok(!JSON.parse(read('data/design-lab.json')).concepts.some((c) => c.modules.some((m) => m.roof && m.roof.type === 'biosolar')), 'no Design Lab concept uses a biosolar roof');
-ok(/name="ex-building" value="b"/.test(explorerHtml) && /cabin-pair/.test(read('site/js/data.js')), 'Cabin B and D are wired to the two-container explorer model');
+ok(/name="ex-building" value="b"/.test(explorerHtml) && /cabin-pair/.test(read('site/js/data.js')) && /e"?:\s*"cabin-pair"|e: 'cabin-pair'/.test(read('site/js/data.js')), 'Cabin B, D and Fern are wired to the two-container explorer model');
 
 section('Terrain and landscape');
 ok(near(analysis.area_acres, 15.0, 0.06), `the fictional parcel is ${analysis.area_acres} acres (target 15.0)`);
@@ -93,15 +93,21 @@ const visibleText = homeHtml.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]+
 ok(!/3\.66|12\.59|26\.7\s*m²|35\.6\s*m²/.test(visibleText), 'general descriptions avoid two-decimal dimensions and exact floor areas');
 ok(/~12\.6|~3\.7/.test(visibleText), 'general descriptions use approximate dimensions');
 
-const homeIds = ['a','b','c','d','e','f','lodge'];
-for (const id of homeIds) {
-  const page = read(`site/homes/${id}/index.html`);
-  ok(exists(`site/homes/${id}/index.html`) && /<h1>/.test(page) && new RegExp(`id="main-view"`).test(page) && new RegExp(`id="siting"`).test(page), `home page ${id} has a title, main view and siting anchor`);
-  ok(/class="heading-link"/.test(page) && /class="on-page"/.test(page), `home page ${id} exposes section permalinks`);
+const HOME_PAGES = { a: 'Cedar-1-simple', b: 'Birch-2-wide', c: 'Pine-1-simple', d: 'Moss-2-wide', e: 'Fern-2-wide', f: 'Juniper-1-simple', lodge: 'Lodge-3-community' };
+for (const [id, slug] of Object.entries(HOME_PAGES)) {
+  const page = read(`site/homes/${slug}/index.html`);
+  ok(exists(`site/homes/${slug}/index.html`) && /<h1>/.test(page) && /id="main-view"/.test(page) && /id="siting"/.test(page), `home page ${slug} has a title, main view and siting anchor`);
+  ok(/class="heading-link"/.test(page) && /class="on-page"/.test(page), `home page ${slug} exposes section permalinks`);
+  const redirect = read(`site/homes/${id}/index.html`);
+  ok(/http-equiv="refresh"/.test(redirect) && redirect.indexOf(`../${slug}/`) >= 0, `legacy /homes/${id}/ redirects to ${slug}`);
+  const shortName = { a: 'Cedar', b: 'Birch', c: 'Pine', d: 'Moss', e: 'Fern', f: 'Juniper', lodge: 'Common-Lodge' }[id];
+  const nameRedirect = read(`site/homes/${shortName}/index.html`);
+  ok(/http-equiv="refresh"/.test(nameRedirect) && nameRedirect.indexOf(`../${slug}/`) >= 0, `/homes/${shortName}/ redirects to ${slug}`);
+  if (id === 'e') ok(/Fern-2-wide/.test(read('site/homes/Fern-1-simple/index.html')), 'old Fern-1-simple URL redirects to Fern-2-wide');
 }
 const homesIndexHtml = read('site/homes/index.html');
-ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && homeIds.every((id) => homesIndexHtml.indexOf(`href="${id}/"`) >= 0), 'homes index links all seven home pages');
-ok((homeHtml.match(/class="home-index-card"/g) || []).length === 7 && /homes\/c\//.test(homeHtml), 'the main page links the seven dedicated home pages');
+ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && Object.values(HOME_PAGES).every((slug) => homesIndexHtml.indexOf(`href="${slug}/"`) >= 0), 'homes index links all seven descriptive home pages');
+ok((homeHtml.match(/class="home-index-card"/g) || []).length === 7 && /homes\/Pine-1-simple\//.test(homeHtml), 'the main page links the seven descriptive home pages');
 
 section('Homes, views and orientation');
 ok(analysis.buildings.length === 7, 'six homes and one common lodge are placed');

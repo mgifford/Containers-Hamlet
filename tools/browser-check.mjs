@@ -156,15 +156,15 @@ try {
   const homesIndex = await open('homes/');
   ok(homesIndex.errors.length === 0, `homes index: no console errors${homesIndex.errors.length ? ': ' + homesIndex.errors.join(' | ') : ''}`);
   const homesState = await homesIndex.page.evaluate(() => ({ cards: document.querySelectorAll('.home-index-card').length, links: [...document.querySelectorAll('.home-index-card h2 a')].map((a) => a.href) }));
-  ok(homesState.cards === 7 && homesState.links.every((u) => /\/homes\/[a-z]+\/$/.test(u)), 'homes index has seven shareable home links');
+  ok(homesState.cards === 7 && homesState.links.every((u) => /\/homes\/[A-Za-z0-9-]+\/$/.test(u)), 'homes index has seven shareable home links');
   await axe(homesIndex.page, 'homes index');
   await shot(homesIndex.page, 'homes-index');
-  const pine = await open('homes/c/');
+  const pine = await open('homes/Pine-1-simple/');
   ok(pine.errors.length === 0, `Cabin C page: no console errors${pine.errors.length ? ': ' + pine.errors.join(' | ') : ''}`);
   const pineState = await pine.page.evaluate(() => ({ title: document.title, h1: document.querySelector('h1') && document.querySelector('h1').textContent, ids: [...document.querySelectorAll('h2[id]')].map((h) => h.id) }));
   ok(/Cabin C/.test(pineState.title) && /Pine/.test(pineState.h1), 'Cabin C page has its own title and heading');
   ok(['orientation','main-view','nearby','path','winter','siting','design-note','drawings'].every((id) => pineState.ids.indexOf(id) >= 0), 'Cabin C page has the shareable section anchors');
-  await pine.page.goto(BASE + 'homes/c/#main-view');
+  await pine.page.goto(BASE + 'homes/Pine-1-simple/#main-view');
   await pine.page.waitForTimeout(1200);
   ok(await pine.page.evaluate(() => location.hash === '#main-view' && document.querySelector('#main-view').getBoundingClientRect().top < 200), 'Cabin C #main-view anchor opens at the section');
   await axe(pine.page, 'Cabin C page');
@@ -177,7 +177,7 @@ try {
   ok(await page.locator('#homes .home-card-image img').first().evaluate((i) => i.getAttribute('loading') === 'lazy'), 'home card diagrams are lazy-loaded');
   await page.click('[data-choice="a"]');
   const homeHref = await page.getAttribute('#building-details a', 'href');
-  ok(/homes\/a\/$/.test(homeHref), 'the map details link points to the dedicated Cabin A page');
+  ok(/homes\/Cedar-1-simple\/$/.test(homeHref), 'the map details link points to the descriptive Cedar home page');
 
   await page.focus('input[name="cabin-a-view"]:checked');
   ok(await visible(page, '#cabin-a-floor-plan') && !(await visible(page, '#cabin-a-elevations')), 'only the chosen drawing is shown');
@@ -212,6 +212,9 @@ try {
   await page.check('input[name="ex-building"][value="d"]');
   await page.waitForTimeout(250);
   ok(/Cabin D:/.test(await label()) && await page.$('button[data-room="annex-studio"]') !== null, 'Cabin D opens the two-container model');
+  await page.check('input[name="ex-building"][value="e"]');
+  await page.waitForTimeout(250);
+  ok(/Cabin E:/.test(await label()) && await page.$('button[data-room="annex-studio"]') !== null, 'Fern differs from Juniper with a two-container model');
 
   await page.locator('#homes').screenshot({ path: SHOTS ? path.join(SHOTS, 'desktop-homes.png') : undefined }).catch(() => {});
   await page.click('[data-choice="a"]');

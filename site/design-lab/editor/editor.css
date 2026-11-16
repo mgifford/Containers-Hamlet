@@ -116,3 +116,9 @@ button.secondary:hover { background: var(--surface); color: var(--link); }
 
 #finish-controls .field-grid { grid-template-columns: 1fr 1fr; }
 @media (max-width: 700px) { #finish-controls .field-grid { grid-template-columns: 1fr; } }
+
+.plan-module-hit { cursor: grab; touch-action: none; }
+.plan-module-hit:focus { outline: none; stroke: #b45e1c; stroke-width: 4; fill: #ffd28a; fill-opacity: .18; }
+.plan-module-hit:active { cursor: grabbing; }
+.plan-selected { pointer-events: none; }
+.plan-help { margin: .35rem 0 0; }
