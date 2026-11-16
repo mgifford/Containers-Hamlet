@@ -491,12 +491,51 @@
     }).join('');
   }
 
+  function syncModulePositionInputs(m) {
+    var i = moduleIndex(m.id);
+    if (i < 0) return;
+    ['0', '1'].forEach(function (axis) {
+      var el = document.querySelector('[data-path="modules.' + i + '.position_m.' + axis + '"]');
+      if (el && document.activeElement !== el) el.value = m.position_m[Number(axis)];
+    });
+  }
+
+  function focusPlanModule(id) {
+    var hit = document.querySelector('#plan .plan-module-hit[data-module-id="' + id + '"]');
+    if (hit) hit.focus({ preventScroll: true });
+  }
+
+  function nudgeModule(m, dx, dy, message) {
+    var before = clone(state.design);
+    m.position_m[0] = Math.round((m.position_m[0] + dx) * 10) / 10;
+    m.position_m[1] = Math.round((m.position_m[1] + dy) * 10) / 10;
+    pushHistory(before);
+    state.design = Schema.canonicalize(state.design);
+    renderControls();
+    renderVisuals();
+    focusPlanModule(m.id);
+    announce(message || ('Module ' + m.id + ' moved to ' + m.position_m[0] + ', ' + m.position_m[1] + ' metres.'));
+  }
+
+  function rotateModule(m, delta) {
+    var before = clone(state.design);
+    m.rotation_deg = ((m.rotation_deg || 0) + delta + 360) % 360;
+    pushHistory(before);
+    state.design = Schema.canonicalize(state.design);
+    renderControls();
+    renderVisuals();
+    focusPlanModule(m.id);
+    announce('Module ' + m.id + ' rotated to ' + m.rotation_deg + ' degrees.');
+  }
+
+  var planDrag = null;
+
   function renderVisuals() {
     var d = state.design;
     var assessment = Model.assess(d);
     var summary = Schema.summary(d);
     try {
-      $('plan').innerHTML = Model.renderPlan(d, { idPrefix: 'editor-plan' });
+      $('plan').innerHTML = Model.renderPlan(d, { idPrefix: 'editor-plan', selectedModule: state.selectedModule, interactive: true });
       $('exterior').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-exterior', season: state.season === 'winter' ? 'winter' : undefined });
       $('cutaway').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-cutaway', mode: 'cutaway' });
     } catch (err) {
@@ -1131,11 +1170,100 @@
     });
     $('controls').addEventListener('click', onAction);
     $('plan').addEventListener('click', function (e) {
-      var hit = e.target.closest ? e.target.closest('[data-module-id]') : null;
-      if (!hit) return;
+      var hit = e.target.closest ? e.target.closest('.plan-module-hit') : null;
+      if (!hit || planDrag) return;
       state.selectedModule = hit.getAttribute('data-module-id');
       renderControls();
-      announce('Module ' + state.selectedModule + ' selected from the plan. Use the module controls to move or rotate it.');
+      renderVisuals();
+      focusPlanModule(state.selectedModule);
+      announce('Module ' + state.selectedModule + ' selected from the plan. Drag it or use the arrow keys; R rotates.');
+    });
+
+    $('plan').addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      var hit = e.target.closest ? e.target.closest('.plan-module-hit') : null;
+      if (!hit) return;
+      e.preventDefault();
+      var id = hit.getAttribute('data-module-id');
+      var m = state.design.modules.filter(function (x) { return x.id === id; })[0];
+      var svg = $('plan').querySelector('svg');
+      if (!m || !svg || !svg.getScreenCTM) return;
+      state.selectedModule = id;
+      renderControls();
+      renderVisuals();
+      svg = $('plan').querySelector('svg');
+      var planScale = Number(svg.getAttribute('data-plan-scale')) || 1;
+      var planWidth = Number(svg.getAttribute('data-plan-width')) || 1040;
+      var renderedWidth = svg.getBoundingClientRect().width || planWidth;
+      var pixelsPerMetre = planScale * (renderedWidth / planWidth);
+      planDrag = { id: id, startX: e.clientX, startY: e.clientY, x: m.position_m[0], y: m.position_m[1], pixelsPerMetre: pixelsPerMetre, before: clone(state.design), moved: false };
+      document.body.classList.add('dragging-module');
+      announce('Module ' + id + ' selected for dragging.');
+    });
+
+    document.addEventListener('pointermove', function (e) {
+      if (!planDrag) return;
+      e.preventDefault();
+      var m = state.design.modules.filter(function (x) { return x.id === planDrag.id; })[0];
+      if (!m) return;
+      var dx = (e.clientX - planDrag.startX) / planDrag.pixelsPerMetre;
+      var dy = (e.clientY - planDrag.startY) / planDrag.pixelsPerMetre;
+      if (Math.abs(dx) + Math.abs(dy) > 0.02) planDrag.moved = true;
+      m.position_m[0] = Math.round((planDrag.x + dx) * 10) / 10;
+      m.position_m[1] = Math.round((planDrag.y + dy) * 10) / 10;
+      renderVisuals();
+      syncModulePositionInputs(m);
+    });
+
+    document.addEventListener('pointerup', function () {
+      if (!planDrag) return;
+      var drag = planDrag;
+      planDrag = null;
+      document.body.classList.remove('dragging-module');
+      if (drag.moved) {
+        pushHistory(drag.before);
+        renderControls();
+        renderVisuals();
+        focusPlanModule(drag.id);
+        var m = state.design.modules.filter(function (x) { return x.id === drag.id; })[0];
+        announce('Module ' + drag.id + ' moved to ' + m.position_m[0] + ', ' + m.position_m[1] + ' metres. Undo is available.');
+      }
+    });
+
+    $('plan').addEventListener('keydown', function (e) {
+      var hit = e.target.closest ? e.target.closest('.plan-module-hit') : null;
+      if (!hit) return;
+      var m = state.design.modules.filter(function (x) { return x.id === hit.getAttribute('data-module-id'); })[0];
+      if (!m) return;
+      var step = e.shiftKey ? 0.5 : 0.1;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        state.selectedModule = m.id;
+        renderControls();
+        renderVisuals();
+        focusPlanModule(m.id);
+        announce('Module ' + m.id + ' selected.');
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        var dx = e.key === 'ArrowLeft' ? -step : e.key === 'ArrowRight' ? step : 0;
+        var dy = e.key === 'ArrowUp' ? -step : e.key === 'ArrowDown' ? step : 0;
+        state.selectedModule = m.id;
+        nudgeModule(m, dx, dy);
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        state.selectedModule = m.id;
+        rotateModule(m, e.shiftKey ? -15 : 15);
+      }
+    });
+
+    $('plan').addEventListener('focusin', function (e) {
+      var hit = e.target.closest ? e.target.closest('.plan-module-hit') : null;
+      if (!hit) return;
+      var id = hit.getAttribute('data-module-id');
+      if (state.selectedModule !== id) {
+        state.selectedModule = id;
+        renderControls();
+      }
     });
     $('controls').addEventListener('focusin', function (e) {
       var card = e.target.closest ? e.target.closest('[data-module-card]') : null;

@@ -29,6 +29,7 @@ It is not a generic home builder. The container is the core of every design; tim
 - Summer/winter view control, approximate window exposure by world-facing side, and qualitative shading/privacy/maintenance notes.
 - Elevated foundation options: engineered helical piles (default), ground screws, concrete piers, timber posts on pads and bedrock anchors, with an elevated no-compaction section, root-protection notes and geotechnical/frost/permit warnings.
 - A paint palette and entry-shelter control with a Micro Studio example using reused-door shutters.
+- **Direct plan manipulation**: click/tap or Tab to a module, drag it with a pointer, or use arrow keys (Shift = 0.5 m), Enter/Space to select and R/Shift+R to rotate. Selected modules have a visible outline and an announced position.
 - A separate 1.2 m × 8 m pedestrian footbridge study with helical-pile/ground-screw abutments, clear-span/no-fill intent and conservation-authority/permit notes.
 - Per-module tilted solar: default 39° due south (year-round 36–39°), winter ≈60° and summer ≈30° options, with a solar section diagram and PV label in the exterior/winter views.
 - Solar tilt, azimuth and strategy persist in JSON; the plan shows the solar arrow and tilt/azimuth label.
