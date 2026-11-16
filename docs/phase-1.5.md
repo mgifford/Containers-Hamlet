@@ -26,7 +26,7 @@ This phase shifts the site from an architectural showcase toward a resident-faci
 
 ## Validation
 
-See `docs/phase-1.5-audit.md`. Final: 203 generated files; 289 main static; 722 Design Lab static; 107 main browser; 166 Design Lab browser; 258 KB / 64 KB initial; 3,502 KB total under 3.5 MB.
+See `docs/phase-1.5-audit.md`. Final: 205 generated files; 289 main static; 724 Design Lab static; 107 main browser; 171 Design Lab browser; 259 KB / 64 KB initial; 3,502 KB total under 3.5 MB.
 
 **Do not merge automatically.**
 
@@ -39,3 +39,18 @@ See `docs/phase-1.5-audit.md`. Final: 203 generated files; 289 main static; 722 
 - Both: 0.9 m door targets, step-free porch, reachable storage, a firm winter route and a place to wait for help.
 - Still unresolved: structural opening, fire/egress, foundation/drainage, fixture clearances, personal care, CSA B651/code review and consultant sign-off.
 - Linked from the Cedar home page and `/living/#accessibility`.
+
+## Styling and navigation audit
+
+All 59 canonical HTML pages were loaded in Chromium at 1440 px and 320 px:
+
+- every page loaded its stylesheets with no 4xx/5xx CSS or asset responses;
+- no page had horizontal overflow at 320 px after fixing the model pages, cost worksheet and shared header;
+- the apparent “missing styling” on `/design-lab/vegetation/` was a **crowded 15-link header**, not a missing stylesheet.
+
+The Design Lab now uses one six-item top-level header plus a compact **Gallery / Editor / Guides / Compare** sub-navigation. A new `/design-lab/guides/` hub links vegetation, ground, patterns, fire, two-storey, resilience and water.
+
+## Screenshots
+
+- `../screenshots/phase-1.5-community/vegetation-navigation.jpg`
+- `../screenshots/phase-1.5-community/design-guides.jpg`

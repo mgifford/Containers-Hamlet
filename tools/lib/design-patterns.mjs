@@ -1,4 +1,6 @@
-// Code: MIT. Page/diagram content: CC BY-SA 4.0.
+// Code: MIT.
+import { designShellNav } from './design-nav.mjs';
+// Page/diagram content: CC BY-SA 4.0.
 const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 export function patternsSVG() {
@@ -31,24 +33,7 @@ export function patternsPage() {
 </head>
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header">
-  <a class="brand" href="../../../index.html">Containers Hamlet</a>
-  <nav aria-label="Design Lab">
-    <a href="../index.html">Design gallery</a>
-    <a href="../editor/">Editor</a>
-    <a href="../vegetation/">Vegetation</a>
-    <a href="../ground/">Ground</a>
-    <a href="../patterns/" aria-current="page">Patterns</a>
-    <a href="../fire/">Fire</a>
-    <a href="../two-storey/">Two-storey</a>
-    <a href="../resilience/">Resilience</a>
-    <a href="../water/">Water</a>
-    <a href="../compare/">Compare</a>
-    <a href="../../living/">Living Here</a>
-    <a href="../../participate/">Participate</a>
-    <a href="../../../index.html">Main site</a>
-  </nav>
-</header>
+${designShellNav(2, 'guides')}
 <main id="main" class="lab-main">
   <p class="eyebrow">Container patterns</p>
   <h1>Configurations, paint and doors as shelter</h1>

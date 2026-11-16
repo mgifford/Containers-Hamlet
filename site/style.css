@@ -426,3 +426,17 @@ details.concept-specs > summary { cursor: pointer; font-weight: 700; min-height:
 @media (max-width: 750px) { .resident-questions, .scenario-list, .scenario-grid, .hub-grid, .living-grid { grid-template-columns: 1fr; } }
 
 .site-footer .small { color: inherit; }
+
+/* Consistent top-level header + compact Design Lab sub-navigation */
+.site-header { flex-wrap: wrap; }
+.site-header nav { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem 1rem; }
+.subnav { display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; padding: .55rem max(1rem, calc((100vw - 72rem) / 2)); background: var(--surface); border-bottom: 1px solid var(--border); }
+.subnav a { font-weight: 700; text-decoration: none; padding: .35rem .1rem; }
+.subnav a[aria-current="page"] { border-bottom: 3px solid var(--focus); }
+@media (max-width: 750px) { .site-header { align-items: flex-start; } .site-header nav { gap: .2rem .8rem; } .subnav { padding: .5rem 1rem; } }
+
+/* Keep model pages and worksheets inside the mobile viewport. */
+.model-page-grid, .model-page-grid > *, .model-page-figure { min-width: 0; }
+.cost-worksheet fieldset { overflow-x: auto; min-width: 0; }
+.cost-worksheet table { min-width: 34rem; }
+@media (max-width: 600px) { .facts { grid-template-columns: 1fr; } }

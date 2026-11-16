@@ -24,6 +24,8 @@ import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { modelPage } from './lib/model-pages.mjs';
 import { accessibleHomePage, accessiblePlanSVG } from './lib/accessible-home.mjs';
+import { designShellNav } from './lib/design-nav.mjs';
+import { guidesPage } from './lib/design-guides.mjs';
 import { communityPage, scenariosPage, ownershipPage, costsPage, roadmapPage, livingPage, participatePage, usabilityPage, licensingPage } from './lib/community-pages.mjs';
 import { configurationSVG } from './lib/home-config.mjs';
 import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
@@ -240,9 +242,14 @@ export function generate() {
   const galleryTemplate = readText(galleryPagePath);
   const gallery = galleryCards(designLab.concepts, (c) => DesignSchema.summary(c)) + '\n' + arrangementCards();
   ['stacked','cantilever','courtyard','creek'].forEach((k) => put(`site/design-lab/arrangements/${k}.svg`, arrangementSVG(k)));
-  const galleryOut = galleryTemplate.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${gallery}\n<!-- /gen:gallery -->`);
+  const galleryTemplateWithNav = galleryTemplate.replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(1, 'gallery'));
+  const galleryOut = galleryTemplateWithNav.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${gallery}\n<!-- /gen:gallery -->`);
   if (!galleryTemplate.includes('<!-- gen:gallery -->') || !galleryTemplate.includes('<!-- /gen:gallery -->')) issues.push({ level: 'error', message: 'site/design-lab/index.html is missing the gen:gallery markers' });
   put(galleryPagePath, galleryOut);
+  put('site/design-lab/guides/index.html', guidesPage());
+  const editorPath = 'site/design-lab/editor/index.html';
+  const editorHtml = readText(editorPath).replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(2, 'editor'));
+  put(editorPath, editorHtml);
   const publicAnalysis = {
     generated_by: 'tools/build.mjs',
     fictional: true,

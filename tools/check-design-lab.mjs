@@ -189,6 +189,12 @@ ok(/<details class="deep-dive"><summary>Building measures worth specifying/.test
 const arr = read('site/design-lab/arrangements/stacked.svg');
 ok(/role="img"/.test(arr) && /<title id=/.test(arr) && /<desc id=/.test(arr) && /CC BY-SA 4\.0/.test(arr), 'arrangement diagrams are accessible and licensed');
 
+section('Shared navigation and guide hub');
+const guides = read('site/design-lab/guides/index.html');
+ok(/Design Lab guides/.test(guides) && (guides.match(/class="hub-grid"/g) || []).length === 1 && ['vegetation/','ground/','patterns/','fire/','two-storey/','resilience/','water/'].every((h) => guides.indexOf('../' + h) >= 0), 'guide hub links all seven Design Lab guides');
+const vegetationPage = read('site/design-lab/vegetation/index.html');
+ok((vegetationPage.match(/class="subnav"/g) || []).length === 1 && /Gallery/.test(vegetationPage) && /Guides/.test(vegetationPage) && !/Design on the main site/.test(vegetationPage), 'guide pages use one compact Design Lab sub-navigation');
+
 section('Community resilience and water');
 const resilience = read('site/design-lab/resilience/index.html');
 ok(/Resilience is a hamlet-scale system/.test(resilience) && /Forest fire: beyond the Ontario guidance/.test(resilience) && /Hotter, wetter, drier, smokier/.test(resilience) && /How a container hamlet builds community resilience/.test(resilience), 'resilience page covers fire, climate, water and community capacity');

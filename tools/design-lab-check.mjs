@@ -56,6 +56,18 @@ const shot = async (page, name, full = false) => { if (SHOTS) await page.screens
 const visible = (page, sel) => page.evaluate((s) => { const e = document.querySelector(s); return !!e && e.offsetParent !== null; }, sel);
 
 try {
+  const guides = await open('design-lab/guides/');
+  ok(guides.errors.length === 0, `guide hub: no console errors${guides.errors.length ? ': ' + guides.errors.join(' | ') : ''}`);
+  ok(await guides.page.locator('.hub-grid a').count() === 7, 'guide hub shows seven guides');
+  await axe(guides.page, 'guide hub');
+  await shot(guides.page, 'design-guides');
+  const vegetation = await open('design-lab/vegetation/');
+  const navHeights = await vegetation.page.evaluate(() => [...document.querySelectorAll('header nav, .subnav')].map((n) => n.getBoundingClientRect().height));
+  ok(navHeights.length === 2 && navHeights.every((h) => h < 70), 'vegetation page has a compact two-level navigation');
+  await axe(vegetation.page, 'vegetation navigation');
+  await vegetation.context.close();
+  await guides.context.close();
+
   section('Design gallery');
   let { context, page, errors, foreign } = await open('design-lab/');
   ok(errors.length === 0, `gallery: no console errors${errors.length ? ': ' + errors.join(' | ') : ''}`);
