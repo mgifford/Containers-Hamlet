@@ -24,13 +24,13 @@ Primary warnings and decisions stay visible. `<details>` works without JavaScrip
 
 ## Validation
 
-- 268 main static
+- 285 main static
 - 722 Design Lab static
-- 86 main browser
+- 103 main browser
 - 166 Design Lab browser
-- 192 generated files
-- 3422 KB under 3.5 MB
-- Initial view 253 KB / 63 KB
+- 201 generated files
+- 3502 KB under 3.5 MB
+- Initial view 258 KB / 64 KB
 
 ## Screenshot
 

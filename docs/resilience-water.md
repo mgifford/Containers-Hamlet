@@ -36,13 +36,13 @@ It deliberately does not size a real system.
 
 | Check | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | 192 generated files current |
-| `node tools/check.mjs` | 268 passed, 0 failed |
+| `node tools/build.mjs --check` | 201 generated files current |
+| `node tools/check.mjs` | 285 passed, 0 failed |
 | `node tools/check-design-lab.mjs` | 722 passed, 0 failed |
-| `node tools/browser-check.mjs` | 86 passed, 0 failed |
+| `node tools/browser-check.mjs` | 103 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 166 passed, 0 failed |
-| Initial view | 253 KB / 63 KB compressed |
-| Whole site | 3422 KB |
+| Initial view | 258 KB / 64 KB compressed |
+| Whole site | 3502 KB |
 
 ## Screenshots
 
