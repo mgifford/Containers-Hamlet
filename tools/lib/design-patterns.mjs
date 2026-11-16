@@ -44,6 +44,8 @@ export function patternsPage() {
     <a href="../resilience/">Resilience</a>
     <a href="../water/">Water</a>
     <a href="../compare/">Compare</a>
+    <a href="../../living/">Living Here</a>
+    <a href="../../participate/">Participate</a>
     <a href="../../../index.html">Main site</a>
   </nav>
 </header>

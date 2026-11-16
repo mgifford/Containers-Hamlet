@@ -267,6 +267,57 @@ try {
   await context.close();
 
   /* ------------------------------------------------------------ */
+  section('Resident community pages');
+  const community = await open('community/');
+  ok(community.errors.length === 0, `community page: no console errors${community.errors.length ? ': ' + community.errors.join(' | ') : ''}`);
+  const communityText = await community.page.textContent('main');
+  ok(/What is it\?/.test(communityText) && /What would I have privately\?/.test(communityText) && /What is unresolved\?/.test(communityText), 'community page answers the resident questions');
+  await axe(community.page, 'community page');
+  await shot(community.page, 'community-page', true);
+  await community.context.close();
+
+  const ownership = await open('community/ownership/');
+  ok(/Who owns what/.test(await ownership.page.textContent('main')) && /No binding model/.test(await ownership.page.textContent('main')), 'ownership guide separates land, home, lease, membership and association');
+  await axe(ownership.page, 'ownership guide');
+  await ownership.context.close();
+
+  const costs = await open('community/costs/');
+  await costs.page.fill('[id="initial-0"]', '100000');
+  await costs.page.fill('[id="operating-0"]', '12000');
+  await costs.page.fill('#worksheet-households', '6');
+  await costs.page.click('#calculate-costs');
+  await costs.page.waitForTimeout(200);
+  const costText = await costs.page.textContent('#cost-result');
+  ok(/100,000/.test(costText) && /12,000/.test(costText) && /2,000/.test(costText), 'cost worksheet adds user-entered assumptions and divides shared operating costs');
+  await axe(costs.page, 'cost worksheet');
+  await costs.context.close();
+
+  const living = await open('living/');
+  ok(/Living here is a set of tradeoffs/.test(await living.page.textContent('main')) && /step-free is not enough/i.test(await living.page.textContent('main')), 'practical-living guide covers tradeoffs and accessibility limits');
+  await axe(living.page, 'living guide');
+  await living.context.close();
+
+  const usability = await open('community/usability/');
+  ok(/No representative residents have completed it yet/.test(await usability.page.textContent('main')) && /Results template/.test(await usability.page.textContent('main')), 'usability page is a plan, not a completed test claim');
+  await axe(usability.page, 'usability plan');
+  await usability.context.close();
+
+  const participate = await open('participate/');
+  ok(/No contact database/.test(await participate.page.textContent('main')) && /GitHub issue/.test(await participate.page.textContent('main')), 'participation path does not require a contact database');
+  await axe(participate.page, 'participation page');
+  await participate.context.close();
+
+  const licensing = await open('licensing/');
+  ok(/No automatic relicensing/.test(await licensing.page.textContent('main')) && /AGPL-3\.0-or-later/.test(await licensing.page.textContent('main')), 'licensing page records current and intended licences');
+  await axe(licensing.page, 'licensing page');
+  await licensing.context.close();
+
+  const smallCommunity = await open('community/', { viewport: { width: 320, height: 640 } });
+  ok(await smallCommunity.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'community page has no horizontal scrolling at 320 px');
+  await axe(smallCommunity.page, 'community page at 320 px');
+  await smallCommunity.context.close();
+
+  /* ------------------------------------------------------------ */
   section('Motion preferences');
   ({ context, page } = await open({ reducedMotion: 'reduce' }));
   ok(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior) === 'auto', 'reduced motion: no smooth scrolling');

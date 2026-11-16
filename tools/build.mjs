@@ -23,6 +23,7 @@ import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { modelPage } from './lib/model-pages.mjs';
+import { communityPage, scenariosPage, ownershipPage, costsPage, roadmapPage, livingPage, participatePage, usabilityPage, licensingPage } from './lib/community-pages.mjs';
 import { configurationSVG } from './lib/home-config.mjs';
 import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
 import { twoStoreyPage, twoStoreySVG } from './lib/design-two-storey.mjs';
@@ -179,6 +180,17 @@ export function generate() {
   put('site/design-lab/fire/index.html', firePage());
   put('site/design-lab/two-storey/index.html', twoStoreyPage());
   put('site/design-lab/resilience/index.html', resiliencePage());
+  const community = JSON.parse(readText('data/community.json'));
+  put('site/community/index.html', communityPage(community));
+  put('site/community/scenarios/index.html', scenariosPage(community));
+  put('site/community/ownership/index.html', ownershipPage());
+  put('site/community/costs/index.html', costsPage(community));
+  put('site/community/roadmap/index.html', roadmapPage(community));
+  put('site/community/usability/index.html', usabilityPage());
+  put('site/living/index.html', livingPage(community));
+  put('site/participate/index.html', participatePage());
+  put('site/licensing/index.html', licensingPage());
+
   put('site/design-lab/water/index.html', waterPage());
   put('site/design-lab/systems/fire-zones.svg', fireZonesSVG());
   put('site/design-lab/systems/two-storey-options.svg', twoStoreySVG());
