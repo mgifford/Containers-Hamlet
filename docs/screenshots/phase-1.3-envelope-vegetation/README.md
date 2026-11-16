@@ -32,3 +32,10 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 
 - `map-layout.jpg`: the selected-building panel now has a stable height beside the map, with the map key in its own adjacent column.
 - `map-layout-tablet.jpg`: at tablet width the map and key sit side by side, with the selected-building details below.
+
+## Container patterns and security
+
+- `patterns-guide.jpg`: configuration diagrams and the pattern guide.
+- `patterns-doors.jpg`: doors as shelter, shutters and security guidance.
+- `editor-patterns.jpg`: paint palette and entry-shelter controls.
+- `micro-shelter.jpg`: the Micro Studio example with reused-door canopy and shutters.

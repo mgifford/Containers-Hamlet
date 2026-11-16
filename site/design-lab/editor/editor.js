@@ -178,6 +178,7 @@
     $('season').value = state.season;
     renderSolarSection();
     renderFoundation();
+    renderFinish();
     renderOpenings();
     renderZones();
     renderPorches();
@@ -299,6 +300,54 @@
       state.design.foundation.no_compaction = noCompaction;
       state.design.foundation.independent_deck = independentDeck;
     }, 'Foundation changed. Recheck soil, frost uplift, corrosion, lateral capacity, slope stability, permits and conservation-authority requirements.');
+  }
+
+  var PAINT_PALETTES = [
+    { id: 'forest-ochre', label: 'Forest green / ochre trim', body: '#2f7d5f', trim: '#e5b21c', sheen: 'satin', note: 'Light-responsive body colour; bright trim marks the entry.' },
+    { id: 'charcoal-cedar', label: 'Charcoal / cedar trim', body: '#3f4a45', trim: '#b07a45', sheen: 'satin', note: 'Dark body with warm trim; heat gain and visibility at the entry need review.' },
+    { id: 'oxide-cream', label: 'Oxide red / cream trim', body: '#9a4e3a', trim: '#efe2c4', sheen: 'matte', note: 'High-contrast entry; confirm fade and touch-up.' },
+    { id: 'chalk-black', label: 'Chalk / black trim', body: '#d9d4c5', trim: '#202826', sheen: 'matte', note: 'Light body, dark trim; glare and dirt showing need review.' },
+    { id: 'marine-sand', label: 'Marine blue / sand trim', body: '#2f6473', trim: '#d8b878', sheen: 'satin', note: 'Cool body with warm entry; check salt/chloride exposure if near water.' }
+  ];
+
+  function renderFinish() {
+    var d = state.design, panel = $('finish-controls');
+    if (!panel) return;
+    var f = d.entry_shelter || {};
+    var palette = d.paint && PAINT_PALETTES.some(function (p) { return p.id === d.paint.id; }) ? d.paint.id : 'custom';
+    panel.innerHTML = '<div class="field-grid">' +
+      field('Paint palette', selectInput('', palette, 'paint-palette', option('custom', 'Keep current colours', palette) + PAINT_PALETTES.map(function (p) { return option(p.id, p.label, palette); }).join(''))) +
+      field('Shelter side', selectInput('', f.side || 'north', 'shelter-side', ['north','south','east','west'].map(function (v) { return option(v, v, f.side || 'north'); }).join(''))) +
+      field('Shelter width (m)', numberInput('', f.width_m || 2.2, 'shelter-width', ' step="0.1" min="0.8" max="4"')) +
+      field('Projection (m)', numberInput('', f.projection_m || 1.2, 'shelter-projection', ' step="0.05" min="0.4" max="2.5"')) +
+      '</div>' +
+      checkbox('', !!f.enabled, 'shelter-enabled', 'Reused container-door canopy') +
+      checkbox('', !!f.security_shutters, 'shelter-shutters', 'Open door leaves as security shutters') +
+      '<p class="small" id="finish-note">' + esc((d.paint && d.paint.note) || 'Choose a palette. Paint colour is not a security or durability guarantee.') + '</p>';
+  }
+
+  function applyFinishChoice() {
+    var palette = $('paint-palette').value;
+    var chosen = PAINT_PALETTES.filter(function (p) { return p.id === palette; })[0];
+    var side = $('shelter-side').value;
+    var width = Math.max(0.8, Math.min(4, Number($('shelter-width').value) || 2.4));
+    var projection = Math.max(0.4, Math.min(2.5, Number($('shelter-projection').value) || 1.2));
+    var enabled = $('shelter-enabled').checked;
+    var shutters = $('shelter-shutters').checked;
+    mutate(function () {
+      if (chosen) {
+        state.design.modules.forEach(function (m) {
+          m.cladding.colour = chosen.body;
+          m.frame_colour = chosen.trim;
+        });
+        state.design.paint = { id: chosen.id, name: chosen.label, body: chosen.body, trim: chosen.trim, sheen: chosen.sheen, note: chosen.note };
+      }
+      state.design.entry_shelter.side = side;
+      state.design.entry_shelter.width_m = width;
+      state.design.entry_shelter.projection_m = projection;
+      state.design.entry_shelter.enabled = enabled;
+      state.design.entry_shelter.security_shutters = shutters;
+    }, 'Paint and entry shelter updated. Hinges, wind, snow, egress and lock strategy still need review.');
   }
 
   function renderSolarSection() {
@@ -496,6 +545,7 @@
       ['Vegetation', d.vegetation.length + ' separate system' + (d.vegetation.length === 1 ? '' : 's')],
       ['Solar', d.modules.filter(function (m) { return m.solar.enabled; }).map(function (m) { return m.id + ': ' + m.solar.tilt_deg + '° / ' + m.solar.azimuth_deg + '° ' + m.solar.season_mode; }).join(' · ') || 'No solar array enabled'],
       ['Foundation', d.foundation.system + ' · ' + d.foundation.clearance_m + ' m clearance · ' + (d.foundation.no_compaction ? 'no compaction' : 'compaction unresolved')],
+      ['Paint and shelter', (d.paint ? d.paint.name : 'current palette') + ' · ' + (d.entry_shelter.enabled ? 'entry shelter on ' + d.entry_shelter.side : 'no entry shelter')],
       ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green/biosolar ' : '') || 'Membrane'],
       ['Insulation', 'Up to ' + s.maxInsulation_mm + ' mm external'],
       ['Status', assessment.ok ? 'No invalid geometry; professional review required' : 'Invalid geometry; drawings disabled'],
@@ -1061,6 +1111,7 @@
     $('add-vegetation').addEventListener('click', addVegetation);
     $('envelope-controls').addEventListener('change', applyEnvelopeChoice);
     $('foundation-controls').addEventListener('change', applyFoundationChoice);
+    $('finish-controls').addEventListener('change', applyFinishChoice);
     $('season').addEventListener('change', function () { state.season = $('season').value; renderVisuals(); announce('Season switched to ' + state.season + '. The plan and cutaway are unchanged.'); });
     $('apply-colour').addEventListener('click', function () {
       var colour = $('default-colour').value;

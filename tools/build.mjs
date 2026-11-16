@@ -19,6 +19,7 @@ import { architecturePage } from './lib/design-architecture.mjs';
 import { vegetationPage } from './lib/design-vegetation.mjs';
 import { vegetationComparisonSVG } from './lib/design-systems.mjs';
 import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
+import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
@@ -142,6 +143,8 @@ export function generate() {
   put('site/design-lab/compare/index.html', comparePage(designProfiles, designLab.concepts));
   put('site/design-lab/vegetation/index.html', vegetationPage(designLab.concepts));
   put('site/design-lab/ground/index.html', groundPage(designLab.concepts));
+  put('site/design-lab/patterns/index.html', patternsPage());
+  put('site/design-lab/systems/container-patterns.svg', patternsSVG());
   put('site/design-lab/systems/footbridge.svg', footbridgeSVG());
   put('site/design-lab/systems/vegetation-comparison.svg', vegetationComparisonSVG());
   const foundationSystems = Array.from(new Set(designLab.concepts.map((c) => c.foundation.system)));

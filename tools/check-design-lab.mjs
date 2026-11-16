@@ -180,6 +180,21 @@ ok(!Schema.validateSchema(badFoundation).ok, 'unknown foundation systems are rej
 const badClearance = JSON.parse(JSON.stringify(data.concepts[0])); badClearance.foundation.clearance_m = 3;
 ok(!Schema.validateSchema(badClearance).ok, 'foundation clearance above 2 m is rejected');
 
+section('Container patterns, paint and door shelter');
+const micro = data.concepts.find((c) => c.id === 'micro-studio');
+ok(micro.entry_shelter && micro.entry_shelter.enabled && micro.entry_shelter.security_shutters && micro.paint && micro.paint.body === '#2f7d5f', 'Micro Studio carries the door-shelter and paint example');
+const microExt = Model.renderAxo(micro, { idPrefix: 'test-shelter' });
+ok(/2b5c4a/.test(microExt) && !/NaN/.test(microExt), 'the exterior draws the reused-door shutters');
+const microPlan = Model.renderPlan(micro, { idPrefix: 'test-shelter-plan' });
+ok(/entry shelter/.test(microPlan), 'the plan labels the entry shelter');
+const badShelter = JSON.parse(JSON.stringify(micro)); badShelter.entry_shelter.side = 'up';
+ok(!Schema.validateSchema(badShelter).ok, 'invalid shelter sides are rejected');
+const patterns = read('site/design-lab/patterns/index.html');
+ok(/Configurations worth testing/.test(patterns) && /Doors as shelter, shutters and security/.test(patterns) && /Paint and colour/.test(patterns) && /A security checklist, not a promise/.test(patterns), 'patterns guide covers configurations, doors, paint and security');
+ok(/dornob\.com/.test(patterns) && /discovercontainers\.com/.test(patterns) && /instructables\.com/.test(patterns) && /homesteading\.com/.test(patterns) && /morningchores\.com/.test(patterns) && /houzz\.com/.test(patterns) && /stock\.adobe\.com/.test(patterns), 'patterns guide cites every supplied precedent');
+const patternsSvg = read('site/design-lab/systems/container-patterns.svg');
+ok(/role="img"/.test(patternsSvg) && /<title id=/.test(patternsSvg) && /<desc id=/.test(patternsSvg) && /CC BY-SA 4\.0/.test(patternsSvg), 'container-patterns diagram is accessible and licensed');
+
 section('Common Lodge roof and solar orientation');
 const lodgeConcept = data.concepts.find((c) => c.id === 'common-lodge');
 ok(lodgeConcept.roof_form && lodgeConcept.roof_form.type === 'south-shed' && lodgeConcept.roof_form.solar_side === 'south' && lodgeConcept.roof_form.pitch_deg === 5, 'Common Lodge has one south-facing shed roof');

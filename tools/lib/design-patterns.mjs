@@ -1,0 +1,132 @@
+// Code: MIT. Page/diagram content: CC BY-SA 4.0.
+const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+export function patternsSVG() {
+  const panel = (x, y, label, draw) => `<g transform="translate(${x},${y})"><rect width="300" height="165" rx="10" fill="#f7f5ed" stroke="#b9c4b3"/><text x="14" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#1d392c">${esc(label)}</text>${draw}<text x="14" y="158" font-family="system-ui, sans-serif" font-size="9" fill="#4f5f53">Concept only · engineering and permit review required</text></g>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 390" role="img" aria-labelledby="patterns-t patterns-d">
+<title id="patterns-t">Six container configurations and a door-shelter detail</title>
+<desc id="patterns-d">Original schematic diagrams: one container with a shallow entry shelter and open door-leaf shutters; two staggered containers with a covered gap; an L-shaped pair around a deck; a stacked pair; a cantilevered upper container; and a secure entry porch with shutters. These are planning diagrams, not engineered structures.</desc>
+<rect width="1000" height="390" fill="#faf8f2"/>
+<text x="10" y="386" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Original schematic · Containers Hamlet Design Lab · CC BY-SA 4.0</text>
+${panel(10, 10, 'Single + door shelter', '<rect x="72" y="62" width="110" height="56" fill="#8a6a4a" stroke="#274c3b"/><path d="M72 62h110v-18H72z" fill="#3d6654" stroke="#274c3b"/><path d="M64 44h126" stroke="#e5b21c" stroke-width="4"/><path d="M82 44v18M182 44v18" stroke="#5d6f6a" stroke-width="3"/><text x="72" y="130" font-size="8" fill="#3f5a4c">canopy + open shutters</text>')}
+${panel(340, 10, 'Staggered pair / dogtrot', '<rect x="50" y="58" width="130" height="50" fill="#8a6a4a" stroke="#274c3b"/><rect x="132" y="104" width="130" height="50" fill="#8a6a4a" stroke="#274c3b"/><rect x="120" y="82" width="72" height="42" fill="#d9c7a5" stroke="#274c3b" stroke-dasharray="4 3"/><text x="50" y="130" font-size="8" fill="#3f5a4c">cross-ventilated gap</text>')}
+${panel(670, 10, 'L-shape / courtyard', '<rect x="60" y="56" width="120" height="52" fill="#8a6a4a" stroke="#274c3b"/><rect x="148" y="92" width="52" height="64" fill="#8a6a4a" stroke="#274c3b"/><path d="M60 108h88v48H60z" fill="#d9c7a5" fill-opacity=".55" stroke="#7b8b73" stroke-dasharray="4 3"/><text x="60" y="130" font-size="8" fill="#3f5a4c">sheltered court</text>')}
+${panel(10, 202, 'Stacked pair', '<rect x="82" y="48" width="120" height="48" fill="#8a6a4a" stroke="#274c3b"/><rect x="82" y="96" width="120" height="48" fill="#9a7a58" stroke="#274c3b"/><path d="M82 96h120M82 48v96" stroke="#274c3b" stroke-width="2"/><text x="82" y="130" font-size="8" fill="#3f5a4c">load path · wind uplift · fire</text>')}
+${panel(340, 202, 'Cantilever', '<rect x="58" y="60" width="110" height="50" fill="#8a6a4a" stroke="#274c3b"/><rect x="118" y="104" width="130" height="38" fill="#8a6a4a" stroke="#274c3b"/><path d="M118 104h130" stroke="#9a4e3a" stroke-width="3"/><path d="M150 104v-44M250 104v-44" stroke="#5d6f6a" stroke-width="3"/><text x="58" y="130" font-size="8" fill="#3f5a4c">engineer the overturning path</text>')}
+${panel(670, 202, 'Secure entry porch', '<rect x="74" y="62" width="100" height="54" fill="#8a6a4a" stroke="#274c3b"/><path d="M62 62h124v-16H62z" fill="#3d6654" stroke="#274c3b"/><path d="M62 78v46M186 78v46" stroke="#e5b21c" stroke-width="5"/><path d="M74 116v20h100v-20" fill="none" stroke="#7b8b73" stroke-dasharray="3 2"/><text x="74" y="130" font-size="8" fill="#3f5a4c">visibility + egress + lock</text>')}
+</svg>`;
+}
+
+export function patternsPage() {
+  return `<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Container house configurations, paint palettes and reused container doors as entry shelter and security shutters for the Containers Hamlet Design Lab.">
+<title>Container patterns, paint and door shelters · Containers Hamlet Design Lab</title>
+<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="../architecture.css">
+</head>
+<body class="lab-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="../../../index.html">Containers Hamlet</a>
+  <nav aria-label="Design Lab">
+    <a href="../index.html">Design gallery</a>
+    <a href="../editor/">Editor</a>
+    <a href="../vegetation/">Vegetation</a>
+    <a href="../ground/">Ground</a>
+    <a href="../patterns/" aria-current="page">Patterns</a>
+    <a href="../compare/">Compare</a>
+    <a href="../../../index.html">Main site</a>
+  </nav>
+</header>
+<main id="main" class="lab-main">
+  <p class="eyebrow">Container patterns</p>
+  <h1>Configurations, paint and doors as shelter</h1>
+  <p class="lede">The useful precedents are rarely a single “container house” shape. They are moves: a staggered pair with a gap, a shallow roof over an entry, a reused door leaf as a shutter, a strong body colour with a bright trim. Each move changes structure, weather, security and egress. Use these as questions to test, not details to copy.</p>
+  <p class="notice"><strong>Concept only.</strong> No configuration, paint system, hinge, shutter, lock or cantilever is engineered, code-compliant or security-certified. A cantilever or stacked container needs a structural engineer, foundation design, wind-uplift and fire/egress review. Security hardware must never defeat escape.</p>
+
+  <section aria-labelledby="patterns-title">
+    <h2 id="patterns-title">Configurations worth testing</h2>
+    <figure class="system-figure">
+      <img src="../systems/container-patterns.svg" width="1000" height="390" alt="Six original schematic diagrams: a single container with a shallow entry canopy and open shutters; two staggered containers with a covered gap; an L-shaped pair around a deck; a stacked pair; a cantilevered upper container; and a secure entry porch with shutters." loading="eager" decoding="async">
+      <figcaption>Original planning diagrams, not construction details. The cantilever and stacked options need a stamped structural design; the door-shelter option needs hinge, wind, snow, egress and lock review.</figcaption>
+    </figure>
+    <div class="table-wrap" role="region" aria-label="Container configurations" tabindex="0"><table>
+      <caption>Configuration, what it buys and what it still needs.</caption>
+      <thead><tr><th scope="col">Pattern</th><th scope="col">What it can buy</th><th scope="col">What it still needs</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Single container + entry shelter</th><td>A dry, legible entry; a small wind lobby; a place for a lockable shutter.</td><td>Hinge and wind design, snow shedding, door swing, egress, fire separation, paint touch-up.</td></tr>
+        <tr><th scope="row">Staggered pair / dogtrot</th><td>Cross-ventilation, a covered outdoor gap, a clear front door and a social edge.</td><td>Structural connections, roof drainage at the gap, snow drift, fire separation, privacy and maintenance access.</td></tr>
+        <tr><th scope="row">L-shape / courtyard</th><td>A sheltered court, a clear entry, and a defended outdoor room without a fortress wall.</td><td>Setbacks, glazing and shading, drainage, root protection, and a door that is visible from the approach.</td></tr>
+        <tr><th scope="row">Stacked pair</th><td>A smaller footprint and a two-level home or guest space.</td><td>Part 4 structural design, foundation, load transfer, wind uplift, fire separation, stairs, guards and egress.</td></tr>
+        <tr><th scope="row">Cantilever</th><td>A dramatic overhang, a sheltered below-space and a lighter footprint.</td><td>Engineer the overturning path, back-span, connection, foundation, wind uplift, snow and service penetrations. Do not copy a photograph.</td></tr>
+        <tr><th scope="row">Secure entry porch</th><td>One visible, lit threshold; a place for shutters, a parcel box and a lockable outer door.</td><td>Two ways out, breakable/lockable hardware, visibility, fire, accessibility and a lock strategy that works for all residents.</td></tr>
+      </tbody>
+    </table></div>
+    <p>The Design Lab models the <strong>entry shelter and open door-leaf shutters</strong> as a configurable add-on, and the paint palette as a design choice. It does <strong>not</strong> model a cantilever or a stacked structure as a buildable geometry; those remain structural studies.</p>
+  </section>
+
+  <section aria-labelledby="doors-title">
+    <h2 id="doors-title">Doors as shelter, shutters and security</h2>
+    <p>Container doors are heavy steel leaves with strong frames. Reusing them can be beautiful and materially efficient, but a door is not a canopy by default. Three distinct uses should not be conflated:</p>
+    <ul>
+      <li><strong>Canopy:</strong> a leaf held horizontally or at a slope above the entry, with engineered hinges, stays and a wind/snow release strategy. It must not block the door swing or egress.</li>
+      <li><strong>Open shutters:</strong> leaves hinged beside glazing and held open in normal use. In a storm they close over the opening. They need a positive hold-open, a controlled closing force, and a way to open from inside.</li>
+      <li><strong>Privacy screen:</strong> a leaf fixed or sliding beside a porch. It can shade and screen without pretending to be a security door.</li>
+    </ul>
+    <p>Security is a layered outcome, not a product. Useful moves are a <strong>visible entry</strong>, a lit approach, a lockable outer shutter, laminated or toughened glazing, reinforced strike plates, and neighbours or paths with sightlines. A solid shutter can also hide an intruder, block a rescuer or trap an occupant. Every bedroom needs a viable escape route; security hardware must not override it.</p>
+    <p>The <a href="../editor/">editor</a> lets you test a shallow canopy and open shutters on the first module. It does not calculate hinge loads, wind uplift, snow drift or fire performance.</p>
+  </section>
+
+  <section aria-labelledby="paint-title">
+    <h2 id="paint-title">Paint and colour</h2>
+    <p>Paint is a maintenance system, not a colour chip. For steel containers, the durable sequence is surface preparation, a compatible primer, and a topcoat chosen for the exposure. The Design Lab palettes are visual intents only; a supplier’s system and a trial panel are required.</p>
+    <div class="table-wrap" role="region" aria-label="Sample paint palettes" tabindex="0"><table>
+      <caption>Sample palettes for testing, not specified products.</caption>
+      <thead><tr><th scope="col">Palette</th><th scope="col">Body / trim</th><th scope="col">Why try it</th><th scope="col">Watch</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Forest / ochre</th><td><span class="swatch-inline" style="background:#2f7d5f"></span> <span class="swatch-inline" style="background:#e5b21c"></span></td><td>The supplied café reference; green body, bright entry.</td><td>Dark bodies gain heat; confirm fade, chalking and touch-up.</td></tr>
+        <tr><th scope="row">Charcoal / cedar</th><td><span class="swatch-inline" style="background:#3f4a45"></span> <span class="swatch-inline" style="background:#b07a45"></span></td><td>A quiet body with a warm, legible entry.</td><td>Dark surfaces hide detail and can raise cooling loads.</td></tr>
+        <tr><th scope="row">Oxide / cream</th><td><span class="swatch-inline" style="background:#9a4e3a"></span> <span class="swatch-inline" style="background:#efe2c4"></span></td><td>A warm, high-contrast entry that reads from a distance.</td><td>Red pigments can fade; cream trim shows dirt.</td></tr>
+        <tr><th scope="row">Chalk / black</th><td><span class="swatch-inline" style="background:#d9d4c5"></span> <span class="swatch-inline" style="background:#202826"></span></td><td>A light body and a crisp, visible door.</td><td>Glare and dirt; black trim gets hot.</td></tr>
+        <tr><th scope="row">Marine / sand</th><td><span class="swatch-inline" style="background:#2f6473"></span> <span class="swatch-inline" style="background:#d8b878"></span></td><td>A cool body with a warm entry; works near water.</td><td>Salt/chloride exposure; confirm coating system.</td></tr>
+      </tbody>
+    </table></div>
+    <p>Keep the entry trim distinct from the body. A door that disappears into a dark wall is harder to find in poor light. Paint the door edge and frame, not only the face. Do not paint over hinges, locks, seals, data plates or inspection marks.</p>
+  </section>
+
+  <section aria-labelledby="security-title">
+    <h2 id="security-title">A security checklist, not a promise</h2>
+    <ul>
+      <li><strong>See and be seen:</strong> a lit, unobstructed entry; no deep recess without a sightline; trim the planting.</li>
+      <li><strong>One obvious door:</strong> a single main entry, a sheltered threshold, a lockable outer shutter and a clear house number.</li>
+      <li><strong>Layers:</strong> a lockable gate or porch, a solid door, a secondary lock, laminated glass and window shutters where appropriate.</li>
+      <li><strong>Escape first:</strong> every sleeping room needs an operable escape; shutters and locks must open from inside without a key.</li>
+      <li><strong>Services:</strong> exterior lights, camera if used, and meter/utility access should not create a hidden corner.</li>
+      <li><strong>Community:</strong> paths, shared lighting and neighbours who can see the entry are more useful than a fortress wall.</li>
+    </ul>
+    <p>Security is site-specific and cannot be guaranteed. A criminal can defeat most residential hardware; the aim is to remove easy concealment, make entry visible and keep escape possible.</p>
+  </section>
+
+  <section aria-labelledby="examples-title">
+    <h2 id="examples-title">Precedents, and what not to copy</h2>
+    <ul>
+      <li><a href="https://dornob.com/containers-of-hope-cheap-modern-cargo-container-home/">Dornob — Containers of Hope</a>: two staggered containers, raised on stilts, a tilted roof, cross-ventilation and a low-cost approach. It is a Costa Rica project; the climate, structure and code context are not Ontario.</li>
+      <li><a href="https://www.discovercontainers.com/projects/utah-cantilevered-container-house/">Discover Containers — Utah cantilevered container house</a>: a cantilever precedent. The photograph is not a structural drawing; a cantilever needs a stamped design and a foundation/back-span strategy.</li>
+      <li><a href="https://www.instructables.com/Tiny-Shipping-Container-Home/">Instructables — Tiny Shipping Container Home</a>: a DIY step-by-step. Useful for sequence and small-space thinking; not a verified code or engineering source.</li>
+      <li><a href="https://homesteading.com/cool-container-homes/">Homesteading — cool container homes</a> and <a href="https://morningchores.com/shipping-container-homes/">Morning Chores — shipping container homes</a>: image-led collections. Treat dimensions, costs and construction claims as unverified inspiration.</li>
+      <li><a href="https://www.houzz.com/photos/query/shipping-container-houses">Houzz — shipping-container house photos</a> and <a href="https://stock.adobe.com/ca/search?k=shipping+container+house+interior">Adobe Stock — container interiors</a>: visual references only; no stock image is copied into this project.</li>
+    </ul>
+    <p>These sources inspired the patterns and questions above. They are not evidence that a configuration is lawful, safe, affordable or suitable for a Canadian climate.</p>
+  </section>
+
+  <p><a class="action" href="../editor/">Test paint and a door shelter</a> <a class="action secondary" href="../ground/">Ground and foundations</a></p>
+</main>
+<footer class="site-footer"><p><a href="../../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>
+</body>
+</html>`;
+}

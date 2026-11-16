@@ -113,3 +113,6 @@ button.secondary:hover { background: var(--surface); color: var(--link); }
 .exposure-grid dd { margin: .1rem 0 0; }
 
 #foundation-controls .field-grid { grid-template-columns: 1fr; }
+
+#finish-controls .field-grid { grid-template-columns: 1fr 1fr; }
+@media (max-width: 700px) { #finish-controls .field-grid { grid-template-columns: 1fr; } }

@@ -85,6 +85,7 @@
     d.vegetation = Array.isArray(d.vegetation) ? d.vegetation : [];
     d.vegetation.forEach(function (v) { v.offset_m = isNum(v.offset_m) ? v.offset_m : 0.5; v.separation_m = isNum(v.separation_m) ? v.separation_m : v.offset_m; v.height_m = isNum(v.height_m) ? v.height_m : 2.5; v.length_m = isNum(v.length_m) ? v.length_m : 2; v.start_m = isNum(v.start_m) ? v.start_m : 0; });
     d.foundation = Object.assign({ system: 'helical-piles', type: 'Engineered helical piles with adjustable brackets', clearance_m: 0.6, no_compaction: true, independent_deck: true, frost_design: 'Engineered pile depth and uplift resistance below frost; geotechnical review required.', ground_disturbance: 'Point loads only; no slab, fill or grade change. Use matting and root protection during construction.', note: 'Elevated floor on engineered piles. Confirm soil, frost uplift, corrosion, lateral capacity and permits.' }, d.foundation || {});
+    d.entry_shelter = Object.assign({ enabled: false, side: 'north', width_m: 2.2, projection_m: 1.2, security_shutters: true, note: 'Reused container-door leaves can form a shelter and shutters; hinges, wind uplift, egress, fire and security need review.' }, d.entry_shelter || {});
     if (d.solar_array) d.solar_array = Object.assign({ enabled: false, tilt_deg: 39, azimuth_deg: 180, season_mode: 'year-round', side: 'south', mounting: 'tilted racks on a south roof slope', source: 'SolarCalculator.CA Ottawa', note: 'True south; review required.' }, d.solar_array);
     d.connections.forEach(function (c) { c.glazed = !!c.glazed; c.door_type = c.door_type || 'none'; c.glazing_area_m2 = isNum(c.glazing_area_m2) ? c.glazing_area_m2 : 0; });
     d.materials = Array.isArray(d.materials) ? d.materials : [];
@@ -154,6 +155,13 @@
       if (!isNum(d.foundation.clearance_m) || d.foundation.clearance_m < 0 || d.foundation.clearance_m > 2) err('Foundation clearance must be 0–2 m.');
       if (typeof d.foundation.no_compaction !== 'boolean') err('Foundation no-compaction flag is required.');
       if (typeof d.foundation.independent_deck !== 'boolean') err('Foundation independent-deck flag is required.');
+    }
+    if (d.entry_shelter) {
+      if (typeof d.entry_shelter.enabled !== 'boolean') err('entry_shelter.enabled must be boolean.');
+      if (['north','south','east','west'].indexOf(d.entry_shelter.side) < 0) err('entry_shelter.side must be north, south, east or west.');
+      if (!isNum(d.entry_shelter.width_m) || d.entry_shelter.width_m < 0.8 || d.entry_shelter.width_m > 4) err('entry_shelter.width_m must be 0.8–4 m.');
+      if (!isNum(d.entry_shelter.projection_m) || d.entry_shelter.projection_m < 0.4 || d.entry_shelter.projection_m > 2.5) err('entry_shelter.projection_m must be 0.4–2.5 m.');
+      if (typeof d.entry_shelter.security_shutters !== 'boolean') err('entry_shelter.security_shutters must be boolean.');
     }
     if (d.solar_array) {
       if (typeof d.solar_array.enabled !== 'boolean' || d.solar_array.side !== 'south') err('solar_array must be a south-side array with an enabled flag.');
@@ -227,7 +235,7 @@
       if (c.door_type && ['none','insulated-sliding','folding','garage'].indexOf(c.door_type) < 0) err('Connection ' + c.id + ' has an unknown door type.');
       if (!isNum(c.glazing_area_m2) || c.glazing_area_m2 < 0) err('Connection ' + c.id + ' has an invalid glazing area.');
     });
-    return { ok: errors.length === 0, errors: errors, warnings: warnings, unknownKeys: Object.keys(d).filter(function (k) { return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal','envelope','vegetation','roof_form','solar_array'].indexOf(k) < 0; }) };
+    return { ok: errors.length === 0, errors: errors, warnings: warnings, unknownKeys: Object.keys(d).filter(function (k) { return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal','envelope','vegetation','roof_form','solar_array','entry_shelter','paint'].indexOf(k) < 0; }) };
   }
 
   /* Migrate the supplied prototype's v0.1 JSON. Nothing is dropped silently:

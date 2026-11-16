@@ -28,7 +28,7 @@
 - the page with its scripts blocked, including all seven home briefs and view diagrams
 - same-origin requests, no third-party requests and all local links
 
-`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 205 static checks; the main browser suite runs 65 checks. `tools/check-design-lab.mjs` adds 697 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery and comparison checks, and `tools/design-lab-check.mjs` adds 114 browser checks for the gallery, editor, architectural slideshow, vegetation guide, ground guide and comparison.
+`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 206 static checks; the main browser suite runs 65 checks. `tools/check-design-lab.mjs` adds 704 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery and comparison checks, and `tools/design-lab-check.mjs` adds 126 browser checks for the gallery, editor, architectural slideshow, vegetation guide, ground guide and comparison.
 
 ## Manual testing still required
 
@@ -66,6 +66,7 @@ The architectural slideshow is a progressive enhancement over a static list of a
 - **Drawing types.** Plan, cutaway and porch detail are labelled geometry-backed drawings; exterior and winter images are labelled illustrative studies. Colour is not the only distinction.
 - **Comparison.** The two side-by-side panels and all-concepts table use native selects, buttons and a caption/scope table. Without JavaScript the default pair and the table remain.
 - **Thermal explanations.** The editor gives plain-language explanations of overheating, heat loss, condensation and moisture without claiming code compliance or certified performance.
+- **Patterns and shelter.** The pattern guide uses labelled tables, a titled/described configuration diagram, native links and a visible entry-shelter explanation. The editor paint palette and shelter controls are native selects, number inputs and checkboxes.
 - **Foundations and bridge.** The foundation system is a native select, clearance is a number field, and no-compaction/independent-deck are checkboxes. The foundation section is a keyboard-scrollable labelled group. The ground guide uses native tables with captions and scope headers; the bridge diagram has a title, description and visible caveats.
 - **Solar.** Solar tilt and azimuth are native number fields; the strategy is a native select. The solar section is a keyboard-scrollable labelled group. The exterior view labels `PV 39° / 180°`; the plan adds a solar arrow and text. No energy or snow-shedding claim is made.
 - **Envelope and vegetation.** The wall-section container is keyboard-scrollable and labelled; assembly and planting controls are native selects, numbers, text fields and buttons. Seasonal and exposure panels use headings, lists and a caption/scope table. The wall section is a complex image with a text title/desc and a layer legend; the exposure panel repeats the approximate areas as text.

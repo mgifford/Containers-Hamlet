@@ -619,6 +619,15 @@
       out.push('<path class="plan-module-hit" data-module-id="' + esc(m.id) + '" d="' + path(moduleCorners(m)) + '" fill="transparent" pointer-events="all"/>');
     });
     planLabels.forEach(function (label) { out.push(label); });
+    if (d.entry_shelter && d.entry_shelter.enabled) {
+      var sm = d.modules[0];
+      var sg = shelterGeometry(sm, d.entry_shelter);
+      var start = d.entry_shelter.side === 'north' || d.entry_shelter.side === 'south' ? sm.nominal.length_m / 2 - sg.w / 2 : sm.nominal.width_m / 2 - sg.w / 2;
+      var sp = outdoorRect(sm, d.entry_shelter.side, start, sg.w, sg.p, 0);
+      out.push('<path d="' + path(sp) + '" fill="#3d6654" fill-opacity="0.14" stroke="#245244" stroke-width="1" stroke-dasharray="5 3"/>');
+      var sc = P([(sp[0][0] + sp[2][0]) / 2, (sp[0][1] + sp[2][1]) / 2]);
+      out.push(text(sc[0] + 3, sc[1] - 3, 'entry shelter', 8, ' fill="#245244" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
+    }
     if (d.roof_form && d.roof_form.type === 'south-shed') {
       var roofPolys = d.modules.map(moduleCorners).concat(d.connections.filter(function (c) { return c.glazed; }).map(connectionCorners));
       var rminX = Infinity, rminY = Infinity, rmaxX = -Infinity, rmaxY = -Infinity;
@@ -948,6 +957,51 @@
     return inside;
   }
 
+  function shelterGeometry(m, s) {
+    var L = m.nominal.length_m, W = m.nominal.width_m;
+    var w = Math.min(Math.max(0.8, s.width_m || 2.2), L - 0.4);
+    var p = Math.min(Math.max(0.4, s.projection_m || 1.2), 2.5);
+    var loc0, loc1, normal;
+    if (s.side === 'south') { loc0 = [-w / 2, W / 2]; loc1 = [w / 2, W / 2]; normal = [0, 1]; }
+    else if (s.side === 'east') { loc0 = [L / 2, -w / 2]; loc1 = [L / 2, w / 2]; normal = [1, 0]; }
+    else if (s.side === 'west') { loc0 = [-L / 2, -w / 2]; loc1 = [-L / 2, w / 2]; normal = [-1, 0]; }
+    else { loc0 = [-w / 2, -W / 2]; loc1 = [w / 2, -W / 2]; normal = [0, -1]; }
+    var outer0 = [loc0[0] + normal[0] * p, loc0[1] + normal[1] * p];
+    var outer1 = [loc1[0] + normal[0] * p, loc1[1] + normal[1] * p];
+    return { w: w, p: p, loc0: loc0, loc1: loc1, outer0: outer0, outer1: outer1, normal: normal };
+  }
+
+  function shelterSVG(d, m, S, winter) {
+    var s = d.entry_shelter;
+    if (!s || !s.enabled) return '';
+    var g = shelterGeometry(m, s);
+    var base = d.foundation ? Math.max(0, d.foundation.clearance_m || 0) : 0;
+    var zWall = base + m.nominal.height_m + 0.08;
+    var zOut = zWall - 0.16;
+    var p0 = transform(m, g.loc0), p1 = transform(m, g.loc1);
+    var q0 = transform(m, g.outer0), q1 = transform(m, g.outer1);
+    var canopy = [[p0[0], p0[1], zWall], [p1[0], p1[1], zWall], [q1[0], q1[1], zOut], [q0[0], q0[1], zOut]];
+    var out = '<path d="M' + polyScreen(canopy, S) + 'Z" fill="' + (winter ? '#dce5dc' : '#3d6654') + '" stroke="#17392e" stroke-width="1.1"/>';
+    [q0, q1].forEach(function (q) { var a = S([q[0], q[1], 0]), b = S([q[0], q[1], zOut]); out += '<line x1="' + n(a[0]) + '" y1="' + n(a[1]) + '" x2="' + n(b[0]) + '" y2="' + n(b[1]) + '" stroke="#5d6f6a" stroke-width="3.2"/>'; });
+    if (s.security_shutters) {
+      var c0 = (g.loc0[0] + g.loc1[0]) / 2, c1 = (g.loc0[1] + g.loc1[1]) / 2;
+      var dx = g.loc1[0] - g.loc0[0], dy = g.loc1[1] - g.loc0[1], dd = Math.max(0.01, Math.hypot(dx, dy));
+      var along = [dx / dd, dy / dd];
+      [-1, 1].forEach(function (side) {
+        var off = side * (g.w / 2 + 0.32);
+        var a = transform(m, [c0 + along[0] * off + g.normal[0] * 0.06, c1 + along[1] * off + g.normal[1] * 0.06]);
+        var b = transform(m, [c0 + along[0] * (off + 0.48) + g.normal[0] * 0.06, c1 + along[1] * (off + 0.48) + g.normal[1] * 0.06]);
+        var z0 = base + 0.18, z1 = base + m.nominal.height_m - 0.18;
+        var panel = [[a[0], a[1], z0], [b[0], b[1], z0], [b[0], b[1], z1], [a[0], a[1], z1]];
+        out += '<path d="M' + polyScreen(panel, S) + 'Z" fill="#2b5c4a" stroke="' + (m.frame_colour || '#e5b21c') + '" stroke-width="1.2"/>';
+        var mid = S([a[0], a[1], z0 + (z1 - z0) / 2]);
+        var mid2 = S([b[0], b[1], z0 + (z1 - z0) / 2]);
+        out += '<line x1="' + n(mid[0]) + '" y1="' + n(mid[1]) + '" x2="' + n(mid2[0]) + '" y2="' + n(mid2[1]) + '" stroke="' + (m.frame_colour || '#e5b21c') + '" stroke-width="0.8"/>';
+      });
+    }
+    return out;
+  }
+
   function moduleDraw(d, m, cut, S, winter) {
     var colour = m.cladding.colour || CC[m.cladding.type] || '#9a7350';
     var ins = m.insulation.thickness_mm / 1000;
@@ -1030,6 +1084,7 @@
       var pc = S([(corners[0][0] + corners[2][0]) / 2, (corners[0][1] + corners[2][1]) / 2, z0 + 0.2]);
       s += '<text x="' + n(pc[0]) + '" y="' + n(pc[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#eaf6f9" stroke="#123b4d" stroke-width="2.2" paint-order="stroke">PV ' + n(tilt, 0) + '° / ' + n(m.solar.azimuth_deg, 0) + '°</text>';
     }
+    if (!cut && d.entry_shelter && d.entry_shelter.enabled && m.id === d.modules[0].id) s += shelterSVG(d, m, S, winter);
     return s;
   }
 

@@ -232,6 +232,10 @@ try {
   section('Editor: envelope, season and vegetation');
   ok(await page.evaluate(() => !!document.querySelector('#env-assembly') && !!document.querySelector('#wall-section svg')), 'envelope controls and an explanatory wall section are available');
   const wallBefore = await page.evaluate(() => document.querySelector('#wall-section').innerHTML);
+  await page.selectOption('#paint-palette', 'forest-ochre');
+  await page.waitForTimeout(200);
+  await page.check('#shelter-enabled');
+  await page.waitForTimeout(200);
   await page.selectOption('#foundation-system', 'ground-screws');
   await page.waitForTimeout(250);
   await page.fill('#foundation-clearance', '0.9');
@@ -256,6 +260,14 @@ try {
   await page.selectOption('#foundation-system', 'ground-screws');
   await page.waitForTimeout(300);
   ok(/ground-screws|Ground screws/i.test(await page.textContent('#foundation-section')), 'changing foundation system updates the section');
+  ok(await page.locator('#finish-controls').count() === 1, 'paint and entry-shelter controls are available');
+  await page.selectOption('#paint-palette', 'forest-ochre');
+  await page.waitForTimeout(300);
+  ok(/Light-responsive body colour/.test(await page.textContent('#finish-note')) && /2f7d5f|2d775a/.test(await page.evaluate(() => document.querySelector('#exterior').innerHTML)), 'paint palette updates the model and note');
+  await page.check('#shelter-enabled');
+  await page.waitForTimeout(300);
+  ok(/entry shelter/.test(await page.evaluate(() => document.querySelector('#plan').innerHTML)), 'enabling the entry shelter updates the plan');
+
   const summerExterior = await page.evaluate(() => document.querySelector('#exterior').innerHTML);
   await page.selectOption('#season', 'winter');
   await page.waitForTimeout(300);
@@ -327,6 +339,10 @@ try {
   section('Editor: export and reopen');
   await page.click('#reset');
   await page.waitForTimeout(300);
+  await page.selectOption('#paint-palette', 'forest-ochre');
+  await page.waitForTimeout(200);
+  await page.check('#shelter-enabled');
+  await page.waitForTimeout(200);
   async function downloadFile(selector, name) {
     const ev = page.waitForEvent('download');
     await page.click(selector);
@@ -359,6 +375,7 @@ try {
   ok(parsed.vegetation && parsed.vegetation.length >= 1 && parsed.vegetation.every((v) => v.plant_type && v.irrigation && v.support && v.offset_m >= 0.3), 'vegetation and planting metadata persist in the exported JSON');
   ok(parsed.modules.some((m) => m.solar && m.solar.tilt_deg === 60 && m.solar.season_mode === 'winter'), 'solar tilt, azimuth and season persist in the exported JSON');
   ok(parsed.foundation && parsed.foundation.system === 'ground-screws' && parsed.foundation.clearance_m === 0.9 && parsed.foundation.no_compaction, 'foundation system, clearance and no-compaction persist in the exported JSON');
+  ok(parsed.paint && parsed.paint.id === 'forest-ochre' && parsed.entry_shelter && parsed.entry_shelter.enabled && parsed.entry_shelter.security_shutters, 'paint and entry-shelter choices persist in the exported JSON');
   const wallFile = await downloadFile('#export-wall', 'wall.svg');
   ok(/^<svg|^<\?xml/.test(fs.readFileSync(wallFile, 'utf8').trim()), 'wall section SVG exports');
   const planFile = await downloadFile('#export-plan', 'plan.svg');
@@ -388,6 +405,17 @@ try {
   await shot(vegPage.page, 'vegetation-top');
   await shot(vegPage.page, 'vegetation-full', true);
   await vegPage.context.close();
+
+  section('Container patterns and security');
+  const patterns = await open('design-lab/patterns/');
+  ok(patterns.errors.length === 0, `patterns guide: no console errors${patterns.errors.length ? ': ' + patterns.errors.join(' | ') : ''}`);
+  const patternState = await patterns.page.evaluate(() => ({ rows: document.querySelectorAll('tbody tr').length, figure: !!document.querySelector('.system-figure img'), text: document.body.textContent, links: [...document.querySelectorAll('a')].map((a) => a.href) }));
+  ok(patternState.rows >= 10 && patternState.figure && /doors as shelter/i.test(patternState.text) && /security checklist/i.test(patternState.text), 'patterns guide: configurations, doors, paint and security are present');
+  ok(await patterns.page.evaluate(() => document.querySelector('.system-figure img').naturalWidth > 0), 'patterns guide: configuration diagram loads');
+  ok(patternState.links.some((u) => /dornob\.com/.test(u)) && patternState.links.some((u) => /discovercontainers\.com/.test(u)) && patternState.links.some((u) => /instructables\.com/.test(u)) && patternState.links.some((u) => /houzz\.com/.test(u)), 'patterns guide: supplied precedents are linked');
+  await axe(patterns.page, 'patterns guide');
+  await shot(patterns.page, 'patterns-guide');
+  await patterns.context.close();
 
   section('Ground and footbridge');
   const ground = await open('design-lab/ground/');
@@ -431,6 +459,14 @@ try {
   const darkCompare = await open('design-lab/compare/', { colorScheme: 'dark' });
   await axe(darkCompare.page, 'comparison in dark scheme');
   await darkCompare.context.close();
+  const smallPatterns = await open('design-lab/patterns/', { viewport: { width: 320, height: 640 } });
+  await smallPatterns.page.waitForTimeout(300);
+  ok(await smallPatterns.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'patterns guide has no horizontal scrolling at 320 px');
+  await axe(smallPatterns.page, 'patterns guide at 320 px');
+  await smallPatterns.context.close();
+  const darkPatterns = await open('design-lab/patterns/', { colorScheme: 'dark' });
+  await axe(darkPatterns.page, 'patterns guide in dark scheme');
+  await darkPatterns.context.close();
   const smallGround = await open('design-lab/ground/', { viewport: { width: 320, height: 640 } });
   await smallGround.page.waitForTimeout(300);
   ok(await smallGround.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'ground guide has no horizontal scrolling at 320 px');

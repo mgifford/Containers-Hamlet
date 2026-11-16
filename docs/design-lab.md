@@ -7,6 +7,7 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 - **Editor:** `/design-lab/editor/`
 - **Vegetation guide:** `/design-lab/vegetation/` — four systems, evidence and sources
 - **Ground guide:** `/design-lab/ground/` — Ontario foundation options, no-compaction and a footbridge concept
+- **Patterns guide:** `/design-lab/patterns/` — container configurations, paint, doors as shelter and security
 - **Comparison:** `/design-lab/compare/`
 - **Schema:** `containers-hamlet-design/v1.0`
 - **Legacy import:** `containers-hamlet-editor/v0.1` (the supplied starter schema)
@@ -27,6 +28,7 @@ It is not a generic home builder. The container is the core of every design; tim
 - Vegetation systems: freestanding trellis, modular living wall, edible planter wall and evergreen privacy screen; each records plant type, mature height, seasonal foliage, irrigation, maintenance, separation and support.
 - Summer/winter view control, approximate window exposure by world-facing side, and qualitative shading/privacy/maintenance notes.
 - Elevated foundation options: engineered helical piles (default), ground screws, concrete piers, timber posts on pads and bedrock anchors, with an elevated no-compaction section, root-protection notes and geotechnical/frost/permit warnings.
+- A paint palette and entry-shelter control with a Micro Studio example using reused-door shutters.
 - A separate 1.2 m × 8 m pedestrian footbridge study with helical-pile/ground-screw abutments, clear-span/no-fill intent and conservation-authority/permit notes.
 - Per-module tilted solar: default 39° due south (year-round 36–39°), winter ≈60° and summer ≈30° options, with a solar section diagram and PV label in the exterior/winter views.
 - Solar tilt, azimuth and strategy persist in JSON; the plan shows the solar arrow and tilt/azimuth label.
@@ -207,8 +209,8 @@ Every design has a five-view page under `site/design-lab/architecture/<id>/`. Th
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 697 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery, comparison, licence and privacy checks
-node tools/design-lab-check.mjs      # 114 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
+node tools/check-design-lab.mjs      # 704 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery, comparison, licence and privacy checks
+node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 
 The main site checks and browser checks continue to run separately.

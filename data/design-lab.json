@@ -409,8 +409,8 @@
             "type": "exterior closed-cell spray foam (protected, fire-reviewed)"
           },
           "cladding": {
-            "type": "mixed",
-            "colour": "#6f6a5d"
+            "type": "metal",
+            "colour": "#2f7d5f"
           },
           "roof": {
             "type": "solar",
@@ -489,7 +489,8 @@
             "mounting": "fixed tilt, due south; snow-shedding; roof structure and wind uplift need review",
             "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; brief range 36\u201339\u00b0 year-round, winter ~60\u00b0, summer ~30\u00b0, due south.",
             "note": "True south; confirm magnetic declination, shading, snow shedding and structural fixing."
-          }
+          },
+          "frame_colour": "#e5b21c"
         }
       ],
       "connections": [],
@@ -694,7 +695,22 @@
           "support": "independent posts and root barrier",
           "notes": "Set clear of the container and services; do not rely on the screen for structural support."
         }
-      ]
+      ],
+      "entry_shelter": {
+        "enabled": true,
+        "side": "north",
+        "width_m": 2.0,
+        "projection_m": 1.15,
+        "security_shutters": true,
+        "note": "Reused container-door leaves form a shallow entry shelter and open shutters. Hinges, wind uplift, snow, egress, fire and lock strategy need review."
+      },
+      "paint": {
+        "name": "Forest green with ochre trim",
+        "body": "#2f7d5f",
+        "trim": "#e5b21c",
+        "sheen": "satin",
+        "note": "Light-reflective body colour with a contrasting entry; surface preparation, primer, corrosion and repairability to be specified."
+      }
     },
     {
       "id": "lakeside-hideaway",
