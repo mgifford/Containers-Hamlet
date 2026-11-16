@@ -1,0 +1,599 @@
+{
+  "scenarios": [
+    {
+      "id": "solo",
+      "title": "Living alone, year-round",
+      "summary": "A permanent resident who wants a compact home, a short walk to the lodge and a clear maintenance routine.",
+      "home": "Cedar-1-simple",
+      "home_name": "Cedar",
+      "configuration": "40-ft single",
+      "space": "~27 m² clear plus porch; one sleeping room, living/kitchen and bathroom.",
+      "storage": "A small exterior locker, porch storage and a loft/bed storage plan. No basement.",
+      "winter": "Cold-climate heat pump, vestibule, drain-down and a snow-clearing routine.",
+      "access": "Step-free porch route, but the current bathroom does not fit a 1.5 m turning circle.",
+      "privacy": "A separate clearing and screened porch; the lodge is a short walk away.",
+      "work": "A desk in the living room; connectivity needs a real service test, not a map promise.",
+      "shared": "Lodge laundry, workshop, guest room and community meals.",
+      "responsibilities": "Path clearing, shared-system checks, a buddy check-in and a role in the fire plan.",
+      "unresolved": "Overnight care, illness, isolation and how a solo resident gets help quickly."
+    },
+    {
+      "id": "remote",
+      "title": "A couple working remotely",
+      "summary": "Two people who need reliable work space, power and bandwidth without turning the home into an office.",
+      "home": "Birch-2-wide",
+      "home_name": "Birch",
+      "configuration": "Two-container pair",
+      "space": "~50 m² clear; separate work corner or second-module studio; two screens and a call space.",
+      "storage": "Files, equipment and bikes need dedicated storage; the porch is not a warehouse.",
+      "winter": "Heat pump, balanced ventilation and a power/backup plan for workdays.",
+      "access": "Step-free route; verify door widths, thresholds and a place for mobility equipment.",
+      "privacy": "Two people need acoustic separation; the pair plan has to be tested, not assumed.",
+      "work": "A service test for fibre/fixed wireless; shared lodge meeting room as overflow.",
+      "shared": "Lodge meeting room, guest room, workshop and laundry.",
+      "responsibilities": "Shared internet contract, backup power, snow clearing and quiet-hours norms.",
+      "unresolved": "Bandwidth, latency, backup power and whether remote work is compatible with a seasonal community."
+    },
+    {
+      "id": "seasonal",
+      "title": "A seasonal resident",
+      "summary": "A summer and shoulder-season resident who does not need a year-round home and should not pretend a 20-ft cabin is one.",
+      "home": "Juniper-1-compact",
+      "home_name": "Juniper",
+      "configuration": "20-ft compact",
+      "space": "~12.8 m² clear; one compact bedroom, bathroom and living/kitchen.",
+      "storage": "Very limited; a separate locker and the lodge store are essential.",
+      "winter": "The compact cabin is not presented as a year-round accessible home; water, heat and road access need a winter strategy.",
+      "access": "Compact bathroom and tight circulation; not suitable for a wheelchair user without redesign.",
+      "privacy": "A low, juniper-edged site with a separate porch view.",
+      "work": "Occasional desk use only; do not assume a permanent office.",
+      "shared": "Lodge laundry, guest space, tools and the main gathering space.",
+      "responsibilities": "Seasonal opening/closing, water drain-down, wildlife-proofing and shared fees.",
+      "unresolved": "Whether winter occupation is permitted, insurable and safe; short-term rental rules."
+    },
+    {
+      "id": "aging",
+      "title": "Planning for changing mobility",
+      "summary": "An older resident who wants to stay in the community as mobility changes, without assuming the current compact plan is accessible.",
+      "home": "Pine-1-simple",
+      "home_name": "Pine",
+      "configuration": "40-ft single, accessible redesign required",
+      "space": "A longer room or a different plan is needed for a 1.5 m turning circle; the current bathroom fails.",
+      "storage": "Reachable storage, no ladder-only storage, space for mobility equipment.",
+      "winter": "Reliable heat, backup power, a clear accessible path and a place to wait for help.",
+      "access": "Step-free entry is only the start; bathroom, sleeping and kitchen clearances need redesign.",
+      "privacy": "A quiet site, but the resident needs to be reachable in an emergency.",
+      "work": "Optional; a seated work surface and good light.",
+      "shared": "Lodge universal washroom, meals and guest space; not a substitute for personal care.",
+      "responsibilities": "Accessible path maintenance, emergency check-in and a personal support plan.",
+      "unresolved": "Personal care, funding, home modifications, evacuation and aging in place without a care facility."
+    },
+    {
+      "id": "hosts",
+      "title": "A household that hosts guests",
+      "summary": "A resident who wants occasional family and friends to stay without letting visitors take over the hamlet.",
+      "home": "Moss-2-wide",
+      "home_name": "Moss",
+      "configuration": "Two-container pair",
+      "space": "A second sleeping room or a convertible studio; a guest bathroom is better than a shared one.",
+      "storage": "Guest bedding, chairs, parking and outdoor gear need a home.",
+      "winter": "Extra heat and water demand; a guest wing should be closable.",
+      "access": "Guest route and bathroom should be step-free; visitors may have different needs.",
+      "privacy": "Visitor rules, quiet hours and a clear boundary around the resident's rooms.",
+      "work": "Noise and call conflicts; guests need a place to work if they stay.",
+      "shared": "Lodge guest room, parking, laundry and gathering space.",
+      "responsibilities": "Booking rules, cleaning, insurance, water use and neighbourhood courtesy.",
+      "unresolved": "Short-term rental versus private hosting; parking, septic load and insurance."
+    },
+    {
+      "id": "gardener",
+      "title": "Gardening and land stewardship",
+      "summary": "A resident who wants to grow food, compost and care for the forest, with realistic water and wildlife constraints.",
+      "home": "Fern-2-wide",
+      "home_name": "Fern",
+      "configuration": "Two-container pair",
+      "space": "A home plus a small mudroom/utility zone for tools and produce.",
+      "storage": "Tool storage, harvest storage, potting bench and a place to dry boots.",
+      "winter": "Seed starting, freeze protection and a water plan that does not empty the fire reserve.",
+      "access": "Raised beds and a firm route; gardening still needs a seated option.",
+      "privacy": "Garden is shared or semi-private; clear rules prevent quiet encroachment.",
+      "work": "A seasonal work pattern; not assumed to be a paid farm.",
+      "shared": "Community garden, compost, tool library, lodge kitchen and water.",
+      "responsibilities": "Watering rota, compost management, invasive-species control and deer/fire clearance.",
+      "unresolved": "Soil contamination, water rights, food safety, wildlife and who owns the harvest."
+    }
+  ],
+  "costs": {
+    "initial": [
+      [
+        "Land acquisition",
+        "Purchase or long-term lease, legal fees, title, survey and closing costs."
+      ],
+      [
+        "Surveys and professional studies",
+        "Survey, geotechnical, environmental, archaeology, species at risk, fire and accessibility studies."
+      ],
+      [
+        "Planning and approvals",
+        "Planning application, zoning, consent, conservation authority and building permits."
+      ],
+      [
+        "Roads and access",
+        "Entrance, lane, turnaround, bridge/culvert, snow storage and emergency access."
+      ],
+      [
+        "Water and wastewater",
+        "Wells/cisterns, treatment, septic/alternative systems, testing and connections."
+      ],
+      [
+        "Shared electrical infrastructure",
+        "Service, distribution, backup power, metering and utility coordination."
+      ],
+      [
+        "Common lodge",
+        "Structure, envelope, kitchen, laundry, universal washroom and shared systems."
+      ],
+      [
+        "Container acquisition",
+        "Units, inspection, survey, repair and delivery coordination."
+      ],
+      [
+        "Fabrication",
+        "Cuts, reinforcement, frames, insulation, cladding, windows and services."
+      ],
+      [
+        "Transport and installation",
+        "Crane, permits, route survey, rigging, temporary works and site supervision."
+      ],
+      [
+        "Foundations",
+        "Piles, footings, geotechnical work, drainage and frost protection."
+      ],
+      [
+        "Contingency",
+        "Unknown conditions, design changes, weather and approval delays."
+      ]
+    ],
+    "recurring": [
+      [
+        "Land taxes",
+        "Municipal property taxes and any school/regional levies."
+      ],
+      [
+        "Insurance",
+        "Property, liability, wildfire, flood and shared-asset coverage."
+      ],
+      [
+        "Snow clearing",
+        "Lane, parking, paths and emergency access."
+      ],
+      [
+        "Road maintenance",
+        "Grading, gravel, culverts, bridge inspection and drainage."
+      ],
+      [
+        "Shared utilities",
+        "Common electricity, water treatment, septic servicing and communications."
+      ],
+      [
+        "Wastewater maintenance",
+        "Pumping, inspection, repairs and reserve-field planning."
+      ],
+      [
+        "Building maintenance",
+        "Roof, envelope, porches, paint, seals and structural inspection."
+      ],
+      [
+        "Ecological stewardship",
+        "Invasive species, trail work, tree risk, fire-fuel maintenance and monitoring."
+      ],
+      [
+        "Governance and administration",
+        "Bookkeeping, insurance, meetings, legal and record keeping."
+      ],
+      [
+        "Capital replacement reserves",
+        "Roof, pump, cistern, road and shared-building replacements."
+      ]
+    ],
+    "individual": [
+      [
+        "Home acquisition or construction",
+        "The resident's own dwelling cost, financing and professional fees."
+      ],
+      [
+        "Homesite lease or occupancy fees",
+        "Ground lease/occupancy payment, if any, set by the land trust."
+      ],
+      [
+        "Individual utilities",
+        "Home electricity, heating, water/sewer share and internet."
+      ],
+      [
+        "Home maintenance",
+        "Repairs and replacements inside the resident's responsibility."
+      ],
+      [
+        "Home insurance",
+        "Contents and dwelling coverage as applicable."
+      ],
+      [
+        "Shared operating contributions",
+        "Residents' association fees for shared services and reserves."
+      ]
+    ],
+    "note": "Categories only. No land, construction, insurance or utility prices are invented. Every number must be entered from a real quote, local data or a clearly labelled assumption."
+  },
+  "roadmap": [
+    {
+      "stage": "1",
+      "title": "Find people and shared goals",
+      "questions": [
+        "Who wants to live here, and who is only curious?",
+        "What must the community do that a normal house cannot?"
+      ],
+      "responsible": [
+        "Founding participants",
+        "Facilitator"
+      ],
+      "evidence": [
+        "Written purpose",
+        "Participant roles",
+        "Decision log"
+      ],
+      "blockers": [
+        "Unclear mandate",
+        "One person carrying everything"
+      ],
+      "dependencies": [
+        "Time",
+        "Facilitation"
+      ]
+    },
+    {
+      "stage": "2",
+      "title": "Define ownership and governance",
+      "questions": [
+        "Land trust, co-op, corporation or another structure?",
+        "Who decides, who owns, who can leave?"
+      ],
+      "responsible": [
+        "Participants",
+        "Lawyer",
+        "Accountant"
+      ],
+      "evidence": [
+        "Structure options paper",
+        "Draft membership principles",
+        "Conflict/dispute process"
+      ],
+      "blockers": [
+        "No legal advice",
+        "Unresolved power imbalance"
+      ],
+      "dependencies": [
+        "Stage 1"
+      ]
+    },
+    {
+      "stage": "3",
+      "title": "Investigate jurisdictions and sites",
+      "questions": [
+        "Which municipality/First Nation territory?",
+        "What is allowed on the candidate land?"
+      ],
+      "responsible": [
+        "Project lead",
+        "Planner",
+        "Local advisers"
+      ],
+      "evidence": [
+        "Site shortlist",
+        "Planning pre-consultation notes",
+        "Title/survey"
+      ],
+      "blockers": [
+        "No site control",
+        "Zoning incompatibility",
+        "Unceded land questions"
+      ],
+      "dependencies": [
+        "Stage 1–2"
+      ]
+    },
+    {
+      "stage": "4",
+      "title": "Preliminary planning and zoning",
+      "questions": [
+        "Are six homes, a lodge and shared water permitted?",
+        "What approvals are needed?"
+      ],
+      "responsible": [
+        "Planner",
+        "Municipality",
+        "Conservation authority"
+      ],
+      "evidence": [
+        "Zoning matrix",
+        "Pre-application minutes",
+        "Approval path"
+      ],
+      "blockers": [
+        "Official plan conflict",
+        "Minimum lot/road standards"
+      ],
+      "dependencies": [
+        "Stage 3"
+      ]
+    },
+    {
+      "stage": "5",
+      "title": "Environmental constraints",
+      "questions": [
+        "Wetland, shoreline, species at risk, archaeology, slope, flooding?",
+        "Can the footprint avoid harm?"
+      ],
+      "responsible": [
+        "Ecologist",
+        "Archaeologist",
+        "Engineer"
+      ],
+      "evidence": [
+        "Constraint map",
+        "Seasonal surveys",
+        "Avoidance/mitigation plan"
+      ],
+      "blockers": [
+        "Protected habitat",
+        "Contaminated soil",
+        "Flood risk"
+      ],
+      "dependencies": [
+        "Stage 3"
+      ]
+    },
+    {
+      "stage": "6",
+      "title": "Water, wastewater and emergency access",
+      "questions": [
+        "Is there safe potable water?",
+        "Can sewage be treated?",
+        "Can fire/ambulance reach every home?"
+      ],
+      "responsible": [
+        "Hydrogeologist",
+        "Civil engineer",
+        "Fire department",
+        "Health unit"
+      ],
+      "evidence": [
+        "Well/pump tests",
+        "Septic design",
+        "Road/bridge load and turnaround",
+        "Fire water plan"
+      ],
+      "blockers": [
+        "No water",
+        "Poor soils",
+        "Insufficient access"
+      ],
+      "dependencies": [
+        "Stage 5"
+      ]
+    },
+    {
+      "stage": "7",
+      "title": "Financing and insurance",
+      "questions": [
+        "Who funds shared infrastructure?",
+        "Can residents insure homes and shared assets?"
+      ],
+      "responsible": [
+        "Participants",
+        "Lender",
+        "Broker",
+        "Accountant"
+      ],
+      "evidence": [
+        "Capital stack",
+        "Operating budget",
+        "Quotes",
+        "Insurance confirmation"
+      ],
+      "blockers": [
+        "No lender",
+        "Wildfire/flood uninsurable"
+      ],
+      "dependencies": [
+        "Stage 2–6"
+      ]
+    },
+    {
+      "stage": "8",
+      "title": "Architectural and engineering studies",
+      "questions": [
+        "Do the homes meet structure, fire, energy and accessibility requirements?",
+        "What needs redesign?"
+      ],
+      "responsible": [
+        "Architect",
+        "Structural engineer",
+        "Fire engineer",
+        "Accessibility consultant"
+      ],
+      "evidence": [
+        "Stamped drawings",
+        "Energy model",
+        "Fire/egress review",
+        "Accessibility audit"
+      ],
+      "blockers": [
+        "Container modifications",
+        "Poor access",
+        "Unresolved servicing"
+      ],
+      "dependencies": [
+        "Stage 6–7"
+      ]
+    },
+    {
+      "stage": "9",
+      "title": "Approvals and permits",
+      "questions": [
+        "Which approvals are still missing?",
+        "What conditions apply?"
+      ],
+      "responsible": [
+        "Owner",
+        "Planner",
+        "Building official",
+        "Conservation authority"
+      ],
+      "evidence": [
+        "Permits",
+        "Conditions",
+        "Inspection plan"
+      ],
+      "blockers": [
+        "Incomplete studies",
+        "Public opposition",
+        "Servicing capacity"
+      ],
+      "dependencies": [
+        "Stage 4–8"
+      ]
+    },
+    {
+      "stage": "10",
+      "title": "Construction and operation",
+      "questions": [
+        "Who builds, inspects and maintains it?",
+        "How are costs and decisions reported?"
+      ],
+      "responsible": [
+        "Builder",
+        "Clerk of works",
+        "Residents' association",
+        "Land trust board"
+      ],
+      "evidence": [
+        "Construction schedule",
+        "As-built records",
+        "Maintenance calendar",
+        "Reserve fund"
+      ],
+      "blockers": [
+        "Cost overrun",
+        "Seasonal access",
+        "Governance burnout"
+      ],
+      "dependencies": [
+        "Stage 7–9"
+      ]
+    }
+  ],
+  "living": [
+    [
+      "Winter roads and paths",
+      "Shared lane/parking clearing and a written snow plan.",
+      "Residents clear their own porch/path and keep emergency access clear.",
+      "Snow storage, ice, plowing costs and who is responsible when someone is away."
+    ],
+    [
+      "Grocery and medical access",
+      "Shared trips and delivery coordination.",
+      "Personal shopping, prescriptions and appointments.",
+      "Distance, winter driving, no car, and privacy of health information."
+    ],
+    [
+      "Internet and mobile",
+      "Shared service contract and a lodge connection.",
+      "Home router, backup and data use.",
+      "No guarantee of fibre; trees, terrain and weather affect service."
+    ],
+    [
+      "Power outages",
+      "Shared battery/solar and a lodge refuge.",
+      "Home backup, medical equipment and frozen pipes.",
+      "A battery is not a permanent generator; fuel and maintenance matter."
+    ],
+    [
+      "Water shortages",
+      "Shared storage, fire reserve and trigger levels.",
+      "Home demand, leaks and personal use.",
+      "A fire reserve cannot be spent on gardens."
+    ],
+    [
+      "Wastewater",
+      "Shared septic/alternative system servicing.",
+      "What goes down the drain; reporting problems.",
+      "Pumping, reserve fields, flooding and replacement cost."
+    ],
+    [
+      "Shared laundry",
+      "Lodge machines, booking and maintenance.",
+      "Personal laundry and supplies.",
+      "Queues, noise, accessibility and machine downtime."
+    ],
+    [
+      "Deliveries",
+      "Shared address, parcel box and delivery rules.",
+      "Personal orders and access.",
+      "Rural carriers, theft, winter access and traffic."
+    ],
+    [
+      "Visitors and guests",
+      "Guest room and visitor rules.",
+      "Hosting, parking and quiet hours.",
+      "Privacy, septic load, insurance and short-term rental rules."
+    ],
+    [
+      "Pets",
+      "Shared rules for dogs, waste and wildlife.",
+      "Feeding, control, vaccinations and noise.",
+      "Wildlife conflict, allergies and liability."
+    ],
+    [
+      "Noise",
+      "Quiet hours and shared-space norms.",
+      "Home music, tools and guests.",
+      "Small homes transmit sound; consensus is not the same as enforcement."
+    ],
+    [
+      "Shared tools",
+      "Tool library, maintenance and training.",
+      "Borrowing, returning and damage.",
+      "Storage, safety and replacement."
+    ],
+    [
+      "Gardening",
+      "Community garden, compost and water rules.",
+      "Personal beds and harvest.",
+      "Soil, deer, water, invasives and who owns the food."
+    ],
+    [
+      "Wildlife",
+      "Bear-safe storage, no feeding and reporting.",
+      "Home screening, pets and waste.",
+      "Living with wildlife is not a pest-control problem alone."
+    ],
+    [
+      "Emergency response",
+      "Address signs, fire water, access and phone tree.",
+      "Personal medication, mobility and meet-up plan.",
+      "Response times, evacuation and care during a long outage."
+    ],
+    [
+      "Privacy and conflict",
+      "Clear shared/private boundaries and a dispute process.",
+      "Home privacy, visitors and personal information.",
+      "Small communities can blur boundaries; governance must protect dissent."
+    ],
+    [
+      "Accessibility",
+      "Step-free shared facilities, hearing loop and accessible meetings.",
+      "Home modifications, mobility equipment and personal support.",
+      "A step-free door does not make a compact bathroom or a winter path accessible."
+    ]
+  ]
+}

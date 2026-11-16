@@ -68,6 +68,8 @@ export function architecturePage(c, sizes, profile) {
     <a href="../../water/">Water</a>
     <a href="../../compare/">Compare</a>
     <a href="../../../index.html#design-lab">Design on the main site</a>
+    <a href="../../../living/">Living Here</a>
+    <a href="../../../participate/">Participate</a>
     <a href="../../../index.html">Main site</a>
   </nav>
 </header>

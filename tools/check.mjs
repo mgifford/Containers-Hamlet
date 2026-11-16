@@ -121,6 +121,24 @@ const homesIndexHtml = read('site/homes/index.html');
 ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && Object.values(HOME_PAGES).every((slug) => homesIndexHtml.indexOf(`href="${slug}/"`) >= 0), 'homes index links all seven descriptive home pages');
 ok((homeHtml.match(/class="home-index-card"/g) || []).length === 7 && /homes\/Pine-1-simple\//.test(homeHtml), 'the main page links the seven descriptive home pages');
 
+section('Resident-facing Phase 1.5 pages');
+const communityData = JSON.parse(read('data/community.json'));
+ok(communityData.scenarios.length === 6 && communityData.scenarios.every((x) => x.home && exists(`site/homes/${x.home}/index.html`)), 'six resident scenarios link to existing home pages');
+ok(communityData.costs.initial.length === 12 && communityData.costs.recurring.length === 10 && communityData.costs.individual.length === 6, 'cost worksheet has capital, operating and individual categories');
+ok(communityData.roadmap.length === 10 && communityData.living.length >= 16, 'roadmap has ten stages and the practical-living guide covers the required topics');
+for (const p of ['community/index.html','community/scenarios/index.html','community/ownership/index.html','community/costs/index.html','community/roadmap/index.html','living/index.html','participate/index.html','community/usability/index.html','licensing/index.html']) {
+  ok(exists(`site/${p}`), `resident page exists: ${p}`);
+}
+const communityHtml = read('site/community/index.html');
+ok(/What is it\?/.test(communityHtml) && /What would I have privately\?/.test(communityHtml) && /What is unresolved\?/.test(communityHtml), 'community page answers the five resident questions');
+ok(/Community/.test(homeHtml) && /Living Here/.test(homeHtml) && /Participate/.test(homeHtml), 'main navigation exposes Community, Living Here and Participate');
+const costsHtml = read('site/community/costs/index.html');
+ok(/Your worksheet/.test(costsHtml) && !/\$[0-9]/.test(costsHtml), 'cost worksheet uses user-entered assumptions and invents no prices');
+const usabilityHtml = read('site/community/usability/index.html');
+ok(/No representative residents have completed it yet/.test(usabilityHtml) && /Results template/.test(usabilityHtml), 'usability page is a plan, not a claim of completed testing');
+const licensingHtml = read('site/licensing/index.html');
+ok(/No automatic relicensing/.test(licensingHtml) && /AGPL-3\.0-or-later/.test(licensingHtml) && /CC BY-SA 4\.0/.test(licensingHtml), 'licensing page has a matrix and no automatic relicensing claim');
+
 section('Homes, views and orientation');
 ok(analysis.buildings.length === 7, 'six homes and one common lodge are placed');
 ok(analysis.buildings.filter((b) => b.id !== 'lodge').length === 6, 'the target of six homes is met by the fictional landscape');

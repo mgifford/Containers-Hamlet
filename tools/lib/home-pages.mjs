@@ -9,12 +9,12 @@ function nav(prefix, current) {
   return `<header class="site-header">
   <a class="brand" href="${prefix}index.html">Containers Hamlet</a>
   <nav aria-label="Main">
-    <a href="${prefix}index.html#day">The day</a>
-    <a href="${prefix}hamlet/">Hamlet map</a>
+    <a href="${prefix}community/">Community</a>
+    <a href="${prefix}hamlet/">Map</a>
     <a href="${prefix}homes/"${current === 'homes' ? ' aria-current="page"' : ''}>Homes</a>
-    <a href="${prefix}cabin-a/">Cabin A</a>
-    <a href="${prefix}lodge/">Lodge</a>
     <a href="${prefix}design-lab/">Design Lab</a>
+    <a href="${prefix}living/">Living Here</a>
+    <a href="${prefix}participate/">Participate</a>
   </nav>
 </header>`;
 }
