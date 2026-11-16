@@ -71,3 +71,8 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 
 - `resilience-guide.jpg`: hamlet-scale fire, climate and social capacity.
 - `water-guide.jpg`: rainwater, greywater, blackwater and fire reserve.
+
+## Map discoverability
+
+- `map-wide.jpg`: the wider map with the key below and the selected-building panel.
+- `map-promo.jpg`: the landing-page map preview card.

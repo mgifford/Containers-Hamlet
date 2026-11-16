@@ -98,6 +98,7 @@ ${nav('../../', 'home')}
   <p class="eyebrow">${esc(useLabel(h.use))} · ${esc(m.configuration)} · ${esc(h.model === 'lodge' ? 'common lodge concept' : 'Cabin A concept')}</p>
   <h1>${esc(h.name)} <span class="home-name">· ${esc(h.short_name || '')}</span></h1>
   <p class="lede">${esc(h.character || '')}</p>
+  <p class="home-map-link"><a class="action" href="../../hamlet/?building=${encodeURIComponent(h.id)}">See ${esc(h.name)} on the hamlet map</a></p>
   <p class="home-share">Share this home: <code>homes/${esc(m.slug)}/</code> · <a href="#orientation">orientation</a> · <a href="#main-view">main view</a> · <a href="#siting">siting</a></p>
   <nav class="on-page" aria-label="On this page">
     <a href="#orientation">Orientation</a>

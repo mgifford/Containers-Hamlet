@@ -135,8 +135,8 @@ try {
   ok(await mp.evaluate(() => document.querySelector('#map-building-c').classList.contains('selected')), 'the map highlights Cabin C');
   ok(/from the shoreline/.test(await mp.textContent('#building-details')) && /Main view/.test(await mp.textContent('#building-details')), 'the details panel lists the view and computed siting checks');
   ok(Math.abs(await mp.evaluate(() => document.querySelector('#building-details').getBoundingClientRect().height) - detailsHeightBefore) < 2, 'selecting a building does not resize the details panel');
-  const mapKeyLayout = await mp.evaluate(() => { const m = document.querySelector('.map').getBoundingClientRect(); const k = document.querySelector('#map-key').getBoundingClientRect(); return { mapRight: m.right, keyLeft: k.left, mapTop: m.top, keyTop: k.top }; });
-  ok(mapKeyLayout.keyLeft >= mapKeyLayout.mapRight - 2 && Math.abs(mapKeyLayout.keyTop - mapKeyLayout.mapTop) < 80, 'the map key sits beside the map');
+  const mapKeyLayout = await mp.evaluate(() => { const m = document.querySelector('.map').getBoundingClientRect(); const k = document.querySelector('#map-key').getBoundingClientRect(); return { mapBottom: m.bottom, keyLeft: k.left, mapLeft: m.left, keyTop: k.top }; });
+  ok(mapKeyLayout.keyTop >= mapKeyLayout.mapBottom - 2 && Math.abs(mapKeyLayout.keyLeft - mapKeyLayout.mapLeft) < 3, 'the map key sits below the wider map and aligns with it');
   await mp.focus('.skip-local');
   await mp.waitForTimeout(120);
   const localSkip = await mp.evaluate(() => { const e = document.activeElement; return { cls: e.className, href: e.getAttribute('href') }; });
@@ -156,6 +156,12 @@ try {
   await mp.click('[data-choice="a"]');
   const homeHref = await mp.getAttribute('#building-details a', 'href');
   ok(/homes\/Cedar-1-simple\/$/.test(homeHref), 'the map details link points to the descriptive Cedar home page');
+  ok(await mp.locator('#map-expand').count() === 1, 'the map offers a full-screen control');
+  ok(/site-plan\.svg$/.test(await mp.getAttribute('.map-actions a', 'href')), 'the map offers the full-size SVG');
+  await mp.goto(BASE + 'hamlet/?building=lodge');
+  await mp.waitForTimeout(300);
+  ok(await mp.getAttribute('[data-choice="lodge"]', 'aria-pressed') === 'true', 'a building deep link selects the lodge on the map');
+
   await axe(mp, 'hamlet map page');
   await shot(mp, 'hamlet-map', true);
   await map.context.close();
@@ -172,6 +178,8 @@ try {
   const pineState = await pine.page.evaluate(() => ({ title: document.title, h1: document.querySelector('h1') && document.querySelector('h1').textContent, ids: [...document.querySelectorAll('h2[id]')].map((h) => h.id) }));
   ok(/Cabin C/.test(pineState.title) && /Pine/.test(pineState.h1), 'Cabin C page has its own title and heading');
   ok(['orientation','main-view','nearby','path','winter','siting','design-note','drawings'].every((id) => pineState.ids.indexOf(id) >= 0), 'Cabin C page has the shareable section anchors');
+  ok(/hamlet\/\?building=c$/.test(await pine.page.getAttribute('.home-map-link a', 'href')), 'Cabin C has a direct map link to its building');
+
   await pine.page.goto(BASE + 'homes/Pine-1-simple/#main-view');
   await pine.page.waitForTimeout(1200);
   ok(await pine.page.evaluate(() => location.hash === '#main-view' && document.querySelector('#main-view').getBoundingClientRect().top < 200), 'Cabin C #main-view anchor opens at the section');
@@ -182,6 +190,8 @@ try {
 
   section('Main-page home cards and Cabin A page');
   ok(await page.locator('#homes .home-index-card').count() === 7, 'the main page shows seven home cards');
+  ok(await page.locator('.map-promo a[href="hamlet/"]').count() === 1, 'the main page has a map preview card linking to the map');
+
   ok(await page.locator('#homes .home-card-image img').first().evaluate((i) => i.getAttribute('loading') === 'lazy'), 'home card diagrams are lazy-loaded');
   const cabin = await open('cabin-a/');
   ok(cabin.errors.length === 0, `Cabin A page: no console errors${cabin.errors.length ? ': ' + cabin.errors.join(' | ') : ''}`);

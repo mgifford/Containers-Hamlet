@@ -111,6 +111,8 @@ const lodgePage = read('site/lodge/index.html');
 ok(/<h1>Cabin A · The Retreat<\/h1>/.test(cabinPage) && /id="plan"/.test(cabinPage) && /id="rooms"/.test(cabinPage) && /models\/cabin-a\/floor-plan\.svg/.test(cabinPage), 'Cabin A has a dedicated drawings-and-rooms page');
 ok(/<h1>The common lodge<\/h1>/.test(lodgePage) && /id="plan"/.test(lodgePage) && /id="rooms"/.test(lodgePage) && /models\/lodge\/floor-plan\.svg/.test(lodgePage), 'the lodge has a dedicated drawings-and-rooms page');
 ok(/href="hamlet\/"/.test(homeHtml) && !/id="site-map"/.test(homeHtml), 'the landing page links the map page and no longer inlines the map');
+ok(/class="map-promo"/.test(homeHtml) && /href="hamlet\/"/.test(homeHtml), 'the landing page has a visible map preview link');
+ok(/id="map-expand"/.test(hamletHtml) && /href="\.\.\/assets\/site-plan\.svg"/.test(hamletHtml), 'the map page has full-screen and full-size map controls');
 const homesIndexHtml = read('site/homes/index.html');
 ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && Object.values(HOME_PAGES).every((slug) => homesIndexHtml.indexOf(`href="${slug}/"`) >= 0), 'homes index links all seven descriptive home pages');
 ok((homeHtml.match(/class="home-index-card"/g) || []).length === 7 && /homes\/Pine-1-simple\//.test(homeHtml), 'the main page links the seven descriptive home pages');
