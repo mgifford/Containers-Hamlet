@@ -28,7 +28,7 @@
 - the page with its scripts blocked, including all seven home briefs and view diagrams
 - same-origin requests, no third-party requests and all local links
 
-`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 199 static checks; the main browser suite runs 62 checks. `tools/check-design-lab.mjs` adds 697 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery and comparison checks, and `tools/design-lab-check.mjs` adds 114 browser checks for the gallery, editor, architectural slideshow, vegetation guide, ground guide and comparison.
+`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 205 static checks; the main browser suite runs 65 checks. `tools/check-design-lab.mjs` adds 697 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery and comparison checks, and `tools/design-lab-check.mjs` adds 114 browser checks for the gallery, editor, architectural slideshow, vegetation guide, ground guide and comparison.
 
 ## Manual testing still required
 

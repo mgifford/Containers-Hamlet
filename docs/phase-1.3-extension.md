@@ -1,6 +1,6 @@
 # Phase 1.3 extension: architectural galleries, thermal comfort and a common lodge
 
-> A further extension adds configurable exterior insulation assemblies, wall sections and living vegetation systems. See [`phase-1.3-envelope-vegetation.md`](phase-1.3-envelope-vegetation.md). Current counts are 199 main static, 697 Design Lab static, 62 main browser and 114 Design Lab browser checks; whole site 2995 KB under a revised 3.0 MB budget.
+> A further extension adds configurable exterior insulation assemblies, wall sections and living vegetation systems. See [`phase-1.3-envelope-vegetation.md`](phase-1.3-envelope-vegetation.md). Current counts are 205 main static, 697 Design Lab static, 65 main browser and 114 Design Lab browser checks; whole site 2994 KB under a revised 3.0 MB budget.
 
 This extension builds on the Phase 1.3 Container Home Design Studio. It adds a five-view architectural gallery for every developed design, a café-inspired common lodge concept, thermal-envelope options, and a side-by-side comparison tool. It keeps the project container-first and does not turn it into a generic architecture application.
 
@@ -107,9 +107,9 @@ At the time of this extension:
 | `node tools/build.mjs --check` | 119 generated files current |
 | `node tools/check.mjs` | 190 passed, 0 failed |
 | `node tools/check-design-lab.mjs` | 491 passed, 0 failed |
-| `node tools/browser-check.mjs` | 62 passed, 0 failed |
+| `node tools/browser-check.mjs` | 65 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 80 passed, 0 failed |
-| Main first view | 400 KB uncompressed / 98 KB gzipped |
+| Main first view | 398 KB uncompressed / 98 KB gzipped |
 | Whole published site | 2536 KB (under 2.5 MB) |
 
 Design Lab static checks cover the schema, thermal fields, five-view determinism, XML attribute integrity, gallery and architecture pages, the no-auto-advance code, comparison metrics, licence and privacy constraints.

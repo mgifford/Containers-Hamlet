@@ -96,7 +96,7 @@ Record any use in the material passport.
 
 ## Phase 1.2: landscape-led siting, access and views
 
-Phase 1.2 moves the design from a flat 15-acre diagram to a fictional 13.5-acre Canadian Shield site. The construction principles do not change; the site assumptions become more explicit.
+Phase 1.2 moved the design from a flat 15-acre diagram to a fictional Canadian Shield site; it was later expanded to **15 acres (6.07 ha)**. The construction principles do not change; the site assumptions become more explicit.
 
 ### Terrain and building benches
 

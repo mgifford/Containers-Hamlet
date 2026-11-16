@@ -27,3 +27,8 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 - `editor-foundation.jpg`: foundation system, clearance and no-compaction controls.
 - `editor-elevated.jpg`: elevated house exterior with visible piles.
 - `footbridge.jpg`: conceptual 8 m clear-span footbridge on independent abutments.
+
+## Map layout and 15-acre woodland
+
+- `map-layout.jpg`: the selected-building panel now has a stable height beside the map, with the map key in its own adjacent column.
+- `map-layout-tablet.jpg`: at tablet width the map and key sit side by side, with the selected-building details below.

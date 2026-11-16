@@ -2,7 +2,7 @@
 
 Six individual woodland retreats that happen to share a community.
 
-A fictional 13.5-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.3 adds a **Container Home Design Studio**: nine container homes plus a green, yellow-framed café lodge under one south-facing shed roof, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls, elevated helical-pile foundations, a small footbridge study and a side-by-side comparison tool. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
+A fictional 15-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.3 adds a **Container Home Design Studio**: nine container homes plus a green, yellow-framed café lodge under one south-facing shed roof, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls, elevated helical-pile foundations, a small footbridge study and a side-by-side comparison tool. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
 
 Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, all drawings, downloads, the cutaway explorer and the validation workflow. The new editor uses a separate, versioned multi-container schema and never overwrites the existing architectural data. See [`docs/phase-1.3.md`](docs/phase-1.3.md), the [gallery/thermal extension](docs/phase-1.3-extension.md) the [envelope/vegetation extension](docs/phase-1.3-envelope-vegetation.md) and the [foundations and access study](docs/foundations-and-access.md) for the audit, changes, tests, screenshots and limitations.
 
@@ -23,10 +23,10 @@ Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 199 main-site static checks
+   node tools/check.mjs       # 205 main-site static checks
    node tools/check-design-lab.mjs   # 697 Design Lab schema, geometry, envelope, vegetation, solar, foundation, gallery and comparison checks
    npm install
-   npm run test:browser       # 62 main-site browser checks
+   npm run test:browser       # 65 main-site browser checks
    npm run test:design-lab    # 114 Design Lab browser checks
    ```
 
@@ -48,13 +48,13 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 400 KB uncompressed / 98 KB compressed. The whole published site is about 2995 KB, under the revised 3.0 MB budget.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 398 KB uncompressed / 98 KB compressed. The whole published site is about 2994 KB, under the revised 3.0 MB budget.
 
 ## The fictional landscape
 
 Everything is generated deterministically from `data/site.json` with seed `1202`:
 
-- 13.5 acres / 5.46 ha, computed from an irregular parcel polygon
+- 15 acres / 6.07 ha, computed from an irregular parcel polygon
 - Heron Lake along the west edge, with a beaver-influenced inlet
 - a beaver meadow wetland, seasonally connected by two drainage channels
 - a north ridge, south knoll, rock outcrops and mixed woodland stands
@@ -87,7 +87,7 @@ The existing `data/cabin-a.json` remains authoritative for Cabin A. `tools/lib/d
 
 Generated from the JSON (do not edit by hand; edit the data and rebuild):
 
-- `site/assets/site-plan.svg`: the fictional 13.5-acre property in metres, with terrain relief, contours, water, wetland, woodland, rocks, clearings, buffers, paths, tracks, parking, view arrows, crane mats, homes and lodge at true scale.
+- `site/assets/site-plan.svg`: the fictional 15-acre property in metres, with terrain relief, contours, water, wetland, woodland, rocks, clearings, buffers, paths, tracks, parking, view arrows, crane mats, homes and lodge at true scale.
 - `site/assets/lake-impression.svg`: an original concept impression of a lake-edge home. Illustration, not a surveyed view.
 - `site/assets/views/<home>.svg`: a plan-centred view diagram for each home and the lodge.
 - `models/cabin-a/*` and `models/lodge/*`: floor plans, elevations, sections, axonometrics, cutaways, OBJ and MTL.
@@ -109,7 +109,7 @@ Workshop fabrication and fit-out; staged transport; minimal suitable engineered 
 
 ## Important cautions
 
-All plans are **illustrative, not permit-ready**. Shipping containers need structural verification, especially where walls are cut. Exterior insulation, vapour and air control, thermal bridging, freeze-thaw, condensation, snow loads, fire separation and ventilation require professional detailing for the actual Canadian location. Roof gardens require engineering for saturated soil and snow loads. A wetland and shoreline may be regulated. A 13.5-acre parcel does not imply permission for six residences or rentals. Ground lease and container ownership terms require provincial legal advice.
+All plans are **illustrative, not permit-ready**. Shipping containers need structural verification, especially where walls are cut. Exterior insulation, vapour and air control, thermal bridging, freeze-thaw, condensation, snow loads, fire separation and ventilation require professional detailing for the actual Canadian location. Roof gardens require engineering for saturated soil and snow loads. A wetland and shoreline may be regulated. A 15-acre parcel does not imply permission for six residences or rentals. Ground lease and container ownership terms require provincial legal advice.
 
 The depicted site is fictional; no cadastral, contour, lidar, photographic, coordinate or environmental survey is represented. The terrain is an invented formula with seeded roughness and assumed building benches. Contours, view diagrams, buffer widths, slope limits, crane reach, lane widths, parking counts and path alignments are placeholders. Dimensions are conceptual. The 40-foot high-cube shell is represented by approximate external dimensions 12.192 × 2.438 × 2.896 m; confirm the actual container and clear interior after insulation and services. Accessibility notes are intentions to verify against CSA B651 and the applicable code; several rooms are known not to meet turning-space expectations.
 

@@ -1,8 +1,8 @@
 {
   "fictional": true,
   "phase": "1.2",
-  "area_acres": 13.5,
-  "area_ha": 5.46,
+  "area_acres": 15.0,
+  "area_ha": 6.07,
   "setting": "A rugged Canadian Shield woodland beside a small lake: rock ridges, mixed forest, a beaver-influenced shoreline and a protected wetland",
   "units": "metres; x east, y south, origin at the north-west corner of the map",
   "provenance": {
@@ -14,7 +14,7 @@
     "licence": "CC BY 4.0"
   },
   "map": {
-    "width_m": 330,
+    "width_m": 360,
     "height_m": 215
   },
   "terrain": {
@@ -418,83 +418,83 @@
         210
       ],
       [
-        315,
+        344,
         210
       ],
       [
-        311,
+        340,
         199
       ],
       [
-        318,
+        347,
         189
       ],
       [
-        314,
+        343,
         177
       ],
       [
-        320,
+        349,
         167
       ],
       [
-        315,
+        344,
         155
       ],
       [
-        321,
+        350,
         145
       ],
       [
-        316,
+        345,
         133
       ],
       [
-        322,
+        351,
         121
       ],
       [
-        317,
+        346,
         109
       ],
       [
-        323,
+        352,
         97
       ],
       [
-        318,
+        347,
         85
       ],
       [
-        324,
+        353,
         73
       ],
       [
-        319,
+        348,
         61
       ],
       [
-        325,
+        354,
         49
       ],
       [
-        320,
+        349,
         37
       ],
       [
-        326,
+        355,
         25
       ],
       [
-        321,
+        350,
         13
       ],
       [
-        325,
+        354,
         4
       ],
       [
-        315,
+        344,
         0
       ]
     ],
@@ -783,6 +783,31 @@
         ],
         "note": "Cedar, balsam fir and white pine hold the shore. This stand is left uncut and is the main winter screening for the lake-facing homes.",
         "conifer_share": 0.7
+      },
+      {
+        "id": "east-wood",
+        "name": "East mixed woodland",
+        "type": "mixed",
+        "polygon": [
+          [
+            330,
+            0
+          ],
+          [
+            355,
+            0
+          ],
+          [
+            355,
+            210
+          ],
+          [
+            330,
+            210
+          ]
+        ],
+        "note": "Additional mixed woodland on the eastern edge of the fictional 15-acre parcel. Indicative only.",
+        "conifer_share": 0.45
       }
     ]
   },
@@ -1941,7 +1966,7 @@
     }
   ],
   "trees": {
-    "count": 240,
+    "count": 190,
     "seed": 1202,
     "clearance_m": 3.2,
     "types": {
