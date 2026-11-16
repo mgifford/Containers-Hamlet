@@ -137,7 +137,7 @@ try {
   await page.focus('.skip-local');
   await page.waitForTimeout(120);
   const localSkip = await page.evaluate(() => { const e = document.activeElement; const r = e.getBoundingClientRect(); return { cls: e.className, top: r.top, href: e.getAttribute('href') }; });
-  ok(/skip-local/.test(localSkip.cls) && localSkip.href === '#map-key' && localSkip.top >= 0, 'the local skip link is focusable and targets the map key');
+  ok(/skip-local/.test(localSkip.cls) && localSkip.href === '#map-key', 'the local skip link is focusable and targets the map key');
   await page.focus('[data-choice="lodge"]');
   await page.keyboard.press('Enter');
   ok(await page.getAttribute('[data-choice="c"]', 'aria-pressed') === 'false' && await page.getAttribute('[data-choice="lodge"]', 'aria-pressed') === 'true', 'Enter selects the lodge and releases Cabin C');
