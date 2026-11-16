@@ -52,3 +52,7 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 ## Direct manipulation
 
 - `editor-direct-manipulation.jpg`: a focused module in the plan, with the drag/selection outline and keyboard help.
+
+## Fire resilience
+
+- `fire-guide.jpg`: steel-hull limits, defensible space, building measures and code context.

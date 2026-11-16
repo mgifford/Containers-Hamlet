@@ -62,6 +62,7 @@ export function architecturePage(c, sizes, profile) {
     <a href="../../vegetation/">Vegetation</a>
     <a href="../../ground/">Ground</a>
     <a href="../../patterns/">Patterns</a>
+    <a href="../../fire/">Fire</a>
     <a href="../../compare/">Compare</a>
     <a href="../../../index.html#design-lab">Design on the main site</a>
     <a href="../../../index.html">Main site</a>

@@ -21,6 +21,7 @@ import { vegetationComparisonSVG } from './lib/design-systems.mjs';
 import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { homesIndexPage, homePage, homeCards } from './lib/home-pages.mjs';
+import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
@@ -148,6 +149,8 @@ export function generate() {
   put('site/design-lab/vegetation/index.html', vegetationPage(designLab.concepts));
   put('site/design-lab/ground/index.html', groundPage(designLab.concepts));
   put('site/design-lab/patterns/index.html', patternsPage());
+  put('site/design-lab/fire/index.html', firePage());
+  put('site/design-lab/systems/fire-zones.svg', fireZonesSVG());
   put('site/design-lab/systems/container-patterns.svg', patternsSVG());
   put('site/design-lab/systems/footbridge.svg', footbridgeSVG());
   put('site/design-lab/systems/vegetation-comparison.svg', vegetationComparisonSVG());

@@ -235,6 +235,9 @@ try {
   await page.selectOption('#paint-palette', 'forest-ochre');
   await page.waitForTimeout(200);
   await page.check('#shelter-enabled');
+  await page.uncheck('#fire-vents');
+  await page.fill('#fire-space', '20');
+  await page.locator('#fire-space').blur();
   await page.waitForTimeout(200);
   await page.selectOption('#foundation-system', 'ground-screws');
   await page.waitForTimeout(250);
@@ -287,6 +290,13 @@ try {
   const dragX = Number(await page.inputValue('[data-path="modules.0.position_m.0"]')); ok(dragX !== shiftedX, 'dragging a plan module updates its position');
   ok(await page.locator('#plan .plan-module-hit').first().evaluate((e) => document.activeElement === e || document.activeElement === document.body), 'a dragged module returns focus to the plan');
   ok(await page.locator('#finish-controls').count() === 1, 'paint and entry-shelter controls are available');
+  ok(await page.locator('#fire-controls').count() === 1, 'fire-resilience controls are available');
+  await page.uncheck('#fire-vents');
+  await page.fill('#fire-space', '20');
+  await page.locator('#fire-space').blur();
+  await page.waitForTimeout(300);
+  ok(/20 m defensible space/.test(await page.textContent('#summary')), 'fire measures update the design summary');
+
   await page.selectOption('#paint-palette', 'forest-ochre');
   await page.waitForTimeout(300);
   ok(/Light-responsive body colour/.test(await page.textContent('#finish-note')) && /2f7d5f|2d775a/.test(await page.evaluate(() => document.querySelector('#exterior').innerHTML)), 'paint palette updates the model and note');
@@ -368,6 +378,9 @@ try {
   await page.selectOption('#paint-palette', 'forest-ochre');
   await page.waitForTimeout(200);
   await page.check('#shelter-enabled');
+  await page.uncheck('#fire-vents');
+  await page.fill('#fire-space', '20');
+  await page.locator('#fire-space').blur();
   await page.waitForTimeout(200);
   async function downloadFile(selector, name) {
     const ev = page.waitForEvent('download');
@@ -402,6 +415,7 @@ try {
   ok(parsed.modules.some((m) => m.solar && m.solar.tilt_deg === 60 && m.solar.season_mode === 'winter'), 'solar tilt, azimuth and season persist in the exported JSON');
   ok(parsed.foundation && parsed.foundation.system === 'ground-screws' && parsed.foundation.clearance_m === 0.9 && parsed.foundation.no_compaction, 'foundation system, clearance and no-compaction persist in the exported JSON');
   ok(parsed.paint && parsed.paint.id === 'forest-ochre' && parsed.entry_shelter && parsed.entry_shelter.enabled && parsed.entry_shelter.security_shutters, 'paint and entry-shelter choices persist in the exported JSON');
+  ok(parsed.fire && parsed.fire.defensible_space_m === 20 && parsed.fire.ember_resistant_vents === false, 'fire-resilience measures persist in the exported JSON');
   const wallFile = await downloadFile('#export-wall', 'wall.svg');
   ok(/^<svg|^<\?xml/.test(fs.readFileSync(wallFile, 'utf8').trim()), 'wall section SVG exports');
   const planFile = await downloadFile('#export-plan', 'plan.svg');
@@ -431,6 +445,17 @@ try {
   await shot(vegPage.page, 'vegetation-top');
   await shot(vegPage.page, 'vegetation-full', true);
   await vegPage.context.close();
+
+  section('Fire resilience guide');
+  const firePage = await open('design-lab/fire/');
+  ok(firePage.errors.length === 0, `fire guide: no console errors${firePage.errors.length ? ': ' + firePage.errors.join(' | ') : ''}`);
+  const fireState = await firePage.page.evaluate(() => ({ image: !!document.querySelector('.system-figure img'), text: document.body.textContent, links: [...document.querySelectorAll('a')].map((a) => a.href) }));
+  ok(fireState.image && /Steel helps/.test(fireState.text) && /Defensible space/.test(fireState.text) && /Codes, standards/.test(fireState.text), 'fire guide: steel limits, zones and code context are present');
+  ok(await firePage.page.evaluate(() => document.querySelector('.system-figure img').naturalWidth > 0), 'fire guide: fire-zone diagram loads');
+  ok(fireState.links.some((u) => /cbhcc-cchcc\.ca/.test(u)) && fireState.links.some((u) => /fmapprovals\.com/.test(u)) && fireState.links.some((u) => /ibhs\.org/.test(u)), 'fire guide: key fire references are linked');
+  await axe(firePage.page, 'fire guide');
+  await shot(firePage.page, 'fire-guide');
+  await firePage.context.close();
 
   section('Container patterns and security');
   const patterns = await open('design-lab/patterns/');
@@ -485,6 +510,14 @@ try {
   const darkCompare = await open('design-lab/compare/', { colorScheme: 'dark' });
   await axe(darkCompare.page, 'comparison in dark scheme');
   await darkCompare.context.close();
+  const smallFire = await open('design-lab/fire/', { viewport: { width: 320, height: 640 } });
+  await smallFire.page.waitForTimeout(300);
+  ok(await smallFire.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'fire guide has no horizontal scrolling at 320 px');
+  await axe(smallFire.page, 'fire guide at 320 px');
+  await smallFire.context.close();
+  const darkFire = await open('design-lab/fire/', { colorScheme: 'dark' });
+  await axe(darkFire.page, 'fire guide in dark scheme');
+  await darkFire.context.close();
   const smallPatterns = await open('design-lab/patterns/', { viewport: { width: 320, height: 640 } });
   await smallPatterns.page.waitForTimeout(300);
   ok(await smallPatterns.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'patterns guide has no horizontal scrolling at 320 px');

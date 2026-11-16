@@ -179,6 +179,7 @@
     renderSolarSection();
     renderFoundation();
     renderFinish();
+    renderFire();
     renderOpenings();
     renderZones();
     renderPorches();
@@ -348,6 +349,35 @@
       state.design.entry_shelter.enabled = enabled;
       state.design.entry_shelter.security_shutters = shutters;
     }, 'Paint and entry shelter updated. Hinges, wind, snow, egress and lock strategy still need review.');
+  }
+
+  function renderFire() {
+    var f = state.design.fire, panel = $('fire-controls');
+    if (!panel) return;
+    panel.innerHTML = '<div class="field-grid">' +
+      field('Roof class', selectInput('', f.roof_class, 'fire-roof', option('A', 'Class A / most resistant', f.roof_class) + option('B', 'Class B', f.roof_class) + option('C', 'Class C / least resistant', f.roof_class))) +
+      field('Defensible space (m)', numberInput('', f.defensible_space_m, 'fire-space', ' step="1" min="0" max="100"')) +
+      '</div>' +
+      checkbox('', f.noncombustible_eaves, 'fire-eaves', 'Noncombustible, closed eaves and soffits') +
+      checkbox('', f.ember_resistant_vents, 'fire-vents', 'Ember-resistant vents and screening') +
+      checkbox('', f.tempered_glazing, 'fire-glazing', 'Tempered or laminated glazing') +
+      checkbox('', f.noncombustible_deck, 'fire-deck', 'Noncombustible deck and porch surface') +
+      checkbox('', f.exterior_shutters, 'fire-shutters', 'Exterior shutters or fire-rated covers') +
+      checkbox('', f.water_access, 'fire-water', 'Fire access and water supply confirmed') +
+      '<p class="small">' + esc(f.note) + ' The model does not calculate fire resistance, radiant heat, ember exposure or sprinkler performance.</p>';
+  }
+
+  function applyFireChoice() {
+    mutate(function () {
+      state.design.fire.roof_class = $('fire-roof').value;
+      state.design.fire.defensible_space_m = Math.max(0, Math.min(100, Number($('fire-space').value) || 0));
+      state.design.fire.noncombustible_eaves = $('fire-eaves').checked;
+      state.design.fire.ember_resistant_vents = $('fire-vents').checked;
+      state.design.fire.tempered_glazing = $('fire-glazing').checked;
+      state.design.fire.noncombustible_deck = $('fire-deck').checked;
+      state.design.fire.exterior_shutters = $('fire-shutters').checked;
+      state.design.fire.water_access = $('fire-water').checked;
+    }, 'Fire-resilience measures updated. This is not a fire-resistance rating or WUI approval.');
   }
 
   function renderSolarSection() {
@@ -585,6 +615,7 @@
       ['Solar', d.modules.filter(function (m) { return m.solar.enabled; }).map(function (m) { return m.id + ': ' + m.solar.tilt_deg + '° / ' + m.solar.azimuth_deg + '° ' + m.solar.season_mode; }).join(' · ') || 'No solar array enabled'],
       ['Foundation', d.foundation.system + ' · ' + d.foundation.clearance_m + ' m clearance · ' + (d.foundation.no_compaction ? 'no compaction' : 'compaction unresolved')],
       ['Paint and shelter', (d.paint ? d.paint.name : 'current palette') + ' · ' + (d.entry_shelter.enabled ? 'entry shelter on ' + d.entry_shelter.side : 'no entry shelter')],
+      ['Fire resilience', d.fire.roof_class + ' roof · ' + d.fire.defensible_space_m + ' m defensible space · ' + ['noncombustible_eaves','ember_resistant_vents','tempered_glazing','noncombustible_deck','exterior_shutters','water_access'].filter(function (k) { return d.fire[k]; }).length + ' measures'],
       ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green roof (not offered) ' : '') || 'Membrane'],
       ['Insulation', 'Up to ' + s.maxInsulation_mm + ' mm external'],
       ['Status', assessment.ok ? 'No invalid geometry; professional review required' : 'Invalid geometry; drawings disabled'],
@@ -1151,6 +1182,7 @@
     $('envelope-controls').addEventListener('change', applyEnvelopeChoice);
     $('foundation-controls').addEventListener('change', applyFoundationChoice);
     $('finish-controls').addEventListener('change', applyFinishChoice);
+    $('fire-controls').addEventListener('change', applyFireChoice);
     $('season').addEventListener('change', function () { state.season = $('season').value; renderVisuals(); announce('Season switched to ' + state.season + '. The plan and cutaway are unchanged.'); });
     $('apply-colour').addEventListener('click', function () {
       var colour = $('default-colour').value;

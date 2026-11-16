@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 470" role="img" aria-labelledby="fire-t fire-d">
+<title id="fire-t">Conceptual forest-home fire-resilience zones</title>
+<desc id="fire-d">Original diagram of a steel-hulled home in a managed forest. A noncombustible 0 to 1.5 metre zone surrounds the building, a reduced-fuel 1.5 to 10 metre zone follows, and a managed 10 to 30 metre forest zone beyond. Ember exposure, roof and vent vulnerabilities, access, water and evacuation are labelled. Not a code or fire-engineering drawing.</desc>
+<rect width="1040" height="470" fill="#faf8f2"/>
+<text x="34" y="38" font-family="system-ui, sans-serif" font-size="24" font-weight="800" fill="#1d392c">Fire resilience is a site strategy, not just a steel wall</text>
+<text x="34" y="60" font-family="system-ui, sans-serif" font-size="12" fill="#3f5a4c">Defensible space · ember-resistant detailing · access and water · a home that can be defended</text>
+<rect x="40" y="92" width="960" height="330" rx="14" fill="#e8efe2"/>
+<circle cx="390" cy="260" r="160" fill="#d7e3cd" stroke="#7c9679"/>
+<circle cx="390" cy="260" r="105" fill="#c5d8b8" stroke="#6d8c6b"/>
+<circle cx="390" cy="260" r="48" fill="#efe8d5" stroke="#a78d64"/>
+<rect x="350" y="232" width="82" height="56" fill="#2f6b57" stroke="#17392e" stroke-width="2"/>
+<path d="M350 232h82l-41-26z" fill="#245244" stroke="#17392e"/>
+<text x="391" y="266" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#fff">steel hull</text>
+<text x="391" y="218" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#31573f">0–1.5 m noncombustible</text>
+<text x="391" y="134" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#31573f">1.5–10 m reduced fuel</text>
+<text x="391" y="92" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#31573f">10–30 m managed forest</text>
+<path d="M520 245c50-28 88-28 132-10M520 275c50 28 88 28 132 10" fill="none" stroke="#9a4e3a" stroke-width="2" stroke-dasharray="5 3"/>
+<text x="666" y="238" font-family="system-ui, sans-serif" font-size="10" fill="#9a4e3a">wind-blown embers</text>
+<text x="666" y="252" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">roof edges, vents, gaps, decks</text>
+<rect x="670" y="285" width="286" height="100" rx="8" fill="#f7f5ed" stroke="#b9c4b3"/>
+<text x="684" y="305" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#1d392c">The weak points are openings</text>
+<text x="684" y="323" font-family="system-ui, sans-serif" font-size="9" fill="#3f5a4c">roof/eave junction · vents · windows · doors</text>
+<text x="684" y="339" font-family="system-ui, sans-serif" font-size="9" fill="#3f5a4c">combustible deck/porch · storage under floor</text>
+<text x="684" y="355" font-family="system-ui, sans-serif" font-size="9" fill="#3f5a4c">interior contents · exposed insulation</text>
+<text x="684" y="371" font-family="system-ui, sans-serif" font-size="9" fill="#9a4e3a">Steel conducts heat; thin steel loses strength.</text>
+<rect x="72" y="348" width="240" height="52" rx="8" fill="#f7f5ed" stroke="#b9c4b3"/>
+<text x="86" y="367" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#1d392c">Access + water</text>
+<text x="86" y="383" font-family="system-ui, sans-serif" font-size="9" fill="#3f5a4c">turnaround · bridge load · hydrant/draft · address</text>
+<text x="34" y="450" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Concept only · not a code, WUI, fire-engineering or insurance assessment · Containers Hamlet Design Lab · CC BY-SA 4.0</text>
+</svg>

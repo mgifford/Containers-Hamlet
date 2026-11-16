@@ -180,6 +180,17 @@ ok(!Schema.validateSchema(badFoundation).ok, 'unknown foundation systems are rej
 const badClearance = JSON.parse(JSON.stringify(data.concepts[0])); badClearance.foundation.clearance_m = 3;
 ok(!Schema.validateSchema(badClearance).ok, 'foundation clearance above 2 m is rejected');
 
+section('Fire resilience');
+const fire = Schema.canonicalize(data.concepts[0]).fire;
+ok(fire && fire.roof_class === 'A' && fire.ember_resistant_vents && fire.defensible_space_m >= 0, 'fire-resilience defaults are present');
+const badFire = JSON.parse(JSON.stringify(data.concepts[0])); badFire.fire = { roof_class: 'Z', noncombustible_eaves: true, ember_resistant_vents: true, tempered_glazing: true, noncombustible_deck: false, exterior_shutters: true, defensible_space_m: 10, water_access: false };
+ok(!Schema.validateSchema(badFire).ok, 'invalid fire roof classes are rejected');
+const fireHtml = read('site/design-lab/fire/index.html');
+ok(/Steel helps. It is not a fire strategy/.test(fireHtml) && /Defensible space, without clearing the forest/.test(fireHtml) && /Codes, standards and what is actually in force/.test(fireHtml), 'fire guide covers steel limits, defensible space and codes');
+ok(/cbhcc-cchcc\.ca/.test(fireHtml) && /housing-infrastructure\.canada\.ca/.test(fireHtml) && /fmapprovals\.com/.test(fireHtml) && /rosagalvez\.ca/.test(fireHtml) && /uwspace\.uwaterloo\.ca/.test(fireHtml) && /neep\.org/.test(fireHtml) && /climatedata\.ca/.test(fireHtml) && /canadianconsultingengineer\.com/.test(fireHtml) && /ibhs\.org/.test(fireHtml), 'fire guide cites every supplied resource');
+const fireSvg = read('site/design-lab/systems/fire-zones.svg');
+ok(/role="img"/.test(fireSvg) && /<title id=/.test(fireSvg) && /<desc id=/.test(fireSvg) && /CC BY-SA 4\.0/.test(fireSvg), 'fire-zone diagram is accessible and licensed');
+
 section('Container patterns, paint and door shelter');
 const micro = data.concepts.find((c) => c.id === 'micro-studio');
 ok(micro.entry_shelter && micro.entry_shelter.enabled && micro.entry_shelter.security_shutters && micro.paint && micro.paint.body === '#2f7d5f', 'Micro Studio carries the door-shelter and paint example');
