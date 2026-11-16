@@ -10,6 +10,8 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 - **Patterns guide:** `/design-lab/patterns/` — container configurations, paint, doors as shelter and security
 - **Fire guide:** `/design-lab/fire/` — steel-hull limits, defensible space, ember-resistant detailing, access and water
 - **Two-storey study:** `/design-lab/two-storey/` — three stacking options with structural, fire, egress and hillside questions
+- **Resilience:** `/design-lab/resilience/` — fire beyond one house, heat, flood, drought, power and social capacity
+- **Water:** `/design-lab/water/` — rainwater, greywater, blackwater, fire reserve and an illustrative calculator
 - **Comparison:** `/design-lab/compare/`
 - **Schema:** `containers-hamlet-design/v1.0`
 - **Legacy import:** `containers-hamlet-editor/v0.1` (the supplied starter schema)

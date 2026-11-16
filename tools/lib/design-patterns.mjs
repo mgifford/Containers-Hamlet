@@ -41,6 +41,8 @@ export function patternsPage() {
     <a href="../patterns/" aria-current="page">Patterns</a>
     <a href="../fire/">Fire</a>
     <a href="../two-storey/">Two-storey</a>
+    <a href="../resilience/">Resilience</a>
+    <a href="../water/">Water</a>
     <a href="../compare/">Compare</a>
     <a href="../../../index.html">Main site</a>
   </nav>

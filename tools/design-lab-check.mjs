@@ -446,6 +446,28 @@ try {
   await shot(vegPage.page, 'vegetation-full', true);
   await vegPage.context.close();
 
+  section('Community resilience and water');
+  const resilience = await open('design-lab/resilience/');
+  ok(resilience.errors.length === 0, `resilience page: no console errors${resilience.errors.length ? ': ' + resilience.errors.join(' | ') : ''}`);
+  const resilienceText = await resilience.page.textContent('main');
+  ok(/hamlet-scale system/.test(resilienceText) && /beyond the Ontario guidance/.test(resilienceText) && /Hotter, wetter, drier, smokier/.test(resilienceText) && /community resilience/.test(resilienceText), 'resilience page: fire, climate and community sections are present');
+  await axe(resilience.page, 'resilience page');
+  await shot(resilience.page, 'resilience-guide');
+  await resilience.context.close();
+
+  const water = await open('design-lab/water/');
+  ok(water.errors.length === 0, `water page: no console errors${water.errors.length ? ': ' + water.errors.join(' | ') : ''}`);
+  const waterState = await water.page.evaluate(() => ({ image: !!document.querySelector('.system-figure img'), output: document.querySelector('#water-result').textContent, inputs: document.querySelectorAll('#water-calc input').length }));
+  ok(waterState.image && waterState.inputs === 7 && /Illustrative harvest/.test(waterState.output), 'water page: diagram, seven inputs and calculated result are present');
+  await water.page.fill('#roof-area', '72');
+  await water.page.fill('#people', '4');
+  await water.page.click('#calc-water');
+  await water.page.waitForTimeout(200);
+  ok(/Illustrative harvest/.test(await water.page.textContent('#water-result')) && /L\/year/.test(await water.page.textContent('#water-result')), 'water calculator updates from the inputs');
+  await axe(water.page, 'water page');
+  await shot(water.page, 'water-guide');
+  await water.context.close();
+
   section('Two-storey study');
   const storey = await open('design-lab/two-storey/');
   ok(storey.errors.length === 0, `two-storey study: no console errors${storey.errors.length ? ': ' + storey.errors.join(' | ') : ''}`);
@@ -520,6 +542,22 @@ try {
   const darkCompare = await open('design-lab/compare/', { colorScheme: 'dark' });
   await axe(darkCompare.page, 'comparison in dark scheme');
   await darkCompare.context.close();
+  const smallResilience = await open('design-lab/resilience/', { viewport: { width: 320, height: 640 } });
+  await smallResilience.page.waitForTimeout(300);
+  ok(await smallResilience.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'resilience page has no horizontal scrolling at 320 px');
+  await axe(smallResilience.page, 'resilience page at 320 px');
+  await smallResilience.context.close();
+  const darkResilience = await open('design-lab/resilience/', { colorScheme: 'dark' });
+  await axe(darkResilience.page, 'resilience page in dark scheme');
+  await darkResilience.context.close();
+  const smallWater = await open('design-lab/water/', { viewport: { width: 320, height: 640 } });
+  await smallWater.page.waitForTimeout(300);
+  ok(await smallWater.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'water page has no horizontal scrolling at 320 px');
+  await axe(smallWater.page, 'water page at 320 px');
+  await smallWater.context.close();
+  const darkWater = await open('design-lab/water/', { colorScheme: 'dark' });
+  await axe(darkWater.page, 'water page in dark scheme');
+  await darkWater.context.close();
   const smallStorey = await open('design-lab/two-storey/', { viewport: { width: 320, height: 640 } });
   await smallStorey.page.waitForTimeout(300);
   ok(await smallStorey.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'two-storey study has no horizontal scrolling at 320 px');

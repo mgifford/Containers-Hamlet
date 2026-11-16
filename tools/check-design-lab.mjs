@@ -180,6 +180,16 @@ ok(!Schema.validateSchema(badFoundation).ok, 'unknown foundation systems are rej
 const badClearance = JSON.parse(JSON.stringify(data.concepts[0])); badClearance.foundation.clearance_m = 3;
 ok(!Schema.validateSchema(badClearance).ok, 'foundation clearance above 2 m is rejected');
 
+section('Community resilience and water');
+const resilience = read('site/design-lab/resilience/index.html');
+ok(/Resilience is a hamlet-scale system/.test(resilience) && /Forest fire: beyond the Ontario guidance/.test(resilience) && /Hotter, wetter, drier, smokier/.test(resilience) && /How a container hamlet builds community resilience/.test(resilience), 'resilience page covers fire, climate, water and community capacity');
+const water = read('site/design-lab/water/index.html');
+ok(/Keep the water cycles separate/.test(water) && /Rainwater harvesting/.test(water) && /Greywater/.test(water) && /Blackwater and sewage/.test(water) && /Fire reserve is not the last litre/.test(water), 'water page separates rain, greywater, blackwater and fire reserve');
+ok(/id="water-calc"/.test(water) && /id="water-result"/.test(water) && /aria-live="polite"/.test(water), 'water calculator is labelled and announces its result');
+const waterSvg = read('site/design-lab/systems/water-cycle.svg');
+ok(/role="img"/.test(waterSvg) && /<title id=/.test(waterSvg) && /<desc id=/.test(waterSvg) && /CC BY-SA 4\.0/.test(waterSvg), 'water-cycle diagram is accessible and licensed');
+ok(/defendable hamlet/.test(read('site/design-lab/fire/index.html')), 'fire guide adds the hamlet-scale protection layer');
+
 section('Two-storey study');
 const twoStorey = read('site/design-lab/two-storey/index.html');
 ok(/Three ways to stack/.test(twoStorey) && /Not a Look inside model/.test(twoStorey) && /Fire separation and egress/.test(twoStorey) && /What would change in the model/.test(twoStorey), 'two-storey page covers options, fire/egress and model limits');

@@ -62,6 +62,8 @@ export function groundPage(concepts) {
     <a href="../patterns/">Patterns</a>
     <a href="../fire/">Fire</a>
     <a href="../two-storey/">Two-storey</a>
+    <a href="../resilience/">Resilience</a>
+    <a href="../water/">Water</a>
     <a href="../compare/">Compare</a>
     <a href="../../../index.html#design-lab">Design on the main site</a>
     <a href="../../../index.html">Main site</a>

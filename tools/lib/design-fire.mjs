@@ -59,6 +59,8 @@ export function firePage() {
     <a href="../patterns/">Patterns</a>
     <a href="../fire/" aria-current="page">Fire</a>
     <a href="../two-storey/">Two-storey</a>
+    <a href="../resilience/">Resilience</a>
+    <a href="../water/">Water</a>
     <a href="../compare/">Compare</a>
     <a href="../../../index.html">Main site</a>
   </nav>
@@ -68,6 +70,19 @@ export function firePage() {
   <h1>Steel helps. It is not a fire strategy.</h1>
   <p class="lede">A steel container is noncombustible, but a home burns through its openings, roof edges, vents, decks and contents. In a forest, the site, the ember detail and the ability of firefighters to reach water matter as much as the hull. This page sets out the questions and the limits; it is not a fire-resistance rating or a WUI approval.</p>
   <p class="notice"><strong>Concept only.</strong> No assembly, clearance, water supply or access route here is certified. Confirm the actual site with the local fire department, building official, conservation authority, insurer and a fire-protection engineer.</p>
+
+  <section aria-labelledby="hamlet-fire-title">
+    <h2 id="hamlet-fire-title">From one home to a defendable hamlet</h2>
+    <p>Ontario's <a href="https://www.ontario.ca/page/firesmart">FireSmart guidance</a>, forest-fire danger ratings and outdoor-fire rules are necessary, but they are mostly property and compliance measures. A hamlet needs a <strong>community wildfire protection plan</strong> that links the homes to each other and to the fire service.</p>
+    <ul>
+      <li><strong>Access:</strong> a loop or two-way route, turnaround, bridge load limits, year-round clearance and address signs.</li>
+      <li><strong>Water:</strong> a dedicated fire reserve, dry hydrant/draft point or cistern with a connection the fire service has tested.</li>
+      <li><strong>Fuel:</strong> shaded fuel breaks, limbing, spacing, dead-material removal and a maintenance calendar across parcel boundaries.</li>
+      <li><strong>People:</strong> named roles, a phone tree/radio, evacuation triggers, a meeting point, medication/pet plans and vulnerable-neighbour check-ins.</li>
+      <li><strong>Recovery:</strong> insurance review, document copies, temporary shelter and a rebuilding plan.</li>
+    </ul>
+    <p>Owner-level FireSmart work is necessary but not sufficient. The <a href="../resilience/">community resilience brief</a> sets out the hamlet-scale layers; the <a href="../water/">water page</a> separates domestic storage from a tested fire reserve.</p>
+  </section>
 
   <section aria-labelledby="steel-title">
     <h2 id="steel-title">What the steel hull does and does not do</h2>

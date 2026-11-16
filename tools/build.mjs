@@ -24,6 +24,8 @@ import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/h
 import { modelPage } from './lib/model-pages.mjs';
 import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
 import { twoStoreyPage, twoStoreySVG } from './lib/design-two-storey.mjs';
+import { resiliencePage } from './lib/design-resilience.mjs';
+import { waterPage, waterSVG } from './lib/design-water.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
@@ -168,8 +170,11 @@ export function generate() {
   put('site/design-lab/patterns/index.html', patternsPage());
   put('site/design-lab/fire/index.html', firePage());
   put('site/design-lab/two-storey/index.html', twoStoreyPage());
+  put('site/design-lab/resilience/index.html', resiliencePage());
+  put('site/design-lab/water/index.html', waterPage());
   put('site/design-lab/systems/fire-zones.svg', fireZonesSVG());
   put('site/design-lab/systems/two-storey-options.svg', twoStoreySVG());
+  put('site/design-lab/systems/water-cycle.svg', waterSVG());
   put('site/design-lab/systems/container-patterns.svg', patternsSVG());
   put('site/design-lab/systems/footbridge.svg', footbridgeSVG());
   put('site/design-lab/systems/vegetation-comparison.svg', vegetationComparisonSVG());

@@ -66,3 +66,8 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 - `split-overview.jpg`: the shorter landing page.
 - `split-hamlet.jpg`: the map on its own `/hamlet/` page.
 - `split-cabin-a.jpg`: Cabin A drawings and rooms on `/cabin-a/`.
+
+## Community resilience and water
+
+- `resilience-guide.jpg`: hamlet-scale fire, climate and social capacity.
+- `water-guide.jpg`: rainwater, greywater, blackwater and fire reserve.
