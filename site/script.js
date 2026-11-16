@@ -84,7 +84,8 @@
     if (b.checks) row('Siting', (b.ok ? 'All illustrative checks pass' : 'One or more illustrative checks fail') + ': ' + fixed(b.shoreline_m, 0) + ' m from the shoreline, ' + fixed(b.wetland_m, 0) + ' m from the wetland, ' + approx(b.pad.max_m) + ' m maximum bench cut or fill, ' + fixed(b.crane_reach_m, 0) + ' m crane reach.');
     details.appendChild(dl);
     var p = el('p', { class: 'detail-links' });
-    var brief = el('a', { href: 'homes/' + b.id + '/' }, 'Read the full home brief');
+    var homeSlug = (DATA.homeSlugs && DATA.homeSlugs[b.id]) || b.id;
+  var brief = el('a', { href: 'homes/' + homeSlug + '/' }, 'Read the full home brief');
     var inside = el('a', { href: '#inside', 'data-explore': b.id }, 'Look inside');
     var drawings = el('a', { href: b.model === 'lodge' ? '#lodge' : '#cabin' }, b.model === 'lodge' ? 'Lodge drawings' : 'Cabin drawings');
     p.appendChild(brief); p.appendChild(doc.createTextNode(' • ')); p.appendChild(inside); p.appendChild(doc.createTextNode(' • ')); p.appendChild(drawings);

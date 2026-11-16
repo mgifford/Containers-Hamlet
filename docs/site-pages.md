@@ -5,7 +5,7 @@ This extension starts splitting the dense single-page hamlet into shareable page
 ## What changed
 
 - Added `/homes/`, an index of all six cabins and the lodge.
-- Added `/homes/<id>/` pages for **Cedar, Birch, Pine, Moss, Fern, Juniper and the lodge**.
+- Added descriptive pages for **Cedar-1-simple, Birch-2-wide, Pine-1-simple, Moss-2-wide, Fern-1-simple, Juniper-1-simple and Lodge-3-community**. The old `/homes/a/`–`/homes/lodge/` URLs are small redirects.
 - Each home page has stable anchors:
   - `#orientation`
   - `#main-view`
@@ -44,9 +44,9 @@ Current limits:
 
 | Measure | Limit | Current |
 |---|---:|---:|
-| Initial view, compressed | 120 KB | 95 KB |
-| Initial view, uncompressed | 400 KB | 391 KB |
-| Whole published site | 3.2 MB | 3115 KB |
+| Initial view, compressed | 120 KB | 96 KB |
+| Initial view, uncompressed | 400 KB | 392 KB |
+| Whole published site | 3.2 MB | 3119 KB |
 
 The initial view is under 400 KB by about **20 KB**. The whole site is under 3.2 MB by about **200 KB**. Adding another substantial page or gallery item will still require either:
 
@@ -69,13 +69,13 @@ Lazy loading improves **when bytes are requested**, not the total byte count. A 
 
 | Check | Result |
 |---|---|
-| `node tools/build.mjs --check` | 142 generated files current |
-| `node tools/check.mjs` | 228 passed, 0 failed |
+| `node tools/build.mjs --check` | 149 generated files current |
+| `node tools/check.mjs` | 235 passed, 0 failed |
 | `node tools/check-design-lab.mjs` | 709 passed, 0 failed |
 | `node tools/browser-check.mjs` | 73 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 143 passed, 0 failed |
-| Initial view | 391 KB / 95 KB compressed |
-| Whole site | 3115 KB |
+| Initial view | 392 KB / 96 KB compressed |
+| Whole site | 3119 KB |
 
 Browser checks cover the homes index, all seven cards, the Cabin C page, `#main-view`, each section ID, lazy card diagrams, no-JavaScript cards and axe-core.
 

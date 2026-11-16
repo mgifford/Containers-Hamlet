@@ -20,7 +20,7 @@ import { vegetationPage } from './lib/design-vegetation.mjs';
 import { vegetationComparisonSVG } from './lib/design-systems.mjs';
 import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
-import { homesIndexPage, homePage, homeCards } from './lib/home-pages.mjs';
+import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import {
@@ -102,6 +102,15 @@ export function generate() {
     hash: analysis.terrain_hash,
   };
   put('site/data/terrain.json', JSON.stringify(terrainPublic, null, 2) + '\n');
+  const HOME_META = {
+    a: { slug: 'Cedar-1-simple', configuration: 'One container · simple' },
+    b: { slug: 'Birch-2-wide', configuration: 'Two containers · wide pair' },
+    c: { slug: 'Pine-1-simple', configuration: 'One container · simple' },
+    d: { slug: 'Moss-2-wide', configuration: 'Two containers · wide pair' },
+    e: { slug: 'Fern-1-simple', configuration: 'One container · simple' },
+    f: { slug: 'Juniper-1-simple', configuration: 'One container · simple' },
+    lodge: { slug: 'Lodge-3-community', configuration: 'Two containers + hall · community' }
+  };
   const homesPublic = {
     generated_by: 'tools/build.mjs',
     fictional: true,
@@ -115,8 +124,12 @@ export function generate() {
     })),
   };
   put('site/data/homes.json', JSON.stringify(homesPublic, null, 2) + '\n');
-  put('site/homes/index.html', homesIndexPage(homesPublic.buildings));
-  homesPublic.buildings.forEach((h) => put(`site/homes/${h.id}/index.html`, homePage(h, site)));
+  put('site/homes/index.html', homesIndexPage(homesPublic.buildings, HOME_META));
+  homesPublic.buildings.forEach((h) => {
+    const meta = HOME_META[h.id] || { slug: h.id, configuration: 'Home concept' };
+    put(`site/homes/${meta.slug}/index.html`, homePage(h, site, meta));
+    put(`site/homes/${h.id}/index.html`, legacyHomeRedirect(meta.slug, h.name));
+  });
 
   /* ---------------- Container Home Design Lab ---------------- */
   const designLab = JSON.parse(readText('data/design-lab.json'));
@@ -223,6 +236,7 @@ export function generate() {
   const data = {
     buildings: explorerBuildings,
     buildingModels: { a: 'cabin-a', b: 'cabin-pair', c: 'cabin-a', d: 'cabin-pair', e: 'cabin-a', f: 'cabin-a', lodge: 'lodge' },
+    homeSlugs: Object.fromEntries(Object.entries(HOME_META).map(([id, m]) => [id, m.slug])),
     site: {
       name: 'Containers Hamlet',
       area_acres: analysis.area_acres,
@@ -310,7 +324,7 @@ export function generate() {
     })(),
     'landscape-facts': landscapeFacts(site, analysis),
     'home-tabs': '',
-    'home-dossiers': homeCards(homesPublic.buildings),
+    'home-dossiers': homeCards(homesPublic.buildings, HOME_META),
     'model-cards': modelCards(BUILDINGS.map((id) => models[id]), {
       'cabin-a': img('cabin-a', 'axonometric.svg', 'Cabin A seen from the south-west: a long timber-clad container home with solar panels, a screened porch, an access ramp and a planted trellis.').replace(' loading="lazy"', ''),
       lodge: img('lodge', 'axonometric.svg', 'The common lodge seen from the south-west: two timber-clad modules either side of a taller hall with clerestory windows, solar panels, a screened porch and two ramps.').replace(' loading="lazy"', ''),

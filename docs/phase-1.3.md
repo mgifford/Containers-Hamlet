@@ -1,6 +1,6 @@
 # Phase 1.3: Container Home Design Studio
 
-> The Phase 1.3 extension adds five-view architectural galleries, a common lodge concept, thermal-envelope options and comparison. See [`phase-1.3-extension.md`](phase-1.3-extension.md). Current counts are 228 main static, 709 Design Lab static, 73 main browser and 143 Design Lab browser checks; the original Phase 1.3 figures below are retained as a historical record. The [envelope/vegetation extension](phase-1.3-envelope-vegetation.md) adds configurable assemblies, wall sections and planted systems; the [foundations and access study](foundations-and-access.md) adds elevated piles, no-compaction guidance and a footbridge concept, and the [container patterns study](container-patterns.md) adds configurations, paint and doors as shelter.
+> The Phase 1.3 extension adds five-view architectural galleries, a common lodge concept, thermal-envelope options and comparison. See [`phase-1.3-extension.md`](phase-1.3-extension.md). Current counts are 235 main static, 709 Design Lab static, 73 main browser and 143 Design Lab browser checks; the original Phase 1.3 figures below are retained as a historical record. The [envelope/vegetation extension](phase-1.3-envelope-vegetation.md) adds configurable assemblies, wall sections and planted systems; the [foundations and access study](foundations-and-access.md) adds elevated piles, no-compaction guidance and a footbridge concept, and the [container patterns study](container-patterns.md) adds configurations, paint and doors as shelter.
 
 This phase integrates the supplied Container Home Design Lab starter into Containers Hamlet, adds a nine-concept container-home gallery, and builds a browser-based editor for three matured presets. The project remains container-first. Timber, glass, screened porches, decks, green roofs and planting are complementary layers, not a move toward a generic home builder.
 
@@ -197,7 +197,7 @@ Design Lab browser checks cover:
 
 | Measure | Result |
 |---|---|
-| Main first view | 391 KB uncompressed, 95 KB gzipped, 8 requests |
+| Main first view | 392 KB uncompressed, 96 KB gzipped, 8 requests |
 | Whole published site | 2240 KB |
 
 The whole site includes the gallery, three views for nine concepts, source JSON, the editor, the full AGPL text and the Phase 1.2 assets. It remains under the 2.5 MB budget.
