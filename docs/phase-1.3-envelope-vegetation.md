@@ -117,14 +117,14 @@ No energy production, snow-shedding, wind-uplift, structural or code performance
 | Check | Result |
 | --- | --- |
 | `node tools/build.mjs --check` | 130 generated files current |
-| `node tools/check.mjs` | 206 passed, 0 failed |
+| `node tools/check.mjs` | 227 passed, 0 failed |
 | `node tools/check-design-lab.mjs` | 704 passed, 0 failed |
-| `node tools/browser-check.mjs` | 65 passed, 0 failed |
+| `node tools/browser-check.mjs` | 73 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 126 passed, 0 failed |
-| Main first view | 398 KB uncompressed / 98 KB gzipped |
-| Whole published site | 3025 KB (under the revised 3.0 MB budget) |
+| Main first view | 391 KB uncompressed / 95 KB gzipped |
+| Whole published site | 3084 KB (under the revised 3.2 MB budget) |
 
-The whole-site budget was raised from 2.5 MB to 3.0 MB for the extra wall sections, seasonal/envelope sections and vegetation guide. The main first view remains unchanged at about 398 KB.
+The whole-site budget was raised from 3.0 MB to 3.2 MB for the seven shareable home pages and the richer roof/solar/trail detail. The main first view remains about 391 KB.
 
 Screenshots: [`screenshots/phase-1.3-envelope-vegetation/`](screenshots/phase-1.3-envelope-vegetation/).
 

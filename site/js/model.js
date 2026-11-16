@@ -462,11 +462,11 @@
       else if (r.side === 'west') w = { x: [p.x0 - run, p.x0], y: [r.from_m, r.to_m], high: 'east' };
       else if (r.side === 'south') w = { x: [r.from_m, r.to_m], y: [p.y1, p.y1 + run], high: 'north' };
       else w = { x: [r.from_m, r.to_m], y: [p.y0 - run, p.y0], high: 'south' };
-      var b = mkBox({ x: w.x, y: w.y, z: [zGrade, FFL], name: 'Ramp (1:' + r.slope_ratio + ' concept)', group: 'ramp_' + r.id, cat: 'ramp', mat: 'decking', ramp: r.id });
+      var b = mkBox({ x: w.x, y: w.y, z: [zGrade, FFL], name: (r.surface === 'gravel' ? 'Graded gravel trail' : 'Ramp') + ' (1:' + r.slope_ratio + ' concept)', group: 'ramp_' + r.id, cat: 'ramp', mat: r.surface === 'gravel' ? 'gravel' : 'decking', ramp: r.id });
       b.kind = 'wedge';
       b.high = w.high;
       prims.push(b);
-      ramps.push({ id: r.id, porch: r.porch, side: r.side, rise_m: round(rise, 3), run_m: round(run, 2), slope_ratio: r.slope_ratio, width_m: round(Math.abs(r.to_m - r.from_m), 2), x0: b.min[0], x1: b.max[0], y0: b.min[1], y1: b.max[1], high: w.high });
+      ramps.push({ id: r.id, porch: r.porch, side: r.side, surface: r.surface || 'decking', rise_m: round(rise, 3), run_m: round(run, 2), slope_ratio: r.slope_ratio, width_m: round(Math.abs(r.to_m - r.from_m), 2), x0: b.min[0], x1: b.max[0], y0: b.min[1], y1: b.max[1], high: w.high });
     });
 
     /* --- trellis (independent of the shell) --- */

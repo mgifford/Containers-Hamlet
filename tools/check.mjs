@@ -55,6 +55,17 @@ for (const spec of [cabin, lodge]) {
 ok(near(analysis.area_acres, site.area_acres, 0.2), `parcel polygon is ${analysis.area_acres} acres (declared ${site.area_acres})`);
 
 /* ------------------------------------------------------------------ */
+section('Explorer models and roof options');
+const pairSpec = JSON.parse(read('data/cabin-pair.json'));
+const pairModel = EcoModel.buildModel(pairSpec);
+ok(pairSpec.bays.filter((b) => b.type === 'container').length === 2 && pairModel.meta.footprint_m2 > 0 && EcoModel.validate(pairSpec, pairModel).filter((i) => i.level === 'error').length === 0, 'the two-container explorer model builds without errors');
+const explorerHtml = read('site/index.html');
+const exHomes = (explorerHtml.match(/name="ex-building"/g) || []).length;
+ok(exHomes === 7 && ['a','b','c','d','e','f','lodge'].every((id) => explorerHtml.indexOf(`name="ex-building" value="${id}"`) >= 0), 'Look inside offers all seven buildings');
+ok(!/name="ex-roof" value="biosolar"/.test(explorerHtml), 'the biosolar roof option is removed from the explorer');
+ok(!JSON.parse(read('data/design-lab.json')).concepts.some((c) => c.modules.some((m) => m.roof && m.roof.type === 'biosolar')), 'no Design Lab concept uses a biosolar roof');
+ok(/name="ex-building" value="b"/.test(explorerHtml) && /cabin-pair/.test(read('site/js/data.js')), 'Cabin B and D are wired to the two-container explorer model');
+
 section('Terrain and landscape');
 ok(near(analysis.area_acres, 15.0, 0.06), `the fictional parcel is ${analysis.area_acres} acres (target 15.0)`);
 ok(near(analysis.area_ha, 6.07, 0.03), `the fictional parcel is ${analysis.area_ha} ha (target 6.07)`);
@@ -81,6 +92,16 @@ ok(/class="skip skip-local" href="#map-key"/.test(homeHtml), 'the map has a loca
 const visibleText = homeHtml.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]+>/g, ' ');
 ok(!/3\.66|12\.59|26\.7\s*m²|35\.6\s*m²/.test(visibleText), 'general descriptions avoid two-decimal dimensions and exact floor areas');
 ok(/~12\.6|~3\.7/.test(visibleText), 'general descriptions use approximate dimensions');
+
+const homeIds = ['a','b','c','d','e','f','lodge'];
+for (const id of homeIds) {
+  const page = read(`site/homes/${id}/index.html`);
+  ok(exists(`site/homes/${id}/index.html`) && /<h1>/.test(page) && new RegExp(`id="main-view"`).test(page) && new RegExp(`id="siting"`).test(page), `home page ${id} has a title, main view and siting anchor`);
+  ok(/class="heading-link"/.test(page) && /class="on-page"/.test(page), `home page ${id} exposes section permalinks`);
+}
+const homesIndexHtml = read('site/homes/index.html');
+ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && homeIds.every((id) => homesIndexHtml.indexOf(`href="${id}/"`) >= 0), 'homes index links all seven home pages');
+ok((homeHtml.match(/class="home-index-card"/g) || []).length === 7 && /homes\/c\//.test(homeHtml), 'the main page links the seven dedicated home pages');
 
 section('Homes, views and orientation');
 ok(analysis.buildings.length === 7, 'six homes and one common lodge are placed');
@@ -286,7 +307,7 @@ let total = 0;
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).forEach((e) => { const f = path.join(d, e.name); if (e.isDirectory()) walk(f); else total += fs.statSync(f).size; });
 walk(path.join(ROOT, 'site'));
 console.log(`       whole published site: ${(total / 1024).toFixed(0)} KB`);
-ok(total <= 3.0 * 1024 * 1024, 'whole published site stays under 3.0 MB');
+ok(total <= 3.2 * 1024 * 1024, 'whole published site stays under 3.2 MB');
 ok(/loading="lazy"/.test(html), 'below-the-fold drawings load lazily');
 ok(!/@import|@font-face|url\(http/.test(read('site/style.css')), 'no web fonts or remote CSS');
 

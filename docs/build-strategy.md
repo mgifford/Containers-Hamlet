@@ -68,7 +68,7 @@ Record any use in the material passport.
 ### Solar-friendly green roofs
 
 - The default roof carries a PV array, fitted automatically with edge setbacks: about 4.2 kWp on a cabin, 10.5 kWp on the lodge.
-- The "biosolar" alternative adds a 100 mm extensive green roof with a gravel edge and raises the PV above the planting, so the vegetation never shades the panels.
+- The former biosolar alternative is retired. A plain green roof or membrane alternative may be tested separately; rooftop food production is not assumed.
 - On the lodge, the taller hall would shade the north module, so that roof gets planting but no PV.
 - Never assume a green roof. Engineer it for saturated weight, snow and drift (especially at the lodge's roof steps), drainage, root barriers, waterproofing, maintenance access and fire.
 

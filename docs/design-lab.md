@@ -33,7 +33,7 @@ It is not a generic home builder. The container is the core of every design; tim
 - Per-module tilted solar: default 39° due south (year-round 36–39°), winter ≈60° and summer ≈30° options, with a solar section diagram and PV label in the exterior/winter views.
 - Solar tilt, azimuth and strategy persist in JSON; the plan shows the solar arrow and tilt/azimuth label.
 - Interior room bands: sleeping, bathroom, kitchen, living, dining, workspace, storage and circulation.
-- External insulation thickness, cladding type and colour, roof type (solar, green, biosolar, membrane).
+- External insulation thickness, cladding type and colour, roof type (solar, green, membrane).
 - Material-intent choices for reuse, repairability, insulation, selective spray foam, connections, modular outdoor rooms, solar and green roofs.
 - Structural warnings fields: large wall removals and conceptual cantilevers.
 - Undo, redo and reset to preset.

@@ -23,7 +23,7 @@
   var OPENING_TYPES = ['window', 'door', 'sliding-door', 'opening'];
   var ZONE_TYPES = ['sleeping', 'bathroom', 'kitchen', 'living', 'dining', 'work', 'storage', 'circulation'];
   var CLADDING = ['timber', 'metal', 'mixed'];
-  var ROOFS = ['solar', 'green', 'biosolar', 'membrane'];
+  var ROOFS = ['solar', 'green', 'membrane'];
   var ENVELOPE_ASSEMBLIES = ['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'];
   var VEGETATION_TYPES = ['trellis', 'living-wall', 'edible-wall', 'privacy-screen'];
   var SOLAR_SEASONS = ['year-round', 'winter', 'summer'];
@@ -169,7 +169,7 @@
       if (!isNum(d.solar_array.azimuth_deg) || d.solar_array.azimuth_deg < 0 || d.solar_array.azimuth_deg > 360) err('solar_array azimuth must be 0–360 degrees.');
     }
     if (d.roof_form) {
-      if (d.roof_form.type !== 'south-shed') err('Only the south-shed roof form is supported.');
+      if (['south-shed','gable'].indexOf(d.roof_form.type) < 0) err('Only the south-shed and gable roof forms are supported.');
       if (!isNum(d.roof_form.pitch_deg) || d.roof_form.pitch_deg < 0 || d.roof_form.pitch_deg > 45) err('Roof pitch must be 0–45 degrees.');
       if (d.roof_form.solar_side !== 'south') err('Roof solar must be on the south side.');
     }
@@ -256,7 +256,7 @@
         rotation_deg: 0,
         insulation: { thickness_mm: Number(old.envelope && old.envelope.external_insulation_mm) || 150, type: 'migrated from v0.1 (type not recorded)' },
         cladding: { type: old.envelope && old.envelope.cladding || 'timber', colour: '#8a6a4a' },
-        roof: { type: old.envelope && old.envelope.roof || 'solar', solar: (old.envelope && old.envelope.roof) !== 'green', green: (old.envelope && old.envelope.roof) === 'green' || (old.envelope && old.envelope.roof) === 'biosolar' },
+        roof: { type: old.envelope && old.envelope.roof === 'biosolar' ? 'solar' : (old.envelope && old.envelope.roof || 'solar'), solar: (old.envelope && old.envelope.roof) !== 'green', green: (old.envelope && old.envelope.roof) === 'green' },
         structure: { openings_reinforced: true, wall_removal: 'none', cantilever_m: 0, notes: 'Migrated from v0.1; no structural assessment was present.' },
         openings: i === 0 ? (old.openings || []).map(function (o) {
           return { id: o.id || 'opening', face: o.face || 'south', type: 'window', position_m: Number(o.position_m), width_m: Number(o.width_m), height_m: 1.4, sill_m: 0.9, name: (o.id || 'Window') + ' (migrated)' };

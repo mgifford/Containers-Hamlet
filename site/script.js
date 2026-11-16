@@ -84,8 +84,8 @@
     if (b.checks) row('Siting', (b.ok ? 'All illustrative checks pass' : 'One or more illustrative checks fail') + ': ' + fixed(b.shoreline_m, 0) + ' m from the shoreline, ' + fixed(b.wetland_m, 0) + ' m from the wetland, ' + approx(b.pad.max_m) + ' m maximum bench cut or fill, ' + fixed(b.crane_reach_m, 0) + ' m crane reach.');
     details.appendChild(dl);
     var p = el('p', { class: 'detail-links' });
-    var brief = el('a', { href: '#home-' + b.id, 'data-home-link': b.id }, 'Read the full home brief');
-    var inside = el('a', { href: '#inside', 'data-explore': b.model }, 'Look inside');
+    var brief = el('a', { href: 'homes/' + b.id + '/' }, 'Read the full home brief');
+    var inside = el('a', { href: '#inside', 'data-explore': b.id }, 'Look inside');
     var drawings = el('a', { href: b.model === 'lodge' ? '#lodge' : '#cabin' }, b.model === 'lodge' ? 'Lodge drawings' : 'Cabin drawings');
     p.appendChild(brief); p.appendChild(doc.createTextNode(' • ')); p.appendChild(inside); p.appendChild(doc.createTextNode(' • ')); p.appendChild(drawings);
     details.appendChild(p);
@@ -177,26 +177,28 @@
   var roomStatus = $('#room-status');
   if (!canvas || !Model || !Render || !DATA) return;
 
-  var state = { building: 'cabin-a', mode: 'cut', view: 'sw', roof: 'pv', hide: {}, room: null };
+  var state = { building: 'a', mode: 'cut', view: 'sw', roof: 'pv', hide: {}, room: null };
   var cache = {};
 
   function model() {
     var key = state.building + ':' + state.roof;
-    if (!cache[key]) cache[key] = Model.buildModel(DATA.buildings[state.building], { roof: state.roof });
+    var modelId = (DATA.buildingModels && DATA.buildingModels[state.building]) || state.building;
+    if (!cache[key]) cache[key] = Model.buildModel(DATA.buildings[modelId], { roof: state.roof });
     return cache[key];
   }
-  function spec() { return DATA.buildings[state.building]; }
+  function spec() { return DATA.buildings[(DATA.buildingModels && DATA.buildingModels[state.building]) || state.building]; }
 
   function draw() {
     var m = model();
     var opts = {
       view: state.view, mode: state.mode, hide: state.hide, highlight: state.room,
-      labels: state.room ? 'highlight' : 'all', scale: state.building === 'lodge' ? 24 : 32
+      labels: state.room ? 'highlight' : 'all', scale: (state.building === 'lodge' || state.building === 'b' || state.building === 'd') ? 24 : 32
     };
     var out = Render.renderAxo(m, opts);
     canvas.innerHTML = out.svg;
     var svg = $('svg', canvas);
-    var text = (spec().short_name || spec().name) + ': ' + Render.describe(m, opts);
+    var sb = (DATA.site && DATA.site.buildings || []).filter(function (x) { return x.id === state.building; })[0];
+    var text = ((sb && sb.name) || spec().name) + ': ' + Render.describe(m, opts);
     svg.setAttribute('role', 'img');
     svg.setAttribute('aria-label', text);
     svg.setAttribute('focusable', 'false');
@@ -204,7 +206,7 @@
   }
 
   function roomText(r) {
-    return r.name + ': ' + fixed(r.clear_length_m, 2) + ' by ' + fixed(r.clear_width_m, 2) + ' m clear, ' + fixed(r.area_m2, 1) + ' m²';
+    return r.name + ': ~' + r1(r.clear_length_m) + ' by ' + r1(r.clear_width_m) + ' m clear, ~' + r1(r.area_m2) + ' m²';
   }
 
   function showRoom() {
@@ -216,7 +218,7 @@
       return;
     }
     roomInfo.appendChild(el('h4', {}, r.name));
-    roomInfo.appendChild(el('p', {}, fixed(r.clear_length_m, 2) + ' × ' + fixed(r.clear_width_m, 2) + ' m clear (' + fixed(r.area_m2, 1) + ' m²), ceiling height ' + fixed(r.clear_height_m, 2) + ' m.'));
+    roomInfo.appendChild(el('p', {}, '~' + r1(r.clear_length_m) + ' × ' + r1(r.clear_width_m) + ' m clear (~' + r1(r.area_m2) + ' m²), ceiling height ~' + r1(r.clear_height_m) + ' m.'));
     if (r.use) roomInfo.appendChild(el('p', {}, r.use));
     var fixtures = model().prims.filter(function (p) { return p.cat === 'fixture' && p.room === r.id; }).map(function (p) { return p.name; });
     if (fixtures.length) roomInfo.appendChild(el('p', {}, 'Fixtures: ' + fixtures.join(', ') + '.'));
@@ -254,7 +256,8 @@
   }
 
   function setBuilding(id) {
-    if (!DATA.buildings[id]) return;
+    var modelId = (DATA.buildingModels && DATA.buildingModels[id]) || id;
+    if (!DATA.buildings[modelId]) return;
     state.building = id;
     state.room = null;
     var radio = $('input[name="ex-building"][value="' + id + '"]');

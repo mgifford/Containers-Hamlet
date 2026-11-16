@@ -4,7 +4,8 @@ Every drawing, model, map, view diagram and table on the site comes from three J
 
 | File | Describes |
 |---|---|
-| `data/cabin-a.json` | Cabin A: one container module, screened porch and ramp |
+| `data/cabin-a.json` | Cabin A: one container module, screened porch and graded trail |
+| `data/cabin-pair.json` | Two-container explorer variant used by Cabin B and D; no site-plan change |
 | `data/lodge.json` | Common lodge: two container modules and a timber hall |
 | `data/site.json` | Fictional terrain, water, wetland, drainage, woodland, rock, clearings, access, views and building placements |
 
@@ -31,7 +32,8 @@ Metres. `x` runs east along the containers, `y` runs south across them, `z` is u
 - **`fixtures`**: placed relative to a room corner (`nw`, `ne`, `sw`, `se`) with `at: [dx, dy]`, `size: [x, y, height]` and an optional `elevation_m`.
 - **`openings`**: `bay`, `face` (`north`, `south`, `east`, `west`), `type` (`window`, `door`, `sliding-door`, `opening`), `from_m`/`to_m` along the face, and `sill_m`/`head_m` above the finished floor. Along north and south faces, positions are measured from the west end. Along east and west faces they are measured from the bay's north edge. Doors can set `swing` (`in`/`out`) and `hinge` (`east`, `west`, `north`, `south` or `both` for a pair).
 - **`porches`**: `side`, `from_m`, `length_m` and `depth_m`, plus deck, post and roof sizes, `screened`, and an optional `screen_door`. Each porch stands on its own piles. The model stores placed porch bounds as `x0/x1/y0/y1`.
-- **`ramps`**: start from a porch `side`. The run length is computed as floor height above grade × `slope_ratio`, so changing the floor height or the foundation clearance changes the ramp.
+- **`cabin-pair.json`**: a browser-explorer-only two-container variant. `site/js/data.js` maps `b` and `d` to it; the landscape plan still uses the single-container site footprints, so this is not a site-plan approval.
+- **`ramps`**: start from a porch `side`. The run length is computed as floor height above grade × `slope_ratio`; `surface: "gravel"` presents the section as a graded compacted-gravel trail with landings rather than a timber walkway. The run length still needs accessibility, drainage and geotechnical review.
 - **`trellis`**: a free-standing trellis on one face at `offset_m` from the rainscreen.
 - **`roof`**: named `options`. Each lists `pv_bays` and `green_bays`. PV over a green roof is raised above the planting automatically, and the module count is fitted to the roof.
 - **`material_passport`**: one entry per component. `material_key` links the entry to modelled solids for the volume column.

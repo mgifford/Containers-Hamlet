@@ -30,7 +30,7 @@ export function fromCabinA(spec) {
   const insulation = (spec.envelope.wall_layers || []).filter((l) => l.material === 'insulation').reduce((s, l) => s + l.thickness_m, 0);
   const cladding = (spec.envelope.wall_layers || []).find((l) => l.material !== 'insulation' && l.material !== 'cavity') || {};
   const roof = spec.roof && spec.roof.default_option ? spec.roof.default_option : 'solar';
-  const green = roof === 'green' || roof === 'biosolar';
+  const green = roof === 'green';
   const design = Schema.canonicalize({
     schema: Schema.SCHEMA,
     id: 'cabin-a-adapted',

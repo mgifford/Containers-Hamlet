@@ -30,7 +30,11 @@
     "note": "Typical published dimensions for a 40-foot high cube. Measure the actual unit: internal dimensions, corrugation depth and floor build-up vary by manufacturer."
   },
   "bays": [
-    { "id": "main", "type": "container", "name": "Main module" }
+    {
+      "id": "main",
+      "type": "container",
+      "name": "Main module"
+    }
   ],
   "envelope": {
     "interior_lining_m": 0.04,
@@ -38,17 +42,55 @@
     "ceiling_lining_m": 0.03,
     "opening_frame_m": 0.06,
     "wall_layers": [
-      { "id": "ext-insulation", "name": "Continuous external insulation (type TBD)", "material": "insulation", "thickness_m": 0.15, "options": "wood fibre board, mineral wool or reclaimed board, chosen for moisture tolerance, fire performance and embodied carbon" },
-      { "id": "cavity", "name": "Ventilated cavity / weather control (TBD)", "material": "cavity", "thickness_m": 0.025, "options": "battens over a vapour-open weather-resistive barrier; insect mesh at top and bottom" },
-      { "id": "rainscreen", "name": "Replaceable timber rainscreen", "material": "cladding", "thickness_m": 0.022, "options": "untreated durable species or reclaimed boards, screw-fixed for replacement" }
+      {
+        "id": "ext-insulation",
+        "name": "Continuous external insulation (type TBD)",
+        "material": "insulation",
+        "thickness_m": 0.15,
+        "options": "wood fibre board, mineral wool or reclaimed board, chosen for moisture tolerance, fire performance and embodied carbon"
+      },
+      {
+        "id": "cavity",
+        "name": "Ventilated cavity / weather control (TBD)",
+        "material": "cavity",
+        "thickness_m": 0.025,
+        "options": "battens over a vapour-open weather-resistive barrier; insect mesh at top and bottom"
+      },
+      {
+        "id": "rainscreen",
+        "name": "Replaceable timber rainscreen",
+        "material": "cladding",
+        "thickness_m": 0.022,
+        "options": "untreated durable species or reclaimed boards, screw-fixed for replacement"
+      }
     ],
     "roof_layers": [
-      { "id": "roof-insulation", "name": "Tapered external roof insulation (nominal)", "material": "insulation", "thickness_m": 0.2 },
-      { "id": "roof-membrane", "name": "Cover board and roof membrane", "material": "membrane", "thickness_m": 0.02 }
+      {
+        "id": "roof-insulation",
+        "name": "Tapered external roof insulation (nominal)",
+        "material": "insulation",
+        "thickness_m": 0.2
+      },
+      {
+        "id": "roof-membrane",
+        "name": "Cover board and roof membrane",
+        "material": "membrane",
+        "thickness_m": 0.02
+      }
     ],
     "floor_layers": [
-      { "id": "floor-insulation", "name": "Insulation below the container floor", "material": "insulation", "thickness_m": 0.15 },
-      { "id": "soffit", "name": "Vented, rodent-resistant soffit board", "material": "soffit", "thickness_m": 0.012 }
+      {
+        "id": "floor-insulation",
+        "name": "Insulation below the container floor",
+        "material": "insulation",
+        "thickness_m": 0.15
+      },
+      {
+        "id": "soffit",
+        "name": "Vented, rodent-resistant soffit board",
+        "material": "soffit",
+        "thickness_m": 0.012
+      }
     ],
     "interior_layers_note": "40 mm service battens and lining inside the steel; 20 mm floor finish over the container floor; 30 mm ceiling lining.",
     "unspecified": "Air, vapour, thermal bridge and fastening details are intentionally unspecified. Selective spray foam requires separate assessment."
@@ -62,49 +104,294 @@
   "partition_thickness_m": 0.1,
   "rooms": [
     {
-      "id": "sleeping", "name": "Sleeping", "bay": "main", "end_m": 3.2, "boundary": "partition",
-      "door": { "from_m": 1.38, "to_m": 2.28, "type": "sliding", "head_m": 2.1 },
+      "id": "sleeping",
+      "name": "Sleeping",
+      "bay": "main",
+      "end_m": 3.2,
+      "boundary": "partition",
+      "door": {
+        "from_m": 1.38,
+        "to_m": 2.28,
+        "type": "sliding",
+        "head_m": 2.1
+      },
       "use": "Bedroom with a double bed, wardrobe and windows to the south and west (lake side).",
       "accessibility": "About 0.9 m clear beside the bed and 1.0 m at its foot. A 1.5 m turning circle does not fit with this layout: an accessible variant needs a smaller bed, a longer room or a different arrangement."
     },
     {
-      "id": "living", "name": "Living", "bay": "main", "end_m": 6.85, "boundary": "open",
+      "id": "living",
+      "name": "Living",
+      "bay": "main",
+      "end_m": 6.85,
+      "boundary": "open",
       "use": "Main entry from the north path, sliding glass doors to the screened porch, bench seating and a table.",
       "accessibility": "Step-free route from the porch ramp through the sliding door (threshold to be designed). Entry door clear width target 0.86 m or more."
     },
     {
-      "id": "kitchen", "name": "Kitchenette", "bay": "main", "end_m": 9.75, "boundary": "partition",
-      "door": { "from_m": 0.25, "to_m": 1.15, "type": "sliding", "head_m": 2.1 },
+      "id": "kitchen",
+      "name": "Kitchenette",
+      "bay": "main",
+      "end_m": 9.75,
+      "boundary": "partition",
+      "door": {
+        "from_m": 0.25,
+        "to_m": 1.15,
+        "type": "sliding",
+        "head_m": 2.1
+      },
       "use": "Single counter run on the south wall with a window over the sink, refrigerator at the end of the run, open to living.",
       "accessibility": "About 1.6 m clear between the counter and the north wall. Counter height, knee space and controls to be designed for seated use."
     },
     {
-      "id": "bath", "name": "Bathroom", "bay": "main",
+      "id": "bath",
+      "name": "Bathroom",
+      "bay": "main",
       "use": "Roll-in shower along the east wall, toilet, wall-hung vanity and a high window for privacy.",
-      "accessibility": "2.27 x 2.27 m clear; a 1.5 m turning circle overlaps the curbless shower area. Grab bars, fixture clearances and controls must be checked against CSA B651 and the applicable building code."
+      "accessibility": "~2.3 x 2.3 m clear; a 1.5 m turning circle overlaps the curbless shower area. Grab bars, fixture clearances and controls must be checked against CSA B651 and the applicable building code."
     }
   ],
-  "interior_zones": ["sleeping", "living", "kitchenette", "bathroom"],
+  "interior_zones": [
+    "sleeping",
+    "living",
+    "kitchenette",
+    "bathroom"
+  ],
   "fixtures": [
-    { "id": "bed", "name": "Double bed", "room": "sleeping", "corner": "nw", "at": [0.0, 0.0], "size": [2.03, 1.37, 0.5], "material": "soft" },
-    { "id": "wardrobe", "name": "Wardrobe", "room": "sleeping", "corner": "ne", "at": [0.0, 0.0], "size": [0.6, 1.1, 2.0], "material": "joinery" },
-    { "id": "bench", "name": "Built-in bench seat with storage", "room": "living", "corner": "nw", "at": [0.0, 0.0], "size": [2.1, 0.6, 0.45], "material": "joinery" },
-    { "id": "table", "name": "Table", "room": "living", "corner": "nw", "at": [0.45, 0.9], "size": [1.2, 0.8, 0.75], "material": "joinery" },
-    { "id": "counter", "name": "Kitchen counter with sink and induction hob", "room": "kitchen", "corner": "sw", "at": [0.1, 0.0], "size": [2.05, 0.65, 0.9], "material": "joinery" },
-    { "id": "fridge", "name": "Refrigerator", "room": "kitchen", "corner": "se", "at": [0.0, 0.0], "size": [0.65, 0.68, 1.8], "material": "appliance" },
-    { "id": "shower", "name": "Curbless roll-in shower area", "room": "bath", "corner": "ne", "at": [0.0, 0.0], "size": [0.95, 1.5, 0.02], "material": "tile" },
-    { "id": "toilet", "name": "Toilet", "room": "bath", "corner": "sw", "at": [0.3, 0.0], "size": [0.45, 0.7, 0.45], "material": "appliance" },
-    { "id": "vanity", "name": "Wall-hung vanity with knee space", "room": "bath", "corner": "se", "at": [0.0, 0.0], "size": [0.8, 0.5, 0.15], "elevation_m": 0.71, "material": "appliance" }
+    {
+      "id": "bed",
+      "name": "Double bed",
+      "room": "sleeping",
+      "corner": "nw",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "size": [
+        2.03,
+        1.37,
+        0.5
+      ],
+      "material": "soft"
+    },
+    {
+      "id": "wardrobe",
+      "name": "Wardrobe",
+      "room": "sleeping",
+      "corner": "ne",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.6,
+        1.1,
+        2.0
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "bench",
+      "name": "Built-in bench seat with storage",
+      "room": "living",
+      "corner": "nw",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "size": [
+        2.1,
+        0.6,
+        0.45
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "table",
+      "name": "Table",
+      "room": "living",
+      "corner": "nw",
+      "at": [
+        0.45,
+        0.9
+      ],
+      "size": [
+        1.2,
+        0.8,
+        0.75
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "counter",
+      "name": "Kitchen counter with sink and induction hob",
+      "room": "kitchen",
+      "corner": "sw",
+      "at": [
+        0.1,
+        0.0
+      ],
+      "size": [
+        2.05,
+        0.65,
+        0.9
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "fridge",
+      "name": "Refrigerator",
+      "room": "kitchen",
+      "corner": "se",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.65,
+        0.68,
+        1.8
+      ],
+      "material": "appliance"
+    },
+    {
+      "id": "shower",
+      "name": "Curbless roll-in shower area",
+      "room": "bath",
+      "corner": "ne",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.95,
+        1.5,
+        0.02
+      ],
+      "material": "tile"
+    },
+    {
+      "id": "toilet",
+      "name": "Toilet",
+      "room": "bath",
+      "corner": "sw",
+      "at": [
+        0.3,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.7,
+        0.45
+      ],
+      "material": "appliance"
+    },
+    {
+      "id": "vanity",
+      "name": "Wall-hung vanity with knee space",
+      "room": "bath",
+      "corner": "se",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.8,
+        0.5,
+        0.15
+      ],
+      "elevation_m": 0.71,
+      "material": "appliance"
+    }
   ],
   "openings": [
-    { "id": "W1", "name": "West window (lake view, egress size to verify)", "bay": "main", "face": "west", "type": "window", "from_m": 0.6, "to_m": 1.8, "sill_m": 0.6, "head_m": 2.1 },
-    { "id": "W2", "name": "South bedroom window", "bay": "main", "face": "south", "type": "window", "from_m": 0.9, "to_m": 2.4, "sill_m": 0.9, "head_m": 2.1 },
-    { "id": "W3", "name": "North living window", "bay": "main", "face": "north", "type": "window", "from_m": 3.6, "to_m": 5.0, "sill_m": 0.75, "head_m": 2.15 },
-    { "id": "D1", "name": "Entry door (north)", "bay": "main", "face": "north", "type": "door", "from_m": 5.75, "to_m": 6.67, "head_m": 2.1, "swing": "in", "hinge": "east" },
-    { "id": "D2", "name": "Sliding glass doors to screened porch", "bay": "main", "face": "south", "type": "sliding-door", "from_m": 4.05, "to_m": 6.45, "head_m": 2.15 },
-    { "id": "W4", "name": "Window over the sink", "bay": "main", "face": "south", "type": "window", "from_m": 7.3, "to_m": 8.7, "sill_m": 1.05, "head_m": 2.15 },
-    { "id": "W5", "name": "North kitchen window", "bay": "main", "face": "north", "type": "window", "from_m": 7.8, "to_m": 9.0, "sill_m": 1.0, "head_m": 2.15 },
-    { "id": "W6", "name": "High bathroom window", "bay": "main", "face": "east", "type": "window", "from_m": 0.9, "to_m": 1.7, "sill_m": 1.5, "head_m": 2.1 }
+    {
+      "id": "W1",
+      "name": "West window (lake view, egress size to verify)",
+      "bay": "main",
+      "face": "west",
+      "type": "window",
+      "from_m": 0.6,
+      "to_m": 1.8,
+      "sill_m": 0.6,
+      "head_m": 2.1
+    },
+    {
+      "id": "W2",
+      "name": "South bedroom window",
+      "bay": "main",
+      "face": "south",
+      "type": "window",
+      "from_m": 0.9,
+      "to_m": 2.4,
+      "sill_m": 0.9,
+      "head_m": 2.1
+    },
+    {
+      "id": "W3",
+      "name": "North living window",
+      "bay": "main",
+      "face": "north",
+      "type": "window",
+      "from_m": 3.6,
+      "to_m": 5.0,
+      "sill_m": 0.75,
+      "head_m": 2.15
+    },
+    {
+      "id": "D1",
+      "name": "Entry door (north)",
+      "bay": "main",
+      "face": "north",
+      "type": "door",
+      "from_m": 5.75,
+      "to_m": 6.67,
+      "head_m": 2.1,
+      "swing": "in",
+      "hinge": "east"
+    },
+    {
+      "id": "D2",
+      "name": "Sliding glass doors to screened porch",
+      "bay": "main",
+      "face": "south",
+      "type": "sliding-door",
+      "from_m": 4.05,
+      "to_m": 6.45,
+      "head_m": 2.15
+    },
+    {
+      "id": "W4",
+      "name": "Window over the sink",
+      "bay": "main",
+      "face": "south",
+      "type": "window",
+      "from_m": 7.3,
+      "to_m": 8.7,
+      "sill_m": 1.05,
+      "head_m": 2.15
+    },
+    {
+      "id": "W5",
+      "name": "North kitchen window",
+      "bay": "main",
+      "face": "north",
+      "type": "window",
+      "from_m": 7.8,
+      "to_m": 9.0,
+      "sill_m": 1.0,
+      "head_m": 2.15
+    },
+    {
+      "id": "W6",
+      "name": "High bathroom window",
+      "bay": "main",
+      "face": "east",
+      "type": "window",
+      "from_m": 0.9,
+      "to_m": 1.7,
+      "sill_m": 1.5,
+      "head_m": 2.1
+    }
   ],
   "porches": [
     {
@@ -122,12 +409,25 @@
       "clear_height_m": 2.5,
       "roof_thickness_m": 0.15,
       "roof_overhang_m": 0.2,
-      "screen_door": { "side": "east", "from_m": 4.505, "to_m": 5.405 },
+      "screen_door": {
+        "side": "east",
+        "from_m": 4.505,
+        "to_m": 5.405
+      },
       "note": "Deck at interior floor level for step-free access. Stands on its own piles, 20 mm clear of the rainscreen, so it can be repaired or replaced without disturbing the envelope."
     }
   ],
   "ramps": [
-    { "id": "porch-ramp", "porch": "screened-porch", "side": "east", "from_m": 4.205, "to_m": 5.705, "slope_ratio": 15, "note": "Concept only. Landings, edge protection, handrails, surface and drainage to be designed to CSA B651 and the applicable code. Every 0.1 m of floor height adds 1.5 m of ramp at 1:15." }
+    {
+      "id": "porch-ramp",
+      "porch": "screened-porch",
+      "side": "east",
+      "from_m": 4.205,
+      "to_m": 5.705,
+      "slope_ratio": 15,
+      "note": "Graded compacted-gravel trail with landings, not a timber walkway. Verify slope, width, drainage and edge protection; a short paved/boardwalk section may still be necessary at the threshold. Concept only.",
+      "surface": "gravel"
+    }
   ],
   "trellis": {
     "face": "west",
@@ -144,10 +444,25 @@
   "roof": {
     "default_option": "pv",
     "options": {
-      "pv": { "label": "PV array on a membrane roof", "pv_bays": ["main"], "green_bays": [] },
-      "biosolar": { "label": "Biosolar: extensive green roof with raised PV", "pv_bays": ["main"], "green_bays": ["main"] }
+      "pv": {
+        "label": "PV array on a membrane roof",
+        "pv_bays": [
+          "main"
+        ],
+        "green_bays": []
+      },
+      "membrane": {
+        "label": "Membrane roof, no PV or green roof",
+        "pv_bays": [],
+        "green_bays": []
+      }
     },
-    "pv_panel": { "width_m": 1.134, "length_m": 2.278, "watts": 420, "gap_m": 0.02 },
+    "pv_panel": {
+      "width_m": 1.134,
+      "length_m": 2.278,
+      "watts": 420,
+      "gap_m": 0.02
+    },
     "pv_edge_setback_m": 0.25,
     "green_edge_setback_m": 0.5,
     "green_roof_depth_m": 0.1,
@@ -175,7 +490,8 @@
   ],
   "material_passport": [
     {
-      "component": "Container shell", "material_key": "steel",
+      "component": "Container shell",
+      "material_key": "steel",
       "material": "Weathering steel, corrugated walls and roof, steel cross-members",
       "source": "Reclaimed ISO container (one-trip or used)",
       "condition_assessment": "Required before purchase: corrosion, deformation, weld repairs, CSC plate history, prior cargo, and coatings tested for hazardous substances.",
@@ -185,7 +501,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "Container floor deck", "material_key": "steel",
+      "component": "Container floor deck",
+      "material_key": "steel",
       "material": "Original hardwood plywood deck on steel cross-members",
       "source": "Comes with the container",
       "condition_assessment": "Original container floors are often treated with pesticides. Test, then replace or encapsulate before occupancy.",
@@ -195,7 +512,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "External insulation", "material_key": "insulation",
+      "component": "External insulation",
+      "material_key": "insulation",
       "material": "Wood fibre board, mineral wool or documented reclaimed board (TBD)",
       "source": "New or reclaimed (TBD)",
       "condition_assessment": "Reclaimed board: verify type, blowing agent, contamination and fire classification.",
@@ -205,7 +523,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "Rainscreen cladding and battens", "material_key": "cladding",
+      "component": "Rainscreen cladding and battens",
+      "material_key": "cladding",
       "material": "Durable timber boards on timber battens",
       "source": "Prefer local reclaimed or certified timber",
       "condition_assessment": "Reclaimed boards: check for nails, lead paint and rot.",
@@ -215,7 +534,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "Windows and doors", "material_key": "glass",
+      "component": "Windows and doors",
+      "material_key": "glass",
       "material": "Triple-glazed units in timber or fibreglass frames (TBD)",
       "source": "New or salvaged units of known performance",
       "condition_assessment": "Salvaged units: verify seal integrity, labelled performance and safety glazing.",
@@ -225,7 +545,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "Porch, ramp and trellis", "material_key": "decking",
+      "component": "Porch, ramp and trellis",
+      "material_key": "decking",
       "material": "Timber frame, decking, insect screen and steel connectors",
       "source": "Local timber; reclaimed where structurally graded",
       "condition_assessment": "Grade reclaimed members for structural use.",
@@ -235,7 +556,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "PV modules", "material_key": "pv",
+      "component": "PV modules",
+      "material_key": "pv",
       "material": "Crystalline silicon modules on aluminium rails",
       "source": "New or tested second-life modules",
       "condition_assessment": "Second-life modules: flash test and insulation resistance test.",
@@ -246,12 +568,45 @@
     }
   ],
   "reviews_required": [
-    { "topic": "Structure: cut openings, lifting points, snow, wind and seismic loads, porch and roof options", "reviewer": "Structural engineer (P.Eng.)", "status": "Not started" },
-    { "topic": "Foundations: soils, frost, pile type and depth, wetland and shoreline proximity", "reviewer": "Geotechnical engineer", "status": "Not started" },
-    { "topic": "Envelope: air, vapour and moisture control, condensation on steel, thermal bridges", "reviewer": "Building envelope consultant", "status": "Not started" },
-    { "topic": "Fire: separations, cladding, spray foam (if any), PV and battery safety, wildland interface", "reviewer": "Fire protection engineer and building official", "status": "Not started" },
-    { "topic": "Accessibility: ramp, thresholds, door clearances, bathroom and kitchen", "reviewer": "Accessibility consultant; CSA B651 and applicable code", "status": "Not started" },
-    { "topic": "Mechanical and electrical: heating, ventilation, water, wastewater, PV", "reviewer": "Mechanical and electrical engineers; electrical safety authority", "status": "Not started" },
-    { "topic": "Code and zoning compliance for the actual site", "reviewer": "Architect or qualified designer; municipal building department", "status": "Not started" }
-  ]
+    {
+      "topic": "Structure: cut openings, lifting points, snow, wind and seismic loads, porch and roof options",
+      "reviewer": "Structural engineer (P.Eng.)",
+      "status": "Not started"
+    },
+    {
+      "topic": "Foundations: soils, frost, pile type and depth, wetland and shoreline proximity",
+      "reviewer": "Geotechnical engineer",
+      "status": "Not started"
+    },
+    {
+      "topic": "Envelope: air, vapour and moisture control, condensation on steel, thermal bridges",
+      "reviewer": "Building envelope consultant",
+      "status": "Not started"
+    },
+    {
+      "topic": "Fire: separations, cladding, spray foam (if any), PV and battery safety, wildland interface",
+      "reviewer": "Fire protection engineer and building official",
+      "status": "Not started"
+    },
+    {
+      "topic": "Accessibility: ramp, thresholds, door clearances, bathroom and kitchen",
+      "reviewer": "Accessibility consultant; CSA B651 and applicable code",
+      "status": "Not started"
+    },
+    {
+      "topic": "Mechanical and electrical: heating, ventilation, water, wastewater, PV",
+      "reviewer": "Mechanical and electrical engineers; electrical safety authority",
+      "status": "Not started"
+    },
+    {
+      "topic": "Code and zoning compliance for the actual site",
+      "reviewer": "Architect or qualified designer; municipal building department",
+      "status": "Not started"
+    }
+  ],
+  "access": {
+    "strategy": "graded gravel trail with landings and the shortest practical threshold ramp",
+    "note": "Prefer a graded gravel trail with landings to a long timber ramp. A hillside or uphill grade entry can shorten the route, but changes the foundation, drainage, tree protection and accessibility review.",
+    "review": "Accessibility consultant, civil/geotechnical review and the building official; CSA B651 and the applicable code still apply."
+  }
 }

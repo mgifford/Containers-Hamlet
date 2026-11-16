@@ -39,3 +39,12 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 - `patterns-doors.jpg`: doors as shelter, shutters and security guidance.
 - `editor-patterns.jpg`: paint palette and entry-shelter controls.
 - `micro-shelter.jpg`: the Micro Studio example with reused-door canopy and shutters.
+
+## Shareable home pages
+
+- `homes-index.jpg`: seven home cards linking to dedicated pages.
+- `home-c-page.jpg`: Cabin C page with on-page anchors and heading permalinks.
+
+## Look inside all homes
+
+- `explorer-all-homes.jpg`: the Look inside selector covering Cabin A–F and the lodge, showing the two-container Cabin B model.

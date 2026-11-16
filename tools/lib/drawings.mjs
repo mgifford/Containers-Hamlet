@@ -17,7 +17,7 @@ const LICENCE = 'Original concept | CC BY 4.0 | Eco Hamlet contributors 2026';
 const CUT = {
   steel: '#55646a', frame: '#2c3539', insulation: 'url(#ins)', cladding: '#9a6b3f', lining: '#e3d6bb',
   partition: '#a3a89f', glass: '#cbe8ef', door: '#6f5136', timber: '#b88a57', membrane: '#4d545b',
-  soffit: '#7d7f77', post: '#6e4f33', trellis: '#6e5a3d', screen: '#3e755d', decking: '#a97c52',
+  soffit: '#7d7f77', post: '#6e4f33', trellis: '#6e5a3d', screen: '#3e755d', decking: '#a97c52', gravel: '#9b9484',
   pile: '#4c4f51', floor: '#cdb791', roofing: '#5e4f42', pv: '#24364f', green: '#6f9d5b', vine: '#4f8a4a',
   room: '#e8d8b8', joinery: '#d8b98f', soft: '#9fb6a6', appliance: '#f4f5f2', tile: '#c9dbe0', battery: '#b84a3a', fixture: '#f7f4ec',
 };
@@ -178,7 +178,7 @@ export function planSVG(model) {
     const cx = X((r.x0 + r.x1) / 2);
     const cy = Y((r.y0 + r.y1) / 2);
     const vertical = r.high === 'north' || r.high === 'south';
-    const label = `RAMP 1:${r.slope_ratio} • ${m(r.run_m, 2)} m • DOWN`;
+    const label = `${r.surface === 'gravel' ? 'GRADED TRAIL' : 'RAMP'} 1:${r.slope_ratio} • ${m(r.run_m, 2)} m • DOWN`;
     const arrow = { west: '→', east: '←', north: '↓', south: '↑' }[r.high];
     o.push(`<text x="${fmt(cx)}" y="${fmt(cy + 4)}" font-size="12" fill="#5a4026"${vertical ? ` transform="rotate(90 ${fmt(cx)} ${fmt(cy)})"` : ''}>${esc(label)} ${vertical ? '→' : arrow}</text>`);
   });
@@ -222,7 +222,7 @@ export function planSVG(model) {
   o.push(`<path d="M${lx} ${ly + 6}h22" stroke="${CUT.screen}" stroke-width="2.2" stroke-dasharray="5 3"/><text x="${lx + 28}" y="${ly + 10}">Insect screen</text>`);
   const notes = [
     'Walls, openings and zones are diagrammatic. Clear dimensions are measured inside the interior lining.',
-    `Finished floor ${m(M.ffl_above_grade_m, 2)} m above assumed level grade. At 1:15, every 0.1 m of floor height adds 1.5 m of ramp.`,
+    `Finished floor ${m(M.ffl_above_grade_m, 2)} m above assumed level grade. At 1:15, every 0.1 m of floor height adds 1.5 m of graded trail; use grade, landings and the shortest practical threshold ramp.`,
     'Cut openings in the steel need engineered reinforcement. Accessibility, egress and fire separations need professional review.',
     LICENCE,
   ];
@@ -231,7 +231,7 @@ export function planSVG(model) {
 
   const rl = rooms.map((r) => `${r.name} ${m(r.clear_length_m, 2)} by ${m(r.clear_width_m, 2)} m (${area(r.area_m2)})`).join('; ');
   const pl = model.porches.map((p) => `${p.name} on the ${p.side} side`).join('; ');
-  const ra = model.ramps.map((r) => `ramp at 1:${r.slope_ratio}, ${m(r.run_m, 2)} m long`).join('; ');
+  const ra = model.ramps.map((r) => `${r.surface === 'gravel' ? 'graded trail' : 'ramp'} at 1:${r.slope_ratio}, ${m(r.run_m, 2)} m long`).join('; ');
   const desc = `Floor plan of ${spec.name}, north up, cut 1.2 m above the floor. Overall ${m(ov.length_m, 2)} by ${m(ov.width_m, 2)} m outside the rainscreen; ` +
     `${model.bays.filter((bb) => bb.type === 'container').length} container module(s) of ${m(M.L, 3)} by ${m(M.W, 3)} m. Rooms with clear dimensions: ${rl}. ${pl}. ${ra}. Not for construction.`;
   return sheet(W, H, `${spec.id}-plan`, `${spec.short_name || spec.name} conceptual floor plan`, desc, o.join(''));
@@ -364,7 +364,7 @@ export function elevationsSVG(model) {
   const top = Math.max(...model.bays.map((bb) => bb.top));
   const desc = `Four elevations of ${spec.name} at one scale. Top of roof ${m(top - M.zGrade, 2)} m above grade, finished floor ${m(M.ffl_above_grade_m, 2)} m above grade on piles. ` +
     `Timber rainscreen over continuous external insulation; ${model.openings.filter((op) => op.exterior).length} exterior openings; ` +
-    `${model.porches.map((p) => p.name.toLowerCase()).join(' and ')}${model.ramps.length ? `; ${model.ramps.length} ramp(s) at 1:${model.ramps[0].slope_ratio}` : ''}; ${M.pv.panels} PV modules drawn flat. Not engineered.`;
+    `${model.porches.map((p) => p.name.toLowerCase()).join(' and ')}${model.ramps.length ? `; ${model.ramps.length} ramp(s) at 1:${model.ramps[0].slope_ratio}` : ''}; ${M.pv.panels} PV modules drawn as individual tilted panels. Not engineered.`;
   return sheet(W, H, `${spec.id}-elev`, `${spec.short_name || spec.name} exterior elevations`, desc, o.join(''));
 }
 

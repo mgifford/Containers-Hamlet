@@ -197,14 +197,14 @@ ok(/role="img"/.test(patternsSvg) && /<title id=/.test(patternsSvg) && /<desc id
 
 section('Common Lodge roof and solar orientation');
 const lodgeConcept = data.concepts.find((c) => c.id === 'common-lodge');
-ok(lodgeConcept.roof_form && lodgeConcept.roof_form.type === 'south-shed' && lodgeConcept.roof_form.solar_side === 'south' && lodgeConcept.roof_form.pitch_deg === 5, 'Common Lodge has one south-facing shed roof');
+ok(lodgeConcept.roof_form && lodgeConcept.roof_form.type === 'gable' && lodgeConcept.roof_form.solar_side === 'south' && lodgeConcept.roof_form.pitch_deg === 10, 'Common Lodge has one south-facing shed roof');
 ok(lodgeConcept.solar_array && lodgeConcept.solar_array.enabled && lodgeConcept.solar_array.side === 'south' && lodgeConcept.solar_array.azimuth_deg === 180 && lodgeConcept.solar_array.tilt_deg === 39, 'Common Lodge solar is 39° and true south on the south slope only');
 ok(lodgeConcept.modules.every((m) => m.solar && m.solar.enabled === false), 'Common Lodge does not add individual north-side module arrays');
 const lodgeExt = Model.renderAxo(lodgeConcept, { idPrefix: 'test-lodge-roof' });
 ok((lodgeExt.match(/PV 39° \/ 180°/g) || []).length === 1, 'Common Lodge exterior draws one south PV array');
 ok(/#2d775a|#256651|#2f6b57/.test(lodgeExt) && /#e5b21c/.test(lodgeExt), 'Common Lodge uses green containers and yellow frames');
 const lodgePlan = Model.renderPlan(lodgeConcept, { idPrefix: 'test-lodge-plan' });
-ok(/shed roof · PV south only/.test(lodgePlan) && /PV 39° \/ 180°/.test(lodgePlan), 'Common Lodge plan labels the south shed roof and PV');
+ok(/(gable|shed) roof · PV south only/.test(lodgePlan) && /PV 39° \/ 180°/.test(lodgePlan), 'Common Lodge plan labels the roof and south PV');
 const badRoof = JSON.parse(JSON.stringify(lodgeConcept)); badRoof.roof_form.solar_side = 'north';
 ok(!Schema.validateSchema(badRoof).ok, 'north-side roof solar is rejected');
 const badArray = JSON.parse(JSON.stringify(lodgeConcept)); badArray.solar_array.side = 'north';

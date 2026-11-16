@@ -56,6 +56,14 @@ Ks 0.05 0.05 0.05
 d 0.6
 illum 1
 
+newmtl gravel
+# Graded gravel trail
+Kd 0.608 0.580 0.518
+Ka 0 0 0
+Ks 0.05 0.05 0.05
+d 1
+illum 1
+
 newmtl insulation
 # Insulation
 Kd 0.914 0.812 0.545

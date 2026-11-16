@@ -1,6 +1,6 @@
 # Phase 1.3: Container Home Design Studio
 
-> The Phase 1.3 extension adds five-view architectural galleries, a common lodge concept, thermal-envelope options and comparison. See [`phase-1.3-extension.md`](phase-1.3-extension.md). Current counts are 206 main static, 704 Design Lab static, 65 main browser and 126 Design Lab browser checks; the original Phase 1.3 figures below are retained as a historical record. The [envelope/vegetation extension](phase-1.3-envelope-vegetation.md) adds configurable assemblies, wall sections and planted systems; the [foundations and access study](foundations-and-access.md) adds elevated piles, no-compaction guidance and a footbridge concept, and the [container patterns study](container-patterns.md) adds configurations, paint and doors as shelter.
+> The Phase 1.3 extension adds five-view architectural galleries, a common lodge concept, thermal-envelope options and comparison. See [`phase-1.3-extension.md`](phase-1.3-extension.md). Current counts are 227 main static, 704 Design Lab static, 73 main browser and 126 Design Lab browser checks; the original Phase 1.3 figures below are retained as a historical record. The [envelope/vegetation extension](phase-1.3-envelope-vegetation.md) adds configurable assemblies, wall sections and planted systems; the [foundations and access study](foundations-and-access.md) adds elevated piles, no-compaction guidance and a footbridge concept, and the [container patterns study](container-patterns.md) adds configurations, paint and doors as shelter.
 
 This phase integrates the supplied Container Home Design Lab starter into Containers Hamlet, adds a nine-concept container-home gallery, and builds a browser-based editor for three matured presets. The project remains container-first. Timber, glass, screened porches, decks, green roofs and planting are complementary layers, not a move toward a generic home builder.
 
@@ -14,7 +14,7 @@ Baseline on `main` at the Phase 1.2 merge (`36f3124`):
 |---|---|
 | `node tools/build.mjs --check` | 45 generated files current |
 | `node tools/check.mjs` | 140 passed, 0 failed |
-| `node tools/browser-check.mjs` | 65 passed, 0 failed |
+| `node tools/browser-check.mjs` | 73 passed, 0 failed |
 | Main site | 15 acres, six oriented homes, lodge, landscape, home briefs and view diagrams; the map key sits beside the map and the selected-building panel has a stable height |
 | Existing models | Cabin A and lodge authoritative; all drawings and downloads working |
 | Design Lab | Absent; no gallery or editor |
@@ -109,7 +109,7 @@ All controls are native form controls with labels. The editor is entirely client
 Warnings are grouped as:
 
 - **Invalid geometry** — duplicate ids, wrong module count, opening bounds/overlaps, zone bounds/overlaps, porch/deck bounds, module overlap, connector overlap, references.
-- **Engineering review** — openings near corners, large structural wall removals, conceptual cantilevers, green/biosolar roof loads, thin insulation, transport width/height, 40-foot modules, multiple lifts, deep porch shading, general envelope/condensation.
+- **Engineering review** — openings near corners, large structural wall removals, conceptual cantilevers, green roof loads, thin insulation, transport width/height, 40-foot modules, multiple lifts, deep porch shading, general envelope/condensation.
 - **Accessibility review** — narrow doors, small bathroom zones, door-swing proximity, circulation and fixture clearance.
 - **Professional review** — structure, foundation, fire, code and the fact that no professional has reviewed the design.
 
@@ -181,7 +181,7 @@ The Design Lab checks cover:
 
 ### Browser
 
-- `node tools/browser-check.mjs`: **65 passed, 0 failed** for the main site.
+- `node tools/browser-check.mjs`: **73 passed, 0 failed** for the main site.
 - `node tools/design-lab-check.mjs`: **53 passed, 0 failed**.
 
 Design Lab browser checks cover:
@@ -197,7 +197,7 @@ Design Lab browser checks cover:
 
 | Measure | Result |
 |---|---|
-| Main first view | 398 KB uncompressed, 98 KB gzipped, 8 requests |
+| Main first view | 391 KB uncompressed, 95 KB gzipped, 8 requests |
 | Whole published site | 2240 KB |
 
 The whole site includes the gallery, three views for nine concepts, source JSON, the editor, the full AGPL text and the Phase 1.2 assets. It remains under the 2.5 MB budget.
@@ -261,7 +261,7 @@ This branch:
 - makes Woodland Retreat, L-Shaped Haven and Woodland Courtyard editable, with explicit one-to-three-module geometry;
 - adds a versioned schema, v0.1 migration, Cabin A adapter, validation and deterministic SVG generation;
 - adds undo/redo, presets, openings, porches, decks, trellises, connectors, room zones, roof/cladding/insulation options, exports/imports and a hamlet preview;
-- extends validation to 167 main static, 260 Design Lab static, 65 main browser and 53 Design Lab browser checks;
+- extends validation to 167 main static, 260 Design Lab static, 73 main browser and 53 Design Lab browser checks;
 - preserves the existing models, drawings, downloads and landscape;
 - documents licensing, limitations and deferred work.
 
