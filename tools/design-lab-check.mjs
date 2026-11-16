@@ -446,6 +446,16 @@ try {
   await shot(vegPage.page, 'vegetation-full', true);
   await vegPage.context.close();
 
+  section('Two-storey study');
+  const storey = await open('design-lab/two-storey/');
+  ok(storey.errors.length === 0, `two-storey study: no console errors${storey.errors.length ? ': ' + storey.errors.join(' | ') : ''}`);
+  const storeyState = await storey.page.evaluate(() => ({ image: !!document.querySelector('.system-figure img'), text: document.body.textContent }));
+  ok(storeyState.image && /Three ways to stack/.test(storeyState.text) && /Fire separation and egress/.test(storeyState.text) && /Not a Look inside model/.test(storeyState.text), 'two-storey study: options and model limits are present');
+  ok(await storey.page.evaluate(() => document.querySelector('.system-figure img').naturalWidth > 0), 'two-storey study: option diagram loads');
+  await axe(storey.page, 'two-storey study');
+  await shot(storey.page, 'two-storey-study');
+  await storey.context.close();
+
   section('Fire resilience guide');
   const firePage = await open('design-lab/fire/');
   ok(firePage.errors.length === 0, `fire guide: no console errors${firePage.errors.length ? ': ' + firePage.errors.join(' | ') : ''}`);
@@ -510,6 +520,14 @@ try {
   const darkCompare = await open('design-lab/compare/', { colorScheme: 'dark' });
   await axe(darkCompare.page, 'comparison in dark scheme');
   await darkCompare.context.close();
+  const smallStorey = await open('design-lab/two-storey/', { viewport: { width: 320, height: 640 } });
+  await smallStorey.page.waitForTimeout(300);
+  ok(await smallStorey.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'two-storey study has no horizontal scrolling at 320 px');
+  await axe(smallStorey.page, 'two-storey study at 320 px');
+  await smallStorey.context.close();
+  const darkStorey = await open('design-lab/two-storey/', { colorScheme: 'dark' });
+  await axe(darkStorey.page, 'two-storey study in dark scheme');
+  await darkStorey.context.close();
   const smallFire = await open('design-lab/fire/', { viewport: { width: 320, height: 640 } });
   await smallFire.page.waitForTimeout(300);
   ok(await smallFire.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'fire guide has no horizontal scrolling at 320 px');

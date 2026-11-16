@@ -180,6 +180,13 @@ ok(!Schema.validateSchema(badFoundation).ok, 'unknown foundation systems are rej
 const badClearance = JSON.parse(JSON.stringify(data.concepts[0])); badClearance.foundation.clearance_m = 3;
 ok(!Schema.validateSchema(badClearance).ok, 'foundation clearance above 2 m is rejected');
 
+section('Two-storey study');
+const twoStorey = read('site/design-lab/two-storey/index.html');
+ok(/Three ways to stack/.test(twoStorey) && /Not a Look inside model/.test(twoStorey) && /Fire separation and egress/.test(twoStorey) && /What would change in the model/.test(twoStorey), 'two-storey page covers options, fire/egress and model limits');
+ok(/Stacked pair \+ external stair/.test(twoStorey) && /Offset stack \/ cantilever/.test(twoStorey) && /Hillside two-level/.test(twoStorey), 'two-storey page presents all three options');
+const twoStoreySvg = read('site/design-lab/systems/two-storey-options.svg');
+ok(/role="img"/.test(twoStoreySvg) && /<title id=/.test(twoStoreySvg) && /<desc id=/.test(twoStoreySvg) && /CC BY-SA 4\.0/.test(twoStoreySvg), 'two-storey diagram is accessible and licensed');
+
 section('Fire resilience');
 const fire = Schema.canonicalize(data.concepts[0]).fire;
 ok(fire && fire.roof_class === 'A' && fire.ember_resistant_vents && fire.defensible_space_m >= 0, 'fire-resilience defaults are present');
