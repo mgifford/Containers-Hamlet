@@ -179,6 +179,11 @@ try {
   ok(/Cabin C/.test(pineState.title) && /Pine/.test(pineState.h1), 'Cabin C page has its own title and heading');
   ok(['orientation','main-view','nearby','path','winter','siting','design-note','drawings'].every((id) => pineState.ids.indexOf(id) >= 0), 'Cabin C page has the shareable section anchors');
   ok(/hamlet\/\?building=c$/.test(await pine.page.getAttribute('.home-map-link a', 'href')), 'Cabin C has a direct map link to its building');
+  const juniper = await open('homes/Juniper-1-compact/');
+  ok(await juniper.page.evaluate(() => document.querySelector('.home-config-figure img').naturalWidth > 0), 'Juniper shows its compact configuration thumbnail');
+  ok(/~13 m² clear/.test(await juniper.page.textContent('#main')), 'Juniper reports the compact floor area');
+  await juniper.context.close();
+
 
   await pine.page.goto(BASE + 'homes/Pine-1-simple/#main-view');
   await pine.page.waitForTimeout(1200);

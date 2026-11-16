@@ -78,7 +78,8 @@ export function homePage(h, site, meta) {
   const m = meta || { slug: h.id, configuration: 'Home concept' };
   const isLodge = h.id === 'lodge';
   const concept = isLodge ? 'lodge' : 'cabin';
-  const conceptLabel = isLodge ? 'Lodge concept drawings' : 'Cabin A concept drawings';
+  const conceptLabel = isLodge ? 'Lodge drawings' : 'Base Cabin A drawings';
+  const modelLabel = isLodge ? 'common lodge concept' : h.model === 'cabin-pair' ? 'two-container pair concept' : h.model === 'cabin-20' ? '20-ft compact concept' : '40-ft single-container concept';
   return `<!doctype html>
 <html lang="en-CA">
 <head>
@@ -95,9 +96,10 @@ export function homePage(h, site, meta) {
 ${nav('../../', 'home')}
 <main id="main" class="home-page" tabindex="-1">
   <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Containers Hamlet</a> / <a href="../">Homes</a> / ${esc(h.name)}</nav>
-  <p class="eyebrow">${esc(useLabel(h.use))} · ${esc(m.configuration)} · ${esc(h.model === 'lodge' ? 'common lodge concept' : 'Cabin A concept')}</p>
+  <p class="eyebrow">${esc(useLabel(h.use))} · ${esc(m.configuration)} · ${esc(modelLabel)}</p>
   <h1>${esc(h.name)} <span class="home-name">· ${esc(h.short_name || '')}</span></h1>
   <p class="lede">${esc(h.character || '')}</p>
+  <figure class="home-config-figure"><img src="../../assets/configurations/${esc(h.id)}.svg" width="520" height="190" alt="${esc(h.name)} configuration diagram: ${esc(m.configuration)}. Concept massing only." loading="eager" decoding="async"><figcaption>${esc(m.configuration)}. The view diagram below shows the 50 m context; this shows the module arrangement.</figcaption></figure>
   <p class="home-map-link"><a class="action" href="../../hamlet/?building=${encodeURIComponent(h.id)}">See ${esc(h.name)} on the hamlet map</a></p>
   <p class="home-share">Share this home: <code>homes/${esc(m.slug)}/</code> · <a href="#orientation">orientation</a> · <a href="#main-view">main view</a> · <a href="#siting">siting</a></p>
   <nav class="on-page" aria-label="On this page">

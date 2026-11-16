@@ -1,0 +1,540 @@
+{
+  "id": "cabin-20",
+  "name": "Cabin F: Juniper Micro",
+  "short_name": "Cabin F",
+  "status": "concept only",
+  "drawing_accuracy": "diagrammatic; dimensions and openings require professional verification",
+  "summary": "A single 20-foot high-cube container with a compact sleeping room, bathroom and living/kitchen space, plus a small screened porch. A shorter, lower-impact alternative to the 40-foot cabin.",
+  "provenance": {
+    "authors": "Eco Hamlet contributors",
+    "created": "2026",
+    "revision": "0.1.0",
+    "source": "Original concept geometry. No third-party plans, models or drawings are used.",
+    "method": "Parametric. All drawings, the OBJ model and the browser explorer are generated from this file by tools/build.mjs.",
+    "licence": "CC BY 4.0 (geometry, drawings, text); MIT (code)",
+    "verification": "None. Not reviewed by an architect, engineer, building official or accessibility consultant.",
+    "changes": [
+      "0.1.0: compact 20-foot variant of Cabin A for the Juniper site."
+    ]
+  },
+  "module": {
+    "type": "20-foot high-cube ISO container",
+    "external_length_m": 6.058,
+    "external_width_m": 2.438,
+    "external_height_m": 2.896,
+    "internal_length_m": 5.898,
+    "internal_width_m": 2.352,
+    "internal_height_m": 2.698,
+    "floor_structure_m": 0.16,
+    "note": "Typical published dimensions for a 20-foot high cube. Measure the actual unit: internal dimensions, corrugation depth and floor build-up vary by manufacturer."
+  },
+  "bays": [
+    {
+      "id": "main",
+      "type": "container",
+      "name": "Main module"
+    }
+  ],
+  "envelope": {
+    "interior_lining_m": 0.04,
+    "floor_finish_m": 0.02,
+    "ceiling_lining_m": 0.03,
+    "opening_frame_m": 0.06,
+    "wall_layers": [
+      {
+        "id": "ext-insulation",
+        "name": "Continuous external insulation (type TBD)",
+        "material": "insulation",
+        "thickness_m": 0.15,
+        "options": "wood fibre board, mineral wool or reclaimed board, chosen for moisture tolerance, fire performance and embodied carbon"
+      },
+      {
+        "id": "cavity",
+        "name": "Ventilated cavity / weather control (TBD)",
+        "material": "cavity",
+        "thickness_m": 0.025,
+        "options": "battens over a vapour-open weather-resistive barrier; insect mesh at top and bottom"
+      },
+      {
+        "id": "rainscreen",
+        "name": "Replaceable timber rainscreen",
+        "material": "cladding",
+        "thickness_m": 0.022,
+        "options": "untreated durable species or reclaimed boards, screw-fixed for replacement"
+      }
+    ],
+    "roof_layers": [
+      {
+        "id": "roof-insulation",
+        "name": "Tapered external roof insulation (nominal)",
+        "material": "insulation",
+        "thickness_m": 0.2
+      },
+      {
+        "id": "roof-membrane",
+        "name": "Cover board and roof membrane",
+        "material": "membrane",
+        "thickness_m": 0.02
+      }
+    ],
+    "floor_layers": [
+      {
+        "id": "floor-insulation",
+        "name": "Insulation below the container floor",
+        "material": "insulation",
+        "thickness_m": 0.15
+      },
+      {
+        "id": "soffit",
+        "name": "Vented, rodent-resistant soffit board",
+        "material": "soffit",
+        "thickness_m": 0.012
+      }
+    ],
+    "interior_layers_note": "40 mm service battens and lining inside the steel; 20 mm floor finish over the container floor; 30 mm ceiling lining.",
+    "unspecified": "Air, vapour, thermal bridge and fastening details are intentionally unspecified. Selective spray foam requires separate assessment."
+  },
+  "foundation": {
+    "type": "Helical (screw) piles at the corner castings and mid-span: concept placeholder",
+    "clearance_above_grade_m": 0.3,
+    "pile_size_m": 0.14,
+    "note": "Pile type, depth and bearing need a geotechnical investigation and structural design. Piles bear on the steel through the floor insulation, which creates thermal bridges to be detailed. Piles are not automatically appropriate near wetlands or on rock."
+  },
+  "partition_thickness_m": 0.1,
+  "rooms": [
+    {
+      "id": "sleeping",
+      "name": "Sleeping",
+      "bay": "main",
+      "end_m": 2.35,
+      "boundary": "partition",
+      "door": {
+        "from_m": 0.7,
+        "to_m": 1.6,
+        "type": "sliding",
+        "head_m": 2.1
+      },
+      "use": "Compact bedroom with a small double bed, wardrobe and windows to the west and south.",
+      "accessibility": "About 0.75 m clear beside the bed. This is a compact home, not an accessible dwelling; a 1.5 m turning circle does not fit."
+    },
+    {
+      "id": "bath",
+      "name": "Bathroom",
+      "bay": "main",
+      "end_m": 4.15,
+      "boundary": "partition",
+      "door": {
+        "from_m": 0.25,
+        "to_m": 1.15,
+        "type": "sliding",
+        "head_m": 2.1
+      },
+      "use": "Shower, toilet and wall-hung vanity.",
+      "accessibility": "~1.7 x 2.2 m; a 1.5 m turning circle does not fit with the shower. Accessible variant needs a different plan."
+    },
+    {
+      "id": "living",
+      "name": "Living / kitchen",
+      "bay": "main",
+      "use": "Main entry, bench, small table, single kitchen run and a window to the porch.",
+      "accessibility": "Step-free porch route; entry clear width target 0.86 m. Tight but usable for one or two people."
+    }
+  ],
+  "interior_zones": [
+    "sleeping",
+    "living",
+    "kitchenette",
+    "bathroom"
+  ],
+  "fixtures": [
+    {
+      "id": "bed",
+      "name": "Small double bed",
+      "room": "sleeping",
+      "corner": "nw",
+      "at": [
+        0,
+        0
+      ],
+      "size": [
+        1.9,
+        1.25,
+        0.5
+      ],
+      "material": "soft"
+    },
+    {
+      "id": "shower",
+      "name": "Shower",
+      "room": "bath",
+      "corner": "ne",
+      "at": [
+        0,
+        0
+      ],
+      "size": [
+        0.9,
+        1.3,
+        0.02
+      ],
+      "material": "tile"
+    },
+    {
+      "id": "toilet",
+      "name": "Toilet",
+      "room": "bath",
+      "corner": "sw",
+      "at": [
+        0.15,
+        0
+      ],
+      "size": [
+        0.45,
+        0.7,
+        0.45
+      ],
+      "material": "appliance"
+    },
+    {
+      "id": "vanity",
+      "name": "Compact vanity",
+      "room": "bath",
+      "corner": "se",
+      "at": [
+        0,
+        0
+      ],
+      "size": [
+        0.65,
+        0.45,
+        0.15
+      ],
+      "elevation_m": 0.71,
+      "material": "appliance"
+    },
+    {
+      "id": "counter",
+      "name": "Kitchen counter with sink and hob",
+      "room": "living",
+      "corner": "sw",
+      "at": [
+        0.05,
+        0
+      ],
+      "size": [
+        1.2,
+        0.6,
+        0.9
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "bench",
+      "name": "Bench seat",
+      "room": "living",
+      "corner": "nw",
+      "at": [
+        0,
+        0
+      ],
+      "size": [
+        1.2,
+        0.5,
+        0.45
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "table",
+      "name": "Folding table",
+      "room": "living",
+      "corner": "nw",
+      "at": [
+        0.3,
+        0.7
+      ],
+      "size": [
+        0.8,
+        0.6,
+        0.75
+      ],
+      "material": "joinery"
+    }
+  ],
+  "openings": [
+    {
+      "id": "W1",
+      "name": "West bedroom window",
+      "bay": "main",
+      "face": "west",
+      "type": "window",
+      "from_m": 0.6,
+      "to_m": 1.7,
+      "sill_m": 0.6,
+      "head_m": 2.1
+    },
+    {
+      "id": "W2",
+      "name": "South bedroom window",
+      "bay": "main",
+      "face": "south",
+      "type": "window",
+      "from_m": 0.6,
+      "to_m": 1.7,
+      "sill_m": 0.9,
+      "head_m": 2.1
+    },
+    {
+      "id": "D1",
+      "name": "Entry door (north)",
+      "bay": "main",
+      "face": "north",
+      "type": "door",
+      "from_m": 2.7,
+      "to_m": 3.6,
+      "head_m": 2.1,
+      "swing": "in",
+      "hinge": "east"
+    },
+    {
+      "id": "D2",
+      "name": "Sliding door to screened porch",
+      "bay": "main",
+      "face": "south",
+      "type": "sliding-door",
+      "from_m": 2.8,
+      "to_m": 3.85,
+      "head_m": 2.15
+    },
+    {
+      "id": "W3",
+      "name": "High bathroom window",
+      "bay": "main",
+      "face": "east",
+      "type": "window",
+      "from_m": 0.6,
+      "to_m": 1.2,
+      "sill_m": 1.55,
+      "head_m": 2.1
+    }
+  ],
+  "porches": [
+    {
+      "id": "screened-porch",
+      "name": "Screened porch",
+      "side": "south",
+      "from_m": 2.4,
+      "length_m": 2.6,
+      "depth_m": 2.5,
+      "gap_m": 0.02,
+      "structure": "independent timber frame concept",
+      "screened": true,
+      "deck_thickness_m": 0.2,
+      "post_size_m": 0.14,
+      "clear_height_m": 2.5,
+      "roof_thickness_m": 0.15,
+      "roof_overhang_m": 0.2,
+      "screen_door": {
+        "side": "east",
+        "from_m": 3.3,
+        "to_m": 4.1
+      },
+      "note": "Compact screened outdoor room; stands on its own piles."
+    }
+  ],
+  "ramps": [
+    {
+      "id": "porch-ramp",
+      "porch": "screened-porch",
+      "side": "east",
+      "from_m": 3.0,
+      "to_m": 4.2,
+      "slope_ratio": 15,
+      "note": "Graded compacted-gravel trail with landings, not a timber walkway. Verify slope, width, drainage and edge protection. Concept only.",
+      "surface": "gravel"
+    }
+  ],
+  "trellis": {
+    "face": "west",
+    "offset_m": 0.35,
+    "from_m": -0.05,
+    "to_m": 1.8,
+    "posts": 3,
+    "post_size_m": 0.09,
+    "height_m": 3.4,
+    "rail_spacing_m": 0.45,
+    "planting_height_m": 2.6,
+    "note": "Free-standing trellis on its own footings, 350 mm from the rainscreen."
+  },
+  "roof": {
+    "default_option": "pv",
+    "options": {
+      "pv": {
+        "label": "PV array on a membrane roof",
+        "pv_bays": [
+          "main"
+        ],
+        "green_bays": []
+      },
+      "membrane": {
+        "label": "Membrane roof, no PV or green roof",
+        "pv_bays": [],
+        "green_bays": []
+      }
+    },
+    "pv_panel": {
+      "width_m": 1.134,
+      "length_m": 2.278,
+      "watts": 420,
+      "gap_m": 0.02
+    },
+    "pv_edge_setback_m": 0.25,
+    "green_edge_setback_m": 0.5,
+    "green_roof_depth_m": 0.1,
+    "note": "PV is shown flat; tilt, racking, snow shedding and fire-access setbacks are to be designed. A green roof is never assumed: saturated growing medium, snow, drainage, waterproofing, maintenance and fire must be engineered. Planting stays below the raised panels so it never shades them.",
+    "pv_bays": [
+      "main"
+    ]
+  },
+  "section_x_m": 3.0,
+  "design_targets": {
+    "min_clear_door_width_m": 0.86,
+    "preferred_ramp_ratio": 15,
+    "note": "Project targets, not code values. Verify against CSA B651 and the applicable provincial building code."
+  },
+  "screened_porch": {
+    "length_m": 3.66,
+    "depth_m": 3.05,
+    "structure": "independent timber frame concept",
+    "note": "Retained for compatibility with Phase 1. The authoritative porch definition is porches[0]."
+  },
+  "design_intent": [
+    "off-site fabrication",
+    "continuous external insulation",
+    "repairable rainscreen",
+    "selective spray foam subject to review",
+    "optional independent green wall trellis",
+    "PV-compatible roof design"
+  ],
+  "material_passport": [
+    {
+      "component": "Container shell",
+      "material_key": "steel",
+      "material": "Weathering steel, corrugated walls and roof, steel cross-members",
+      "source": "Reclaimed ISO container (one-trip or used)",
+      "condition_assessment": "Required before purchase: corrosion, deformation, weld repairs, CSC plate history, prior cargo, and coatings tested for hazardous substances.",
+      "connections": "Welded original structure; new openings cut and reinforced; bolted lifting and foundation connections where feasible.",
+      "disassembly": "Module can be lifted and relocated as a unit.",
+      "end_of_life": "Reuse as a module, otherwise steel recycling.",
+      "documentation": "Not started"
+    },
+    {
+      "component": "Container floor deck",
+      "material_key": "steel",
+      "material": "Original hardwood plywood deck on steel cross-members",
+      "source": "Comes with the container",
+      "condition_assessment": "Original container floors are often treated with pesticides. Test, then replace or encapsulate before occupancy.",
+      "connections": "Screwed to cross-members",
+      "disassembly": "Removable panels",
+      "end_of_life": "Hazardous-waste route if treatment is confirmed",
+      "documentation": "Not started"
+    },
+    {
+      "component": "External insulation",
+      "material_key": "insulation",
+      "material": "Wood fibre board, mineral wool or documented reclaimed board (TBD)",
+      "source": "New or reclaimed (TBD)",
+      "condition_assessment": "Reclaimed board: verify type, blowing agent, contamination and fire classification.",
+      "connections": "Mechanically fixed through battens; no adhesives on the steel",
+      "disassembly": "Unscrew battens and lift off boards",
+      "end_of_life": "Reuse; wood fibre can be composted or recovered when uncontaminated",
+      "documentation": "Not started"
+    },
+    {
+      "component": "Rainscreen cladding and battens",
+      "material_key": "cladding",
+      "material": "Durable timber boards on timber battens",
+      "source": "Prefer local reclaimed or certified timber",
+      "condition_assessment": "Reclaimed boards: check for nails, lead paint and rot.",
+      "connections": "Exposed screws for replacement",
+      "disassembly": "Board-by-board replacement",
+      "end_of_life": "Reuse, then biomass recovery",
+      "documentation": "Not started"
+    },
+    {
+      "component": "Windows and doors",
+      "material_key": "glass",
+      "material": "Triple-glazed units in timber or fibreglass frames (TBD)",
+      "source": "New or salvaged units of known performance",
+      "condition_assessment": "Salvaged units: verify seal integrity, labelled performance and safety glazing.",
+      "connections": "Installed in the insulation layer on brackets (outie)",
+      "disassembly": "Units removable without cutting steel",
+      "end_of_life": "Glass and frame separation",
+      "documentation": "Not started"
+    },
+    {
+      "component": "Porch, ramp and trellis",
+      "material_key": "decking",
+      "material": "Timber frame, decking, insect screen and steel connectors",
+      "source": "Local timber; reclaimed where structurally graded",
+      "condition_assessment": "Grade reclaimed members for structural use.",
+      "connections": "Bolted, independent of the container",
+      "disassembly": "Fully demountable",
+      "end_of_life": "Reuse, then biomass recovery",
+      "documentation": "Not started"
+    },
+    {
+      "component": "PV modules",
+      "material_key": "pv",
+      "material": "Crystalline silicon modules on aluminium rails",
+      "source": "New or tested second-life modules",
+      "condition_assessment": "Second-life modules: flash test and insulation resistance test.",
+      "connections": "Clamped to rails; no roof penetrations through the membrane where avoidable",
+      "disassembly": "Clamp release",
+      "end_of_life": "Module take-back or recycling",
+      "documentation": "Not started"
+    }
+  ],
+  "reviews_required": [
+    {
+      "topic": "Structure: cut openings, lifting points, snow, wind and seismic loads, porch and roof options",
+      "reviewer": "Structural engineer (P.Eng.)",
+      "status": "Not started"
+    },
+    {
+      "topic": "Foundations: soils, frost, pile type and depth, wetland and shoreline proximity",
+      "reviewer": "Geotechnical engineer",
+      "status": "Not started"
+    },
+    {
+      "topic": "Envelope: air, vapour and moisture control, condensation on steel, thermal bridges",
+      "reviewer": "Building envelope consultant",
+      "status": "Not started"
+    },
+    {
+      "topic": "Fire: separations, cladding, spray foam (if any), PV and battery safety, wildland interface",
+      "reviewer": "Fire protection engineer and building official",
+      "status": "Not started"
+    },
+    {
+      "topic": "Accessibility: ramp, thresholds, door clearances, bathroom and kitchen",
+      "reviewer": "Accessibility consultant; CSA B651 and applicable code",
+      "status": "Not started"
+    },
+    {
+      "topic": "Mechanical and electrical: heating, ventilation, water, wastewater, PV",
+      "reviewer": "Mechanical and electrical engineers; electrical safety authority",
+      "status": "Not started"
+    },
+    {
+      "topic": "Code and zoning compliance for the actual site",
+      "reviewer": "Architect or qualified designer; municipal building department",
+      "status": "Not started"
+    }
+  ],
+  "access": {
+    "strategy": "graded gravel trail with landings and the shortest practical threshold ramp",
+    "note": "Prefer a graded gravel trail with landings to a long timber ramp. A hillside or uphill grade entry can shorten the route, but changes the foundation, drainage, tree protection and accessibility review.",
+    "review": "Accessibility consultant, civil/geotechnical review and the building official; CSA B651 and the applicable code still apply."
+  }
+}

@@ -22,6 +22,7 @@ import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { modelPage } from './lib/model-pages.mjs';
+import { configurationSVG } from './lib/home-config.mjs';
 import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
 import { twoStoreyPage, twoStoreySVG } from './lib/design-two-storey.mjs';
 import { resiliencePage } from './lib/design-resilience.mjs';
@@ -39,8 +40,8 @@ const DesignSchema = require('../site/js/design-schema.js');
 const DesignModel = require('../site/js/design-model.js');
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const BUILDINGS = ['cabin-a', 'lodge'];
-const DATA_FILES = ['cabin-a.json', 'lodge.json', 'site.json'];
+const BUILDINGS = ['cabin-a', 'cabin-20', 'lodge'];
+const DATA_FILES = ['cabin-a.json', 'cabin-20.json', 'lodge.json', 'site.json'];
 
 const readText = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const kb = (s) => Math.max(1, Math.round(Buffer.byteLength(s) / 1024));
@@ -112,7 +113,7 @@ export function generate() {
     c: { slug: 'Pine-1-simple', name: 'Pine', configuration: 'One container · simple' },
     d: { slug: 'Moss-2-wide', name: 'Moss', configuration: 'Two containers · wide pair' },
     e: { slug: 'Fern-2-wide', name: 'Fern', configuration: 'Two containers · wide pair' },
-    f: { slug: 'Juniper-1-simple', name: 'Juniper', configuration: 'One container · simple' },
+    f: { slug: 'Juniper-1-compact', name: 'Juniper', configuration: 'One 20-ft container · compact' },
     lodge: { slug: 'Lodge-3-community', name: 'Common-Lodge', configuration: 'Two containers + hall · community' }
   };
   const homesPublic = {
@@ -128,6 +129,11 @@ export function generate() {
     })),
   };
   put('site/data/homes.json', JSON.stringify(homesPublic, null, 2) + '\n');
+  homesPublic.buildings.forEach((h) => {
+    const meta = HOME_META[h.id] || {};
+    const kind = h.model === 'lodge' ? 'lodge' : meta.slug.indexOf('-2-') >= 0 ? 'pair' : meta.slug.indexOf('compact') >= 0 ? 'compact' : 'single';
+    put(`site/assets/configurations/${h.id}.svg`, configurationSVG(h.id, h.name, kind));
+  });
   put('site/homes/index.html', homesIndexPage(homesPublic.buildings, HOME_META));
   homesPublic.buildings.forEach((h) => {
     const meta = HOME_META[h.id] || { slug: h.id, configuration: 'Home concept' };
@@ -135,6 +141,7 @@ export function generate() {
     put(`site/homes/${h.id}/index.html`, legacyHomeRedirect(meta.slug, h.name));
     put(`site/homes/${meta.name}/index.html`, legacyHomeRedirect(meta.slug, h.name));
     if (h.id === 'e') put('site/homes/Fern-1-simple/index.html', legacyHomeRedirect(meta.slug, h.name));
+    if (h.id === 'f') put('site/homes/Juniper-1-simple/index.html', legacyHomeRedirect(meta.slug, h.name));
   });
 
   /* ---------------- Container Home Design Lab ---------------- */
@@ -246,7 +253,7 @@ export function generate() {
   explorerBuildings['cabin-pair'] = strip(pairSpec);
   const data = {
     buildings: explorerBuildings,
-    buildingModels: { a: 'cabin-a', b: 'cabin-pair', c: 'cabin-a', d: 'cabin-pair', e: 'cabin-pair', f: 'cabin-a', lodge: 'lodge' },
+    buildingModels: { a: 'cabin-a', b: 'cabin-pair', c: 'cabin-a', d: 'cabin-pair', e: 'cabin-pair', f: 'cabin-20', lodge: 'lodge' },
     homeSlugs: Object.fromEntries(Object.entries(HOME_META).map(([id, m]) => [id, m.slug])),
     site: {
       name: 'Containers Hamlet',

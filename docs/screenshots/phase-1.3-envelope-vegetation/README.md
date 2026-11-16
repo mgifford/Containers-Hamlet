@@ -76,3 +76,9 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 
 - `map-wide.jpg`: the wider map with the key below and the selected-building panel.
 - `map-promo.jpg`: the landing-page map preview card.
+
+## Home variation
+
+- `pair-birch.jpg`: Birch with an offset two-container massing.
+- `juniper-compact.jpg`: the 20-foot Juniper home.
+- `map-pair.jpg`: the map showing the offset pair.
