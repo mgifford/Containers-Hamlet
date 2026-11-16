@@ -47,6 +47,7 @@ const svgSize = (s) => {
 export function generate() {
   const specs = Object.fromEntries(BUILDINGS.map((id) => [id, JSON.parse(readText(`data/${id}.json`))]));
   const site = JSON.parse(readText('data/site.json'));
+  const pairSpec = JSON.parse(readText('data/cabin-pair.json'));
   const issues = [];
   const models = {};
   for (const id of BUILDINGS) {
@@ -214,8 +215,11 @@ export function generate() {
     ['material_passport', 'reviews_required', 'provenance', 'screened_porch', 'design_intent', 'interior_zones'].forEach((k) => delete s[k]);
     return s;
   };
+  const explorerBuildings = Object.fromEntries(BUILDINGS.map((id) => [id, strip(specs[id])]));
+  explorerBuildings['cabin-pair'] = strip(pairSpec);
   const data = {
-    buildings: Object.fromEntries(BUILDINGS.map((id) => [id, strip(specs[id])])),
+    buildings: explorerBuildings,
+    buildingModels: { a: 'cabin-a', b: 'cabin-pair', c: 'cabin-a', d: 'cabin-pair', e: 'cabin-a', f: 'cabin-a', lodge: 'lodge' },
     site: {
       name: 'Containers Hamlet',
       area_acres: analysis.area_acres,

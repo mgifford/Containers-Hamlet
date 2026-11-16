@@ -40,7 +40,7 @@
   var ZONE_LABEL = { sleeping: 'Sleeping', bathroom: 'Bathroom', kitchen: 'Kitchen', living: 'Living', dining: 'Dining', work: 'Workspace', storage: 'Storage', circulation: 'Circulation' };
   var FACE_LABEL = { north: 'North', south: 'South', east: 'East', west: 'West' };
   var OPENING_LABEL = { window: 'Window', door: 'Door', 'sliding-door': 'Sliding door', opening: 'Open passage' };
-  var ROOF_LABEL = { solar: 'Solar array', green: 'Green roof', biosolar: 'Biosolar roof', membrane: 'Membrane roof' };
+  var ROOF_LABEL = { solar: 'Solar array', green: 'Green roof (not offered)', membrane: 'Membrane roof' };
   var CLAD_LABEL = { timber: 'Timber rainscreen', metal: 'Reused metal', mixed: 'Timber and metal' };
   var COLOURS = [
     ['#8a6a4a', 'Weathered timber'], ['#6f6a5d', 'Charcoal timber'], ['#7a5a3d', 'Warm cedar'],
@@ -546,7 +546,7 @@
       ['Solar', d.modules.filter(function (m) { return m.solar.enabled; }).map(function (m) { return m.id + ': ' + m.solar.tilt_deg + '° / ' + m.solar.azimuth_deg + '° ' + m.solar.season_mode; }).join(' · ') || 'No solar array enabled'],
       ['Foundation', d.foundation.system + ' · ' + d.foundation.clearance_m + ' m clearance · ' + (d.foundation.no_compaction ? 'no compaction' : 'compaction unresolved')],
       ['Paint and shelter', (d.paint ? d.paint.name : 'current palette') + ' · ' + (d.entry_shelter.enabled ? 'entry shelter on ' + d.entry_shelter.side : 'no entry shelter')],
-      ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green/biosolar ' : '') || 'Membrane'],
+      ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green roof (not offered) ' : '') || 'Membrane'],
       ['Insulation', 'Up to ' + s.maxInsulation_mm + ' mm external'],
       ['Status', assessment.ok ? 'No invalid geometry; professional review required' : 'Invalid geometry; drawings disabled'],
       ['Material intent', Object.keys(d.material_intent || {}).filter(function (k) { return d.material_intent[k]; }).length + ' selected; see the Material intent controls'],
@@ -648,8 +648,8 @@
 
   function applyRoof(m, type) {
     m.roof.type = type;
-    m.roof.solar = type === 'solar' || type === 'biosolar';
-    m.roof.green = type === 'green' || type === 'biosolar';
+    m.roof.solar = type === 'solar';
+    m.roof.green = type === 'green';
     if (m.solar) m.solar.enabled = !!m.roof.solar;
   }
 
@@ -934,7 +934,7 @@
     lines.push('- Interior zones: ' + s.zoneCount);
     lines.push('- Openings: ' + s.openingCount);
     lines.push('- Screened porch: ' + n(s.screenedPorch_m2) + ' m²');
-    lines.push('- Roof: ' + (s.solar ? 'solar ' : '') + (s.greenRoof ? 'green/biosolar ' : '') || 'membrane');
+    lines.push('- Roof: ' + (s.solar ? 'solar ' : '') + (s.greenRoof ? 'green (not offered) ' : '') || 'membrane');
     lines.push('- Maximum external insulation: ' + s.maxInsulation_mm + ' mm');
     lines.push('');
     lines.push('## Containers');

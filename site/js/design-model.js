@@ -204,7 +204,7 @@
           if (Math.abs(a.position_m - b.position_m) < 1.0) warn('door-swing', 'Doors ' + a.id + ' and ' + b.id + ' are close together on the ' + a.face + ' face. Check door swings, circulation and furniture clearances.', 'accessibility');
         });
       });
-      if (m.roof && m.roof.green) warn('green-roof', m.id + ' has a green or biosolar roof. Saturated weight, snow, drainage, waterproofing and fire need engineering review.', 'engineering');
+      if (m.roof && m.roof.green) warn('green-roof', m.id + ' has a green roof. Saturated weight, snow, drainage, waterproofing and fire need engineering review.', 'engineering');
       if (m.insulation.thickness_mm < 100) warn('thin-insulation', m.id + ' has less than 100 mm of external insulation; thermal bridging and condensation need review.', 'engineering');
       var transportWidth = m.nominal.width_m + 2 * (m.insulation.thickness_mm / 1000 + 0.03);
       var transportHeight = m.nominal.height_m + m.insulation.thickness_mm / 1000 + 0.25;
@@ -1160,7 +1160,7 @@
     if (d.thermal.thermal_bridge_mitigation) strengths.push('Thermal-bridge intent: ' + d.thermal.thermal_bridge_mitigation + '.');
     if (ratio > 0.28) risks.push('Glazing is about ' + Math.round(ratio * 100) + '% of nominal conditioned area; summer overheating and winter heat loss need modelling.');
     if (d.connections.some(function (c) { return c.glazed; })) strengths.push('The central hall/veranda is modelled with insulated sliding/folding glazing intent, not an uninsulated garage door.');
-    if (d.modules.some(function (m) { return m.roof.green; })) risks.push('Green or biosolar roof adds saturated load, drainage and maintenance complexity; it is not a substitute for roof insulation.');
+    if (d.modules.some(function (m) { return m.roof.green; })) risks.push('Green roof adds saturated load, drainage and maintenance complexity; it is not a substitute for roof insulation.');
     if (ratio <= 0.2) strengths.push('The window area is relatively moderate for the nominal floor area.');
     return {
       wall_insulation_mm: wall,
@@ -1218,7 +1218,7 @@
     var s = Schema.summary(design);
     var zones = [];
     design.modules.forEach(function (m) { m.zones.forEach(function (z) { zones.push(z.name + ' (' + n(z.end_m - z.start_m) + ' m)'); }); });
-    return design.name + ': ' + s.moduleCount + ' container module' + (s.moduleCount === 1 ? '' : 's') + ' (' + s.types.join(', ') + '), ' + s.nominalFootprint_m2 + ' m² nominal footprint. ' + (zones.length ? 'Interior zones: ' + zones.join('; ') + '. ' : '') + (s.solar ? 'Solar roof. ' : '') + (s.greenRoof ? 'Green or biosolar roof. ' : '') + 'Concept only; not verified.';
+    return design.name + ': ' + s.moduleCount + ' container module' + (s.moduleCount === 1 ? '' : 's') + ' (' + s.types.join(', ') + '), ' + s.nominalFootprint_m2 + ' m² nominal footprint. ' + (zones.length ? 'Interior zones: ' + zones.join('; ') + '. ' : '') + (s.solar ? 'Solar roof. ' : '') + (s.greenRoof ? 'Green roof. ' : '') + 'Concept only; not verified.';
   }
 
   return {

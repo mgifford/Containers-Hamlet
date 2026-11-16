@@ -147,7 +147,7 @@
       "name": "Bathroom",
       "bay": "main",
       "use": "Roll-in shower along the east wall, toilet, wall-hung vanity and a high window for privacy.",
-      "accessibility": "2.27 x 2.27 m clear; a 1.5 m turning circle overlaps the curbless shower area. Grab bars, fixture clearances and controls must be checked against CSA B651 and the applicable building code."
+      "accessibility": "~2.3 x 2.3 m clear; a 1.5 m turning circle overlaps the curbless shower area. Grab bars, fixture clearances and controls must be checked against CSA B651 and the applicable building code."
     }
   ],
   "interior_zones": [
@@ -451,14 +451,10 @@
         ],
         "green_bays": []
       },
-      "biosolar": {
-        "label": "Biosolar: extensive green roof with raised PV",
-        "pv_bays": [
-          "main"
-        ],
-        "green_bays": [
-          "main"
-        ]
+      "membrane": {
+        "label": "Membrane roof, no PV or green roof",
+        "pv_bays": [],
+        "green_bays": []
       }
     },
     "pv_panel": {

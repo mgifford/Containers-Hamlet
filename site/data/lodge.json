@@ -187,7 +187,7 @@
       "end_m": 9.05,
       "boundary": "partition",
       "use": "Single-user, all-gender accessible washroom with an adult-size change table.",
-      "accessibility": "2.35 x 2.27 m clear; 1.0 m door (consider a power operator). Turning space, transfer space, grab bars and the change table to be designed to CSA B651 and the applicable code."
+      "accessibility": "~2.4 x 2.3 m clear; 1.0 m door (consider a power operator). Turning space, transfer space, grab bars and the change table to be designed to CSA B651 and the applicable code."
     },
     {
       "id": "boot",
@@ -935,16 +935,10 @@
         ],
         "green_bays": []
       },
-      "biosolar": {
-        "label": "Biosolar: green roofs on both modules, PV on the hall and raised over the south module",
-        "pv_bays": [
-          "hall",
-          "south"
-        ],
-        "green_bays": [
-          "north",
-          "south"
-        ]
+      "membrane": {
+        "label": "Membrane roof, no PV or green roof",
+        "pv_bays": [],
+        "green_bays": []
       }
     },
     "pv_panel": {

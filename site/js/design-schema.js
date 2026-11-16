@@ -23,7 +23,7 @@
   var OPENING_TYPES = ['window', 'door', 'sliding-door', 'opening'];
   var ZONE_TYPES = ['sleeping', 'bathroom', 'kitchen', 'living', 'dining', 'work', 'storage', 'circulation'];
   var CLADDING = ['timber', 'metal', 'mixed'];
-  var ROOFS = ['solar', 'green', 'biosolar', 'membrane'];
+  var ROOFS = ['solar', 'green', 'membrane'];
   var ENVELOPE_ASSEMBLIES = ['rigid-board', 'mineral-wool', 'wood-fibre', 'spray-foam', 'hybrid'];
   var VEGETATION_TYPES = ['trellis', 'living-wall', 'edible-wall', 'privacy-screen'];
   var SOLAR_SEASONS = ['year-round', 'winter', 'summer'];
@@ -256,7 +256,7 @@
         rotation_deg: 0,
         insulation: { thickness_mm: Number(old.envelope && old.envelope.external_insulation_mm) || 150, type: 'migrated from v0.1 (type not recorded)' },
         cladding: { type: old.envelope && old.envelope.cladding || 'timber', colour: '#8a6a4a' },
-        roof: { type: old.envelope && old.envelope.roof || 'solar', solar: (old.envelope && old.envelope.roof) !== 'green', green: (old.envelope && old.envelope.roof) === 'green' || (old.envelope && old.envelope.roof) === 'biosolar' },
+        roof: { type: old.envelope && old.envelope.roof === 'biosolar' ? 'solar' : (old.envelope && old.envelope.roof || 'solar'), solar: (old.envelope && old.envelope.roof) !== 'green', green: (old.envelope && old.envelope.roof) === 'green' },
         structure: { openings_reinforced: true, wall_removal: 'none', cantilever_m: 0, notes: 'Migrated from v0.1; no structural assessment was present.' },
         openings: i === 0 ? (old.openings || []).map(function (o) {
           return { id: o.id || 'opening', face: o.face || 'south', type: 'window', position_m: Number(o.position_m), width_m: Number(o.width_m), height_m: 1.4, sill_m: 0.9, name: (o.id || 'Window') + ' (migrated)' };

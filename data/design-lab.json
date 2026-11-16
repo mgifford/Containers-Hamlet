@@ -718,8 +718,8 @@
       "group": "One container",
       "editable": false,
       "visual_seed": 37,
-      "tagline": "A protected veranda on the weather side, with a biosolar roof.",
-      "description": "A 40-foot container turned so its long side faces the lake, with a deep screened veranda, a biosolar roof and living space opened to the water. The veranda gives shade in summer and a sheltered edge in shoulder seasons.",
+      "tagline": "A protected veranda on the weather side, with a solar roof.",
+      "description": "A 40-foot container turned so its long side faces the lake, with a deep screened veranda, a solar roof and living space opened to the water. The veranda gives shade in summer and a sheltered edge in shoulder seasons.",
       "primary_view_deg": 270,
       "modules": [
         {
@@ -744,9 +744,9 @@
             "colour": "#7a5a3d"
           },
           "roof": {
-            "type": "biosolar",
+            "type": "solar",
             "solar": true,
-            "green": true
+            "green": false
           },
           "structure": {
             "openings_reinforced": true,
@@ -892,7 +892,7 @@
         ],
         "outdoor": "6.0 \u00d7 3.0 m screened veranda plus 1.0 m deck",
         "solar": "Raised PV above an extensive green roof",
-        "green_roof": "Biosolar concept; saturated weight and drainage need engineering",
+        "green_roof": "Solar roof; green roof not included; saturated weight and drainage need engineering",
         "accessibility": "Step-free veranda intended; bathroom is compact.",
         "environment": "Shading from the veranda and a green roof; lake edge must remain undisturbed."
       },
@@ -2446,9 +2446,9 @@
             "colour": "#6f5a41"
           },
           "roof": {
-            "type": "biosolar",
+            "type": "solar",
             "solar": true,
-            "green": true
+            "green": false
           },
           "structure": {
             "openings_reinforced": true,
@@ -2863,7 +2863,7 @@
         ],
         "outdoor": "6.0 \u00d7 3.0 m screened courtyard porch plus deck",
         "solar": "Solar on all roofs; green roof on the north module",
-        "green_roof": "Biosolar on the north module; weight and drainage need engineering",
+        "green_roof": "Solar on the north module; weight and drainage need engineering",
         "accessibility": "Courtyard can be step-free; bathrooms and sleeping rooms need accessible variants.",
         "environment": "Three modules share one courtyard and one solar-ready roofscape."
       },
@@ -3083,9 +3083,9 @@
             "colour": "#776a54"
           },
           "roof": {
-            "type": "biosolar",
+            "type": "solar",
             "solar": true,
-            "green": true
+            "green": false
           },
           "structure": {
             "openings_reinforced": true,
@@ -3451,7 +3451,7 @@
         ],
         "outdoor": "8.0 \u00d7 3.0 m screened porch plus 1.5 m deck",
         "solar": "Solar on all roofs; green roof on the central module",
-        "green_roof": "Biosolar on the central module",
+        "green_roof": "Solar on the central module",
         "accessibility": "Long shared porch can be step-free; sleeping and bath need accessible variants.",
         "environment": "A larger home still uses three reused modules and a compact footprint."
       },
@@ -3727,9 +3727,9 @@
             "colour": "#6a5a43"
           },
           "roof": {
-            "type": "biosolar",
+            "type": "solar",
             "solar": true,
-            "green": true
+            "green": false
           },
           "structure": {
             "openings_reinforced": true,
@@ -4006,7 +4006,7 @@
         ],
         "outdoor": "Large screened gathering room, covered workshop entry, decks",
         "solar": "Solar on the north module; green roofs on the south and west modules",
-        "green_roof": "Green and biosolar roofs; weight, drainage and fire review required",
+        "green_roof": "Green and solar roofs; weight, drainage and fire review required",
         "accessibility": "Gathering room can be a step-free shared space; sleeping and bath need accessible variants.",
         "environment": "Shared space reduces the need for larger individual homes; green roofs and solar share infrastructure."
       },
@@ -4202,9 +4202,9 @@
             "colour": "#2f7d5f"
           },
           "roof": {
-            "type": "biosolar",
+            "type": "solar",
             "solar": true,
-            "green": true
+            "green": false
           },
           "structure": {
             "openings_reinforced": true,
@@ -4738,7 +4738,7 @@
         ],
         "outdoor": "8.0 \u00d7 3.0 m screened veranda, covered west entrance, decks",
         "solar": "A single 39\u00b0 south-facing array on the south slope of a 10\u00b0 gable roof; no north-side array. True south, independent of building rotation.",
-        "green_roof": "Green/biosolar roof on the north module; weight, drainage and fire review required",
+        "green_roof": "Green/solar roof on the north module; weight, drainage and fire review required",
         "accessibility": "Step-free hall and veranda intended; two accessible washrooms, one with an adult-size change table; door widths, turning spaces and counter heights need verification.",
         "environment": "Three reused green containers and a glazed timber hall share one gable roof; only the south slope carries solar. Large glazing and a green roof increase the technical review."
       },

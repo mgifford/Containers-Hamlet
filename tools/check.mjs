@@ -55,6 +55,17 @@ for (const spec of [cabin, lodge]) {
 ok(near(analysis.area_acres, site.area_acres, 0.2), `parcel polygon is ${analysis.area_acres} acres (declared ${site.area_acres})`);
 
 /* ------------------------------------------------------------------ */
+section('Explorer models and roof options');
+const pairSpec = JSON.parse(read('data/cabin-pair.json'));
+const pairModel = EcoModel.buildModel(pairSpec);
+ok(pairSpec.bays.filter((b) => b.type === 'container').length === 2 && pairModel.meta.footprint_m2 > 0 && EcoModel.validate(pairSpec, pairModel).filter((i) => i.level === 'error').length === 0, 'the two-container explorer model builds without errors');
+const explorerHtml = read('site/index.html');
+const exHomes = (explorerHtml.match(/name="ex-building"/g) || []).length;
+ok(exHomes === 7 && ['a','b','c','d','e','f','lodge'].every((id) => explorerHtml.indexOf(`name="ex-building" value="${id}"`) >= 0), 'Look inside offers all seven buildings');
+ok(!/name="ex-roof" value="biosolar"/.test(explorerHtml), 'the biosolar roof option is removed from the explorer');
+ok(!JSON.parse(read('data/design-lab.json')).concepts.some((c) => c.modules.some((m) => m.roof && m.roof.type === 'biosolar')), 'no Design Lab concept uses a biosolar roof');
+ok(/name="ex-building" value="b"/.test(explorerHtml) && /cabin-pair/.test(read('site/js/data.js')), 'Cabin B and D are wired to the two-container explorer model');
+
 section('Terrain and landscape');
 ok(near(analysis.area_acres, 15.0, 0.06), `the fictional parcel is ${analysis.area_acres} acres (target 15.0)`);
 ok(near(analysis.area_ha, 6.07, 0.03), `the fictional parcel is ${analysis.area_ha} ha (target 6.07)`);

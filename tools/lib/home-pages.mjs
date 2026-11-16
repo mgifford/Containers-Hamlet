@@ -161,7 +161,7 @@ ${nav('../../', 'home')}
 
   <section aria-labelledby="drawings">
     ${heading('drawings', 'Drawings and next steps')}
-    <p><a href="../../index.html#${concept}">${esc(conceptLabel)}</a> · <a href="../../index.html#explore">Show ${esc(h.name)} on the hamlet map</a> · <a href="../../design-lab/">Design Lab</a></p>
+    <p><a href="../../index.html#${concept}">${esc(conceptLabel)}</a> · <a href="../../index.html#inside">Look inside ${esc(h.name)}</a> · <a href="../../index.html#explore">Show ${esc(h.name)} on the hamlet map</a> · <a href="../../design-lab/">Design Lab</a></p>
     <p class="small">This page is a brief, not a construction drawing. No photograph, stock image or proprietary design is reproduced.</p>
   </section>
 </main>

@@ -199,13 +199,20 @@ try {
   await page.focus('input[name="ex-view"]:checked');
   await page.keyboard.press('ArrowRight');
   ok(/south-east/.test(await label()), 'arrow keys turn the model');
-  await page.focus('input[name="ex-roof"]:checked');
-  await page.keyboard.press('ArrowRight');
-  ok(await page.evaluate(() => document.querySelector('input[name="ex-roof"][value="biosolar"]').checked), 'roof option switches to the green roof');
-  await page.focus('input[name="ex-building"]:checked');
-  await page.keyboard.press('ArrowRight');
-  ok(/Lodge:/.test(await label()) && await page.$('button[data-room="hall"]') !== null, 'building switch loads the lodge and its rooms');
+  ok(await page.evaluate(() => document.querySelector('input[name="ex-roof"][value="biosolar"]') === null), 'no biosolar roof option is offered');
+  await page.check('input[name="ex-building"][value="lodge"]');
+  await page.waitForTimeout(250);
+  ok(/Common lodge:/.test(await label()) && await page.$('button[data-room="hall"]') !== null, 'building switch loads the lodge and its rooms');
   await shot(page, 'desktop-explorer-lodge');
+  const exHomes = await page.evaluate(() => [...document.querySelectorAll('input[name="ex-building"]')].map((r) => r.value));
+  ok(exHomes.length === 7 && ['a','b','c','d','e','f','lodge'].every((id) => exHomes.indexOf(id) >= 0), 'Look inside lists all seven buildings');
+  await page.check('input[name="ex-building"][value="b"]');
+  await page.waitForTimeout(250);
+  ok(/Cabin B:/.test(await label()) && await page.$('button[data-room="annex-studio"]') !== null, 'Cabin B opens a two-container model with a second-module room');
+  await page.check('input[name="ex-building"][value="d"]');
+  await page.waitForTimeout(250);
+  ok(/Cabin D:/.test(await label()) && await page.$('button[data-room="annex-studio"]') !== null, 'Cabin D opens the two-container model');
+
   await page.locator('#homes').screenshot({ path: SHOTS ? path.join(SHOTS, 'desktop-homes.png') : undefined }).catch(() => {});
   await page.click('[data-choice="a"]');
   await page.click('#building-details a[data-explore]');
