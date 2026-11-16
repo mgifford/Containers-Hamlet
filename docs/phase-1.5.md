@@ -26,6 +26,16 @@ This phase shifts the site from an architectural showcase toward a resident-faci
 
 ## Validation
 
-See `docs/phase-1.5-audit.md`. Final: 201 generated files; 285 main static; 722 Design Lab static; 103 main browser; 166 Design Lab browser; 258 KB / 64 KB initial; 3,502 KB total under 3.5 MB.
+See `docs/phase-1.5-audit.md`. Final: 203 generated files; 289 main static; 722 Design Lab static; 107 main browser; 166 Design Lab browser; 258 KB / 64 KB initial; 3,502 KB total under 3.5 MB.
 
 **Do not merge automatically.**
+
+## Accessibility follow-up: Cedar Accessible
+
+`/homes/Cedar-Accessible/` is a two-option layout study, not a seventh home or an accessibility certification.
+
+- **Option A, one 40-foot module:** one-person layout; full-width bathroom; 1.5 m turning in kitchen/living; single bed with a 1.5 m transfer side. A double bed with transfer space does not fit across 2.35 m clear width.
+- **Option B, two 40-foot modules:** one-bedroom layout with a double bed and transfer space; larger bathroom and circulation. Requires a structural opening/transfer frame and fire separation.
+- Both: 0.9 m door targets, step-free porch, reachable storage, a firm winter route and a place to wait for help.
+- Still unresolved: structural opening, fire/egress, foundation/drainage, fixture clearances, personal care, CSA B651/code review and consultant sign-off.
+- Linked from the Cedar home page and `/living/#accessibility`.

@@ -2,7 +2,7 @@
 
 Six individual woodland retreats that happen to share a community.
 
-A fictional 15-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.5 adds a **resident-facing community guide**: six illustrative resident scenarios, ownership/governance, a cost-category worksheet, a ten-stage feasibility roadmap, practical living, participation and a usability plan. It preserves the Phase 1.3 Container Home Design Studio: nine container homes plus a green, yellow-framed café lodge under one gable roof with south-slope solar, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls, elevated helical-pile foundations, a small footbridge study, a container-pattern/paint/door-shelter guide with creek and hillside options, a forest fire-resilience guide and a two-storey structural study, a community-resilience brief, a separated water-cycle guide and arrangement studies in the gallery, a side-by-side comparison tool, direct plan manipulation and descriptive shareable pages for all six cabins and the lodge, including a 20-foot compact Juniper and offset two-container pairs, and a Look inside explorer covering all seven with single- and two-container configurations. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
+A fictional 15-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.5 adds a **resident-facing community guide**: six illustrative resident scenarios, ownership/governance, a cost-category worksheet, a ten-stage feasibility roadmap, practical living, participation and a usability plan and a two-option accessible Cedar layout study. It preserves the Phase 1.3 Container Home Design Studio: nine container homes plus a green, yellow-framed café lodge under one gable roof with south-slope solar, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls, elevated helical-pile foundations, a small footbridge study, a container-pattern/paint/door-shelter guide with creek and hillside options, a forest fire-resilience guide and a two-storey structural study, a community-resilience brief, a separated water-cycle guide and arrangement studies in the gallery, a side-by-side comparison tool, direct plan manipulation and descriptive shareable pages for all six cabins and the lodge, including a 20-foot compact Juniper and offset two-container pairs, and a Look inside explorer covering all seven with single- and two-container configurations. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
 
 Phase 1.5 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, all drawings, downloads, the cutaway explorer and the validation workflow. The new editor uses a separate, versioned multi-container schema and never overwrites the existing architectural data. See [`docs/phase-1.5.md`](docs/phase-1.5.md), the [`Phase 1.5 audit`](docs/phase-1.5-audit.md), [`LICENSING.md`](LICENSING.md), [`docs/phase-1.3.md`](docs/phase-1.3.md), the [gallery/thermal extension](docs/phase-1.3-extension.md) the [envelope/vegetation extension](docs/phase-1.3-envelope-vegetation.md) the [foundations and access study](docs/foundations-and-access.md), the [container patterns and security study](docs/container-patterns.md) and the [gallery arrangements and disclosure notes](docs/gallery-disclosure.md), the [home variation notes](docs/home-variation.md), the [fire-resilience study](docs/fire-resilience.md), the [two-storey study](docs/two-storey.md), the [community resilience and water study](docs/resilience-water.md), the [site-structure and page-weight notes](docs/site-pages.md) for the audit, changes, tests, screenshots and limitations.
 
@@ -23,10 +23,10 @@ Phase 1.5 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 285 main-site static checks
+   node tools/check.mjs       # 289 main-site static checks
    node tools/check-design-lab.mjs   # 722 Design Lab schema, geometry, envelope, vegetation, solar, foundation, gallery and comparison checks
    npm install
-   npm run test:browser       # 103 main-site browser checks
+   npm run test:browser       # 107 main-site browser checks
    npm run test:design-lab    # 166 Design Lab browser checks
    ```
 
@@ -60,7 +60,7 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 258 KB uncompressed / 62 KB compressed. The whole published site is about 3502 KB, under the revised 3.5 MB budget.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 258 KB uncompressed / 62 KB compressed. The whole published site is about 3513 KB, under the revised 3.5 MB budget.
 
 ## The fictional landscape
 

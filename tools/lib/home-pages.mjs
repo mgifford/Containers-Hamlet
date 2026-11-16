@@ -100,7 +100,7 @@ ${nav('../../', 'home')}
   <h1>${esc(h.name)} <span class="home-name">· ${esc(h.short_name || '')}</span></h1>
   <p class="lede">${esc(h.character || '')}</p>
   <figure class="home-config-figure"><img src="../../assets/configurations/${esc(h.id)}.svg" width="520" height="190" alt="${esc(h.name)} configuration diagram: ${esc(m.configuration)}. Concept massing only." loading="eager" decoding="async"><figcaption>${esc(m.configuration)}. The view diagram below shows the 50 m context; this shows the module arrangement.</figcaption></figure>
-  <p class="home-map-link"><a class="action" href="../../hamlet/?building=${encodeURIComponent(h.id)}">See ${esc(h.name)} on the hamlet map</a></p>
+  <p class="home-map-link"><a class="action" href="../../hamlet/?building=${encodeURIComponent(h.id)}">See ${esc(h.name)} on the hamlet map</a>${h.id === 'a' ? ` <a class="action secondary" href="../Cedar-Accessible/">Accessible layout study</a>` : ''}</p>
   <p class="home-share">Share this home: <code>homes/${esc(m.slug)}/</code> · <a href="#orientation">orientation</a> · <a href="#main-view">main view</a> · <a href="#siting">siting</a></p>
   <nav class="on-page" aria-label="On this page">
     <a href="#orientation">Orientation</a>

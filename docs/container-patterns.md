@@ -62,13 +62,13 @@ These sources inspired the patterns and questions. They are not evidence that a 
 
 | Check | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | 201 generated files current |
-| `node tools/check.mjs` | 285 passed, 0 failed |
+| `node tools/build.mjs --check` | 203 generated files current |
+| `node tools/check.mjs` | 289 passed, 0 failed |
 | `node tools/check-design-lab.mjs` | 722 passed, 0 failed |
-| `node tools/browser-check.mjs` | 103 passed, 0 failed |
+| `node tools/browser-check.mjs` | 107 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 166 passed, 0 failed |
 | Main first view | 258 KB uncompressed / 64 KB gzipped |
-| Whole published site | 3502 KB (under 3.5 MB) |
+| Whole published site | 3513 KB (under 3.5 MB) |
 
 Browser checks cover the pattern guide at 320 px and in dark mode, the configuration image, source links, editor paint/shelter persistence, export/import and axe-core.
 

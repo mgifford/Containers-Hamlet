@@ -5,3 +5,5 @@
 - `phase15-costs.jpg`: cost categories and the user-entered worksheet.
 
 No usability test has been conducted. These are screenshots of the site, not evidence of resident testing.
+
+- `cedar-accessible.jpg`: the two-option Cedar accessible layout study.
