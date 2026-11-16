@@ -103,13 +103,13 @@ export function generate() {
   };
   put('site/data/terrain.json', JSON.stringify(terrainPublic, null, 2) + '\n');
   const HOME_META = {
-    a: { slug: 'Cedar-1-simple', configuration: 'One container · simple' },
-    b: { slug: 'Birch-2-wide', configuration: 'Two containers · wide pair' },
-    c: { slug: 'Pine-1-simple', configuration: 'One container · simple' },
-    d: { slug: 'Moss-2-wide', configuration: 'Two containers · wide pair' },
-    e: { slug: 'Fern-1-simple', configuration: 'One container · simple' },
-    f: { slug: 'Juniper-1-simple', configuration: 'One container · simple' },
-    lodge: { slug: 'Lodge-3-community', configuration: 'Two containers + hall · community' }
+    a: { slug: 'Cedar-1-simple', name: 'Cedar', configuration: 'One container · simple' },
+    b: { slug: 'Birch-2-wide', name: 'Birch', configuration: 'Two containers · wide pair' },
+    c: { slug: 'Pine-1-simple', name: 'Pine', configuration: 'One container · simple' },
+    d: { slug: 'Moss-2-wide', name: 'Moss', configuration: 'Two containers · wide pair' },
+    e: { slug: 'Fern-1-simple', name: 'Fern', configuration: 'One container · simple' },
+    f: { slug: 'Juniper-1-simple', name: 'Juniper', configuration: 'One container · simple' },
+    lodge: { slug: 'Lodge-3-community', name: 'Lodge', configuration: 'Two containers + hall · community' }
   };
   const homesPublic = {
     generated_by: 'tools/build.mjs',
@@ -129,6 +129,7 @@ export function generate() {
     const meta = HOME_META[h.id] || { slug: h.id, configuration: 'Home concept' };
     put(`site/homes/${meta.slug}/index.html`, homePage(h, site, meta));
     put(`site/homes/${h.id}/index.html`, legacyHomeRedirect(meta.slug, h.name));
+    put(`site/homes/${meta.name}/index.html`, legacyHomeRedirect(meta.slug, h.name));
   });
 
   /* ---------------- Container Home Design Lab ---------------- */

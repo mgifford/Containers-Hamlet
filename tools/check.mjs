@@ -100,6 +100,9 @@ for (const [id, slug] of Object.entries(HOME_PAGES)) {
   ok(/class="heading-link"/.test(page) && /class="on-page"/.test(page), `home page ${slug} exposes section permalinks`);
   const redirect = read(`site/homes/${id}/index.html`);
   ok(/http-equiv="refresh"/.test(redirect) && redirect.indexOf(`../${slug}/`) >= 0, `legacy /homes/${id}/ redirects to ${slug}`);
+  const shortName = { a: 'Cedar', b: 'Birch', c: 'Pine', d: 'Moss', e: 'Fern', f: 'Juniper', lodge: 'Lodge' }[id];
+  const nameRedirect = read(`site/homes/${shortName}/index.html`);
+  ok(/http-equiv="refresh"/.test(nameRedirect) && nameRedirect.indexOf(`../${slug}/`) >= 0, `/homes/${shortName}/ redirects to ${slug}`);
 }
 const homesIndexHtml = read('site/homes/index.html');
 ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && Object.values(HOME_PAGES).every((slug) => homesIndexHtml.indexOf(`href="${slug}/"`) >= 0), 'homes index links all seven descriptive home pages');
