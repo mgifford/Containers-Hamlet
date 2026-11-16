@@ -85,10 +85,11 @@ ok(site.drainage.length >= 2 && site.drainage.every((d) => d.points.length > 2),
 ok(analysis.potential_areas.count > 0 && analysis.potential_areas.points.every(([x, y]) => pointInPolygon([x, y], site.parcel.polygon)), `${analysis.potential_areas.count} potential building cells are inside the parcel`);
 
 const homeHtml = read('site/index.html');
-ok(/<h2 id="explore-title">A 15-acre woodland/.test(homeHtml) && /15 acres \(6\.07 ha\)/.test(homeHtml) && !/13\.5|5\.46/.test(homeHtml.replace(/<svg[\s\S]*?<\/svg>/g, '')), 'the public site uses the 15-acre woodland area');
-ok(/class="map-layout"[\s\S]*?<aside class="map-side" id="map-key" tabindex="-1" aria-labelledby="map-key-title">[\s\S]*?<\/aside>[\s\S]*?<\/div>/.test(homeHtml), 'the map key is a sibling of the map inside the map layout');
-ok(/<details|<div id="building-details" class="details" role="region" aria-label="Selected building details" tabindex="0">/.test(homeHtml), 'the selected-building details are a labelled, keyboard-scrollable region');
-ok(/class="skip skip-local" href="#map-key"/.test(homeHtml), 'the map has a local skip link to its key');
+const hamletHtml = read('site/hamlet/index.html');
+ok(/<h1 id="explore-title">A 15-acre woodland/.test(hamletHtml) && /15 acres \(6\.07 ha\)/.test(hamletHtml) && !/13\.5|5\.46/.test(hamletHtml.replace(/<svg[\s\S]*?<\/svg>/g, '')), 'the hamlet map page uses the 15-acre woodland area');
+ok(/class="map-layout"[\s\S]*?<aside class="map-side" id="map-key" tabindex="-1" aria-labelledby="map-key-title">[\s\S]*?<\/aside>[\s\S]*?<\/div>/.test(hamletHtml), 'the map key is a sibling of the map inside the map layout');
+ok(/<details|<div id="building-details" class="details" role="region" aria-label="Selected building details" tabindex="0">/.test(hamletHtml), 'the selected-building details are a labelled, keyboard-scrollable region');
+ok(/class="skip skip-local" href="#map-key"/.test(hamletHtml), 'the map has a local skip link to its key');
 const visibleText = homeHtml.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]+>/g, ' ');
 ok(!/3\.66|12\.59|26\.7\s*m²|35\.6\s*m²/.test(visibleText), 'general descriptions avoid two-decimal dimensions and exact floor areas');
 ok(/~12\.6|~3\.7/.test(visibleText), 'general descriptions use approximate dimensions');
@@ -105,6 +106,11 @@ for (const [id, slug] of Object.entries(HOME_PAGES)) {
   ok(/http-equiv="refresh"/.test(nameRedirect) && nameRedirect.indexOf(`../${slug}/`) >= 0, `/homes/${shortName}/ redirects to ${slug}`);
   if (id === 'e') ok(/Fern-2-wide/.test(read('site/homes/Fern-1-simple/index.html')), 'old Fern-1-simple URL redirects to Fern-2-wide');
 }
+const cabinPage = read('site/cabin-a/index.html');
+const lodgePage = read('site/lodge/index.html');
+ok(/<h1>Cabin A · The Retreat<\/h1>/.test(cabinPage) && /id="plan"/.test(cabinPage) && /id="rooms"/.test(cabinPage) && /models\/cabin-a\/floor-plan\.svg/.test(cabinPage), 'Cabin A has a dedicated drawings-and-rooms page');
+ok(/<h1>The common lodge<\/h1>/.test(lodgePage) && /id="plan"/.test(lodgePage) && /id="rooms"/.test(lodgePage) && /models\/lodge\/floor-plan\.svg/.test(lodgePage), 'the lodge has a dedicated drawings-and-rooms page');
+ok(/href="hamlet\/"/.test(homeHtml) && !/id="site-map"/.test(homeHtml), 'the landing page links the map page and no longer inlines the map');
 const homesIndexHtml = read('site/homes/index.html');
 ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && Object.values(HOME_PAGES).every((slug) => homesIndexHtml.indexOf(`href="${slug}/"`) >= 0), 'homes index links all seven descriptive home pages');
 ok((homeHtml.match(/class="home-index-card"/g) || []).length === 7 && /homes\/Pine-1-simple\//.test(homeHtml), 'the main page links the seven descriptive home pages');

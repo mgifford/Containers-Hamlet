@@ -17,13 +17,14 @@ This extension starts splitting the dense single-page hamlet into shareable page
   - `#drawings`
 - Each heading has a visible permalink `#`; the page also has an **On this page** navigation.
 - The landing page now shows **seven compact home cards** instead of seven long hidden briefs. The cards are lazy-loaded and link to the dedicated pages.
-- The map's “Read the full home brief” link now goes to the matching home page.
+- The map moved to `/hamlet/`; Cabin A and the lodge drawings/rooms moved to `/cabin-a/` and `/lodge/`.
+- The map's “Read the full home brief” link goes to the matching home page.
 - Legacy `#home-a` … `#home-lodge` anchors remain on the landing-page cards.
 - Home pages use the existing view diagrams with `loading="lazy"`; all text and anchors work without JavaScript.
 
 ## Why the home page was split
 
-The landing page was carrying the whole site: hero, day-in-the-life, a 158 KB inline map, seven long home briefs, Cabin A drawings and rooms, the lodge drawings and rooms, living/nature/materials, downloads, and the Design Lab entry. The map and Cabin A/lodge still remain on the landing page; the seven home briefs moved to their own pages first. The next split should move the map to `/hamlet/` and the Cabin A/lodge drawing sections to their own pages.
+The landing page was carrying the whole site: hero, day-in-the-life, a 158 KB inline map, seven long home briefs, Cabin A drawings and rooms, the lodge drawings and rooms, living/nature/materials, downloads, and the Design Lab entry. The home briefs moved first. The map now lives at `/hamlet/` and the drawings/rooms at `/cabin-a/` and `/lodge/`; the landing page keeps a short map teaser, the Home cards, the Look inside explorer and the wider brief.
 
 ## What the page budget measures
 
@@ -44,14 +45,13 @@ Current limits:
 
 | Measure | Limit | Current |
 |---|---:|---:|
-| Initial view, compressed | 120 KB | 96 KB |
-| Initial view, uncompressed | 400 KB | 392 KB |
-| Whole published site | 3.2 MB | 3135 KB |
+| Initial view, compressed | 120 KB | 62 KB |
+| Initial view, uncompressed | 400 KB | 235 KB |
+| Whole published site | 3.2 MB | 3145 KB |
 
-The initial view is under 400 KB by about **20 KB**. The whole site is under 3.2 MB by about **200 KB**. Adding another substantial page or gallery item will still require either:
+The initial view is under 400 KB by about **165 KB**. The whole site is under 3.2 MB by about **131 KB**. Adding another substantial page or gallery item will still require either:
 
-- moving the inline map and its optional layers behind a route or lazy request;
-- removing or compressing the duplicate full-size site-plan asset;
+- compressing the duplicate full-size site-plan asset;
 - reducing the optional potential-building/tree layers; or
 - deliberately raising the total budget above 3.2 MB.
 
@@ -69,20 +69,18 @@ Lazy loading improves **when bytes are requested**, not the total byte count. A 
 
 | Check | Result |
 |---|---|
-| `node tools/build.mjs --check` | 159 generated files current |
-| `node tools/check.mjs` | 244 passed, 0 failed |
+| `node tools/build.mjs --check` | 162 generated files current |
+| `node tools/check.mjs` | 246 passed, 0 failed |
 | `node tools/check-design-lab.mjs` | 712 passed, 0 failed |
-| `node tools/browser-check.mjs` | 74 passed, 0 failed |
+| `node tools/browser-check.mjs` | 79 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 150 passed, 0 failed |
-| Initial view | 392 KB / 96 KB compressed |
-| Whole site | 3135 KB |
+| Initial view | 235 KB / 62 KB compressed |
+| Whole site | 3145 KB |
 
 Browser checks cover the homes index, all seven cards, the Cabin C page, `#main-view`, each section ID, lazy card diagrams, no-JavaScript cards and axe-core.
 
 ## Deferred
 
-- Move the map and its layers to `/hamlet/`.
-- Move Cabin A/lodge drawings and rooms to their own pages.
 - Split living/nature/materials/downloads if still needed after the map and model pages move.
 - Reduce or raise the whole-site budget.
 - Real screen-reader/disabled-person testing.

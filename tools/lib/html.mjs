@@ -257,7 +257,7 @@ export function modelCards(models, images) {
           <li>${model.bays.filter((b) => b.type === 'container').length} reused container module${model.bays.filter((b) => b.type === 'container').length === 1 ? '' : 's'}${model.bays.some((b) => b.type === 'hall') ? ' and a timber hall' : ''}.</li>
           <li>Continuous external insulation, ventilated rainscreen and a replaceable envelope. Concept only.</li>
         </ul>
-        <p><a href="#${spec.id === 'lodge' ? 'lodge' : 'cabin'}">Drawings, rooms and downloads</a></p>
+        <p><a href="${spec.id === 'lodge' ? 'lodge/' : 'cabin-a/'}">Drawings, rooms and downloads</a></p>
       </div>
     </article>`;
   });

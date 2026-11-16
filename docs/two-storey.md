@@ -56,13 +56,13 @@ No structural, fire, egress, foundation, height or zoning compliance is claimed.
 
 | Check | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | 159 generated files current |
-| `node tools/check.mjs` | 244 passed, 0 failed |
+| `node tools/build.mjs --check` | 162 generated files current |
+| `node tools/check.mjs` | 246 passed, 0 failed |
 | `node tools/check-design-lab.mjs` | 712 passed, 0 failed |
-| `node tools/browser-check.mjs` | 74 passed, 0 failed |
+| `node tools/browser-check.mjs` | 79 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 150 passed, 0 failed |
-| Initial view | 392 KB / 96 KB compressed |
-| Whole site | 3135 KB |
+| Initial view | 235 KB / 62 KB compressed |
+| Whole site | 3145 KB |
 
 ## Screenshot
 

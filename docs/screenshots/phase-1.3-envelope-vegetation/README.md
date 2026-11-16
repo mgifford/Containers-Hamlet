@@ -60,3 +60,9 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 ## Two-storey study
 
 - `two-storey-study.jpg`: three two-storey options with structural, fire, egress and hillside questions.
+
+## Landing-page split
+
+- `split-overview.jpg`: the shorter landing page.
+- `split-hamlet.jpg`: the map on its own `/hamlet/` page.
+- `split-cabin-a.jpg`: Cabin A drawings and rooms on `/cabin-a/`.

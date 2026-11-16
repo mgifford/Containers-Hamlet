@@ -23,10 +23,10 @@ Phase 1.3 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 244 main-site static checks
+   node tools/check.mjs       # 246 main-site static checks
    node tools/check-design-lab.mjs   # 704 Design Lab schema, geometry, envelope, vegetation, solar, foundation, gallery and comparison checks
    npm install
-   npm run test:browser       # 74 main-site browser checks
+   npm run test:browser       # 79 main-site browser checks
    npm run test:design-lab    # 150 Design Lab browser checks
    ```
 
@@ -48,7 +48,7 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 392 KB uncompressed / 96 KB compressed. The whole published site is about 3135 KB, under the revised 3.2 MB budget.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 235 KB uncompressed / 62 KB compressed. The whole published site is about 3145 KB, under the revised 3.2 MB budget.
 
 ## The fictional landscape
 
