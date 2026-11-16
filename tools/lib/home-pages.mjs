@@ -10,10 +10,10 @@ function nav(prefix, current) {
   <a class="brand" href="${prefix}index.html">Containers Hamlet</a>
   <nav aria-label="Main">
     <a href="${prefix}index.html#day">The day</a>
-    <a href="${prefix}index.html#explore">Hamlet map</a>
+    <a href="${prefix}hamlet/">Hamlet map</a>
     <a href="${prefix}homes/"${current === 'homes' ? ' aria-current="page"' : ''}>Homes</a>
-    <a href="${prefix}index.html#cabin">Cabin A</a>
-    <a href="${prefix}index.html#lodge">Lodge</a>
+    <a href="${prefix}cabin-a/">Cabin A</a>
+    <a href="${prefix}lodge/">Lodge</a>
     <a href="${prefix}design-lab/">Design Lab</a>
   </nav>
 </header>`;
@@ -59,7 +59,7 @@ ${nav('../', 'homes')}
   <p class="lede">The map is a shared overview. Each home has its own page for the orientation, main view, path, winter notes and siting checks, with anchors so a particular section can be shared directly.</p>
   <p class="notice"><strong>Fictional concepts.</strong> Placements, views and checks are illustrative. No land rights, building permission or privacy guarantee is implied.</p>
   <div class="home-index-grid">${cards}</div>
-  <p><a class="action" href="../index.html#explore">Open the hamlet map</a> <a class="action secondary" href="../design-lab/">Design Lab</a></p>
+  <p><a class="action" href="../hamlet/">Open the hamlet map</a> <a class="action secondary" href="../design-lab/">Design Lab</a></p>
 </main>
 ${footer('../')}
 </body>
@@ -163,7 +163,7 @@ ${nav('../../', 'home')}
 
   <section aria-labelledby="drawings">
     ${heading('drawings', 'Drawings and next steps')}
-    <p><a href="../../index.html#${concept}">${esc(conceptLabel)}</a> · <a href="../../index.html#inside">Look inside ${esc(h.name)}</a> · <a href="../../index.html#explore">Show ${esc(h.name)} on the hamlet map</a> · <a href="../../design-lab/">Design Lab</a></p>
+    <p><a href="../../${concept === 'cabin' ? 'cabin-a' : 'lodge'}/">${esc(conceptLabel)}</a> · <a href="../../index.html#inside">Look inside ${esc(h.name)}</a> · <a href="../../hamlet/">Show ${esc(h.name)} on the hamlet map</a> · <a href="../../design-lab/">Design Lab</a></p>
     <p class="small">This page is a brief, not a construction drawing. No photograph, stock image or proprietary design is reproduced.</p>
   </section>
 </main>

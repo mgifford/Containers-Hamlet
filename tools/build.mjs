@@ -21,6 +21,7 @@ import { vegetationComparisonSVG } from './lib/design-systems.mjs';
 import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
+import { modelPage } from './lib/model-pages.mjs';
 import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
 import { twoStoreyPage, twoStoreySVG } from './lib/design-two-storey.mjs';
 import { comparePage } from './lib/design-compare.mjs';
@@ -296,6 +297,13 @@ export function generate() {
 
   const html = readText('site/index.html');
   const mapSvg = renderSitePlan(site, models, analysis, layers, { inline: true, idPrefix: 'map-' });
+  const hamletTemplate = readText('site/hamlet/index.html');
+  const hamlet = replaceFragments(hamletTemplate, {
+  });
+  hamlet.missing.forEach((n) => issues.push({ level: 'error', message: `site/hamlet/index.html is missing the <!-- gen:${n} --> marker` }));
+  put('site/hamlet/index.html', hamlet.html);
+  put('site/cabin-a/index.html', modelPage(models['cabin-a'], sizes['cabin-a'], 'cabin'));
+  put('site/lodge/index.html', modelPage(models.lodge, sizes.lodge, 'lodge'));
   const diagrams = {};
   site.buildings.forEach((b) => {
     const svg = renderViewDiagram(site, models, analysis, b);
@@ -311,14 +319,6 @@ export function generate() {
   };
   const sizeOf = (id) => Object.fromEntries(Object.entries(sizes[id]).map(([k, v]) => [k, v]));
   const { html: page, missing } = replaceFragments(html, {
-    'site-map': mapSvg,
-    'site-checks': siteChecks(site, analysis),
-    'cabin-a-facts': factsList(models['cabin-a']),
-    'cabin-a-drawings': drawingsBlock('cabin-a', 'Cabin A', sizeOf('cabin-a')),
-    'cabin-a-rooms': roomsTable(models['cabin-a'], 'Cabin A rooms, clear dimensions inside the lining'),
-    'lodge-facts': factsList(models.lodge),
-    'lodge-drawings': drawingsBlock('lodge', 'Common lodge', sizeOf('lodge')),
-    'lodge-rooms': roomsTable(models.lodge, 'Common lodge rooms, clear dimensions inside the lining'),
     passport: passportTables(BUILDINGS.map((id) => models[id])),
     provenance: provenanceList(BUILDINGS.map((id) => models[id]), site),
     reviews: reviewsTables(BUILDINGS.map((id) => models[id])),
@@ -327,14 +327,12 @@ export function generate() {
       const sz = svgSize(impression);
       return `<img src="assets/lake-impression.svg" width="${sz.width}" height="${sz.height}" alt="Concept impression of a lake-edge home at dawn: a low timber-clad cabin with a solar roof and a screened porch faces a rocky Canadian Shield lake, framed by cedar and pine." decoding="async">`;
     })(),
-    'landscape-facts': landscapeFacts(site, analysis),
     'home-tabs': '',
     'home-dossiers': homeCards(homesPublic.buildings, HOME_META),
     'model-cards': modelCards(BUILDINGS.map((id) => models[id]), {
       'cabin-a': img('cabin-a', 'axonometric.svg', 'Cabin A seen from the south-west: a long timber-clad container home with solar panels, a screened porch, an access ramp and a planted trellis.').replace(' loading="lazy"', ''),
       lodge: img('lodge', 'axonometric.svg', 'The common lodge seen from the south-west: two timber-clad modules either side of a taller hall with clerestory windows, solar panels, a screened porch and two ramps.').replace(' loading="lazy"', ''),
     }),
-    'lodge-image': img('lodge', 'axonometric.svg', 'The common lodge seen from the south-west: two timber-clad modules either side of a taller hall with clerestory windows, solar panels, a screened porch, an entry canopy and two ramps.'),
     'explorer-fallback': img('cabin-a', 'cutaway.svg', 'Cabin A cutaway with the roof removed and walls cut at 1.2 m, showing Sleeping, Living, Kitchenette and Bathroom from the south-west.'),
   });
   missing.forEach((n) => issues.push({ level: 'error', message: `site/index.html is missing the <!-- gen:${n} --> marker` }));

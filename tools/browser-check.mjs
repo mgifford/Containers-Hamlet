@@ -124,33 +124,41 @@ try {
   ok(hidden.length === 0, `every focused element is scrolled into view and not obscured${hidden.length ? ': ' + hidden.map((s) => s.label).join(', ') : ''}`);
   await walk.context.close();
 
-  section('Keyboard: operating the controls');
-  const detailsHeightBefore = await page.evaluate(() => document.querySelector('#building-details').getBoundingClientRect().height);
-  await page.focus('[data-choice="c"]');
-  await page.keyboard.press('Space');
-  ok(await page.getAttribute('[data-choice="c"]', 'aria-pressed') === 'true', 'Space selects Cabin C (aria-pressed)');
-  ok(/Cabin C, permanent home/.test(await page.textContent('#selected')), 'the status message announces the selection');
-  ok(await page.evaluate(() => document.querySelector('#map-building-c').classList.contains('selected')), 'the map highlights Cabin C');
-  ok(/from the shoreline/.test(await page.textContent('#building-details')) && /Main view/.test(await page.textContent('#building-details')), 'the details panel lists the view and computed siting checks');
-  ok(Math.abs(await page.evaluate(() => document.querySelector('#building-details').getBoundingClientRect().height) - detailsHeightBefore) < 2, 'selecting a building does not resize the details panel');
-  const mapKeyLayout = await page.evaluate(() => { const m = document.querySelector('.map').getBoundingClientRect(); const k = document.querySelector('#map-key').getBoundingClientRect(); return { mapRight: m.right, keyLeft: k.left, mapTop: m.top, keyTop: k.top }; });
+  section('Map page: keyboard and pointer');
+  const map = await open('hamlet/');
+  const mp = map.page;
+  const detailsHeightBefore = await mp.evaluate(() => document.querySelector('#building-details').getBoundingClientRect().height);
+  await mp.focus('[data-choice="c"]');
+  await mp.keyboard.press('Space');
+  ok(await mp.getAttribute('[data-choice="c"]', 'aria-pressed') === 'true', 'Space selects Cabin C (aria-pressed)');
+  ok(/Cabin C, permanent home/.test(await mp.textContent('#selected')), 'the status message announces the selection');
+  ok(await mp.evaluate(() => document.querySelector('#map-building-c').classList.contains('selected')), 'the map highlights Cabin C');
+  ok(/from the shoreline/.test(await mp.textContent('#building-details')) && /Main view/.test(await mp.textContent('#building-details')), 'the details panel lists the view and computed siting checks');
+  ok(Math.abs(await mp.evaluate(() => document.querySelector('#building-details').getBoundingClientRect().height) - detailsHeightBefore) < 2, 'selecting a building does not resize the details panel');
+  const mapKeyLayout = await mp.evaluate(() => { const m = document.querySelector('.map').getBoundingClientRect(); const k = document.querySelector('#map-key').getBoundingClientRect(); return { mapRight: m.right, keyLeft: k.left, mapTop: m.top, keyTop: k.top }; });
   ok(mapKeyLayout.keyLeft >= mapKeyLayout.mapRight - 2 && Math.abs(mapKeyLayout.keyTop - mapKeyLayout.mapTop) < 80, 'the map key sits beside the map');
-  await page.focus('.skip-local');
-  await page.waitForTimeout(120);
-  const localSkip = await page.evaluate(() => { const e = document.activeElement; const r = e.getBoundingClientRect(); return { cls: e.className, top: r.top, href: e.getAttribute('href') }; });
+  await mp.focus('.skip-local');
+  await mp.waitForTimeout(120);
+  const localSkip = await mp.evaluate(() => { const e = document.activeElement; return { cls: e.className, href: e.getAttribute('href') }; });
   ok(/skip-local/.test(localSkip.cls) && localSkip.href === '#map-key', 'the local skip link is focusable and targets the map key');
-  await page.focus('[data-choice="lodge"]');
-  await page.keyboard.press('Enter');
-  ok(await page.getAttribute('[data-choice="c"]', 'aria-pressed') === 'false' && await page.getAttribute('[data-choice="lodge"]', 'aria-pressed') === 'true', 'Enter selects the lodge and releases Cabin C');
-  await page.focus('[data-layer="trees"]');
-  await page.keyboard.press('Space');
-  ok(await page.evaluate(() => getComputedStyle(document.querySelector('#map-layer-trees')).display === 'none'), 'map layer checkbox hides the tree canopy');
-  await page.keyboard.press('Space');
-  await page.focus('[data-layer="terrain"]');
-  await page.keyboard.press('Space');
-  ok(await page.evaluate(() => getComputedStyle(document.querySelector('#map-layer-terrain')).display === 'none'), 'map layer checkbox hides the terrain relief');
-  await page.keyboard.press('Space');
-  ok(await page.evaluate(() => getComputedStyle(document.querySelector('#map-layer-potential')).display === 'none'), 'the illustrative potential-building layer starts hidden');
+  await mp.focus('[data-choice="lodge"]');
+  await mp.keyboard.press('Enter');
+  ok(await mp.getAttribute('[data-choice="c"]', 'aria-pressed') === 'false' && await mp.getAttribute('[data-choice="lodge"]', 'aria-pressed') === 'true', 'Enter selects the lodge and releases Cabin C');
+  await mp.focus('[data-layer="trees"]');
+  await mp.keyboard.press('Space');
+  ok(await mp.evaluate(() => getComputedStyle(document.querySelector('#map-layer-trees')).display === 'none'), 'map layer checkbox hides the tree canopy');
+  await mp.keyboard.press('Space');
+  await mp.focus('[data-layer="terrain"]');
+  await mp.keyboard.press('Space');
+  ok(await mp.evaluate(() => getComputedStyle(document.querySelector('#map-layer-terrain')).display === 'none'), 'map layer checkbox hides the terrain relief');
+  await mp.keyboard.press('Space');
+  ok(await mp.evaluate(() => getComputedStyle(document.querySelector('#map-layer-potential')).display === 'none'), 'the illustrative potential-building layer starts hidden');
+  await mp.click('[data-choice="a"]');
+  const homeHref = await mp.getAttribute('#building-details a', 'href');
+  ok(/homes\/Cedar-1-simple\/$/.test(homeHref), 'the map details link points to the descriptive Cedar home page');
+  await axe(mp, 'hamlet map page');
+  await shot(mp, 'hamlet-map', true);
+  await map.context.close();
 
   section('Dedicated home pages');
   const homesIndex = await open('homes/');
@@ -172,19 +180,17 @@ try {
   await pine.context.close();
   await homesIndex.context.close();
 
-  section('Main-page home cards and drawings');
+  section('Main-page home cards and Cabin A page');
   ok(await page.locator('#homes .home-index-card').count() === 7, 'the main page shows seven home cards');
   ok(await page.locator('#homes .home-card-image img').first().evaluate((i) => i.getAttribute('loading') === 'lazy'), 'home card diagrams are lazy-loaded');
-  await page.click('[data-choice="a"]');
-  const homeHref = await page.getAttribute('#building-details a', 'href');
-  ok(/homes\/Cedar-1-simple\/$/.test(homeHref), 'the map details link points to the descriptive Cedar home page');
-
-  await page.focus('input[name="cabin-a-view"]:checked');
-  ok(await visible(page, '#cabin-a-floor-plan') && !(await visible(page, '#cabin-a-elevations')), 'only the chosen drawing is shown');
-  await page.keyboard.press('ArrowRight');
-  ok(await visible(page, '#cabin-a-elevations') && !(await visible(page, '#cabin-a-floor-plan')), 'arrow key switches the drawing to elevations');
-  await page.keyboard.press('ArrowRight');
-  ok(await visible(page, '#cabin-a-section'), 'arrow key switches the drawing to the section');
+  const cabin = await open('cabin-a/');
+  ok(cabin.errors.length === 0, `Cabin A page: no console errors${cabin.errors.length ? ': ' + cabin.errors.join(' | ') : ''}`);
+  const cabinState = await cabin.page.evaluate(() => ({ plan: !!document.querySelector('#plan img'), drawings: document.querySelectorAll('.model-page-figure img').length, rooms: document.querySelectorAll('#rooms table tbody tr').length }));
+  ok(cabinState.plan && cabinState.drawings === 4 && cabinState.rooms >= 4, 'Cabin A page has the plan, drawings and room schedule');
+  ok(await cabin.page.evaluate(() => document.querySelector('#plan img').naturalWidth > 0), 'Cabin A page plan loads');
+  await axe(cabin.page, 'Cabin A page');
+  await shot(cabin.page, 'cabin-a-page', true);
+  await cabin.context.close();
 
   const label = () => page.getAttribute('#explorer-canvas svg', 'aria-label');
   ok(/Cabin A: Viewed from the south-west, walls cut at 1\.2 m/.test(await label()), 'explorer renders an SVG with a text description');
@@ -217,9 +223,6 @@ try {
   ok(/Cabin E:/.test(await label()) && await page.$('button[data-room="annex-studio"]') !== null, 'Fern differs from Juniper with a two-container model');
 
   await page.locator('#homes').screenshot({ path: SHOTS ? path.join(SHOTS, 'desktop-homes.png') : undefined }).catch(() => {});
-  await page.click('[data-choice="a"]');
-  await page.click('#building-details a[data-explore]');
-  ok(/Cabin A:/.test(await label()), '"Look inside" from the map opens that building in the explorer');
   await axe(page, 'after interaction');
   ok(errors.length === 0, `no errors during interaction${errors.length ? ': ' + errors.join(' | ') : ''}`);
   ok(await page.evaluate(() => document.getAnimations().length === 0), 'no running animations');
@@ -261,12 +264,12 @@ try {
 
   /* ------------------------------------------------------------ */
   section('Dark scheme and forced colours');
-  ({ context, page } = await open({ colorScheme: 'dark' }));
+  ({ context, page } = await open('hamlet/', { colorScheme: 'dark' }));
   await page.click('[data-choice="b"]');
   await axe(page, 'dark scheme');
   await shot(page, 'dark-top');
   await context.close();
-  ({ context, page, errors } = await open({ forcedColors: 'active' }));
+  ({ context, page, errors } = await open('hamlet/', { forcedColors: 'active' }));
   await page.click('[data-choice="b"]');
   ok(await page.evaluate(() => parseFloat(getComputedStyle(document.querySelector('[data-choice="b"]')).borderTopWidth) >= 3), 'forced colours: pressed buttons keep a visible border');
   ok(errors.length === 0, 'forced colours: no errors');
@@ -280,12 +283,20 @@ try {
   page = await context.newPage();
   await page.goto(BASE, { waitUntil: 'load' });
   ok(await page.evaluate(() => !document.documentElement.classList.contains('js') && !window.EcoModel), 'page loaded with its scripts blocked');
-  for (const id of ['cabin-a-floor-plan', 'cabin-a-elevations', 'cabin-a-section', 'lodge-floor-plan', 'lodge-elevations', 'lodge-section']) {
-    ok(await visible(page, `#${id}`), `#${id} is shown`);
-  }
   ok(await visible(page, '#explorer-canvas img'), 'static cutaway image stands in for the explorer');
   ok(await page.evaluate(() => [...document.querySelectorAll('[data-enhance]')].every((e) => e.offsetParent === null)), 'script-only controls stay hidden');
-  ok(await page.evaluate(() => document.querySelectorAll('table').length >= 7), 'all data tables are present');
+  await page.goto(BASE + 'cabin-a/');
+  for (const id of ['plan', 'elevations', 'section', 'axonometric']) {
+    ok(await visible(page, `#${id} img`), `Cabin A #${id} drawing is shown without JavaScript`);
+  }
+  ok(await page.evaluate(() => document.querySelectorAll('#rooms table').length === 1), 'Cabin A room schedule is present without JavaScript');
+  await page.goto(BASE + 'lodge/');
+  for (const id of ['plan', 'elevations', 'section', 'axonometric']) {
+    ok(await visible(page, `#${id} img`), `Lodge #${id} drawing is shown without JavaScript`);
+  }
+  ok(await page.evaluate(() => document.querySelectorAll('#rooms table').length === 1), 'Lodge room schedule is present without JavaScript');
+  await axe(page, 'no JavaScript model page');
+  await page.goto(BASE);
   ok(await page.evaluate(() => [...document.querySelectorAll('#homes .home-index-card')].filter((e) => e.offsetParent !== null).length === 7), 'all seven home cards are visible without JavaScript');
   ok(await page.evaluate(() => document.querySelectorAll('#homes .home-card-image img').length === 7), 'all seven home-card view diagrams are present without JavaScript');
   await axe(page, 'no JavaScript');
