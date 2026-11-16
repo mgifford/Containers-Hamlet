@@ -22,6 +22,7 @@ import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { firePage, fireZonesSVG } from './lib/design-fire.mjs';
+import { twoStoreyPage, twoStoreySVG } from './lib/design-two-storey.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
@@ -165,7 +166,9 @@ export function generate() {
   put('site/design-lab/ground/index.html', groundPage(designLab.concepts));
   put('site/design-lab/patterns/index.html', patternsPage());
   put('site/design-lab/fire/index.html', firePage());
+  put('site/design-lab/two-storey/index.html', twoStoreyPage());
   put('site/design-lab/systems/fire-zones.svg', fireZonesSVG());
+  put('site/design-lab/systems/two-storey-options.svg', twoStoreySVG());
   put('site/design-lab/systems/container-patterns.svg', patternsSVG());
   put('site/design-lab/systems/footbridge.svg', footbridgeSVG());
   put('site/design-lab/systems/vegetation-comparison.svg', vegetationComparisonSVG());

@@ -58,6 +58,7 @@ export function firePage() {
     <a href="../ground/">Ground</a>
     <a href="../patterns/">Patterns</a>
     <a href="../fire/" aria-current="page">Fire</a>
+    <a href="../two-storey/">Two-storey</a>
     <a href="../compare/">Compare</a>
     <a href="../../../index.html">Main site</a>
   </nav>

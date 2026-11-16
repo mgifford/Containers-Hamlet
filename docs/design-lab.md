@@ -9,6 +9,7 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 - **Ground guide:** `/design-lab/ground/` — Ontario foundation options, no-compaction and a footbridge concept
 - **Patterns guide:** `/design-lab/patterns/` — container configurations, paint, doors as shelter and security
 - **Fire guide:** `/design-lab/fire/` — steel-hull limits, defensible space, ember-resistant detailing, access and water
+- **Two-storey study:** `/design-lab/two-storey/` — three stacking options with structural, fire, egress and hillside questions
 - **Comparison:** `/design-lab/compare/`
 - **Schema:** `containers-hamlet-design/v1.0`
 - **Legacy import:** `containers-hamlet-editor/v0.1` (the supplied starter schema)

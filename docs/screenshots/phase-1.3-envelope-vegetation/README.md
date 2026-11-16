@@ -56,3 +56,7 @@ See [`../../phase-1.3-envelope-vegetation.md`](../../phase-1.3-envelope-vegetati
 ## Fire resilience
 
 - `fire-guide.jpg`: steel-hull limits, defensible space, building measures and code context.
+
+## Two-storey study
+
+- `two-storey-study.jpg`: three two-storey options with structural, fire, egress and hillside questions.
