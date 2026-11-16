@@ -109,7 +109,7 @@ export function generate() {
     d: { slug: 'Moss-2-wide', name: 'Moss', configuration: 'Two containers · wide pair' },
     e: { slug: 'Fern-1-simple', name: 'Fern', configuration: 'One container · simple' },
     f: { slug: 'Juniper-1-simple', name: 'Juniper', configuration: 'One container · simple' },
-    lodge: { slug: 'Lodge-3-community', name: 'Lodge', configuration: 'Two containers + hall · community' }
+    lodge: { slug: 'Lodge-3-community', name: 'Common-Lodge', configuration: 'Two containers + hall · community' }
   };
   const homesPublic = {
     generated_by: 'tools/build.mjs',
