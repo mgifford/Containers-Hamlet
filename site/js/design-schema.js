@@ -169,7 +169,7 @@
       if (!isNum(d.solar_array.azimuth_deg) || d.solar_array.azimuth_deg < 0 || d.solar_array.azimuth_deg > 360) err('solar_array azimuth must be 0–360 degrees.');
     }
     if (d.roof_form) {
-      if (d.roof_form.type !== 'south-shed') err('Only the south-shed roof form is supported.');
+      if (['south-shed','gable'].indexOf(d.roof_form.type) < 0) err('Only the south-shed and gable roof forms are supported.');
       if (!isNum(d.roof_form.pitch_deg) || d.roof_form.pitch_deg < 0 || d.roof_form.pitch_deg > 45) err('Roof pitch must be 0–45 degrees.');
       if (d.roof_form.solar_side !== 'south') err('Roof solar must be on the south side.');
     }

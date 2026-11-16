@@ -30,9 +30,25 @@
     "note": "Typical published dimensions for a 40-foot high cube. Measure the actual units."
   },
   "bays": [
-    { "id": "north", "type": "container", "name": "North service module" },
-    { "id": "hall", "type": "hall", "name": "Gathering hall", "width_m": 6.0, "roof_underside_m": 4.1, "roof_thickness_m": 0.4, "structure": "Timber frame (glulam or reclaimed heavy timber) spanning between the modules" },
-    { "id": "south", "type": "container", "name": "South service module" }
+    {
+      "id": "north",
+      "type": "container",
+      "name": "North service module"
+    },
+    {
+      "id": "hall",
+      "type": "hall",
+      "name": "Gathering hall",
+      "width_m": 6.0,
+      "roof_underside_m": 4.1,
+      "roof_thickness_m": 0.4,
+      "structure": "Timber frame (glulam or reclaimed heavy timber) spanning between the modules"
+    },
+    {
+      "id": "south",
+      "type": "container",
+      "name": "South service module"
+    }
   ],
   "envelope": {
     "interior_lining_m": 0.04,
@@ -41,17 +57,52 @@
     "opening_frame_m": 0.06,
     "hall_frame_m": 0.14,
     "wall_layers": [
-      { "id": "ext-insulation", "name": "Continuous external insulation (type TBD)", "material": "insulation", "thickness_m": 0.15 },
-      { "id": "cavity", "name": "Ventilated cavity / weather control (TBD)", "material": "cavity", "thickness_m": 0.025 },
-      { "id": "rainscreen", "name": "Replaceable timber rainscreen", "material": "cladding", "thickness_m": 0.022 }
+      {
+        "id": "ext-insulation",
+        "name": "Continuous external insulation (type TBD)",
+        "material": "insulation",
+        "thickness_m": 0.15
+      },
+      {
+        "id": "cavity",
+        "name": "Ventilated cavity / weather control (TBD)",
+        "material": "cavity",
+        "thickness_m": 0.025
+      },
+      {
+        "id": "rainscreen",
+        "name": "Replaceable timber rainscreen",
+        "material": "cladding",
+        "thickness_m": 0.022
+      }
     ],
     "roof_layers": [
-      { "id": "roof-insulation", "name": "Tapered external roof insulation (nominal)", "material": "insulation", "thickness_m": 0.2 },
-      { "id": "roof-membrane", "name": "Cover board and roof membrane", "material": "membrane", "thickness_m": 0.02 }
+      {
+        "id": "roof-insulation",
+        "name": "Tapered external roof insulation (nominal)",
+        "material": "insulation",
+        "thickness_m": 0.2
+      },
+      {
+        "id": "roof-membrane",
+        "name": "Cover board and roof membrane",
+        "material": "membrane",
+        "thickness_m": 0.02
+      }
     ],
     "floor_layers": [
-      { "id": "floor-insulation", "name": "Insulation below the container floor", "material": "insulation", "thickness_m": 0.15 },
-      { "id": "soffit", "name": "Vented, rodent-resistant soffit board", "material": "soffit", "thickness_m": 0.012 }
+      {
+        "id": "floor-insulation",
+        "name": "Insulation below the container floor",
+        "material": "insulation",
+        "thickness_m": 0.15
+      },
+      {
+        "id": "soffit",
+        "name": "Vented, rodent-resistant soffit board",
+        "material": "soffit",
+        "thickness_m": 0.012
+      }
     ],
     "unspecified": "Air, vapour, thermal bridge and fastening details are intentionally unspecified. The roof steps between hall and modules need snow-drift, flashing and drainage design."
   },
@@ -64,135 +115,844 @@
   "partition_thickness_m": 0.1,
   "rooms": [
     {
-      "id": "kitchen", "name": "Shared kitchen", "bay": "north", "end_m": 5.65, "boundary": "partition",
-      "door": { "from_m": 0.3, "to_m": 1.2, "type": "sliding", "head_m": 2.1 },
+      "id": "kitchen",
+      "name": "Shared kitchen",
+      "bay": "north",
+      "end_m": 5.65,
+      "boundary": "partition",
+      "door": {
+        "from_m": 0.3,
+        "to_m": 1.2,
+        "type": "sliding",
+        "head_m": 2.1
+      },
       "use": "Community kitchen with a 4.2 m wide servery opening to the hall.",
       "accessibility": "About 1.6 m clear in front of the counter. Include a lowered work section with knee space and front-mounted controls."
     },
     {
-      "id": "pantry", "name": "Pantry and cold storage", "bay": "north", "end_m": 7.65, "boundary": "partition",
+      "id": "pantry",
+      "name": "Pantry and cold storage",
+      "bay": "north",
+      "end_m": 7.65,
+      "boundary": "partition",
       "use": "Shared bulk food storage reached from the kitchen.",
       "accessibility": "Reachable shelving between 0.4 m and 1.2 m for frequently used items."
     },
     {
-      "id": "laundry", "name": "Laundry", "bay": "north", "end_m": 9.65, "boundary": "partition",
+      "id": "laundry",
+      "name": "Laundry",
+      "bay": "north",
+      "end_m": 9.65,
+      "boundary": "partition",
       "use": "Shared washer and dryer, reached from the hall.",
       "accessibility": "Front-loading machines on a raised plinth; 1.5 m clear in front."
     },
     {
-      "id": "mechanical", "name": "Mechanical and battery room", "bay": "north",
+      "id": "mechanical",
+      "name": "Mechanical and battery room",
+      "bay": "north",
       "use": "Heat pump, water storage, PV inverter and battery storage. Exterior door only; no door to the occupied building.",
       "accessibility": "Service space; not a public room.",
       "safety": "Battery storage needs fire separation, ventilation, clearances and protection as required by the manufacturer, the electrical code and the fire code."
     },
     {
-      "id": "hall", "name": "Gathering hall", "bay": "hall",
+      "id": "hall",
+      "name": "Gathering hall",
+      "bay": "hall",
       "use": "Shared meals, meetings, workshops and events. Clerestory windows on both sides; glazed doors to the screened porch on the west and the main entry on the east.",
       "accessibility": "Step-free from both ramps. Plan seating with wheelchair spaces dispersed, a hearing loop for meetings and good daylight without glare."
     },
     {
-      "id": "workshop", "name": "Workshop and tool library", "bay": "south", "end_m": 4.6, "boundary": "partition",
+      "id": "workshop",
+      "name": "Workshop and tool library",
+      "bay": "south",
+      "end_m": 4.6,
+      "boundary": "partition",
       "use": "Shared tools, repair bench and bicycle maintenance. Supports the repair-first approach to the buildings.",
       "accessibility": "Adjustable-height bench section; 1.2 m wide double door to the hall."
     },
     {
-      "id": "washroom", "name": "Washroom with shower", "bay": "south", "end_m": 6.6, "boundary": "partition",
+      "id": "washroom",
+      "name": "Washroom with shower",
+      "bay": "south",
+      "end_m": 6.6,
+      "boundary": "partition",
       "use": "Toilet, sink and shower for guests and work days.",
       "accessibility": "Not designed as the accessible washroom; see the universal washroom."
     },
     {
-      "id": "universal", "name": "Universal washroom", "bay": "south", "end_m": 9.05, "boundary": "partition",
+      "id": "universal",
+      "name": "Universal washroom",
+      "bay": "south",
+      "end_m": 9.05,
+      "boundary": "partition",
       "use": "Single-user, all-gender accessible washroom with an adult-size change table.",
       "accessibility": "2.35 x 2.27 m clear; 1.0 m door (consider a power operator). Turning space, transfer space, grab bars and the change table to be designed to CSA B651 and the applicable code."
     },
     {
-      "id": "boot", "name": "Boot room", "bay": "south",
+      "id": "boot",
+      "name": "Boot room",
+      "bay": "south",
       "use": "Winter entry with bench, boot drying and a separate exterior door to the east.",
       "accessibility": "Bench at 0.45 m with clear floor space beside it."
     }
   ],
   "fixtures": [
-    { "id": "k-counter", "name": "Kitchen counter, range and sinks", "room": "kitchen", "corner": "nw", "at": [0.3, 0.0], "size": [4.6, 0.65, 0.9], "material": "joinery" },
-    { "id": "p-shelves", "name": "Pantry shelving", "room": "pantry", "corner": "nw", "at": [0.05, 0.0], "size": [1.8, 0.45, 2.1], "material": "joinery" },
-    { "id": "l-machines", "name": "Washer and dryer on plinth", "room": "laundry", "corner": "nw", "at": [0.1, 0.0], "size": [1.4, 0.7, 1.3], "material": "appliance" },
-    { "id": "m-tank", "name": "Heat pump water storage", "room": "mechanical", "corner": "nw", "at": [0.1, 0.0], "size": [0.7, 0.7, 1.8], "material": "appliance" },
-    { "id": "m-battery", "name": "Battery cabinet (separated)", "room": "mechanical", "corner": "sw", "at": [0.1, 0.0], "size": [1.2, 0.6, 1.6], "material": "battery" },
-    { "id": "h-table-1", "name": "Dining table", "room": "hall", "corner": "nw", "at": [1.2, 1.6], "size": [2.4, 0.9, 0.75], "material": "joinery" },
-    { "id": "h-table-2", "name": "Dining table", "room": "hall", "corner": "nw", "at": [4.2, 1.6], "size": [2.4, 0.9, 0.75], "material": "joinery" },
-    { "id": "h-table-3", "name": "Dining table", "room": "hall", "corner": "nw", "at": [1.2, 3.4], "size": [2.4, 0.9, 0.75], "material": "joinery" },
-    { "id": "h-table-4", "name": "Dining table", "room": "hall", "corner": "nw", "at": [4.2, 3.4], "size": [2.4, 0.9, 0.75], "material": "joinery" },
-    { "id": "h-sofa-1", "name": "Lounge seating", "room": "hall", "corner": "nw", "at": [8.2, 0.5], "size": [2.4, 0.85, 0.8], "material": "soft" },
-    { "id": "h-sofa-2", "name": "Lounge seating", "room": "hall", "corner": "sw", "at": [8.2, 0.5], "size": [2.4, 0.85, 0.8], "material": "soft" },
-    { "id": "w-bench", "name": "Workbench", "room": "workshop", "corner": "sw", "at": [0.2, 0.0], "size": [3.0, 0.75, 0.9], "material": "joinery" },
-    { "id": "s-toilet", "name": "Toilet", "room": "washroom", "corner": "sw", "at": [0.2, 0.0], "size": [0.45, 0.7, 0.45], "material": "appliance" },
-    { "id": "s-shower", "name": "Shower", "room": "washroom", "corner": "ne", "at": [0.0, 0.0], "size": [0.95, 1.2, 0.02], "material": "tile" },
-    { "id": "u-toilet", "name": "Toilet", "room": "universal", "corner": "sw", "at": [1.2, 0.0], "size": [0.45, 0.7, 0.45], "material": "appliance" },
-    { "id": "u-sink", "name": "Wall-hung sink with knee space", "room": "universal", "corner": "ne", "at": [0.0, 0.6], "size": [0.5, 0.6, 0.15], "elevation_m": 0.71, "material": "appliance" },
-    { "id": "u-change", "name": "Adult-size change table (fold-down)", "room": "universal", "corner": "nw", "at": [0.0, 0.3], "size": [0.8, 1.8, 0.1], "elevation_m": 0.6, "material": "appliance" },
-    { "id": "b-bench", "name": "Boot bench", "room": "boot", "corner": "sw", "at": [0.3, 0.0], "size": [1.8, 0.45, 0.45], "material": "joinery" }
+    {
+      "id": "k-counter",
+      "name": "Kitchen counter, range and sinks",
+      "room": "kitchen",
+      "corner": "nw",
+      "at": [
+        0.3,
+        0.0
+      ],
+      "size": [
+        4.6,
+        0.65,
+        0.9
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "p-shelves",
+      "name": "Pantry shelving",
+      "room": "pantry",
+      "corner": "nw",
+      "at": [
+        0.05,
+        0.0
+      ],
+      "size": [
+        1.8,
+        0.45,
+        2.1
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "l-machines",
+      "name": "Washer and dryer on plinth",
+      "room": "laundry",
+      "corner": "nw",
+      "at": [
+        0.1,
+        0.0
+      ],
+      "size": [
+        1.4,
+        0.7,
+        1.3
+      ],
+      "material": "appliance"
+    },
+    {
+      "id": "m-tank",
+      "name": "Heat pump water storage",
+      "room": "mechanical",
+      "corner": "nw",
+      "at": [
+        0.1,
+        0.0
+      ],
+      "size": [
+        0.7,
+        0.7,
+        1.8
+      ],
+      "material": "appliance"
+    },
+    {
+      "id": "m-battery",
+      "name": "Battery cabinet (separated)",
+      "room": "mechanical",
+      "corner": "sw",
+      "at": [
+        0.1,
+        0.0
+      ],
+      "size": [
+        1.2,
+        0.6,
+        1.6
+      ],
+      "material": "battery"
+    },
+    {
+      "id": "h-table-1",
+      "name": "Dining table",
+      "room": "hall",
+      "corner": "nw",
+      "at": [
+        1.2,
+        1.6
+      ],
+      "size": [
+        2.4,
+        0.9,
+        0.75
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "h-table-2",
+      "name": "Dining table",
+      "room": "hall",
+      "corner": "nw",
+      "at": [
+        4.2,
+        1.6
+      ],
+      "size": [
+        2.4,
+        0.9,
+        0.75
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "h-table-3",
+      "name": "Dining table",
+      "room": "hall",
+      "corner": "nw",
+      "at": [
+        1.2,
+        3.4
+      ],
+      "size": [
+        2.4,
+        0.9,
+        0.75
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "h-table-4",
+      "name": "Dining table",
+      "room": "hall",
+      "corner": "nw",
+      "at": [
+        4.2,
+        3.4
+      ],
+      "size": [
+        2.4,
+        0.9,
+        0.75
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "h-sofa-1",
+      "name": "Lounge seating",
+      "room": "hall",
+      "corner": "nw",
+      "at": [
+        8.2,
+        0.5
+      ],
+      "size": [
+        2.4,
+        0.85,
+        0.8
+      ],
+      "material": "soft"
+    },
+    {
+      "id": "h-sofa-2",
+      "name": "Lounge seating",
+      "room": "hall",
+      "corner": "sw",
+      "at": [
+        8.2,
+        0.5
+      ],
+      "size": [
+        2.4,
+        0.85,
+        0.8
+      ],
+      "material": "soft"
+    },
+    {
+      "id": "w-bench",
+      "name": "Workbench",
+      "room": "workshop",
+      "corner": "sw",
+      "at": [
+        0.2,
+        0.0
+      ],
+      "size": [
+        3.0,
+        0.75,
+        0.9
+      ],
+      "material": "joinery"
+    },
+    {
+      "id": "s-toilet",
+      "name": "Toilet",
+      "room": "washroom",
+      "corner": "sw",
+      "at": [
+        0.2,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.7,
+        0.45
+      ],
+      "material": "appliance"
+    },
+    {
+      "id": "s-shower",
+      "name": "Shower",
+      "room": "washroom",
+      "corner": "ne",
+      "at": [
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.95,
+        1.2,
+        0.02
+      ],
+      "material": "tile"
+    },
+    {
+      "id": "u-toilet",
+      "name": "Toilet",
+      "room": "universal",
+      "corner": "sw",
+      "at": [
+        1.2,
+        0.0
+      ],
+      "size": [
+        0.45,
+        0.7,
+        0.45
+      ],
+      "material": "appliance"
+    },
+    {
+      "id": "u-sink",
+      "name": "Wall-hung sink with knee space",
+      "room": "universal",
+      "corner": "ne",
+      "at": [
+        0.0,
+        0.6
+      ],
+      "size": [
+        0.5,
+        0.6,
+        0.15
+      ],
+      "elevation_m": 0.71,
+      "material": "appliance"
+    },
+    {
+      "id": "u-change",
+      "name": "Adult-size change table (fold-down)",
+      "room": "universal",
+      "corner": "nw",
+      "at": [
+        0.0,
+        0.3
+      ],
+      "size": [
+        0.8,
+        1.8,
+        0.1
+      ],
+      "elevation_m": 0.6,
+      "material": "appliance"
+    },
+    {
+      "id": "b-bench",
+      "name": "Boot bench",
+      "room": "boot",
+      "corner": "sw",
+      "at": [
+        0.3,
+        0.0
+      ],
+      "size": [
+        1.8,
+        0.45,
+        0.45
+      ],
+      "material": "joinery"
+    }
   ],
   "openings": [
-    { "id": "N1", "name": "Kitchen window", "bay": "north", "face": "north", "type": "window", "from_m": 1.0, "to_m": 2.4, "sill_m": 1.05, "head_m": 2.15 },
-    { "id": "N2", "name": "Kitchen window", "bay": "north", "face": "north", "type": "window", "from_m": 3.0, "to_m": 4.4, "sill_m": 1.05, "head_m": 2.15 },
-    { "id": "N3", "name": "Laundry window", "bay": "north", "face": "north", "type": "window", "from_m": 8.0, "to_m": 9.2, "sill_m": 1.2, "head_m": 2.15 },
-    { "id": "N4", "name": "Kitchen west window", "bay": "north", "face": "west", "type": "window", "from_m": 0.6, "to_m": 1.8, "sill_m": 1.05, "head_m": 2.15 },
-    { "id": "N5", "name": "Mechanical room exterior door", "bay": "north", "face": "east", "type": "door", "from_m": 0.7, "to_m": 1.62, "head_m": 2.1, "swing": "out", "hinge": "north" },
-    { "id": "NS1", "name": "Servery opening (kitchen to hall)", "bay": "north", "face": "south", "type": "opening", "from_m": 0.8, "to_m": 5.0, "head_m": 2.3 },
-    { "id": "NS2", "name": "Laundry door", "bay": "north", "face": "south", "type": "door", "from_m": 7.9, "to_m": 8.85, "head_m": 2.1, "swing": "in", "hinge": "west" },
-    { "id": "HW1", "name": "Hall west window", "bay": "hall", "face": "west", "type": "window", "from_m": 0.35, "to_m": 1.0, "sill_m": 0.5, "head_m": 2.4 },
-    { "id": "HW2", "name": "Glazed sliding doors to screened porch", "bay": "hall", "face": "west", "type": "sliding-door", "from_m": 1.2, "to_m": 4.8, "head_m": 2.4 },
-    { "id": "HW3", "name": "Hall west window", "bay": "hall", "face": "west", "type": "window", "from_m": 5.0, "to_m": 5.65, "sill_m": 0.5, "head_m": 2.4 },
-    { "id": "HE1", "name": "Hall east window", "bay": "hall", "face": "east", "type": "window", "from_m": 0.5, "to_m": 1.6, "sill_m": 0.9, "head_m": 2.3 },
-    { "id": "HE2", "name": "Main entry doors (pair)", "bay": "hall", "face": "east", "type": "door", "from_m": 2.1, "to_m": 3.9, "head_m": 2.3, "swing": "out", "hinge": "both" },
-    { "id": "HE3", "name": "Hall east window", "bay": "hall", "face": "east", "type": "window", "from_m": 4.4, "to_m": 5.5, "sill_m": 0.9, "head_m": 2.3 },
-    { "id": "HN1", "name": "North clerestory", "bay": "hall", "face": "north", "type": "window", "from_m": 1.0, "to_m": 3.0, "sill_m": 3.05, "head_m": 3.8 },
-    { "id": "HN2", "name": "North clerestory", "bay": "hall", "face": "north", "type": "window", "from_m": 3.6, "to_m": 5.6, "sill_m": 3.05, "head_m": 3.8 },
-    { "id": "HN3", "name": "North clerestory", "bay": "hall", "face": "north", "type": "window", "from_m": 6.6, "to_m": 8.6, "sill_m": 3.05, "head_m": 3.8 },
-    { "id": "HN4", "name": "North clerestory", "bay": "hall", "face": "north", "type": "window", "from_m": 9.2, "to_m": 11.2, "sill_m": 3.05, "head_m": 3.8 },
-    { "id": "HS1", "name": "South clerestory", "bay": "hall", "face": "south", "type": "window", "from_m": 1.0, "to_m": 3.0, "sill_m": 3.05, "head_m": 3.8 },
-    { "id": "HS2", "name": "South clerestory", "bay": "hall", "face": "south", "type": "window", "from_m": 3.6, "to_m": 5.6, "sill_m": 3.05, "head_m": 3.8 },
-    { "id": "HS3", "name": "South clerestory", "bay": "hall", "face": "south", "type": "window", "from_m": 6.6, "to_m": 8.6, "sill_m": 3.05, "head_m": 3.8 },
-    { "id": "HS4", "name": "South clerestory", "bay": "hall", "face": "south", "type": "window", "from_m": 9.2, "to_m": 11.2, "sill_m": 3.05, "head_m": 3.8 },
-    { "id": "SN1", "name": "Workshop double door", "bay": "south", "face": "north", "type": "door", "from_m": 1.6, "to_m": 2.8, "head_m": 2.1, "swing": "in", "hinge": "both" },
-    { "id": "SN2", "name": "Washroom door", "bay": "south", "face": "north", "type": "door", "from_m": 5.1, "to_m": 6.0, "head_m": 2.1, "swing": "in", "hinge": "west" },
-    { "id": "SN3", "name": "Universal washroom door (consider power operator)", "bay": "south", "face": "north", "type": "door", "from_m": 7.3, "to_m": 8.3, "head_m": 2.1, "swing": "in", "hinge": "east" },
-    { "id": "SN4", "name": "Boot room door", "bay": "south", "face": "north", "type": "door", "from_m": 10.2, "to_m": 11.2, "head_m": 2.1, "swing": "in", "hinge": "east" },
-    { "id": "S1", "name": "Workshop window", "bay": "south", "face": "south", "type": "window", "from_m": 0.8, "to_m": 2.2, "sill_m": 0.9, "head_m": 2.15 },
-    { "id": "S2", "name": "Workshop window", "bay": "south", "face": "south", "type": "window", "from_m": 2.6, "to_m": 4.0, "sill_m": 0.9, "head_m": 2.15 },
-    { "id": "S3", "name": "Washroom high window", "bay": "south", "face": "south", "type": "window", "from_m": 5.2, "to_m": 6.0, "sill_m": 1.6, "head_m": 2.15 },
-    { "id": "S4", "name": "Universal washroom high window", "bay": "south", "face": "south", "type": "window", "from_m": 7.4, "to_m": 8.4, "sill_m": 1.6, "head_m": 2.15 },
-    { "id": "S5", "name": "Boot room window", "bay": "south", "face": "south", "type": "window", "from_m": 10.0, "to_m": 11.4, "sill_m": 0.9, "head_m": 2.15 },
-    { "id": "S6", "name": "Workshop west window", "bay": "south", "face": "west", "type": "window", "from_m": 0.6, "to_m": 1.8, "sill_m": 0.9, "head_m": 2.15 },
-    { "id": "S7", "name": "Boot room exterior door", "bay": "south", "face": "east", "type": "door", "from_m": 0.7, "to_m": 1.62, "head_m": 2.1, "swing": "in", "hinge": "south" }
+    {
+      "id": "N1",
+      "name": "Kitchen window",
+      "bay": "north",
+      "face": "north",
+      "type": "window",
+      "from_m": 1.0,
+      "to_m": 2.4,
+      "sill_m": 1.05,
+      "head_m": 2.15
+    },
+    {
+      "id": "N2",
+      "name": "Kitchen window",
+      "bay": "north",
+      "face": "north",
+      "type": "window",
+      "from_m": 3.0,
+      "to_m": 4.4,
+      "sill_m": 1.05,
+      "head_m": 2.15
+    },
+    {
+      "id": "N3",
+      "name": "Laundry window",
+      "bay": "north",
+      "face": "north",
+      "type": "window",
+      "from_m": 8.0,
+      "to_m": 9.2,
+      "sill_m": 1.2,
+      "head_m": 2.15
+    },
+    {
+      "id": "N4",
+      "name": "Kitchen west window",
+      "bay": "north",
+      "face": "west",
+      "type": "window",
+      "from_m": 0.6,
+      "to_m": 1.8,
+      "sill_m": 1.05,
+      "head_m": 2.15
+    },
+    {
+      "id": "N5",
+      "name": "Mechanical room exterior door",
+      "bay": "north",
+      "face": "east",
+      "type": "door",
+      "from_m": 0.7,
+      "to_m": 1.62,
+      "head_m": 2.1,
+      "swing": "out",
+      "hinge": "north"
+    },
+    {
+      "id": "NS1",
+      "name": "Servery opening (kitchen to hall)",
+      "bay": "north",
+      "face": "south",
+      "type": "opening",
+      "from_m": 0.8,
+      "to_m": 5.0,
+      "head_m": 2.3
+    },
+    {
+      "id": "NS2",
+      "name": "Laundry door",
+      "bay": "north",
+      "face": "south",
+      "type": "door",
+      "from_m": 7.9,
+      "to_m": 8.85,
+      "head_m": 2.1,
+      "swing": "in",
+      "hinge": "west"
+    },
+    {
+      "id": "HW1",
+      "name": "Hall west window",
+      "bay": "hall",
+      "face": "west",
+      "type": "window",
+      "from_m": 0.35,
+      "to_m": 1.0,
+      "sill_m": 0.5,
+      "head_m": 2.4
+    },
+    {
+      "id": "HW2",
+      "name": "Glazed sliding doors to screened porch",
+      "bay": "hall",
+      "face": "west",
+      "type": "sliding-door",
+      "from_m": 1.2,
+      "to_m": 4.8,
+      "head_m": 2.4
+    },
+    {
+      "id": "HW3",
+      "name": "Hall west window",
+      "bay": "hall",
+      "face": "west",
+      "type": "window",
+      "from_m": 5.0,
+      "to_m": 5.65,
+      "sill_m": 0.5,
+      "head_m": 2.4
+    },
+    {
+      "id": "HE1",
+      "name": "Hall east window",
+      "bay": "hall",
+      "face": "east",
+      "type": "window",
+      "from_m": 0.5,
+      "to_m": 1.6,
+      "sill_m": 0.9,
+      "head_m": 2.3
+    },
+    {
+      "id": "HE2",
+      "name": "Main entry doors (pair)",
+      "bay": "hall",
+      "face": "east",
+      "type": "door",
+      "from_m": 2.1,
+      "to_m": 3.9,
+      "head_m": 2.3,
+      "swing": "out",
+      "hinge": "both"
+    },
+    {
+      "id": "HE3",
+      "name": "Hall east window",
+      "bay": "hall",
+      "face": "east",
+      "type": "window",
+      "from_m": 4.4,
+      "to_m": 5.5,
+      "sill_m": 0.9,
+      "head_m": 2.3
+    },
+    {
+      "id": "HN1",
+      "name": "North clerestory",
+      "bay": "hall",
+      "face": "north",
+      "type": "window",
+      "from_m": 1.0,
+      "to_m": 3.0,
+      "sill_m": 3.05,
+      "head_m": 3.8
+    },
+    {
+      "id": "HN2",
+      "name": "North clerestory",
+      "bay": "hall",
+      "face": "north",
+      "type": "window",
+      "from_m": 3.6,
+      "to_m": 5.6,
+      "sill_m": 3.05,
+      "head_m": 3.8
+    },
+    {
+      "id": "HN3",
+      "name": "North clerestory",
+      "bay": "hall",
+      "face": "north",
+      "type": "window",
+      "from_m": 6.6,
+      "to_m": 8.6,
+      "sill_m": 3.05,
+      "head_m": 3.8
+    },
+    {
+      "id": "HN4",
+      "name": "North clerestory",
+      "bay": "hall",
+      "face": "north",
+      "type": "window",
+      "from_m": 9.2,
+      "to_m": 11.2,
+      "sill_m": 3.05,
+      "head_m": 3.8
+    },
+    {
+      "id": "HS1",
+      "name": "South clerestory",
+      "bay": "hall",
+      "face": "south",
+      "type": "window",
+      "from_m": 1.0,
+      "to_m": 3.0,
+      "sill_m": 3.05,
+      "head_m": 3.8
+    },
+    {
+      "id": "HS2",
+      "name": "South clerestory",
+      "bay": "hall",
+      "face": "south",
+      "type": "window",
+      "from_m": 3.6,
+      "to_m": 5.6,
+      "sill_m": 3.05,
+      "head_m": 3.8
+    },
+    {
+      "id": "HS3",
+      "name": "South clerestory",
+      "bay": "hall",
+      "face": "south",
+      "type": "window",
+      "from_m": 6.6,
+      "to_m": 8.6,
+      "sill_m": 3.05,
+      "head_m": 3.8
+    },
+    {
+      "id": "HS4",
+      "name": "South clerestory",
+      "bay": "hall",
+      "face": "south",
+      "type": "window",
+      "from_m": 9.2,
+      "to_m": 11.2,
+      "sill_m": 3.05,
+      "head_m": 3.8
+    },
+    {
+      "id": "SN1",
+      "name": "Workshop double door",
+      "bay": "south",
+      "face": "north",
+      "type": "door",
+      "from_m": 1.6,
+      "to_m": 2.8,
+      "head_m": 2.1,
+      "swing": "in",
+      "hinge": "both"
+    },
+    {
+      "id": "SN2",
+      "name": "Washroom door",
+      "bay": "south",
+      "face": "north",
+      "type": "door",
+      "from_m": 5.1,
+      "to_m": 6.0,
+      "head_m": 2.1,
+      "swing": "in",
+      "hinge": "west"
+    },
+    {
+      "id": "SN3",
+      "name": "Universal washroom door (consider power operator)",
+      "bay": "south",
+      "face": "north",
+      "type": "door",
+      "from_m": 7.3,
+      "to_m": 8.3,
+      "head_m": 2.1,
+      "swing": "in",
+      "hinge": "east"
+    },
+    {
+      "id": "SN4",
+      "name": "Boot room door",
+      "bay": "south",
+      "face": "north",
+      "type": "door",
+      "from_m": 10.2,
+      "to_m": 11.2,
+      "head_m": 2.1,
+      "swing": "in",
+      "hinge": "east"
+    },
+    {
+      "id": "S1",
+      "name": "Workshop window",
+      "bay": "south",
+      "face": "south",
+      "type": "window",
+      "from_m": 0.8,
+      "to_m": 2.2,
+      "sill_m": 0.9,
+      "head_m": 2.15
+    },
+    {
+      "id": "S2",
+      "name": "Workshop window",
+      "bay": "south",
+      "face": "south",
+      "type": "window",
+      "from_m": 2.6,
+      "to_m": 4.0,
+      "sill_m": 0.9,
+      "head_m": 2.15
+    },
+    {
+      "id": "S3",
+      "name": "Washroom high window",
+      "bay": "south",
+      "face": "south",
+      "type": "window",
+      "from_m": 5.2,
+      "to_m": 6.0,
+      "sill_m": 1.6,
+      "head_m": 2.15
+    },
+    {
+      "id": "S4",
+      "name": "Universal washroom high window",
+      "bay": "south",
+      "face": "south",
+      "type": "window",
+      "from_m": 7.4,
+      "to_m": 8.4,
+      "sill_m": 1.6,
+      "head_m": 2.15
+    },
+    {
+      "id": "S5",
+      "name": "Boot room window",
+      "bay": "south",
+      "face": "south",
+      "type": "window",
+      "from_m": 10.0,
+      "to_m": 11.4,
+      "sill_m": 0.9,
+      "head_m": 2.15
+    },
+    {
+      "id": "S6",
+      "name": "Workshop west window",
+      "bay": "south",
+      "face": "west",
+      "type": "window",
+      "from_m": 0.6,
+      "to_m": 1.8,
+      "sill_m": 0.9,
+      "head_m": 2.15
+    },
+    {
+      "id": "S7",
+      "name": "Boot room exterior door",
+      "bay": "south",
+      "face": "east",
+      "type": "door",
+      "from_m": 0.7,
+      "to_m": 1.62,
+      "head_m": 2.1,
+      "swing": "in",
+      "hinge": "south"
+    }
   ],
   "porches": [
     {
-      "id": "west-porch", "name": "Screened porch", "side": "west", "from_m": 2.438, "length_m": 6.0, "depth_m": 3.66, "gap_m": 0.02,
-      "structure": "independent timber frame concept", "screened": true, "deck_thickness_m": 0.2, "post_size_m": 0.14, "clear_height_m": 2.6, "roof_thickness_m": 0.15, "roof_overhang_m": 0.2,
-      "screen_door": { "side": "south", "from_m": -3.6, "to_m": -2.6 },
+      "id": "west-porch",
+      "name": "Screened porch",
+      "side": "west",
+      "from_m": 2.438,
+      "length_m": 6.0,
+      "depth_m": 3.66,
+      "gap_m": 0.02,
+      "structure": "independent timber frame concept",
+      "screened": true,
+      "deck_thickness_m": 0.2,
+      "post_size_m": 0.14,
+      "clear_height_m": 2.6,
+      "roof_thickness_m": 0.15,
+      "roof_overhang_m": 0.2,
+      "screen_door": {
+        "side": "south",
+        "from_m": -3.6,
+        "to_m": -2.6
+      },
       "note": "Bug-screened outdoor room for summer meals and meetings."
     },
     {
-      "id": "entry-deck", "name": "Covered entry deck", "side": "east", "from_m": 3.938, "length_m": 3.0, "depth_m": 2.4, "gap_m": 0.02,
-      "structure": "independent timber frame concept", "screened": false, "deck_thickness_m": 0.2, "post_size_m": 0.14, "clear_height_m": 2.6, "roof_thickness_m": 0.15, "roof_overhang_m": 0.3,
+      "id": "entry-deck",
+      "name": "Covered entry deck",
+      "side": "east",
+      "from_m": 3.938,
+      "length_m": 3.0,
+      "depth_m": 2.4,
+      "gap_m": 0.02,
+      "structure": "independent timber frame concept",
+      "screened": false,
+      "deck_thickness_m": 0.2,
+      "post_size_m": 0.14,
+      "clear_height_m": 2.6,
+      "roof_thickness_m": 0.15,
+      "roof_overhang_m": 0.3,
       "note": "Canopy keeps snow and rain off the main entry and the top of the ramp."
     }
   ],
   "ramps": [
-    { "id": "entry-ramp", "porch": "entry-deck", "side": "east", "from_m": 5.438, "to_m": 6.938, "slope_ratio": 15, "note": "Main accessible route from the shared parking. Concept only." },
-    { "id": "porch-ramp", "porch": "west-porch", "side": "south", "from_m": -3.75, "to_m": -2.25, "slope_ratio": 15, "note": "Second step-free exit toward the cabin paths. Concept only." }
+    {
+      "id": "entry-ramp",
+      "porch": "entry-deck",
+      "side": "east",
+      "from_m": 5.438,
+      "to_m": 6.938,
+      "slope_ratio": 15,
+      "note": "Graded compacted-gravel trail with landings, not a timber walkway. Verify slope, width, drainage and edge protection; a short paved/boardwalk section may still be necessary at the threshold. Concept only.",
+      "surface": "gravel"
+    },
+    {
+      "id": "porch-ramp",
+      "porch": "west-porch",
+      "side": "south",
+      "from_m": -3.75,
+      "to_m": -2.25,
+      "slope_ratio": 15,
+      "note": "Graded compacted-gravel trail with landings, not a timber walkway. Verify slope, width, drainage and edge protection; a short paved/boardwalk section may still be necessary at the threshold. Concept only.",
+      "surface": "gravel"
+    }
   ],
   "trellis": {
-    "face": "south", "offset_m": 0.35, "from_m": 0.5, "to_m": 4.5, "posts": 3, "post_size_m": 0.09, "height_m": 3.4, "rail_spacing_m": 0.45, "planting_height_m": 2.6,
+    "face": "south",
+    "offset_m": 0.35,
+    "from_m": 0.5,
+    "to_m": 4.5,
+    "posts": 3,
+    "post_size_m": 0.09,
+    "height_m": 3.4,
+    "rail_spacing_m": 0.45,
+    "planting_height_m": 2.6,
     "note": "Free-standing trellis shading the workshop windows in summer."
   },
   "roof": {
     "default_option": "pv",
     "options": {
-      "pv": { "label": "PV array on the hall and south module", "pv_bays": ["hall", "south"], "green_bays": [] },
-      "biosolar": { "label": "Biosolar: green roofs on both modules, PV on the hall and raised over the south module", "pv_bays": ["hall", "south"], "green_bays": ["north", "south"] }
+      "pv": {
+        "label": "PV array on the hall and south module",
+        "pv_bays": [
+          "hall",
+          "south"
+        ],
+        "green_bays": []
+      },
+      "biosolar": {
+        "label": "Biosolar: green roofs on both modules, PV on the hall and raised over the south module",
+        "pv_bays": [
+          "hall",
+          "south"
+        ],
+        "green_bays": [
+          "north",
+          "south"
+        ]
+      }
     },
-    "pv_panel": { "width_m": 1.134, "length_m": 2.278, "watts": 420, "gap_m": 0.02 },
+    "pv_panel": {
+      "width_m": 1.134,
+      "length_m": 2.278,
+      "watts": 420,
+      "gap_m": 0.02
+    },
     "pv_edge_setback_m": 0.25,
     "green_edge_setback_m": 0.5,
     "green_roof_depth_m": 0.1,
@@ -214,7 +974,8 @@
   ],
   "material_passport": [
     {
-      "component": "Two container shells", "material_key": "steel",
+      "component": "Two container shells",
+      "material_key": "steel",
       "material": "Weathering steel, corrugated walls and roof, steel cross-members",
       "source": "Reclaimed ISO containers",
       "condition_assessment": "Required before purchase: corrosion, deformation, CSC plate history, prior cargo, coatings and floor treatment.",
@@ -224,7 +985,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "Hall frame and roof", "material_key": "timber",
+      "component": "Hall frame and roof",
+      "material_key": "timber",
       "material": "Glulam or reclaimed heavy timber, insulated timber roof and floor cassettes",
       "source": "Local certified or graded reclaimed timber",
       "condition_assessment": "Grade reclaimed members; check for preservatives and lead paint.",
@@ -234,7 +996,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "External insulation and rainscreen", "material_key": "insulation",
+      "component": "External insulation and rainscreen",
+      "material_key": "insulation",
       "material": "Wood fibre or mineral wool (TBD); timber rainscreen",
       "source": "New or documented reclaimed",
       "condition_assessment": "Verify type, contamination and fire classification of any reclaimed board.",
@@ -244,7 +1007,8 @@
       "documentation": "Not started"
     },
     {
-      "component": "Battery storage", "material_key": "battery",
+      "component": "Battery storage",
+      "material_key": "battery",
       "material": "Battery chemistry TBD (prefer chemistries with lower thermal runaway risk)",
       "source": "New, certified system",
       "condition_assessment": "Certified listing; installation per manufacturer and code.",
@@ -255,10 +1019,35 @@
     }
   ],
   "reviews_required": [
-    { "topic": "Occupancy classification: a shared gathering hall may be treated as an assembly occupancy, with higher fire, egress and accessibility requirements", "reviewer": "Architect and municipal building department", "status": "Not started" },
-    { "topic": "Structure: large openings in the modules, hall frame, snow drift at roof steps, lifting", "reviewer": "Structural engineer (P.Eng.)", "status": "Not started" },
-    { "topic": "Fire: separations, battery room, egress, firefighting access and water supply", "reviewer": "Fire protection engineer and fire department", "status": "Not started" },
-    { "topic": "Accessibility: ramps, entrances, universal washroom, kitchen, assembly seating", "reviewer": "Accessibility consultant; CSA B651 and applicable code", "status": "Not started" },
-    { "topic": "Water, wastewater and food handling for shared meals", "reviewer": "Public health unit and wastewater approvals authority", "status": "Not started" }
-  ]
+    {
+      "topic": "Occupancy classification: a shared gathering hall may be treated as an assembly occupancy, with higher fire, egress and accessibility requirements",
+      "reviewer": "Architect and municipal building department",
+      "status": "Not started"
+    },
+    {
+      "topic": "Structure: large openings in the modules, hall frame, snow drift at roof steps, lifting",
+      "reviewer": "Structural engineer (P.Eng.)",
+      "status": "Not started"
+    },
+    {
+      "topic": "Fire: separations, battery room, egress, firefighting access and water supply",
+      "reviewer": "Fire protection engineer and fire department",
+      "status": "Not started"
+    },
+    {
+      "topic": "Accessibility: ramps, entrances, universal washroom, kitchen, assembly seating",
+      "reviewer": "Accessibility consultant; CSA B651 and applicable code",
+      "status": "Not started"
+    },
+    {
+      "topic": "Water, wastewater and food handling for shared meals",
+      "reviewer": "Public health unit and wastewater approvals authority",
+      "status": "Not started"
+    }
+  ],
+  "access": {
+    "strategy": "graded gravel trail with landings and the shortest practical threshold ramp",
+    "note": "Prefer a graded gravel trail with landings to a long timber ramp. A hillside or uphill grade entry can shorten the route, but changes the foundation, drainage, tree protection and accessibility review.",
+    "review": "Accessibility consultant, civil/geotechnical review and the building official; CSA B651 and the applicable code still apply."
+  }
 }

@@ -28,6 +28,7 @@
     soffit: { fill: '#8d8f86', label: 'Soffit board' },
     timber: { fill: '#c99e6b', label: 'Timber frame' },
     decking: { fill: '#a97c52', label: 'Decking and ramp' },
+    gravel: { fill: '#9b9484', label: 'Graded gravel trail' },
     post: { fill: '#86613f', label: 'Timber post' },
     roofing: { fill: '#6b5a4b', label: 'Porch roof' },
     screen: { fill: '#41574c', opacity: 0.2, label: 'Insect screen' },

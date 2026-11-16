@@ -4177,7 +4177,7 @@
       "editable": false,
       "visual_seed": 113,
       "tagline": "A green container caf\u00e9-lodge under one south-facing shed roof.",
-      "description": "Three reused 40-foot containers in deep green, with yellow-framed glazing and a tall glazed central hall, frame a community lodge beside the water. One south-facing shed roof covers the whole building; the solar array is mounted only on the south slope and is aligned to true south independently of the building. The north wing holds the shared kitchen, pantry, laundry and accessible washrooms; the central hall is the shared dining and gathering space; the south wing holds the workshop, meeting room and boot room; the west wing holds the caf\u00e9 servery, office and a universal washroom. A screened veranda and covered entrance connect the hall to the forest. The existing authoritative lodge model is preserved separately; this is an additional Design Lab concept.",
+      "description": "Three reused 40-foot containers in deep green, with yellow-framed glazing and a tall glazed central hall, frame a community lodge beside the water. One gable roof with a clear ridge covers the whole building; the solar array is mounted only on the south slope and is aligned to true south independently of the building. The north wing holds the shared kitchen, pantry, laundry and accessible washrooms; the central hall is the shared dining and gathering space; the south wing holds the workshop, meeting room and boot room; the west wing holds the caf\u00e9 servery, office and a universal washroom. A screened veranda and covered entrance connect the hall to the forest. The existing authoritative lodge model is preserved separately; this is an additional Design Lab concept.",
       "primary_view_deg": 180,
       "modules": [
         {
@@ -4737,10 +4737,10 @@
           "Storage"
         ],
         "outdoor": "8.0 \u00d7 3.0 m screened veranda, covered west entrance, decks",
-        "solar": "A single 39\u00b0 south-facing array on the 5\u00b0 south slope of the shed roof; no north-side array. True south, independent of building rotation.",
+        "solar": "A single 39\u00b0 south-facing array on the south slope of a 10\u00b0 gable roof; no north-side array. True south, independent of building rotation.",
         "green_roof": "Green/biosolar roof on the north module; weight, drainage and fire review required",
         "accessibility": "Step-free hall and veranda intended; two accessible washrooms, one with an adult-size change table; door widths, turning spaces and counter heights need verification.",
-        "environment": "Three reused green containers and a glazed timber hall share one shallow south-facing shed roof; only the south slope carries solar. Large glazing and a green roof increase the technical review."
+        "environment": "Three reused green containers and a glazed timber hall share one gable roof; only the south slope carries solar. Large glazing and a green roof increase the technical review."
       },
       "materials": [
         {
@@ -4909,12 +4909,12 @@
         }
       ],
       "roof_form": {
-        "type": "south-shed",
-        "pitch_deg": 5,
+        "type": "gable",
+        "pitch_deg": 10,
         "overhang_m": 0.5,
         "solar_side": "south",
         "colour": "#2f6b57",
-        "note": "One south-facing shed roof, low at the south eave and high at the north ridge. Solar only on the south slope; no north-side array."
+        "note": "One gable roof with a ridge: south slope carries solar; north slope is plain. Peak reads as one roof, not a stepped stack."
       },
       "solar_array": {
         "enabled": true,
@@ -4922,7 +4922,7 @@
         "azimuth_deg": 180,
         "season_mode": "year-round",
         "side": "south",
-        "mounting": "tilted racks on the 5\u00b0 south shed slope; panels at 39\u00b0 from horizontal",
+        "mounting": "tilted racks on the 10\u00b0 south gable slope; panels at 39\u00b0 from horizontal",
         "source": "SolarCalculator.CA Ottawa: 39\u00b0 optimal fixed tilt; 36\u201339\u00b0 year-round, winter \u224860\u00b0, summer \u224830\u00b0, due south.",
         "note": "Array is aligned to true south regardless of building rotation; it sits only on the south roof slope. Snow shedding, wind uplift, roof structure and electrical design need review."
       }

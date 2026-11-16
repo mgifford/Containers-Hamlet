@@ -204,7 +204,7 @@
   }
 
   function roomText(r) {
-    return r.name + ': ' + fixed(r.clear_length_m, 2) + ' by ' + fixed(r.clear_width_m, 2) + ' m clear, ' + fixed(r.area_m2, 1) + ' m²';
+    return r.name + ': ~' + r1(r.clear_length_m) + ' by ' + r1(r.clear_width_m) + ' m clear, ~' + r1(r.area_m2) + ' m²';
   }
 
   function showRoom() {
@@ -216,7 +216,7 @@
       return;
     }
     roomInfo.appendChild(el('h4', {}, r.name));
-    roomInfo.appendChild(el('p', {}, fixed(r.clear_length_m, 2) + ' × ' + fixed(r.clear_width_m, 2) + ' m clear (' + fixed(r.area_m2, 1) + ' m²), ceiling height ' + fixed(r.clear_height_m, 2) + ' m.'));
+    roomInfo.appendChild(el('p', {}, '~' + r1(r.clear_length_m) + ' × ' + r1(r.clear_width_m) + ' m clear (~' + r1(r.area_m2) + ' m²), ceiling height ~' + r1(r.clear_height_m) + ' m.'));
     if (r.use) roomInfo.appendChild(el('p', {}, r.use));
     var fixtures = model().prims.filter(function (p) { return p.cat === 'fixture' && p.room === r.id; }).map(function (p) { return p.name; });
     if (fixtures.length) roomInfo.appendChild(el('p', {}, 'Fixtures: ' + fixtures.join(', ') + '.'));

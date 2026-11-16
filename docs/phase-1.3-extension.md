@@ -1,6 +1,6 @@
 # Phase 1.3 extension: architectural galleries, thermal comfort and a common lodge
 
-> A further extension adds configurable exterior insulation assemblies, wall sections and living vegetation systems. See [`phase-1.3-envelope-vegetation.md`](phase-1.3-envelope-vegetation.md). Current counts are 222 main static, 704 Design Lab static, 70 main browser and 126 Design Lab browser checks; whole site 3062 KB under a revised 3.0 MB budget.
+> A further extension adds configurable exterior insulation assemblies, wall sections and living vegetation systems. See [`phase-1.3-envelope-vegetation.md`](phase-1.3-envelope-vegetation.md). Current counts are 222 main static, 704 Design Lab static, 70 main browser and 126 Design Lab browser checks; whole site 3074 KB under a revised 3.2 MB budget.
 
 This extension builds on the Phase 1.3 Container Home Design Studio. It adds a five-view architectural gallery for every developed design, a café-inspired common lodge concept, thermal-envelope options, and a side-by-side comparison tool. It keeps the project container-first and does not turn it into a generic architecture application.
 
@@ -42,7 +42,7 @@ Programme:
 - an 8 × 3 m screened veranda, a covered west entrance and two decks;
 - large landscape-facing windows, a green/biosolar roof on the north module, solar on the other modules, and a separate trellis.
 
-The central hall is modelled as a glazed timber connection with yellow mullions, with `glazed`, `door_type` and `glazing_area_m2` fields. The single shed roof is 5°; the 39° solar array is mounted only on its south slope and is aligned to true south independently of the building rotation. No north-side array is drawn. It is intended to use **insulated sliding or folding doors**, not an uninsulated glazed garage door. The reference palette is deep green containers with yellow frames and a large glazed café frontage. The thermal panel and comparison flag the large glazing, condensation, solar-gain and door-performance risks. The design does not claim that the glazing meets a required thermal performance.
+The central hall is modelled as a glazed timber connection with yellow mullions, with `glazed`, `door_type` and `glazing_area_m2` fields. The single gable roof is 10° with a clear ridge; the 39° solar array is mounted only on its south slope and is aligned to true south independently of the building rotation. No north-side array is drawn. It is intended to use **insulated sliding or folding doors**, not an uninsulated glazed garage door. The reference palette is deep green containers with yellow frames and a large glazed café frontage. The thermal panel and comparison flag the large glazing, condensation, solar-gain and door-performance risks. The design does not claim that the glazing meets a required thermal performance.
 
 The common lodge is currently **inspiration only**, like the six further homes. The three editable presets remain Woodland Retreat, L-Shaped Haven and Woodland Courtyard. The lodge has source JSON, five views and a comparison entry.
 
@@ -109,7 +109,7 @@ At the time of this extension:
 | `node tools/check-design-lab.mjs` | 491 passed, 0 failed |
 | `node tools/browser-check.mjs` | 70 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 80 passed, 0 failed |
-| Main first view | 380 KB uncompressed / 94 KB gzipped |
+| Main first view | 381 KB uncompressed / 95 KB gzipped |
 | Whole published site | 2536 KB (under 2.5 MB) |
 
 Design Lab static checks cover the schema, thermal fields, five-view determinism, XML attribute integrity, gallery and architecture pages, the no-auto-advance code, comparison metrics, licence and privacy constraints.

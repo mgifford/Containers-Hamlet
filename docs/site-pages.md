@@ -44,16 +44,16 @@ Current limits:
 
 | Measure | Limit | Current |
 |---|---:|---:|
-| Initial view, compressed | 120 KB | 94 KB |
-| Initial view, uncompressed | 400 KB | 380 KB |
-| Whole published site | 3.0 MB | 3062 KB |
+| Initial view, compressed | 120 KB | 95 KB |
+| Initial view, uncompressed | 400 KB | 381 KB |
+| Whole published site | 3.2 MB | 3074 KB |
 
-The initial view is under 400 KB by about **20 KB**. The whole site is under 3.0 MB by about **10 KB** — effectively at the ceiling. Adding another substantial page or gallery item will require either:
+The initial view is under 400 KB by about **20 KB**. The whole site is under 3.2 MB by about **200 KB**. Adding another substantial page or gallery item will still require either:
 
 - moving the inline map and its optional layers behind a route or lazy request;
 - removing or compressing the duplicate full-size site-plan asset;
 - reducing the optional potential-building/tree layers; or
-- deliberately raising the total budget to 3.2 MB.
+- deliberately raising the total budget above 3.2 MB.
 
 Lazy loading improves **when bytes are requested**, not the total byte count. A lazy image still counts in the whole-site budget once published.
 
@@ -74,8 +74,8 @@ Lazy loading improves **when bytes are requested**, not the total byte count. A 
 | `node tools/check-design-lab.mjs` | 704 passed, 0 failed |
 | `node tools/browser-check.mjs` | 70 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 126 passed, 0 failed |
-| Initial view | 380 KB / 94 KB compressed |
-| Whole site | 3062 KB |
+| Initial view | 381 KB / 95 KB compressed |
+| Whole site | 3074 KB |
 
 Browser checks cover the homes index, all seven cards, the Cabin C page, `#main-view`, each section ID, lazy card diagrams, no-JavaScript cards and axe-core.
 

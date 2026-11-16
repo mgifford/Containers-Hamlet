@@ -628,19 +628,21 @@
       var sc = P([(sp[0][0] + sp[2][0]) / 2, (sp[0][1] + sp[2][1]) / 2]);
       out.push(text(sc[0] + 3, sc[1] - 3, 'entry shelter', 8, ' fill="#245244" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
     }
-    if (d.roof_form && d.roof_form.type === 'south-shed') {
+    if (d.roof_form && (d.roof_form.type === 'south-shed' || d.roof_form.type === 'gable')) {
       var roofPolys = d.modules.map(moduleCorners).concat(d.connections.filter(function (c) { return c.glazed; }).map(connectionCorners));
       var rminX = Infinity, rminY = Infinity, rmaxX = -Infinity, rmaxY = -Infinity;
       roofPolys.forEach(function (poly) { poly.forEach(function (p) { rminX = Math.min(rminX, p[0]); rmaxX = Math.max(rmaxX, p[0]); rminY = Math.min(rminY, p[1]); rmaxY = Math.max(rmaxY, p[1]); }); });
       var oh = d.roof_form.overhang_m || 0.6;
       var rp = [[rminX - oh, rminY - oh], [rmaxX + oh, rminY - oh], [rmaxX + oh, rmaxY + oh], [rminX - oh, rmaxY + oh]].map(function (q) { return transform({ position_m: [0, 0], rotation_deg: 0 }, q); });
+      var isGable = d.roof_form.type === 'gable';
       out.push('<path d="' + path(rp) + '" fill="none" stroke="#245244" stroke-width="1.5" stroke-dasharray="7 4"/>');
+      if (isGable) { var ridge = (rminY + rmaxY) / 2; var rl = P([rminX, ridge]); var rr = P([rmaxX, ridge]); out.push('<line x1="' + n(rl[0]) + '" y1="' + n(rl[1]) + '" x2="' + n(rr[0]) + '" y2="' + n(rr[1]) + '" stroke="#245244" stroke-width="2"/>'); }
       var rc = P([(rminX + rmaxX) / 2, (rminY + rmaxY) / 2]);
       var sa = (d.solar_array && d.solar_array.azimuth_deg || 180) * DEG;
       var sv = [Math.sin(sa), Math.cos(sa)];
       var saBase = P([(rminX + rmaxX) / 2, rmaxY - 0.8]);
       out.push('<line x1="' + n(saBase[0]) + '" y1="' + n(saBase[1]) + '" x2="' + n(saBase[0] + sv[0] * 48) + '" y2="' + n(saBase[1] + sv[1] * 48) + '" stroke="#245a73" stroke-width="2.4" marker-end="url(#' + pre + '-arrow)"/>');
-      out.push(text(W - 40, 122, 'shed roof · PV south only', 9, ' text-anchor="end" fill="#245244" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
+      out.push(text(W - 40, 122, isGable ? 'gable roof · PV south only' : 'shed roof · PV south only', 9, ' text-anchor="end" fill="#245244" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
       out.push(text(W - 40, 134, 'PV ' + n((d.solar_array && d.solar_array.tilt_deg) || 39, 0) + '° / ' + n((d.solar_array && d.solar_array.azimuth_deg) || 180, 0) + '°', 9, ' text-anchor="end" fill="#245a73" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
     }
     // dimensions
@@ -706,6 +708,22 @@
   }
   function polyScreen(points, S) { return points.map(function (p) { var q = S(p); return n(q[0]) + ' ' + n(q[1]); }).join(' '); }
   function visible(f) { return f.normal[0] * 1 + f.normal[1] * 1 + f.normal[2] * 1 > 0.001; }
+
+  function panelGridSVG(corners, cols, rows, S) {
+    var p0 = corners[0], p1 = corners[1], p2 = corners[2], p3 = corners[3];
+    function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+    function at(u, v) { return mix(mix(p0, p1, u), mix(p3, p2, u), v); }
+    var out = '<path d="M' + polyScreen(corners, S) + 'Z" fill="#123b4d" stroke="#0d2a36" stroke-width="1"/>';
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var u0 = c / cols + 0.018, u1 = (c + 1) / cols - 0.018;
+        var v0 = r / rows + 0.028, v1 = (r + 1) / rows - 0.028;
+        var q = [at(u0, v0), at(u1, v0), at(u1, v1), at(u0, v1)];
+        out += '<path d="M' + polyScreen(q, S) + 'Z" fill="' + ((r + c) % 2 ? '#245a73' : '#2f6d88') + '" stroke="#9fc9d6" stroke-width="0.65"/>';
+      }
+    }
+    return out;
+  }
 
   function axoSVG(design, opts) {
     opts = opts || {};
@@ -856,37 +874,44 @@
         return s;
       } });
     });
-    if (!cut && d.roof_form && d.roof_form.type === 'south-shed') {
+    if (!cut && d.roof_form && (d.roof_form.type === 'south-shed' || d.roof_form.type === 'gable')) {
       var roofPolys = d.modules.map(moduleCorners).concat(d.connections.filter(function (c) { return c.glazed; }).map(connectionCorners));
       var rminX = Infinity, rminY = Infinity, rmaxX = -Infinity, rmaxY = -Infinity;
       roofPolys.forEach(function (poly) { poly.forEach(function (p) { rminX = Math.min(rminX, p[0]); rmaxX = Math.max(rmaxX, p[0]); rminY = Math.min(rminY, p[1]); rmaxY = Math.max(rmaxY, p[1]); }); });
       var oh = d.roof_form.overhang_m || 0.6;
       rminX -= oh; rmaxX += oh; rminY -= oh; rmaxY += oh;
-      var zS = (d.foundation ? d.foundation.clearance_m : 0) + Math.max.apply(null, d.modules.map(function (m) { return m.nominal.height_m; })) + 0.12;
-      var zN = zS + (rmaxY - rminY) * Math.tan((d.roof_form.pitch_deg || 12) * Math.PI / 180);
-      var roofCorners = [[rminX, rmaxY, zS], [rmaxX, rmaxY, zS], [rmaxX, rminY, zN], [rminX, rminY, zN]];
+      var zEave = (d.foundation ? d.foundation.clearance_m : 0) + Math.max.apply(null, d.modules.map(function (m) { return m.nominal.height_m; })) + 0.12;
+      var isGable = d.roof_form.type === 'gable';
+      var ridgeY = (rminY + rmaxY) / 2;
+      var zRidge = zEave + (rmaxY - ridgeY) * Math.tan((d.roof_form.pitch_deg || 10) * Math.PI / 180);
+      var zAtSouth = function (y) { return isGable ? zEave + (rmaxY - y) / Math.max(0.01, rmaxY - ridgeY) * (zRidge - zEave) : zEave + (rmaxY - y) / Math.max(0.01, rmaxY - rminY) * (zRidge - zEave); };
       var roofWinter = winter;
       objects.push({ kind: 'roof', depth: (rminX + rmaxX + rminY + rmaxY) / 2 + 1.2, draw: function () {
-        var rs = '<path d="M' + polyScreen(roofCorners, S) + 'Z" fill="' + (roofWinter ? '#e7ece7' : (d.roof_form.colour || '#245244')) + '" fill-opacity="0.97" stroke="#17392e" stroke-width="1.4"/>';
-        rs += '<path d="M' + polyScreen([roofCorners[0], roofCorners[1]], S) + '" stroke="#17392e" stroke-width="3"/>';
-        rs += '<path d="M' + polyScreen([roofCorners[2], roofCorners[3]], S) + '" stroke="#17392e" stroke-width="2"/>';
-        return rs;
+        var col = roofWinter ? '#e7ece7' : (d.roof_form.colour || '#245244');
+        if (isGable) {
+          var south = [[rminX, rmaxY, zEave], [rmaxX, rmaxY, zEave], [rmaxX, ridgeY, zRidge], [rminX, ridgeY, zRidge]];
+          var north = [[rminX, ridgeY, zRidge], [rmaxX, ridgeY, zRidge], [rmaxX, rminY, zEave], [rminX, rminY, zEave]];
+          var rs = '<path d="M' + polyScreen(south, S) + 'Z" fill="' + col + '" fill-opacity="0.98" stroke="#17392e" stroke-width="1.4"/>';
+          rs += '<path d="M' + polyScreen(north, S) + 'Z" fill="' + (roofWinter ? '#d7e0d7' : '#1f4a3d') + '" fill-opacity="0.98" stroke="#17392e" stroke-width="1.4"/>';
+          rs += '<path d="M' + polyScreen([[rminX, ridgeY, zRidge], [rmaxX, ridgeY, zRidge]], S) + '" stroke="#17392e" stroke-width="3"/>';
+          return rs;
+        }
+        var roofCorners = [[rminX, rmaxY, zEave], [rmaxX, rmaxY, zEave], [rmaxX, rminY, zRidge], [rminX, rminY, zRidge]];
+        return '<path d="M' + polyScreen(roofCorners, S) + 'Z" fill="' + col + '" fill-opacity="0.97" stroke="#17392e" stroke-width="1.4"/>' +
+          '<path d="M' + polyScreen([roofCorners[0], roofCorners[1]], S) + '" stroke="#17392e" stroke-width="3"/>' +
+          '<path d="M' + polyScreen([roofCorners[2], roofCorners[3]], S) + '" stroke="#17392e" stroke-width="2"/>';
       } });
       if (d.solar_array && d.solar_array.enabled) {
         var tilt = Math.max(0, Math.min(75, d.solar_array.tilt_deg || 39));
         var pdl = Math.min(7.0, (rmaxX - rminX) * 0.72);
-        var pdd = Math.min(1.8, (rmaxY - rminY) * 0.42);
+        var southRun = isGable ? rmaxY - ridgeY : rmaxY - rminY;
+        var pdd = Math.min(1.8, southRun * 0.42);
         var cx = (rminX + rmaxX) / 2, yLow = rmaxY - 0.85, yHigh = yLow - pdd;
-        var zLow = zS + (rmaxY - yLow) / Math.max(0.01, rmaxY - rminY) * (zN - zS) + 0.22;
-        var zHigh = zS + (rmaxY - yHigh) / Math.max(0.01, rmaxY - rminY) * (zN - zS) + 0.22 + pdd * Math.tan(tilt * Math.PI / 180);
+        var zLow = zAtSouth(yLow) + 0.22;
+        var zHigh = zAtSouth(yHigh) + 0.22 + pdd * Math.tan(tilt * Math.PI / 180);
         var pCorners = [[cx - pdl / 2, yLow, zLow], [cx + pdl / 2, yLow, zLow], [cx + pdl / 2, yHigh, zHigh], [cx - pdl / 2, yHigh, zHigh]];
         objects.push({ kind: 'solar-array', depth: 2000, draw: function () {
-          var ps = '<path d="M' + polyScreen(pCorners, S) + 'Z" fill="#245a73" fill-opacity="0.97" stroke="#123b4d" stroke-width="1.4"/>';
-          for (var k = 1; k < 6; k++) {
-            var t = k / 6;
-            var a = [cx - pdl / 2 + pdl * t, yLow, zLow], b = [cx - pdl / 2 + pdl * t, yHigh, zHigh];
-            ps += '<line x1="' + n(S(a)[0]) + '" y1="' + n(S(a)[1]) + '" x2="' + n(S(b)[0]) + '" y2="' + n(S(b)[1]) + '" stroke="#9fc9d6" stroke-width="0.8"/>';
-          }
+          var ps = panelGridSVG(pCorners, 3, 2, S);
           ps += '<text x="' + n(S([cx, (yLow + yHigh) / 2, (zLow + zHigh) / 2])[0]) + '" y="' + n(S([cx, (yLow + yHigh) / 2, (zLow + zHigh) / 2])[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#eaf6f9" stroke="#123b4d" stroke-width="2.4" paint-order="stroke">PV ' + n(tilt, 0) + '° / ' + n(d.solar_array.azimuth_deg || 180, 0) + '°</text>';
           return ps;
         } });
@@ -1071,15 +1096,9 @@
       ].map(function (q) { var t = transform(m, [q[0], q[1]]); return [t[0], t[1], q[2]]; });
       var flat = [[corners[0][0], corners[0][1], z0], [corners[1][0], corners[1][1], z0], [corners[2][0], corners[2][1], z0], [corners[3][0], corners[3][1], z0]];
       s += '<path d="M' + polyScreen(flat, S) + 'Z" fill="#245a73" fill-opacity="0.85" stroke="#123b4d" stroke-width="1"/>';
-      s += '<path d="M' + polyScreen(corners, S) + 'Z" fill="#2f6d88" fill-opacity="0.9" stroke="#123b4d" stroke-width="1.2"/>';
+      s += panelGridSVG(corners, 3, 1, S);
       var front = [[corners[0][0], corners[0][1], corners[0][2]], [corners[1][0], corners[1][1], corners[1][2]], [corners[1][0], corners[1][1], corners[1][2] - 0.08], [corners[0][0], corners[0][1], corners[0][2] - 0.08]];
       s += '<path d="M' + polyScreen(front, S) + 'Z" fill="#123b4d" stroke="#0d2a36" stroke-width="1"/>';
-      for (var pi = 1; pi < 5; pi++) {
-        var t = pi / 5;
-        var a1 = [corners[0][0] + (corners[1][0] - corners[0][0]) * t, corners[0][1] + (corners[1][1] - corners[0][1]) * t, corners[0][2]];
-        var a2 = [corners[3][0] + (corners[2][0] - corners[3][0]) * t, corners[3][1] + (corners[2][1] - corners[3][1]) * t, corners[3][2]];
-        s += '<line x1="' + n(S(a1)[0]) + '" y1="' + n(S(a1)[1]) + '" x2="' + n(S(a2)[0]) + '" y2="' + n(S(a2)[1]) + '" stroke="#9fc9d6" stroke-width="0.7"/>';
-      }
       [corners[2], corners[3]].forEach(function (q) { var r = S([q[0], q[1], baseZ + m.nominal.height_m + 0.02]); var tq = S(q); s += '<line x1="' + n(r[0]) + '" y1="' + n(r[1]) + '" x2="' + n(tq[0]) + '" y2="' + n(tq[1]) + '" stroke="#536b63" stroke-width="1.1"/>'; });
       var pc = S([(corners[0][0] + corners[2][0]) / 2, (corners[0][1] + corners[2][1]) / 2, z0 + 0.2]);
       s += '<text x="' + n(pc[0]) + '" y="' + n(pc[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#eaf6f9" stroke="#123b4d" stroke-width="2.2" paint-order="stroke">PV ' + n(tilt, 0) + '° / ' + n(m.solar.azimuth_deg, 0) + '°</text>';

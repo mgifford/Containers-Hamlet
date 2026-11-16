@@ -197,7 +197,7 @@ Design Lab browser checks cover:
 
 | Measure | Result |
 |---|---|
-| Main first view | 380 KB uncompressed, 94 KB gzipped, 8 requests |
+| Main first view | 381 KB uncompressed, 95 KB gzipped, 8 requests |
 | Whole published site | 2240 KB |
 
 The whole site includes the gallery, three views for nine concepts, source JSON, the editor, the full AGPL text and the Phase 1.2 assets. It remains under the 2.5 MB budget.

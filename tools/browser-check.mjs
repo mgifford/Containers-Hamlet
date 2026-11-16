@@ -191,7 +191,7 @@ try {
   await page.focus('button[data-room="bath"]');
   await page.keyboard.press('Enter');
   ok(await page.getAttribute('button[data-room="bath"]', 'aria-pressed') === 'true', 'Enter highlights the bathroom');
-  ok(/Bathroom: 2\.27 by 2\.27 m/.test(await page.textContent('#room-status')), 'room selection is announced through a status message');
+  ok(/Bathroom: ~2\.3 by 2\.3 m/.test(await page.textContent('#room-status')), 'room selection is announced with approximate dimensions');
   ok(/Bathroom highlighted/.test(await label()) && /Bathroom highlighted/.test(await page.textContent('#explorer-caption')), 'image description and caption follow the selection');
   await page.focus('input[name="ex-mode"]:checked');
   await page.keyboard.press('ArrowLeft');

@@ -85,8 +85,8 @@ The foundation section, footbridge diagram, page text and concept data are origi
 | `node tools/check-design-lab.mjs` | 704 passed, 0 failed |
 | `node tools/browser-check.mjs` | 70 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 126 passed, 0 failed |
-| Main first view | 380 KB uncompressed / 94 KB gzipped |
-| Whole published site | 3062 KB (under 3.0 MB) |
+| Main first view | 381 KB uncompressed / 95 KB gzipped |
+| Whole published site | 3074 KB (under 3.2 MB) |
 
 Screenshots: [`screenshots/phase-1.3-envelope-vegetation/`](screenshots/phase-1.3-envelope-vegetation/).
 

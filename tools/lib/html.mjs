@@ -6,6 +6,7 @@ const a2 = (v) => (Math.round(v * 10) / 10).toFixed(1);
 const r1 = (v) => (Math.round((Number(v) + Number.EPSILON) * 10) / 10).toFixed(1);
 const approx = (v, d = 1) => '~' + (d === 0 ? Math.round(Number(v)) : r1(v));
 const dims = (a, b) => `~${r1(a)} × ${r1(b)}`;
+const approxRoom = (v) => `~${r1(v)}`;
 
 export function replaceFragments(html, fragments) {
   let out = html;
@@ -28,15 +29,15 @@ export function factsList(model) {
     ['Modules', `${modules} × ${esc(spec.module.type)}, ${m(M.L, 3)} × ${m(M.W, 3)} × ${m(M.H, 3)} m`],
     ['Clear floor area', `${approx(M.clear_floor_area_m2, 0)} m² inside the lining, plus ${approx(M.porch_area_m2, 0)} m² of porch and deck`],
     ['Clear height', `${m(M.clear_height_m, 2)} m in the modules${model.bays.some((b) => b.type === 'hall') ? `; ${m(model.bays.find((b) => b.type === 'hall').ceiling - M.FFL, 2)} m in the hall` : ''}`],
-    ['Floor above grade', `${approx(M.ffl_above_grade_m)} m on piles${ramp ? `, so step-free access needs ${m(ramp.run_m, 2)} m of ramp at 1:${ramp.slope_ratio} per entrance` : ''}`],
+    ['Floor above grade', `${approx(M.ffl_above_grade_m)} m on piles${ramp ? `, with a graded gravel trail/landing at 1:${ramp.slope_ratio}; the longest section is ${m(ramp.run_m, 1)} m, not a timber walkway` : ''}`],
     ['Exterior wall', `${Math.round(wall * 1000)} mm: lining, steel, ${Math.round(M.wall_layers[0].thickness_m * 1000)} mm external insulation, ventilated cavity, timber rainscreen`],
-    ['Roof PV (concept)', `${M.pv.panels} modules, about ${M.pv.kwp} kWp, drawn flat; sizing needs measured solar resource and winter loads`],
+    ['Roof PV (concept)', `${M.pv.panels} modules, about ${M.pv.kwp} kWp, drawn as individual tilted panels; sizing needs measured solar resource and winter loads`],
   ];
   return `<dl class="facts">\n${rows.map(([k, v]) => `  <div><dt>${k}</dt><dd>${v}</dd></div>`).join('\n')}\n</dl>`;
 }
 
 export function roomsTable(model, caption) {
-  const rows = model.rooms.map((r) => `    <tr><th scope="row">${esc(r.name)}</th><td>${m(r.clear_length_m, 2)} × ${m(r.clear_width_m, 2)} m</td><td>${a2(r.area_m2)} m²</td><td>${esc(r.use || '')}</td><td>${esc(r.accessibility || '')}</td></tr>`);
+  const rows = model.rooms.map((r) => `    <tr><th scope="row">${esc(r.name)}</th><td>${dims(r.clear_length_m, r.clear_width_m)} m</td><td>~${r1(r.area_m2)} m²</td><td>${esc(r.use || '')}</td><td>${esc(r.accessibility || '')}</td></tr>`);
   return `<div class="table-wrap" role="region" aria-label="${esc(caption)}" tabindex="0">
 <table>
   <caption>${esc(caption)}</caption>
