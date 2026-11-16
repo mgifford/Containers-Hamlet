@@ -20,6 +20,7 @@ import { vegetationPage } from './lib/design-vegetation.mjs';
 import { vegetationComparisonSVG } from './lib/design-systems.mjs';
 import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
+import { homesIndexPage, homePage, homeCards } from './lib/home-pages.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
@@ -112,6 +113,8 @@ export function generate() {
     })),
   };
   put('site/data/homes.json', JSON.stringify(homesPublic, null, 2) + '\n');
+  put('site/homes/index.html', homesIndexPage(homesPublic.buildings));
+  homesPublic.buildings.forEach((h) => put(`site/homes/${h.id}/index.html`, homePage(h, site)));
 
   /* ---------------- Container Home Design Lab ---------------- */
   const designLab = JSON.parse(readText('data/design-lab.json'));
@@ -299,8 +302,8 @@ export function generate() {
       return `<img src="assets/lake-impression.svg" width="${sz.width}" height="${sz.height}" alt="Concept impression of a lake-edge home at dawn: a low timber-clad cabin with a solar roof and a screened porch faces a rocky Canadian Shield lake, framed by cedar and pine." decoding="async">`;
     })(),
     'landscape-facts': landscapeFacts(site, analysis),
-    'home-tabs': homeTabs(site),
-    'home-dossiers': homeDossiers(site, analysis, models, diagrams),
+    'home-tabs': '',
+    'home-dossiers': homeCards(homesPublic.buildings),
     'model-cards': modelCards(BUILDINGS.map((id) => models[id]), {
       'cabin-a': img('cabin-a', 'axonometric.svg', 'Cabin A seen from the south-west: a long timber-clad container home with solar panels, a screened porch, an access ramp and a planted trellis.').replace(' loading="lazy"', ''),
       lodge: img('lodge', 'axonometric.svg', 'The common lodge seen from the south-west: two timber-clad modules either side of a taller hall with clerestory windows, solar panels, a screened porch and two ramps.').replace(' loading="lazy"', ''),

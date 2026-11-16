@@ -47,7 +47,8 @@ const BASE = `http://127.0.0.1:${server.address().port}/`;
 
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 
-async function open(options = {}) {
+async function open(url = '', options = {}) {
+  if (typeof url === 'object') { options = url; url = ''; }
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, ...options });
   const page = await context.newPage();
   const errors = [];
@@ -55,7 +56,7 @@ async function open(options = {}) {
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
   page.on('pageerror', (e) => errors.push(String(e)));
   page.on('request', (r) => { if (!r.url().startsWith(BASE) && !r.url().startsWith('data:')) foreign.push(r.url()); });
-  await page.goto(BASE, { waitUntil: 'load' });
+  await page.goto(BASE + url, { waitUntil: 'load' });
   return { context, page, errors, foreign };
 }
 
@@ -151,18 +152,32 @@ try {
   await page.keyboard.press('Space');
   ok(await page.evaluate(() => getComputedStyle(document.querySelector('#map-layer-potential')).display === 'none'), 'the illustrative potential-building layer starts hidden');
 
-  section('Keyboard: home briefs and view diagrams');
-  ok(await visible(page, '#home-a') && !(await visible(page, '#home-b')), 'the home selector shows one brief at a time');
-  await page.focus('input[name="home-choice"][value="a"]');
-  await page.keyboard.press('ArrowRight');
-  ok(await visible(page, '#home-b') && !(await visible(page, '#home-a')), 'arrow keys move between home briefs');
-  ok(/Cabin B/.test(await page.textContent('#selected')), 'changing the home brief also selects that home on the map');
-  ok(await page.evaluate(async () => { const i = document.querySelector('#home-b .view-diagram img'); if (!i) return false; if (!i.complete) await new Promise((r) => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); }); return i.getAttribute('alt').length > 40 && i.naturalWidth > 0; }), 'the visible view diagram has descriptive alt text and loads');
-  await page.click('#home-b [data-select-home]');
-  ok(await page.getAttribute('[data-choice="b"]', 'aria-pressed') === 'true', '"Show on the map" selects that home');
+  section('Dedicated home pages');
+  const homesIndex = await open('homes/');
+  ok(homesIndex.errors.length === 0, `homes index: no console errors${homesIndex.errors.length ? ': ' + homesIndex.errors.join(' | ') : ''}`);
+  const homesState = await homesIndex.page.evaluate(() => ({ cards: document.querySelectorAll('.home-index-card').length, links: [...document.querySelectorAll('.home-index-card h2 a')].map((a) => a.href) }));
+  ok(homesState.cards === 7 && homesState.links.every((u) => /\/homes\/[a-z]+\/$/.test(u)), 'homes index has seven shareable home links');
+  await axe(homesIndex.page, 'homes index');
+  await shot(homesIndex.page, 'homes-index');
+  const pine = await open('homes/c/');
+  ok(pine.errors.length === 0, `Cabin C page: no console errors${pine.errors.length ? ': ' + pine.errors.join(' | ') : ''}`);
+  const pineState = await pine.page.evaluate(() => ({ title: document.title, h1: document.querySelector('h1') && document.querySelector('h1').textContent, ids: [...document.querySelectorAll('h2[id]')].map((h) => h.id) }));
+  ok(/Cabin C/.test(pineState.title) && /Pine/.test(pineState.h1), 'Cabin C page has its own title and heading');
+  ok(['orientation','main-view','nearby','path','winter','siting','design-note','drawings'].every((id) => pineState.ids.indexOf(id) >= 0), 'Cabin C page has the shareable section anchors');
+  await pine.page.goto(BASE + 'homes/c/#main-view');
+  await pine.page.waitForTimeout(1200);
+  ok(await pine.page.evaluate(() => location.hash === '#main-view' && document.querySelector('#main-view').getBoundingClientRect().top < 200), 'Cabin C #main-view anchor opens at the section');
+  await axe(pine.page, 'Cabin C page');
+  await shot(pine.page, 'cabin-c-page', true);
+  await pine.context.close();
+  await homesIndex.context.close();
+
+  section('Main-page home cards and drawings');
+  ok(await page.locator('#homes .home-index-card').count() === 7, 'the main page shows seven home cards');
+  ok(await page.locator('#homes .home-card-image img').first().evaluate((i) => i.getAttribute('loading') === 'lazy'), 'home card diagrams are lazy-loaded');
   await page.click('[data-choice="a"]');
-  await page.click('#building-details a[data-home-link]');
-  ok(await visible(page, '#home-a') && !(await visible(page, '#home-b')), 'the map details link opens the matching full home brief');
+  const homeHref = await page.getAttribute('#building-details a', 'href');
+  ok(/homes\/a\/$/.test(homeHref), 'the map details link points to the dedicated Cabin A page');
 
   await page.focus('input[name="cabin-a-view"]:checked');
   ok(await visible(page, '#cabin-a-floor-plan') && !(await visible(page, '#cabin-a-elevations')), 'only the chosen drawing is shown');
@@ -191,7 +206,6 @@ try {
   await page.keyboard.press('ArrowRight');
   ok(/Lodge:/.test(await label()) && await page.$('button[data-room="hall"]') !== null, 'building switch loads the lodge and its rooms');
   await shot(page, 'desktop-explorer-lodge');
-  await page.focus('input[name="home-choice"][value="a"]');
   await page.locator('#homes').screenshot({ path: SHOTS ? path.join(SHOTS, 'desktop-homes.png') : undefined }).catch(() => {});
   await page.click('[data-choice="a"]');
   await page.click('#building-details a[data-explore]');
@@ -262,8 +276,8 @@ try {
   ok(await visible(page, '#explorer-canvas img'), 'static cutaway image stands in for the explorer');
   ok(await page.evaluate(() => [...document.querySelectorAll('[data-enhance]')].every((e) => e.offsetParent === null)), 'script-only controls stay hidden');
   ok(await page.evaluate(() => document.querySelectorAll('table').length >= 7), 'all data tables are present');
-  ok(await page.evaluate(() => [...document.querySelectorAll('.home')].filter((e) => e.offsetParent !== null).length === 7), 'all seven home briefs are visible without JavaScript');
-  ok(await page.evaluate(() => document.querySelectorAll('.view-diagram img').length === 7), 'all seven view diagrams are present without JavaScript');
+  ok(await page.evaluate(() => [...document.querySelectorAll('#homes .home-index-card')].filter((e) => e.offsetParent !== null).length === 7), 'all seven home cards are visible without JavaScript');
+  ok(await page.evaluate(() => document.querySelectorAll('#homes .home-card-image img').length === 7), 'all seven home-card view diagrams are present without JavaScript');
   await axe(page, 'no JavaScript');
   await context.close();
 } finally {

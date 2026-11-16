@@ -82,6 +82,16 @@ const visibleText = homeHtml.replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<[^>]+
 ok(!/3\.66|12\.59|26\.7\s*m²|35\.6\s*m²/.test(visibleText), 'general descriptions avoid two-decimal dimensions and exact floor areas');
 ok(/~12\.6|~3\.7/.test(visibleText), 'general descriptions use approximate dimensions');
 
+const homeIds = ['a','b','c','d','e','f','lodge'];
+for (const id of homeIds) {
+  const page = read(`site/homes/${id}/index.html`);
+  ok(exists(`site/homes/${id}/index.html`) && /<h1>/.test(page) && new RegExp(`id="main-view"`).test(page) && new RegExp(`id="siting"`).test(page), `home page ${id} has a title, main view and siting anchor`);
+  ok(/class="heading-link"/.test(page) && /class="on-page"/.test(page), `home page ${id} exposes section permalinks`);
+}
+const homesIndexHtml = read('site/homes/index.html');
+ok((homesIndexHtml.match(/class="home-index-card"/g) || []).length === 7 && homeIds.every((id) => homesIndexHtml.indexOf(`href="${id}/"`) >= 0), 'homes index links all seven home pages');
+ok((homeHtml.match(/class="home-index-card"/g) || []).length === 7 && /homes\/c\//.test(homeHtml), 'the main page links the seven dedicated home pages');
+
 section('Homes, views and orientation');
 ok(analysis.buildings.length === 7, 'six homes and one common lodge are placed');
 ok(analysis.buildings.filter((b) => b.id !== 'lodge').length === 6, 'the target of six homes is met by the fictional landscape');
