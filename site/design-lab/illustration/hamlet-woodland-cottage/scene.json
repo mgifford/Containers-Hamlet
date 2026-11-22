@@ -1,0 +1,437 @@
+{
+  "schema": "containers-hamlet-scene/v1",
+  "designId": "hamlet-woodland-cottage",
+  "name": "Woodland Cottage",
+  "revision": "2.0.0",
+  "designSchema": "containers-hamlet-design/v2.0",
+  "designHash": "908e19a3",
+  "sceneType": "exterior-three-quarter",
+  "camera": {
+    "view": "exterior-three-quarter",
+    "viewLabel": "exterior three-quarter view",
+    "height_m": 1.6,
+    "lens_mm": 35,
+    "azimuth_deg": 280,
+    "target": "building",
+    "renderRotationDeg": 215,
+    "note": "Azimuth is a world bearing from north. Reference SVG rendering is approximate; it is a concept reference, not a measured perspective."
+  },
+  "building": {
+    "storeys": 1,
+    "moduleCount": 1,
+    "moduleTypes": [
+      "40ft"
+    ],
+    "arrangement": "single",
+    "footprintType": "rectangular",
+    "grossFloorArea_m2": 29.72,
+    "groundCoverage_m2": 29.72,
+    "buildingHeight_m": 4.39,
+    "roofType": "gable",
+    "roofPitch_deg": 24,
+    "roofOverhang_m": 0.8,
+    "roofGreen": false,
+    "installedPv": true
+  },
+  "requiredElements": [
+    {
+      "type": "container",
+      "sourceId": "m1",
+      "storey": 0,
+      "elevation_m": 0.6,
+      "position_m": [
+        0,
+        0
+      ],
+      "rotation_deg": 0,
+      "nominal": {
+        "length_m": 12.192,
+        "width_m": 2.438,
+        "height_m": 2.896
+      },
+      "support": {
+        "type": "ground",
+        "references": [],
+        "verified": false
+      },
+      "cladding": {
+        "type": "timber",
+        "colour": "#8a6a4a"
+      },
+      "roof": "solar",
+      "offsetNote": ""
+    }
+  ],
+  "openings": [
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-n1",
+      "name": "Bedroom window",
+      "face": "north",
+      "worldFace": "north",
+      "type": "window",
+      "width_m": 1.4,
+      "height_m": 1.3,
+      "sill_m": 0.9,
+      "position_m": 1.8
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-n2",
+      "name": "Kitchen window",
+      "face": "north",
+      "worldFace": "north",
+      "type": "window",
+      "width_m": 1,
+      "height_m": 1.2,
+      "sill_m": 1.1,
+      "position_m": 6.2
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-s1",
+      "name": "Bathroom window",
+      "face": "south",
+      "worldFace": "south",
+      "type": "window",
+      "width_m": 0.8,
+      "height_m": 1,
+      "sill_m": 1.4,
+      "position_m": 4.4
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-s2",
+      "name": "Garden doors",
+      "face": "south",
+      "worldFace": "south",
+      "type": "sliding-door",
+      "width_m": 2.4,
+      "height_m": 2.1,
+      "sill_m": 0,
+      "position_m": 8.4
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-s3",
+      "name": "Step-free entrance",
+      "face": "south",
+      "worldFace": "south",
+      "type": "door",
+      "width_m": 0.95,
+      "height_m": 2.1,
+      "sill_m": 0,
+      "position_m": 6.1
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-w1",
+      "name": "Living window",
+      "face": "west",
+      "worldFace": "west",
+      "type": "window",
+      "width_m": 1,
+      "height_m": 1.3,
+      "sill_m": 0.9,
+      "position_m": 1.2
+    }
+  ],
+  "outdoor": [
+    {
+      "type": "porch",
+      "id": "p1",
+      "module": "m1",
+      "storey": 0,
+      "face": "south",
+      "length_m": 5.4,
+      "depth_m": 2.8,
+      "screened": false,
+      "roof": true,
+      "note": "Covered, step-free garden porch."
+    },
+    {
+      "type": "deck",
+      "id": "d1",
+      "porch": "p1",
+      "projection_m": 1,
+      "note": "Level garden deck; no step at the entrance."
+    }
+  ],
+  "spaces": [
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-z1",
+      "name": "Sleeping",
+      "type": "sleeping",
+      "start_m": 0,
+      "end_m": 3.4,
+      "accessibility": "Ground-floor bedroom; verify a 1.5 m turning circle and a 0.9 m route."
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-z2",
+      "name": "Bathroom",
+      "type": "bathroom",
+      "start_m": 3.4,
+      "end_m": 5.4,
+      "accessibility": "Adaptable bathroom intent; verify transfer space, grab-bar blocking and door clearance."
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-z3",
+      "name": "Kitchen",
+      "type": "kitchen",
+      "start_m": 5.4,
+      "end_m": 8,
+      "accessibility": "Provide a lowered work section and clear approach."
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-z4",
+      "name": "Living",
+      "type": "living",
+      "start_m": 8,
+      "end_m": 12,
+      "accessibility": "Direct step-free garden doors."
+    }
+  ],
+  "materials": {
+    "modules": [
+      {
+        "module": "m1",
+        "cladding": "timber",
+        "colour": "#8a6a4a",
+        "frame": null,
+        "roof": "solar",
+        "insulation_mm": 150,
+        "solar": true
+      }
+    ],
+    "palette": [
+      {
+        "component": "Container modules",
+        "material": "Reclaimed ISO high-cube steel containers",
+        "disclosure": "Reuse avoids new steel but adds transport, reinforcement and insulation. Not automatically lower impact than timber."
+      },
+      {
+        "component": "External insulation",
+        "material": "Wood-fibre or mineral-wool board (TBD)",
+        "disclosure": "Continuous external insulation reduces thermal bridging. Thickness and moisture performance need hygrothermal review."
+      },
+      {
+        "component": "Rainscreen",
+        "material": "Reclaimed or certified timber battens and boards",
+        "disclosure": "Replaceable and repairable, but needs durable species, ventilation and fire review."
+      },
+      {
+        "component": "Structure and connections",
+        "material": "Engineered steel connections, transfer framing where needed",
+        "disclosure": "No connection, transfer beam or foundation capacity is designed in this concept."
+      },
+      {
+        "component": "Roof",
+        "material": "Membrane, timber structure and optional PV",
+        "disclosure": "Roof structure, drainage, snow, wind uplift and PV fixing need engineering review."
+      }
+    ],
+    "roofFinish": "gable",
+    "windowFrames": [
+      null
+    ]
+  },
+  "environment": {
+    "siteId": "a",
+    "siteName": "Cabin A",
+    "siteRotation_deg": 65,
+    "principalView": "Heron Lake seen through cedar and pine, with the far shore low on the horizon.",
+    "principalViewAzimuth_deg": 245,
+    "pathApproach": "east",
+    "season": "late-summer",
+    "time": "late-afternoon",
+    "weather": "clear",
+    "people": false
+  },
+  "constraints": {
+    "preserveGeometry": true,
+    "allowAdditionalOpenings": false,
+    "allowAdditionalStoreys": false,
+    "allowAdditionalOutdoorSpaces": false,
+    "allowMaterialInvention": false,
+    "materialPolicy": "strict-documented"
+  },
+  "capabilities": {
+    "exteriorReference": true,
+    "interiorPerspective": false,
+    "roomZonePlan": true,
+    "roofPlan": true,
+    "containerSchematic": true
+  },
+  "facts": [
+    "1 occupied storey",
+    "1 container module (40ft)",
+    "gable roof at 24 degrees",
+    "29.7 m2 gross floor area",
+    "29.7 m2 ground coverage",
+    "4.39 m to the roof"
+  ],
+  "intentions": [
+    "Step-free entrance is a design intent, not a verified measurement.",
+    "Adaptable bathroom is a design intent, not a verified layout.",
+    "Adaptable kitchen is a design intent, not a verified layout."
+  ],
+  "unresolved": [
+    {
+      "code": "interior-partitions",
+      "severity": "limitation",
+      "message": "Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective."
+    },
+    {
+      "code": "accessibility-verification",
+      "severity": "review",
+      "message": "Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured."
+    },
+    {
+      "code": "site-approach",
+      "severity": "unresolved",
+      "message": "The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification."
+    }
+  ],
+  "presentation": {
+    "style": "photorealistic",
+    "season": "late-summer",
+    "time": "late-afternoon",
+    "weather": "clear",
+    "people": false
+  },
+  "materialPolicy": "strict-documented",
+  "prompt": {
+    "text": "Create a photorealistic architectural illustration of the Woodland Cottage residence.\nUse the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.\nThe building has 1 occupied storey and 1 container module.\nModule geometry:\n- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.\nRoof: gable at 24 degrees, 0.8 m overhang, installed PV array.\nOpenings:\n- m1: north window \"Bedroom window\" at 1.8 m, 1.4 x 1.3 m, sill 0.9 m; north window \"Kitchen window\" at 6.2 m, 1 x 1.2 m, sill 1.1 m; south window \"Bathroom window\" at 4.4 m, 0.8 x 1 m, sill 1.4 m; south sliding-door \"Garden doors\" at 8.4 m, 2.4 x 2.1 m, sill 0 m; south door \"Step-free entrance\" at 6.1 m, 0.95 x 2.1 m, sill 0 m; west window \"Living window\" at 1.2 m, 1 x 1.3 m, sill 0.9 m.\nOutdoor spaces:\n- p1: 5.4 m x 2.8 m covered porch on the south face of m1, roofed.\n- d1: deck beyond p1, projecting 1 m.\nSite: Cabin A. Principal view: Heron Lake seen through cedar and pine, with the far shore low on the horizon. Path approach recorded as east.\nCamera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 280 degrees.\nPresentation: late summer, late afternoon, clear, no people.\nMaterial policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.\nRestrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.\nUnresolved matters to carry into the illustration notes:\n- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.\n- The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\nThis is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.",
+    "lines": [
+      "Create a photorealistic architectural illustration of the Woodland Cottage residence.",
+      "Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.",
+      "The building has 1 occupied storey and 1 container module.",
+      "Module geometry:",
+      "- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.",
+      "Roof: gable at 24 degrees, 0.8 m overhang, installed PV array.",
+      "Openings:",
+      "- m1: north window \"Bedroom window\" at 1.8 m, 1.4 x 1.3 m, sill 0.9 m; north window \"Kitchen window\" at 6.2 m, 1 x 1.2 m, sill 1.1 m; south window \"Bathroom window\" at 4.4 m, 0.8 x 1 m, sill 1.4 m; south sliding-door \"Garden doors\" at 8.4 m, 2.4 x 2.1 m, sill 0 m; south door \"Step-free entrance\" at 6.1 m, 0.95 x 2.1 m, sill 0 m; west window \"Living window\" at 1.2 m, 1 x 1.3 m, sill 0.9 m.",
+      "Outdoor spaces:",
+      "- p1: 5.4 m x 2.8 m covered porch on the south face of m1, roofed.",
+      "- d1: deck beyond p1, projecting 1 m.",
+      "Site: Cabin A. Principal view: Heron Lake seen through cedar and pine, with the far shore low on the horizon. Path approach recorded as east.",
+      "Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 280 degrees.",
+      "Presentation: late summer, late afternoon, clear, no people.",
+      "Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.",
+      "Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.",
+      "Unresolved matters to carry into the illustration notes:",
+      "- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
+      "- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.",
+      "- The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.",
+      "This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance."
+    ]
+  },
+  "negativePrompt": {
+    "text": "extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation",
+    "groups": [
+      {
+        "category": "geometric contradictions",
+        "text": "extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs"
+      },
+      {
+        "category": "architectural additions",
+        "text": "garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded"
+      },
+      {
+        "category": "rendering artifacts",
+        "text": "warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos"
+      },
+      {
+        "category": "environmental contradictions",
+        "text": "tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction"
+      },
+      {
+        "category": "safety-related visual errors",
+        "text": "missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation"
+      }
+    ]
+  },
+  "description": {
+    "text": "# Woodland Cottage — illustration reference\n\nDesign revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 908e19a3\n\nThis description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.\n\n## Architectural facts\n- 1 occupied storey\n- 1 container module (40ft)\n- gable roof at 24 degrees\n- 29.7 m2 gross floor area\n- 29.7 m2 ground coverage\n- 4.39 m to the roof\n\n## Modules\n- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, timber cladding. \n\n## Openings\n- m1 / Bedroom window — north window, 1.4 × 1.3 m, sill 0.9 m.\n- m1 / Kitchen window — north window, 1 × 1.2 m, sill 1.1 m.\n- m1 / Bathroom window — south window, 0.8 × 1 m, sill 1.4 m.\n- m1 / Garden doors — south sliding-door, 2.4 × 2.1 m, sill 0 m.\n- m1 / Step-free entrance — south door, 0.95 × 2.1 m, sill 0 m.\n- m1 / Living window — west window, 1 × 1.3 m, sill 0.9 m.\n\n## Rooms and zones\n- m1 / Sleeping — sleeping, 0–3.4 m. Ground-floor bedroom; verify a 1.5 m turning circle and a 0.9 m route.\n- m1 / Bathroom — bathroom, 3.4–5.4 m. Adaptable bathroom intent; verify transfer space, grab-bar blocking and door clearance.\n- m1 / Kitchen — kitchen, 5.4–8 m. Provide a lowered work section and clear approach.\n- m1 / Living — living, 8–12 m. Direct step-free garden doors.\n\n## Outdoor spaces\n- p1: 5.4 × 2.8 m covered porch on the south face of m1.\n- d1: deck beyond p1, 1 m.\n\n## Site and camera\n- Assigned site: Cabin A (site rotation 65°).\n- Principal view: Heron Lake seen through cedar and pine, with the far shore low on the horizon.\n- Path approach: east\n- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 280°.\n\n## Intentions\n- Step-free entrance is a design intent, not a verified measurement.\n- Adaptable bathroom is a design intent, not a verified layout.\n- Adaptable kitchen is a design intent, not a verified layout.\n\n## Unresolved matters\n- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- **accessibility-verification**: Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.\n- **site-approach**: The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\n\n## Capability notes\n- Exterior reference: available\n- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes\n- Room-zone plan: available\n- Roof plan: available\n\n## Licence and status\nConcept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.",
+    "lines": [
+      "# Woodland Cottage — illustration reference",
+      "",
+      "Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 908e19a3",
+      "",
+      "This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.",
+      "",
+      "## Architectural facts",
+      "- 1 occupied storey",
+      "- 1 container module (40ft)",
+      "- gable roof at 24 degrees",
+      "- 29.7 m2 gross floor area",
+      "- 29.7 m2 ground coverage",
+      "- 4.39 m to the roof",
+      "",
+      "## Modules",
+      "- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, timber cladding. ",
+      "",
+      "## Openings",
+      "- m1 / Bedroom window — north window, 1.4 × 1.3 m, sill 0.9 m.",
+      "- m1 / Kitchen window — north window, 1 × 1.2 m, sill 1.1 m.",
+      "- m1 / Bathroom window — south window, 0.8 × 1 m, sill 1.4 m.",
+      "- m1 / Garden doors — south sliding-door, 2.4 × 2.1 m, sill 0 m.",
+      "- m1 / Step-free entrance — south door, 0.95 × 2.1 m, sill 0 m.",
+      "- m1 / Living window — west window, 1 × 1.3 m, sill 0.9 m.",
+      "",
+      "## Rooms and zones",
+      "- m1 / Sleeping — sleeping, 0–3.4 m. Ground-floor bedroom; verify a 1.5 m turning circle and a 0.9 m route.",
+      "- m1 / Bathroom — bathroom, 3.4–5.4 m. Adaptable bathroom intent; verify transfer space, grab-bar blocking and door clearance.",
+      "- m1 / Kitchen — kitchen, 5.4–8 m. Provide a lowered work section and clear approach.",
+      "- m1 / Living — living, 8–12 m. Direct step-free garden doors.",
+      "",
+      "## Outdoor spaces",
+      "- p1: 5.4 × 2.8 m covered porch on the south face of m1.",
+      "- d1: deck beyond p1, 1 m.",
+      "",
+      "## Site and camera",
+      "- Assigned site: Cabin A (site rotation 65°).",
+      "- Principal view: Heron Lake seen through cedar and pine, with the far shore low on the horizon.",
+      "- Path approach: east",
+      "- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 280°.",
+      "",
+      "## Intentions",
+      "- Step-free entrance is a design intent, not a verified measurement.",
+      "- Adaptable bathroom is a design intent, not a verified layout.",
+      "- Adaptable kitchen is a design intent, not a verified layout.",
+      "",
+      "## Unresolved matters",
+      "- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
+      "- **accessibility-verification**: Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.",
+      "- **site-approach**: The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.",
+      "",
+      "## Capability notes",
+      "- Exterior reference: available",
+      "- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes",
+      "- Room-zone plan: available",
+      "- Roof plan: available",
+      "",
+      "## Licence and status",
+      "Concept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0."
+    ]
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  }
+}

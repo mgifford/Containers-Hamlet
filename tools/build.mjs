@@ -34,6 +34,7 @@ import { resiliencePage } from './lib/design-resilience.mjs';
 import { waterPage, waterSVG } from './lib/design-water.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import { residencesPage } from './lib/design-residences.mjs';
+import { illustrationPage } from './lib/design-illustration-page.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
   provenanceList, reviewsTables, downloadsList, homeTabs, homeDossiers, landscapeFacts,
@@ -44,6 +45,7 @@ const require = createRequire(import.meta.url);
 const EcoModel = require('../site/js/model.js');
 const DesignSchema = require('../site/js/design-schema.js');
 const DesignModel = require('../site/js/design-model.js');
+const DesignIllustration = require('../site/js/design-illustration.js');
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BUILDINGS = ['cabin-a', 'cabin-20', 'lodge'];
@@ -157,6 +159,7 @@ export function generate() {
   if (hamletSelected.length !== 6) issues.push({ level: 'error', message: 'data/design-lab.json must contain six hamlet-selected residences' });
   if (designLab.concepts.some((c) => c.modules.some((m) => m.storey > 1))) issues.push({ level: 'error', message: 'a residence may not exceed two occupied storeys' });
   const designViews = {};
+  const illustrationEntries = [];
   designLab.concepts.forEach((concept) => {
     const schemaCheck = DesignSchema.validateSchema(concept);
     schemaCheck.errors.forEach((e) => issues.push({ level: 'error', message: `design-lab ${concept.id}: ${e.message}` }));
@@ -180,7 +183,43 @@ export function generate() {
       'solar-winter': DesignModel.renderSolarStudy(concept, { idPrefix: `${prefix}-solar-winter`, season: 'winter' })
     };
     if (concept.levels.length > 1) views['plan-upper'] = DesignModel.renderPlan(concept, { idPrefix: `${prefix}-plan-upper`, storey: 1 });
+    const detailedIllustration = concept.role === 'hamlet-selected' || concept.role === 'common-lodge';
+    let _illusConfig = null;
+    let _scene = null;
+    if (detailedIllustration) {
+      views['container-layout'] = DesignModel.containerSchematicSVG(concept, { idPrefix: `${prefix}-container-layout`, mode: 'plan' });
+      views['container-layout-elevation'] = DesignModel.containerSchematicSVG(concept, { idPrefix: `${prefix}-container-layout-elevation`, mode: 'elevation' });
+      views['roof-plan'] = DesignModel.roofPlanSVG(concept, { idPrefix: `${prefix}-roof-plan` });
+      views['exterior-opposite'] = DesignModel.renderReference(concept, { idPrefix: `${prefix}-exterior-opposite`, view: 'exterior-three-quarter', rotationDeg: 180 });
+      views.approach = DesignModel.renderReference(concept, { idPrefix: `${prefix}-approach`, view: 'front-approach' });
+      _illusConfig = DesignIllustration.defaultConfig(concept);
+      _scene = DesignIllustration.sceneSpec(concept, _illusConfig, site);
+      views['site-facing'] = DesignModel.renderReference(concept, { idPrefix: `${prefix}-site-facing`, view: 'exterior-three-quarter', rotationDeg: _scene.camera.renderRotationDeg });
+    }
     Object.entries(views).forEach(([name, svg]) => put(`site/design-lab/views/${concept.id}-${name}.svg`, svg));
+    if (concept.role === 'hamlet-selected') {
+      const base = `site/design-lab/illustration/${concept.id}`;
+      const files = {
+        'design.json': JSON.stringify(concept, null, 2) + '\n',
+        'description.md': _scene.description.text + '\n',
+        'prompt.md': _scene.prompt.text + '\n',
+        'negative.md': _scene.negativePrompt.text + '\n',
+        'config.json': JSON.stringify(_illusConfig, null, 2) + '\n',
+        'scene.json': JSON.stringify(_scene, null, 2) + '\n'
+      };
+      Object.entries(files).forEach(([name, content]) => put(`${base}/${name}`, content));
+      const artifacts = DesignIllustration.artifactPlan(_scene).map((a) => {
+        let content = files[a.path];
+        if (!content && a.path.indexOf('drawings/') === 0) {
+          const viewName = a.path.replace('drawings/', '').replace('.svg', '');
+          content = views[viewName] || '';
+        }
+        if (!content && a.path.indexOf('references/') === 0) content = views['site-facing'] || views['exterior'] || '';
+        return { ...a, hash: DesignIllustration.hashString(content || a.path + ':' + concept.id) };
+      });
+      put(`${base}/manifest.json`, JSON.stringify(DesignIllustration.manifest(_scene, concept, artifacts, designLab.generated || '2026-11-22'), null, 2) + '\n');
+      illustrationEntries.push({ concept, scene: _scene, config: _illusConfig, views });
+    }
     put(`site/design-lab/data/${concept.id}.json`, JSON.stringify(concept) + '\n');
     designViews[concept.id] = Object.fromEntries(Object.entries(views).map(([name, svg]) => [name, svgSize(svg)]));
   });
@@ -188,6 +227,7 @@ export function generate() {
   const profileById = Object.fromEntries(designProfiles.map((p) => [p.id, p]));
   designLab.concepts.forEach((concept) => put(`site/design-lab/architecture/${concept.id}/index.html`, architecturePage(concept, designViews[concept.id], profileById[concept.id]).replace(/[ \t]+$/gm, '')));
   put('site/design-lab/compare/index.html', comparePage(designProfiles, designLab.concepts));
+  put('site/design-lab/illustration/index.html', illustrationPage(illustrationEntries, designLab));
   const hamletProfiles = hamletSelected.map((c) => profileById[c.id]);
   const alternatives = {};
   hamletProfiles.filter((p) => p.storeys > 1).forEach((p) => {
@@ -248,7 +288,7 @@ export function generate() {
     drainage: (site.drainage || []).map((d) => ({ id: d.id, name: d.name, points: d.points, width_m: d.width_m })),
     buildings: site.buildings.map((b) => {
       const r = analysis.placed[b.id];
-      return { id: b.id, name: b.name, short_name: b.short_name, use: b.use, x_m: b.x_m, y_m: b.y_m, rotation_deg: b.rotation_deg, footprint: r ? r.parts[0].poly : null, design_lab_home: b.design_lab_home || null, design_lab_note: b.design_lab_note || null };
+      return { id: b.id, name: b.name, short_name: b.short_name, use: b.use, x_m: b.x_m, y_m: b.y_m, rotation_deg: b.rotation_deg, footprint: r ? r.parts[0].poly : null, design_lab_home: b.design_lab_home || null, design_lab_note: b.design_lab_note || null, views: b.views || null, orientation: b.orientation || null };
     }),
     lanes: site.circulation.lanes.map((l) => ({ id: l.id, name: l.name, kind: l.kind, width_m: l.width_m, points: l.points })),
     trails: site.circulation.trails.map((t) => ({ id: t.id, name: t.name, kind: t.kind, width_m: t.width_m, points: t.points })),

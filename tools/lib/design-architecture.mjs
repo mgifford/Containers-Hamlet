@@ -9,6 +9,12 @@ function viewCaption(c, kind) {
   const porchText = porch ? `${n(porch.length_m)} × ${n(porch.depth_m)} m ${porch.screened ? 'screened porch' : 'covered porch'}` : 'outdoor room';
   const levels = c.levels.length;
   if (kind === 'exterior') return `An exterior concept of ${c.name}. The timber-clad containers and ${porchText} are set against the woodland. ${levels > 1 ? 'Both storeys are drawn at their explicit elevations.' : ''}`;
+  if (kind === 'container-layout') return `Proportional container block plan: ${c.modules.length} modules across ${levels} storey${levels === 1 ? '' : 's'}, with ground modules solid and upper modules dashed and hatched. Dimensions are nominal.`;
+  if (kind === 'container-layout-elevation') return `Proportional container block elevation with ground and upper modules at their explicit elevations. This is a schematic, not a construction elevation.`;
+  if (kind === 'roof-plan') return `Roof plan generated from the roof geometry: form, pitch, overhang, ridge/valley and slope direction. Roof drainage, snow, wind and structure still need review.`;
+  if (kind === 'exterior-opposite') return `Opposite exterior reference from the same geometry and a rotated camera. It is a concept reference, not a measured photograph.`;
+  if (kind === 'approach') return `Approach reference. This is an orthographic elevation of the entrance facade; the world bearing in the prompt describes the site orientation.`;
+  if (kind === 'site-facing') return `Site-facing reference view, rotated so the assigned principal view faces the viewer. It is an approximate concept reference.`;
   if (kind === 'plan') return `Combined concept plan with ${c.modules.length} container module${c.modules.length === 1 ? '' : 's'}, interior room bands, openings, ${porchText}, deck and primary view.${levels > 1 ? ' Upper modules are drawn with a dashed outline over the ground floor.' : ''}`;
   if (kind === 'plan-ground') return `Ground-floor concept plan. Every module is shown with its room bands, openings and outdoor rooms.${levels > 1 ? ' Upper modules are muted outlines so the ground-floor layout stays readable.' : ''}`;
   if (kind === 'plan-upper') return `Upper-floor concept plan. The upper modules are solid and the ground-floor modules stay visible as muted outlines for context.`;
@@ -23,7 +29,7 @@ function viewCaption(c, kind) {
 }
 
 function slide(c, kind, title, src, size) {
-  const geometry = ['plan', 'plan-ground', 'plan-upper', 'cutaway', 'porch', 'section', 'exploded', 'elevation-south', 'elevation-north', 'elevation-east', 'elevation-west'].indexOf(kind) >= 0;
+  const geometry = ['plan', 'plan-ground', 'plan-upper', 'cutaway', 'porch', 'section', 'exploded', 'elevation-south', 'elevation-north', 'elevation-east', 'elevation-west', 'container-layout', 'container-layout-elevation', 'roof-plan', 'exterior-opposite', 'approach', 'site-facing'].indexOf(kind) >= 0;
   const badge = geometry ? 'Geometry-backed drawing' : 'Illustrative / explanatory study';
   const badgeClass = geometry ? 'geometry' : 'illustrative';
   const alt = kind && kind.indexOf('elevation') === 0
@@ -39,6 +45,8 @@ export function architecturePage(c, sizes, profile) {
   const multi = c.levels.length > 1;
   const slides = [
     slide(c, 'exterior', 'Exterior architectural view', `../../views/${c.id}-exterior.svg`, sizes.exterior),
+    sizes['container-layout'] ? slide(c, 'container-layout', 'Container block plan', `../../views/${c.id}-container-layout.svg`, sizes['container-layout']) : '',
+    sizes['container-layout-elevation'] ? slide(c, 'container-layout-elevation', 'Container block elevation', `../../views/${c.id}-container-layout-elevation.svg`, sizes['container-layout-elevation']) : '',
     slide(c, 'plan', 'Combined concept plan', `../../views/${c.id}-plan.svg`, sizes.plan),
     slide(c, 'plan-ground', 'Ground-floor plan', `../../views/${c.id}-plan-ground.svg`, sizes['plan-ground']),
     multi ? slide(c, 'plan-upper', 'Upper-floor plan', `../../views/${c.id}-plan-upper.svg`, sizes['plan-upper']) : '',
@@ -46,8 +54,12 @@ export function architecturePage(c, sizes, profile) {
     slide(c, 'elevation-north', 'North elevation', `../../views/${c.id}-elevation-north.svg`, sizes['elevation-north']),
     slide(c, 'elevation-east', 'East elevation', `../../views/${c.id}-elevation-east.svg`, sizes['elevation-east']),
     slide(c, 'elevation-west', 'West elevation', `../../views/${c.id}-elevation-west.svg`, sizes['elevation-west']),
+    sizes['roof-plan'] ? slide(c, 'roof-plan', 'Roof plan', `../../views/${c.id}-roof-plan.svg`, sizes['roof-plan']) : '',
     slide(c, 'section', 'Building section', `../../views/${c.id}-section.svg`, sizes.section),
     slide(c, 'exploded', 'Exploded levels', `../../views/${c.id}-exploded.svg`, sizes.exploded),
+    sizes['exterior-opposite'] ? slide(c, 'exterior-opposite', 'Opposite exterior reference', `../../views/${c.id}-exterior-opposite.svg`, sizes['exterior-opposite']) : '',
+    sizes.approach ? slide(c, 'approach', 'Approach reference', `../../views/${c.id}-approach.svg`, sizes.approach) : '',
+    sizes['site-facing'] ? slide(c, 'site-facing', 'Site-facing reference', `../../views/${c.id}-site-facing.svg`, sizes['site-facing']) : '',
     slide(c, 'cutaway', 'Interior roof-off cutaway', `../../views/${c.id}-cutaway.svg`, sizes.cutaway),
     slide(c, 'porch', 'Screened porch or deck view', `../../views/${c.id}-porch.svg`, sizes.porch),
     slide(c, 'solar-summer', 'Summer solar study', `../../views/${c.id}-solar-summer.svg`, sizes['solar-summer']),
@@ -210,6 +222,7 @@ ${slides}
       <a class="action" href="../../data/${c.id}.json" download>Download source JSON</a>
       ${editable ? `<a class="action secondary" href="../../editor/?preset=${c.id}">Open in the editor</a>` : '<a class="action secondary" href="../../editor/">Open the editor</a>'}
       <a class="action secondary" href="../../compare/?a=${c.id}">Compare this concept</a>
+      ${c.role === 'hamlet-selected' ? `<a class="action secondary" href="../../illustration/${esc(c.id)}/">Illustration package</a>` : ''}
       <a class="action secondary" href="../../residences/">Compare the six hamlet homes</a>
       <a class="action secondary" href="../../index.html">Back to the gallery</a>
     </div>

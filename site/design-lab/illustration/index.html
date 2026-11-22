@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Reproducible architectural illustration pipeline for Containers Hamlet: deterministic schematics and reference views, generated prompts, scene specifications and illustration packages.">
+  <title>Illustration pipeline · Containers Hamlet Design Lab</title>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="illustration.css">
+</head>
+<body class="lab-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Containers Hamlet</a>
+  <nav aria-label="Main">
+    <a href="../../community/">Community</a>
+    <a href="../../hamlet/">Map</a>
+    <a href="../../homes/">Homes</a>
+    <a href="../../design-lab/" aria-current="page">Design Lab</a>
+    <a href="../../living/">Living Here</a>
+    <a href="../../participate/">Participate</a>
+  </nav>
+</header>
+<nav class="subnav" aria-label="Design Lab sections">
+  <a href="../../design-lab/">Gallery</a>
+  <a href="../../design-lab/residences/">Residences</a>
+  <a href="../../design-lab/illustration/" aria-current="page">Illustrate</a>
+  <a href="../../design-lab/editor/">Editor</a>
+  <a href="../../design-lab/guides/">Guides</a>
+  <a href="../../design-lab/compare/">Compare</a>
+</nav>
+<main id="main" class="lab-main">
+  <p class="eyebrow">Design Lab · illustration pipeline</p>
+  <h1>Design once. Explore it in different ways.</h1>
+  <p class="lede">The House Studio uses one architectural model to produce container schematics, floor plans, elevations, sections and illustration references. You can also generate prompts for architectural illustrations that help explain what living in the proposed home might feel like. The drawings describe the modeled design. Illustrations are interpretations and may not reproduce every architectural detail accurately. Changing the design updates the drawings and identifies illustrations that need to be regenerated.</p>
+  <p class="notice"><strong>No AI image was generated for this page.</strong> This is the deterministic reference and prompt pipeline. Generated images are an external, optional workflow. They are never treated as architectural drawings or as evidence of code, structural or accessibility compliance.</p>
+  <div class="button-row"><a class="action" href="../editor/">Open the editor and generate a package</a><a class="action secondary" href="../guides/">Design Lab guides</a><a class="action secondary" href="../../index.html">Containers Hamlet</a></div>
+
+  <section aria-labelledby="what-title">
+    <h2 id="what-title">What is deterministic and what is generative</h2>
+    <div class="table-wrap"><table><caption>Output types and their authority.</caption><thead><tr><th scope="col">Output</th><th scope="col">Source</th><th scope="col">Authority</th></tr></thead><tbody>
+      <tr><th scope="row">Container schematic</th><td>Design geometry</td><td>Deterministic concept schematic</td></tr>
+      <tr><th scope="row">Plans, elevations, section, roof plan</th><td>Design geometry</td><td>Deterministic concept drawings</td></tr>
+      <tr><th scope="row">Exterior/site reference</th><td>Design geometry + camera</td><td>Deterministic concept reference; not a measured photograph</td></tr>
+      <tr><th scope="row">Description and prompt</th><td>Scene specification</td><td>Generated interpretation; facts are checked against the model</td></tr>
+      <tr><th scope="row">AI illustration</th><td>Prompt + reference package</td><td>Generative interpretation; never an authoritative drawing</td></tr>
+    </tbody></table></div>
+    <p class="small">The pipeline refuses to invent storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. If a feature is not modeled, the prompt says so. Interior perspective is not claimed because the model has longitudinal room zones, not partitions and camera geometry.</p>
+  </section>
+
+  <section aria-labelledby="packages-title">
+    <h2 id="packages-title">Six residence packages</h2>
+    <p>Each package contains the design JSON, a generated description, the exterior prompt, the negative prompt, the illustration configuration, the scene specification and a manifest with hashes and dependencies. The drawings and reference views are shared from the same generated model.</p>
+    <div class="concept-grid"><article class="concept-card illustration-card" id="illustration-hamlet-woodland-cottage">
+      <div class="concept-card-media"><img src="../views/hamlet-woodland-cottage-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Woodland Cottage. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Illustration package</span>
+        <h2>Woodland Cottage</h2>
+        <p class="small"><strong>1 storey</strong> · 1 module · gable roof · Cabin A</p>
+        <p>A compact, step-free cottage under a pitched roof, with a covered porch and direct garden access.</p>
+        <details><summary>Generated prompt for Woodland Cottage</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Woodland Cottage residence.
+Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
+The building has 1 occupied storey and 1 container module.
+Module geometry:
+- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
+Roof: gable at 24 degrees, 0.8 m overhang, installed PV array.
+Openings:
+- m1: north window &quot;Bedroom window&quot; at 1.8 m, 1.4 x 1.3 m, sill 0.9 m; north window &quot;Kitchen window&quot; at 6.2 m, 1 x 1.2 m, sill 1.1 m; south window &quot;Bathroom window&quot; at 4.4 m, 0.8 x 1 m, sill 1.4 m; south sliding-door &quot;Garden doors&quot; at 8.4 m, 2.4 x 2.1 m, sill 0 m; south door &quot;Step-free entrance&quot; at 6.1 m, 0.95 x 2.1 m, sill 0 m; west window &quot;Living window&quot; at 1.2 m, 1 x 1.3 m, sill 0.9 m.
+Outdoor spaces:
+- p1: 5.4 m x 2.8 m covered porch on the south face of m1, roofed.
+- d1: deck beyond p1, projecting 1 m.
+Site: Cabin A. Principal view: Heron Lake seen through cedar and pine, with the far shore low on the horizon. Path approach recorded as east.
+Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 280 degrees.
+Presentation: late summer, late afternoon, clear, no people.
+Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.
+Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
+Unresolved matters to carry into the illustration notes:
+- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
+- The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>accessibility-verification:</strong> Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.</li><li><strong>site-approach:</strong> The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
+        <p class="small"><strong>3</strong> unresolved/limitation notes · design hash <code>908e19a3</code></p>
+        <div class="button-row">
+          <a class="action" href="hamlet-woodland-cottage/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-woodland-cottage/scene.json" download>Scene JSON</a>
+          <a class="action secondary" href="hamlet-woodland-cottage/description.md" download>Description</a>
+          <a class="action secondary" href="hamlet-woodland-cottage/manifest.json" download>Manifest</a>
+          <a class="action secondary" href="../architecture/hamlet-woodland-cottage/">Architectural gallery</a>
+        </div>
+      </div>
+    </article>
+<article class="concept-card illustration-card" id="illustration-hamlet-offset-stack">
+      <div class="concept-card-media"><img src="../views/hamlet-offset-stack-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Offset Stack. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Illustration package</span>
+        <h2>Offset Stack</h2>
+        <p class="small"><strong>2 storeys</strong> · 2 modules · shed roof · Cabin B</p>
+        <p>Two 40-foot modules stacked with a deliberate offset, creating a covered ground-floor room and a distinct upper volume.</p>
+        <details><summary>Generated prompt for Offset Stack</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Offset Stack residence.
+Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
+The building has 2 occupied storeys and 2 container modules.
+Module geometry:
+- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
+- m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 0 degrees, metal cladding. m2 is offset 2.6 m east relative to m1.
+Roof: shed at 8 degrees, 0.7 m overhang, installed PV array.
+Openings:
+- m1: north window &quot;Stair window&quot; at 9.6 m, 0.9 x 1.2 m, sill 1 m; south sliding-door &quot;Living doors&quot; at 3.2 m, 2.4 x 2.1 m, sill 0 m; south window &quot;Kitchen window&quot; at 8.4 m, 1.2 x 1.2 m, sill 1 m; east door &quot;Entry door&quot; at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window &quot;West window&quot; at 1.4 m, 1 x 1.2 m, sill 1 m.
+- m2: north window &quot;Bedroom window&quot; at 2.4 m, 1.4 x 1.3 m, sill 0.9 m; south window &quot;Studio window&quot; at 7 m, 1.6 x 1.4 m, sill 0.8 m; east door &quot;Balcony door&quot; at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window &quot;Stair window&quot; at 1.2 m, 0.8 x 1.2 m, sill 1.2 m.
+Outdoor spaces:
+- p1: 4 m x 2.6 m covered porch on the south face of m1, roofed.
+- p2: 2.4 m x 1.4 m covered porch on the south face of m2, open.
+Site: Cabin B. Principal view: A sunlit birch glade and a low rock shoulder, with the forest floor visible beneath the trunks. Path approach recorded as south-west.
+Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 173 degrees.
+Presentation: late summer, late afternoon, clear, no people.
+Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.
+Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
+Unresolved matters to carry into the illustration notes:
+- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.
+- The upper porch p2 has no recorded door on the same south face. Do not show it as an accessible balcony; access is unresolved.
+This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>unmodeled-balcony:</strong> The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.</li><li><strong>balcony-access:</strong> The upper porch p2 has no recorded door on the same south face. Do not show it as an accessible balcony; access is unresolved.</li></ul></details>
+        <p class="small"><strong>3</strong> unresolved/limitation notes · design hash <code>4cecbf83</code></p>
+        <div class="button-row">
+          <a class="action" href="hamlet-offset-stack/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-offset-stack/scene.json" download>Scene JSON</a>
+          <a class="action secondary" href="hamlet-offset-stack/description.md" download>Description</a>
+          <a class="action secondary" href="hamlet-offset-stack/manifest.json" download>Manifest</a>
+          <a class="action secondary" href="../architecture/hamlet-offset-stack/">Architectural gallery</a>
+        </div>
+      </div>
+    </article>
+<article class="concept-card illustration-card" id="illustration-hamlet-courtyard-residence">
+      <div class="concept-card-media"><img src="../views/hamlet-courtyard-residence-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Courtyard Residence. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Illustration package</span>
+        <h2>Courtyard Residence</h2>
+        <p class="small"><strong>1 storey</strong> · 2 modules · flat roof · Cabin C</p>
+        <p>Two single-storey modules form an L around a sheltered garden courtyard, with rooms opening in several directions.</p>
+        <details><summary>Generated prompt for Courtyard Residence</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Courtyard Residence residence.
+Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
+The building has 1 occupied storey and 2 container modules.
+Module geometry:
+- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
+- m2: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 90 degrees, timber cladding.
+Roof: flat at 0 degrees, 0.5 m overhang, green-roof concept.
+Openings:
+- m1: north sliding-door &quot;Courtyard doors&quot; at 6.2 m, 2.6 x 2.1 m, sill 0 m; north window &quot;Dining window&quot; at 3 m, 1.4 x 1.4 m, sill 0.8 m; south window &quot;Bedroom window&quot; at 2 m, 1.4 x 1.3 m, sill 0.9 m; south window &quot;Bathroom window&quot; at 9.6 m, 0.8 x 1 m, sill 1.4 m; east door &quot;Entry door&quot; at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window &quot;Garden window&quot; at 1.4 m, 1.2 x 1.4 m, sill 0.8 m.
+- m2: north window &quot;Kitchen window&quot; at 2.2 m, 1.2 x 1.2 m, sill 1.1 m; north window &quot;Courtyard window&quot; at 4.8 m, 1.6 x 1.4 m, sill 0.8 m; north sliding-door &quot;Studio doors&quot; at 8.2 m, 2 x 2.1 m, sill 0 m; south window &quot;Workspace window&quot; at 2.4 m, 1.2 x 1.3 m, sill 0.9 m; south window &quot;Garden window&quot; at 7.6 m, 1.4 x 1.3 m, sill 0.9 m.
+Outdoor spaces:
+- p1: 6.4 m x 2.8 m covered porch on the north face of m1, roofed.
+- d1: deck beyond p1, projecting 1.4 m.
+- c1: glazed connection between m1 and m2.
+Site: Cabin C. Principal view: A long view west between pine trunks to a narrow strip of lake, more water than sky. Path approach recorded as east.
+Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 297 degrees.
+Presentation: late summer, late afternoon, clear, no people.
+Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.
+Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
+Unresolved matters to carry into the illustration notes:
+- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
+- The site path approach is east while the design entrance is north. The generated prompt does not call any side the main approach without qualification.
+This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>accessibility-verification:</strong> Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.</li><li><strong>site-approach:</strong> The site path approach is east while the design entrance is north. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
+        <p class="small"><strong>3</strong> unresolved/limitation notes · design hash <code>0c17aa9c</code></p>
+        <div class="button-row">
+          <a class="action" href="hamlet-courtyard-residence/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-courtyard-residence/scene.json" download>Scene JSON</a>
+          <a class="action secondary" href="hamlet-courtyard-residence/description.md" download>Description</a>
+          <a class="action secondary" href="hamlet-courtyard-residence/manifest.json" download>Manifest</a>
+          <a class="action secondary" href="../architecture/hamlet-courtyard-residence/">Architectural gallery</a>
+        </div>
+      </div>
+    </article>
+<article class="concept-card illustration-card" id="illustration-hamlet-cross-stacked-retreat">
+      <div class="concept-card-media"><img src="../views/hamlet-cross-stacked-retreat-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Cross-Stacked Retreat. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Illustration package</span>
+        <h2>Cross-Stacked Retreat</h2>
+        <p class="small"><strong>2 storeys</strong> · 2 modules · butterfly roof · Cabin D</p>
+        <p>A ground-floor living bar crossed by a perpendicular upper volume, producing a strong silhouette and a shaded outdoor room.</p>
+        <details><summary>Generated prompt for Cross-Stacked Retreat</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Cross-Stacked Retreat residence.
+Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
+The building has 2 occupied storeys and 2 container modules.
+Module geometry:
+- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.
+- m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 90 degrees, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.
+Roof: butterfly at 12 degrees, 0.8 m overhang, installed PV array.
+Openings:
+- m1: north window &quot;North window&quot; at 2 m, 1.2 x 1.2 m, sill 1 m; south sliding-door &quot;Living doors&quot; at 6 m, 2.8 x 2.1 m, sill 0 m; east door &quot;Entry door&quot; at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window &quot;West window&quot; at 1.4 m, 1.2 x 1.3 m, sill 0.9 m.
+- m2: north window &quot;Upper studio window&quot; at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window &quot;Upper bedroom window&quot; at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door &quot;Upper balcony door&quot; at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window &quot;Upper window&quot; at 1 m, 1.2 x 1.2 m, sill 1 m.
+Outdoor spaces:
+- p1: 4.2 m x 2.8 m covered porch on the south face of m1, roofed.
+Site: Cabin D. Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond. Path approach recorded as north.
+Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 231 degrees.
+Presentation: late summer, late afternoon, clear, no people.
+Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.
+Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
+Unresolved matters to carry into the illustration notes:
+- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.
+- The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.
+- The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>unmodeled-balcony:</strong> The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.</li><li><strong>interior-ceiling:</strong> The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.</li><li><strong>site-approach:</strong> The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
+        <p class="small"><strong>4</strong> unresolved/limitation notes · design hash <code>e83cde44</code></p>
+        <div class="button-row">
+          <a class="action" href="hamlet-cross-stacked-retreat/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-cross-stacked-retreat/scene.json" download>Scene JSON</a>
+          <a class="action secondary" href="hamlet-cross-stacked-retreat/description.md" download>Description</a>
+          <a class="action secondary" href="hamlet-cross-stacked-retreat/manifest.json" download>Manifest</a>
+          <a class="action secondary" href="../architecture/hamlet-cross-stacked-retreat/">Architectural gallery</a>
+        </div>
+      </div>
+    </article>
+<article class="concept-card illustration-card" id="illustration-hamlet-accessible-garden-home">
+      <div class="concept-card-media"><img src="../views/hamlet-accessible-garden-home-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Accessible Garden Home. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Illustration package</span>
+        <h2>Accessible Garden Home</h2>
+        <p class="small"><strong>1 storey</strong> · 2 modules · canopy roof · Cabin E</p>
+        <p>Two compact modules side by side, designed around a step-free route, generous circulation and an adaptable bathroom and kitchen.</p>
+        <details><summary>Generated prompt for Accessible Garden Home</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Accessible Garden Home residence.
+Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
+The building has 1 occupied storey and 2 container modules.
+Module geometry:
+- m1: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
+- m2: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
+Roof: canopy at 0 degrees, 1.2 m overhang.
+Openings:
+- m1: south opening &quot;Internal opening to bedroom module&quot; at 3 m, 1.4 x 2.1 m, sill 0 m; north window &quot;Living window&quot; at 1.6 m, 1.4 x 1.3 m, sill 0.8 m; north window &quot;Kitchen window&quot; at 4.6 m, 1 x 1.2 m, sill 1.1 m; west window &quot;West window&quot; at 1 m, 1 x 1.3 m, sill 0.9 m.
+- m2: north opening &quot;Internal opening to living module&quot; at 3 m, 1.4 x 2.1 m, sill 0 m; south door &quot;Step-free entrance&quot; at 1.6 m, 1 x 2.1 m, sill 0 m; south sliding-door &quot;Garden doors&quot; at 4.4 m, 2.4 x 2.1 m, sill 0 m; west window &quot;Bathroom window&quot; at 1 m, 0.8 x 1 m, sill 1.4 m; east door &quot;Utility door&quot; at 1 m, 0.95 x 2.1 m, sill 0 m.
+Outdoor spaces:
+- p1: 4.6 m x 2.8 m covered porch on the south face of m2, roofed.
+- d1: deck beyond p1, projecting 1.2 m.
+Site: Cabin E. Principal view: Fern, hemlock and a distant plane of lake light. The view is more forest than water. Path approach recorded as east.
+Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 315 degrees.
+Presentation: late summer, late afternoon, clear, no people.
+Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.
+Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
+Unresolved matters to carry into the illustration notes:
+- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
+- The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>accessibility-verification:</strong> Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.</li><li><strong>site-approach:</strong> The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
+        <p class="small"><strong>3</strong> unresolved/limitation notes · design hash <code>8b20cafe</code></p>
+        <div class="button-row">
+          <a class="action" href="hamlet-accessible-garden-home/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-accessible-garden-home/scene.json" download>Scene JSON</a>
+          <a class="action secondary" href="hamlet-accessible-garden-home/description.md" download>Description</a>
+          <a class="action secondary" href="hamlet-accessible-garden-home/manifest.json" download>Manifest</a>
+          <a class="action secondary" href="../architecture/hamlet-accessible-garden-home/">Architectural gallery</a>
+        </div>
+      </div>
+    </article>
+<article class="concept-card illustration-card" id="illustration-hamlet-solar-studio-stack">
+      <div class="concept-card-media"><img src="../views/hamlet-solar-studio-stack-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Solar Studio Stack. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Illustration package</span>
+        <h2>Solar Studio Stack</h2>
+        <p class="small"><strong>2 storeys</strong> · 2 modules · solar-ready roof · Cabin F</p>
+        <p>Two 20-foot modules stacked with a slight offset, giving a compact footprint, a solar-ready roof and an upper studio.</p>
+        <details><summary>Generated prompt for Solar Studio Stack</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Solar Studio Stack residence.
+Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
+The building has 2 occupied storeys and 2 container modules.
+Module geometry:
+- m1: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
+- m2: 2 storey, 6.06 m x 2.44 m, base elevation 3.9 m, rotation 0 degrees, metal cladding. m2 is offset 0.8 m east relative to m1.
+Roof: solar-ready at 12 degrees, 0.9 m overhang, installed PV array.
+Openings:
+- m1: south sliding-door &quot;Living doors&quot; at 2 m, 2 x 2.1 m, sill 0 m; south door &quot;Entry door&quot; at 4.4 m, 0.95 x 2.1 m, sill 0 m; north window &quot;Kitchen window&quot; at 1.8 m, 1.2 x 1.2 m, sill 1.1 m; west window &quot;Bathroom window&quot; at 1.2 m, 0.8 x 1 m, sill 1.4 m.
+- m2: south window &quot;Studio glazing&quot; at 3 m, 2.4 x 1.6 m, sill 0.6 m; north window &quot;Studio window&quot; at 2 m, 1.2 x 1.2 m, sill 0.9 m; east door &quot;Balcony door&quot; at 1.2 m, 0.9 x 2.1 m, sill 0 m.
+Outdoor spaces:
+- p1: 4.4 m x 2.4 m covered porch on the south face of m1, roofed.
+Site: Cabin F. Principal view: The southern cove of Heron Lake through juniper and cedar, with the opposite shore close enough to read the rock. Path approach recorded as north-east.
+Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 295 degrees.
+Presentation: late summer, late afternoon, clear, no people.
+Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.
+Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
+Unresolved matters to carry into the illustration notes:
+- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.
+- The alternating-tread stair is recorded but its usability and code acceptability are unresolved. Do not present it as an acceptable permanent-residence solution.
+- The site path approach is north-east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>unmodeled-balcony:</strong> The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.</li><li><strong>alternating-tread-stair:</strong> The alternating-tread stair is recorded but its usability and code acceptability are unresolved. Do not present it as an acceptable permanent-residence solution.</li><li><strong>site-approach:</strong> The site path approach is north-east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
+        <p class="small"><strong>4</strong> unresolved/limitation notes · design hash <code>37368d3b</code></p>
+        <div class="button-row">
+          <a class="action" href="hamlet-solar-studio-stack/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-solar-studio-stack/scene.json" download>Scene JSON</a>
+          <a class="action secondary" href="hamlet-solar-studio-stack/description.md" download>Description</a>
+          <a class="action secondary" href="hamlet-solar-studio-stack/manifest.json" download>Manifest</a>
+          <a class="action secondary" href="../architecture/hamlet-solar-studio-stack/">Architectural gallery</a>
+        </div>
+      </div>
+    </article></div>
+  </section>
+
+  <section aria-labelledby="revision-title">
+    <h2 id="revision-title">Revisions and regeneration</h2>
+    <p>The editor compares the current design hash with the hash used to generate the prompt. If you move a module, change a roof pitch or edit an opening, the illustration is marked <strong>outdated</strong>. Changing only a presentation setting changes the illustration configuration and prompt, not the plans or elevations. Regenerate the affected outputs from the editor.</p>
+    <p class="small">The hashes cover the architectural model and the presentation configuration separately. The manifest records the design revision, schema version, content hash, generator version, generation date, artifact dependencies and known limitations.</p>
+  </section>
+
+  <section aria-labelledby="privacy-title">
+    <h2 id="privacy-title">What this page does not do</h2>
+    <ul>
+      <li>It does not call an AI image service or transmit a design anywhere.</li>
+      <li>It does not store a user account, cookie or design on a server.</li>
+      <li>It does not claim that an illustration is geometrically verified.</li>
+      <li>It does not claim engineering, building-code or accessibility approval.</li>
+      <li>It does not add a user design to the published hamlet layout.</li>
+    </ul>
+  </section>
+</main>
+<footer class="site-footer"><p><a href="../../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>
+</body>
+</html>

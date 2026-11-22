@@ -1,0 +1,554 @@
+{
+  "schema": "containers-hamlet-scene/v1",
+  "designId": "hamlet-cross-stacked-retreat",
+  "name": "Cross-Stacked Retreat",
+  "revision": "2.0.0",
+  "designSchema": "containers-hamlet-design/v2.0",
+  "designHash": "e83cde44",
+  "sceneType": "exterior-three-quarter",
+  "camera": {
+    "view": "exterior-three-quarter",
+    "viewLabel": "exterior three-quarter view",
+    "height_m": 1.6,
+    "lens_mm": 35,
+    "azimuth_deg": 231,
+    "target": "building",
+    "renderRotationDeg": 264,
+    "note": "Azimuth is a world bearing from north. Reference SVG rendering is approximate; it is a concept reference, not a measured perspective."
+  },
+  "building": {
+    "storeys": 2,
+    "moduleCount": 2,
+    "moduleTypes": [
+      "40ft",
+      "40ft"
+    ],
+    "arrangement": "perpendicular-stack",
+    "footprintType": "cross",
+    "grossFloorArea_m2": 59.45,
+    "groundCoverage_m2": 53.5,
+    "buildingHeight_m": 8.26,
+    "roofType": "butterfly",
+    "roofPitch_deg": 12,
+    "roofOverhang_m": 0.8,
+    "roofGreen": false,
+    "installedPv": true
+  },
+  "requiredElements": [
+    {
+      "type": "container",
+      "sourceId": "m1",
+      "storey": 0,
+      "elevation_m": 0.6,
+      "position_m": [
+        0,
+        0
+      ],
+      "rotation_deg": 0,
+      "nominal": {
+        "length_m": 12.192,
+        "width_m": 2.438,
+        "height_m": 2.896
+      },
+      "support": {
+        "type": "ground",
+        "references": [],
+        "verified": false
+      },
+      "cladding": {
+        "type": "metal",
+        "colour": "#6f6a5d"
+      },
+      "roof": "membrane",
+      "offsetNote": ""
+    },
+    {
+      "type": "container",
+      "sourceId": "m2",
+      "storey": 1,
+      "elevation_m": 3.896,
+      "position_m": [
+        0,
+        0
+      ],
+      "rotation_deg": 90,
+      "nominal": {
+        "length_m": 12.192,
+        "width_m": 2.438,
+        "height_m": 2.896
+      },
+      "support": {
+        "type": "module",
+        "references": [
+          "m1"
+        ],
+        "verified": false
+      },
+      "cladding": {
+        "type": "timber",
+        "colour": "#8c8578"
+      },
+      "roof": "solar",
+      "offsetNote": "m2 is aligned with m1, rotated 90 degrees clockwise relative to m1."
+    }
+  ],
+  "openings": [
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-n1",
+      "name": "North window",
+      "face": "north",
+      "worldFace": "north",
+      "type": "window",
+      "width_m": 1.2,
+      "height_m": 1.2,
+      "sill_m": 1,
+      "position_m": 2
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-s1",
+      "name": "Living doors",
+      "face": "south",
+      "worldFace": "south",
+      "type": "sliding-door",
+      "width_m": 2.8,
+      "height_m": 2.1,
+      "sill_m": 0,
+      "position_m": 6
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-e1",
+      "name": "Entry door",
+      "face": "east",
+      "worldFace": "east",
+      "type": "door",
+      "width_m": 0.95,
+      "height_m": 2.1,
+      "sill_m": 0,
+      "position_m": 1.2
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-w1",
+      "name": "West window",
+      "face": "west",
+      "worldFace": "west",
+      "type": "window",
+      "width_m": 1.2,
+      "height_m": 1.3,
+      "sill_m": 0.9,
+      "position_m": 1.4
+    },
+    {
+      "module": "m2",
+      "storey": 1,
+      "id": "m2-n1",
+      "name": "Upper studio window",
+      "face": "north",
+      "worldFace": "east",
+      "type": "window",
+      "width_m": 1.6,
+      "height_m": 1.4,
+      "sill_m": 0.8,
+      "position_m": 2.4
+    },
+    {
+      "module": "m2",
+      "storey": 1,
+      "id": "m2-s1",
+      "name": "Upper bedroom window",
+      "face": "south",
+      "worldFace": "west",
+      "type": "window",
+      "width_m": 1.6,
+      "height_m": 1.4,
+      "sill_m": 0.8,
+      "position_m": 7.2
+    },
+    {
+      "module": "m2",
+      "storey": 1,
+      "id": "m2-e1",
+      "name": "Upper balcony door",
+      "face": "east",
+      "worldFace": "south",
+      "type": "door",
+      "width_m": 0.9,
+      "height_m": 2.1,
+      "sill_m": 0,
+      "position_m": 1.6
+    },
+    {
+      "module": "m2",
+      "storey": 1,
+      "id": "m2-w1",
+      "name": "Upper window",
+      "face": "west",
+      "worldFace": "north",
+      "type": "window",
+      "width_m": 1.2,
+      "height_m": 1.2,
+      "sill_m": 1,
+      "position_m": 1
+    }
+  ],
+  "outdoor": [
+    {
+      "type": "porch",
+      "id": "p1",
+      "module": "m1",
+      "storey": 0,
+      "face": "south",
+      "length_m": 4.2,
+      "depth_m": 2.8,
+      "screened": false,
+      "roof": true,
+      "note": "Shaded outdoor room beneath the cross volume."
+    }
+  ],
+  "spaces": [
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-z1",
+      "name": "Living",
+      "type": "living",
+      "start_m": 0,
+      "end_m": 5,
+      "accessibility": "Ground-floor essential living."
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-z2",
+      "name": "Kitchen",
+      "type": "kitchen",
+      "start_m": 5,
+      "end_m": 7.8,
+      "accessibility": "Ground-floor kitchen."
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-z3",
+      "name": "Bathroom",
+      "type": "bathroom",
+      "start_m": 7.8,
+      "end_m": 9.6,
+      "accessibility": "Ground-floor bathroom."
+    },
+    {
+      "module": "m1",
+      "storey": 0,
+      "id": "m1-z4",
+      "name": "Stair",
+      "type": "circulation",
+      "start_m": 9.6,
+      "end_m": 12,
+      "accessibility": "Internal stair; no lift or lift space."
+    },
+    {
+      "module": "m2",
+      "storey": 1,
+      "id": "m2-z1",
+      "name": "Sleeping",
+      "type": "sleeping",
+      "start_m": 0,
+      "end_m": 4.4,
+      "accessibility": "Upper bedroom; stair only."
+    },
+    {
+      "module": "m2",
+      "storey": 1,
+      "id": "m2-z2",
+      "name": "Bathroom",
+      "type": "bathroom",
+      "start_m": 4.4,
+      "end_m": 6.4,
+      "accessibility": "Upper bathroom; stair only."
+    },
+    {
+      "module": "m2",
+      "storey": 1,
+      "id": "m2-z3",
+      "name": "Studio",
+      "type": "work",
+      "start_m": 6.4,
+      "end_m": 10.4,
+      "accessibility": "Upper studio; stair only."
+    },
+    {
+      "module": "m2",
+      "storey": 1,
+      "id": "m2-z4",
+      "name": "Storage",
+      "type": "storage",
+      "start_m": 10.4,
+      "end_m": 12,
+      "accessibility": "Upper storage."
+    }
+  ],
+  "materials": {
+    "modules": [
+      {
+        "module": "m1",
+        "cladding": "metal",
+        "colour": "#6f6a5d",
+        "frame": null,
+        "roof": "membrane",
+        "insulation_mm": 150,
+        "solar": false
+      },
+      {
+        "module": "m2",
+        "cladding": "timber",
+        "colour": "#8c8578",
+        "frame": null,
+        "roof": "solar",
+        "insulation_mm": 150,
+        "solar": true
+      }
+    ],
+    "palette": [
+      {
+        "component": "Container modules",
+        "material": "Reclaimed ISO high-cube steel containers",
+        "disclosure": "Reuse avoids new steel but adds transport, reinforcement and insulation. Not automatically lower impact than timber."
+      },
+      {
+        "component": "External insulation",
+        "material": "Wood-fibre or mineral-wool board (TBD)",
+        "disclosure": "Continuous external insulation reduces thermal bridging. Thickness and moisture performance need hygrothermal review."
+      },
+      {
+        "component": "Rainscreen",
+        "material": "Reclaimed or certified timber battens and boards",
+        "disclosure": "Replaceable and repairable, but needs durable species, ventilation and fire review."
+      },
+      {
+        "component": "Structure and connections",
+        "material": "Engineered steel connections, transfer framing where needed",
+        "disclosure": "No connection, transfer beam or foundation capacity is designed in this concept."
+      },
+      {
+        "component": "Roof",
+        "material": "Membrane, timber structure and optional PV",
+        "disclosure": "Roof structure, drainage, snow, wind uplift and PV fixing need engineering review."
+      }
+    ],
+    "roofFinish": "butterfly",
+    "windowFrames": [
+      null,
+      null
+    ]
+  },
+  "environment": {
+    "siteId": "d",
+    "siteName": "Cabin D",
+    "siteRotation_deg": 16,
+    "principalView": "The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond.",
+    "principalViewAzimuth_deg": 196,
+    "pathApproach": "north",
+    "season": "late-summer",
+    "time": "late-afternoon",
+    "weather": "clear",
+    "people": false
+  },
+  "constraints": {
+    "preserveGeometry": true,
+    "allowAdditionalOpenings": false,
+    "allowAdditionalStoreys": false,
+    "allowAdditionalOutdoorSpaces": false,
+    "allowMaterialInvention": false,
+    "materialPolicy": "strict-documented"
+  },
+  "capabilities": {
+    "exteriorReference": true,
+    "interiorPerspective": false,
+    "roomZonePlan": true,
+    "roofPlan": true,
+    "containerSchematic": true
+  },
+  "facts": [
+    "2 occupied storeys",
+    "2 container modules (40ft, 40ft)",
+    "butterfly roof at 12 degrees",
+    "59.5 m2 gross floor area",
+    "53.5 m2 ground coverage",
+    "8.26 m to the roof"
+  ],
+  "intentions": [
+    "Step-free entrance is a design intent, not a verified measurement.",
+    "Adaptable bathroom is a design intent, not a verified layout.",
+    "Adaptable kitchen is a design intent, not a verified layout.",
+    "Butterfly roof is an exterior form; the interior ceiling is not resolved."
+  ],
+  "unresolved": [
+    {
+      "code": "interior-partitions",
+      "severity": "limitation",
+      "message": "Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective."
+    },
+    {
+      "code": "unmodeled-balcony",
+      "severity": "unresolved",
+      "module": "m2",
+      "opening": "m2-e1",
+      "message": "The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved."
+    },
+    {
+      "code": "interior-ceiling",
+      "severity": "unresolved",
+      "message": "The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside."
+    },
+    {
+      "code": "site-approach",
+      "severity": "unresolved",
+      "message": "The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification."
+    }
+  ],
+  "presentation": {
+    "style": "photorealistic",
+    "season": "late-summer",
+    "time": "late-afternoon",
+    "weather": "clear",
+    "people": false
+  },
+  "materialPolicy": "strict-documented",
+  "prompt": {
+    "text": "Create a photorealistic architectural illustration of the Cross-Stacked Retreat residence.\nUse the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.\nThe building has 2 occupied storeys and 2 container modules.\nModule geometry:\n- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.\n- m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 90 degrees, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.\nRoof: butterfly at 12 degrees, 0.8 m overhang, installed PV array.\nOpenings:\n- m1: north window \"North window\" at 2 m, 1.2 x 1.2 m, sill 1 m; south sliding-door \"Living doors\" at 6 m, 2.8 x 2.1 m, sill 0 m; east door \"Entry door\" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window \"West window\" at 1.4 m, 1.2 x 1.3 m, sill 0.9 m.\n- m2: north window \"Upper studio window\" at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window \"Upper bedroom window\" at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door \"Upper balcony door\" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window \"Upper window\" at 1 m, 1.2 x 1.2 m, sill 1 m.\nOutdoor spaces:\n- p1: 4.2 m x 2.8 m covered porch on the south face of m1, roofed.\nSite: Cabin D. Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond. Path approach recorded as north.\nCamera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 231 degrees.\nPresentation: late summer, late afternoon, clear, no people.\nMaterial policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.\nRestrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.\nUnresolved matters to carry into the illustration notes:\n- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.\n- The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.\n- The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\nThis is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.",
+    "lines": [
+      "Create a photorealistic architectural illustration of the Cross-Stacked Retreat residence.",
+      "Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.",
+      "The building has 2 occupied storeys and 2 container modules.",
+      "Module geometry:",
+      "- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.",
+      "- m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 90 degrees, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.",
+      "Roof: butterfly at 12 degrees, 0.8 m overhang, installed PV array.",
+      "Openings:",
+      "- m1: north window \"North window\" at 2 m, 1.2 x 1.2 m, sill 1 m; south sliding-door \"Living doors\" at 6 m, 2.8 x 2.1 m, sill 0 m; east door \"Entry door\" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window \"West window\" at 1.4 m, 1.2 x 1.3 m, sill 0.9 m.",
+      "- m2: north window \"Upper studio window\" at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window \"Upper bedroom window\" at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door \"Upper balcony door\" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window \"Upper window\" at 1 m, 1.2 x 1.2 m, sill 1 m.",
+      "Outdoor spaces:",
+      "- p1: 4.2 m x 2.8 m covered porch on the south face of m1, roofed.",
+      "Site: Cabin D. Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond. Path approach recorded as north.",
+      "Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 231 degrees.",
+      "Presentation: late summer, late afternoon, clear, no people.",
+      "Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.",
+      "Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.",
+      "Unresolved matters to carry into the illustration notes:",
+      "- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
+      "- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.",
+      "- The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.",
+      "- The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.",
+      "This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance."
+    ]
+  },
+  "negativePrompt": {
+    "text": "extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation",
+    "groups": [
+      {
+        "category": "geometric contradictions",
+        "text": "extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs"
+      },
+      {
+        "category": "architectural additions",
+        "text": "garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded"
+      },
+      {
+        "category": "rendering artifacts",
+        "text": "warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos"
+      },
+      {
+        "category": "environmental contradictions",
+        "text": "tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction"
+      },
+      {
+        "category": "safety-related visual errors",
+        "text": "missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation"
+      }
+    ]
+  },
+  "description": {
+    "text": "# Cross-Stacked Retreat — illustration reference\n\nDesign revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash e83cde44\n\nThis description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.\n\n## Architectural facts\n- 2 occupied storeys\n- 2 container modules (40ft, 40ft)\n- butterfly roof at 12 degrees\n- 59.5 m2 gross floor area\n- 53.5 m2 ground coverage\n- 8.26 m to the roof\n\n## Modules\n- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding. \n- **m2** — storey 2, 12.192 × 2.438 m, base 3.896 m, rotation 90°, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.\n\n## Openings\n- m1 / North window — north window, 1.2 × 1.2 m, sill 1 m.\n- m1 / Living doors — south sliding-door, 2.8 × 2.1 m, sill 0 m.\n- m1 / Entry door — east door, 0.95 × 2.1 m, sill 0 m.\n- m1 / West window — west window, 1.2 × 1.3 m, sill 0.9 m.\n- m2 / Upper studio window — north window, 1.6 × 1.4 m, sill 0.8 m.\n- m2 / Upper bedroom window — south window, 1.6 × 1.4 m, sill 0.8 m.\n- m2 / Upper balcony door — east door, 0.9 × 2.1 m, sill 0 m.\n- m2 / Upper window — west window, 1.2 × 1.2 m, sill 1 m.\n\n## Rooms and zones\n- m1 / Living — living, 0–5 m. Ground-floor essential living.\n- m1 / Kitchen — kitchen, 5–7.8 m. Ground-floor kitchen.\n- m1 / Bathroom — bathroom, 7.8–9.6 m. Ground-floor bathroom.\n- m1 / Stair — circulation, 9.6–12 m. Internal stair; no lift or lift space.\n- m2 / Sleeping — sleeping, 0–4.4 m. Upper bedroom; stair only.\n- m2 / Bathroom — bathroom, 4.4–6.4 m. Upper bathroom; stair only.\n- m2 / Studio — work, 6.4–10.4 m. Upper studio; stair only.\n- m2 / Storage — storage, 10.4–12 m. Upper storage.\n\n## Outdoor spaces\n- p1: 4.2 × 2.8 m covered porch on the south face of m1.\n\n## Site and camera\n- Assigned site: Cabin D (site rotation 16°).\n- Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond.\n- Path approach: north\n- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 231°.\n\n## Intentions\n- Step-free entrance is a design intent, not a verified measurement.\n- Adaptable bathroom is a design intent, not a verified layout.\n- Adaptable kitchen is a design intent, not a verified layout.\n- Butterfly roof is an exterior form; the interior ceiling is not resolved.\n\n## Unresolved matters\n- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- **unmodeled-balcony**: The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.\n- **interior-ceiling**: The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.\n- **site-approach**: The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\n\n## Capability notes\n- Exterior reference: available\n- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes\n- Room-zone plan: available\n- Roof plan: available\n\n## Licence and status\nConcept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.",
+    "lines": [
+      "# Cross-Stacked Retreat — illustration reference",
+      "",
+      "Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash e83cde44",
+      "",
+      "This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.",
+      "",
+      "## Architectural facts",
+      "- 2 occupied storeys",
+      "- 2 container modules (40ft, 40ft)",
+      "- butterfly roof at 12 degrees",
+      "- 59.5 m2 gross floor area",
+      "- 53.5 m2 ground coverage",
+      "- 8.26 m to the roof",
+      "",
+      "## Modules",
+      "- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding. ",
+      "- **m2** — storey 2, 12.192 × 2.438 m, base 3.896 m, rotation 90°, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.",
+      "",
+      "## Openings",
+      "- m1 / North window — north window, 1.2 × 1.2 m, sill 1 m.",
+      "- m1 / Living doors — south sliding-door, 2.8 × 2.1 m, sill 0 m.",
+      "- m1 / Entry door — east door, 0.95 × 2.1 m, sill 0 m.",
+      "- m1 / West window — west window, 1.2 × 1.3 m, sill 0.9 m.",
+      "- m2 / Upper studio window — north window, 1.6 × 1.4 m, sill 0.8 m.",
+      "- m2 / Upper bedroom window — south window, 1.6 × 1.4 m, sill 0.8 m.",
+      "- m2 / Upper balcony door — east door, 0.9 × 2.1 m, sill 0 m.",
+      "- m2 / Upper window — west window, 1.2 × 1.2 m, sill 1 m.",
+      "",
+      "## Rooms and zones",
+      "- m1 / Living — living, 0–5 m. Ground-floor essential living.",
+      "- m1 / Kitchen — kitchen, 5–7.8 m. Ground-floor kitchen.",
+      "- m1 / Bathroom — bathroom, 7.8–9.6 m. Ground-floor bathroom.",
+      "- m1 / Stair — circulation, 9.6–12 m. Internal stair; no lift or lift space.",
+      "- m2 / Sleeping — sleeping, 0–4.4 m. Upper bedroom; stair only.",
+      "- m2 / Bathroom — bathroom, 4.4–6.4 m. Upper bathroom; stair only.",
+      "- m2 / Studio — work, 6.4–10.4 m. Upper studio; stair only.",
+      "- m2 / Storage — storage, 10.4–12 m. Upper storage.",
+      "",
+      "## Outdoor spaces",
+      "- p1: 4.2 × 2.8 m covered porch on the south face of m1.",
+      "",
+      "## Site and camera",
+      "- Assigned site: Cabin D (site rotation 16°).",
+      "- Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond.",
+      "- Path approach: north",
+      "- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 231°.",
+      "",
+      "## Intentions",
+      "- Step-free entrance is a design intent, not a verified measurement.",
+      "- Adaptable bathroom is a design intent, not a verified layout.",
+      "- Adaptable kitchen is a design intent, not a verified layout.",
+      "- Butterfly roof is an exterior form; the interior ceiling is not resolved.",
+      "",
+      "## Unresolved matters",
+      "- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
+      "- **unmodeled-balcony**: The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.",
+      "- **interior-ceiling**: The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.",
+      "- **site-approach**: The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.",
+      "",
+      "## Capability notes",
+      "- Exterior reference: available",
+      "- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes",
+      "- Room-zone plan: available",
+      "- Roof plan: available",
+      "",
+      "## Licence and status",
+      "Concept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0."
+    ]
+  },
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  }
+}

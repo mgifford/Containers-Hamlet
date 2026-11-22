@@ -1,0 +1,20 @@
+{
+  "schema": "containers-hamlet-illustration/v1",
+  "designId": "hamlet-woodland-cottage",
+  "view": {
+    "type": "exterior-three-quarter",
+    "camera": {
+      "position": "approach",
+      "height_m": 1.6,
+      "lens_mm": 35
+    }
+  },
+  "presentation": {
+    "style": "photorealistic",
+    "season": "late-summer",
+    "time": "late-afternoon",
+    "weather": "clear",
+    "people": false
+  },
+  "materialPolicy": "strict-documented"
+}

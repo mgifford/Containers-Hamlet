@@ -1171,6 +1171,182 @@
     return out.join('');
   }
 
+  /* ---------------- container schematics and reference views ---------------- */
+
+  function rotateDesignForView(input, deg) {
+    var d = Schema.canonicalize(input);
+    var a = deg || 0;
+    if (!a) return d;
+    var cx = d.modules.reduce(function (t, m) { return t + m.position_m[0]; }, 0) / Math.max(1, d.modules.length);
+    var cy = d.modules.reduce(function (t, m) { return t + m.position_m[1]; }, 0) / Math.max(1, d.modules.length);
+    var rot = function (p) { var r = rotatePoint([p[0] - cx, p[1] - cy], a); return [r[0] + cx, r[1] + cy]; };
+    d.modules.forEach(function (m) {
+      var p = rot(m.position_m);
+      m.position_m = [round(p[0], 4), round(p[1], 4)];
+      m.rotation_deg = round(((m.rotation_deg + a) % 360 + 360) % 360, 4);
+    });
+    d.connections.forEach(function (c) {
+      var p = rot(c.position_m);
+      c.position_m = [round(p[0], 4), round(p[1], 4)];
+      c.rotation_deg = round((((c.rotation_deg || 0) + a) % 360 + 360) % 360, 4);
+    });
+    return d;
+  }
+
+  function containerSchematicSVG(design, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(design);
+    var mode = opts.mode === 'elevation' ? 'elevation' : 'plan';
+    var W = 1040, H = mode === 'elevation' ? 680 : 720, pad = 78;
+    var pre = opts.idPrefix || ('schematic-' + mode);
+    var title = d.name + ' · container ' + (mode === 'elevation' ? 'elevation' : 'block plan');
+    var desc = 'Proportional container ' + (mode === 'elevation' ? 'elevation' : 'block plan') + ' for ' + d.name + '. ' + d.modules.length + ' module' + (d.modules.length === 1 ? '' : 's') + ' across ' + d.levels.length + ' occupied storey' + (d.levels.length === 1 ? '' : 's') + '. Ground modules are solid outlines, upper modules are dashed and hatched. Dimensions are nominal. Conceptual schematic, not a construction drawing.';
+    var out = [];
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d" data-schematic="' + mode + '">');
+    out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
+    out.push('<defs><pattern id="' + pre + '-hatch" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#e7e0cf"/><path d="M0 8L8 0" stroke="#6f7b63" stroke-width="0.8"/></pattern></defs>');
+    out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
+    out.push('<text x="30" y="42" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#1d392c">' + esc(title) + '</text>');
+    out.push('<text x="30" y="64" font-family="system-ui, sans-serif" font-size="12" fill="#3f5a4c">' + d.modules.length + ' module' + (d.modules.length === 1 ? '' : 's') + ' · ' + d.levels.length + ' occupied storey' + (d.levels.length === 1 ? '' : 's') + ' · nominal dimensions · not a construction drawing</text>');
+
+    if (mode === 'plan') {
+      var planPolys = d.modules.map(moduleCorners).concat(d.connections.map(connectionCorners));
+      var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      planPolys.forEach(function (poly) { poly.forEach(function (p) { minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minY = Math.min(minY, p[1]); maxY = Math.max(maxY, p[1]); }); });
+      var scale = Math.min((W - 2 * pad) / Math.max(1, maxX - minX), (H - 2 * pad - 40) / Math.max(1, maxY - minY));
+      var ox = (W - (maxX - minX) * scale) / 2 - minX * scale;
+      var oy = (H - (maxY - minY) * scale) / 2 + 20 - minY * scale;
+      var P = function (p) { return [ox + p[0] * scale, oy + p[1] * scale]; };
+      var path = function (poly) { return 'M' + poly.map(function (p) { var q = P(p); return n(q[0]) + ' ' + n(q[1]); }).join('L') + 'Z'; };
+      var text = function (x, y, s, size, extra) { return '<text x="' + n(x) + '" y="' + n(y) + '" font-family="system-ui, sans-serif" font-size="' + (size || 11) + '"' + (extra || ' fill="#1d392c"') + '>' + esc(s) + '</text>'; };
+      d.connections.forEach(function (c) {
+        out.push('<path d="' + path(connectionCorners(c)) + '" fill="' + (c.glazed ? '#cfe8ec' : '#e4d7bf') + '" stroke="#7b6a4d" stroke-width="1.4"/>');
+        var cp = P(c.position_m);
+        out.push(text(cp[0] - 26, cp[1] + 4, c.id, 9, ' fill="#5c4c34" stroke="#faf8f2" stroke-width="2" paint-order="stroke"'));
+      });
+      d.modules.forEach(function (m) {
+        var poly = moduleCorners(m);
+        var upper = m.storey > 0;
+        out.push('<path d="' + path(poly) + '" fill="' + (upper ? 'url(#' + pre + '-hatch)' : '#e9e2ce') + '" stroke="#253a33" stroke-width="' + (upper ? '2.4' : '3') + '"' + (upper ? ' stroke-dasharray="10 5"' : '') + '/>');
+        var c = P(m.position_m);
+        out.push(text(c[0] - 32, c[1] - 4, m.id.toUpperCase() + ' · ' + m.type, 12, ' font-weight="800"'));
+        out.push(text(c[0] - 32, c[1] + 11, 'L' + (m.storey + 1) + ' · ' + n(m.position_m[0], 2) + ', ' + n(m.position_m[1], 2) + ' m · ' + n(m.rotation_deg, 0) + '°', 9.5, ' fill="#4f5e49"'));
+        var c4 = poly.map(P);
+        var mx = Math.min.apply(null, c4.map(function (q) { return q[0]; })), my = Math.min.apply(null, c4.map(function (q) { return q[1]; }));
+        out.push(text(mx + 2, my - 12, 'L' + (m.storey + 1), 9, ' font-weight="700" fill="#31573f"'));
+      });
+      out.push('<line x1="' + n(ox + minX * scale) + '" y1="' + n(oy + minY * scale - 28) + '" x2="' + n(ox + maxX * scale) + '" y2="' + n(oy + minY * scale - 28) + '" stroke="#435a4a" stroke-width="1"/>');
+      out.push(text(ox + (minX + maxX) / 2 * scale - 30, oy + minY * scale - 36, n(maxX - minX) + ' m overall', 12, ' text-anchor="middle" font-weight="700"'));
+      out.push('<line x1="' + n(ox + minX * scale - 28) + '" y1="' + n(oy + minY * scale) + '" x2="' + n(ox + minX * scale - 28) + '" y2="' + n(oy + maxY * scale) + '" stroke="#435a4a" stroke-width="1"/>');
+      out.push(text(ox + minX * scale - 36, oy + (minY + maxY) / 2 * scale, n(maxY - minY) + ' m', 11, ' text-anchor="end"'));
+      out.push('<g font-family="system-ui, sans-serif" font-size="10" fill="#3f5a4c"><rect x="30" y="' + (H - 52) + '" width="34" height="12" fill="#e9e2ce" stroke="#253a33" stroke-width="2"/><text x="72" y="' + (H - 42) + '">ground module</text><rect x="190" y="' + (H - 52) + '" width="34" height="12" fill="url(#' + pre + '-hatch)" stroke="#253a33" stroke-width="2" stroke-dasharray="8 4"/><text x="232" y="' + (H - 42) + '">upper module · dashed + hatched</text><rect x="440" y="' + (H - 52) + '" width="34" height="12" fill="#e4d7bf" stroke="#7b6a4d"/><text x="482" y="' + (H - 42) + '">timber/glazed connector</text></g>');
+    } else {
+      var boxes = d.modules.map(moduleBox3D);
+      var zMax = boxes.reduce(function (t, b) { return Math.max(t, b.maxZ); }, 3.5) + 0.6;
+      var xs = [];
+      boxes.forEach(function (b) { b.corners.forEach(function (p) { xs.push(p[0]); }); });
+      var minU = Math.min.apply(null, xs), maxU = Math.max.apply(null, xs);
+      var scale2 = Math.min((W - 2 * pad) / Math.max(1, maxU - minU), (H - 2 * pad - 30) / Math.max(1, zMax));
+      var ox2 = (W - (maxU - minU) * scale2) / 2 - minU * scale2;
+      var oy2 = H - pad;
+      var X = function (x) { return ox2 + x * scale2; };
+      var Y = function (z) { return oy2 - z * scale2; };
+      out.push('<rect x="0" y="' + n(Y(0)) + '" width="' + W + '" height="' + n(H - Y(0)) + '" fill="#e8ecdf"/>');
+      out.push('<line x1="20" y1="' + n(Y(0)) + '" x2="' + (W - 20) + '" y2="' + n(Y(0)) + '" stroke="#6f7b63" stroke-width="2"/>');
+      boxes.forEach(function (b) {
+        var m = d.modules.filter(function (x) { return x.id === b.id; })[0];
+        var fill = b.storey > 0 ? 'url(#' + pre + '-hatch)' : '#e9e2ce';
+        out.push('<rect x="' + n(X(b.minX)) + '" y="' + n(Y(b.maxZ)) + '" width="' + n((b.maxX - b.minX) * scale2) + '" height="' + n((b.maxZ - b.minZ) * scale2) + '" fill="' + fill + '" stroke="#253a33" stroke-width="2.4"' + (b.storey > 0 ? ' stroke-dasharray="10 5"' : '') + '/>');
+        out.push('<text x="' + n(X((b.minX + b.maxX) / 2)) + '" y="' + n(Y(b.minZ) + 18) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#1d392c" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke">' + esc(m.id + ' · L' + (m.storey + 1)) + '</text>');
+        out.push('<text x="' + n(X((b.minX + b.maxX) / 2)) + '" y="' + n(Y(b.minZ) + 32) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#3f5a4c">' + esc(m.type + ' · ' + n(m.elevation_m, 2) + ' m base') + '</text>');
+      });
+      out.push('<line x1="' + (W - 48) + '" y1="' + n(Y(0)) + '" x2="' + (W - 48) + '" y2="' + n(Y(zMax - 0.6)) + '" stroke="#435a4a" stroke-width="1"/>');
+      out.push('<text x="' + (W - 54) + '" y="' + n(Y((zMax - 0.6) / 2)) + '" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#1d392c">' + n(zMax - 0.6) + ' m</text>');
+      out.push('<g font-family="system-ui, sans-serif" font-size="10" fill="#3f5a4c"><rect x="30" y="' + (H - 46) + '" width="34" height="12" fill="#e9e2ce" stroke="#253a33" stroke-width="2"/><text x="72" y="' + (H - 36) + '">ground module</text><rect x="190" y="' + (H - 46) + '" width="34" height="12" fill="url(#' + pre + '-hatch)" stroke="#253a33" stroke-width="2" stroke-dasharray="8 4"/><text x="232" y="' + (H - 36) + '">upper module · dashed + hatched</text></g>');
+    }
+    out.push('<text x="30" y="' + (H - 14) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Container schematic · proportional nominal geometry · not a construction drawing · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  function roofPlanSVG(design, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(design);
+    var rg = roofGeometry(d);
+    var W = 1040, H = 720, pad = 92;
+    var scale = Math.min((W - 2 * pad) / Math.max(1, rg.width), (H - 2 * pad) / Math.max(1, rg.depth));
+    var ox = (W - rg.width * scale) / 2 - rg.minX * scale;
+    var oy = (H - rg.depth * scale) / 2 - rg.minY * scale;
+    var P = function (p) { return [ox + p[0] * scale, oy + p[1] * scale]; };
+    var pre = opts.idPrefix || 'roof-plan';
+    var title = d.name + ' · roof plan';
+    var desc = 'Concept roof plan for ' + d.name + '. ' + rg.type + ' roof at ' + rg.pitch_deg + ' degrees, ' + n(rg.overhang_m, 2) + ' m overhang. The roof outline, ridge/valley and slope arrows are generated from the same roof geometry as the elevations and section. Conceptual only; drainage, snow, wind and structure need review.';
+    var out = [];
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d" data-drawing="roof-plan">');
+    out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
+    out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
+    out.push('<text x="30" y="42" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#1d392c">' + esc(title) + '</text>');
+    out.push('<text x="30" y="64" font-family="system-ui, sans-serif" font-size="12" fill="#3f5a4c">' + esc((rg.type + ' roof · ' + rg.pitch_deg + '° pitch · ' + n(rg.overhang_m, 2) + ' m overhang · ' + n(rg.roofArea_m2, 1) + ' m² roof area')) + '</text>');
+    d.modules.forEach(function (m) {
+      out.push('<path d="M' + moduleCorners(m).map(function (p) { var q = P(p); return n(q[0]) + ' ' + n(q[1]); }).join('L') + 'Z" fill="none" stroke="#8a9a83" stroke-width="1.2" stroke-dasharray="6 4"/>');
+    });
+    var roofPoly = [[rg.minX, rg.minY], [rg.maxX, rg.minY], [rg.maxX, rg.maxY], [rg.minX, rg.maxY]];
+    out.push('<path d="M' + roofPoly.map(function (p) { var q = P(p); return n(q[0]) + ' ' + n(q[1]); }).join('L') + 'Z" fill="' + (rg.green ? '#3f704b' : '#245244') + '" fill-opacity="0.16" stroke="#245244" stroke-width="2.2"/>');
+    if (rg.type === 'gable' || rg.type === 'butterfly') {
+      var ridge = (rg.minY + rg.maxY) / 2;
+      var a = P([rg.minX, ridge]), b = P([rg.maxX, ridge]);
+      out.push('<line x1="' + n(a[0]) + '" y1="' + n(a[1]) + '" x2="' + n(b[0]) + '" y2="' + n(b[1]) + '" stroke="#245244" stroke-width="2.4" ' + (rg.type === 'butterfly' ? 'stroke-dasharray="6 3"' : '') + '/>');
+      out.push('<text x="' + n(a[0] + 8) + '" y="' + n(a[1] - 8) + '" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#8f5a21">' + (rg.type === 'butterfly' ? 'valley / drainage' : 'ridge') + '</text>');
+    }
+    if (rg.type === 'shed' || rg.type === 'solar-ready' || rg.type === 'gable' || rg.type === 'butterfly') {
+      var sy = rg.maxY - 0.6;
+      var arrow = [[rg.minX + rg.width * 0.2, sy], [rg.minX + rg.width * 0.8, sy]];
+      var p0 = P(arrow[0]), p1 = P(arrow[1]);
+      out.push('<line x1="' + n(p0[0]) + '" y1="' + n(p0[1]) + '" x2="' + n(p1[0]) + '" y2="' + n(p1[1]) + '" stroke="#245a73" stroke-width="2.2"/>');
+      out.push('<text x="' + n(p0[0]) + '" y="' + n(p0[1] - 8) + '" font-family="system-ui, sans-serif" font-size="10" fill="#245a73">slope / drainage direction</text>');
+    }
+    if (rg.solarArea_m2 > 0 && (d.solar_array && d.solar_array.enabled)) {
+      var solar = [[rg.minX + rg.width * 0.2, rg.minY + rg.depth * 0.2], [rg.maxX - rg.width * 0.2, rg.minY + rg.depth * 0.2], [rg.maxX - rg.width * 0.2, rg.maxY - rg.depth * 0.45], [rg.minX + rg.width * 0.2, rg.maxY - rg.depth * 0.45]];
+      out.push('<path d="M' + solar.map(function (p) { var q = P(p); return n(q[0]) + ' ' + n(q[1]); }).join('L') + 'Z" fill="#245a73" fill-opacity="0.28" stroke="#123b4d" stroke-width="1.4" stroke-dasharray="5 3"/>');
+      out.push('<text x="' + n(P([(solar[0][0] + solar[1][0]) / 2, (solar[0][1] + solar[3][1]) / 2])[0]) + '" y="' + n(P([(solar[0][0] + solar[1][0]) / 2, (solar[0][1] + solar[3][1]) / 2])[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#123b4d">PV array intent</text>');
+    }
+    out.push('<g aria-hidden="true"><circle cx="' + (W - 44) + '" cy="44" r="23" fill="#fffdf7" stroke="#b9c3b2"/><path d="M' + (W - 44) + ' 27l6 32l-6 -8l-6 8z" fill="#1d392c"/><text x="' + (W - 44) + '" y="78" text-anchor="middle" font-size="11" font-weight="700" font-family="system-ui, sans-serif" fill="#1d392c">N</text></g>');
+    out.push('<text x="30" y="' + (H - 14) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Concept roof plan · roof geometry is independent of the occupied storeys · drainage, snow, wind and structure need review · CC BY-SA 4.0</text>');
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  function renderReference(design, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(design);
+    var view = opts.view || 'exterior-three-quarter';
+    var pre = opts.idPrefix || ('reference-' + view);
+    if (view === 'front-approach' || view === 'rear-landscape') {
+      var entrance = ModelFeaturesEntrance(d);
+      var side = view === 'rear-landscape' ? oppositeFace(entrance) : entrance;
+      return elevationSVG(d, { idPrefix: pre, side: side, className: opts.className });
+    }
+    if (view === 'interior-looking-out') {
+      return planSVG(d, { idPrefix: pre, storey: 0, className: opts.className });
+    }
+    var rotated = rotateDesignForView(d, num(opts.rotationDeg, 0));
+    return axoSVG(rotated, { idPrefix: pre, className: opts.className, season: opts.season });
+  }
+  function ModelFeaturesEntrance(d) {
+    var door = null;
+    d.modules.forEach(function (m) { (m.openings || []).forEach(function (o) { if (!door && (o.type === 'door')) door = { m: m, o: o }; }); });
+    return door ? worldFaceOf(door.m, door.o.face) : 'south';
+  }
+  function worldFaceOf(m, face) {
+    var v = { north: [0, -1], south: [0, 1], east: [1, 0], west: [-1, 0] }[face] || [0, 1];
+    var a = (m.rotation_deg || 0) * Math.PI / 180;
+    var x = v[0] * Math.cos(a) - v[1] * Math.sin(a);
+    var y = v[0] * Math.sin(a) + v[1] * Math.cos(a);
+    if (Math.abs(x) >= Math.abs(y)) return x >= 0 ? 'east' : 'west';
+    return y >= 0 ? 'south' : 'north';
+  }
+  function oppositeFace(f) { return { north: 'south', south: 'north', east: 'west', west: 'east' }[f] || 'north'; }
+
   /* ---------------- axonometric / cutaway ---------------- */
 
   function project(p) {
@@ -2038,6 +2214,7 @@
     elevationSVG: elevationSVG, sectionSVG: sectionSVG, explodedSVG: explodedSVG, solarStudySVG: solarStudySVG,
     ENVELOPE_LABEL: ENVELOPE_LABEL, VEG_LABEL: VEG_LABEL, PRIMARY_DIVERSITY_FEATURES: PRIMARY_DIVERSITY_FEATURES,
     renderPlan: planSVG, renderAxo: axoSVG, renderElevation: elevationSVG, renderSection: sectionSVG, renderExploded: explodedSVG, renderSolarStudy: solarStudySVG,
+    containerSchematicSVG: containerSchematicSVG, roofPlanSVG: roofPlanSVG, rotateDesignForView: rotateDesignForView, renderReference: renderReference,
     describe: describe, summary: Schema.summary, canonicalize: Schema.canonicalize
   };
 });

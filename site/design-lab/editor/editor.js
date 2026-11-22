@@ -10,6 +10,7 @@
   var Model = window.DesignModel;
   var DATA = window.DesignLabConcepts;
   var SITE = window.DesignLabSite;
+  var Illustration = window.DesignIllustration;
   var $ = function (id) { return document.getElementById(id); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
   var clone = function (v) { return JSON.parse(JSON.stringify(v)); };
@@ -17,7 +18,7 @@
   var n = function (v, d) { return Number(v).toFixed(d == null ? 1 : d); };
   var slug = function (s) { return String(s || 'container-home').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'container-home'; };
 
-  if (!Schema || !Model || !DATA || !SITE) {
+  if (!Schema || !Model || !DATA || !SITE || !Illustration) {
     var missing = $('status');
     if (missing) missing.textContent = 'The Design Lab scripts did not load. Please reload the page.';
     return;
@@ -37,7 +38,11 @@
     editBase: null,
     arrangement: 'single',
     editStorey: 'all',
-    planStorey: 'all'
+    planStorey: 'all',
+    illustrationConfig: null,
+    illustrationScene: null,
+    illustrationGeneratedHash: null,
+    illustrationReferenceSvg: null
   };
 
   var ZONE_LABEL = { sleeping: 'Sleeping', bathroom: 'Bathroom', kitchen: 'Kitchen', living: 'Living', dining: 'Dining', work: 'Workspace', storage: 'Storage', circulation: 'Circulation' };
@@ -103,6 +108,9 @@
     state.selectedZone = state.design.modules[0].zones[0] ? state.design.modules[0].zones[0].id : null;
     state.editStorey = 'all';
     state.planStorey = 'all';
+    state.illustrationConfig = Illustration.defaultConfig(state.design);
+    state.illustrationScene = null;
+    state.illustrationGeneratedHash = null;
     state.arrangement = state.design.modules.length === 1 ? 'single' : state.design.modules.length === 2 && state.design.modules[1].rotation_deg === 90 ? 'l-shape' : state.design.modules.length === 2 ? 'parallel' : 'courtyard';
     renderAll();
     if (!silent) announce('Loaded ' + concept.name + '. Edit the controls; use Undo to step back.');
@@ -192,6 +200,7 @@
     renderStoreyControls();
     renderRoofControls();
     renderAccessControls();
+    renderIllustrationControls();
     renderOpenings();
     renderZones();
     renderPorches();
@@ -277,6 +286,199 @@
       checkbox('access.stair.lift_reserve', !!stair.lift_reserve, 'stair-lift-reserve', 'Space and structure reserved for a future lift') +
       field('Vertical access strategy', '<textarea id="access-vertical" data-path="access.vertical_access_strategy" rows="2">' + esc(a.vertical_access_strategy) + '</textarea>', true) +
       '<p class="small" id="access-note">' + esc(a.standards) + '</p>';
+  }
+
+  function illustrationLabels() {
+    return {
+      views: [
+        ['exterior-three-quarter', 'Exterior three-quarter'],
+        ['front-approach', 'Front approach'],
+        ['rear-landscape', 'Rear / landscape-facing'],
+        ['elevated-isometric', 'Elevated isometric'],
+        ['courtyard-porch', 'Courtyard / porch'],
+        ['interior-looking-out', 'Interior looking outward (zone plan only)']
+      ],
+      styles: [
+        ['photorealistic', 'Photorealistic'],
+        ['architectural-watercolour', 'Architectural watercolour'],
+        ['hand-drawn-sketch', 'Hand-drawn sketch'],
+        ['presentation-rendering', 'Presentation rendering'],
+        ['neutral-material-study', 'Neutral material study'],
+        ['winter-visualisation', 'Winter visualisation']
+      ],
+      seasons: [['late-summer', 'Late summer'], ['autumn', 'Autumn'], ['winter', 'Winter'], ['spring', 'Spring']],
+      times: [['early-morning', 'Early morning'], ['midday', 'Midday'], ['late-afternoon', 'Late afternoon'], ['dusk', 'Dusk']],
+      weather: [['clear', 'Clear'], ['overcast', 'Overcast'], ['light-rain', 'Light rain'], ['snow', 'Snow']],
+      materials: [['strict-documented', 'Strict documented materials'], ['neutral-unspecified', 'Neutral treatment of unspecified'], ['exploratory', 'Exploratory (non-authoritative)']]
+    };
+  }
+  function renderIllustrationControls() {
+    if (!state.design) return;
+    if (!state.illustrationConfig) state.illustrationConfig = Illustration.defaultConfig(state.design);
+    var c = state.illustrationConfig;
+    var L = illustrationLabels();
+    var fill = function (id, rows, value) { var el = $(id); if (!el) return; el.innerHTML = rows.map(function (r) { return option(r[0], r[1], value); }).join(''); el.value = value; };
+    fill('illus-view', L.views, c.view.type);
+    fill('illus-style', L.styles, c.presentation.style);
+    fill('illus-season', L.seasons, c.presentation.season);
+    fill('illus-time', L.times, c.presentation.time);
+    fill('illus-weather', L.weather, c.presentation.weather);
+    fill('illus-material-policy', L.materials, c.materialPolicy);
+    if ($('illus-height')) $('illus-height').value = c.view.camera.height_m;
+    if ($('illus-lens')) $('illus-lens').value = c.view.camera.lens_mm;
+    if ($('illus-people')) $('illus-people').checked = !!c.presentation.people;
+    renderIllustrationPreview();
+  }
+
+  function readIllustrationConfig() {
+    var config = Illustration.defaultConfig(state.design);
+    config.view.type = $('illus-view') ? $('illus-view').value : 'exterior-three-quarter';
+    config.view.camera.height_m = Math.max(0.5, Math.min(30, Number($('illus-height') && $('illus-height').value) || 1.6));
+    config.view.camera.lens_mm = Math.max(12, Math.min(200, Number($('illus-lens') && $('illus-lens').value) || 35));
+    config.presentation.style = $('illus-style') ? $('illus-style').value : 'photorealistic';
+    config.presentation.season = $('illus-season') ? $('illus-season').value : 'late-summer';
+    config.presentation.time = $('illus-time') ? $('illus-time').value : 'late-afternoon';
+    config.presentation.weather = $('illus-weather') ? $('illus-weather').value : 'clear';
+    config.presentation.people = !!($('illus-people') && $('illus-people').checked);
+    config.materialPolicy = $('illus-material-policy') ? $('illus-material-policy').value : 'strict-documented';
+    return config;
+  }
+
+  function illustrationStale() {
+    if (!state.illustrationScene) return true;
+    return state.illustrationGeneratedHash !== Illustration.designHash(state.design);
+  }
+  function updateIllustrationFreshness() {
+    var status = $('illustration-status');
+    var stale = $('illustration-stale');
+    if (!status) return;
+    if (!state.illustrationScene) {
+      status.textContent = 'Choose a viewpoint and generate a prompt. No image is generated in this browser.';
+      if (stale) { stale.hidden = true; stale.textContent = ''; }
+      return;
+    }
+    var outdated = illustrationStale();
+    status.textContent = outdated ? 'Illustration prompt and reference are outdated because the design has changed. Regenerate them.' : 'Illustration prompt and reference are current for design hash ' + state.illustrationGeneratedHash + '.';
+    if (stale) {
+      stale.hidden = !outdated;
+      stale.textContent = outdated ? 'Outdated: the design has changed since this prompt and reference were generated. The old prompt is kept below for comparison; regenerate before using it.' : '';
+    }
+    var host = $('illustration-reference');
+    if (host) {
+      if (state.illustrationReferenceSvg) host.innerHTML = state.illustrationReferenceSvg;
+      else if (state.illustrationScene) host.innerHTML = '<p class="small">No reference view was stored. Generate the prompt and reference again.</p>';
+    }
+    var prompt = $('illustration-prompt');
+    if (prompt) prompt.textContent = state.illustrationScene ? state.illustrationScene.prompt.text : '';
+    var neg = $('illustration-negative');
+    if (neg) neg.textContent = state.illustrationScene ? state.illustrationScene.negativePrompt.text : '';
+    var summary = $('illustration-scene-summary');
+    if (summary && state.illustrationScene) {
+      var sc = state.illustrationScene;
+      summary.innerHTML = '<h3>Facts</h3><ul>' + sc.facts.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>' +
+        '<h3>Intentions</h3>' + (sc.intentions.length ? '<ul>' + sc.intentions.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>' : '<p class="small">None recorded.</p>') +
+        '<h3>Unresolved / limitations</h3>' + (sc.unresolved.length ? '<ul>' + sc.unresolved.map(function (u) { return '<li><strong>' + esc(u.code) + ':</strong> ' + esc(u.message) + '</li>'; }).join('') + '</ul>' : '<p class="small">None recorded.</p>') +
+        '<p class="small">Design hash <code>' + esc(sc.designHash) + '</code> · scene ' + esc(sc.schema) + ' · camera bearing ' + esc(sc.camera.azimuth_deg) + '°</p>';
+    }
+  }
+  function renderIllustrationPreview() {
+    if (!state.design) return;
+    updateIllustrationFreshness();
+  }
+
+  function generateIllustration() {
+    var config = readIllustrationConfig();
+    try {
+      var scene = Illustration.sceneSpec(state.design, config, SITE);
+      if (!scene.validation.ok) throw new Error(scene.validation.errors.join(' '));
+      state.illustrationConfig = config;
+      state.illustrationScene = scene;
+      state.illustrationGeneratedHash = Illustration.designHash(state.design);
+      state.illustrationReferenceSvg = Model.renderReference(state.design, { view: config.view.type, rotationDeg: scene.camera.renderRotationDeg, idPrefix: 'editor-reference' });
+      renderIllustrationPreview();
+      announce('Illustration prompt and reference generated for the current design. The reference is a concept view; the prompt is an interpretation.');
+    } catch (err) {
+      announce('The illustration prompt could not be generated: ' + err.message);
+    }
+  }
+
+  function illustrationNotice(message) {
+    announce(message);
+    if ($('illustration-status')) $('illustration-status').textContent = message;
+  }
+  function copyIllustrationPrompt() {
+    var text = state.illustrationScene ? state.illustrationScene.prompt.text : '';
+    if (!text) { illustrationNotice('Generate the prompt first.'); return; }
+    var done = function () { illustrationNotice('Illustration prompt copied to the clipboard.'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); });
+    else fallbackCopy(text);
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); illustrationNotice('Illustration prompt copied.'); } catch (e) { illustrationNotice('Copy is unavailable; select the prompt text and copy it manually.'); }
+    ta.remove();
+  }
+
+  function illustrationFileMap() {
+    if (!state.illustrationScene) return null;
+    var scene = state.illustrationScene;
+    var config = state.illustrationConfig;
+    var files = {
+      'design.json': JSON.stringify(state.design, null, 2) + '\n',
+      'description.md': scene.description.text + '\n',
+      'scene.json': JSON.stringify(scene, null, 2) + '\n',
+      'prompts/exterior.md': scene.prompt.text + '\n',
+      'prompts/negative.md': scene.negativePrompt.text + '\n',
+      'prompts/illustration-config.json': JSON.stringify(config, null, 2) + '\n',
+      'prompts/interior.md': '# Interior illustration prompt\n\n' + (scene.capabilities.interiorPerspective ? 'Interior perspective is available.\n' : 'Interior perspective is not available. The model has longitudinal room zones, not partitions, fixtures or camera geometry. Use the room-zone plan and describe the view as a conceptual interpretation, not a spatially accurate perspective.\n') + '\n' + scene.description.text + '\n'
+    };
+    var drawings = {
+      'container-layout-plan.svg': Model.containerSchematicSVG(state.design, { mode: 'plan', idPrefix: 'package-container-layout' }),
+      'container-layout-elevation.svg': Model.containerSchematicSVG(state.design, { mode: 'elevation', idPrefix: 'package-container-layout-elevation' }),
+      'plan-ground.svg': Model.renderPlan(state.design, { idPrefix: 'package-plan-ground', storey: 0 }),
+      'roof-plan.svg': Model.roofPlanSVG(state.design, { idPrefix: 'package-roof-plan' }),
+      'elevation-south.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-south', side: 'south' }),
+      'elevation-north.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-north', side: 'north' }),
+      'elevation-east.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-east', side: 'east' }),
+      'elevation-west.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-west', side: 'west' }),
+      'section.svg': Model.renderSection(state.design, { idPrefix: 'package-section' }),
+      'isometric.svg': Model.renderAxo(state.design, { idPrefix: 'package-isometric' })
+    };
+    if (state.design.levels.length > 1) drawings['plan-upper.svg'] = Model.renderPlan(state.design, { idPrefix: 'package-plan-upper', storey: 1 });
+    Object.keys(drawings).forEach(function (name) { files['drawings/' + name] = drawings[name]; });
+    files['references/exterior-reference.svg'] = state.illustrationReferenceSvg || Model.renderReference(state.design, { view: config.view.type, rotationDeg: scene.camera.renderRotationDeg, idPrefix: 'package-reference' });
+    files['illustrations/README.md'] = '# Illustrations\n\nNo AI-generated image is included. Use `prompts/exterior.md` and `references/exterior-reference.svg` with an external image-generation tool. Treat the result as an interpretation, not a measured architectural drawing.\n';
+    var artifacts = Object.keys(files).filter(function (p) { return p !== 'manifest.json'; }).map(function (p) {
+      return { id: p.replace(/[^a-z0-9]+/gi, '-'), path: p, type: p.indexOf('drawings/') === 0 ? 'drawing' : p.indexOf('references/') === 0 ? 'reference' : p.indexOf('prompts/') === 0 ? 'prompt' : 'metadata', dependencies: p === 'design.json' ? ['design'] : ['design', 'scene', 'presentation'], hash: Illustration.hashString(files[p]) };
+    });
+    files['manifest.json'] = JSON.stringify(Illustration.manifest(scene, state.design, artifacts, new Date().toISOString()), null, 2) + '\n';
+    return files;
+  }
+
+  function downloadIllustrationPrompt() {
+    if (!state.illustrationScene) { announce('Generate the prompt first.'); return; }
+    download(slug(state.design.name) + '-illustration-prompt.md', state.illustrationScene.prompt.text + '\n', 'text/markdown');
+    announce('Downloaded the illustration prompt.');
+  }
+  function downloadIllustrationConfig() {
+    var config = state.illustrationConfig || readIllustrationConfig();
+    download(slug(state.design.name) + '-illustration-config.json', JSON.stringify(config, null, 2) + '\n', 'application/json');
+    announce('Downloaded the illustration configuration.');
+  }
+  function downloadIllustrationPackage() {
+    if (!state.illustrationScene) { announce('Generate the prompt and reference first.'); return; }
+    var files = illustrationFileMap();
+    if (!files) return;
+    var entries = Object.keys(files).map(function (name) { return { name: name, data: files[name] }; });
+    var blob = zip(entries);
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = slug(state.design.name) + '-illustration-package.zip';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+    announce('Downloaded the illustration package: design, description, scene, prompts, drawings, reference and manifest.');
   }
 
   function renderOpenings() {
@@ -674,6 +876,7 @@
     renderExposure();
     renderHamlet(d);
     var m = Model.metrics(d);
+    updateIllustrationFreshness();
     if ($('massing-status')) $('massing-status').textContent = m.storeyCount + ' occupied storey' + (m.storeyCount === 1 ? '' : 's') + ' · ' + n(m.groundCoverage_m2) + ' m² ground coverage · ' + n(m.buildingHeight_m) + ' m to the roof. Massing only; no engineering or privacy assessment.';
     ['export-plan', 'export-plan-ground', 'export-plan-upper', 'export-elevation-south', 'export-section', 'export-exploded', 'export-solar-summer', 'export-solar-winter', 'export-exterior', 'export-cutaway', 'export-porch', 'export-winter', 'download-wall', 'export-wall', 'export-zip', 'export-summary'].forEach(function (id) {
       var el = $(id);
@@ -1386,6 +1589,10 @@
       state.editBase = null;
       state.editStorey = 'all';
       state.planStorey = 'all';
+      state.illustrationConfig = Illustration.defaultConfig(state.design);
+      state.illustrationScene = null;
+      state.illustrationGeneratedHash = null;
+      state.illustrationReferenceSvg = null;
       state.selectedModule = state.design.modules[0].id;
       state.selectedOpening = state.design.modules[0].openings[0] ? state.design.modules[0].openings[0].id : null;
       state.selectedZone = state.design.modules[0].zones[0] ? state.design.modules[0].zones[0].id : null;
@@ -1446,6 +1653,23 @@
     });
     $('apply-roof').addEventListener('click', function () { renderControls(); renderVisuals(); announce('Roof form applied to the generated views. Drainage, snow, wind and maintenance remain review items.'); });
     $('apply-access').addEventListener('click', function () { renderControls(); renderVisuals(); announce('Accessibility record updated. This is a design intent, not a compliance assessment.'); });
+    ['illus-view', 'illus-style', 'illus-season', 'illus-time', 'illus-weather', 'illus-material-policy', 'illus-height', 'illus-lens', 'illus-people'].forEach(function (id) {
+      var el = $(id);
+      if (!el) return;
+      el.addEventListener('change', function () {
+        state.illustrationConfig = readIllustrationConfig();
+        state.illustrationScene = null;
+        state.illustrationReferenceSvg = null;
+        renderIllustrationPreview();
+        announce('Illustration settings changed. Generate a new prompt and reference.');
+      });
+      if (el.type === 'number') el.addEventListener('input', function () { state.illustrationConfig = readIllustrationConfig(); state.illustrationScene = null; state.illustrationReferenceSvg = null; renderIllustrationPreview(); });
+    });
+    $('illus-generate').addEventListener('click', generateIllustration);
+    $('illus-copy').addEventListener('click', copyIllustrationPrompt);
+    $('illus-download-prompt').addEventListener('click', downloadIllustrationPrompt);
+    $('illus-download-config').addEventListener('click', downloadIllustrationConfig);
+    $('illus-download-package').addEventListener('click', downloadIllustrationPackage);
     $('module-controls').addEventListener('change', function (event) {
       var input = event.target;
       if (!input || !input.getAttribute || !input.getAttribute('data-support-refs')) return;
