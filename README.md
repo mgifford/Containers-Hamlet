@@ -15,6 +15,16 @@ Phase 1.5 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 - No login, account, upload, backend, WebGL or third-party runtime request. Designs stay in the browser until downloaded. The architectural gallery uses no auto-advancing carousel; keyboard buttons, arrow keys and a show-all alternative are available.
 - Editor warnings cover invalid geometry, engineering concerns, accessibility concerns and items needing professional review. They are not a building code assessment.
 
+## Cabin services
+
+Design Lab studies for the off-grid building services:
+
+- [`docs/passive-ventilation.md`](docs/passive-ventilation.md) — Cabin A end-to-end filtered ventilation, low-wattage fan assist, pollen/pest/rain exclusion and four seasonal operating modes.
+- [`docs/wood-heat-thermal-mass.md`](docs/wood-heat-thermal-mass.md) — Cabin A stove sizing, hearth and masonry heat wall, ventilated air gap, exterior-insulation protection, OAK and CSA B365 clearance caveats.
+- [`docs/multi-container-services.md`](docs/multi-container-services.md) — companion spec for the two-container pairs (Cabins B, D and E) and the Common Lodge.
+
+These are conceptual studies, not construction drawings or engineering approvals. Stove work requires a WETT-certified installer; ventilation, structure, fire and accessibility work require the relevant professionals and the authority having jurisdiction.
+
 ## Start
 
 1. In **Settings > Pages**, select **GitHub Actions** as the build and deployment source. The included workflow checks the generated files and publishes `/site` on pushes to `main`.

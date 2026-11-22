@@ -19,6 +19,18 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 
 It is not a generic home builder. The container is the core of every design; timber, glass, screens, decks, roofs and planting are supporting layers.
 
+## Cabin services studies
+
+The cabin services are documented separately from the drawing editor:
+
+- [`passive-ventilation.md`](passive-ventilation.md) — Cabin A end-to-end ventilation, filters, insect/weather exclusion and seasonal modes.
+- [`wood-heat-thermal-mass.md`](wood-heat-thermal-mass.md) — Cabin A stove, hearth, masonry heat wall, air gap, OAK and clearance caveats.
+- [`multi-container-services.md`](multi-container-services.md) — two-container pairs and the Common Lodge.
+
+These are Design Lab studies. They do not change `data/cabin-a.json`,
+`data/cabin-pair.json` or `data/lodge.json`, and they are not construction
+documents.
+
 ## What the editor does
 
 - One, two or three container modules.
