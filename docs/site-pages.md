@@ -47,13 +47,13 @@ Current limits:
 |---|---:|---:|
 | Initial view, compressed | 120 KB | 64 KB |
 | Initial view, uncompressed | 400 KB | 259 KB |
-| Whole published site | 3.5 MB | 3516 KB |
+| Whole published site | 6 MB | 5220 KB |
 
-The initial view is under 400 KB by about **165 KB**. The whole site is under 3.5 MB by about **131 KB**. Adding another substantial page or gallery item will still require either:
+The initial view is under 400 KB by about **165 KB**. The whole site is under the revised 6 MB budget by about **900 KB** after Phase 2 adds six homes and nine detailed views each. Adding another substantial page or gallery item will still require either:
 
 - compressing the duplicate full-size site-plan asset;
 - reducing the optional potential-building/tree layers; or
-- deliberately raising the total budget above 3.5 MB.
+- deliberately raising the total budget above 6 MB.
 
 Lazy loading improves **when bytes are requested**, not the total byte count. A lazy image still counts in the whole-site budget once published.
 
@@ -69,20 +69,20 @@ Lazy loading improves **when bytes are requested**, not the total byte count. A 
 
 | Check | Result |
 |---|---|
-| `node tools/build.mjs --check` | 205 generated files current |
-| `node tools/check.mjs` | 289 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 724 passed, 0 failed |
+| `node tools/build.mjs --check` | 395 generated files current |
+| `node tools/check.mjs` | 466 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,237 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 171 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 194 passed, 0 failed |
 | Initial view | 259 KB / 64 KB compressed |
-| Whole site | 3516 KB |
+| Whole site | 5220 KB |
 
 Browser checks cover the homes index, all seven cards, the Cabin C page, `#main-view`, each section ID, lazy card diagrams, no-JavaScript cards and axe-core.
 
 ## Deferred
 
 - Split living/nature/materials/downloads if still needed after the map and model pages move.
-- Reduce or raise the whole-site budget.
+- Reduce the whole-site budget, or keep the revised 6 MB budget under review as the gallery grows.
 - Real screen-reader/disabled-person testing.
 
 **Do not merge automatically.**

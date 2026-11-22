@@ -28,7 +28,7 @@
 - the page with its scripts blocked, including all seven home briefs and view diagrams
 - same-origin requests, no third-party requests and all local links
 
-`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 289 static checks; the main browser suite runs 107 checks. `tools/check-design-lab.mjs` adds 722 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery and comparison checks, and `tools/design-lab-check.mjs` adds 171 browser checks for the gallery, editor, architectural slideshow, vegetation guide, ground guide and comparison.
+`tools/check.mjs` checks the SVG titles and descriptions, unique ids, heading order, labels, image dimensions, links, licences, privacy, the landscape and view data, and the absence of third-party requests. It runs 466 static checks; the main browser suite runs 107 checks. `tools/check-design-lab.mjs` adds more than 2,200 schema, vertical-geometry, stacking, support, diversity, accessibility, roof, rendering and comparison checks, and `tools/design-lab-check.mjs` adds 194 browser checks for the gallery, residences, editor, architectural slideshow, vegetation guide, ground guide and comparison.
 
 ## Manual testing still required
 
@@ -58,12 +58,15 @@ Please report barriers through a GitHub issue. Do not include personal informati
 
 ## Design Lab accessibility
 
-The architectural slideshow is a progressive enhancement over a static list of all five figures.
+The architectural slideshow is a progressive enhancement over a static list of every figure, including plans, four elevations, a section, exploded levels and solar studies.
 
-- **No autoplay.** Nothing advances on a timer. The controls are visible only when the script runs; without JavaScript all five figures are shown in order.
+- **No autoplay.** Nothing advances on a timer. The controls are visible only when the script runs; without JavaScript every figure is shown in order.
 - **Keyboard.** The slide region is focusable. Left/Right move one view, Home/End move to the ends; the visible Previous/Next buttons are native buttons. Show all views exposes the non-carousel alternative.
 - **Announcement.** A polite status announces the current view and total. The images have descriptive `alt` text and visible captions.
-- **Drawing types.** Plan, cutaway and porch detail are labelled geometry-backed drawings; exterior and winter images are labelled illustrative studies. Colour is not the only distinction.
+- **Drawing types.** Plans, elevations, section, exploded levels and cutaway are labelled geometry-backed drawings; exterior, porch, winter and solar studies are labelled illustrative or explanatory studies. Colour is not the only distinction.
+- **Floor-specific plans.** The plan level is a native select. When one floor is selected, the other floor remains as muted outlines rather than disappearing. The level is also announced in text.
+- **Stacking controls.** Storey selection, elevation, stack, align, offset, rotate, perpendicular arrangement and support inspection are native buttons, selects and number inputs. Drag-and-drop is a shortcut only. Page Up/Page Down change the level and A shows all levels when a plan module has focus.
+- **Residences comparison.** The hamlet-wide table is a caption/scope table with native select and button sorting/filtering, a polite status message and a complete no-JavaScript fallback. The similarity and alternatives tables are also caption/scope tables.
 - **Comparison.** The two side-by-side panels and all-concepts table use native selects, buttons and a caption/scope table. Without JavaScript the default pair and the table remain.
 - **Thermal explanations.** The editor gives plain-language explanations of overheating, heat loss, condensation and moisture without claiming code compliance or certified performance.
 - **Patterns and shelter.** The pattern guide uses labelled tables, a titled/described configuration diagram, native links and a visible entry-shelter explanation. The editor paint palette and shelter controls are native selects, number inputs and checkboxes.
@@ -73,7 +76,7 @@ The architectural slideshow is a progressive enhancement over a static list of a
 - **Tested.** Browser checks cover no autoplay, keyboard movement, Show all, image loading, no-JavaScript fallback, envelope/vegetation persistence, seasonal changes, 320 px, dark scheme, forced colours, reduced motion, gallery-to-editor navigation and axe-core. Manual screen-reader testing is still required.
 
 
-The gallery is a static page: all nine concepts, their facts, three views, source files and licence links are present without JavaScript. Every gallery image has descriptive alt text and dimensions; the containing `<details>` elements are native and keyboard operable.
+The gallery is a static page: all sixteen concepts, their facts, plans, elevations, source files and licence links are present without JavaScript. The six hamlet residences are separated from the preserved archive. Every gallery image has descriptive alt text and dimensions; the containing `<details>` elements are native and keyboard operable.
 
 The editor adds:
 
@@ -81,12 +84,56 @@ The editor adds:
 - visible focus on every control and button;
 - keyboard-operable add/remove, undo/redo, preset, export and import actions;
 - `role="status"` messages for loading, imports, exports, undo/redo and assessment changes;
-- three generated SVG views, each with `role="img"`, a `<title>` and a `<desc>`;
-- a hamlet preview with a text label describing the homesite, conflicts and the fact that it is illustrative;
+- generated plan, floor-specific plans, four elevations, section, exploded levels, solar studies, exterior and cutaway SVGs, each with `role="img"`, a `<title>` and a `<desc>`;
+- a level selector, stacking buttons and a support report;
+- roof-form, accessibility and stair controls, all native and labelled;
+- a hamlet preview with a text label describing the homesite, storey count, ground coverage, building height, conflicts and the fact that it is illustrative;
+- an axonometric massing panel with a text status;
 - a no-JavaScript message and a link back to the static gallery;
 - 320 px reflow, dark mode and forced-colours support, with drawings retaining their colours;
 - reduced-motion support (no animations).
 
-The editor does **not** yet support screen-reader or disabled-user testing, direct visual dragging, or a full keyboard Tab-walk test for every generated control. That work remains manual. The hamlet preview is explicitly illustrative and is not a privacy or sightline assessment.
+The editor does **not** yet support screen-reader or disabled-user testing, or a full keyboard Tab-walk test for every generated control. That work remains manual. The hamlet preview is explicitly illustrative and is not a privacy or sightline assessment.
 
-The Design Lab's physical building accessibility is a separate question from WCAG. The editor's accessibility prompts (door widths, bathroom zones, door swings) are design review reminders, not a CSA B651 or building-code assessment. A qualified accessibility consultant must review any real home.
+## Building accessibility across one and two storeys
+
+Physical accessibility is a separate question from WCAG. Each concept records:
+
+- step-free entrance availability
+- ground-floor essential functions
+- entrance door clear width and threshold
+- circulation target
+- ground-floor bedroom and bathroom
+- bathroom and kitchen adaptability
+- stair type, module, width, run, rise, landing and lift reserve
+- the connection to the shared hamlet path
+- a vertical-access strategy
+
+A two-storey home is **not** described as fully accessible because its entrance
+is step-free. The model distinguishes:
+
+| Classification | Meaning |
+| --- | --- |
+| `fully-accessible-single-storey` | A single-storey, step-free concept. A design target, not a verified fully accessible dwelling. |
+| `ground-floor-accessible-living` | Essential living and a bathroom are on the ground floor; the upper floor is reached by stairs and is not accessible. |
+| `potentially-adaptable` | Some functions or vertical access remain unresolved. |
+| `unresolved-vertical-access` | A material vertical-access barrier exists. Do not describe the home as accessible. |
+| `not-assessed` | Accessibility has not been recorded. |
+
+The model never automatically sets `professionally-verified`. It warns when a
+two-storey home has no stair, no lift reserve, a stair narrower than 0.86 m, no
+ground-floor bedroom or essential functions, a narrow entrance, a raised
+threshold or an unresolved path connection. These are project targets informed
+by CSA B651 and the Ontario Building Code, not a compliance assessment.
+
+The **Accessible Garden Home** and **Woodland Cottage** are single-storey
+step-free concepts. The **Offset Stack**, **Cross-Stacked Retreat** and **Solar
+Studio Stack** are ground-floor accessible living arrangements; their upper
+floors are stair-only. The **Courtyard Residence** is single-storey but has a
+larger footprint and courtyard thresholds that still need detailing.
+
+A future lift is not assumed to be feasible. A concept must reserve space and
+record structural implications before a lift can be considered. The model does
+not design a lift or claim that one can be added later.
+
+A qualified accessibility consultant must review any real home.

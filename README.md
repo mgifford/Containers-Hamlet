@@ -1,15 +1,15 @@
-# Containers Hamlet | Phase 1.5
+# Containers Hamlet | Phase 2
 
 Six individual woodland retreats that happen to share a community.
 
-A fictional 15-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 1.5 adds a **resident-facing community guide**: six illustrative resident scenarios, ownership/governance, a cost-category worksheet, a ten-stage feasibility roadmap, practical living, participation and a usability plan and a two-option accessible Cedar layout study. It preserves the Phase 1.3 Container Home Design Studio: nine container homes plus a green, yellow-framed café lodge under one gable roof with south-slope solar, five-view architectural galleries, an accessible slideshow, a thermal-envelope editor, configurable exterior insulation assemblies, living green walls, elevated helical-pile foundations, a small footbridge study, a container-pattern/paint/door-shelter guide with creek and hillside options, a forest fire-resilience guide and a two-storey structural study, a community-resilience brief, a separated water-cycle guide and arrangement studies in the gallery, a side-by-side comparison tool, direct plan manipulation and descriptive shareable pages for all six cabins and the lodge, including a 20-foot compact Juniper and offset two-container pairs, and a Look inside explorer covering all seven with single- and two-container configurations. It remains a browser-based studio for container-first homes. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
+A fictional 15-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 2 makes architectural diversity a measurable design requirement and adds explicit vertical geometry. The six homes are intentionally different in storeys, massing, roof, footprint, entrance and circulation: Woodland Cottage, Offset Stack, Courtyard Residence, Cross-Stacked Retreat, Accessible Garden Home and Solar Studio Stack. Three are single-storey and three are two-storey. The Design Lab now generates combined and floor-specific plans, four elevations, building sections, exploded levels, isometrics and summer/winter solar studies from one three-dimensional model; reports geometric support overlap and structural review concerns instead of hiding them; and compares the six homes in an accessible, sortable hamlet-wide table with derived single-storey alternatives. The preserved Phase 1.5 resident-facing community guide, Phase 1.3 landscape and Design Studio, authoritative Cabin A and lodge models, downloads, cutaway explorer and validation workflow are all retained. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
 
-Phase 1.5 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, all drawings, downloads, the cutaway explorer and the validation workflow. The new editor uses a separate, versioned multi-container schema and never overwrites the existing architectural data. See [`docs/phase-1.5.md`](docs/phase-1.5.md), the [`Phase 1.5 audit`](docs/phase-1.5-audit.md), [`LICENSING.md`](LICENSING.md), [`docs/phase-1.3.md`](docs/phase-1.3.md), the [gallery/thermal extension](docs/phase-1.3-extension.md) the [envelope/vegetation extension](docs/phase-1.3-envelope-vegetation.md) the [foundations and access study](docs/foundations-and-access.md), the [container patterns and security study](docs/container-patterns.md) and the [gallery arrangements and disclosure notes](docs/gallery-disclosure.md), the [home variation notes](docs/home-variation.md), the [fire-resilience study](docs/fire-resilience.md), the [two-storey study](docs/two-storey.md), the [community resilience and water study](docs/resilience-water.md), the [site-structure and page-weight notes](docs/site-pages.md) for the audit, changes, tests, screenshots and limitations.
+Phase 2 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, every original Design Lab concept, all drawings, downloads, the cutaway explorer and the validation workflow. The original nine concepts are retained as an archive and migrated to the v2 schema. The common lodge keeps its single-storey default. The v0.1 and v1.0 schemas still import through explicit migrations. See the [visualisation prompt set](docs/visualisation-prompts.md) for image-generation prompts for every room, approach view, nature view and outdoor seating space, the [`architecture and diversity audit`](docs/architecture-diversity-audit.md), [`architectural variation`](docs/architectural-variation.md), [`stacked containers`](docs/stacked-containers.md), [`structural review`](docs/structural-review.md), [`accessibility`](docs/accessibility.md), [`implementation report`](docs/implementation-report.md), [`LICENSING.md`](LICENSING.md), [`docs/phase-1.5.md`](docs/phase-1.5.md), the [gallery/thermal extension](docs/phase-1.3-extension.md), the [envelope/vegetation extension](docs/phase-1.3-envelope-vegetation.md), the [foundations and access study](docs/foundations-and-access.md), the [container patterns and security study](docs/container-patterns.md), the [home variation notes](docs/home-variation.md), the [fire-resilience study](docs/fire-resilience.md), the [two-storey study](docs/two-storey.md), the [community resilience and water study](docs/resilience-water.md) and the [site-structure and page-weight notes](docs/site-pages.md).
 
 ## Design Lab
 
-- Gallery: `/design-lab/` — nine homes and a common lodge, grouped by one, two, three containers and the shared lodge. Every design has a five-view architectural page: exterior, plan, cutaway, porch/deck detail and winter study, plus a seasonal summer/winter comparison, approximate window exposure, an envelope wall section, a solar section and an elevated foundation section. The vegetation guide at `site/design-lab/vegetation/` covers the four planting systems.
-- Editor: `/design-lab/editor/` — three fully editable presets: Woodland Retreat, L-Shaped Haven and Woodland Courtyard. The common lodge is a developed concept with five views and a comparison entry, but is not editable yet.
+- Gallery: `/design-lab/` — six hamlet residences, a nine-concept archive and the common lodge. Every design has an architectural page with combined and floor-specific plans, four elevations, a section, exploded levels, isometric, cutaway, porch detail, winter view, summer/winter solar studies, approximate window exposure, an envelope wall section, a solar section and an elevated foundation section. The six are also compared at `/design-lab/residences/`; the vegetation guide at `site/design-lab/vegetation/` covers the four planting systems.
+- Editor: `/design-lab/editor/` — nine editable concepts: the six hamlet residences plus the three archive presets Woodland Retreat, L-Shaped Haven and Woodland Courtyard. The editor has a level selector, explicit module elevations, stack/align/offset/rotate/perpendicular operations, support inspection, roof-form controls, accessibility and stair controls, floor-specific plans, four elevations, a section, exploded levels, solar studies and an axonometric massing preview. The common lodge remains a developed concept with its original single-storey default.
 - Six further homes and the common lodge are clearly labelled **inspiration only**, with source JSON, five generated views, solar tilt/azimuth and comparison entries.
 - The editor supports independent module position and rotation, 20/40-foot modules, openings, screened porches, decks, independent climbing-plant trellises, living walls, edible planter walls, evergreen privacy screens, timber connectors, interior room bands, rigid-board/mineral-wool/wood-fibre/spray-foam/hybrid exterior assemblies with wall sections, roof/floor insulation, thermal-bridge mitigation, rainscreen and air/vapour strategy, window performance, shading, HRV/ERV, cold-climate heat pump, cladding, roof and colour, material intent, a summer/winter view, 39° due-south tilted solar with winter-60°/summer-30° options, elevated helical-pile foundations with no-compaction intent, approximate window exposure, click a module on the plan to select it, undo/redo, reset, JSON import/export, SVG exports, a design summary, a ZIP bundle and an illustrative hamlet preview.
 - No login, account, upload, backend, WebGL or third-party runtime request. Designs stay in the browser until downloaded. The architectural gallery uses no auto-advancing carousel; keyboard buttons, arrow keys and a show-all alternative are available.
@@ -23,11 +23,11 @@ Phase 1.5 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 289 main-site static checks
-   node tools/check-design-lab.mjs   # 722 Design Lab schema, geometry, envelope, vegetation, solar, foundation, gallery and comparison checks
+   node tools/check.mjs       # 466 main-site static checks
+   node tools/check-design-lab.mjs   # 2,200+ Design Lab schema, vertical geometry, stacking, support, diversity, accessibility, roof, rendering and comparison checks
    npm install
    npm run test:browser       # 107 main-site browser checks
-   npm run test:design-lab    # 171 Design Lab browser checks
+   npm run test:design-lab    # 194 Design Lab browser checks
    ```
 
    The build refuses data that cannot be built or that breaks a site rule, such as a home inside the shoreline setback, an overlapping container module, a porch beyond its face, or a concept with no valid editable presets. See [`docs/data-model.md`](docs/data-model.md) and [`docs/design-lab.md`](docs/design-lab.md).
@@ -58,9 +58,9 @@ The site includes:
 - material passports, provenance and a review register
 - downloadable site, terrain, home, drawing and 3D assets
 - a long-form community, construction and adaptability narrative
-- a **Design** section that introduces the Design Lab, its five-view architectural galleries, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, and its comparison tool
+- a **Design** section that introduces the Design Lab, its floor-specific plans and elevations, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, its six-home comparison and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 258 KB uncompressed / 62 KB compressed. The whole published site is about 3516 KB, under the revised 3.5 MB budget.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 259 KB uncompressed / 64 KB compressed. The whole published site is about 5220 KB, under the revised 6 MB budget for sixteen concepts and their detailed drawing sets.
 
 ## The fictional landscape
 
@@ -80,16 +80,19 @@ The elevation grid is exported to `site/data/terrain.json`; `site/data/homes.jso
 ## Design Lab data flow
 
 ```
-data/design-lab.json
-   ├─ concepts (9)
-   ├─ modules, openings, zones, porches, decks, connections
+data/design-lab.json (schema v2.0)
+   ├─ concepts (16: 9 archive, 6 hamlet residences, common lodge)
+   ├─ modules with storey + elevation_m + support, openings, zones, porches, decks, connections
+   ├─ levels, roof_form, review register, accessibility record
    └─ provenance, material notes, warnings (derived)
         ↓ tools/build.mjs + site/js/design-model.js
-site/design-lab/views/*.svg            plan, exterior, cutaway
+site/design-lab/views/*.svg            plans (combined/ground/upper), 4 elevations,
+                                       section, exploded, isometric, solar studies
 site/design-lab/data/*.json            downloadable source
 site/design-lab/concepts.js            editor presets
 site/design-lab/site-data.js           hamlet preview
 site/design-lab/index.html             gallery
+site/design-lab/residences/            six-home comparison
 site/design-lab/editor/                editor
 ```
 
@@ -103,7 +106,7 @@ Generated from the JSON (do not edit by hand; edit the data and rebuild):
 - `site/assets/lake-impression.svg`: an original concept impression of a lake-edge home. Illustration, not a surveyed view.
 - `site/assets/views/<home>.svg`: a plan-centred view diagram for each home and the lodge.
 - `models/cabin-a/*` and `models/lodge/*`: floor plans, elevations, sections, axonometrics, cutaways, OBJ and MTL.
-- `site/design-lab/views/<concept>-{plan,exterior,cutaway}.svg`: three views per Design Lab concept.
+- `site/design-lab/views/<concept>-{plan,plan-ground,plan-upper,elevation-*,section,exploded,solar-*,exterior,cutaway,porch,winter}.svg`: generated views per Design Lab concept.
 - `site/design-lab/data/*.json`: downloadable concept designs.
 - `site/data/site-analysis.json`, `site/data/terrain.json`, `site/data/homes.json`: computed siting, access and view observations.
 
