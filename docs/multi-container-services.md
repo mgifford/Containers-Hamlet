@@ -13,6 +13,8 @@ This is the companion to:
 - [`electrical-solar-battery.md`](electrical-solar-battery.md) — Cabin A hybrid
   AC/DC service, PV entry, battery placement and grounding; includes scaling
   notes for the pairs and the lodge.
+- [`lighting-cameras-security.md`](lighting-cameras-security.md) — warm LED
+  lighting, kitchen/living/bedside circuits, timers and local-only cameras.
 
 The single-container rules do not simply scale up. A 50 m² pair has two parallel
 tubes and a shared wall; the lodge has a large hall, a commercial kitchen, laundry,

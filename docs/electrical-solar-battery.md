@@ -26,7 +26,8 @@ The cabin needs a small, repairable, off-grid-friendly electrical system that:
 
 This is a **hybrid AC/DC** design. It is not a grid-tied service; if the cabin is
 grid-connected, the utility service, metering and transfer equipment are a
-separate design.
+separate design. Lighting, timers, cameras, blind spots and privacy are detailed
+in [`lighting-cameras-security.md`](lighting-cameras-security.md).
 
 ## 2. Recommended architecture
 
@@ -159,6 +160,49 @@ under the bed.
   cross at 90° and use a listed barrier/sleeve.
 - Do not run AC and DC in the same conduit “for future capacity.” That is a
   code and troubleshooting problem, not a space saving.
+
+### 3.4 Resident circuit and receptacle schedule
+
+The original electrical brief was too thin on everyday use. The kitchen needs
+more than one general circuit, the living area needs receptacles where people
+actually sit, and both sides of the bed need charging without a power bar on the
+floor.
+
+#### 120 V AC circuits
+
+| Circuit | Load | Protection | Notes |
+| --- | --- | --- | --- |
+| AC-1 | Kitchen counter, west of sink | 20 A GFCI | Small appliances, kettle, coffee |
+| AC-2 | Kitchen counter, east of sink | 20 A GFCI | Split from AC-1 so two appliances can run |
+| AC-3 | Fridge | 15–20 A dedicated | Do not share with counter; allow a low-temperature fridge |
+| AC-4 | Induction or kettle | 20 A dedicated, load-managed | A portable 120 V induction can draw ~1.8 kW; interlock with AC-1/AC-2 to avoid inverter overload |
+| AC-5 | Living general receptacles | 20 A AFCI/GFCI | Sofa, desk, lamp, media; split among two or three locations |
+| AC-6 | Sleeping receptacles, both sides of bed | 20 A AFCI | One 120 V and one USB-C PD outlet each side, above nightstand height |
+| AC-7 | Bathroom | 20 A GFCI | Vanity, shaver, small appliance; not the only bathroom circuit if a washer is added |
+| AC-8 | Exterior porch and entry | 20 A GFCI, weatherproof | For tools, a grill, or a temporary light; in-use covers |
+| AC-9 | Spare / future | 20 A | Leave a labelled spare breaker and a pull string to the service tower |
+
+A 2 kW inverter cannot run an induction burner, a kettle and a fridge at the same
+time. Use a **priority/load-shedding panel** or a clearly labelled operator card:
+the high-draw kitchen circuits are interlocked so only one runs at a time. If
+full electric cooking is a requirement, size the inverter and battery for it, or
+use a 240 V range on a separate service.
+
+#### 24 V DC circuits
+
+| Circuit | Load | Protection | Notes |
+| --- | --- | --- | --- |
+| DC-1 | Interior lighting | 5 A | Warm 2700–3000 K dimmable LED; see [`lighting-cameras-security.md`](lighting-cameras-security.md) |
+| DC-2 | Exterior lighting | 5 A | Porch, entry, path, step and service-tower lights; timer/motion |
+| DC-3 | Ventilation fans/controller | 3 A | 2–4 W fans, dew-point controller |
+| DC-4 | Cameras/NVR or PoE injector | 10 A | Local-only recording; see the companion lighting/camera doc |
+| DC-5 | Smoke/CO, temperature, water sensors | 2 A | Keep on a separately fused always-on branch |
+| DC-6 | USB-C charging | 10 A | 24 V→USB-PD modules at bed and sofa; no floor power bars |
+| DC-7 | 24 V→12 V converter | 10 A | For 12 V fans, sensors or legacy devices |
+
+Keep smoke/CO and the low-temperature battery sensor on an **always-on** DC
+branch that cannot be switched off by the lighting master. The inverter can be
+off while these circuits remain live.
 
 ## 4. Interior conduit routing
 
