@@ -47,9 +47,9 @@ Current limits:
 |---|---:|---:|
 | Initial view, compressed | 120 KB | 64 KB |
 | Initial view, uncompressed | 400 KB | 259 KB |
-| Whole published site | 6 MB | 5220 KB |
+| Whole published site | 6 MB | 5955 KB |
 
-The initial view is under 400 KB by about **165 KB**. The whole site is under the revised 6 MB budget by about **900 KB** after Phase 2 adds six homes and nine detailed views each. Adding another substantial page or gallery item will still require either:
+The initial view is under 400 KB by about **165 KB**. The whole site is under the 6 MB budget by about **220 KB** after the illustration pipeline adds schematics, reference views and six prompt packages. Adding another substantial page or gallery item will still require either:
 
 - compressing the duplicate full-size site-plan asset;
 - reducing the optional potential-building/tree layers; or
@@ -70,12 +70,12 @@ Lazy loading improves **when bytes are requested**, not the total byte count. A 
 | Check | Result |
 |---|---|
 | `node tools/build.mjs --check` | 395 generated files current |
-| `node tools/check.mjs` | 466 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,237 passed, 0 failed |
+| `node tools/check.mjs` | 508 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,399 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 194 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 208 passed, 0 failed |
 | Initial view | 259 KB / 64 KB compressed |
-| Whole site | 5220 KB |
+| Whole site | 5955 KB |
 
 Browser checks cover the homes index, all seven cards, the Cabin C page, `#main-view`, each section ID, lazy card diagrams, no-JavaScript cards and axe-core.
 

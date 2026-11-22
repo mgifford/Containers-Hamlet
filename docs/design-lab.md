@@ -20,6 +20,21 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 
 It is not a generic home builder. The container is the core of every design; timber, glass, screens, decks, roofs and planting are supporting layers.
 
+## Illustration pipeline
+
+The Design Lab now has a reproducible illustration pipeline. It generates a
+normalized scene specification from the design model, then deterministic
+container schematics, a roof plan, exterior/approach/site reference views, a
+structured description, an image-generation prompt, a negative prompt and a
+package manifest with hashes. The editor's **Illustrate** section controls
+viewpoint, camera, style, season, time, weather, people and material policy,
+without changing the building geometry.
+
+Start with [`illustration-pipeline.md`](illustration-pipeline.md) and the
+[`audit`](illustration-pipeline-audit.md). The six-home packages are published at
+`/design-lab/illustration/`. Interior perspective is not claimed because the
+model records longitudinal room zones, not partitions and camera geometry.
+
 ## Cabin services studies
 
 The cabin services are documented separately from the drawing editor:
@@ -247,7 +262,7 @@ Every design has an architectural page under `site/design-lab/architecture/<id>/
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 2,237 schema, vertical geometry, stacking, support, diversity, accessibility, roof, rendering, gallery and comparison checks
+node tools/check-design-lab.mjs      # 2,399 schema, geometry, vertical, stacking, illustration, prompt and comparison checks
 node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 
