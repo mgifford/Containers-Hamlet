@@ -24,6 +24,7 @@
   }
 
   var EDITABLE = DATA.concepts.filter(function (c) { return c.editable; });
+  var DEFAULT_PRESET_ID = 'hamlet-woodland-cottage';
   var state = {
     design: null,
     preset: null,
@@ -34,7 +35,9 @@
     selectedZone: null,
     season: 'summer',
     editBase: null,
-    arrangement: 'single'
+    arrangement: 'single',
+    editStorey: 'all',
+    planStorey: 'all'
   };
 
   var ZONE_LABEL = { sleeping: 'Sleeping', bathroom: 'Bathroom', kitchen: 'Kitchen', living: 'Living', dining: 'Dining', work: 'Workspace', storage: 'Storage', circulation: 'Circulation' };
@@ -86,18 +89,20 @@
   }
 
   function loadPreset(id, silent) {
-    var concept = EDITABLE.filter(function (c) { return c.id === id; })[0] || EDITABLE[0];
+    var concept = EDITABLE.filter(function (c) { return c.id === id; })[0] || EDITABLE.filter(function (c) { return c.id === DEFAULT_PRESET_ID; })[0] || EDITABLE[0];
     if (!concept) return;
     state.preset = concept.id;
     state.design = clone(concept);
     state.design.site = Object.assign({ homesite: 'a', rotation_deg: 0, note: 'Illustrative placement only; not part of the published community layout.' }, state.design.site || {});
-    state.design.provenance = Object.assign({ exported_with: 'Containers Hamlet Design Lab 1.3.0' }, state.design.provenance || {});
+    state.design.provenance = Object.assign({ exported_with: 'Containers Hamlet Design Lab 2.0.0' }, state.design.provenance || {});
     state.history = [];
     state.future = [];
     state.editBase = null;
     state.selectedModule = state.design.modules[0].id;
     state.selectedOpening = state.design.modules[0].openings[0] ? state.design.modules[0].openings[0].id : null;
     state.selectedZone = state.design.modules[0].zones[0] ? state.design.modules[0].zones[0].id : null;
+    state.editStorey = 'all';
+    state.planStorey = 'all';
     state.arrangement = state.design.modules.length === 1 ? 'single' : state.design.modules.length === 2 && state.design.modules[1].rotation_deg === 90 ? 'l-shape' : state.design.modules.length === 2 ? 'parallel' : 'courtyard';
     renderAll();
     if (!silent) announce('Loaded ' + concept.name + '. Edit the controls; use Undo to step back.');
@@ -155,6 +160,8 @@
         field('Type', selectInput('modules.' + i + '.type', m.type, idBase + '-type', option('40ft', '40-foot high cube', m.type) + option('20ft', '20-foot high cube', m.type))) +
         field('X position (m)', numberInput('modules.' + i + '.position_m.0', m.position_m[0], idBase + '-x', ' step="0.1"')) +
         field('Y position (m)', numberInput('modules.' + i + '.position_m.1', m.position_m[1], idBase + '-y', ' step="0.1"')) +
+        field('Storey', selectInput('modules.' + i + '.storey', m.storey, idBase + '-storey', option('0', 'Ground floor (level 1)', m.storey) + option('1', 'Upper floor (level 2)', m.storey))) +
+        field('Base elevation (m above grade)', numberInput('modules.' + i + '.elevation_m', m.elevation_m, idBase + '-elev', ' step="0.05" min="0" max="8"')) +
         field('Rotation (degrees)', numberInput('modules.' + i + '.rotation_deg', m.rotation_deg, idBase + '-rot', ' step="1" min="-180" max="180"')) +
         field('External insulation (mm)', numberInput('modules.' + i + '.insulation.thickness_mm', m.insulation.thickness_mm, idBase + '-ins', ' step="10" min="50" max="300"')) +
         field('Cladding', selectInput('modules.' + i + '.cladding.type', m.cladding.type, idBase + '-clad', Object.keys(CLAD_LABEL).map(function (k) { return option(k, CLAD_LABEL[k], m.cladding.type); }).join(''))) +
@@ -165,7 +172,9 @@
         field('Solar strategy', selectInput('modules.' + i + '.solar.season_mode', m.solar.season_mode, idBase + '-solar-season', option('year-round', 'Year-round fixed (39°)', m.solar.season_mode) + option('winter', 'Winter (60°)', m.solar.season_mode) + option('summer', 'Summer (30°)', m.solar.season_mode))) +
         field('Structural wall removal', selectInput('modules.' + i + '.structure.wall_removal', m.structure.wall_removal, idBase + '-wall', option('none', 'No large removal', m.structure.wall_removal) + option('partial', 'Partial wall removal', m.structure.wall_removal) + option('large', 'Large structural removal', m.structure.wall_removal))) +
         field('Conceptual cantilever (m)', numberInput('modules.' + i + '.structure.cantilever_m', m.structure.cantilever_m || 0, idBase + '-cant', ' step="0.1" min="0" max="2"')) +
+        field('Declared support modules (ids, comma separated)', '<input type="text" id="' + idBase + '-support" data-support-refs="' + i + '" value="' + esc((m.support.references || []).join(', ')) + '" autocomplete="off">', true) +
         '</div>' + checkbox('modules.' + i + '.solar.enabled', m.solar.enabled, idBase + '-solar-enabled', 'Solar array enabled') +
+        '<p class="small module-support-note">Level ' + (m.storey + 1) + ' · base ' + n(m.elevation_m, 2) + ' m · support: ' + esc(m.support.type) + (m.support.references.length ? ' (' + esc(m.support.references.join(', ')) + ')' : '') + ' · ' + (m.support.verified ? 'professionally verified with documentation' : 'not professionally verified') + '</p>' +
         '<button type="button" class="secondary" data-action="select-module" data-module="' + esc(m.id) + '">Select module for openings and rooms</button>' +
         '</fieldset>';
     }).join('');
@@ -180,6 +189,9 @@
     renderFoundation();
     renderFinish();
     renderFire();
+    renderStoreyControls();
+    renderRoofControls();
+    renderAccessControls();
     renderOpenings();
     renderZones();
     renderPorches();
@@ -189,6 +201,82 @@
     renderThermal();
     renderEnvelope();
     renderVegetation();
+  }
+
+  function renderStoreyControls() {
+    var d = state.design;
+    var upper = d.levels.some(function (l) { return l.storey > 0; });
+    var edit = $('edit-storey'), plan = $('plan-level');
+    if (edit) {
+      edit.innerHTML = option('all', 'All levels', state.editStorey) + option('0', 'Ground floor', state.editStorey) + option('1', 'Upper floor', state.editStorey);
+      edit.value = state.editStorey;
+    }
+    if (plan) {
+      plan.innerHTML = option('all', 'All levels (combined footprint)', state.planStorey) + option('0', 'Ground floor', state.planStorey) + option('1', 'Upper floor', state.planStorey);
+      plan.value = state.planStorey;
+    }
+    if ($('stack-above')) $('stack-above').disabled = false;
+    if ($('inspect-support')) $('inspect-support').disabled = false;
+    var note = $('support-report');
+    if (note && !note.getAttribute('data-rendered')) {
+      note.innerHTML = '<p class="small">Select a module, then inspect its support. The report gives geometric bearing overlap and flags unsupported area; it is not a capacity calculation.</p>';
+    }
+  }
+
+  function renderRoofControls() {
+    var r = state.design.roof_form;
+    var panel = $('roof-controls');
+    if (!panel) return;
+    var labels = { gable: 'Simple gable', shed: 'Shed roof', butterfly: 'Butterfly roof', flat: 'Flat roof with drainage strategy', canopy: 'Roof canopy (not an occupied floor)', green: 'Green roof concept', 'solar-ready': 'Solar-ready roof' };
+    panel.innerHTML = '<div class="field-grid">' +
+      field('Roof form', selectInput('roof_form.type', r.type, 'roof-type', Object.keys(labels).map(function (k) { return option(k, labels[k], r.type); }).join(''))) +
+      field('Pitch (degrees)', numberInput('roof_form.pitch_deg', r.pitch_deg, 'roof-pitch', ' step="1" min="0" max="45"')) +
+      field('Overhang (m)', numberInput('roof_form.overhang_m', r.overhang_m, 'roof-overhang', ' step="0.05" min="0" max="2"')) +
+      field('Drainage strategy', '<textarea id="roof-drainage" data-path="roof_form.drainage" rows="2">' + esc(r.drainage) + '</textarea>', true) +
+      '</div>' + checkbox('roof_form.green_roof', !!r.green_roof, 'roof-green', 'Green roof concept (adds load, drainage and fire review)') +
+      '<p class="small" id="roof-note">' + esc(r.snow + ' ' + r.wind + ' ' + r.maintenance) + '</p>';
+  }
+
+  function renderAccessControls() {
+    var a = state.design.access;
+    var panel = $('access-controls');
+    if (!panel) return;
+    var stair = a.stair || {};
+    var storeys = state.design.levels.length;
+    panel.innerHTML = '<div class="field-grid">' +
+      field('Entrance door clear width (m)', numberInput('access.entrance_door_width_m', a.entrance_door_width_m, 'access-door', ' step="0.01" min="0.6" max="3"')) +
+      field('Entrance threshold (m)', numberInput('access.entrance_threshold_m', a.entrance_threshold_m, 'access-threshold', ' step="0.01" min="0" max="0.5"')) +
+      field('Circulation target (m)', numberInput('access.circulation_width_m', a.circulation_width_m, 'access-circulation', ' step="0.05" min="0.6" max="4"')) +
+      field('Accessibility classification', selectInput('access.classification', a.classification, 'access-classification', [
+        option('fully-accessible-single-storey', 'Single-storey, step-free concept', a.classification),
+        option('ground-floor-accessible-living', 'Ground-floor accessible living', a.classification),
+        option('potentially-adaptable', 'Potentially adaptable', a.classification),
+        option('unresolved-vertical-access', 'Unresolved vertical-access barrier', a.classification),
+        option('not-assessed', 'Not assessed', a.classification)
+      ].join(''))) +
+      '</div>' +
+      checkbox('access.step_free_entrance', a.step_free_entrance, 'access-step-free', 'Step-free entrance recorded') +
+      checkbox('access.ground_floor_essential_functions', a.ground_floor_essential_functions, 'access-ground-functions', 'Essential living functions on the ground floor') +
+      checkbox('access.ground_floor_bedroom', a.ground_floor_bedroom, 'access-ground-bedroom', 'Ground-floor bedroom') +
+      checkbox('access.ground_floor_bathroom', a.ground_floor_bathroom, 'access-ground-bathroom', 'Ground-floor bathroom') +
+      checkbox('access.adaptable_bathroom', a.adaptable_bathroom, 'access-bathroom-adaptable', 'Adaptable bathroom target') +
+      checkbox('access.adaptable_kitchen', a.adaptable_kitchen, 'access-kitchen-adaptable', 'Adaptable kitchen target') +
+      field('Path connection', '<textarea id="access-path" data-path="access.path_connection" rows="2">' + esc(a.path_connection) + '</textarea>', true) +
+      '<h3>Vertical circulation</h3>' +
+      '<p class="small">' + (storeys > 1 ? 'A two-storey home with a step-free entrance is not fully accessible. Record the stair and whether space is reserved for a future lift.' : 'Single-storey concept. A stair is not required, but the entrance and internal route still need verification.') + '</p>' +
+      '<div class="field-grid">' +
+      field('Stair type', selectInput('access.stair.type', stair.type || 'none', 'stair-type', ['none','straight-run','dog-leg','spiral','alternating-tread','external'].map(function (t) { return option(t, t.replace(/-/g, ' '), stair.type || 'none'); }).join(''))) +
+      field('Stair module', selectInput('access.stair.module', stair.module || '', 'stair-module', option('', 'Not assigned', stair.module || '') + state.design.modules.map(function (m) { return option(m.id, m.id, stair.module || ''); }).join(''))) +
+      field('Stair clear width (m)', numberInput('access.stair.width_m', stair.width_m || 0, 'stair-width', ' step="0.05" min="0" max="3"')) +
+      field('Stair run (m)', numberInput('access.stair.run_m', stair.run_m || 0, 'stair-run', ' step="0.1" min="0" max="8"')) +
+      field('Stair rise (m)', numberInput('access.stair.rise_m', stair.rise_m || 0, 'stair-rise', ' step="0.1" min="0" max="6"')) +
+      field('Stair location', textInput('access.stair.location', stair.location || '', 'stair-location', ' maxlength="80"'), true) +
+      '</div>' +
+      checkbox('access.stair.present', !!stair.present, 'stair-present', 'Stair present') +
+      checkbox('access.stair.landing', !!stair.landing, 'stair-landing', 'Landing recorded') +
+      checkbox('access.stair.lift_reserve', !!stair.lift_reserve, 'stair-lift-reserve', 'Space and structure reserved for a future lift') +
+      field('Vertical access strategy', '<textarea id="access-vertical" data-path="access.vertical_access_strategy" rows="2">' + esc(a.vertical_access_strategy) + '</textarea>', true) +
+      '<p class="small" id="access-note">' + esc(a.standards) + '</p>';
   }
 
   function renderOpenings() {
@@ -564,10 +652,20 @@
     var d = state.design;
     var assessment = Model.assess(d);
     var summary = Schema.summary(d);
+    var storey = state.planStorey === 'all' ? undefined : Number(state.planStorey);
     try {
-      $('plan').innerHTML = Model.renderPlan(d, { idPrefix: 'editor-plan', selectedModule: state.selectedModule, interactive: true });
+      $('plan').innerHTML = Model.renderPlan(d, { idPrefix: 'editor-plan', selectedModule: state.selectedModule, interactive: true, storey: storey });
       $('exterior').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-exterior', season: state.season === 'winter' ? 'winter' : undefined });
       $('cutaway').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-cutaway', mode: 'cutaway' });
+      ['south', 'north', 'east', 'west'].forEach(function (side) {
+        var host = $('elevation-' + side);
+        if (host) host.innerHTML = Model.renderElevation(d, { idPrefix: 'editor-elevation-' + side, side: side });
+      });
+      if ($('section')) $('section').innerHTML = Model.renderSection(d, { idPrefix: 'editor-section' });
+      if ($('exploded')) $('exploded').innerHTML = Model.renderExploded(d, { idPrefix: 'editor-exploded' });
+      if ($('solar-summer')) $('solar-summer').innerHTML = Model.renderSolarStudy(d, { idPrefix: 'editor-solar-summer', season: 'summer' });
+      if ($('solar-winter')) $('solar-winter').innerHTML = Model.renderSolarStudy(d, { idPrefix: 'editor-solar-winter', season: 'winter' });
+      if ($('massing')) $('massing').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-massing' });
     } catch (err) {
       announce('The view could not be drawn: ' + err.message);
     }
@@ -575,23 +673,21 @@
     renderSummary(d, summary, assessment);
     renderExposure();
     renderHamlet(d);
-    $('export-plan').disabled = !assessment.ok;
-    $('export-exterior').disabled = !assessment.ok;
-    $('export-cutaway').disabled = !assessment.ok;
-    $('export-porch').disabled = !assessment.ok;
-    $('export-winter').disabled = !assessment.ok;
-    $('download-wall').disabled = !assessment.ok;
-    $('export-wall').disabled = !assessment.ok;
-    $('export-zip').disabled = !assessment.ok;
-    $('export-summary').disabled = !assessment.ok;
+    var m = Model.metrics(d);
+    if ($('massing-status')) $('massing-status').textContent = m.storeyCount + ' occupied storey' + (m.storeyCount === 1 ? '' : 's') + ' · ' + n(m.groundCoverage_m2) + ' m² ground coverage · ' + n(m.buildingHeight_m) + ' m to the roof. Massing only; no engineering or privacy assessment.';
+    ['export-plan', 'export-plan-ground', 'export-plan-upper', 'export-elevation-south', 'export-section', 'export-exploded', 'export-solar-summer', 'export-solar-winter', 'export-exterior', 'export-cutaway', 'export-porch', 'export-winter', 'download-wall', 'export-wall', 'export-zip', 'export-summary'].forEach(function (id) {
+      var el = $(id);
+      if (el) el.disabled = !assessment.ok;
+    });
   }
 
   function renderWarnings(assessment) {
-    var groups = { invalid: [], engineering: [], accessibility: [], review: [] };
+    var groups = { 'invalid-data': [], 'invalid-geometry': [], structural: [], accessibility: [], 'professional-review': [] };
     assessment.items.forEach(function (i) { if (groups[i.category]) groups[i.category].push(i); });
-    var labels = { invalid: 'Invalid geometry', engineering: 'Engineering review', accessibility: 'Accessibility review', review: 'Professional review' };
+    var labels = { 'invalid-data': 'Invalid data', 'invalid-geometry': 'Invalid geometry', structural: 'Structural review', accessibility: 'Accessibility review', 'professional-review': 'Professional review' };
+    var invalidCount = groups['invalid-data'].length + groups['invalid-geometry'].length;
     var status = $('assessment-status');
-    if (status) status.textContent = assessment.ok ? 'No invalid geometry. ' + groups.engineering.length + ' engineering, ' + groups.accessibility.length + ' accessibility and ' + groups.review.length + ' professional-review prompts.' : groups.invalid.length + ' invalid geometry issue' + (groups.invalid.length === 1 ? '' : 's') + '. Fix these before exporting drawings.';
+    if (status) status.textContent = assessment.ok ? 'No invalid data or geometry. ' + groups.structural.length + ' structural, ' + groups.accessibility.length + ' accessibility and ' + groups['professional-review'].length + ' professional-review prompts.' : invalidCount + ' invalid data or geometry issue' + (invalidCount === 1 ? '' : 's') + '. Fix these before exporting drawings.';
     var out = '';
     Object.keys(groups).forEach(function (key) {
       if (!groups[key].length) return;
@@ -601,10 +697,20 @@
   }
 
   function renderSummary(d, s, assessment) {
+    var met = Model.metrics(d);
+    var access = Model.accessibilityProfile(d);
+    var review = Model.structuralReview(d);
     var rows = [
       ['Design', d.name],
+      ['Storeys', met.storeyCount + ' occupied · ' + met.levels.map(function (l) { return l.name + ' at ' + n(l.elevation_m, 2) + ' m'; }).join('; ')],
       ['Containers', s.moduleCount + ' × ' + s.types.join(', ')],
-      ['Nominal footprint', n(s.nominalFootprint_m2) + ' m² before insulation'],
+      ['Gross floor area', n(met.grossFloorArea_m2) + ' m² nominal modules plus glazed links'],
+      ['Ground coverage', n(met.groundCoverage_m2) + ' m² projected footprint'],
+      ['Building height', n(met.buildingHeight_m) + ' m to the roof'],
+      ['Roof form', d.roof_form.type.replace(/-/g, ' ') + ' · ' + d.roof_form.pitch_deg + '° pitch · ' + n(d.roof_form.overhang_m, 2) + ' m overhang'],
+      ['Accessibility', access.classification.replace(/-/g, ' ') + (' · ' + access.issues.length + ' recorded issue(s)')],
+      ['Structural review', review.model_status.replace(/-/g, ' ') + ' · ' + review.concerns.filter(function (c) { return c.status === 'requires-review'; }).length + ' concern(s) require review'],
+      ['Nominal module area', n(s.nominalFootprint_m2) + ' m² before insulation'],
       ['Interior zones', s.zoneCount],
       ['Openings', s.openingCount],
       ['Screened porch', n(s.screenedPorch_m2) + ' m²'],
@@ -616,9 +722,9 @@
       ['Foundation', d.foundation.system + ' · ' + d.foundation.clearance_m + ' m clearance · ' + (d.foundation.no_compaction ? 'no compaction' : 'compaction unresolved')],
       ['Paint and shelter', (d.paint ? d.paint.name : 'current palette') + ' · ' + (d.entry_shelter.enabled ? 'entry shelter on ' + d.entry_shelter.side : 'no entry shelter')],
       ['Fire resilience', d.fire.roof_class + ' roof · ' + d.fire.defensible_space_m + ' m defensible space · ' + ['noncombustible_eaves','ember_resistant_vents','tempered_glazing','noncombustible_deck','exterior_shutters','water_access'].filter(function (k) { return d.fire[k]; }).length + ' measures'],
-      ['Roof', (s.solar ? 'Solar ' : '') + (s.greenRoof ? 'Green roof (not offered) ' : '') || 'Membrane'],
+      ['Roof finish', (s.solar ? 'Solar-ready ' : '') + (s.greenRoof ? 'Green roof concept ' : '') + '· ' + d.roof_form.type.replace(/-/g, ' ')],
       ['Insulation', 'Up to ' + s.maxInsulation_mm + ' mm external'],
-      ['Status', assessment.ok ? 'No invalid geometry; professional review required' : 'Invalid geometry; drawings disabled'],
+      ['Status', assessment.ok ? 'No invalid data or geometry; professional review required' : 'Invalid data or geometry; drawings disabled'],
       ['Material intent', Object.keys(d.material_intent || {}).filter(function (k) { return d.material_intent[k]; }).length + ' selected; see the Material intent controls'],
       ['Licence', 'Code AGPL-3.0-or-later · content CC BY-SA 4.0']
     ];
@@ -698,9 +804,15 @@
         if (dd < (t.width_m || 1) / 2 + 0.5) pathNote = ' The existing path or track may need adjustment around the illustrated footprint.';
       });
     });
-    var label = 'Illustrative placement at ' + site.name + '. ' + (unique.length ? 'Conflicts: ' + unique.join('; ') + '. ' : 'No conflict with the modelled buffers or other buildings. ') + pathNote + ' This preview does not add the design to the community layout.';
+    var met = Model.metrics(d);
+    var assigned = site.design_lab_home ? ' The site’s illustrative architectural assignment is ' + site.design_lab_home.replace(/-/g, ' ') + '.' : '';
+    var label = 'Illustrative placement at ' + site.name + '.' + assigned + ' ' + met.storeyCount + ' occupied storey' + (met.storeyCount === 1 ? '' : 's') + ', ' + n(met.groundCoverage_m2) + ' square metres ground coverage and ' + n(met.buildingHeight_m) + ' metres to the roof. ' + (unique.length ? 'Conflicts: ' + unique.join('; ') + '. ' : 'No conflict with the modelled buffers or other buildings. ') + pathNote + ' This preview does not add the design to the community layout.';
     host.setAttribute('aria-label', label);
-    var fp = polys.map(function (poly) { return '<path d="M' + poly.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="' + (unique.length ? '#9b2c2c' : '#246b4a') + '" fill-opacity="0.35" stroke="' + (unique.length ? '#9b2c2c' : '#174d35') + '" stroke-width="1.4"' + (unique.length ? ' stroke-dasharray="3 2"' : '') + '/>'; }).join('');
+    var fp = d.modules.map(function (m) {
+      var poly = toSite(Model.moduleCorners(m), site);
+      var upper = m.storey > 0;
+      return '<path d="M' + poly.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="' + (unique.length ? '#9b2c2c' : upper ? '#3f6f9a' : '#246b4a') + '" fill-opacity="' + (upper ? '0.16' : '0.35') + '" stroke="' + (unique.length ? '#9b2c2c' : upper ? '#245a73' : '#174d35') + '" stroke-width="' + (upper ? '1' : '1.4') + '"' + (upper || unique.length ? ' stroke-dasharray="3 2"' : '') + '/>' + (upper ? '<text x="' + n(poly[0][0] + 2) + '" y="' + n(poly[0][1] - 2) + '" font-family="system-ui, sans-serif" font-size="5" font-weight="800" fill="#245a73" stroke="#faf8f2" stroke-width="1.4" paint-order="stroke">L' + (m.storey + 1) + '</text>' : '');
+    }).join('');
     var existing = SITE.buildings.filter(function (b) { return b.id !== site.id; }).map(function (b) { return b.footprint ? '<path d="M' + b.footprint.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="none" stroke="#5b4a36" stroke-width="0.8" stroke-dasharray="2 1"/>' : ''; }).join('');
     var az = ((Number(d.primary_view_deg) || 0) + (Number(d.site.rotation_deg) || 0)) * Math.PI / 180;
     var arrow = '<line x1="' + site.x_m + '" y1="' + site.y_m + '" x2="' + n(site.x_m + Math.sin(az) * 22) + '" y2="' + n(site.y_m - Math.cos(az) * 22) + '" stroke="#3f5f8a" stroke-width="1.4" stroke-dasharray="3 2"/><circle cx="' + n(site.x_m + Math.sin(az) * 22) + '" cy="' + n(site.y_m - Math.cos(az) * 22) + '" r="2.4" fill="#3f5f8a"/>';
@@ -710,7 +822,7 @@
         '<svg viewBox="0 0 330 279" aria-hidden="true" focusable="false"></svg>';
       overlay = host.querySelector('svg');
     }
-    overlay.innerHTML = existing + fp + arrow + '<text x="' + n(site.x_m + 5) + '" y="' + n(site.y_m - 6) + '" font-family="system-ui, sans-serif" font-size="6" font-weight="800" fill="#1d392c" stroke="#faf8f2" stroke-width="1.6" paint-order="stroke">YOUR DESIGN</text>';
+    overlay.innerHTML = existing + fp + arrow + '<text x="' + n(site.x_m + 5) + '" y="' + n(site.y_m - 6) + '" font-family="system-ui, sans-serif" font-size="6" font-weight="800" fill="#1d392c" stroke="#faf8f2" stroke-width="1.6" paint-order="stroke">YOUR DESIGN · ' + met.storeyCount + ' STOREY' + (met.storeyCount === 1 ? '' : 'S') + ' · ' + n(met.buildingHeight_m) + ' m</text>';
     $('site-status').textContent = label;
   }
 
@@ -739,6 +851,13 @@
       var si = Number(path.split('.')[1]);
       state.design.modules[si].solar.season_mode = value;
       state.design.modules[si].solar.tilt_deg = value === 'winter' ? 60 : value === 'summer' ? 30 : 39;
+    } else if (/^modules\.\d+\.storey$/.test(path)) {
+      var sti = Number(path.split('.')[1]);
+      var stm = state.design.modules[sti];
+      stm.storey = Number(value);
+      stm.elevation_m = defaultElevationFor(stm);
+      stm.support = { type: stm.storey === 0 ? 'ground' : 'not-assessed', references: [], verified: false, note: stm.storey === 0 ? 'Ground-bearing design intent.' : 'Support intent not yet recorded.' };
+      announce('Module ' + stm.id + ' moved to level ' + (stm.storey + 1) + ' at ' + n(stm.elevation_m, 2) + ' m. Add support references if a module below carries it.');
     } else if (path.indexOf('.type') >= 0 && /^modules\.\d+\.type$/.test(path)) {
       var idx = Number(path.split('.')[1]);
       var m = state.design.modules[idx];
@@ -763,11 +882,18 @@
     if (!path) return;
     if (state.editBase && JSON.stringify(state.editBase) !== JSON.stringify(state.design)) pushHistory(state.editBase);
     state.editBase = null;
-    if (path.indexOf('.type') >= 0 || path.indexOf('.roof.type') >= 0 || /^modules\.\d+\.solar\./.test(path)) {
+    if (path.indexOf('.type') >= 0 || path.indexOf('.roof.type') >= 0 || path.indexOf('.storey') >= 0 || path.indexOf('elevation_m') >= 0 || /^modules\.\d+\.solar\./.test(path) || /^roof_form\./.test(path) || /^access\./.test(path)) {
       renderControls();
       renderVisuals();
     }
     updateHistoryButtons();
+  }
+
+  function defaultElevationFor(m) {
+    if (m.storey === 0) return Math.max(0, Number(state.design.foundation.clearance_m) || 0.6);
+    var below = state.design.modules.filter(function (x) { return x.id !== m.id && x.storey < m.storey; });
+    var top = below.reduce(function (t, x) { return Math.max(t, Model.moduleTop(x)); }, 0);
+    return Math.round(((top || 2.896) + Schema.INTER_STOREY_FLOOR_M) * 1000) / 1000;
   }
 
   function mutate(fn, message) {
@@ -863,6 +989,113 @@
       state.selectedModule = modules[0].id;
       state.arrangement = arrangement;
     }, 'Arrangement applied. Moving modules independently is still available; Undo is available.');
+  }
+
+  function stackingTarget() {
+    var m = currentModule();
+    if (!m) { announce('Select a module first.'); return null; }
+    return m;
+  }
+
+  function stackAbove() {
+    var m = stackingTarget();
+    if (!m) return;
+    if (m.storey >= 1) { announce('The selected module is already on the upper floor. Select a ground-floor module to stack above it.'); return; }
+    if (state.design.modules.length >= 3) { announce('The Design Lab supports up to three containers. Remove one before stacking another.'); return; }
+    mutate(function () {
+      var id = nextId('m', state.design.modules);
+      var copy = clone(m);
+      copy.id = id;
+      copy.storey = 1;
+      copy.elevation_m = Math.round((Model.moduleTop(m) + Schema.INTER_STOREY_FLOOR_M) * 1000) / 1000;
+      copy.position_m = [m.position_m[0], m.position_m[1]];
+      copy.support = { type: 'module', references: [m.id], verified: false, note: 'Design intent only. A module directly above another is not automatically supported; capacity, connections, lateral stability and uplift need professional review.' };
+      copy.structure = Object.assign({}, copy.structure, { cantilever_m: 0, notes: 'Stacked above ' + m.id + '; load path and connections are not designed.' });
+      copy.cladding = Object.assign({}, copy.cladding, { type: 'metal', colour: '#7d8587' });
+      copy.openings = (m.openings || []).map(function (o, i) { var c = clone(o); c.id = id + '-o' + (i + 1); return c; });
+      copy.zones = (m.zones || []).map(function (z, i) { var c = clone(z); c.id = id + '-z' + (i + 1); return c; });
+      state.design.modules.push(copy);
+      state.selectedModule = id;
+      state.editStorey = '1';
+      state.planStorey = '1';
+    }, 'Upper module added above ' + m.id + ' at ' + n(Model.moduleTop(m) + Schema.INTER_STOREY_FLOOR_M, 2) + ' m. The support reference is design intent only; inspect and review it.');
+  }
+
+  function alignBelow() {
+    var m = stackingTarget();
+    if (!m) return;
+    if (m.storey < 1) { announce('Select an upper-floor module to align it to the module below.'); return; }
+    var row = Model.supportAnalysis(state.design).rows.filter(function (r) { return r.module === m.id; })[0];
+    var ref = (m.support.references || [])[0] || (row && row.contacts[0] && row.contacts[0].module);
+    var below = state.design.modules.filter(function (x) { return x.id === ref; })[0];
+    if (!below) { announce('No supporting module is recorded below ' + m.id + '. Add a support reference first.'); return; }
+    mutate(function () {
+      m.position_m = [below.position_m[0], below.position_m[1]];
+      m.elevation_m = Math.round((Model.moduleTop(below) + Schema.INTER_STOREY_FLOOR_M) * 1000) / 1000;
+      m.support = Object.assign({}, m.support, { type: 'module', references: [below.id], verified: false, note: 'Aligned bearing intent only; capacity and connections are not designed.' });
+    }, 'Module ' + m.id + ' aligned over ' + below.id + ' at ' + n(m.elevation_m, 2) + ' m.');
+  }
+
+  function offsetUpper() {
+    var m = stackingTarget();
+    if (!m) return;
+    if (m.storey < 1) { announce('Select an upper-floor module to offset it.'); return; }
+    mutate(function () {
+      m.position_m[0] = Math.round((m.position_m[0] + 1.5) * 100) / 100;
+      m.structure.cantilever_m = Math.max(m.structure.cantilever_m || 0, 1.5);
+    }, 'Upper module ' + m.id + ' offset by 1.5 m. The unsupported area and cantilever now need structural review.');
+  }
+
+  function rotateUpper() {
+    var m = stackingTarget();
+    if (!m) return;
+    if (m.storey < 1) { announce('Select an upper-floor module to rotate it.'); return; }
+    mutate(function () {
+      m.rotation_deg = ((m.rotation_deg || 0) + 90) % 360;
+    }, 'Upper module ' + m.id + ' rotated to ' + m.rotation_deg + ' degrees. Recheck plan overlap, support contact and lateral stability.');
+  }
+
+  function perpendicularStack() {
+    var m = stackingTarget();
+    if (!m) return;
+    var ground = m.storey > 0 ? state.design.modules.filter(function (x) { return x.storey < m.storey; })[0] : m;
+    if (!ground) { announce('No ground-floor module is available.'); return; }
+    var upper = state.design.modules.filter(function (x) { return x.storey > 0; })[0];
+    if (!upper) {
+      stackAbove();
+      upper = state.design.modules.filter(function (x) { return x.storey > 0; })[0];
+      if (!upper) return;
+    }
+    mutate(function () {
+      upper.rotation_deg = ((ground.rotation_deg || 0) + 90) % 360;
+      upper.position_m = [ground.position_m[0], ground.position_m[1]];
+      upper.elevation_m = Math.round((Model.moduleTop(ground) + Schema.INTER_STOREY_FLOOR_M) * 1000) / 1000;
+      upper.support = Object.assign({}, upper.support, { type: 'module', references: [ground.id], verified: false, note: 'Perpendicular bearing intent only. The crossing requires an engineered transfer and lateral system.' });
+      state.selectedModule = upper.id;
+      state.editStorey = '1';
+      state.planStorey = '1';
+    }, 'Perpendicular stack created. The upper module crosses the ground module and needs an engineered transfer and lateral review.');
+  }
+
+  function inspectSupport() {
+    var host = $('support-report');
+    if (!host) return;
+    var analysis = Model.supportAnalysis(state.design);
+    var rows = analysis.rows;
+    var html = '<h3>Support relationship</h3>';
+    if (!rows.some(function (r) { return r.upper; })) {
+      html += '<p>This design is single-storey. Every module is recorded as ground-bearing; foundation capacity still needs geotechnical and structural review.</p>';
+    } else {
+      html += '<ul>' + rows.map(function (r) {
+        if (!r.upper) return '<li><strong>' + esc(r.module) + '</strong> is ground-bearing at ' + n(r.elevation_m, 2) + ' m. Foundation capacity is not designed.</li>';
+        return '<li><strong>' + esc(r.module) + '</strong> is at ' + n(r.elevation_m, 2) + ' m and is geometrically supported over ' + Math.round(r.support_fraction * 100) + '% of its footprint (' + n(r.supported_area_m2) + ' of ' + n(r.footprint_m2) + ' m²). ' + (r.declared.length ? 'Declared support: ' + esc(r.declared.join(', ')) + '. ' : 'No support module is declared. ') + (r.support_fraction <= 0.001 ? 'No supporting module is below it.' : r.support_fraction < 0.999 ? 'The unsupported area requires engineered transfer or cantilever review.' : 'Geometric bearing only; capacity and connections are not verified.') + '</li>';
+      }).join('') + '</ul>';
+      html += '<p class="small">This report is geometric. It does not calculate load capacity, connection strength, lateral stability, wind uplift or foundation reactions. A support reference is design intent, not a verified load path.</p>';
+    }
+    host.innerHTML = html;
+    host.setAttribute('data-rendered', 'true');
+    var analysisStatus = Model.structuralReview(state.design);
+    announce('Support inspected. ' + analysisStatus.summary + ' No capacity is calculated.');
   }
 
   function addOpening() {
@@ -985,8 +1218,8 @@
   }
   function exportDesignJSON() {
     var out = clone(state.design);
-    out.provenance = Object.assign({ exported_with: 'Containers Hamlet Design Lab 1.3.0', review_required: true }, out.provenance || {});
-    out.assessment = { generated_by: 'Containers Hamlet Design Lab 1.3.0', authoritative: false, ok: Model.assess(out).ok, items: Model.assess(out).items };
+    out.provenance = Object.assign({ exported_with: 'Containers Hamlet Design Lab 2.0.0', review_required: true }, out.provenance || {});
+    out.assessment = { generated_by: 'Containers Hamlet Design Lab 2.0.0', authoritative: false, ok: Model.assess(out).ok, items: Model.assess(out).items };
     download(slug(out.name) + '-design.json', JSON.stringify(out, null, 2) + '\n', 'application/json');
     $('export-status').textContent = 'Downloaded the editable design JSON. Reopen it with Import JSON.';
   }
@@ -998,18 +1231,27 @@
     lines.push('');
     lines.push('Concept only. Not engineered, not permit-ready and not a building code assessment.');
     lines.push('');
+    var met = Model.metrics(state.design);
+    var access = Model.accessibilityProfile(state.design);
+    var review = Model.structuralReview(state.design);
     lines.push('- Schema: ' + state.design.schema);
+    lines.push('- Storeys: ' + met.storeyCount + ' occupied (' + met.levels.map(function (l) { return l.name + ' at ' + n(l.elevation_m, 2) + ' m'; }).join('; ') + ')');
     lines.push('- Containers: ' + s.moduleCount + ' × ' + s.types.join(', '));
-    lines.push('- Nominal footprint: ' + n(s.nominalFootprint_m2) + ' m² before external insulation');
+    lines.push('- Gross floor area: ' + n(met.grossFloorArea_m2) + ' m² nominal modules plus glazed links');
+    lines.push('- Ground coverage: ' + n(met.groundCoverage_m2) + ' m² projected footprint');
+    lines.push('- Building height: ' + n(met.buildingHeight_m) + ' m to the roof');
+    lines.push('- Roof form: ' + state.design.roof_form.type + ' · ' + state.design.roof_form.pitch_deg + '° pitch · ' + n(state.design.roof_form.overhang_m, 2) + ' m overhang');
+    lines.push('- Nominal module area: ' + n(s.nominalFootprint_m2) + ' m² before external insulation');
     lines.push('- Interior zones: ' + s.zoneCount);
     lines.push('- Openings: ' + s.openingCount);
     lines.push('- Screened porch: ' + n(s.screenedPorch_m2) + ' m²');
-    lines.push('- Roof: ' + (s.solar ? 'solar ' : '') + (s.greenRoof ? 'green (not offered) ' : '') || 'membrane');
+    lines.push('- Accessibility: ' + access.classification + ' · ' + access.label);
+    lines.push('- Structural review: ' + review.model_status + ' · ' + review.summary);
     lines.push('- Maximum external insulation: ' + s.maxInsulation_mm + ' mm');
     lines.push('');
     lines.push('## Containers');
     state.design.modules.forEach(function (m) {
-      lines.push('- ' + m.id + ': ' + m.type + ' at ' + m.position_m[0] + ', ' + m.position_m[1] + ' m, rotation ' + m.rotation_deg + '°, ' + m.insulation.thickness_mm + ' mm insulation, ' + CLAD_LABEL[m.cladding.type] + ', ' + ROOF_LABEL[m.roof.type]);
+      lines.push('- ' + m.id + ': ' + m.type + ' on level ' + (m.storey + 1) + ' at ' + m.position_m[0] + ', ' + m.position_m[1] + ' m, base elevation ' + n(m.elevation_m, 2) + ' m, rotation ' + m.rotation_deg + '°, ' + m.insulation.thickness_mm + ' mm insulation, ' + CLAD_LABEL[m.cladding.type] + ', ' + ROOF_LABEL[m.roof.type] + '. Support: ' + m.support.type + (m.support.references.length ? ' (' + m.support.references.join(', ') + ')' : '') + ', ' + (m.support.verified ? 'professionally verified' : 'not professionally verified') + '.');
     });
     lines.push('');
     lines.push('## Openings');
@@ -1023,7 +1265,7 @@
     });
     lines.push('');
     lines.push('## Design checks');
-    lines.push(a.ok ? 'No invalid geometry; professional review still required.' : 'Invalid geometry must be fixed before drawings are exported.');
+    lines.push(a.ok ? 'No invalid data or geometry; professional review still required.' : 'Invalid data or geometry must be fixed before drawings are exported.');
     a.items.forEach(function (i) { lines.push('- [' + i.category + '] ' + i.message); });
     lines.push('');
     lines.push('## Provenance and licence');
@@ -1036,7 +1278,17 @@
   }
   function exportSummary() { download(slug(state.design.name) + '-summary.md', summaryText(), 'text/markdown'); $('export-status').textContent = 'Downloaded the design summary.'; }
   function exportSVG(kind) {
-    var svg = kind === 'wall' ? Model.wallSectionSVG(state.design, state.selectedModule, { idPrefix: 'export-wall' }) : kind === 'plan' ? Model.renderPlan(state.design, { idPrefix: 'export-plan' }) : Model.renderAxo(state.design, { idPrefix: 'export-' + kind, mode: kind === 'cutaway' ? 'cutaway' : undefined, focus: kind === 'porch' ? 'outdoor' : undefined, season: kind === 'winter' ? 'winter' : undefined });
+    var svg;
+    if (kind === 'wall') svg = Model.wallSectionSVG(state.design, state.selectedModule, { idPrefix: 'export-wall' });
+    else if (kind === 'plan') svg = Model.renderPlan(state.design, { idPrefix: 'export-plan' });
+    else if (kind === 'plan-ground') svg = Model.renderPlan(state.design, { idPrefix: 'export-plan-ground', storey: 0 });
+    else if (kind === 'plan-upper') svg = Model.renderPlan(state.design, { idPrefix: 'export-plan-upper', storey: 1 });
+    else if (kind === 'elevation-south') svg = Model.renderElevation(state.design, { idPrefix: 'export-elevation-south', side: 'south' });
+    else if (kind === 'section') svg = Model.renderSection(state.design, { idPrefix: 'export-section' });
+    else if (kind === 'exploded') svg = Model.renderExploded(state.design, { idPrefix: 'export-exploded' });
+    else if (kind === 'solar-summer') svg = Model.renderSolarStudy(state.design, { idPrefix: 'export-solar-summer', season: 'summer' });
+    else if (kind === 'solar-winter') svg = Model.renderSolarStudy(state.design, { idPrefix: 'export-solar-winter', season: 'winter' });
+    else svg = Model.renderAxo(state.design, { idPrefix: 'export-' + kind, mode: kind === 'cutaway' ? 'cutaway' : undefined, focus: kind === 'porch' ? 'outdoor' : undefined, season: kind === 'winter' ? 'winter' : undefined });
     download(slug(state.design.name) + '-' + kind + '.svg', '<?xml version="1.0" encoding="UTF-8"?>\n' + svg, 'image/svg+xml');
     $('export-status').textContent = 'Downloaded the ' + kind + ' SVG.';
   }
@@ -1085,6 +1337,16 @@
     var files = [
       { name: base + '-design.json', data: JSON.stringify(state.design, null, 2) + '\n' },
       { name: base + '-plan.svg', data: Model.renderPlan(state.design, { idPrefix: 'zip-plan' }) },
+      { name: base + '-plan-ground.svg', data: Model.renderPlan(state.design, { idPrefix: 'zip-plan-ground', storey: 0 }) },
+      { name: base + '-plan-upper.svg', data: Model.renderPlan(state.design, { idPrefix: 'zip-plan-upper', storey: 1 }) },
+      { name: base + '-elevation-south.svg', data: Model.renderElevation(state.design, { idPrefix: 'zip-elevation-south', side: 'south' }) },
+      { name: base + '-elevation-north.svg', data: Model.renderElevation(state.design, { idPrefix: 'zip-elevation-north', side: 'north' }) },
+      { name: base + '-elevation-east.svg', data: Model.renderElevation(state.design, { idPrefix: 'zip-elevation-east', side: 'east' }) },
+      { name: base + '-elevation-west.svg', data: Model.renderElevation(state.design, { idPrefix: 'zip-elevation-west', side: 'west' }) },
+      { name: base + '-section.svg', data: Model.renderSection(state.design, { idPrefix: 'zip-section' }) },
+      { name: base + '-exploded.svg', data: Model.renderExploded(state.design, { idPrefix: 'zip-exploded' }) },
+      { name: base + '-solar-summer.svg', data: Model.renderSolarStudy(state.design, { idPrefix: 'zip-solar-summer', season: 'summer' }) },
+      { name: base + '-solar-winter.svg', data: Model.renderSolarStudy(state.design, { idPrefix: 'zip-solar-winter', season: 'winter' }) },
       { name: base + '-exterior.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-exterior' }) },
       { name: base + '-cutaway.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-cutaway', mode: 'cutaway' }) },
       { name: base + '-porch.svg', data: Model.renderAxo(state.design, { idPrefix: 'zip-porch', focus: 'outdoor' }) },
@@ -1108,32 +1370,28 @@
     file.text().then(function (text) {
       var raw = JSON.parse(text);
       var design = null, report = null;
-      if (raw.schema === Schema.LEGACY_SCHEMA) {
-        var migrated = Schema.migrateV01(raw);
-        design = migrated.design; report = migrated.report;
-      } else if (raw.schema === Schema.SCHEMA) {
-        design = Schema.canonicalize(raw);
-        var check = Schema.validateSchema(design);
-        if (!check.ok) throw new Error(check.errors.map(function (e) { return e.message; }).join(' '));
-        var unknown = check.unknownKeys || [];
-        if (unknown.length) {
-          design.provenance = Object.assign({}, design.provenance, { imported_unknown: {} });
-          unknown.forEach(function (k) { design.provenance.imported_unknown[k] = raw[k]; });
-        }
-      } else {
-        throw new Error('Unsupported schema. Use ' + Schema.SCHEMA + ' or ' + Schema.LEGACY_SCHEMA + '.');
+      var migrated = Schema.migrateAny(raw);
+      design = migrated.design; report = migrated.report;
+      var check = Schema.validateSchema(design);
+      if (!check.ok) throw new Error(check.errors.map(function (e) { return e.message; }).join(' '));
+      var unknown = check.unknownKeys || [];
+      if (unknown.length) {
+        design.provenance = Object.assign({}, design.provenance, { imported_unknown: {} });
+        unknown.forEach(function (k) { design.provenance.imported_unknown[k] = raw[k]; });
       }
       state.design = design;
       state.preset = null;
       state.history = [];
       state.future = [];
       state.editBase = null;
+      state.editStorey = 'all';
+      state.planStorey = 'all';
       state.selectedModule = state.design.modules[0].id;
       state.selectedOpening = state.design.modules[0].openings[0] ? state.design.modules[0].openings[0].id : null;
       state.selectedZone = state.design.modules[0].zones[0] ? state.design.modules[0].zones[0].id : null;
       renderAll();
       var msg = 'Imported design. ';
-      if (report) msg += 'Migrated from v0.1. ' + report.warnings.join(' ');
+      if (report && report.from && report.from !== Schema.SCHEMA) msg += 'Migrated from ' + report.from + '. ' + (report.warnings || []).join(' ');
       var assessment = Model.assess(state.design);
       if (!assessment.ok) msg += ' The imported geometry has invalid issues; fix them before exporting drawings.';
       announce(msg);
@@ -1157,18 +1415,51 @@
     renderPresetOptions();
     var params = new URLSearchParams(location.search);
     var requested = params.get('preset');
-    var initial = EDITABLE.filter(function (c) { return c.id === requested; })[0] || EDITABLE[0];
+    var initial = EDITABLE.filter(function (c) { return c.id === requested; })[0] || EDITABLE.filter(function (c) { return c.id === DEFAULT_PRESET_ID; })[0] || EDITABLE[0];
     loadPreset(initial.id, true);
     renderArrangementFromState();
-    announce('Loaded ' + initial.name + '. Three presets are editable; the gallery has six more inspiration concepts.');
+    announce('Loaded ' + initial.name + '. Six hamlet residences and three archive concepts are editable; the gallery also preserves six inspiration concepts.');
 
     $('preset').addEventListener('change', function () { if ($('preset').value) loadPreset($('preset').value); });
     $('undo').addEventListener('click', undo);
     $('redo').addEventListener('click', redo);
-    $('reset').addEventListener('click', function () { if (state.preset) loadPreset(state.preset); else loadPreset(EDITABLE[0].id); });
+    $('reset').addEventListener('click', function () { if (state.preset) loadPreset(state.preset); else loadPreset(DEFAULT_PRESET_ID); });
     $('add-module').addEventListener('click', addModule);
     $('remove-module').addEventListener('click', removeModule);
     $('apply-arrangement').addEventListener('click', applyArrangement);
+    $('stack-above').addEventListener('click', stackAbove);
+    $('align-below').addEventListener('click', alignBelow);
+    $('offset-upper').addEventListener('click', offsetUpper);
+    $('rotate-upper').addEventListener('click', rotateUpper);
+    $('perpendicular-stack').addEventListener('click', perpendicularStack);
+    $('inspect-support').addEventListener('click', inspectSupport);
+    ['edit-storey', 'plan-level'].forEach(function (id) {
+      var el = $(id);
+      if (el) el.addEventListener('change', function () {
+        state.editStorey = el.value;
+        state.planStorey = el.value;
+        renderControls();
+        renderVisuals();
+        focusPlanModule(state.selectedModule);
+        announce('Editing level: ' + (el.value === 'all' ? 'all levels' : 'level ' + (Number(el.value) + 1)) + '.');
+      });
+    });
+    $('apply-roof').addEventListener('click', function () { renderControls(); renderVisuals(); announce('Roof form applied to the generated views. Drainage, snow, wind and maintenance remain review items.'); });
+    $('apply-access').addEventListener('click', function () { renderControls(); renderVisuals(); announce('Accessibility record updated. This is a design intent, not a compliance assessment.'); });
+    $('module-controls').addEventListener('change', function (event) {
+      var input = event.target;
+      if (!input || !input.getAttribute || !input.getAttribute('data-support-refs')) return;
+      var idx = Number(input.getAttribute('data-support-refs'));
+      var m = state.design.modules[idx];
+      if (!m) return;
+      var refs = input.value.split(',').map(function (x) { return x.trim(); }).filter(Boolean);
+      mutate(function () {
+        m.support.references = refs;
+        m.support.type = refs.length ? 'module' : m.storey === 0 ? 'ground' : 'not-assessed';
+        m.support.verified = false;
+        m.support.note = refs.length ? 'Declared support intent only; capacity and connections are not verified.' : 'Support intent not recorded.';
+      }, 'Support references for ' + m.id + ' recorded as design intent. No capacity is calculated.');
+    });
     $('add-opening').addEventListener('click', addOpening);
     $('remove-opening').addEventListener('click', function () { if (state.selectedOpening) removeOpening(state.selectedOpening); else announce('Choose an opening card to remove.'); });
     $('add-zone').addEventListener('click', addZone);
@@ -1285,6 +1576,16 @@
         e.preventDefault();
         state.selectedModule = m.id;
         rotateModule(m, e.shiftKey ? -15 : 15);
+      } else if (e.key === 'PageUp' || e.key === 'PageDown' || e.key === 'a' || e.key === 'A') {
+        e.preventDefault();
+        if (e.key === 'a' || e.key === 'A') state.planStorey = 'all';
+        else if (e.key === 'PageUp') state.planStorey = '1';
+        else state.planStorey = '0';
+        state.editStorey = state.planStorey;
+        renderControls();
+        renderVisuals();
+        focusPlanModule(state.selectedModule);
+        announce('Plan level: ' + (state.planStorey === 'all' ? 'all levels' : 'level ' + (Number(state.planStorey) + 1)) + '.');
       }
     });
 
@@ -1306,11 +1607,10 @@
       if (zc) state.selectedZone = zc.getAttribute('data-zone-id');
     });
     $('export-json').addEventListener('click', exportDesignJSON);
-    $('export-plan').addEventListener('click', function () { exportSVG('plan'); });
-    $('export-exterior').addEventListener('click', function () { exportSVG('exterior'); });
-    $('export-cutaway').addEventListener('click', function () { exportSVG('cutaway'); });
-    $('export-porch').addEventListener('click', function () { exportSVG('porch'); });
-    $('export-winter').addEventListener('click', function () { exportSVG('winter'); });
+    ['plan', 'plan-ground', 'plan-upper', 'elevation-south', 'section', 'exploded', 'solar-summer', 'solar-winter', 'exterior', 'cutaway', 'porch', 'winter'].forEach(function (kind) {
+      var el = $('export-' + kind);
+      if (el) el.addEventListener('click', function () { exportSVG(kind); });
+    });
     $('download-wall').addEventListener('click', function () { exportSVG('wall'); });
     $('export-wall').addEventListener('click', function () { exportSVG('wall'); });
     $('export-summary').addEventListener('click', exportSummary);

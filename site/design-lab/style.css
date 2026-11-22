@@ -31,6 +31,9 @@
 .concept-card-body { padding: 0.9rem 1rem 1rem; display: flex; flex-direction: column; flex: 1; }
 .concept-badge { display: inline-block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 800; border: 1px solid var(--border); border-radius: 999px; padding: 0.15rem 0.55rem; margin-bottom: 0.4rem; }
 .concept-badge.editable { border-color: var(--ok); color: var(--ok); }
+.concept-badge.hamlet { border-color: #245a73; color: #1f4f60; background: #e3f0f4; }
+.gallery-chapter { margin: 2.5rem 0; }
+.gallery-chapter > h2 { margin-bottom: .3rem; }
 .concept-card .tagline { font-weight: 600; margin: 0.2rem 0 0.55rem; }
 .concept-card p { margin: 0.35rem 0; }
 .concept-facts { display: grid; gap: 0.35rem; margin: 0.6rem 0 0.8rem; font-size: 0.9rem; }
@@ -57,6 +60,7 @@
   .concept-grid, .lab-steps { grid-template-columns: 1fr; }
 }
 @media (prefers-color-scheme: dark) {
+  .concept-badge.hamlet { background: #16323a; color: #bfe6ef; border-color: #6fb3c4; }
   .lab-page { --lab-paper: #1b2621; }
   .lab-hero-panel, .concept-card, .lab-steps li { background: var(--surface); }
   .concept-card-media, .concept-view-stack img { background: #faf8f2; }

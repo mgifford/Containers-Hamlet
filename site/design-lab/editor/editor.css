@@ -122,3 +122,22 @@ button.secondary:hover { background: var(--surface); color: var(--link); }
 .plan-module-hit:active { cursor: grabbing; }
 .plan-selected { pointer-events: none; }
 .plan-help { margin: .35rem 0 0; }
+
+/* Floor and stacking controls, structural review and massing preview */
+.view-grid.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.view-level { display: block; max-width: 30rem; margin: .4rem 0 .6rem; }
+.hamlet-preview-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: .8rem; align-items: start; }
+.support-report { margin: .7rem 0; padding: .6rem .8rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--surface); }
+.support-report h3 { margin-top: 0; font-size: 1rem; }
+.support-report ul { padding-left: 1.1rem; }
+.module-support-note { margin: .2rem 0 .5rem; color: var(--muted); }
+.badge.invalid-data, .badge.invalid-geometry { color: var(--fail); border-color: var(--fail); }
+.badge.structural { color: var(--pressed); border-color: var(--pressed-border); }
+.badge.professional-review { color: var(--muted); border-color: var(--border); }
+@media (prefers-color-scheme: dark) {
+  .badge.invalid-data, .badge.invalid-geometry { color: #ff9e94; border-color: #ff9e94; }
+  .badge.structural { color: #e0a35c; border-color: #e0a35c; }
+}
+@media (max-width: 1100px) { .hamlet-preview-grid { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .view-grid.four { grid-template-columns: 1fr; } }
+@media (forced-colors: active) { .support-report { border: 1px solid CanvasText; } }

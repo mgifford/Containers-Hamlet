@@ -1,0 +1,15 @@
+/* Containers Hamlet residence comparison. Code licence: AGPL-3.0-or-later. */
+.residence-card { max-width: 48rem; }
+.residence-card h3 { margin-top: .3rem; }
+#residence-controls { align-items: end; }
+#residence-controls label { min-width: 12rem; }
+#residence-controls select { display: block; width: 100%; min-width: 12rem; margin-top: .2rem; }
+#residence-controls button { min-height: 44px; }
+#residence-table caption, #similarity-table caption, #alternatives-table caption { text-align: left; font-weight: 700; padding: .5rem 0; }
+#residence-table th, #residence-table td, #similarity-table th, #similarity-table td, #alternatives-table th, #alternatives-table td { vertical-align: top; }
+#residence-table { font-size: .92rem; }
+#residence-table caption { font-weight: 800; }
+#residence-table-desc { max-width: 70rem; }
+.duplicate-flag { background: #fff3cd; }
+@media (prefers-color-scheme: dark) { .duplicate-flag { background: #4a3a1d; } }
+@media (forced-colors: active) { .duplicate-flag { border: 2px solid CanvasText; } }

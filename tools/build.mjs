@@ -33,6 +33,7 @@ import { twoStoreyPage, twoStoreySVG } from './lib/design-two-storey.mjs';
 import { resiliencePage } from './lib/design-resilience.mjs';
 import { waterPage, waterSVG } from './lib/design-water.mjs';
 import { comparePage } from './lib/design-compare.mjs';
+import { residencesPage } from './lib/design-residences.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
   provenanceList, reviewsTables, downloadsList, homeTabs, homeDossiers, landscapeFacts,
@@ -151,32 +152,50 @@ export function generate() {
 
   /* ---------------- Container Home Design Lab ---------------- */
   const designLab = JSON.parse(readText('data/design-lab.json'));
-  if (!designLab.concepts || designLab.concepts.length !== 10) issues.push({ level: 'error', message: 'data/design-lab.json must contain nine home concepts and the common lodge' });
-  const editableCount = designLab.concepts.filter((c) => c.editable).length;
-  if (editableCount !== 3) issues.push({ level: 'error', message: 'data/design-lab.json must mark exactly three concepts as editable' });
+  if (!designLab.concepts || designLab.concepts.length !== 16) issues.push({ level: 'error', message: 'data/design-lab.json must contain nine archived concepts, six hamlet residences and the common lodge' });
+  const hamletSelected = designLab.concepts.filter((c) => c.role === 'hamlet-selected');
+  if (hamletSelected.length !== 6) issues.push({ level: 'error', message: 'data/design-lab.json must contain six hamlet-selected residences' });
+  if (designLab.concepts.some((c) => c.modules.some((m) => m.storey > 1))) issues.push({ level: 'error', message: 'a residence may not exceed two occupied storeys' });
   const designViews = {};
   designLab.concepts.forEach((concept) => {
     const schemaCheck = DesignSchema.validateSchema(concept);
     schemaCheck.errors.forEach((e) => issues.push({ level: 'error', message: `design-lab ${concept.id}: ${e.message}` }));
     const assessment = DesignModel.assess(concept);
-    assessment.items.filter((i) => i.category === 'invalid').forEach((i) => issues.push({ level: 'error', message: `design-lab ${concept.id}: ${i.message}` }));
-    const plan = DesignModel.renderPlan(concept, { idPrefix: `concept-${concept.id}-plan` });
-    const exterior = DesignModel.renderAxo(concept, { idPrefix: `concept-${concept.id}-exterior` });
-    const cutaway = DesignModel.renderAxo(concept, { idPrefix: `concept-${concept.id}-cutaway`, mode: 'cutaway' });
-    const porch = DesignModel.renderAxo(concept, { idPrefix: `concept-${concept.id}-porch`, focus: 'outdoor' });
-    const winter = DesignModel.renderAxo(concept, { idPrefix: `concept-${concept.id}-winter`, season: 'winter' });
-    put(`site/design-lab/views/${concept.id}-plan.svg`, plan);
-    put(`site/design-lab/views/${concept.id}-exterior.svg`, exterior);
-    put(`site/design-lab/views/${concept.id}-cutaway.svg`, cutaway);
-    put(`site/design-lab/views/${concept.id}-porch.svg`, porch);
-    put(`site/design-lab/views/${concept.id}-winter.svg`, winter);
+    assessment.items.filter((i) => i.category.startsWith('invalid')).forEach((i) => issues.push({ level: 'error', message: `design-lab ${concept.id}: ${i.message}` }));
+    const prefix = `concept-${concept.id}`;
+    const views = {
+      plan: DesignModel.renderPlan(concept, { idPrefix: `${prefix}-plan` }),
+      'plan-ground': DesignModel.renderPlan(concept, { idPrefix: `${prefix}-plan-ground`, storey: 0 }),
+      exterior: DesignModel.renderAxo(concept, { idPrefix: `${prefix}-exterior` }),
+      cutaway: DesignModel.renderAxo(concept, { idPrefix: `${prefix}-cutaway`, mode: 'cutaway' }),
+      porch: DesignModel.renderAxo(concept, { idPrefix: `${prefix}-porch`, focus: 'outdoor' }),
+      winter: DesignModel.renderAxo(concept, { idPrefix: `${prefix}-winter`, season: 'winter' }),
+      'elevation-south': DesignModel.renderElevation(concept, { idPrefix: `${prefix}-elevation-south`, side: 'south' }),
+      'elevation-north': DesignModel.renderElevation(concept, { idPrefix: `${prefix}-elevation-north`, side: 'north' }),
+      'elevation-east': DesignModel.renderElevation(concept, { idPrefix: `${prefix}-elevation-east`, side: 'east' }),
+      'elevation-west': DesignModel.renderElevation(concept, { idPrefix: `${prefix}-elevation-west`, side: 'west' }),
+      section: DesignModel.renderSection(concept, { idPrefix: `${prefix}-section` }),
+      exploded: DesignModel.renderExploded(concept, { idPrefix: `${prefix}-exploded` }),
+      'solar-summer': DesignModel.renderSolarStudy(concept, { idPrefix: `${prefix}-solar-summer`, season: 'summer' }),
+      'solar-winter': DesignModel.renderSolarStudy(concept, { idPrefix: `${prefix}-solar-winter`, season: 'winter' })
+    };
+    if (concept.levels.length > 1) views['plan-upper'] = DesignModel.renderPlan(concept, { idPrefix: `${prefix}-plan-upper`, storey: 1 });
+    Object.entries(views).forEach(([name, svg]) => put(`site/design-lab/views/${concept.id}-${name}.svg`, svg));
     put(`site/design-lab/data/${concept.id}.json`, JSON.stringify(concept) + '\n');
-    designViews[concept.id] = { plan: svgSize(plan), exterior: svgSize(exterior), cutaway: svgSize(cutaway), porch: svgSize(porch), winter: svgSize(winter) };
+    designViews[concept.id] = Object.fromEntries(Object.entries(views).map(([name, svg]) => [name, svgSize(svg)]));
   });
   const designProfiles = designLab.concepts.map((concept) => DesignModel.designProfile(concept));
   const profileById = Object.fromEntries(designProfiles.map((p) => [p.id, p]));
   designLab.concepts.forEach((concept) => put(`site/design-lab/architecture/${concept.id}/index.html`, architecturePage(concept, designViews[concept.id], profileById[concept.id]).replace(/[ \t]+$/gm, '')));
   put('site/design-lab/compare/index.html', comparePage(designProfiles, designLab.concepts));
+  const hamletProfiles = hamletSelected.map((c) => profileById[c.id]);
+  const alternatives = {};
+  hamletProfiles.filter((p) => p.storeys > 1).forEach((p) => {
+    const concept = designLab.concepts.find((c) => c.id === p.id);
+    const alt = DesignModel.singleStoreyAlternative(concept);
+    if (alt) alternatives[p.id] = DesignModel.designProfile(alt);
+  });
+  put('site/design-lab/residences/index.html', residencesPage(hamletProfiles, hamletSelected, alternatives).replace(/[ \t]+$/gm, ''));
   put('site/design-lab/vegetation/index.html', vegetationPage(designLab.concepts));
   put('site/design-lab/ground/index.html', groundPage(designLab.concepts));
   put('site/design-lab/patterns/index.html', patternsPage());
@@ -229,7 +248,7 @@ export function generate() {
     drainage: (site.drainage || []).map((d) => ({ id: d.id, name: d.name, points: d.points, width_m: d.width_m })),
     buildings: site.buildings.map((b) => {
       const r = analysis.placed[b.id];
-      return { id: b.id, name: b.name, short_name: b.short_name, use: b.use, x_m: b.x_m, y_m: b.y_m, rotation_deg: b.rotation_deg, footprint: r ? r.parts[0].poly : null };
+      return { id: b.id, name: b.name, short_name: b.short_name, use: b.use, x_m: b.x_m, y_m: b.y_m, rotation_deg: b.rotation_deg, footprint: r ? r.parts[0].poly : null, design_lab_home: b.design_lab_home || null, design_lab_note: b.design_lab_note || null };
     }),
     lanes: site.circulation.lanes.map((l) => ({ id: l.id, name: l.name, kind: l.kind, width_m: l.width_m, points: l.points })),
     trails: site.circulation.trails.map((t) => ({ id: t.id, name: t.name, kind: t.kind, width_m: t.width_m, points: t.points })),
@@ -240,12 +259,30 @@ export function generate() {
 
   const galleryPagePath = 'site/design-lab/index.html';
   const galleryTemplate = readText(galleryPagePath);
-  const gallery = galleryCards(designLab.concepts, (c) => DesignSchema.summary(c)) + '\n' + arrangementCards();
+  const summaryOf = (c) => {
+    const s = DesignSchema.summary(c);
+    const m = DesignModel.metrics(c);
+    return Object.assign({}, s, { grossFloorArea_m2: m.grossFloorArea_m2, groundCoverage_m2: m.groundCoverage_m2, buildingHeight_m: m.buildingHeight_m });
+  };
+  const hamletGallery = galleryCards(hamletSelected, summaryOf, {
+    heading: 'Six intentionally different hamlet residences',
+    headingId: 'hamlet-residences',
+    idPrefix: 'hamlet-',
+    intro: 'Each home has its own massing, roof, arrangement and relationship to the ground. They share construction principles, not a single look. Two are single-storey and two-storey alternatives are shown explicitly so the trade-offs are visible.'
+  });
+  const archiveConcepts = designLab.concepts.filter((c) => c.role !== 'hamlet-selected');
+  const archiveGallery = galleryCards(archiveConcepts, summaryOf, {
+    heading: 'Concept archive and the common lodge',
+    headingId: 'concept-archive',
+    idPrefix: 'archive-',
+    intro: 'The original nine concepts are preserved, migrated to the current schema and clearly separated from the six hamlet-selected homes. No source concept was deleted.'
+  });
+  const gallery = hamletGallery + '\n' + archiveGallery + '\n' + arrangementCards();
   ['stacked','cantilever','courtyard','creek'].forEach((k) => put(`site/design-lab/arrangements/${k}.svg`, arrangementSVG(k)));
   const galleryTemplateWithNav = galleryTemplate.replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(1, 'gallery'));
   const galleryOut = galleryTemplateWithNav.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${gallery}\n<!-- /gen:gallery -->`);
   if (!galleryTemplate.includes('<!-- gen:gallery -->') || !galleryTemplate.includes('<!-- /gen:gallery -->')) issues.push({ level: 'error', message: 'site/design-lab/index.html is missing the gen:gallery markers' });
-  put(galleryPagePath, galleryOut);
+  put(galleryPagePath, galleryOut.replace(/[ \t]+$/gm, ''));
   put('site/design-lab/guides/index.html', guidesPage());
   const editorPath = 'site/design-lab/editor/index.html';
   const editorHtml = readText(editorPath).replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(2, 'editor'));
