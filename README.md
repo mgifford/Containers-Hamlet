@@ -21,6 +21,8 @@ Design Lab studies for the off-grid building services:
 
 - [`docs/passive-ventilation.md`](docs/passive-ventilation.md) — Cabin A end-to-end filtered ventilation, low-wattage fan assist, pollen/pest/rain exclusion and four seasonal operating modes.
 - [`docs/wood-heat-thermal-mass.md`](docs/wood-heat-thermal-mass.md) — Cabin A stove sizing, hearth and masonry heat wall, ventilated air gap, exterior-insulation protection, OAK and CSA B365 clearance caveats.
+- [`docs/electrical-solar-battery.md`](docs/electrical-solar-battery.md) — Cabin A hybrid AC/DC service, interior conduit routing, PV entry, indoor vs outdoor LiFePO₄ battery placement and steel-shell bonding.
+- [`docs/lighting-cameras-security.md`](docs/lighting-cameras-security.md) — warm LED lighting, kitchen/living/bedside circuits, security timers, local-only wildlife/security cameras and container blind spots.
 - [`docs/multi-container-services.md`](docs/multi-container-services.md) — companion spec for the two-container pairs (Cabins B, D and E) and the Common Lodge.
 
 These are conceptual studies, not construction drawings or engineering approvals. Stove work requires a WETT-certified installer; ventilation, structure, fire and accessibility work require the relevant professionals and the authority having jurisdiction.
