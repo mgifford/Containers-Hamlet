@@ -1,7 +1,7 @@
 {
   "fictional": true,
   "phase": "1.2",
-  "area_acres": 15.0,
+  "area_acres": 15,
   "area_ha": 6.07,
   "setting": "A rugged Canadian Shield woodland beside a small lake: rock ridges, mixed forest, a beaver-influenced shoreline and a protected wetland",
   "units": "metres; x east, y south, origin at the north-west corner of the map",
@@ -1425,7 +1425,7 @@
           ],
           [
             216.3,
-            46.0
+            46
           ]
         ],
         "note": "Approaches Cabin B from the south-west, then turns to its north entrance. It does not cross the birch-glade view."
@@ -1668,7 +1668,9 @@
         "winter": "Cedar and pine keep the lake edge screened in winter. Leaf-off opens a clearer view through the birch, and the low sun reaches the porch."
       },
       "design_note": "Cabin A's one-module plan is the starting point. A site-specific variant would widen the sleeping room to fit a 1.5 m turning circle and choose the porch screen colour with the resident.",
-      "character": "A cedar-screened bench above the lake, with the porch turned to the water and the entry tucked behind."
+      "character": "A cedar-screened bench above the lake, with the porch turned to the water and the entry tucked behind.",
+      "design_lab_home": "hamlet-woodland-cottage",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged."
     },
     {
       "id": "b",
@@ -1715,7 +1717,9 @@
       "pair_offset": [
         1.9,
         1.15
-      ]
+      ],
+      "design_lab_home": "hamlet-offset-stack",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged."
     },
     {
       "id": "c",
@@ -1757,7 +1761,9 @@
         "winter": "Pine and hemlock hold their needles, so the long view stays framed but private. Leaf-off reveals more of the lake and the ridge."
       },
       "design_note": "The resident might replace the west trellis with a small covered deck. The landscape model accepts that change without moving the home.",
-      "character": "A quiet room in the pines, with a long view west between trunks."
+      "character": "A quiet room in the pines, with a long view west between trunks.",
+      "design_lab_home": "hamlet-courtyard-residence",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged."
     },
     {
       "id": "d",
@@ -1804,7 +1810,9 @@
       "pair_offset": [
         -1.9,
         1.15
-      ]
+      ],
+      "design_lab_home": "hamlet-cross-stacked-retreat",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged."
     },
     {
       "id": "e",
@@ -1851,7 +1859,9 @@
       "pair_offset": [
         1.9,
         -1.15
-      ]
+      ],
+      "design_lab_home": "hamlet-accessible-garden-home",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged."
     },
     {
       "id": "f",
@@ -1893,7 +1903,9 @@
       },
       "design_note": "This is the smallest-feeling site and may suit a seasonal, one-person or couple's home. A future 20-foot module variant could be tested here without changing the clearing.",
       "character": "A low, juniper-edged retreat above the southern cove.",
-      "configuration": "single-20"
+      "configuration": "single-20",
+      "design_lab_home": "hamlet-solar-studio-stack",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged."
     },
     {
       "id": "lodge",
@@ -1936,7 +1948,9 @@
         "winter": "Hemlock and cedar keep the glade edge green in winter. The hall's clerestories bring low winter light into the gathering space, and the porch stays usable with screens and a windbreak."
       },
       "design_note": "The lodge is the social centre, so it gets the most accessible arrival, the universal washroom, the shared kitchen and the workshop. It is deliberately at the edge, near parking and services, not in the quietest part of the woods.",
-      "character": "The shared hearth: kitchen, hall, workshop and the gathering glade."
+      "character": "The shared hearth: kitchen, hall, workshop and the gathering glade.",
+      "design_lab_home": "common-lodge",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged."
     }
   ],
   "landmarks": [

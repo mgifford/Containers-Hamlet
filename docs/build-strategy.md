@@ -133,3 +133,47 @@ Phase 1.2 moved the design from a flat 15-acre diagram to a fictional Canadian S
 - Reuse topsoil, control erosion, remove temporary matting and plant native ground cover, shrubs and trees.
 - Monitor establishment, drainage, erosion and wetland condition for at least three years, and adapt maintenance.
 - Treat the wetland, shoreline and rock outcrops as the reason for the project, not as obstacles to be engineered away.
+
+## Phase 2: architectural diversity and stacked geometry
+
+Phase 2 extends the Design Lab from a horizontal arrangement editor to a
+two-storey, explicitly three-dimensional design environment. It does not change
+the construction principles: reused containers, a drained and ventilated
+exterior assembly, independent foundations, replaceable components, and
+professional review before construction.
+
+### Build outputs
+
+For each of the sixteen Design Lab concepts the build now writes a combined
+plan, a ground-floor plan, an upper-floor plan when the home has two storeys,
+four elevations, a building section, an exploded-level view, summer and winter
+solar studies, and the original exterior, cutaway, porch and winter studies.
+`site/design-lab/residences/index.html` adds a hamlet-wide comparison. The six
+site buildings carry an illustrative `design_lab_home` reference; the
+authoritative site geometry, Cabin A model and lodge model are unchanged.
+
+### Page-weight budget
+
+The published site grew from about 3.5 MB to about 5.2 MB because it now carries
+six more homes and a much larger generated drawing set. The initial view remains
+about 259 KB uncompressed and 64 KB compressed, under the existing per-view
+budget. The whole-site budget is revised to **6 MB** and documented in
+`docs/site-pages.md`. This is a content growth, not a runtime dependency: there
+are still no web fonts, remote scripts, tracking or WebGL.
+
+### Determinism and checking
+
+`node tools/build.mjs --check` verifies every generated file. The static suite
+rebuilds each view from the JSON and compares it byte-for-byte with the committed
+SVG. The browser suite checks the editor's stack operations, level selector,
+support report, keyboard level controls, axe-core results, 320 px reflow, dark
+scheme, forced colours and no-JavaScript fallbacks.
+
+### What is deferred
+
+Full BIM/IFC exchange, structural finite-element analysis, automated code
+certification, construction documents, cost estimation, carbon accounting and a
+georeferenced 3D site model are deliberately out of scope. The next useful step
+would be to commission a structural and accessibility review of one stacked home
+— probably the Offset Stack — and feed the documented findings back into the
+review register as evidence, not as an automatic status change.

@@ -47,6 +47,8 @@
       },
       "design_note": "Cabin A's one-module plan is the starting point. A site-specific variant would widen the sleeping room to fit a 1.5 m turning circle and choose the porch screen colour with the resident.",
       "character": "A cedar-screened bench above the lake, with the porch turned to the water and the entry tucked behind.",
+      "design_lab_home": "hamlet-woodland-cottage",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged.",
       "analysis": {
         "id": "a",
         "name": "Cabin A",
@@ -197,6 +199,8 @@
         1.9,
         1.15
       ],
+      "design_lab_home": "hamlet-offset-stack",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged.",
       "analysis": {
         "id": "b",
         "name": "Cabin B",
@@ -365,6 +369,8 @@
       },
       "design_note": "The resident might replace the west trellis with a small covered deck. The landscape model accepts that change without moving the home.",
       "character": "A quiet room in the pines, with a long view west between trunks.",
+      "design_lab_home": "hamlet-courtyard-residence",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged.",
       "analysis": {
         "id": "c",
         "name": "Cabin C",
@@ -523,6 +529,8 @@
         -1.9,
         1.15
       ],
+      "design_lab_home": "hamlet-cross-stacked-retreat",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged.",
       "analysis": {
         "id": "d",
         "name": "Cabin D",
@@ -673,6 +681,8 @@
         1.9,
         -1.15
       ],
+      "design_lab_home": "hamlet-accessible-garden-home",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged.",
       "analysis": {
         "id": "e",
         "name": "Cabin E",
@@ -833,6 +843,8 @@
       "design_note": "This is the smallest-feeling site and may suit a seasonal, one-person or couple's home. A future 20-foot module variant could be tested here without changing the clearing.",
       "character": "A low, juniper-edged retreat above the southern cove.",
       "configuration": "single-20",
+      "design_lab_home": "hamlet-solar-studio-stack",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged.",
       "analysis": {
         "id": "f",
         "name": "Cabin F",
@@ -979,6 +991,8 @@
       },
       "design_note": "The lodge is the social centre, so it gets the most accessible arrival, the universal washroom, the shared kitchen and the workshop. It is deliberately at the edge, near parking and services, not in the quietest part of the woods.",
       "character": "The shared hearth: kitchen, hall, workshop and the gathering glade.",
+      "design_lab_home": "common-lodge",
+      "design_lab_note": "Illustrative architectural assignment for the Phase 2 comparison. The authoritative site geometry and the separate Cabin A and lodge models are unchanged.",
       "analysis": {
         "id": "lodge",
         "name": "Common lodge",

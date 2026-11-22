@@ -63,7 +63,7 @@ Metres, with `x` east and `y` south from the north-west corner of the map. The s
 - **`no_build`**: shoreline, wetland, drainage and rock buffers, plus `applies_to`. Buffers are drawn as true distance isolines or buffer corridors and enforced for buildings, porches, ramps, trellises, lanes, parking and crane pads. Lanes and paths stay out of the shoreline and wetland buffers; a track may cross a seasonal drainage channel on a recorded culvert. They are **not** legal setbacks.
 - **`circulation`**: `entrance`, `lanes` (polylines with widths and kinds), `parking`, `dropoff`, `trails`, and `max_entrance_to_lane_m`. Footpaths and the emergency track are checked against the buffers and building footprints.
 - **`crane.max_reach_m`**: checked from each building's `crane_pad` to its centre. The pad is treated as temporary matting, not a permanent road.
-- **`buildings`**: `id`, `name`, `short_name`, `use`, `model`, `x_m`/`y_m` (centre of the main volume), `rotation_deg` (clockwise), `crane_pad`, `clearing_radius_m`, `clearing_note`, `character`, `orientation`, `views` and `design_note`.
+- **`buildings`**: `id`, `name`, `short_name`, `use`, `model`, `x_m`/`y_m` (centre of the main volume), `rotation_deg` (clockwise), `crane_pad`, `clearing_radius_m`, `clearing_note`, `character`, `orientation`, `views` and `design_note`. An optional `design_lab_home` records an illustrative architectural concept for the site; it does not change the authoritative model or the published layout.
 - **`landmarks`**: named points used as view targets (`north-ridge`, `south-knoll`, `east-rock`, glades).
 - **`trees`**: deterministic scatter count, seed, clearance and conifer/deciduous mix. Indicative canopy only, not a tree survey.
 
@@ -118,14 +118,77 @@ The browser explorer runs the same `model.js` and `render.js` as the generator, 
 `terrain.seed` fixes the roughness phases. `trees.seed` fixes the tree scatter. The build writes an FNV hash of the 5 m elevation grid into `site/data/site-analysis.json` and `site/data/terrain.json`. The static checks rebuild the grid and compare it with the hash, so an accidental change to the surface is visible in review.
 
 
-## Design Lab schema
+## Design Lab schema v2.0
 
-Phase 1.3 adds a separate versioned schema for the Container Home Design Studio. It is documented in [`design-lab.md`](design-lab.md) and implemented in `site/js/design-schema.js` / `site/js/design-model.js`.
+Phase 2 adds explicit vertical geometry and an architectural review model to the
+separate Design Lab schema. It is documented in [`design-lab.md`](design-lab.md),
+[`stacked-containers.md`](stacked-containers.md) and
+[`structural-review.md`](structural-review.md), and implemented in
+`site/js/design-schema.js` / `site/js/design-model.js`.
 
-- **`containers-hamlet-design/v1.0`** supports one to three explicit module objects, each with position, rotation, insulation, cladding, roof, openings, zones and structural warnings.
-- Porches, decks and timber connectors are separate components.
-- `containers-hamlet-editor/v0.1` (the supplied prototype) is migrated with a report of defaulted or unmapped information.
-- `tools/lib/design-adapter.mjs` maps Cabin A into the Design Lab schema and a compatible design back to a Cabin A proposal. It never writes `data/cabin-a.json` and reports everything it cannot represent.
-- The Design Lab does not replace the authoritative Cabin A or lodge data. Its generated views and downloads are copies.
+- **`containers-hamlet-design/v2.0`** supports one to three explicit module
+  objects. Each module has a stable id, type, nominal dimensions, `position_m`
+  (x, y), `elevation_m` (base above grade), `storey` (0 or 1), rotation,
+  insulation, cladding, roof, openings, zones, structure and a `support` intent.
+- A design has generated `levels` (storey, name, elevation, module ids),
+  `maxOccupiedStoreys` (1 or 2), `roof_form`, `review`, `access` and
+  `architecture` records.
+- `review` holds the structural, accessibility, energy and fire status plus a
+  per-concern register. `professionally-verified` requires a documented,
+  attributable assessment.
+- `access` holds the step-free entrance, ground-floor functions, entrance width
+  and threshold, circulation target, bathroom/kitchen adaptability, stair and
+  lift-reserve data, path connection and a classification.
+- `roof_form` is independent of module geometry: gable, shed, butterfly, flat,
+  canopy, green or solar-ready, with pitch, overhang and drainage/snow/wind notes.
+- Porches, decks, trellises, vegetation and timber/glazed connectors remain
+  separate components. A porch or deck below an upper module is now allowed and
+  flagged for headroom, drainage, fire separation and support review.
+- `containers-hamlet-design/v1.0` is migrated to v2.0 by placing every module on
+  storey 0 at the recorded foundation clearance. The migration reports that
+  vertical geometry, support evidence and review evidence did not exist.
+- `containers-hamlet-editor/v0.1` (the supplied prototype) is migrated to v2.0
+  with a report of defaulted or unmapped information.
+- `tools/lib/design-adapter.mjs` maps Cabin A into the Design Lab schema and a
+  compatible design back to a Cabin A proposal. It never writes
+  `data/cabin-a.json` and reports everything it cannot represent.
+- The Design Lab does not replace the authoritative Cabin A or lodge data. Its
+  generated views and downloads are copies.
 
-All five Design Lab views derive from the same design object: plan, exterior, cutaway, porch/deck detail and winter study cannot drift from one another. The `thermal`, versioned `envelope`, `vegetation` and glazed-connection fields are part of the same JSON source and are preserved through export/import. The wall section is generated from `envelope`; summer/winter exterior views use the same geometry and vegetation. Each module carries a tilted `solar` configuration (tilt, azimuth, season strategy); the exterior/winter views and plan use it, and the solar section is generated from it.
+### Design Lab coordinates
+
+X is east, Y south, Z up, in metres. `position_m` is the module centre in the
+model plane; `elevation_m` is the module base above finished exterior grade. A
+rotation is around the vertical axis. Site placement is a separate transformation.
+The foundation clearance is a design-level value; a module's explicit elevation
+must be consistent with it.
+
+### Design Lab outputs
+
+For each concept, the build writes:
+
+| Output | Description |
+| --- | --- |
+| `site/design-lab/views/<id>-plan.svg` | Combined plan |
+| `site/design-lab/views/<id>-plan-ground.svg` | Ground-floor plan |
+| `site/design-lab/views/<id>-plan-upper.svg` | Upper-floor plan, when the home has two storeys |
+| `site/design-lab/views/<id>-elevation-{north,south,east,west}.svg` | Four elevations |
+| `site/design-lab/views/<id>-section.svg` | Building section |
+| `site/design-lab/views/<id>-exploded.svg` | Exploded levels |
+| `site/design-lab/views/<id>-solar-{summer,winter}.svg` | Solar studies |
+| `site/design-lab/views/<id>-exterior.svg`, `cutaway.svg`, `porch.svg`, `winter.svg` | Illustrative studies |
+| `site/design-lab/data/<id>.json` | Downloadable source |
+| `site/design-lab/architecture/<id>/index.html` | Gallery with plans, elevations, section, review and access |
+
+All views derive from one design object. The plans, elevations, section and
+exploded view cannot drift from one another. The wall section is generated from
+`envelope`; solar studies use the roof geometry and glazing. Each module carries
+a tilted `solar` configuration (tilt, azimuth, season strategy); the
+exterior/winter views and plan use it, and the solar section is generated from it.
+
+### Adding or changing a Design Lab concept
+
+Edit `data/design-lab.json`, then run `node tools/build.mjs`. A schema error, an
+invalid 3D collision, a three-storey residence, an opening outside its face or a
+porch beyond its module stops the build with a specific message. Generated files
+must be committed; `node tools/build.mjs --check` verifies them.

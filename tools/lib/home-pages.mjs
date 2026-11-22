@@ -36,7 +36,7 @@ export function homesIndexPage(homes, meta) {
         <div><dt>Orientation</dt><dd>${esc(h.orientation && h.orientation.reason ? h.orientation.reason : '')}</dd></div>
         <div><dt>Approximate</dt><dd>${approx(a.clear_floor_area_m2, 0)} m² clear · ${approx(a.footprint_m2, 0)} m² footprint</dd></div>
       </dl>
-      <p class="home-index-links"><a href="${esc(m.slug)}/">Open ${esc(h.name)} page</a> <a href="${esc(m.slug)}/#main-view">Main view</a> <a href="${esc(m.slug)}/#siting">Siting</a></p>
+      <p class="home-index-links"><a href="${esc(m.slug)}/">Open ${esc(h.name)} page</a> <a href="${esc(m.slug)}/#main-view">Main view</a> <a href="${esc(m.slug)}/#siting">Siting</a>${h.design_lab_home ? ` <a href="../design-lab/architecture/${esc(h.design_lab_home)}/">Architectural concept</a>` : ''}</p>
     </article>`;
   }).join('\n');
   return `<!doctype html>
@@ -166,7 +166,7 @@ ${nav('../../', 'home')}
 
   <section aria-labelledby="drawings">
     ${heading('drawings', 'Drawings and next steps')}
-    <p><a href="../../${concept === 'cabin' ? 'cabin-a' : 'lodge'}/">${esc(conceptLabel)}</a> · <a href="../../index.html#inside">Look inside ${esc(h.name)}</a> · <a href="../../hamlet/">Show ${esc(h.name)} on the hamlet map</a> · <a href="../../design-lab/">Design Lab</a></p>
+    <p><a href="../../${concept === 'cabin' ? 'cabin-a' : 'lodge'}/">${esc(conceptLabel)}</a> · <a href="../../index.html#inside">Look inside ${esc(h.name)}</a> · <a href="../../hamlet/">Show ${esc(h.name)} on the hamlet map</a> · <a href="../../design-lab/">Design Lab</a>${h.design_lab_home ? ` · <a href="../../design-lab/architecture/${esc(h.design_lab_home)}/">Illustrative architectural concept</a>` : ''}</p>
     <p class="small">This page is a brief, not a construction drawing. No photograph, stock image or proprietary design is reproduced.</p>
   </section>
 </main>

@@ -2,8 +2,9 @@
 
 The Design Lab is a container-first design gallery and editor at `/design-lab/`. It is a separate, explicitly scoped part of Containers Hamlet:
 
-- **Gallery:** `/design-lab/` — nine homes and the common lodge
-- **Architecture pages:** `/design-lab/architecture/<id>/` — five views per design, seasonal pair, approximate exposure and envelope section
+- **Gallery:** `/design-lab/` — six hamlet residences, a nine-concept archive and the common lodge
+- **Residences comparison:** `/design-lab/residences/` — all six homes, sortable/filterable table, diversity heuristic, structural/accessibility summaries and stacked-versus-single-storey translations
+- **Architecture pages:** `/design-lab/architecture/<id>/` — combined and floor-specific plans, four elevations, section, exploded levels, isometric, solar studies, seasonal pair, approximate exposure and envelope section
 - **Editor:** `/design-lab/editor/`
 - **Vegetation guide:** `/design-lab/vegetation/` — four systems, evidence and sources
 - **Ground guide:** `/design-lab/ground/` — Ontario foundation options, no-compaction and a footbridge concept
@@ -14,7 +15,7 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 - **Resilience:** `/design-lab/resilience/` — fire beyond one house, heat, flood, drought, power and social capacity
 - **Water:** `/design-lab/water/` — rainwater, greywater, blackwater, fire reserve and an illustrative calculator
 - **Comparison:** `/design-lab/compare/`
-- **Schema:** `containers-hamlet-design/v1.0`
+- **Schema:** `containers-hamlet-design/v2.0` (v1.0 is migrated explicitly)
 - **Legacy import:** `containers-hamlet-editor/v0.1` (the supplied starter schema)
 
 It is not a generic home builder. The container is the core of every design; timber, glass, screens, decks, roofs and planting are supporting layers.
@@ -24,10 +25,25 @@ It is not a generic home builder. The container is the core of every design; tim
 - One, two or three container modules.
 - 20-foot and 40-foot high-cube nominal sizes.
 - Independent module position and rotation.
+- **One or two occupied storeys, never three.** Each module has an explicit
+  storey and base elevation above grade. The editor can stack above a ground
+  module, align an upper module, offset it, rotate it or create a perpendicular
+  stack.
+- **Storey/level selector** with all-levels, ground and upper views. When one
+  level is edited, the other level remains visible as a muted outline.
+- **Support inspection** that reports geometric bearing overlap, unsupported
+  area and declared support intent. It does not calculate capacity.
+- **Roof form** independent of module geometry: gable, shed, butterfly, flat,
+  canopy, green-roof concept and solar-ready.
+- **Accessibility and vertical circulation** controls: step-free entrance,
+  entrance width/threshold, circulation target, ground-floor essential
+  functions and bedroom, adaptable bathroom/kitchen, stair data and lift reserve.
 - Arrangement presets: single, parallel, adjacent, L-shaped and three-module courtyard.
 - Windows, doors, sliding doors and open passages, with face, centre position, width, height and sill.
 - Screened or covered porches, decks beyond porches, independent climbing-plant trellises, and separate timber connectors.
-- A five-view architectural gallery for every design: exterior, plan, cutaway, porch/deck detail and winter study.
+- A generated architectural set for every design: combined plan, ground plan,
+  upper plan when present, four elevations, section, exploded levels, isometric
+  exterior, cutaway, porch detail, winter view and summer/winter solar studies.
 - Thermal-envelope choices: roof and floor insulation, thermal-bridge mitigation, ventilated rainscreen, air/vapour strategy, window performance, external shading, HRV/ERV and a cold-climate heat pump.
 - Versioned exterior envelope assemblies: rigid board, mineral wool, wood fibre, exterior closed-cell spray foam and hybrid, with an explanatory wall section and warnings.
 - Vegetation systems: freestanding trellis, modular living wall, edible planter wall and evergreen privacy screen; each records plant type, mature height, seasonal foliage, irrigation, maintenance, separation and support.
@@ -43,8 +59,9 @@ It is not a generic home builder. The container is the core of every design; tim
 - Material-intent choices for reuse, repairability, insulation, selective spray foam, connections, modular outdoor rooms, solar and green roofs.
 - Structural warnings fields: large wall removals and conceptual cantilevers.
 - Undo, redo and reset to preset.
-- JSON import/export, plan/exterior/cutaway/porch/winter/wall-section SVG downloads, a Markdown summary and a ZIP with all available files.
-- An illustrative hamlet preview with homesite, rotation, footprint, primary view and conflict prompts.
+- JSON import/export, plan/ground/upper/elevation/section/exploded/solar/exterior/cutaway/porch/winter/wall-section SVG downloads, a Markdown summary and a ZIP with all available files.
+- An illustrative hamlet preview with homesite, rotation, footprint, storey count, ground coverage, height, primary view and conflict prompts, plus an axonometric massing panel.
+- Keyboard level controls on the plan: Page Up (upper), Page Down (ground) and A (all levels).
 
 The exported JSON includes the `thermal`, `envelope` and `vegetation` objects and a derived `assessment` snapshot so warnings travel with the file. It is not authoritative; the editor recomputes the assessment on import and the reader must not treat the snapshot as a professional review. The editor does **not** calculate structure, fire, energy, acoustics, cost or code compliance. It does not produce construction documents, BIM, IFC or DXF. It does not write to the repository or upload a design. It does not add a customised home to the published community layout.
 
@@ -54,7 +71,7 @@ Each concept or edited design is one JSON object:
 
 ```json
 {
-  "schema": "containers-hamlet-design/v1.0",
+  "schema": "containers-hamlet-design/v2.0",
   "id": "woodland-retreat",
   "name": "Woodland Retreat",
   "primary_view_deg": 180,
@@ -64,7 +81,10 @@ Each concept or edited design is one JSON object:
       "type": "40ft",
       "nominal": { "length_m": 12.192, "width_m": 2.438, "height_m": 2.896 },
       "position_m": [0, 0],
+      "elevation_m": 0.6,
       "rotation_deg": 0,
+      "storey": 0,
+      "support": { "type": "ground", "references": [], "verified": false },
       "insulation": { "thickness_mm": 150, "type": "wood-fibre or documented reclaimed board" },
       "cladding": { "type": "timber", "colour": "#8a6a4a" },
       "roof": { "type": "solar", "solar": true, "green": false },
@@ -144,7 +164,7 @@ Each concept or edited design is one JSON object:
 
 ## Source of truth
 
-`data/design-lab.json` is the source for the ten gallery designs (nine homes and the common lodge). `tools/build.mjs` generates:
+`data/design-lab.json` is the source for the sixteen gallery concepts (nine archive concepts, six hamlet residences and the common lodge). `tools/build.mjs` generates:
 
 - `site/design-lab/views/<id>-plan.svg`
 - `site/design-lab/views/<id>-exterior.svg`
@@ -202,20 +222,20 @@ The gallery uses the generated exterior and source JSON; each architectural page
 
 ## Editing and export
 
-Clicking a module on the plan is a pointer shortcut for selecting it; the module buttons and the opening/room selectors provide the keyboard route. Dragging modules on the plan is not implemented. The editor keeps history in memory. It does not use local storage, cookies or a backend. Closing the page loses unsaved work; download the JSON to reopen it later. The JSON import accepts v1.0 and v0.1.
+Clicking a module on the plan is a pointer shortcut for selecting it; the module buttons, opening/room selectors and keyboard arrow keys provide the keyboard route. Dragging a module on the plan is a pointer shortcut, not the only way to move it. The editor keeps history in memory. It does not use local storage, cookies or a backend. Closing the page loses unsaved work; download the JSON to reopen it later. The JSON import accepts v2.0, v1.0 and v0.1 through explicit migrations.
 
 The ZIP contains the JSON, plan, exterior, cutaway, porch/deck, winter, a Markdown summary and a notice. The summary includes a warning snapshot and provenance. The exported files remain concept material under CC BY-SA 4.0; the editor code is AGPL-3.0-or-later. No café photographs are bundled or redistributed.
 
 ## Architectural galleries and comparison
 
-Every design has a five-view page under `site/design-lab/architecture/<id>/`. The page is a progressive enhancement: without JavaScript all five figures are visible; with JavaScript the same figures become a slideshow with visible Previous/Next and Show-all controls, Left/Right/Home/End keyboard support, a polite live status and no auto-advance. The plan, cutaway and porch detail are labelled **geometry-backed drawings**; the exterior and winter images are labelled **illustrative studies**.
+Every design has an architectural page under `site/design-lab/architecture/<id>/` with 12–15 views: combined, ground and (when present) upper plans, four elevations, building section, exploded levels, isometric exterior, cutaway, porch detail, winter view and summer/winter solar studies. The page is a progressive enhancement: without JavaScript every figure is visible; with JavaScript the same figures become a slideshow with visible Previous/Next and Show-all controls, Left/Right/Home/End keyboard support, a polite live status and no auto-advance. Plans, elevations, section, exploded levels and cutaway are labelled **geometry-backed drawings**; exterior, porch, winter and solar studies are labelled **illustrative or explanatory studies**. The page also shows the levels/support table, accessibility record and structural review register.
 
 `/design-lab/compare/` compares two concepts. It reports container count, nominal conditioned area (modules plus glazed hall), screened porch area, porch/deck area, approximate glazing area and ratio, envelope choices, accessibility notes, qualitative thermal strengths and risks, and structural/installation review items. It does not calculate cost, carbon, energy or code compliance. The all-concepts table and default pair remain available without JavaScript.
 
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 704 schema, geometry, envelope, vegetation, solar, foundation, five-view, gallery, comparison, licence and privacy checks
+node tools/check-design-lab.mjs      # 2,237 schema, vertical geometry, stacking, support, diversity, accessibility, roof, rendering, gallery and comparison checks
 node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 

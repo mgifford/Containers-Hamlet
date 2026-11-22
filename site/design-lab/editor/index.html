@@ -26,23 +26,19 @@
 </header>
 <nav class="subnav" aria-label="Design Lab sections">
   <a href="../../design-lab/">Gallery</a>
+  <a href="../../design-lab/residences/">Residences</a>
   <a href="../../design-lab/editor/" aria-current="page">Editor</a>
   <a href="../../design-lab/guides/">Guides</a>
   <a href="../../design-lab/compare/">Compare</a>
 </nav>
-<nav class="subnav" aria-label="Design Lab sections">
-  <a href="../../design-lab/">Gallery</a>
-  <a href="../../design-lab/editor/" aria-current="page">Editor</a>
-  <a href="../../design-lab/guides/">Guides</a>
-  <a href="../../design-lab/compare/">Compare</a>
-</nav>
+
 <main id="main" class="editor-main" tabindex="-1">
 
 <section class="editor-hero" aria-labelledby="editor-title">
   <p class="eyebrow">Container Home Design Studio · Editor</p>
-  <h1 id="editor-title">Design your container home.</h1>
-  <p class="lead">Start with a one-, two- or three-container preset, then move modules, change windows and doors, add a screened porch, deck or climbing-plant trellis, choose roof and cladding options, and shape the rooms inside. The plan, exterior and roof-off cutaway update from the same model.</p>
-  <p class="lab-note"><strong>Concept only.</strong> The editor does not calculate structure, fire, energy or code compliance. It only blocks geometry that breaks its own explicit rules. Every design needs professional review.</p>
+  <h1 id="editor-title">Design and stack your home, level by level.</h1>
+  <p class="lead">Start with one of the six hamlet residences or an archive preset. Move modules, choose a level, stack or offset an upper module, inspect support, change windows and doors, add a porch or deck, choose a roof form, and shape the rooms inside. The floor plans, four elevations, section, exploded levels, isometric, solar studies and massing preview all update from the same three-dimensional model.</p>
+  <p class="lab-note"><strong>Concept only.</strong> The editor does not calculate structure, fire, energy or code compliance. It reports geometric support overlap and review concerns; it never certifies a load path. Every design needs professional review.</p>
   <div class="toolbar" role="group" aria-label="Design actions">
     <label class="toolbar-field">Starting design
       <select id="preset"></select>
@@ -88,6 +84,44 @@
         </select>
       </label>
       <button type="button" id="apply-arrangement">Apply arrangement</button>
+    </section>
+
+    <section class="control-block" aria-labelledby="storeys-title">
+      <h2 id="storeys-title">Storeys and stacking</h2>
+      <p class="small">A module's elevation is explicit. A module directly above another is not automatically supported: the model records design intent and reports the geometric bearing overlap for professional review. A residence may not exceed two occupied storeys.</p>
+      <label>Level being edited
+        <select id="edit-storey">
+          <option value="all">All levels</option>
+          <option value="0">Ground floor</option>
+          <option value="1">Upper floor</option>
+        </select>
+      </label>
+      <div class="button-row">
+        <button type="button" id="stack-above">Stack selected module above</button>
+        <button type="button" id="align-below">Align selected module to the one below</button>
+      </div>
+      <div class="button-row">
+        <button type="button" id="offset-upper" class="secondary">Offset upper module 1.5 m</button>
+        <button type="button" id="rotate-upper" class="secondary">Rotate upper module 90°</button>
+        <button type="button" id="perpendicular-stack" class="secondary">Create perpendicular stack</button>
+      </div>
+      <button type="button" id="inspect-support">Inspect support relationships</button>
+      <div id="support-report" class="support-report" role="status" aria-live="polite"></div>
+      <p class="small">When you edit one level, the other level stays visible as a muted outline in the plan. Choose <strong>All levels</strong> to see the combined footprint. Use <kbd>Page Up</kbd>, <kbd>Page Down</kbd> and <kbd>A</kbd> on the plan for the same level controls.</p>
+    </section>
+
+    <section class="control-block" aria-labelledby="roof-title">
+      <h2 id="roof-title">Roof form</h2>
+      <p class="small">Roof geometry is independent of the container geometry. A roof does not create an occupied storey. Drainage, snow, wind uplift and maintenance remain review items.</p>
+      <div id="roof-controls"></div>
+      <button type="button" id="apply-roof">Apply roof form</button>
+    </section>
+
+    <section class="control-block" aria-labelledby="access-title">
+      <h2 id="access-title">Accessibility and vertical circulation</h2>
+      <p class="small">Accessibility is a whole-home design target, not a badge on one room. A two-storey home is not described as fully accessible merely because its entrance is step-free. No code compliance or professional accessibility assessment is claimed.</p>
+      <div id="access-controls"></div>
+      <button type="button" id="apply-access">Apply accessibility choices</button>
     </section>
 
     <section class="control-block" aria-labelledby="openings-title">
@@ -214,10 +248,17 @@
 
   <div class="editor-output">
     <section class="view-block" aria-labelledby="plan-title">
-      <h2 id="plan-title">Dimensioned concept plan</h2>
+      <h2 id="plan-title">Floor-specific concept plan</h2>
+      <label class="view-level">Plan level
+        <select id="plan-level">
+          <option value="all">All levels (combined footprint)</option>
+          <option value="0">Ground floor</option>
+          <option value="1">Upper floor</option>
+        </select>
+      </label>
       <div id="plan" class="view-svg"></div>
-      <p id="plan-keyboard-help" class="small plan-help">Click or tap a module to select it, then drag it. With the keyboard, Tab to a module; use Enter or Space to select, arrow keys to move by 0.1 m, Shift+arrow for 0.5 m, and R or Shift+R to rotate.</p>
-      <p class="view-caption">Nominal container geometry. Dimensions are not verified clearances. Openings are shown as blue windows and brown doors.</p>
+      <p id="plan-keyboard-help" class="small plan-help">Click or tap a module to select it, then drag it. With the keyboard, Tab to a module; use Enter or Space to select, arrow keys to move by 0.1 m, Shift+arrow for 0.5 m, and R or Shift+R to rotate. Page Up and Page Down change the level; A shows all levels.</p>
+      <p class="view-caption">Nominal container geometry. Dimensions are not verified clearances. Openings are shown as blue windows and brown doors. Modules on other levels are muted outlines.</p>
     </section>
 
     <div class="view-grid">
@@ -228,6 +269,39 @@
       <section class="view-block" aria-labelledby="cutaway-title">
         <h2 id="cutaway-title">Roof-off cutaway</h2>
         <div id="cutaway" class="view-svg"></div>
+      </section>
+    </div>
+
+    <section class="view-block" aria-labelledby="elevations-title">
+      <h2 id="elevations-title">Elevations</h2>
+      <p class="small">Four elevations generated from the same module elevations, openings and roof. The upper storey is visible in the geometry. These are concept elevations, not construction drawings.</p>
+      <div class="view-grid four">
+        <div><h3>South</h3><div id="elevation-south" class="view-svg"></div></div>
+        <div><h3>North</h3><div id="elevation-north" class="view-svg"></div></div>
+        <div><h3>East</h3><div id="elevation-east" class="view-svg"></div></div>
+        <div><h3>West</h3><div id="elevation-west" class="view-svg"></div></div>
+      </div>
+    </section>
+
+    <div class="view-grid">
+      <section class="view-block" aria-labelledby="section-title">
+        <h2 id="section-title">Building section</h2>
+        <div id="section" class="view-svg"></div>
+      </section>
+      <section class="view-block" aria-labelledby="exploded-title">
+        <h2 id="exploded-title">Exploded levels</h2>
+        <div id="exploded" class="view-svg"></div>
+      </section>
+    </div>
+
+    <div class="view-grid">
+      <section class="view-block" aria-labelledby="solar-summer-title">
+        <h2 id="solar-summer-title">Summer solar study</h2>
+        <div id="solar-summer" class="view-svg"></div>
+      </section>
+      <section class="view-block" aria-labelledby="solar-winter-title">
+        <h2 id="solar-winter-title">Winter solar study</h2>
+        <div id="solar-winter" class="view-svg"></div>
       </section>
     </div>
 
@@ -251,7 +325,10 @@
         <label>Fictional homesite<select id="homesite" data-path="site.homesite"></select></label>
         <label>Preview rotation (degrees)<input id="site-rotation" type="number" min="0" max="359" step="1" data-path="site.rotation_deg"></label>
       </div>
-      <div id="site-preview" class="site-preview" role="img" aria-label="Illustrative site preview"></div>
+      <div class="hamlet-preview-grid">
+        <div id="site-preview" class="site-preview" role="img" aria-label="Illustrative site preview"></div>
+        <div><h3>Building massing</h3><div id="massing" class="view-svg" role="group" aria-label="Massing preview of the current design"></div><p id="massing-status" class="small"></p></div>
+      </div>
       <p id="site-status" class="status" role="status" aria-live="polite"></p>
     </section>
 
@@ -262,9 +339,16 @@
 
     <section class="view-block downloads" aria-labelledby="downloads-title">
       <h2 id="downloads-title">Download and reopen</h2>
-      <p>Your design stays in this browser. Download the JSON to reopen it here later, or take the SVG views and summary into another tool. The JSON import accepts both this schema and the earlier <code>containers-hamlet-editor/v0.1</code> prototype.</p>
+      <p>Your design stays in this browser. Download the JSON to reopen it here later, or take the SVG views and summary into another tool. The JSON import accepts this schema, the earlier v1 design schema and the <code>containers-hamlet-editor/v0.1</code> prototype. Older files are migrated explicitly and report what could not be preserved.</p>
       <div class="button-row">
         <button type="button" id="export-plan">Download plan SVG</button>
+        <button type="button" id="export-plan-ground">Download ground-floor plan</button>
+        <button type="button" id="export-plan-upper">Download upper-floor plan</button>
+        <button type="button" id="export-elevation-south">Download south elevation</button>
+        <button type="button" id="export-section">Download section</button>
+        <button type="button" id="export-exploded">Download exploded levels</button>
+        <button type="button" id="export-solar-summer">Download summer solar study</button>
+        <button type="button" id="export-solar-winter">Download winter solar study</button>
         <button type="button" id="export-exterior">Download exterior SVG</button>
         <button type="button" id="export-cutaway">Download cutaway SVG</button>
         <button type="button" id="export-porch">Download porch/deck SVG</button>

@@ -71,8 +71,8 @@ try {
   section('Design gallery');
   let { context, page, errors, foreign } = await open('design-lab/');
   ok(errors.length === 0, `gallery: no console errors${errors.length ? ': ' + errors.join(' | ') : ''}`);
-  const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card:not(.arrangement-card)').length, editable: document.querySelectorAll('.concept-badge.editable').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
-  ok(count.cards === 10 && count.editable === 3 && count.inspiration === 7 && count.headings === 1, 'gallery shows ten concept cards, three editable, six inspiration-only homes and the lodge');
+  const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card:not(.arrangement-card)').length, editable: document.querySelectorAll('.concept-badge.editable').length, hamlet: document.querySelectorAll('.concept-badge.hamlet').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
+  ok(count.cards === 16 && count.editable === 3 && count.hamlet === 6 && count.inspiration === 7 && count.headings === 1, 'gallery shows sixteen concept cards, six hamlet residences, three editable archive presets, six inspiration-only concepts and the lodge');
   ok(await page.locator('.arrangement-card').count() === 4, 'gallery shows four arrangement studies');
   ok(await page.locator('.concept-specs').first().evaluate((d) => !d.open), 'technical specification lists start collapsed');
   await page.locator('.concept-specs').first().locator('summary').click();
@@ -113,26 +113,26 @@ try {
     solar: !!document.querySelector('.solar-section img'),
     foundation: !!document.querySelector('.foundation-section img')
   }));
-  ok(archState.slides === 5 && archState.current === 1 && archState.visible === 1 && archState.controls, 'architecture: five slides, one current and visible controls');
-  ok(archState.geometry === 3 && archState.illustrative === 2, 'architecture: three geometry-backed drawings and two illustrative studies are labelled');
+  ok(archState.slides >= 12 && archState.current === 1 && archState.visible === 1 && archState.controls, `architecture: ${archState.slides} slides, one current and visible controls`);
+  ok(archState.geometry >= 9 && archState.illustrative >= 2, 'architecture: geometry-backed drawings and illustrative studies are labelled');
   ok(archState.caps && archState.imgs && (await arch.page.evaluate(() => document.querySelector('[data-slide].is-current img').naturalWidth > 0)), 'architecture: every view has a descriptive caption and alt text');
-  ok(archState.seasonal === 2 && archState.wall && archState.veg && archState.solar && archState.foundation, 'architecture: seasonal pair, wall, solar, foundation and vegetation sections are present');
+  ok(archState.seasonal >= 2 && archState.wall && archState.veg && archState.solar && archState.foundation, 'architecture: seasonal pair, wall, solar, foundation and vegetation sections are present');
   ok(await arch.page.evaluate(() => [...document.querySelectorAll('.season-pair img, .assembly-section img, .solar-section img, .foundation-section img')].every((i) => i.naturalWidth > 0)), 'architecture: seasonal, wall-section, solar and foundation images load');
   await arch.page.waitForTimeout(900);
-  ok(/View 1 of 5/.test(await arch.page.textContent('[data-slide-status]')), 'architecture: does not advance automatically');
+  ok(new RegExp('View 1 of ' + archState.slides).test(await arch.page.textContent('[data-slide-status]')), 'architecture: does not advance automatically');
   await arch.page.focus('[data-slide-viewport]');
   await arch.page.keyboard.press('ArrowRight');
   await arch.page.waitForTimeout(150);
-  ok(/View 2 of 5/.test(await arch.page.textContent('[data-slide-status]')), 'architecture: Right Arrow advances a view');
+  ok(new RegExp('View 2 of ' + archState.slides).test(await arch.page.textContent('[data-slide-status]')), 'architecture: Right Arrow advances a view');
   await arch.page.keyboard.press('ArrowLeft');
   await arch.page.waitForTimeout(150);
-  ok(/View 1 of 5/.test(await arch.page.textContent('[data-slide-status]')), 'architecture: Left Arrow returns a view');
+  ok(new RegExp('View 1 of ' + archState.slides).test(await arch.page.textContent('[data-slide-status]')), 'architecture: Left Arrow returns a view');
   await arch.page.click('[data-slide-all]');
   await arch.page.waitForTimeout(150);
   const allShown = await arch.page.evaluate(() => ({ count: [...document.querySelectorAll('[data-slide]')].filter((e) => e.offsetParent !== null).length, expanded: document.querySelector('[data-slide-all]').getAttribute('aria-expanded') }));
-  ok(allShown.count === 5 && allShown.expanded === 'true', 'architecture: Show all views exposes the non-carousel alternative');
+  ok(allShown.count === archState.slides && allShown.expanded === 'true', 'architecture: Show all views exposes the non-carousel alternative');
   await arch.page.waitForTimeout(500);
-  ok(await arch.page.evaluate(() => [...document.querySelectorAll('[data-slide] img')].every((i) => i.naturalWidth > 0)), 'architecture: all five views load when the non-carousel alternative is shown');
+  ok(await arch.page.evaluate(() => [...document.querySelectorAll('[data-slide] img')].every((i) => i.naturalWidth > 0)), 'architecture: all views load when the non-carousel alternative is shown');
   await arch.page.click('[data-slide-all]');
   await arch.page.waitForTimeout(150);
   await axe(arch.page, 'architecture');
@@ -146,7 +146,7 @@ try {
 
   const nojsArch = await open('design-lab/architecture/woodland-retreat/', { javaScriptEnabled: false });
   const nojsState = await nojsArch.page.evaluate(() => ({ visible: [...document.querySelectorAll('[data-slide]')].filter((e) => e.offsetParent !== null).length, controls: !!document.querySelector('[data-slide-controls]') && document.querySelector('[data-slide-controls]').offsetParent !== null, note: /JavaScript is off/.test(document.body.textContent) }));
-  ok(nojsState.visible === 5 && nojsState.controls === false && nojsState.note, 'architecture: no-JavaScript fallback shows all five views and explains itself');
+  ok(nojsState.visible >= 12 && nojsState.controls === false && nojsState.note, 'architecture: no-JavaScript fallback shows all views and explains itself');
   await nojsArch.context.close();
 
   section('Gallery-to-editor navigation');
@@ -163,7 +163,7 @@ try {
   let compare = await open('design-lab/compare/');
   ok(compare.errors.length === 0, `compare: no console errors${compare.errors.length ? ': ' + compare.errors.join(' | ') : ''}`);
   const compareState = await compare.page.evaluate(() => ({ options: document.querySelectorAll('#compare-a option').length, panels: document.querySelectorAll('.compare-panel').length, rows: document.querySelectorAll('.all-concepts tbody tr').length, text: document.body.textContent }));
-  ok(compareState.options === 10 && compareState.panels === 2 && compareState.rows === 10, 'compare: two side-by-side panels and all ten concepts in the table');
+  ok(compareState.options === 16 && compareState.panels === 2 && compareState.rows === 16, 'compare: two side-by-side panels and all sixteen concepts in the table');
   ok(!/\b(kWh|kgCO2|cost \$|\$\d)/i.test(compareState.text), 'compare: no invented energy, carbon or cost figures');
   await compare.page.selectOption('#compare-a', 'common-lodge');
   await compare.page.waitForTimeout(250);
@@ -180,8 +180,31 @@ try {
 
   const nojsCompare = await open('design-lab/compare/', { javaScriptEnabled: false });
   const nojsCompareState = await nojsCompare.page.evaluate(() => ({ panels: document.querySelectorAll('.compare-panel').length, rows: document.querySelectorAll('.all-concepts tbody tr').length, note: /JavaScript is off/.test(document.body.textContent) }));
-  ok(nojsCompareState.panels === 2 && nojsCompareState.rows === 10 && nojsCompareState.note, 'compare: no-JavaScript fallback keeps the default comparison and table');
+  ok(nojsCompareState.panels === 2 && nojsCompareState.rows === 16 && nojsCompareState.note, 'compare: no-JavaScript fallback keeps the default comparison and table');
   await nojsCompare.context.close();
+
+  section('Hamlet residences comparison');
+  const residences = await open('design-lab/residences/');
+  ok(residences.errors.length === 0, `residences: no console errors${residences.errors.length ? ': ' + residences.errors.join(' | ') : ''}`);
+  const resState = await residences.page.evaluate(() => ({ rows: document.querySelectorAll('#residence-table tbody tr').length, cards: document.querySelectorAll('.residence-card').length, options: document.querySelectorAll('#sort-residences option').length, similarity: document.querySelectorAll('#similarity-table tbody tr').length, alternatives: document.querySelectorAll('#alternatives-table tbody tr').length }));
+  ok(resState.rows === 6 && resState.cards === 6 && resState.options >= 6, 'residences page shows six accessible rows and six cards with sorting controls');
+  ok(resState.similarity === 15 && resState.alternatives === 3, 'residences page shows pairwise diversity and three stacked/single-storey alternatives');
+  await residences.page.selectOption('#filter-storeys', '2');
+  await residences.page.click('#apply-residences');
+  await residences.page.waitForTimeout(250);
+  const filtered = await residences.page.evaluate(() => [...document.querySelectorAll('#residence-table tbody tr')].filter((r) => !r.hidden).length);
+  ok(filtered === 3 && /Showing 3 of 6/.test(await residences.page.textContent('#residence-status')), 'storey filter reduces the table to three two-storey homes');
+  await residences.page.click('#reset-residences');
+  await residences.page.waitForTimeout(250);
+  ok(/Showing all 6/.test(await residences.page.textContent('#residence-status')), 'reset restores all six residences');
+  await axe(residences.page, 'residences comparison');
+  await shot(residences.page, 'residences-top');
+  await shot(residences.page, 'residences-full', true);
+  await residences.context.close();
+  const nojsResidences = await open('design-lab/residences/', { javaScriptEnabled: false });
+  const nojsResState = await nojsResidences.page.evaluate(() => ({ rows: document.querySelectorAll('#residence-table tbody tr').length, cards: document.querySelectorAll('.residence-card').length, note: /JavaScript is off/.test(document.body.textContent) }));
+  ok(nojsResState.rows === 6 && nojsResState.cards === 6 && nojsResState.note, 'residences: no-JavaScript fallback keeps the full table and cards');
+  await nojsResidences.context.close();
 
   section('Editor: initial state and accessibility');
   ({ context, page, errors, foreign } = await open('design-lab/editor/'));
@@ -198,10 +221,10 @@ try {
     status: document.querySelector('#assessment-status').textContent,
     warnings: document.querySelectorAll('.warning-group').length
   }));
-  ok(initial.presets === 3, 'editor lists the three editable presets');
+  ok(initial.presets === 9, 'editor lists the nine editable concepts');
   ok(initial.modules === 1 && initial.openings > 0 && initial.zones > 0, 'editor loads modules, openings and room zones');
   ok(initial.plan && initial.exterior && initial.cutaway, 'editor renders plan, exterior and cutaway from the start');
-  ok(/No invalid geometry/.test(initial.status) && initial.warnings > 0, 'editor starts with valid geometry and professional-review prompts');
+  ok(/No invalid data or geometry/.test(initial.status) && initial.warnings > 0, 'editor starts with valid geometry and professional-review prompts');
   const editorHrefs = await page.evaluate(() => [...new Set([...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')).filter((h) => !/^(https?:|#|mailto:)/.test(h)))]);
   const editorBroken = [];
   for (const h of editorHrefs) { const r = await page.request.get(new URL(h, BASE + 'design-lab/editor/').href); if (r.status() !== 200) editorBroken.push(h); }
@@ -209,6 +232,58 @@ try {
   await axe(page, 'editor');
   await shot(page, 'editor-top');
   await shot(page, 'editor-full', true);
+
+  section('Editor: storeys, stacking and support');
+  await page.selectOption('#preset', 'hamlet-offset-stack');
+  await page.waitForTimeout(400);
+  ok(await page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 2), 'two-storey preset loads both modules');
+  ok(await page.evaluate(() => document.querySelectorAll('#edit-storey option').length === 3 && document.querySelectorAll('#plan-level option').length === 3), 'editor offers all-levels, ground and upper level selectors');
+  ok(Number(await page.inputValue('#m-1-elev')) > Number(await page.inputValue('#m-0-elev')), 'upper module has a higher explicit base elevation');
+  await page.selectOption('#plan-level', '1');
+  await page.waitForTimeout(300);
+  ok(/outline/.test(await page.evaluate(() => document.querySelector('#plan').innerHTML)), 'upper plan keeps the ground floor as muted outlines');
+  await page.selectOption('#plan-level', 'all');
+  await page.waitForTimeout(200);
+  await page.click('#inspect-support');
+  await page.waitForTimeout(200);
+  ok(/geometrically supported over/.test(await page.textContent('#support-report')), 'support inspection reports geometric bearing overlap');
+  ok(/does not calculate load capacity/.test(await page.textContent('#support-report')), 'support inspection states that capacity is not calculated');
+  await page.click('#stack-above');
+  await page.waitForTimeout(200);
+  await page.click('[data-action="select-module"][data-module="m2"]');
+  await page.waitForTimeout(200);
+  await page.click('#stack-above');
+  await page.waitForTimeout(200);
+  ok(/already on the upper floor/i.test(await page.textContent('#status')), 'the editor refuses to stack above an upper module');
+  await page.selectOption('#preset', 'hamlet-woodland-cottage');
+  await page.waitForTimeout(400);
+  await page.click('#stack-above');
+  await page.waitForTimeout(400);
+  ok(await page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 2 && document.querySelector('#plan-level').value === '1'), 'Stack above adds an upper module and switches to the upper plan');
+  ok(/upper module added/i.test(await page.textContent('#status')) && /design intent only/i.test(await page.textContent('#status')), 'stacking announces that support is design intent only');
+  await page.focus('#undo');
+  await page.keyboard.press('Enter');
+  await page.waitForTimeout(300);
+  ok(await page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 1), 'Undo removes the stacked module');
+  await page.focus('#plan .plan-module-hit');
+  await page.keyboard.press('PageUp');
+  await page.waitForTimeout(300);
+  ok((await page.inputValue('#plan-level')) === '1', 'Page Up switches the plan to the upper level');
+  await page.keyboard.press('PageDown');
+  await page.waitForTimeout(300);
+  ok((await page.inputValue('#plan-level')) === '0', 'Page Down switches the plan to the ground level');
+  await page.keyboard.press('a');
+  await page.waitForTimeout(300);
+  ok((await page.inputValue('#plan-level')) === 'all', 'A returns the plan to all levels');
+  ok(await page.evaluate(() => !!document.querySelector('#roof-type') && !!document.querySelector('#access-classification') && !!document.querySelector('#stair-type')), 'roof and accessibility controls are available');
+  await page.selectOption('#roof-type', 'butterfly');
+  await page.waitForTimeout(300);
+  ok(/butterfly/i.test(await page.textContent('#summary')), 'changing the roof form updates the summary and views');
+  await page.selectOption('#access-classification', 'potentially-adaptable');
+  await page.waitForTimeout(300);
+  ok(/potentially adaptable/i.test(await page.textContent('#summary')), 'changing accessibility classification updates the summary');
+  await page.selectOption('#preset', 'hamlet-woodland-cottage');
+  await page.waitForTimeout(300);
 
   section('Editor: keyboard, presets and independent modules');
   await page.focus('#preset');
@@ -365,18 +440,23 @@ try {
   ok((await page.evaluate(() => document.querySelectorAll('.connection-card').length)) >= 1, 'keyboard activation adds a timber connector');
 
   section('Editor: invalid geometry and recovery');
-  await page.click('#reset');
+  await page.selectOption('#preset', 'l-shaped-haven');
   await page.waitForTimeout(300);
   await page.fill('#m-1-x', '0');
   await page.locator('#m-1-x').blur();
+  await page.fill('#m-1-y', '0');
+  await page.locator('#m-1-y').blur();
   await page.waitForTimeout(300);
-  ok(/invalid geometry/i.test(await page.textContent('#assessment-status')), 'overlapping containers are reported as invalid geometry');
+  ok(/invalid data or geometry/i.test(await page.textContent('#assessment-status')), 'same-level overlapping containers are reported as invalid geometry');
   ok(await page.evaluate(() => document.querySelector('#export-plan').disabled && document.querySelector('#export-zip').disabled), 'drawing and ZIP exports are disabled for invalid geometry');
   ok(await page.evaluate(() => !document.querySelector('#export-json').disabled), 'JSON export remains available to preserve the work');
-  await page.focus('#undo');
-  await page.keyboard.press('Enter');
-  await page.waitForTimeout(300);
-  ok(/No invalid geometry/.test(await page.textContent('#assessment-status')), 'Undo recovers valid geometry');
+  for (let u = 0; u < 4; u++) {
+    if (/No invalid data or geometry/.test(await page.textContent('#assessment-status'))) break;
+    await page.focus('#undo');
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(200);
+  }
+  ok(/No invalid data or geometry/.test(await page.textContent('#assessment-status')), 'Undo recovers valid geometry');
 
   section('Editor: hamlet preview');
   await page.click('#reset');
@@ -425,7 +505,7 @@ try {
   await page.waitForTimeout(200);
   const jsonFile = await downloadFile('#export-json', 'design.json');
   const parsed = JSON.parse(fs.readFileSync(jsonFile, 'utf8'));
-  ok(parsed.schema === 'containers-hamlet-design/v1.0' && parsed.modules.length === 2, 'exported JSON carries the v1 schema and both modules');
+  ok(parsed.schema === 'containers-hamlet-design/v2.0' && parsed.modules.length === 2, 'exported JSON carries the v2 schema and both modules');
   ok(parsed.thermal && parsed.thermal.roof_insulation_mm === 360 && /double glazed/i.test(parsed.thermal.window_performance), 'thermal envelope choices persist in the exported JSON');
   ok(parsed.envelope && parsed.envelope.assembly === 'wood-fibre' && parsed.envelope.layers.some((l) => l.role === 'insulation'), 'envelope assembly and layers persist in the exported JSON');
   ok(parsed.vegetation && parsed.vegetation.length >= 1 && parsed.vegetation.every((v) => v.plant_type && v.irrigation && v.support && v.offset_m >= 0.3), 'vegetation and planting metadata persist in the exported JSON');
@@ -448,7 +528,7 @@ try {
   fs.writeFileSync(legacyFile, JSON.stringify(legacy));
   await page.setInputFiles('#import-file', legacyFile);
   await page.waitForTimeout(500);
-  ok(/Migrated from v0.1/.test(await page.textContent('#status')) && await page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 2), 'v0.1 JSON imports through the migration path');
+  ok(/Migrated from containers-hamlet-editor\/v0\.1/.test(await page.textContent('#status')) && await page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 2), 'v0.1 JSON imports through the migration path');
   await axe(page, 'editor after interaction');
 
   section('Vegetation guide');

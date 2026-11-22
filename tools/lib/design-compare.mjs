@@ -10,10 +10,13 @@ export function panel(p, c) {
   return `<article class="compare-panel" data-compare-panel="${esc(p.id)}">
     <img src="../views/${esc(p.id)}-exterior.svg" alt="Exterior concept of ${esc(p.name)}" width="1040" height="700" loading="lazy" decoding="async">
     <div class="compare-panel-body">
-      <p class="eyebrow">${esc(c.group)} · ${p.container_count} container${p.container_count === 1 ? '' : 's'}</p>
+      <p class="eyebrow">${esc(c.group)} · ${p.container_count} container${p.container_count === 1 ? '' : 's'} · ${p.storeys} storey${p.storeys === 1 ? '' : 's'}</p>
       <h2>${esc(p.name)}</h2>
       <p>${esc(c.tagline)}</p>
       <dl class="compare-facts">
+        <div><dt>Storeys and massing</dt><dd>${p.storeys} storey${p.storeys === 1 ? '' : 's'} · ${esc(p.architecture.arrangement.replace(/-/g, ' '))} · ${esc(p.architecture.roof_type)} roof</dd></div>
+        <div><dt>Gross floor area</dt><dd>${n(p.metrics.grossFloorArea_m2)} m² nominal modules plus glazed links</dd></div>
+        <div><dt>Ground coverage</dt><dd>${n(p.metrics.groundCoverage_m2)} m² projected footprint · ${n(p.metrics.buildingHeight_m)} m to roof</dd></div>
         <div><dt>Container count</dt><dd>${p.container_count} × ${esc(p.types.join(' + '))}</dd></div>
         <div><dt>Nominal conditioned footprint</dt><dd>${n(p.conditioned_area_m2)} m² modules plus glazed hall</dd></div>
         <div><dt>Screened porch area</dt><dd>${n(p.screened_porch_m2)} m²${p.screened_porch_m2 ? '' : ' (no screened porch)'}</dd></div>
@@ -36,9 +39,11 @@ export function panel(p, c) {
       ${list(t.strengths, 'No specific strengths recorded.')}
       <h3>Thermal risks</h3>
       ${list(t.risks, 'No specific risks recorded beyond the general review prompts.')}
-      <h3>Accessibility considerations</h3>
+      <h3>Accessibility</h3>
+      <p><strong>${esc(p.accessibility_profile.label)}</strong></p>
       ${list(p.accessibility, 'No accessibility notes recorded.')}
       <h3>Structural / installation review</h3>
+      <p><strong>Model status: ${esc(p.structural_review.model_status.replace(/-/g, ' '))}.</strong> ${esc(p.structural_review.summary)}</p>
       ${list(p.structural, 'No specific structural warning recorded; openings and lifting still need review.')}
       <p class="small"><strong>No cost, carbon, energy or code-compliance figures are calculated.</strong> Areas are approximate nominal geometry. Thermal notes are qualitative design prompts, not performance claims.</p>
       <p class="compare-links"><a class="action" href="../architecture/${esc(p.id)}/">Five-view architectural gallery</a> ${p.editable ? `<a class="action secondary" href="../editor/?preset=${esc(p.id)}">Open in editor</a>` : ''}</p>
@@ -48,19 +53,19 @@ export function panel(p, c) {
 
 export function table(profiles, concepts) {
   return `<div class="table-wrap"><table>
-    <caption>All ten concepts at a glance. Areas are approximate nominal geometry; thermal notes are qualitative.</caption>
-    <thead><tr><th scope="col">Concept</th><th scope="col">Containers</th><th scope="col">Conditioned m²</th><th scope="col">Screened porch m²</th><th scope="col">Glazing m²</th><th scope="col">Envelope</th><th scope="col">Thermal strengths and risks</th><th scope="col">Accessibility</th><th scope="col">Structural review</th></tr></thead>
+    <caption>All sixteen concepts at a glance. Areas are approximate nominal geometry; thermal notes are qualitative. No cost, carbon or energy figure is calculated.</caption>
+    <thead><tr><th scope="col">Concept</th><th scope="col">Storeys</th><th scope="col">Containers</th><th scope="col">Gross floor m²</th><th scope="col">Ground cover m²</th><th scope="col">Conditioned m²</th><th scope="col">Glazing m²</th><th scope="col">Envelope</th><th scope="col">Accessibility</th><th scope="col">Structural review</th></tr></thead>
     <tbody>${profiles.map((p) => {
       const c = concepts.find((x) => x.id === p.id);
       const t = p.thermal;
-      return `<tr><th scope="row"><a href="../architecture/${esc(p.id)}/">${esc(p.name)}</a></th><td>${p.container_count} × ${esc(p.types.join(' + '))}</td><td>${n(p.conditioned_area_m2)}</td><td>${n(p.screened_porch_m2)}</td><td>${n(p.glazing_m2)} (${n(p.glazing_ratio)}%)</td><td>${n(t.wall_insulation_mm)} / ${n(t.roof_insulation_mm)} / ${n(t.floor_insulation_mm)} mm wall / roof / floor; ${esc(t.window_performance)}</td><td>${esc((t.strengths[0] || '') + ' ' + (t.risks[0] || ''))}</td><td>${esc((p.accessibility[0] || '') + (p.accessibility.length > 1 ? ' ' + p.accessibility[1] : ''))}</td><td>${esc((p.structural[0] || 'Openings and lifting need review.'))}</td></tr>`;
+      return `<tr><th scope="row"><a href="../architecture/${esc(p.id)}/">${esc(p.name)}</a></th><td>${p.storeys}</td><td>${p.container_count} × ${esc(p.types.join(' + '))}</td><td>${n(p.metrics.grossFloorArea_m2)}</td><td>${n(p.metrics.groundCoverage_m2)}</td><td>${n(p.conditioned_area_m2)}</td><td>${n(p.glazing_m2)} (${n(p.glazing_ratio)}%)</td><td>${n(t.wall_insulation_mm)} / ${n(t.roof_insulation_mm)} / ${n(t.floor_insulation_mm)} mm wall / roof / floor; ${esc(t.window_performance)}</td><td>${esc(p.accessibility_profile.label)}</td><td>${esc(p.structural_review.model_status.replace(/-/g, ' '))}</td></tr>`;
     }).join('')}</tbody>
   </table></div>`;
 }
 
 export function comparePage(profiles, concepts) {
-  const a = profiles.find((p) => p.id === 'woodland-retreat') || profiles[0];
-  const b = profiles.find((p) => p.id === 'common-lodge') || profiles[1];
+  const a = profiles.find((p) => p.id === 'hamlet-woodland-cottage') || profiles[0];
+  const b = profiles.find((p) => p.id === 'hamlet-offset-stack') || profiles[1];
   const options = (selected) => concepts.map((c) => `<option value="${esc(c.id)}"${c.id === selected ? ' selected' : ''}>${esc(c.name)}</option>`).join('');
   const aConcept = concepts.find((c) => c.id === a.id), bConcept = concepts.find((c) => c.id === b.id);
   return `<!doctype html>
@@ -89,16 +94,16 @@ ${designShellNav(2, 'compare')}
     <button type="button" id="compare-swap">Swap A and B</button>
   </form>
   <noscript><p class="notice">JavaScript is off. The default comparison and the full table remain available; the selectors and Swap button need JavaScript.</p></noscript>
-  <p class="status" id="compare-status" role="status" aria-live="polite">Comparing Woodland Retreat and Common Lodge.</p>
+  <p class="status" id="compare-status" role="status" aria-live="polite">Comparing the Woodland Cottage and the Offset Stack.</p>
   <div class="compare-grid" id="compare-grid">
     ${panel(a, aConcept)}
     ${panel(b, bConcept)}
   </div>
   <details class="all-concepts" open>
-    <summary>All ten concepts at a glance</summary>
+    <summary>All sixteen concepts at a glance</summary>
     ${table(profiles, concepts)}
   </details>
-  <p class="small">The comparison is qualitative. It does not calculate heating load, energy use, carbon, cost, structural capacity or code compliance. Existing authoritative Cabin A and lodge models are unchanged.</p>
+  <p class="small">The comparison is qualitative. It does not calculate heating load, energy use, carbon, cost, structural capacity or code compliance. A support reference is design intent, not a verified load path. Existing authoritative Cabin A and lodge models are unchanged.</p>
 </main>
 <footer class="site-footer"><p><a href="../../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>
 <script src="../../js/design-schema.js"></script>

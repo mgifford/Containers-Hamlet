@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Nine original container homes and a common lodge for a fictional Canadian Shield hamlet, with three editable designs, five-view architectural galleries and a browser-based editor.">
+<meta name="description" content="Six deliberately different container homes and a common lodge for a fictional Canadian Shield hamlet, with floor-specific plans, elevations, sections, stacked-container warnings and a browser-based editor. Nine concepts are editable, including the six hamlet residences.">
 <meta name="color-scheme" content="light dark">
 <title>Design Your Container Home | Containers Hamlet</title>
 <link rel="stylesheet" href="../style.css">
@@ -25,96 +25,419 @@
 </header>
 <nav class="subnav" aria-label="Design Lab sections">
   <a href="../design-lab/" aria-current="page">Gallery</a>
+  <a href="../design-lab/residences/">Residences</a>
   <a href="../design-lab/editor/">Editor</a>
   <a href="../design-lab/guides/">Guides</a>
   <a href="../design-lab/compare/">Compare</a>
 </nav>
-<nav class="subnav" aria-label="Design Lab sections">
-  <a href="../design-lab/" aria-current="page">Gallery</a>
-  <a href="../design-lab/editor/">Editor</a>
-  <a href="../design-lab/guides/">Guides</a>
-  <a href="../design-lab/compare/">Compare</a>
-</nav>
+
 <main id="main" class="lab-main" tabindex="-1">
 
 <section class="lab-hero" aria-labelledby="lab-title">
   <div>
     <p class="eyebrow">Container Home Design Studio</p>
-    <h1 id="lab-title">Design your container home.</h1>
-    <p class="lead">Nine original container-based homes and a common lodge for the fictional Containers Hamlet. Start with one, two or three reused shipping containers, then explore windows, screened porches, decks, insulation, roof options and the rooms inside. The container is the core of the home; timber, glass and planting are the supporting layers.</p>
+    <h1 id="lab-title">Six homes. One construction language.</h1>
+    <p class="lead">Six deliberately different container homes and a common lodge for the fictional Containers Hamlet. Some are single-storey; some stack two containers. They differ in massing, roof, footprint, entrance and circulation, not just colour. Start with one, two or three reused shipping containers, then explore windows, porches, decks, insulation, roof options and the rooms inside.</p>
     <p class="lab-note"><strong>Concept only.</strong> These are not engineered plans, permit drawings, a building code assessment or a real property offering. Container modifications need structural, envelope, fire, transport and foundation review.</p>
-    <p class="lab-actions"><a class="action" href="editor/">Open the Design Lab editor</a> <a class="action secondary" href="#gallery">Browse the concepts</a> <a class="action secondary" href="compare/">Compare two concepts</a> <a class="action secondary" href="../hamlet/">See the hamlet map</a></p>
+    <p class="lab-actions"><a class="action" href="editor/">Open the Design Lab editor</a> <a class="action secondary" href="residences/">Compare the six residences</a> <a class="action secondary" href="#gallery">Browse the concepts</a> <a class="action secondary" href="compare/">Compare two concepts</a> <a class="action secondary" href="../hamlet/">See the hamlet map</a></p>
     <p class="lab-meta">No login, account, upload or backend. Designs stay in your browser until you choose to download them.</p>
   </div>
   <aside class="lab-hero-panel" aria-labelledby="editable-title">
-    <h2 id="editable-title">Three concepts are editable now</h2>
+    <h2 id="editable-title">Six hamlet residences are editable</h2>
     <ol>
-      <li>Woodland Retreat — one 40-foot container</li>
-      <li>L-Shaped Haven — two containers</li>
-      <li>Woodland Courtyard — three containers</li>
+      <li>Woodland Cottage — single storey, gable roof</li>
+      <li>Offset Stack — two storeys, offset upper module</li>
+      <li>Courtyard Residence — single storey, L-shaped courtyard</li>
+      <li>Cross-Stacked Retreat — two storeys, perpendicular modules</li>
+      <li>Accessible Garden Home — single storey, step-free layout</li>
+      <li>Solar Studio Stack — two storeys, solar-ready roof</li>
     </ol>
-    <p class="small">The other six homes and the common lodge are included as inspiration cards with source files and generated views. They are clearly labelled as not yet editable.</p>
-    <p><a href="editor/?preset=woodland-retreat">Start with the Woodland Retreat</a></p>
+    <p class="small">The three original editable presets and six archived concepts are preserved in the <a href="#concept-archive">concept archive</a>. The common lodge remains a developed concept with its original single-storey default.</p>
+    <p><a href="editor/?preset=hamlet-offset-stack">Start with the Offset Stack</a></p>
   </aside>
 </section>
 
 <section aria-labelledby="read-title">
   <h2 id="read-title">How to read this gallery</h2>
   <ul class="lab-steps">
-    <li><strong>Exterior concept</strong>An illustrative axonometric of the container arrangement, timber, glazing and screened outdoor rooms.</li>
-    <li><strong>Roof-off cutaway</strong>The same geometry with the roof removed and walls cut at 1.2 m, showing the interior zones.</li>
-    <li><strong>Dimensioned concept plan</strong>Nominal container dimensions, openings, porches, decks and room zones. Not verified clearances.</li>
+    <li><strong>Floor-specific plans</strong>Ground and upper plans generated from the same model. When one floor is selected, the other stays visible as a muted outline.</li>
+    <li><strong>Elevations and section</strong>Four elevations and a building section generated from the same module elevations, openings and roof. Rooflines are conceptual, not construction details.</li>
+    <li><strong>Simulated views</strong>The exterior, porch, cutaway, exploded levels and seasonal solar studies explain the design. They are not engineering drawings.</li>
   </ul>
-  <p>Exterior insulation assemblies and four planting systems are documented in the <a href="vegetation/">vegetation and envelope guide</a>. All five architectural views for each design come from one multi-container JSON model, including a geometry-backed porch/deck detail and a winter study. The editable designs can be changed in the <a href="editor/">editor</a>, then exported as JSON, SVG or a ZIP. The source JSON is available for every concept.</p>
+  <p>Exterior insulation assemblies and four planting systems are documented in the <a href="vegetation/">vegetation and envelope guide</a>. Plans, elevations, sections, exploded levels and isometric views come from one multi-container JSON model. The editable designs can be changed in the <a href="editor/">editor</a>, then exported as JSON, SVG or a ZIP. The source JSON is available for every concept.</p>
+  <section aria-labelledby="why-different">
+    <h2 id="why-different">Why the homes are intentionally different</h2>
+    <ul>
+      <li><strong>One or two storeys.</strong> A single-storey home avoids stairs and keeps every essential room on one level. A two-storey home can use a smaller ground footprint, but adds structure, stairs, fire separation and vertical-access constraints.</li>
+      <li><strong>Why stacking can be attractive.</strong> Stacking can reduce ground coverage, foundation area and site disturbance. It does not automatically reduce cost, carbon or energy use, and it is not automatically accessible.</li>
+      <li><strong>Why stacking is difficult.</strong> A container directly above another is not automatically supported. The project records support intent, calculates the geometric bearing overlap and reports the rest for professional review.</li>
+      <li><strong>Shared construction principles.</strong> The homes use the same container-first approach, drained and ventilated exterior assemblies, independent foundations and replaceable components. Shared systems reduce unnecessary complexity without forcing identical buildings.</li>
+      <li><strong>No engineering approval.</strong> Every design is a concept. Structural, envelope, fire, accessibility and foundation work still needs qualified professionals and local approvals.</li>
+      <li><strong>The hamlet model is a comparison tool.</strong> It helps a community discuss trade-offs in floor area, ground coverage, privacy, access and maintenance. It is not a planning application or a construction estimate.</li>
+      <li><strong>The Design Lab supports experimentation.</strong> Change a level, stack, offset, roof or circulation strategy, then compare the generated plans, elevations and section. The model reports geometric consequences and review items; it does not decide which home is best.</li>
+    </ul>
+  </section>
   <p class="small"><strong>Licensing:</strong> Design Lab source code is AGPL-3.0-or-later. Original Design Lab documentation, diagrams and sample concept data are CC BY-SA 4.0. The rest of Containers Hamlet remains MIT (code) and CC BY 4.0 (original content). See <a href="LICENSE.txt">the Design Lab licence</a> and <a href="CONTENT-LICENSE.md">content licence</a>.</p>
 </section>
 
 <div id="gallery">
 <!-- gen:gallery -->
-<section class="concept-group" aria-labelledby="one-container">
-  <h3 id="one-container">One container</h3>
-  <p class="small">A single reused module, with the porch and deck doing much of the work.</p>
+<section class="gallery-chapter" aria-labelledby="hamlet-residences">
+  <h2 id="hamlet-residences">Six intentionally different hamlet residences</h2>
+  <p>Each home has its own massing, roof, arrangement and relationship to the ground. They share construction principles, not a single look. Two are single-storey and two-storey alternatives are shown explicitly so the trade-offs are visible.</p>
+  <section class="concept-group" aria-labelledby="hamlet-single-storey">
+  <h3 id="hamlet-single-storey">Single storey</h3>
+  <p class="small">Ground-level homes. They differ in footprint, roof, arrangement and relationship to the garden, not just in colour.</p>
+  <div class="concept-grid">
+    <article class="concept-card" id="concept-hamlet-woodland-cottage">
+      <div class="concept-card-media">
+        <img src="views/hamlet-woodland-cottage-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Woodland Cottage: A compact, step-free cottage under a pitched roof, with a covered porch and direct garden access." loading="eager" decoding="async">
+      </div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Hamlet selected · Editable</span>
+        <h4>Woodland Cottage</h4>
+        <p class="tagline">A compact, step-free cottage under a pitched roof, with a covered porch and direct garden access.</p>
+        <p>One 40-foot module holds a ground-level bedroom, bathroom, kitchen and living room under a gable roof. A covered porch faces the garden. The simple footprint, conventional circulation and step-free entrance make this the baseline against which the other homes are compared.</p>
+        <p class="small"><strong>Single storey</strong> · 1 × 40ft · 29.7 m² gross floor area · gable roof</p>
+        <details class="concept-specs"><summary>Dimensions, access and performance</summary>
+        <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
+          <div><dt>Containers</dt><dd>1 × 40ft</dd></div>
+          <div><dt>Gross floor area</dt><dd>29.7 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>29.7 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>gable · 24° pitch · 0.80 m overhang</dd></div>
+          <div><dt>Interior uses</dt><dd>Sleeping, Bathroom, Kitchen, Living</dd></div>
+          <div><dt>Outdoor living</dt><dd>5.4 × 2.8 m covered porch and a level garden deck</dd></div>
+          <div><dt>Accessibility</dt><dd>Ground-floor living with a step-free entrance and an adaptable bathroom target. Not a compliance assessment.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
+        </dl></details>
+        <details>
+          <summary>Views and source files for Woodland Cottage</summary>
+          <div class="concept-view-stack">
+            <figure><img src="views/hamlet-woodland-cottage-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Woodland Cottage: 1 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/hamlet-woodland-cottage-elevation-south.svg" width="1040" height="720" alt="South elevation of Woodland Cottage generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
+            <figure><img src="views/hamlet-woodland-cottage-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Woodland Cottage showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
+          </div>
+          <ul class="concept-files">
+            <li><a href="data/hamlet-woodland-cottage.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/hamlet-woodland-cottage-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/hamlet-woodland-cottage-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/hamlet-woodland-cottage-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/hamlet-woodland-cottage-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/hamlet-woodland-cottage-exploded.svg" download>Exploded levels SVG</a></li>
+          </ul>
+        </details>
+        <div class="card-actions">
+          <a class="action" href="architecture/hamlet-woodland-cottage/">Architectural gallery: plans, elevations, section</a>
+          <a class="action secondary" href="editor/?preset=hamlet-woodland-cottage">Customize Woodland Cottage</a>
+        </div>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
+      </div>
+    </article>
+    <article class="concept-card" id="concept-hamlet-courtyard-residence">
+      <div class="concept-card-media">
+        <img src="views/hamlet-courtyard-residence-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Courtyard Residence: Two single-storey modules form an L around a sheltered garden courtyard, with rooms opening in several directions." loading="eager" decoding="async">
+      </div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Hamlet selected · Editable</span>
+        <h4>Courtyard Residence</h4>
+        <p class="tagline">Two single-storey modules form an L around a sheltered garden courtyard, with rooms opening in several directions.</p>
+        <p>A long 40-foot module and a perpendicular 40-foot module enclose a private courtyard. Living, dining, kitchen, bathroom, bedroom and workspace open onto the courtyard and the surrounding woodland. The footprint is larger than the cottage, but the home remains single-storey and step-free. A flat green roof is shown as a concept only, with unresolved drainage and load questions.</p>
+        <p class="small"><strong>Single storey</strong> · 2 × 40ft · 63.3 m² gross floor area · flat roof</p>
+        <details class="concept-specs"><summary>Dimensions, access and performance</summary>
+        <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
+          <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
+          <div><dt>Gross floor area</dt><dd>63.3 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>63.3 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.50 m overhang</dd></div>
+          <div><dt>Interior uses</dt><dd>Sleeping, Bathroom, Dining, Living, Kitchen, Workspace</dd></div>
+          <div><dt>Outdoor living</dt><dd>Sheltered courtyard, covered porch and a courtyard deck</dd></div>
+          <div><dt>Accessibility</dt><dd>Single-storey with a step-free entrance and ground-floor essential functions. Courtyard thresholds need detailing.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
+        </dl></details>
+        <details>
+          <summary>Views and source files for Courtyard Residence</summary>
+          <div class="concept-view-stack">
+            <figure><img src="views/hamlet-courtyard-residence-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Courtyard Residence: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/hamlet-courtyard-residence-elevation-south.svg" width="1040" height="720" alt="South elevation of Courtyard Residence generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
+            <figure><img src="views/hamlet-courtyard-residence-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Courtyard Residence showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
+          </div>
+          <ul class="concept-files">
+            <li><a href="data/hamlet-courtyard-residence.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/hamlet-courtyard-residence-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/hamlet-courtyard-residence-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/hamlet-courtyard-residence-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/hamlet-courtyard-residence-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/hamlet-courtyard-residence-exploded.svg" download>Exploded levels SVG</a></li>
+          </ul>
+        </details>
+        <div class="card-actions">
+          <a class="action" href="architecture/hamlet-courtyard-residence/">Architectural gallery: plans, elevations, section</a>
+          <a class="action secondary" href="editor/?preset=hamlet-courtyard-residence">Customize Courtyard Residence</a>
+        </div>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
+      </div>
+    </article>
+    <article class="concept-card" id="concept-hamlet-accessible-garden-home">
+      <div class="concept-card-media">
+        <img src="views/hamlet-accessible-garden-home-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Accessible Garden Home: Two compact modules side by side, designed around a step-free route, generous circulation and an adaptable bathroom and kitchen." loading="eager" decoding="async">
+      </div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Hamlet selected · Editable</span>
+        <h4>Accessible Garden Home</h4>
+        <p class="tagline">Two compact modules side by side, designed around a step-free route, generous circulation and an adaptable bathroom and kitchen.</p>
+        <p>Two 20-foot modules sit side by side to make a compact single-storey home. The entrance, garden doors and internal route are step-free, with a ground-floor bedroom, an adaptable bathroom and a kitchen designed for seated use. A roof canopy covers the garden terrace. Accessibility is a design target across the whole home, not a badge on one room.</p>
+        <p class="small"><strong>Single storey</strong> · 2 × 20ft · 29.5 m² gross floor area · canopy roof</p>
+        <details class="concept-specs"><summary>Dimensions, access and performance</summary>
+        <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
+          <div><dt>Containers</dt><dd>2 × 20ft</dd></div>
+          <div><dt>Gross floor area</dt><dd>29.5 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>29.5 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>canopy · 0° pitch · 1.20 m overhang</dd></div>
+          <div><dt>Interior uses</dt><dd>Living, Kitchen, Sleeping, Bathroom, Storage</dd></div>
+          <div><dt>Outdoor living</dt><dd>Covered, step-free garden terrace with a level deck</dd></div>
+          <div><dt>Accessibility</dt><dd>Step-free entrance, ground-floor bedroom, adaptable bathroom and kitchen, 1.2 m circulation target. A design target, not a compliance assessment.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
+        </dl></details>
+        <details>
+          <summary>Views and source files for Accessible Garden Home</summary>
+          <div class="concept-view-stack">
+            <figure><img src="views/hamlet-accessible-garden-home-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Accessible Garden Home: 2 × 20ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/hamlet-accessible-garden-home-elevation-south.svg" width="1040" height="720" alt="South elevation of Accessible Garden Home generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
+            <figure><img src="views/hamlet-accessible-garden-home-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Accessible Garden Home showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
+          </div>
+          <ul class="concept-files">
+            <li><a href="data/hamlet-accessible-garden-home.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/hamlet-accessible-garden-home-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/hamlet-accessible-garden-home-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/hamlet-accessible-garden-home-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/hamlet-accessible-garden-home-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/hamlet-accessible-garden-home-exploded.svg" download>Exploded levels SVG</a></li>
+          </ul>
+        </details>
+        <div class="card-actions">
+          <a class="action" href="architecture/hamlet-accessible-garden-home/">Architectural gallery: plans, elevations, section</a>
+          <a class="action secondary" href="editor/?preset=hamlet-accessible-garden-home">Customize Accessible Garden Home</a>
+        </div>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
+      </div>
+    </article>
+  </div>
+</section>
+<section class="concept-group" aria-labelledby="hamlet-two-storeys">
+  <h3 id="hamlet-two-storeys">Two storeys</h3>
+  <p class="small">Stacked homes. A second storey adds floor area on a smaller footprint, but also adds stairs, structure, fire separation and accessibility constraints.</p>
+  <div class="concept-grid">
+    <article class="concept-card" id="concept-hamlet-offset-stack">
+      <div class="concept-card-media">
+        <img src="views/hamlet-offset-stack-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Offset Stack: Two 40-foot modules stacked with a deliberate offset, creating a covered ground-floor room and a distinct upper volume." loading="eager" decoding="async">
+      </div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Hamlet selected · Editable</span>
+        <h4>Offset Stack</h4>
+        <p class="tagline">Two 40-foot modules stacked with a deliberate offset, creating a covered ground-floor room and a distinct upper volume.</p>
+        <p>A ground-floor living module carries a second 40-foot module shifted 2.6 m east. The offset creates a covered outdoor room and a strong upper volume. Part of the upper floor has no module below it, so the design depends on an engineered transfer or cantilever that is not resolved here. An internal stair serves the upper bedroom and studio.</p>
+        <p class="small"><strong>Two storeys</strong> · 2 × 40ft · 59.5 m² gross floor area · shed roof</p>
+        <details class="concept-specs"><summary>Dimensions, access and performance</summary>
+        <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Two storeys · 1 upper module</dd></div>
+          <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
+          <div><dt>Gross floor area</dt><dd>59.5 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>36.1 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>shed · 8° pitch · 0.70 m overhang</dd></div>
+          <div><dt>Interior uses</dt><dd>Living, Kitchen, Bathroom, Sleeping, Studio</dd></div>
+          <div><dt>Outdoor living</dt><dd>Covered ground-floor porch under the offset and a small upper balcony</dd></div>
+          <div><dt>Accessibility</dt><dd>Ground-floor living arrangement with a step-free entrance and a ground bathroom. Upper bedroom is stair-only and is not accessible.</dd></div>
+          <div><dt>Structural review</dt><dd>1 upper module with a declared, unverified support intent. Stacking, lateral stability and transfer loads require professional review.</dd></div>
+        </dl></details>
+        <details>
+          <summary>Views and source files for Offset Stack</summary>
+          <div class="concept-view-stack">
+            <figure><img src="views/hamlet-offset-stack-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Offset Stack: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/hamlet-offset-stack-plan-upper.svg" width="1040" height="720" alt="Upper-floor concept plan for Offset Stack, with the ground-floor modules shown as muted outlines." loading="lazy" decoding="async"><figcaption>Upper-floor concept plan with the level below muted.</figcaption></figure>
+            <figure><img src="views/hamlet-offset-stack-elevation-south.svg" width="1040" height="720" alt="South elevation of Offset Stack generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
+            <figure><img src="views/hamlet-offset-stack-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Offset Stack showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
+          </div>
+          <ul class="concept-files">
+            <li><a href="data/hamlet-offset-stack.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/hamlet-offset-stack-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/hamlet-offset-stack-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+            <li><a href="views/hamlet-offset-stack-plan-upper.svg" download>Upper-floor plan SVG</a></li>
+            <li><a href="views/hamlet-offset-stack-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/hamlet-offset-stack-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/hamlet-offset-stack-exploded.svg" download>Exploded levels SVG</a></li>
+          </ul>
+        </details>
+        <div class="card-actions">
+          <a class="action" href="architecture/hamlet-offset-stack/">Architectural gallery: plans, elevations, section</a>
+          <a class="action secondary" href="editor/?preset=hamlet-offset-stack">Customize Offset Stack</a>
+        </div>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
+      </div>
+    </article>
+    <article class="concept-card" id="concept-hamlet-cross-stacked-retreat">
+      <div class="concept-card-media">
+        <img src="views/hamlet-cross-stacked-retreat-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Cross-Stacked Retreat: A ground-floor living bar crossed by a perpendicular upper volume, producing a strong silhouette and a shaded outdoor room." loading="eager" decoding="async">
+      </div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Hamlet selected · Editable</span>
+        <h4>Cross-Stacked Retreat</h4>
+        <p class="tagline">A ground-floor living bar crossed by a perpendicular upper volume, producing a strong silhouette and a shaded outdoor room.</p>
+        <p>A 40-foot ground module runs east-west; a second 40-foot module crosses it at 90 degrees on the upper floor. The cross gives the home a distinctive profile and a shaded ground-floor living area. The upper module bears on only the small crossing area, so most of it is unsupported in this concept. The structural warnings are deliberately explicit.</p>
+        <p class="small"><strong>Two storeys</strong> · 2 × 40ft · 59.5 m² gross floor area · butterfly roof</p>
+        <details class="concept-specs"><summary>Dimensions, access and performance</summary>
+        <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Two storeys · 1 upper module</dd></div>
+          <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
+          <div><dt>Gross floor area</dt><dd>59.5 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>53.5 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>butterfly · 12° pitch · 0.80 m overhang</dd></div>
+          <div><dt>Interior uses</dt><dd>Living, Kitchen, Bathroom, Sleeping, Studio</dd></div>
+          <div><dt>Outdoor living</dt><dd>Shaded covered outdoor room beneath the cross volume and a small upper balcony</dd></div>
+          <div><dt>Accessibility</dt><dd>Ground-floor living arrangement with a step-free entrance and ground bathroom. Upper floor is stair-only and is not accessible.</dd></div>
+          <div><dt>Structural review</dt><dd>1 upper module with a declared, unverified support intent. Stacking, lateral stability and transfer loads require professional review.</dd></div>
+        </dl></details>
+        <details>
+          <summary>Views and source files for Cross-Stacked Retreat</summary>
+          <div class="concept-view-stack">
+            <figure><img src="views/hamlet-cross-stacked-retreat-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Cross-Stacked Retreat: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/hamlet-cross-stacked-retreat-plan-upper.svg" width="1040" height="720" alt="Upper-floor concept plan for Cross-Stacked Retreat, with the ground-floor modules shown as muted outlines." loading="lazy" decoding="async"><figcaption>Upper-floor concept plan with the level below muted.</figcaption></figure>
+            <figure><img src="views/hamlet-cross-stacked-retreat-elevation-south.svg" width="1040" height="720" alt="South elevation of Cross-Stacked Retreat generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
+            <figure><img src="views/hamlet-cross-stacked-retreat-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Cross-Stacked Retreat showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
+          </div>
+          <ul class="concept-files">
+            <li><a href="data/hamlet-cross-stacked-retreat.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/hamlet-cross-stacked-retreat-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/hamlet-cross-stacked-retreat-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+            <li><a href="views/hamlet-cross-stacked-retreat-plan-upper.svg" download>Upper-floor plan SVG</a></li>
+            <li><a href="views/hamlet-cross-stacked-retreat-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/hamlet-cross-stacked-retreat-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/hamlet-cross-stacked-retreat-exploded.svg" download>Exploded levels SVG</a></li>
+          </ul>
+        </details>
+        <div class="card-actions">
+          <a class="action" href="architecture/hamlet-cross-stacked-retreat/">Architectural gallery: plans, elevations, section</a>
+          <a class="action secondary" href="editor/?preset=hamlet-cross-stacked-retreat">Customize Cross-Stacked Retreat</a>
+        </div>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
+      </div>
+    </article>
+    <article class="concept-card" id="concept-hamlet-solar-studio-stack">
+      <div class="concept-card-media">
+        <img src="views/hamlet-solar-studio-stack-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Solar Studio Stack: Two 20-foot modules stacked with a slight offset, giving a compact footprint, a solar-ready roof and an upper studio." loading="eager" decoding="async">
+      </div>
+      <div class="concept-card-body">
+        <span class="concept-badge hamlet">Hamlet selected · Editable</span>
+        <h4>Solar Studio Stack</h4>
+        <p class="tagline">Two 20-foot modules stacked with a slight offset, giving a compact footprint, a solar-ready roof and an upper studio.</p>
+        <p>A compact 20-foot ground module holds essential living, a bathroom and a stair. A second 20-foot module sits above with a slight offset, providing a studio and sleeping space. The shed roof is solar-ready and the south facade is shaded by an overhang. The small footprint reduces ground coverage but adds stairs, structure and a more complex envelope.</p>
+        <p class="small"><strong>Two storeys</strong> · 2 × 20ft · 29.5 m² gross floor area · solar ready roof</p>
+        <details class="concept-specs"><summary>Dimensions, access and performance</summary>
+        <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Two storeys · 1 upper module</dd></div>
+          <div><dt>Containers</dt><dd>2 × 20ft</dd></div>
+          <div><dt>Gross floor area</dt><dd>29.5 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>16.7 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>solar ready · 12° pitch · 0.90 m overhang</dd></div>
+          <div><dt>Interior uses</dt><dd>Living, Kitchen, Bathroom, Studio, Sleeping</dd></div>
+          <div><dt>Outdoor living</dt><dd>Covered south terrace and a small upper balcony</dd></div>
+          <div><dt>Accessibility</dt><dd>Ground-floor essential living and bathroom, but the upper studio is stair-only. A compact stair is not an accessible vertical-access strategy.</dd></div>
+          <div><dt>Structural review</dt><dd>1 upper module with a declared, unverified support intent. Stacking, lateral stability and transfer loads require professional review.</dd></div>
+        </dl></details>
+        <details>
+          <summary>Views and source files for Solar Studio Stack</summary>
+          <div class="concept-view-stack">
+            <figure><img src="views/hamlet-solar-studio-stack-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Solar Studio Stack: 2 × 20ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/hamlet-solar-studio-stack-plan-upper.svg" width="1040" height="720" alt="Upper-floor concept plan for Solar Studio Stack, with the ground-floor modules shown as muted outlines." loading="lazy" decoding="async"><figcaption>Upper-floor concept plan with the level below muted.</figcaption></figure>
+            <figure><img src="views/hamlet-solar-studio-stack-elevation-south.svg" width="1040" height="720" alt="South elevation of Solar Studio Stack generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
+            <figure><img src="views/hamlet-solar-studio-stack-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Solar Studio Stack showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
+          </div>
+          <ul class="concept-files">
+            <li><a href="data/hamlet-solar-studio-stack.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/hamlet-solar-studio-stack-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/hamlet-solar-studio-stack-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+            <li><a href="views/hamlet-solar-studio-stack-plan-upper.svg" download>Upper-floor plan SVG</a></li>
+            <li><a href="views/hamlet-solar-studio-stack-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/hamlet-solar-studio-stack-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/hamlet-solar-studio-stack-exploded.svg" download>Exploded levels SVG</a></li>
+          </ul>
+        </details>
+        <div class="card-actions">
+          <a class="action" href="architecture/hamlet-solar-studio-stack/">Architectural gallery: plans, elevations, section</a>
+          <a class="action secondary" href="editor/?preset=hamlet-solar-studio-stack">Customize Solar Studio Stack</a>
+        </div>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+
+
+</section>
+<section class="gallery-chapter" aria-labelledby="concept-archive">
+  <h2 id="concept-archive">Concept archive and the common lodge</h2>
+  <p>The original nine concepts are preserved, migrated to the current schema and clearly separated from the six hamlet-selected homes. No source concept was deleted.</p>
+
+
+<section class="concept-group" aria-labelledby="archive-one-container">
+  <h3 id="archive-one-container">One container</h3>
+  <p class="small">Archived one-module concepts. Preserved for provenance and comparison, not removed.</p>
   <div class="concept-grid">
     <article class="concept-card" id="concept-woodland-retreat">
       <div class="concept-card-media">
         <img src="views/woodland-retreat-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Woodland Retreat: A single 40-foot room in the trees, with the porch turned to the view." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
-        <span class="concept-badge editable">Editable</span>
+        <span class="concept-badge editable">Editable archive concept</span>
         <h4>Woodland Retreat</h4>
         <p class="tagline">A single 40-foot room in the trees, with the porch turned to the view.</p>
         <p>One 40-foot high-cube container holds a sleeping room, bath, kitchen and living space. A generous screened porch and a small deck extend the living area into the forest. The long side faces the view; the entry and path stay behind.</p>
-        <p class="small"><strong>1 × 40ft</strong> · 29.7 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 1 × 40ft · 29.7 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>1 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>29.7 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>29.7 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>29.7 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Sleeping, Bathroom, Kitchen, Living</dd></div>
           <div><dt>Outdoor living</dt><dd>4.4 × 3.05 m screened porch plus 1.2 m deck</dd></div>
-          <div><dt>Trellis</dt><dd>west face, 1.8 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Solar array on the main roof Not included; can be tested as an option</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Step-free porch route is intended; bathroom and sleeping turning space need redesign.</dd></div>
-          <div><dt>Environmental</dt><dd>Small footprint, external insulation and a replaceable rainscreen.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Woodland Retreat</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/woodland-retreat-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Woodland Retreat: 1 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/woodland-retreat-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Woodland Retreat: 1 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/woodland-retreat-elevation-south.svg" width="1040" height="720" alt="South elevation of Woodland Retreat generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/woodland-retreat-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Woodland Retreat showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/woodland-retreat.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/woodland-retreat-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/woodland-retreat-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/woodland-retreat-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/woodland-retreat.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/woodland-retreat-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/woodland-retreat-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/woodland-retreat-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/woodland-retreat-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/woodland-retreat-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/woodland-retreat/">Five-view architectural gallery</a>
+          <a class="action" href="architecture/woodland-retreat/">Architectural gallery: plans, elevations, section</a>
           <a class="action secondary" href="editor/?preset=woodland-retreat">Customize Woodland Retreat</a>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-micro-studio">
@@ -126,37 +449,42 @@
         <h4>Micro Studio</h4>
         <p class="tagline">Twenty feet of shelter, with most of the living outdoors.</p>
         <p>A 20-foot container holds a compact bath, kitchenette and sleeping/living room. The screened porch and deck are almost as large as the interior, making the outdoors part of the home.</p>
-        <p class="small"><strong>1 × 20ft</strong> · 14.8 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 1 × 20ft · 14.8 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>1 × 20ft</dd></div>
-          <div><dt>Container footprint</dt><dd>14.8 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>14.8 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>14.8 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Wet room, Kitchenette, Sleeping/living</dd></div>
           <div><dt>Outdoor living</dt><dd>3.2 × 2.4 m screened porch plus 1.6 m deck</dd></div>
-          <div><dt>Trellis</dt><dd>east face, 1.8 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Small solar array Not included</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Too small for a 1.5 m turning circle; a seasonal studio, not an accessible permanent home.</dd></div>
-          <div><dt>Environmental</dt><dd>Smallest footprint and material use; the deck reduces pressure on the interior.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Micro Studio</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/micro-studio-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Micro Studio: 1 × 20ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/micro-studio-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Micro Studio: 1 × 20ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/micro-studio-elevation-south.svg" width="1040" height="720" alt="South elevation of Micro Studio generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/micro-studio-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Micro Studio showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/micro-studio.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/micro-studio-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/micro-studio-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/micro-studio-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/micro-studio.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/micro-studio-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/micro-studio-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/micro-studio-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/micro-studio-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/micro-studio-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/micro-studio/">Five-view architectural gallery</a>
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/micro-studio/">Architectural gallery: plans, elevations, section</a>
+          <p class="small"><strong>Not editable.</strong> This concept is preserved with source files, generated views and a comparison entry.</p>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-lakeside-hideaway">
@@ -168,44 +496,49 @@
         <h4>Lakeside Hideaway</h4>
         <p class="tagline">A protected veranda on the weather side, with a solar roof.</p>
         <p>A 40-foot container turned so its long side faces the lake, with a deep screened veranda, a solar roof and living space opened to the water. The veranda gives shade in summer and a sheltered edge in shoulder seasons.</p>
-        <p class="small"><strong>1 × 40ft</strong> · 29.7 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 1 × 40ft · 29.7 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>1 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>29.7 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>29.7 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>29.7 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Sleeping, Bathroom, Kitchen, Living</dd></div>
           <div><dt>Outdoor living</dt><dd>6.0 × 3.0 m screened veranda plus 1.0 m deck</dd></div>
-          <div><dt>Trellis</dt><dd>south face, 2.4 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Raised PV above an extensive green roof Solar roof; green roof not included; saturated weight and drainage need engineering</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Step-free veranda intended; bathroom is compact.</dd></div>
-          <div><dt>Environmental</dt><dd>Shading from the veranda and a green roof; lake edge must remain undisturbed.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Lakeside Hideaway</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/lakeside-hideaway-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Lakeside Hideaway: 1 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/lakeside-hideaway-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Lakeside Hideaway: 1 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/lakeside-hideaway-elevation-south.svg" width="1040" height="720" alt="South elevation of Lakeside Hideaway generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/lakeside-hideaway-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Lakeside Hideaway showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/lakeside-hideaway.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/lakeside-hideaway-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/lakeside-hideaway-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/lakeside-hideaway-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/lakeside-hideaway.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/lakeside-hideaway-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/lakeside-hideaway-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/lakeside-hideaway-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/lakeside-hideaway-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/lakeside-hideaway-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/lakeside-hideaway/">Five-view architectural gallery</a>
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/lakeside-hideaway/">Architectural gallery: plans, elevations, section</a>
+          <p class="small"><strong>Not editable.</strong> This concept is preserved with source files, generated views and a comparison entry.</p>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
   </div>
 </section>
-<section class="concept-group" aria-labelledby="two-containers">
-  <h3 id="two-containers">Two containers</h3>
-  <p class="small">Two modules can form a wider home, an L, or a courtyard without becoming a suburban footprint.</p>
+<section class="concept-group" aria-labelledby="archive-two-containers">
+  <h3 id="archive-two-containers">Two containers</h3>
+  <p class="small">Archived two-module concepts. Some are editable; others remain inspiration only.</p>
   <div class="concept-grid">
     <article class="concept-card" id="concept-forest-courtyard">
       <div class="concept-card-media">
@@ -216,37 +549,42 @@
         <h4>Forest Courtyard</h4>
         <p class="tagline">Two parallel containers around a timber-framed outdoor room.</p>
         <p>Two 40-foot containers face each other across a timber-framed connecting space. The link creates a sheltered courtyard for meals and work, with sleeping in one module and living in the other.</p>
-        <p class="small"><strong>2 × 40ft</strong> · 59.4 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 2 × 40ft · 59.5 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>59.5 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>59.5 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Living, Kitchen, Bathroom, Two sleeping rooms, Workspace</dd></div>
           <div><dt>Outdoor living</dt><dd>Timber-framed screened courtyard, two covered seating areas, decks</dd></div>
-          <div><dt>Trellis</dt><dd>west face, 1.8 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Solar on both roofs Optional on the north module</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round; m2: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Courtyard route can be step-free; the bathroom remains compact.</dd></div>
-          <div><dt>Environmental</dt><dd>Two modules share a courtyard instead of extending the building footprint.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Forest Courtyard</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/forest-courtyard-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Forest Courtyard: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/forest-courtyard-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Forest Courtyard: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/forest-courtyard-elevation-south.svg" width="1040" height="720" alt="South elevation of Forest Courtyard generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/forest-courtyard-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Forest Courtyard showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/forest-courtyard.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/forest-courtyard-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/forest-courtyard-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/forest-courtyard-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/forest-courtyard.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/forest-courtyard-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/forest-courtyard-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/forest-courtyard-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/forest-courtyard-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/forest-courtyard-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/forest-courtyard/">Five-view architectural gallery</a>
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/forest-courtyard/">Architectural gallery: plans, elevations, section</a>
+          <p class="small"><strong>Not editable.</strong> This concept is preserved with source files, generated views and a comparison entry.</p>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-l-shaped-haven">
@@ -254,41 +592,46 @@
         <img src="views/l-shaped-haven-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of L-Shaped Haven: Two containers form a sheltered corner without a single long road." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
-        <span class="concept-badge editable">Editable</span>
+        <span class="concept-badge editable">Editable archive concept</span>
         <h4>L-Shaped Haven</h4>
         <p class="tagline">Two containers form a sheltered corner without a single long road.</p>
         <p>One horizontal container holds living and cooking; a second, rotated container holds sleeping and work. The L wraps a sheltered porch and deck, leaving the view open to the south and east.</p>
-        <p class="small"><strong>2 × 40ft</strong> · 59.4 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 2 × 40ft · 59.5 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>59.5 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>59.5 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Living, Kitchen, Bathroom, Two sleeping rooms, Workspace</dd></div>
           <div><dt>Outdoor living</dt><dd>4.4 × 2.8 m screened porch plus 1.2 m deck</dd></div>
-          <div><dt>Trellis</dt><dd>west face, 2.0 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Solar on both roofs Optional on the west module</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round; m2: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Step-free porch; sleeping and bath need accessible variants.</dd></div>
-          <div><dt>Environmental</dt><dd>The L protects the porch from wind and leaves the forest view open.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for L-Shaped Haven</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/l-shaped-haven-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for L-Shaped Haven: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/l-shaped-haven-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for L-Shaped Haven: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/l-shaped-haven-elevation-south.svg" width="1040" height="720" alt="South elevation of L-Shaped Haven generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/l-shaped-haven-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of L-Shaped Haven showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/l-shaped-haven.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/l-shaped-haven-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/l-shaped-haven-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/l-shaped-haven-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/l-shaped-haven.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/l-shaped-haven-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/l-shaped-haven-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/l-shaped-haven-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/l-shaped-haven-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/l-shaped-haven-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/l-shaped-haven/">Five-view architectural gallery</a>
+          <a class="action" href="architecture/l-shaped-haven/">Architectural gallery: plans, elevations, section</a>
           <a class="action secondary" href="editor/?preset=l-shaped-haven">Customize L-Shaped Haven</a>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-open-plan">
@@ -300,85 +643,95 @@
         <h4>Open Plan</h4>
         <p class="tagline">Two adjacent containers become one wider home.</p>
         <p>Two 40-foot containers sit side by side, with a large structural opening between them to create a wider living space. Sleeping, bath and work occupy the quieter side.</p>
-        <p class="small"><strong>2 × 40ft</strong> · 59.4 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 2 × 40ft · 59.5 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>2 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>59.4 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>59.5 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>59.5 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Living, Kitchen, Dining, Sleeping, Bathroom, Workspace</dd></div>
           <div><dt>Outdoor living</dt><dd>4.5 × 3.0 m screened porch plus 1.2 m deck</dd></div>
-          <div><dt>Trellis</dt><dd>west face, 1.8 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Solar on both roofs Optional on the north module</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round; m2: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Wider interior helps circulation, but the bathroom still needs an accessible layout.</dd></div>
-          <div><dt>Environmental</dt><dd>Reuses two shells and avoids a larger footprint, but the wall removal is structurally significant.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Open Plan</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/open-plan-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Open Plan: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/open-plan-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Open Plan: 2 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/open-plan-elevation-south.svg" width="1040" height="720" alt="South elevation of Open Plan generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/open-plan-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Open Plan showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/open-plan.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/open-plan-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/open-plan-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/open-plan-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/open-plan.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/open-plan-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/open-plan-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/open-plan-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/open-plan-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/open-plan-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/open-plan/">Five-view architectural gallery</a>
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/open-plan/">Architectural gallery: plans, elevations, section</a>
+          <p class="small"><strong>Not editable.</strong> This concept is preserved with source files, generated views and a comparison entry.</p>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
   </div>
 </section>
-<section class="concept-group" aria-labelledby="three-containers">
-  <h3 id="three-containers">Three containers</h3>
-  <p class="small">Three modules support a larger household or a shared retreat, always around a compact outdoor room.</p>
+<section class="concept-group" aria-labelledby="archive-three-containers">
+  <h3 id="archive-three-containers">Three containers</h3>
+  <p class="small">Archived three-module concepts, including the courtyard studies.</p>
   <div class="concept-grid">
     <article class="concept-card" id="concept-woodland-courtyard">
       <div class="concept-card-media">
         <img src="views/woodland-courtyard-exterior.svg" width="1040" height="700" alt="Illustrative exterior concept of Woodland Courtyard: Three containers hold a quiet courtyard open to the south." loading="eager" decoding="async">
       </div>
       <div class="concept-card-body">
-        <span class="concept-badge editable">Editable</span>
+        <span class="concept-badge editable">Editable archive concept</span>
         <h4>Woodland Courtyard</h4>
         <p class="tagline">Three containers hold a quiet courtyard open to the south.</p>
         <p>A north module holds kitchen and living; two rotated side modules hold sleeping and work. Together they enclose a protected courtyard, with the screened porch facing into it.</p>
-        <p class="small"><strong>3 × 40ft</strong> · 89.2 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 3 × 40ft · 89.2 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>3 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>89.2 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>89.2 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Kitchen, Dining, Living, Three sleeping rooms, Two bathrooms, Workspaces</dd></div>
           <div><dt>Outdoor living</dt><dd>6.0 × 3.0 m screened courtyard porch plus deck</dd></div>
-          <div><dt>Trellis</dt><dd>west face, 2.0 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Solar on all roofs; green roof on the north module Solar on the north module; weight and drainage need engineering</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round; m2: 39° / 180° year-round; m3: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Courtyard can be step-free; bathrooms and sleeping rooms need accessible variants.</dd></div>
-          <div><dt>Environmental</dt><dd>Three modules share one courtyard and one solar-ready roofscape.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Woodland Courtyard</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/woodland-courtyard-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Woodland Courtyard: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/woodland-courtyard-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Woodland Courtyard: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/woodland-courtyard-elevation-south.svg" width="1040" height="720" alt="South elevation of Woodland Courtyard generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/woodland-courtyard-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Woodland Courtyard showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/woodland-courtyard.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/woodland-courtyard-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/woodland-courtyard-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/woodland-courtyard-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/woodland-courtyard.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/woodland-courtyard-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/woodland-courtyard-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/woodland-courtyard-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/woodland-courtyard-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/woodland-courtyard-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/woodland-courtyard/">Five-view architectural gallery</a>
+          <a class="action" href="architecture/woodland-courtyard/">Architectural gallery: plans, elevations, section</a>
           <a class="action secondary" href="editor/?preset=woodland-courtyard">Customize Woodland Courtyard</a>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-family-lodge">
@@ -390,37 +743,42 @@
         <h4>Family Lodge</h4>
         <p class="tagline">A central gathering module between two sleeping wings.</p>
         <p>A central 40-foot module holds the shared kitchen, dining and living space. Rotated side modules hold sleeping and work, creating a broad sheltered court and a long screened porch. The wings are shown as independent modules; a structural connector is not assumed.</p>
-        <p class="small"><strong>3 × 40ft</strong> · 89.2 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 3 × 40ft · 89.2 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>3 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>89.2 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>89.2 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Shared kitchen, Dining, Living, Three sleeping rooms, Bathrooms, Workspace</dd></div>
           <div><dt>Outdoor living</dt><dd>8.0 × 3.0 m screened porch plus 1.5 m deck</dd></div>
-          <div><dt>Trellis</dt><dd>west face, 2.0 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Solar on all roofs; green roof on the central module Solar on the central module</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round; m2: 39° / 180° year-round; m3: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Long shared porch can be step-free; sleeping and bath need accessible variants.</dd></div>
-          <div><dt>Environmental</dt><dd>A larger home still uses three reused modules and a compact footprint.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Family Lodge</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/family-lodge-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Family Lodge: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/family-lodge-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Family Lodge: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/family-lodge-elevation-south.svg" width="1040" height="720" alt="South elevation of Family Lodge generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/family-lodge-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Family Lodge showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/family-lodge.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/family-lodge-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/family-lodge-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/family-lodge-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/family-lodge.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/family-lodge-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/family-lodge-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/family-lodge-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/family-lodge-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/family-lodge-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/family-lodge/">Five-view architectural gallery</a>
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/family-lodge/">Architectural gallery: plans, elevations, section</a>
+          <p class="small"><strong>Not editable.</strong> This concept is preserved with source files, generated views and a comparison entry.</p>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
     <article class="concept-card" id="concept-gathering-house">
@@ -432,44 +790,49 @@
         <h4>Gathering House</h4>
         <p class="tagline">Three containers around a large screened shared room.</p>
         <p>Two parallel containers and one perpendicular container frame a large screened gathering space. The shared room can host meals, workshops and meetings; sleeping and studio space sit in the quieter modules.</p>
-        <p class="small"><strong>3 × 40ft</strong> · 89.2 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 3 × 40ft · 89.2 m² gross floor area · flat roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>3 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>89.2 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>89.2 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>flat · 0° pitch · 0.60 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Kitchen, Dining, Living, Sleeping, Bathrooms, Workshop, Studio</dd></div>
           <div><dt>Outdoor living</dt><dd>Large screened gathering room, covered workshop entry, decks</dd></div>
-          <div><dt>Trellis</dt><dd>west face, 2.0 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>Solar on the north module; green roofs on the south and west modules Green and solar roofs; weight, drainage and fire review required</dd></div>
-          <div><dt>Solar tilt</dt><dd>m1: 39° / 180° year-round; m2: 39° / 180° year-round; m3: 39° / 180° year-round</dd></div>
           <div><dt>Accessibility</dt><dd>Gathering room can be a step-free shared space; sleeping and bath need accessible variants.</dd></div>
-          <div><dt>Environmental</dt><dd>Shared space reduces the need for larger individual homes; green roofs and solar share infrastructure.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Gathering House</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/gathering-house-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Gathering House: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/gathering-house-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Gathering House: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/gathering-house-elevation-south.svg" width="1040" height="720" alt="South elevation of Gathering House generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/gathering-house-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Gathering House showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/gathering-house.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/gathering-house-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/gathering-house-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/gathering-house-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/gathering-house.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/gathering-house-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/gathering-house-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/gathering-house-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/gathering-house-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/gathering-house-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/gathering-house/">Five-view architectural gallery</a>
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/gathering-house/">Architectural gallery: plans, elevations, section</a>
+          <p class="small"><strong>Not editable.</strong> This concept is preserved with source files, generated views and a comparison entry.</p>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
   </div>
 </section>
-<section class="concept-group" aria-labelledby="common-lodge">
-  <h3 id="common-lodge">Common lodge</h3>
-  <p class="small">A café-inspired community building: three reused containers around a generous, accessible shared hall.</p>
+<section class="concept-group" aria-labelledby="archive-common-lodge">
+  <h3 id="archive-common-lodge">Common lodge</h3>
+  <p class="small">The preserved community building. Its single-storey default is unchanged; an optional two-storey lodge is a separate study.</p>
   <div class="concept-grid">
     <article class="concept-card" id="concept-common-lodge">
       <div class="concept-card-media">
@@ -480,40 +843,46 @@
         <h4>Common Lodge</h4>
         <p class="tagline">A green container café-lodge under one south-facing shed roof.</p>
         <p>Three reused 40-foot containers in deep green, with yellow-framed glazing and a tall glazed central hall, frame a community lodge beside the water. One gable roof with a clear ridge covers the whole building; the solar array is mounted only on the south slope and is aligned to true south independently of the building. The north wing holds the shared kitchen, pantry, laundry and accessible washrooms; the central hall is the shared dining and gathering space; the south wing holds the workshop, meeting room and boot room; the west wing holds the café servery, office and a universal washroom. A screened veranda and covered entrance connect the hall to the forest. The existing authoritative lodge model is preserved separately; this is an additional Design Lab concept.</p>
-        <p class="small"><strong>3 × 40ft</strong> · 89.2 m² nominal footprint</p>
+        <p class="small"><strong>Single storey</strong> · 3 × 40ft · 215.2 m² gross floor area · gable roof</p>
         <details class="concept-specs"><summary>Dimensions, access and performance</summary>
         <dl class="concept-facts">
+          <div><dt>Storeys</dt><dd>Single storey</dd></div>
           <div><dt>Containers</dt><dd>3 × 40ft</dd></div>
-          <div><dt>Container footprint</dt><dd>89.2 m² nominal, before external insulation</dd></div>
+          <div><dt>Gross floor area</dt><dd>215.2 m² nominal modules plus glazed links</dd></div>
+          <div><dt>Ground coverage</dt><dd>215.2 m² projected footprint</dd></div>
+          <div><dt>Roof</dt><dd>gable · 10° pitch · 0.50 m overhang</dd></div>
           <div><dt>Interior uses</dt><dd>Shared kitchen, Shared dining, Pantry, Laundry, Universal washroom, Accessible WC, Workshop, Meeting room, Café servery, Office, Storage</dd></div>
           <div><dt>Outdoor living</dt><dd>8.0 × 3.0 m screened veranda, covered west entrance, decks</dd></div>
-          <div><dt>Trellis</dt><dd>east face, 1.8 m long</dd></div>
-          <div><dt>Solar / roof</dt><dd>A single 39° south-facing array on the south slope of a 10° gable roof; no north-side array. True south, independent of building rotation. Green/solar roof on the north module; weight, drainage and fire review required</dd></div>
-          <div><dt>Solar tilt</dt><dd>South roof slope: 39° / 180° year-round; no north array</dd></div>
           <div><dt>Accessibility</dt><dd>Step-free hall and veranda intended; two accessible washrooms, one with an adult-size change table; door widths, turning spaces and counter heights need verification.</dd></div>
-          <div><dt>Environmental</dt><dd>Three reused green containers and a glazed timber hall share one gable roof; only the south slope carries solar. Large glazing and a green roof increase the technical review.</dd></div>
+          <div><dt>Structural review</dt><dd>Single-level concept; openings, roof and foundation still need engineering review.</dd></div>
         </dl></details>
         <details>
           <summary>Views and source files for Common Lodge</summary>
           <div class="concept-view-stack">
-            <figure><img src="views/common-lodge-plan.svg" width="1040" height="720" alt="Dimensioned concept plan for Common Lodge: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Dimensioned concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+            <figure><img src="views/common-lodge-plan-ground.svg" width="1040" height="720" alt="Ground-floor concept plan for Common Lodge: 3 × 40ft, interior zones, openings, porches and decks." loading="lazy" decoding="async"><figcaption>Ground-floor concept plan. Nominal dimensions, not verified clearances.</figcaption></figure>
+
+            <figure><img src="views/common-lodge-elevation-south.svg" width="1040" height="720" alt="South elevation of Common Lodge generated from the same module geometry as the plan." loading="lazy" decoding="async"><figcaption>South elevation from the shared geometry. Other elevations and the section are on the architectural page.</figcaption></figure>
             <figure><img src="views/common-lodge-cutaway.svg" width="1040" height="700" alt="Roof-off cutaway of Common Lodge showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/common-lodge.json" download>Design JSON (containers-hamlet-design/v1.0)</a></li>
-            <li><a href="views/common-lodge-plan.svg" download>Concept plan SVG</a></li>
-            <li><a href="views/common-lodge-exterior.svg" download>Exterior concept SVG</a></li>
-            <li><a href="views/common-lodge-cutaway.svg" download>Roof-off cutaway SVG</a></li>
+            <li><a href="data/common-lodge.json" download>Design JSON (containers-hamlet-design/v2.0)</a></li>
+            <li><a href="views/common-lodge-plan.svg" download>Combined concept plan SVG</a></li>
+            <li><a href="views/common-lodge-plan-ground.svg" download>Ground-floor plan SVG</a></li>
+
+            <li><a href="views/common-lodge-elevation-south.svg" download>South elevation SVG</a></li>
+            <li><a href="views/common-lodge-section.svg" download>Building section SVG</a></li>
+            <li><a href="views/common-lodge-exploded.svg" download>Exploded levels SVG</a></li>
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/common-lodge/">Five-view architectural gallery</a>
-          <p class="small"><strong>Not yet editable.</strong> This concept has source files, five generated views and a comparison entry. Start from one of the three editable presets in the <a href="editor/">Design Lab editor</a>.</p>
+          <a class="action" href="architecture/common-lodge/">Architectural gallery: plans, elevations, section</a>
+          <p class="small"><strong>Not editable.</strong> This concept is preserved with source files, generated views and a comparison entry.</p>
         </div>
-        <p class="small">Concept only. Not reviewed by an architect, engineer or building official.</p>
+        <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>
       </div>
     </article>
   </div>
+</section>
 </section>
 <section class="concept-group arrangement-studies" aria-labelledby="arrangement-studies">
   <h3 id="arrangement-studies">Arrangement studies: possible, not offered as engineered models</h3>

@@ -68,6 +68,416 @@
   function moduleById(d, id) { return (d.modules || []).filter(function (m) { return m.id === id; })[0]; }
   function porchById(d, id) { return (d.porches || []).filter(function (p) { return p.id === id; })[0]; }
 
+  /* ---------------- explicit vertical geometry ---------------- */
+
+  function moduleBase(m) { return num(m.elevation_m, 0); }
+  function moduleTop(m) { return moduleBase(m) + num(m.nominal && m.nominal.height_m, 2.896); }
+  function envelopeThickness(m) { return num(m.insulation && m.insulation.thickness_mm, 150) / 1000 + 0.03; }
+  function moduleBox3D(m) {
+    var t = envelopeThickness(m);
+    var L = m.nominal.length_m + 2 * t, W = m.nominal.width_m + 2 * t;
+    var corners = [[-L / 2, -W / 2], [L / 2, -W / 2], [L / 2, W / 2], [-L / 2, W / 2]].map(function (p) { return transform(m, p); });
+    var xs = corners.map(function (p) { return p[0]; }), ys = corners.map(function (p) { return p[1]; });
+    return {
+      id: m.id, storey: num(m.storey, 0),
+      minX: Math.min.apply(null, xs), maxX: Math.max.apply(null, xs),
+      minY: Math.min.apply(null, ys), maxY: Math.max.apply(null, ys),
+      minZ: moduleBase(m), maxZ: moduleTop(m),
+      corners: corners
+    };
+  }
+  function boxOverlap3D(a, b, tolerance) {
+    var t = tolerance == null ? 0.002 : tolerance;
+    var ov = function (lo1, hi1, lo2, hi2) { return lo1 < hi2 - t && lo2 < hi1 - t; };
+    return ov(a.minX, a.maxX, b.minX, b.maxX) && ov(a.minY, a.maxY, b.minY, b.maxY) && ov(a.minZ, a.maxZ, b.minZ, b.maxZ);
+  }
+  function verticalGap(a, b) {
+    if (a.maxZ <= b.minZ) return b.minZ - a.maxZ;
+    if (b.maxZ <= a.minZ) return a.minZ - b.maxZ;
+    return 0;
+  }
+  function planOverlapArea(a, b) {
+    return overlapArea(moduleCorners(a), moduleCorners(b));
+  }
+  function moduleArea(m) { return m.nominal.length_m * m.nominal.width_m; }
+  function unionArea(polys) {
+    if (!polys.length) return 0;
+    var total = 0;
+    for (var mask = 1; mask < (1 << polys.length); mask++) {
+      var subset = [];
+      for (var i = 0; i < polys.length; i++) if (mask & (1 << i)) subset.push(polys[i]);
+      var inter = subset[0];
+      for (var j = 1; j < subset.length && inter.length; j++) inter = clipPolygon(inter, subset[j]);
+      var a = subset.length > 1 && inter.length >= 3 ? polygonArea(inter) : subset.length === 1 ? polygonArea(subset[0]) : 0;
+      total += (subset.length % 2 ? 1 : -1) * a;
+    }
+    return total;
+  }
+  function footprintArea(d) {
+    var polys = d.modules.map(moduleCorners).concat(d.connections.filter(function (c) { return c.glazed; }).map(connectionCorners));
+    return unionArea(polys);
+  }
+  function floorAreaByStorey(d) {
+    var out = {};
+    d.modules.forEach(function (m) { var s = num(m.storey, 0); out[s] = (out[s] || 0) + moduleArea(m); });
+    d.connections.filter(function (c) { return c.glazed; }).forEach(function (c) { out[0] = (out[0] || 0) + c.length_m * c.width_m; });
+    return out;
+  }
+
+  function supportAnalysis(input) {
+    var d = Schema.canonicalize(input);
+    var rows = [];
+    d.modules.forEach(function (m) {
+      var box = moduleBox3D(m);
+      var lower = d.modules.filter(function (o) { return o.id !== m.id && num(o.storey, 0) < num(m.storey, 0); });
+      var contacts = lower.map(function (o) {
+        var gap = moduleBase(m) - moduleTop(o);
+        var area = planOverlapArea(m, o);
+        return { module: o.id, gap_m: round(gap, 3), overlap_m2: round(area, 2), supports: gap >= -0.01 && gap <= 0.6 && area > 0.01 };
+      }).filter(function (c) { return c.overlap_m2 > 0.01; });
+      var supportedArea = contacts.filter(function (c) { return c.supports; }).reduce(function (t, c) { return t + c.overlap_m2; }, 0);
+      var footprint = moduleArea(m);
+      var declared = (m.support && m.support.references) || [];
+      var declaredMissing = declared.filter(function (id) { return !contacts.some(function (c) { return c.module === id && c.supports; }); });
+      var gapWarnings = contacts.filter(function (c) { return c.overlap_m2 > 0.01 && c.gap_m > 0.6; });
+      rows.push({
+        module: m.id, storey: num(m.storey, 0), elevation_m: moduleBase(m),
+        supported_area_m2: round(supportedArea, 2), footprint_m2: round(footprint, 2),
+        support_fraction: footprint ? round(supportedArea / footprint, 3) : 0,
+        contacts: contacts, declared: declared, declared_missing: declaredMissing,
+        vertical_gap_m: gapWarnings.length ? gapWarnings[0].gap_m : null,
+        upper: num(m.storey, 0) > 0
+      });
+    });
+    return { rows: rows, stacked: rows.some(function (r) { return r.upper; }) };
+  }
+
+  function metrics(input) {
+    var d = Schema.canonicalize(input);
+    var rg = roofGeometry(d);
+    var byStorey = floorAreaByStorey(d);
+    var gross = d.modules.reduce(function (t, m) { return t + moduleArea(m); }, 0) + d.connections.filter(function (c) { return c.glazed; }).reduce(function (t, c) { return t + c.length_m * c.width_m; }, 0);
+    var envelope = d.modules.reduce(function (t, m) {
+      var t2 = envelopeThickness(m);
+      return t + 2 * (m.nominal.length_m + m.nominal.width_m + 4 * t2) * m.nominal.height_m;
+    }, 0);
+    var windows = d.modules.reduce(function (t, m) { return t + (m.openings || []).filter(function (o) { return o.type === 'window' || o.type === 'sliding-door'; }).reduce(function (u, o) { return u + o.width_m * o.height_m; }, 0); }, 0);
+    return {
+      moduleCount: d.modules.length,
+      storeyCount: d.levels.length,
+      maxStorey: d.levels.length ? Math.max.apply(null, d.levels.map(function (l) { return l.storey; })) : 0,
+      levels: d.levels,
+      grossFloorArea_m2: round(gross, 2),
+      floorAreaByStorey: Object.keys(byStorey).sort().map(function (k) { return { storey: Number(k), area_m2: round(byStorey[k], 2) }; }),
+      groundCoverage_m2: round(footprintArea(d), 2),
+      buildingFootprint_m2: round(footprintArea(d), 2),
+      upperFloorArea_m2: round(byStorey[1] || 0, 2),
+      envelopeArea_m2: round(envelope, 1),
+      roofArea_m2: round(rg.roofArea_m2, 1),
+      roofType: rg.type,
+      roofPitch_deg: rg.pitch_deg,
+      roofTop_m: round(rg.top_m, 2),
+      buildingHeight_m: round(rg.top_m, 2),
+      windowArea_m2: round(windows, 1),
+      solarArea_m2: round(rg.solarArea_m2, 1),
+      structuralReview: structuralReview(d).model_status,
+      accessibility: accessibilityProfile(d).classification
+    };
+  }
+
+  function roofGeometry(input) {
+    var d = Schema.canonicalize(input);
+    var rf = d.roof_form;
+    var polys = d.modules.map(moduleCorners).concat(d.connections.filter(function (c) { return c.glazed; }).map(connectionCorners));
+    if (!polys.length) return { type: rf.type, top_m: 0, pitch_deg: rf.pitch_deg, roofArea_m2: 0, solarArea_m2: 0, minX: 0, maxX: 0, minY: 0, maxY: 0 };
+    var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    polys.forEach(function (poly) { poly.forEach(function (p) { minX = Math.min(minX, p[0]); minY = Math.min(minY, p[1]); maxX = Math.max(maxX, p[0]); maxY = Math.max(maxY, p[1]); }); });
+    var oh = num(rf.overhang_m, 0.6);
+    minX -= oh; minY -= oh; maxX += oh; maxY += oh;
+    var base = d.modules.reduce(function (t, m) { return Math.max(t, moduleTop(m)); }, 0);
+    var width = maxX - minX, depth = maxY - minY;
+    var pitch = Math.max(0, Math.min(45, num(rf.pitch_deg, 0)));
+    var rise = Math.tan(pitch * DEG);
+    var top = base;
+    if (rf.type === 'gable') top = base + (depth / 2) * rise;
+    else if (rf.type === 'shed' || rf.type === 'solar-ready') top = base + depth * rise;
+    else if (rf.type === 'butterfly') top = base + (depth / 2) * rise;
+    else if (rf.type === 'flat') top = base + 0.3;
+    else if (rf.type === 'canopy') top = base + 0.25;
+    else if (rf.type === 'green') top = base + 0.4;
+    var planArea = Math.max(0, width * depth);
+    var roofArea = rf.type === 'flat' || rf.type === 'canopy' || rf.type === 'green' ? planArea : planArea / Math.max(0.3, Math.cos(pitch * DEG));
+    var southRun = rf.type === 'gable' ? depth / 2 : depth;
+    return {
+      type: rf.type, pitch_deg: pitch, overhang_m: oh,
+      minX: minX, minY: minY, maxX: maxX, maxY: maxY, width: width, depth: depth,
+      base_m: base, top_m: top, ridge_m: top, eave_m: base,
+      roofArea_m2: roofArea, solarArea_m2: rf.type === 'flat' || rf.type === 'canopy' ? planArea * 0.55 : Math.max(0, southRun * width),
+      green: !!rf.green_roof || rf.type === 'green',
+      drainage: rf.drainage, snow: rf.snow, wind: rf.wind, maintenance: rf.maintenance
+    };
+  }
+
+  function structuralReview(input) {
+    var d = Schema.canonicalize(input);
+    var sup = supportAnalysis(d);
+    var stacked = sup.stacked;
+    var multi = d.modules.length > 1;
+    var concerns = [
+      { id: 'corner-castings', label: 'Corner castings and corner posts', triggered: true, note: 'Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.' },
+      { id: 'vertical-load-transfer', label: 'Vertical load transfer', triggered: stacked, note: stacked ? 'Stacked modules need an explicit, continuous load path through posts, beams or an engineered transfer structure.' : 'Single-storey loads still need a continuous path to the foundation.' },
+      { id: 'container-orientation', label: 'Container orientation and span', triggered: true, note: 'Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.' },
+      { id: 'sidewall-openings', label: 'Openings through sidewalls', triggered: (d.modules || []).some(function (m) { return (m.openings || []).some(function (o) { return o.width_m >= 2.0 || o.type === 'sliding-door'; }) || (m.structure && m.structure.wall_removal !== 'none'); }), note: 'Large openings and removed walls need engineered framing, headers and corner reinforcement.' },
+      { id: 'removed-walls', label: 'Removed structural walls', triggered: (d.modules || []).some(function (m) { return m.structure && m.structure.wall_removal !== 'none'; }), note: 'A removed sidewall changes the load path and may require a transfer frame or additional columns.' },
+      { id: 'cantilevers', label: 'Cantilevers and unsupported overhangs', triggered: sup.rows.some(function (r) { return r.upper && r.support_fraction < 0.999; }), note: sup.rows.filter(function (r) { return r.upper && r.support_fraction < 0.999; }).map(function (r) { return r.module + ' is supported over ' + Math.round(r.support_fraction * 100) + '% of its footprint; ' + n(Math.max(0, r.footprint_m2 - r.supported_area_m2)) + ' m² has no supporting module below.'; }).join(' ') || 'No upper module overhang is recorded.' },
+      { id: 'lateral-stability', label: 'Lateral stability and racking', triggered: stacked || multi, note: lateralNote(stacked, multi) },
+      { id: 'wind-loading', label: 'Wind loading and uplift', triggered: stacked || metricsHeight(d) > 4, note: 'Exposed sites, roof overhangs, cladding and stacked modules need wind uplift and lateral load review.' },
+      { id: 'snow-loading', label: 'Snow loading and drift', triggered: true, note: 'Roof geometry, valleys, parapets and adjacent taller volumes change snow accumulation and drift.' },
+      { id: 'foundation-reactions', label: 'Foundation reactions', triggered: stacked || multi || !!(d.roof_form && d.roof_form.green_roof), note: 'Stacking, roof loads and green roofs change point loads, uplift and frost-depth requirements.' },
+      { id: 'module-connections', label: 'Connections between modules', triggered: multi, note: 'Inter-module connections need designed shear, tension and bearing capacity, not just gravity bearing.' },
+      { id: 'crane-access', label: 'Crane access and lifting', triggered: multi || d.modules.some(function (m) { return m.type === '40ft'; }), note: 'Lifting points, crane reach, ground bearing, matting and overhead clearance need a lift plan.' },
+      { id: 'transport', label: 'Transport limitations', triggered: d.modules.some(function (m) { return m.type === '40ft' || m.nominal.width_m + 2 * envelopeThickness(m) > 3.0; }), note: 'Oversize width, route surveys, permits and escort requirements need checking.' },
+      { id: 'fire-separation', label: 'Fire separation and egress', triggered: stacked || multi, note: 'Inter-storey separation, protected egress, cladding, cavity barriers and fire service access need review.' },
+      { id: 'corrosion', label: 'Corrosion protection', triggered: true, note: 'Coastal, de-icing, ground-contact and concealed steel surfaces need a corrosion strategy and inspection plan.' },
+      { id: 'thermal-bridges', label: 'Thermal bridges', triggered: true, note: 'Steel posts, floor edges, connections and penetrations create thermal bridges and condensation risk.' },
+      { id: 'moisture-condensation', label: 'Moisture and condensation', triggered: true, note: 'Interstitial condensation, trapped water, roof drainage and floor build-ups need a building-envelope review.' }
+    ];
+    concerns.forEach(function (c) {
+      var override = d.review && d.review.concerns && d.review.concerns[c.id];
+      c.status = override && Schema.REVIEW_STATUSES.indexOf(override.status) >= 0 ? override.status : c.triggered ? 'requires-review' : 'not-assessed';
+      c.notes = override && override.note ? override.note : c.note;
+      c.assessment = override && override.assessment ? override.assessment : null;
+    });
+    var rank = { 'not-assessed': 0, 'requires-review': 1, 'conceptually-resolved': 2, 'professionally-verified': 3 };
+    var model_status = concerns.reduce(function (s, c) { return rank[c.status] > rank[s] ? c.status : s; }, 'not-assessed');
+    return { concerns: concerns, model_status: model_status, summary: concerns.filter(function (c) { return c.status === 'requires-review'; }).length + ' of ' + concerns.length + ' concerns need review.' };
+  }
+  function lateralNote(stacked, multi) { return stacked ? 'Stacked modules need a designed lateral system; container corner posts alone are not a lateral-force strategy.' : multi ? 'Connected single-storey modules need a designed lateral system across the links.' : 'A single module still needs its container frame, foundation and cladding to act as a designed lateral system.'; }
+  function metricsHeight(d) { return d.modules.reduce(function (t, m) { return Math.max(t, moduleTop(m)); }, 0); }
+
+  function accessibilityProfile(input) {
+    var d = Schema.canonicalize(input);
+    var a = d.access;
+    var storeyCount = d.levels.length;
+    var doors = [];
+    d.modules.forEach(function (m) { m.openings.forEach(function (o) { if (o.type === 'door' || o.type === 'sliding-door') doors.push({ module: m.id, opening: o }); }); });
+    var entrance = doors.filter(function (x) { return x.opening.type === 'door'; })[0] || doors[0] || null;
+    var doorWidth = entrance ? entrance.opening.width_m : a.entrance_door_width_m;
+    var issues = [], notes = [];
+    if (!a.step_free_entrance) issues.push({ code: 'step-free-entrance', message: 'A step-free entrance is not recorded. Verify the path, threshold, door width and landing.' });
+    if (doorWidth < 0.86) issues.push({ code: 'entrance-width', message: 'The entrance door is ' + n(doorWidth) + ' m wide; the project target is at least 0.86 m clear.' });
+    if (a.entrance_threshold_m > 0.02) issues.push({ code: 'threshold', message: 'The entrance threshold is ' + n(a.entrance_threshold_m) + ' m; a flush or ramped threshold needs detailing.' });
+    if (a.circulation_width_m < 0.9) issues.push({ code: 'circulation', message: 'The recorded circulation width is ' + n(a.circulation_width_m) + ' m; verify a 0.9 m clear route and turning spaces.' });
+    if (storeyCount > 1) {
+      if (!a.ground_floor_essential_functions) issues.push({ code: 'ground-functions', message: 'Ground-floor essential living functions are not recorded. Without them the home cannot offer accessible living.' });
+      if (!a.ground_floor_bedroom) issues.push({ code: 'ground-bedroom', message: 'No ground-floor bedroom is recorded. Upper-floor sleeping depends on stairs.' });
+      if (!a.stair || !a.stair.present || a.stair.type === 'none') issues.push({ code: 'vertical-access', message: 'An upper storey is present but no stair is recorded. Vertical access is unresolved.' });
+      else if (a.stair.width_m < 0.86) issues.push({ code: 'stair-width', message: 'The stair is ' + n(a.stair.width_m) + ' m wide; verify clear width, handrails, landings and guarding.' });
+      if (!a.stair || !a.stair.lift_reserve) issues.push({ code: 'lift-reserve', message: 'No space or structure is reserved for a future lift. Do not assume a lift can be added later.' });
+      notes.push('A two-storey home is not described as fully accessible because its entrance is step-free.');
+    }
+    if (a.adaptable_bathroom) notes.push('Bathroom adaptability is recorded as an intent; verify the 1.5 m turning circle, transfer space, grab-bar blocking and door clearance against CSA B651.'); else issues.push({ code: 'bathroom-adaptable', message: 'Bathroom adaptability is not recorded. Verify turning, transfer, grab-bar and door clearances.' });
+    if (a.adaptable_kitchen) notes.push('Kitchen adaptability is recorded as an intent; verify knee space, work-surface heights and clear approach.'); else issues.push({ code: 'kitchen-adaptable', message: 'Kitchen adaptability is not recorded. Verify clear approach, knee space and work-surface heights.' });
+    if (!a.path_connection || /not assessed/i.test(a.path_connection)) issues.push({ code: 'path-connection', message: 'The connection to the shared hamlet path is not assessed.' });
+    var classification = a.classification;
+    if (classification === 'not-assessed' || !classification) {
+      if (!a.step_free_entrance) classification = 'not-assessed';
+      else if (storeyCount === 1) classification = 'fully-accessible-single-storey';
+      else if (a.ground_floor_essential_functions && a.ground_floor_bedroom) classification = 'ground-floor-accessible-living';
+      else if (a.stair && a.stair.present) classification = 'potentially-adaptable';
+      else classification = 'unresolved-vertical-access';
+    }
+    if (storeyCount > 1 && classification === 'fully-accessible-single-storey') classification = 'unresolved-vertical-access';
+    var labels = {
+      'fully-accessible-single-storey': 'Single-storey, step-free concept. This is a design target, not a verified fully accessible dwelling.',
+      'ground-floor-accessible-living': 'Ground-floor accessible living arrangement; the upper floor is reached by stairs and is not accessible.',
+      'potentially-adaptable': 'Potentially adaptable, but vertical access and some essential functions are not resolved.',
+      'unresolved-vertical-access': 'Unresolved vertical-access barrier. Do not describe this home as accessible.',
+      'not-assessed': 'Accessibility not assessed.'
+    };
+    return {
+      classification: classification,
+      label: labels[classification],
+      storeyCount: storeyCount,
+      step_free_entrance: !!a.step_free_entrance,
+      ground_floor_essential_functions: !!a.ground_floor_essential_functions,
+      ground_floor_bedroom: !!a.ground_floor_bedroom,
+      entrance_door_width_m: round(doorWidth, 2),
+      entrance_threshold_m: a.entrance_threshold_m,
+      circulation_width_m: a.circulation_width_m,
+      stair: a.stair,
+      lift_reserve: !!(a.stair && a.stair.lift_reserve),
+      vertical_access_strategy: a.vertical_access_strategy,
+      path_connection: a.path_connection,
+      issues: issues,
+      notes: notes,
+      standards: a.standards,
+      assessment: a.assessment,
+      note: 'Qualitative accessibility review against project targets informed by CSA B651 and the Ontario Building Code. No compliance, licence or professional accessibility assessment is claimed.'
+    };
+  }
+
+  /* A derived, non-authoritative single-storey translation of a two-storey
+     home. It keeps the same modules and openings, moves the upper modules to
+     the ground beside the stack and removes stair-dependent access claims.
+     It is a comparison sketch, not a redesign. */
+  function singleStoreyAlternative(input) {
+    var d = Schema.canonicalize(input);
+    if (d.levels.length < 2) return null;
+    var alt = JSON.parse(JSON.stringify(d));
+    var ground = alt.modules.filter(function (m) { return num(m.storey, 0) === 0; });
+    var maxY = ground.reduce(function (t, m) { return Math.max(t, moduleCorners(m).reduce(function (u, p) { return Math.max(u, p[1]); }, -Infinity)); }, 0);
+    var cursor = maxY + 1.5;
+    alt.modules.forEach(function (m) {
+      if (num(m.storey, 0) === 0) return;
+      m.storey = 0;
+      m.elevation_m = alt.foundation.clearance_m;
+      var probe = JSON.parse(JSON.stringify(m));
+      probe.position_m = [0, 0];
+      var ys = moduleCorners(probe).map(function (p) { return p[1]; });
+      var halfY = Math.max.apply(null, ys.map(Math.abs));
+      m.position_m = [m.position_m[0], cursor + halfY];
+      cursor += halfY * 2 + 1.5;
+      m.support = { type: 'ground', references: [], verified: false, note: 'Derived single-storey alternative; support is ground-bearing intent only.' };
+      m.structure = Object.assign({}, m.structure, { cantilever_m: 0, notes: 'Derived single-storey alternative; the original stacking structure is removed.' });
+    });
+    var ids = alt.modules.map(function (m) { return m.id; });
+    alt.porches = alt.porches.filter(function (p) {
+      if (ids.indexOf(p.module) < 0) return false;
+      var m = alt.modules.filter(function (x) { return x.id === p.module; })[0];
+      if (!m) return false;
+      var poly = porchCorners(m, p);
+      return !alt.modules.some(function (other) { return other.id !== m.id && overlapArea(poly, moduleCorners(other)) > 0.1; });
+    });
+    var porchIds = alt.porches.map(function (p) { return p.id; });
+    alt.decks = alt.decks.filter(function (dk) { return porchIds.indexOf(dk.porch) >= 0; });
+    alt.access = Schema.defaultAccess(1);
+    alt.access.step_free_entrance = d.access.step_free_entrance;
+    alt.access.ground_floor_essential_functions = true;
+    alt.access.ground_floor_bedroom = true;
+    alt.access.ground_floor_bathroom = true;
+    alt.access.entrance_door_width_m = d.access.entrance_door_width_m;
+    alt.access.entrance_threshold_m = d.access.entrance_threshold_m;
+    alt.access.circulation_width_m = d.access.circulation_width_m;
+    alt.access.path_connection = d.access.path_connection;
+    alt.access.vertical_access_strategy = 'Derived single-storey alternative; no internal stair.';
+    alt.access.classification = d.access.step_free_entrance ? 'fully-accessible-single-storey' : 'not-assessed';
+    alt.access.stair = { present: false, type: 'none', module: '', location: 'not applicable', width_m: 0, run_m: 0, rise_m: 0, landing: false, lift_reserve: false, note: 'Removed in the single-storey translation.' };
+    alt.id = d.id + '-single-storey-alternative';
+    alt.name = d.name + ' — single-storey translation';
+    alt.role = 'derived-alternative';
+    alt.architecture = Object.assign({}, d.architecture, { intent: 'Derived single-storey translation for floor-area and access comparison. Not a redesign and not professionally reviewed.' });
+    alt.provenance = Object.assign({}, d.provenance, { derived_from: d.id, method: 'Upper modules translated to the ground beside the stack; stair and support intent removed. Geometry-only comparison, not a design proposal.', verification: 'None.' });
+    return Schema.canonicalize(alt);
+  }
+
+  function architectureFeatures(input) {
+    var d = Schema.canonicalize(input);
+    var storeys = d.levels.length;
+    var upper = d.modules.filter(function (m) { return num(m.storey, 0) > 0; });
+    var arrangement;
+    if (d.modules.length === 1) arrangement = 'single';
+    else if (upper.length) {
+      var cross = upper.some(function (u) { return d.modules.some(function (g) { return num(g.storey, 0) < num(u.storey, 0) && Math.abs(((u.rotation_deg || 0) - (g.rotation_deg || 0)) % 180) > 45; }); });
+      var frac = upper.length ? supportAnalysis(d).rows.filter(function (r) { return r.upper; }).reduce(function (t, r) { return Math.max(t, r.support_fraction); }, 0) : 1;
+      arrangement = cross ? 'perpendicular-stack' : frac >= 0.85 ? 'aligned-stack' : 'offset-stack';
+    } else if (d.modules.length === 3) arrangement = 'courtyard-or-linked';
+    else {
+      var rot = Math.abs(((d.modules[0].rotation_deg || 0) - (d.modules[1].rotation_deg || 0)) % 180);
+      arrangement = rot > 45 ? 'l-shape' : 'parallel-pair';
+    }
+    var footprint = metrics(d).groundCoverage_m2;
+    var b = bounds(d);
+    var ratio = b.height ? b.width / b.height : 1;
+    var footprintType = arrangement === 'courtyard-or-linked' ? 'courtyard' : arrangement === 'l-shape' ? 'l-shaped' : arrangement === 'perpendicular-stack' ? 'cross' : ratio > 3 ? 'linear' : ratio < 1.4 ? 'compact' : 'rectangular';
+    var roof = d.roof_form.type;
+    var entrance = 'south';
+    var door = null;
+    d.modules.forEach(function (m) { (m.openings || []).forEach(function (o) { if (!door && (o.type === 'door' || o.type === 'sliding-door')) door = { m: m, o: o }; }); });
+    if (door) entrance = worldFace(door.m, door.o.face);
+    var circulation = storeys > 1 ? (d.access.stair && d.access.stair.present ? 'internal-stair' : 'unresolved-vertical-access') : 'single-level';
+    return {
+      id: d.id, name: d.name,
+      storeys: storeys,
+      arrangement: arrangement,
+      footprint_type: footprintType,
+      roof_type: roof,
+      entrance_orientation: entrance,
+      circulation_type: circulation,
+      proportion: round(b.height ? b.width / b.height : 0, 2),
+      gross_floor_area_m2: metrics(d).grossFloorArea_m2,
+      ground_coverage_m2: footprint,
+      building_height_m: metrics(d).buildingHeight_m
+    };
+  }
+
+  var PRIMARY_DIVERSITY_FEATURES = ['storeys', 'arrangement', 'footprint_type', 'roof_type', 'entrance_orientation', 'circulation_type'];
+  function architecturalSimilarity(a, b) {
+    var fa = architectureFeatures(a), fb = architectureFeatures(b);
+    var known = PRIMARY_DIVERSITY_FEATURES.filter(function (k) { return fa[k] != null && fb[k] != null; });
+    var matching = known.filter(function (k) { return String(fa[k]) === String(fb[k]); });
+    var proportionMatch = Math.abs((fa.proportion || 0) - (fb.proportion || 0)) <= 0.35;
+    var score = known.length ? (matching.length + (proportionMatch ? 1 : 0)) / (known.length + 1) : null;
+    return { score: score == null ? null : round(score, 3), comparable: known.length > 0, matchingFeatures: matching, proportionMatch: proportionMatch, features: [fa, fb] };
+  }
+  function findSimilarHomes(homes, threshold) {
+    var t = threshold == null ? 0.8 : threshold;
+    var out = [];
+    for (var i = 0; i < homes.length; i++) {
+      for (var j = i + 1; j < homes.length; j++) {
+        var r = architecturalSimilarity(homes[i], homes[j]);
+        if (r.comparable && r.score >= t) out.push({ homes: [homes[i].id, homes[j].id], names: [homes[i].name, homes[j].name], score: r.score, matchingFeatures: r.matchingFeatures, proportionMatch: r.proportionMatch });
+      }
+    }
+    return out;
+  }
+
+  function sustainabilityProfile(input) {
+    var d = Schema.canonicalize(input);
+    var m = metrics(d);
+    var t = thermalProfile(d);
+    var blocks = d.modules.map(function (mod) {
+      var width = mod.nominal.width_m + 2 * envelopeThickness(mod);
+      return { id: mod.id, type: mod.type, length_m: mod.nominal.length_m, width_m: round(width, 2), height_m: mod.nominal.height_m, oversize_width: width > 3.0, oversize_length: mod.nominal.length_m > 13.6 };
+    });
+    var strengths = [], tradeoffs = [];
+    if (d.material_intent.reclaimed_containers) strengths.push('Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence.');
+    if (d.thermal.rainscreen_ventilation) strengths.push('Ventilated rainscreen and replaceable cladding support repair and drying.');
+    if (d.foundation.no_compaction) strengths.push('Point-load foundation intent avoids a slab, fill and compaction.');
+    if (m.storeyCount > 1) strengths.push('A smaller ground footprint may reduce foundation and site disturbance, but it adds structure, stairs and vertical-access complexity.');
+    if (m.groundCoverage_m2 > m.grossFloorArea_m2 * 0.95) tradeoffs.push('Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.');
+    if (m.storeyCount > 1) tradeoffs.push('Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.');
+    if (m.envelopeArea_m2 > 0 && m.grossFloorArea_m2 > 0) tradeoffs.push('Exposed envelope is about ' + round(m.envelopeArea_m2 / m.grossFloorArea_m2, 2) + ' m² per m² of gross floor area; a compact form reduces this, but openings and thermal bridges still matter.');
+    if (d.roof_form && d.roof_form.green_roof) tradeoffs.push('A green roof adds saturated load, drainage, fire and maintenance complexity; it is not assumed to be feasible.');
+    if (blocks.some(function (b) { return b.oversize_width; })) tradeoffs.push('Insulated modules may exceed about 3.0 m transport width; oversize permits and route surveys are likely.');
+    return {
+      container_count: d.modules.length,
+      containers_reused_assumption: !!d.material_intent.reclaimed_containers,
+      gross_floor_area_m2: m.grossFloorArea_m2,
+      ground_coverage_m2: m.groundCoverage_m2,
+      usable_floor_area_m2: null,
+      usable_floor_area_note: 'Usable floor area cannot be calculated reliably from nominal container geometry. It excludes structure, services, circulation, partitions and inaccessible zones.',
+      envelope_area_m2: m.envelopeArea_m2,
+      roof_area_m2: m.roofArea_m2,
+      window_area_m2: m.windowArea_m2,
+      glazing_by_orientation: exposureProfile(d).glazing_by_face,
+      roof_type: m.roofType,
+      solar_ready_area_m2: m.solarArea_m2,
+      insulation: { wall_mm: t.wall_insulation_mm, roof_mm: t.roof_insulation_mm, floor_mm: t.floor_insulation_mm, assembly: t.assembly, thermal_bridges: t.thermal_bridge_mitigation },
+      foundation: { system: d.foundation.system, clearance_m: d.foundation.clearance_m, no_compaction: d.foundation.no_compaction },
+      transport: blocks,
+      lifting: { crane_lifts: d.modules.length, note: 'One lift per module is assumed for comparison; the actual lift plan and crane position need review.' },
+      material_reuse: (d.materials || []).map(function (x) { return x.component + ': ' + x.material; }),
+      maintenance: ['Inspect cladding, sealant, cavity, fasteners and vegetation twice a year and after severe weather.', 'Inspect roof drainage, snow accumulation and PV mounting annually.'],
+      qualitative: { strengths: strengths, tradeoffs: tradeoffs },
+      assumptions: ['Reused ISO containers are the module source; condition and provenance are not verified.', 'Nominal container dimensions are used; insulation and cladding increase the exposed envelope.', 'No structural, energy, carbon or cost model has been run.'],
+      missing_inputs: ['Verified container condition and provenance', 'Structural design and connection details', 'Geotechnical and foundation design', 'Energy and carbon data', 'Cost and labour rates', 'Local material transport distances', 'Whole-life maintenance and replacement schedule'],
+      comparator: 'A conventional timber-frame home is a valid comparator. This concept does not claim that container construction is environmentally preferable to timber construction.',
+      note: 'Geometry-derived areas only. No carbon, energy, cost or durability result is invented.'
+    };
+  }
+
+
   function polygonArea(poly) {
     var a = 0;
     for (var i = 0; i < poly.length; i++) { var p = poly[i], q = poly[(i + 1) % poly.length]; a += p[0] * q[1] - q[0] * p[1]; }
@@ -166,10 +576,37 @@
     var warn = function (code, message, category) { warnings.push({ code: code, severity: category || 'engineering', message: message }); };
     if (d.modules.length < 1) err('no-modules', 'A design needs at least one container.');
     if (d.modules.length > 3) err('too-many-modules', 'The Design Lab supports one to three containers.');
+    if (d.maxOccupiedStoreys > Schema.MAX_OCCUPIED_STOREYS) err('too-many-storeys', 'A residence may not exceed two occupied storeys.');
+    (d.modules || []).forEach(function (m) {
+      if (num(m.storey, 0) > 1) err('too-many-storeys', 'Module ' + m.id + ' is on storey ' + num(m.storey, 0) + '; a residence may not exceed two occupied storeys.');
+      if (num(m.storey, 0) < 0) err('negative-storey', 'Module ' + m.id + ' has a negative storey.');
+      if (moduleBase(m) < -0.01) err('negative-elevation', 'Module ' + m.id + ' has a negative elevation.');
+    });
     for (var i = 0; i < d.modules.length; i++) {
       for (var j = i + 1; j < d.modules.length; j++) {
-        if (polygonsOverlap(moduleCorners(d.modules[i]), moduleCorners(d.modules[j]))) err('module-overlap', 'Containers ' + d.modules[i].id + ' and ' + d.modules[j].id + ' overlap. Move or rotate one of them.');
+        var a = d.modules[i], b = d.modules[j];
+        var plan = polygonsOverlap(moduleCorners(a), moduleCorners(b));
+        if (!plan) continue;
+        var za = [moduleBase(a), moduleTop(a)], zb = [moduleBase(b), moduleTop(b)];
+        var zOverlap = za[0] < zb[1] - 0.002 && zb[0] < za[1] - 0.002;
+        if (zOverlap) err('module-collision-3d', 'Containers ' + a.id + ' and ' + b.id + ' collide in three dimensions. Modules may overlap in plan only when they are on different elevations.');
+        else warn('module-overlap-in-plan', 'Containers ' + a.id + ' and ' + b.id + ' overlap in plan at different elevations. Verify the support path, floor assembly, fire separation and construction sequence.', 'engineering');
       }
+    }
+    var support = supportAnalysis(d);
+    support.rows.filter(function (r) { return r.upper; }).forEach(function (r) {
+      if (!r.declared.length) warn('support-not-declared', r.module + ' is on an upper storey but declares no supporting module. Support intent is uncertain; report uncertainty rather than assuming a load path.', 'engineering');
+      if (r.support_fraction <= 0.001) warn('unsupported-upper', r.module + ' has no supporting module below. It requires an engineered transfer structure, or the design is not buildable as drawn.', 'engineering');
+      else if (r.support_fraction < 0.999) warn('partial-support', r.module + ' is supported over ' + Math.round(r.support_fraction * 100) + '% of its footprint (' + n(r.supported_area_m2) + ' m² of ' + n(r.footprint_m2) + ' m²). The unsupported area needs engineered transfer and cantilever review; no arbitrary cantilever limit is applied.', 'engineering');
+      if (r.vertical_gap_m != null) warn('inter-storey-gap', r.module + ' sits ' + n(r.vertical_gap_m) + ' m above the module below. The inter-storey floor, connectors and fire separation are not represented.', 'engineering');
+      if (r.declared_missing.length) warn('support-reference-mismatch', r.module + ' names ' + r.declared_missing.join(', ') + ' as support, but that module does not provide a bearing overlap at the recorded elevation.', 'engineering');
+      if (!(r.contacts || []).length) warn('no-support-contact', r.module + ' has no lower module in plan contact. An independent structure or cantilever is implied.', 'engineering');
+    });
+    if (support.stacked) {
+      warn('stacked-lateral', 'Stacked modules need a designed lateral-force system, inter-module connections, fire separation and a crane/lift sequence. Bearing alone is not a structural design.', 'engineering');
+      warn('stacked-foundation', 'Stacking changes foundation reactions, uplift and point loads. Foundation design needs geotechnical and structural review.', 'engineering');
+      if (!(d.access.stair && d.access.stair.present)) warn('missing-stair', 'An upper storey is present but no stair is recorded. Vertical access is unresolved.', 'accessibility');
+      else if (d.access.stair.width_m < 0.86) warn('stair-width', 'The recorded stair width is ' + n(d.access.stair.width_m) + ' m; verify clear width, handrails, landings, guarding and egress.', 'accessibility');
     }
     d.modules.forEach(function (m) {
       (m.openings || []).forEach(function (o) {
@@ -196,7 +633,7 @@
         });
       });
       if (m.structure && m.structure.wall_removal === 'large') warn('wall-removal', m.id + ' assumes a large structural wall removal. Engineered framing and transfer beams are required.', 'engineering');
-      if (m.structure && m.structure.cantilever_m > 0.6) warn('cantilever', m.id + ' has a conceptual cantilever of ' + n(m.structure.cantilever_m) + ' m; support and uplift need review.', 'engineering');
+      if (m.structure && m.structure.cantilever_m > 0) warn('cantilever', m.id + ' records a ' + n(m.structure.cantilever_m) + ' m conceptual cantilever. No cantilever length is treated as acceptable by this model; support, tie-down, deflection and uplift need engineering review.', 'engineering');
       var doors = (m.openings || []).filter(function (o) { return o.type === 'door' || o.type === 'sliding-door'; });
       doors.forEach(function (a, di) {
         doors.slice(di + 1).forEach(function (b) {
@@ -227,7 +664,9 @@
       var poly = deckCorners(m, p, dk);
       d.modules.forEach(function (other) {
         if (other.id === m.id) return;
-        if (overlapArea(poly, moduleCorners(other)) > 0.1) err('deck-overlap', 'Deck ' + dk.id + ' overlaps container ' + other.id + '.');
+        if (overlapArea(poly, moduleCorners(other)) <= 0.1) return;
+        if (moduleBase(m) < moduleTop(other) - 0.002 && moduleBase(other) < moduleTop(m) - 0.002) err('deck-overlap', 'Deck ' + dk.id + ' overlaps container ' + other.id + ' at the same elevation.');
+        else warn('deck-under-module', 'Deck ' + dk.id + ' sits below container ' + other.id + '. Headroom, drainage, support and fire separation need review.', 'engineering');
       });
     });
     (d.trellises || []).forEach(function (t) {
@@ -249,18 +688,25 @@
     });
     d.connections.forEach(function (c) {
       var poly = connectionCorners(c);
+      var cz0 = d.foundation.clearance_m, cz1 = cz0 + 2.65;
       d.modules.forEach(function (m) {
         var area = overlapArea(poly, moduleCorners(m));
-        if (area > 0.15) err('connection-overlap', 'Connection ' + c.id + ' overlaps container ' + m.id + ' by ' + n(area) + ' m².');
+        if (area <= 0.15) return;
+        if (cz0 < moduleTop(m) - 0.002 && moduleBase(m) < cz1 - 0.002) err('connection-overlap', 'Connection ' + c.id + ' overlaps container ' + m.id + ' by ' + n(area) + ' m² at the same elevation.');
+        else warn('connection-under-module', 'Connection ' + c.id + ' sits below container ' + m.id + '. Covered circulation is legitimate, but headroom, drainage, fire separation and support need review.', 'engineering');
       });
     });
     d.porches.forEach(function (p) {
       var m = moduleById(d, p.module);
       if (!m) return;
       var poly = porchCorners(m, p);
+      var pz0 = moduleBase(m), pz1 = moduleTop(m);
       d.modules.forEach(function (other) {
         if (other.id === m.id) return;
-        if (overlapArea(poly, moduleCorners(other)) > 0.1) err('porch-overlap', 'Porch ' + p.id + ' overlaps container ' + other.id + '.');
+        if (overlapArea(poly, moduleCorners(other)) <= 0.1) return;
+        var oz0 = moduleBase(other), oz1 = moduleTop(other);
+        if (pz0 < oz1 - 0.002 && oz0 < pz1 - 0.002) err('porch-overlap', 'Porch ' + p.id + ' overlaps container ' + other.id + ' at the same elevation.');
+        else warn('porch-under-module', 'Porch ' + p.id + ' sits below container ' + other.id + '. Covered outdoor space is legitimate, but headroom, drainage, fire separation, support and the upper module’s loads need review.', 'engineering');
       });
     });
     if (d.modules.length > 1) warn('crane', 'More than one container means a staged lift and a crane/installation review.', 'engineering');
@@ -295,6 +741,24 @@
       if (d.envelope.assembly === 'spray-foam') warn('envelope-spray-foam', 'Exterior closed-cell spray foam needs protection from UV and fire, a compatible substrate, controlled thickness and a moisture strategy; do not assume it is vapour-safe.', 'engineering');
     }
     if (d.connections.some(function (c) { return c.glazed && (c.glazing_area_m2 || 0) > 12; })) warn('large-glazed-hall', 'A large glazed hall or veranda needs insulated sliding/folding doors, thermal breaks and a condensation strategy. Do not assume a glazed garage door is suitable.', 'engineering');
+
+    /* Vertical geometry, roof and accessibility checks. */
+    d.modules.forEach(function (m) {
+      if (moduleBase(m) + 0.01 < d.foundation.clearance_m) warn('elevation-below-clearance', m.id + ' is set at ' + n(moduleBase(m)) + ' m but the foundation clearance is ' + n(d.foundation.clearance_m) + ' m. The floor, foundation and drainage relationship is inconsistent.', 'engineering');
+      if (moduleTop(m) > 8) warn('building-height', m.id + ' reaches ' + n(moduleTop(m)) + ' m above grade before the roof. Height, wind, fire access and planning limits need review.', 'engineering');
+    });
+    var rg = roofGeometry(d);
+    if (rg.type === 'flat') warn('roof-drainage', 'A flat roof needs a designed drainage strategy: slope, outlets, overflow, ponding, snow and maintenance access are not resolved by the concept.', 'engineering');
+    if (rg.type === 'butterfly') warn('roof-butterfly', 'A butterfly roof concentrates water at a central valley. Drainage, snow drift, overflow and structural loading need review.', 'engineering');
+    if (rg.type === 'green' || rg.green) warn('roof-green', 'A green roof adds saturated load, drainage, root protection, fire and maintenance complexity. Do not assume it is feasible.', 'engineering');
+    if (rg.type === 'canopy') warn('roof-canopy', 'A roof canopy is not an occupied storey. Fixings, uplift, snow drift and thermal continuity at the junction need review.', 'engineering');
+    if (rg.type === 'solar-ready') warn('roof-solar-ready', 'A solar-ready roof records mounting intent only. Roof structure, wind uplift, snow shedding, fire access and electrical design need review.', 'engineering');
+    if (rg.top_m > 0) warn('roof-wind', 'Roof overhangs, ridges, valleys and parapets change wind uplift and snow drift. Roof geometry is conceptual.', 'engineering');
+    var access = accessibilityProfile(d);
+    access.issues.forEach(function (i) { warn(i.code, i.message, 'accessibility'); });
+    if (d.levels.length > 1 && !d.access.ground_floor_essential_functions) warn('no-ground-functions', 'A two-storey home does not record ground-floor essential living functions. It cannot be described as offering accessible living.', 'accessibility');
+    if (d.review && d.review.structural === 'professionally-verified' && !Schema.hasProfessionalAssessment(d.review)) warn('review-claim', 'The structural review register claims professional verification without a documented, attributable assessment. The model does not treat that claim as evidence.', 'review');
+    if (d.review && d.review.accessibility === 'professionally-verified' && !Schema.hasProfessionalAssessment(d.review)) warn('review-claim-accessibility', 'The accessibility review register claims professional verification without a documented, attributable assessment.', 'review');
     return { errors: errors, warnings: warnings, ok: errors.length === 0 };
   }
 
@@ -302,11 +766,16 @@
     var schema = Schema.validateSchema(design);
     var geo = validateGeometry(design);
     var items = [];
-    schema.errors.forEach(function (e) { items.push({ category: 'invalid', code: e.code, message: e.message }); });
-    schema.warnings.forEach(function (w) { items.push({ category: 'review', code: w.code, message: w.message }); });
-    geo.errors.forEach(function (e) { items.push({ category: 'invalid', code: e.code, message: e.message }); });
-    geo.warnings.forEach(function (w) { items.push({ category: w.severity || 'engineering', code: w.code, message: w.message }); });
-    return { ok: items.filter(function (i) { return i.category === 'invalid'; }).length === 0, items: items, warnings: geo.warnings };
+    schema.errors.forEach(function (e) { items.push({ category: 'invalid-data', code: e.code, message: e.message }); });
+    schema.warnings.forEach(function (w) { items.push({ category: 'professional-review', code: w.code, message: w.message }); });
+    geo.errors.forEach(function (e) { items.push({ category: 'invalid-geometry', code: e.code, message: e.message }); });
+    geo.warnings.forEach(function (w) {
+      var sev = w.severity || 'engineering';
+      var category = sev === 'accessibility' ? 'accessibility' : sev === 'review' ? 'professional-review' : 'structural';
+      items.push({ category: category, code: w.code, message: w.message });
+    });
+    var invalid = items.filter(function (i) { return i.category === 'invalid-data' || i.category === 'invalid-geometry'; });
+    return { ok: invalid.length === 0, items: items, warnings: geo.warnings, invalid: invalid };
   }
 
   var ENVELOPE_LABEL = { 'rigid-board': 'Rigid board', 'mineral-wool': 'Mineral wool', 'wood-fibre': 'Wood fibre', 'spray-foam': 'Exterior closed-cell spray foam', 'hybrid': 'Hybrid wood fibre + mineral wool' };
@@ -522,8 +991,10 @@
     var pre = opts.idPrefix || 'plan';
     var out = [];
     var planLabels = [];
-    var title = d.name + ' concept plan';
-    var desc = 'Dimensioned concept plan for ' + d.name + '. ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + ', ' + Schema.summary(d).nominalFootprint_m2 + ' square metres nominal footprint. ' + Schema.summary(d).zoneCount + ' interior zones and ' + Schema.summary(d).openingCount + ' openings. Dimensions are nominal container sizes, not verified construction dimensions.';
+    var planStoreyLabel = opts.storey === undefined || opts.storey === null || opts.storey === 'all' ? 'all levels' : 'level ' + (Number(opts.storey) + 1);
+    var planMetrics = metrics(d);
+    var title = d.name + ' concept plan (' + planStoreyLabel + ')';
+    var desc = 'Concept plan for ' + d.name + ' showing ' + planStoreyLabel + '. ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + ', ' + planMetrics.groundCoverage_m2 + ' square metres projected ground coverage and ' + planMetrics.grossFloorArea_m2 + ' square metres gross floor area across ' + d.levels.length + ' occupied storey' + (d.levels.length === 1 ? '' : 's') + '. ' + Schema.summary(d).zoneCount + ' interior zones and ' + Schema.summary(d).openingCount + ' openings. Modules on other levels are shown as muted outlines where a single level is selected. Dimensions are nominal container sizes, not verified construction dimensions.';
     out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="' + (opts.interactive ? 'group' : 'img') + '" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + ' data-plan-scale="' + n(scale) + '" data-plan-width="' + W + '"' + '>');
     out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
     out.push('<defs><marker id="' + pre + '-arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#245a73"/></marker><pattern id="' + pre + '-porch" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#d8e6d3"/><path d="M0 7L7 0" stroke="#6b9277" stroke-width="0.8"/></pattern><pattern id="' + pre + '-deck" width="9" height="5" patternUnits="userSpaceOnUse"><rect width="9" height="5" fill="#d9c3a1"/><path d="M0 2.5H9" stroke="#9a7750" stroke-width="0.7"/></pattern><pattern id="' + pre + '-link" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#e4d7bf"/><path d="M0 6L6 0" stroke="#9a8765" stroke-width="0.7"/></pattern></defs>');
@@ -579,13 +1050,27 @@
       var c = P([(poly[0][0] + poly[2][0]) / 2, (poly[0][1] + poly[2][1]) / 2]);
       planLabels.push(text(c[0] - 34, c[1] + 3, VEG_LABEL[v.type] || v.type, 8.5, ' fill="#1d392c" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
     });
-    // modules
+    // modules. A numeric storey shows that floor; other floors stay visible
+    // as muted outlines so an upper-floor selection keeps its context.
+    var storeyFilter = opts.storey === undefined || opts.storey === null || opts.storey === 'all' ? 'all' : Number(opts.storey);
+    var levelCount = d.levels.length;
     d.modules.forEach(function (m) {
+      var onFilter = storeyFilter === 'all' || num(m.storey, 0) === storeyFilter;
+      var showSolid = storeyFilter === 'all' ? (levelCount === 1 || num(m.storey, 0) === 0) : onFilter;
       var ins = m.insulation.thickness_mm / 1000 + 0.03;
       var outer = [[-m.nominal.length_m / 2 - ins, -m.nominal.width_m / 2 - ins], [m.nominal.length_m / 2 + ins, -m.nominal.width_m / 2 - ins], [m.nominal.length_m / 2 + ins, m.nominal.width_m / 2 + ins], [-m.nominal.length_m / 2 - ins, m.nominal.width_m / 2 + ins]].map(function (q) { return transform(m, q); });
+      if (!showSolid) {
+        out.push('<path d="' + path(outer) + '" fill="#f1ecdf" fill-opacity="0.55" stroke="#7d8b73" stroke-width="1.4" stroke-dasharray="8 5"/>');
+        var mpMuted = moduleCorners(m).map(P);
+        var mmx = Math.min.apply(null, mpMuted.map(function (q) { return q[0]; }));
+        var mmy = Math.min.apply(null, mpMuted.map(function (q) { return q[1]; }));
+        planLabels.push(text(mmx + 2, mmy - 10, m.id.toUpperCase() + ' · LEVEL ' + (num(m.storey, 0) + 1) + ' · outline', 9, ' fill="#6c7a66" font-weight="700" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
+        out.push('<path class="plan-module-hit" data-module-id="' + esc(m.id) + '" d="' + path(moduleCorners(m)) + '" fill="transparent" pointer-events="all" tabindex="0" role="button" aria-pressed="' + (opts.selectedModule === m.id ? 'true' : 'false') + '" aria-describedby="plan-keyboard-help" aria-label="Module ' + esc(m.id) + ', ' + esc(m.type) + ', level ' + (num(m.storey, 0) + 1) + ', shown as a muted outline because another level is being edited."/>');
+        return;
+      }
       out.push('<path d="' + path(outer) + '" fill="#e9e2ce" stroke="#7d8b73" stroke-width="1"/>');
       if (opts.selectedModule === m.id) out.push('<path class="plan-selected" d="' + path(outer) + '" fill="none" stroke="#b45e1c" stroke-width="4" stroke-dasharray="10 4"/>');
-      out.push('<path d="' + path(moduleCorners(m)) + '" fill="#' + (CC[m.cladding.type] || '#9a7350').slice(1) + '" fill-opacity="0.18" stroke="#253a33" stroke-width="2.2"/>');
+      out.push('<path d="' + path(moduleCorners(m)) + '" fill="#' + (CC[m.cladding.type] || '#9a7350').slice(1) + '" fill-opacity="0.18" stroke="#253a33" stroke-width="2.2" ' + (num(m.storey, 0) > 0 && storeyFilter === 'all' ? 'stroke-dasharray="12 5"' : '') + '/>');
       (m.zones || []).forEach(function (z) {
         var L = m.nominal.length_m, Wd = m.nominal.width_m;
         var zx0 = -L / 2 + z.start_m, zx1 = -L / 2 + z.end_m;
@@ -608,7 +1093,7 @@
       var mp = moduleCorners(m).map(P);
       var mx = Math.min.apply(null, mp.map(function (q) { return q[0]; }));
       var my = Math.min.apply(null, mp.map(function (q) { return q[1]; }));
-      out.push(text(mx + 2, my - 26, m.id.toUpperCase() + ' · ' + m.type, 10, ' font-weight="800" stroke="#faf8f2" stroke-width="2.6" paint-order="stroke"'));
+      out.push(text(mx + 2, my - 26, m.id.toUpperCase() + ' · ' + m.type + ' · L' + (num(m.storey, 0) + 1) + ' @ ' + n(moduleBase(m), 2) + ' m', 10, ' font-weight="800" stroke="#faf8f2" stroke-width="2.6" paint-order="stroke"'));
       if (m.roof.solar && m.solar && m.solar.enabled && !(d.solar_array && d.solar_array.enabled)) {
         var sc = P(m.position_m);
         var sa = (m.solar.azimuth_deg || 180) * DEG;
@@ -617,9 +1102,12 @@
         out.push('<line x1="' + n(sc[0]) + '" y1="' + n(sc[1]) + '" x2="' + n(sx) + '" y2="' + n(sy) + '" stroke="#245a73" stroke-width="2.2" marker-end="url(#' + pre + '-arrow)"/>');
         out.push(text(sx + 4, sy + 4, 'solar ' + n(m.solar.tilt_deg, 0) + '° / ' + n(m.solar.azimuth_deg, 0) + '°', 8, ' fill="#245a73" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
       }
-      out.push('<path class="plan-module-hit" data-module-id="' + esc(m.id) + '" d="' + path(moduleCorners(m)) + '" fill="transparent" pointer-events="all" tabindex="0" role="button" aria-pressed="' + (opts.selectedModule === m.id ? 'true' : 'false') + '" aria-describedby="plan-keyboard-help" aria-label="Module ' + esc(m.id) + ', ' + esc(m.type) + ', at ' + n(m.position_m[0]) + ', ' + n(m.position_m[1]) + ' metres. Select, then drag or use arrow keys to move; R rotates."/>');
+      out.push('<path class="plan-module-hit" data-module-id="' + esc(m.id) + '" d="' + path(moduleCorners(m)) + '" fill="transparent" pointer-events="all" tabindex="0" role="button" aria-pressed="' + (opts.selectedModule === m.id ? 'true' : 'false') + '" aria-describedby="plan-keyboard-help" aria-label="Module ' + esc(m.id) + ', ' + esc(m.type) + ', level ' + (num(m.storey, 0) + 1) + ', base elevation ' + n(moduleBase(m), 2) + ' metres, at ' + n(m.position_m[0]) + ', ' + n(m.position_m[1]) + ' metres. Select, then drag or use arrow keys to move; R rotates."/>');
     });
     planLabels.forEach(function (label) { out.push(label); });
+    if (storeyFilter !== 'all' && !d.modules.some(function (m) { return num(m.storey, 0) === storeyFilter; })) {
+      out.push(text(W / 2 - 120, H - 72, 'No modules on this level. Choose another level or add a stacked module.', 12, ' fill="#8f5a21" font-weight="700"'));
+    }
     if (d.entry_shelter && d.entry_shelter.enabled) {
       var sm = d.modules[0];
       var sg = shelterGeometry(sm, d.entry_shelter);
@@ -629,22 +1117,31 @@
       var sc = P([(sp[0][0] + sp[2][0]) / 2, (sp[0][1] + sp[2][1]) / 2]);
       out.push(text(sc[0] + 3, sc[1] - 3, 'entry shelter', 8, ' fill="#245244" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
     }
-    if (d.roof_form && (d.roof_form.type === 'south-shed' || d.roof_form.type === 'gable')) {
-      var roofPolys = d.modules.map(moduleCorners).concat(d.connections.filter(function (c) { return c.glazed; }).map(connectionCorners));
-      var rminX = Infinity, rminY = Infinity, rmaxX = -Infinity, rmaxY = -Infinity;
-      roofPolys.forEach(function (poly) { poly.forEach(function (p) { rminX = Math.min(rminX, p[0]); rmaxX = Math.max(rmaxX, p[0]); rminY = Math.min(rminY, p[1]); rmaxY = Math.max(rmaxY, p[1]); }); });
-      var oh = d.roof_form.overhang_m || 0.6;
-      var rp = [[rminX - oh, rminY - oh], [rmaxX + oh, rminY - oh], [rmaxX + oh, rmaxY + oh], [rminX - oh, rmaxY + oh]].map(function (q) { return transform({ position_m: [0, 0], rotation_deg: 0 }, q); });
-      var isGable = d.roof_form.type === 'gable';
+    if (d.roof_form) {
+      var rgPlan = roofGeometry(d);
+      var rminX = rgPlan.minX, rminY = rgPlan.minY, rmaxX = rgPlan.maxX, rmaxY = rgPlan.maxY;
+      var rp = [[rminX, rminY], [rmaxX, rminY], [rmaxX, rmaxY], [rminX, rmaxY]];
+      var roofLabel = { gable: 'gable roof', shed: 'shed roof', butterfly: 'butterfly roof', flat: 'flat roof', canopy: 'roof canopy (not occupied)', green: 'green roof concept', 'solar-ready': 'solar-ready shed roof' }[rgPlan.type] || rgPlan.type + ' roof';
       out.push('<path d="' + path(rp) + '" fill="none" stroke="#245244" stroke-width="1.5" stroke-dasharray="7 4"/>');
-      if (isGable) { var ridge = (rminY + rmaxY) / 2; var rl = P([rminX, ridge]); var rr = P([rmaxX, ridge]); out.push('<line x1="' + n(rl[0]) + '" y1="' + n(rl[1]) + '" x2="' + n(rr[0]) + '" y2="' + n(rr[1]) + '" stroke="#245244" stroke-width="2"/>'); }
-      var rc = P([(rminX + rmaxX) / 2, (rminY + rmaxY) / 2]);
+      if (rgPlan.type === 'gable' || rgPlan.type === 'butterfly') {
+        var ridge = (rminY + rmaxY) / 2;
+        var rl = P([rminX, ridge]), rr = P([rmaxX, ridge]);
+        out.push('<line x1="' + n(rl[0]) + '" y1="' + n(rl[1]) + '" x2="' + n(rr[0]) + '" y2="' + n(rr[1]) + '" stroke="#245244" stroke-width="2" ' + (rgPlan.type === 'butterfly' ? 'stroke-dasharray="4 3"' : '') + '/>');
+        if (rgPlan.type === 'butterfly') out.push(text(rl[0] + 6, rl[1] - 6, 'valley / drainage', 8, ' fill="#8f5a21" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
+      }
+      if (rgPlan.type === 'shed' || rgPlan.type === 'solar-ready') {
+        var lowA = P([rminX + (rmaxX - rminX) * 0.15, rmaxY - 0.5]), lowB = P([rminX + (rmaxX - rminX) * 0.85, rmaxY - 0.5]);
+        out.push('<line x1="' + n(lowA[0]) + '" y1="' + n(lowA[1]) + '" x2="' + n(lowB[0]) + '" y2="' + n(lowB[1]) + '" stroke="#245244" stroke-width="2.4" marker-end="url(#' + pre + '-arrow)"/>');
+      }
+      if (rgPlan.type === 'green') {
+        for (var gh = 0; gh < 6; gh++) out.push('<line x1="' + n(P([rminX + 0.4 + gh * (rmaxX - rminX) / 6, rminY + 0.4])[0]) + '" y1="' + n(P([rminX + 0.4 + gh * (rmaxX - rminX) / 6, rminY + 0.4])[1]) + '" x2="' + n(P([rminX + 0.4 + gh * (rmaxX - rminX) / 6, rmaxY - 0.4])[0]) + '" y2="' + n(P([rminX + 0.4 + gh * (rmaxX - rminX) / 6, rmaxY - 0.4])[1]) + '" stroke="#31573f" stroke-width="0.8" stroke-opacity="0.5"/>');
+      }
       var sa = (d.solar_array && d.solar_array.azimuth_deg || 180) * DEG;
       var sv = [Math.sin(sa), Math.cos(sa)];
       var saBase = P([(rminX + rmaxX) / 2, rmaxY - 0.8]);
       out.push('<line x1="' + n(saBase[0]) + '" y1="' + n(saBase[1]) + '" x2="' + n(saBase[0] + sv[0] * 48) + '" y2="' + n(saBase[1] + sv[1] * 48) + '" stroke="#245a73" stroke-width="2.4" marker-end="url(#' + pre + '-arrow)"/>');
-      out.push(text(W - 40, 122, isGable ? 'gable roof · PV south only' : 'shed roof · PV south only', 9, ' text-anchor="end" fill="#245244" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
-      out.push(text(W - 40, 134, 'PV ' + n((d.solar_array && d.solar_array.tilt_deg) || 39, 0) + '° / ' + n((d.solar_array && d.solar_array.azimuth_deg) || 180, 0) + '°', 9, ' text-anchor="end" fill="#245a73" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
+      out.push(text(W - 40, 122, roofLabel + ' · PV south only', 9, ' text-anchor="end" fill="#245244" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
+      out.push(text(W - 40, 134, 'solar ' + n((d.solar_array && d.solar_array.tilt_deg) || 39, 0) + '° / ' + n((d.solar_array && d.solar_array.azimuth_deg) || 180, 0) + '° · PV', 9, ' text-anchor="end" fill="#245a73" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
     }
     // dimensions
     var topY = oy + b.minY * scale - 30;
@@ -769,7 +1266,8 @@
     }
     var pre = opts.idPrefix || (cut ? 'cutaway' : winter ? 'winter' : focus ? 'outdoor' : 'exterior');
     var title = d.name + (cut ? ' roof-off cutaway' : focus ? ' porch and deck detail' : winter ? ' winter exterior concept' : ' exterior concept');
-    var desc = (cut ? 'Roof-off cutaway' : focus ? 'Screened porch and deck detail' : winter ? 'Winter exterior axonometric' : 'Exterior axonometric') + ' of ' + d.name + ', ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + '. The view is generated from the same multi-container geometry as the plan and uses no WebGL. Conceptual only.';
+    var aig = metrics(d);
+    var desc = (cut ? 'Roof-off cutaway' : focus ? 'Screened porch and deck detail' : winter ? 'Winter exterior axonometric' : 'Exterior axonometric') + ' of ' + d.name + ', ' + d.modules.length + ' container module' + (d.modules.length === 1 ? '' : 's') + ' across ' + d.levels.length + ' occupied storey' + (d.levels.length === 1 ? '' : 's') + ', ' + n(aig.buildingHeight_m, 2) + ' metres to the roof. Upper modules are drawn at their explicit elevations. The view is generated from the same three-dimensional geometry as the plans, elevations and section and uses no WebGL. Conceptual only.';
     var out = [];
     out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + viewBox + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + ' data-plan-scale="' + n(scale) + '" data-plan-width="' + W + '"' + '>');
     out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
@@ -875,34 +1373,61 @@
         return s;
       } });
     });
-    if (!cut && d.roof_form && (d.roof_form.type === 'south-shed' || d.roof_form.type === 'gable')) {
-      var roofPolys = d.modules.map(moduleCorners).concat(d.connections.filter(function (c) { return c.glazed; }).map(connectionCorners));
-      var rminX = Infinity, rminY = Infinity, rmaxX = -Infinity, rmaxY = -Infinity;
-      roofPolys.forEach(function (poly) { poly.forEach(function (p) { rminX = Math.min(rminX, p[0]); rmaxX = Math.max(rmaxX, p[0]); rminY = Math.min(rminY, p[1]); rmaxY = Math.max(rmaxY, p[1]); }); });
-      var oh = d.roof_form.overhang_m || 0.6;
-      rminX -= oh; rmaxX += oh; rminY -= oh; rmaxY += oh;
-      var zEave = (d.foundation ? d.foundation.clearance_m : 0) + Math.max.apply(null, d.modules.map(function (m) { return m.nominal.height_m; })) + 0.12;
-      var isGable = d.roof_form.type === 'gable';
+    if (!cut && d.roof_form) {
+      var rg = roofGeometry(d);
+      var rminX = rg.minX, rminY = rg.minY, rmaxX = rg.maxX, rmaxY = rg.maxY;
+      var zEave = rg.base_m + 0.12;
+      var isGable = rg.type === 'gable';
+      var isButterfly = rg.type === 'butterfly';
+      var isShed = rg.type === 'shed' || rg.type === 'solar-ready';
+      var isFlat = rg.type === 'flat' || rg.type === 'green' || rg.type === 'canopy';
       var ridgeY = (rminY + rmaxY) / 2;
-      var zRidge = zEave + (rmaxY - ridgeY) * Math.tan((d.roof_form.pitch_deg || 10) * Math.PI / 180);
-      var zAtSouth = function (y) { return isGable ? zEave + (rmaxY - y) / Math.max(0.01, rmaxY - ridgeY) * (zRidge - zEave) : zEave + (rmaxY - y) / Math.max(0.01, rmaxY - rminY) * (zRidge - zEave); };
+      var depth = Math.max(0.01, rmaxY - rminY);
+      var pitchRad = rg.pitch_deg * Math.PI / 180;
+      var zRidge = zEave + (isGable || isButterfly ? depth / 2 : depth) * Math.tan(pitchRad);
+      var zValley = zEave - (isButterfly ? (depth / 2) * Math.tan(pitchRad) * 0.45 : 0);
+      var zAtSouth = function (y) {
+        if (isGable) return zEave + (rmaxY - y) / Math.max(0.01, rmaxY - ridgeY) * (zRidge - zEave);
+        if (isButterfly) return y >= ridgeY ? zValley + (y - ridgeY) / Math.max(0.01, rmaxY - ridgeY) * (zEave - zValley) : zValley + (ridgeY - y) / Math.max(0.01, ridgeY - rminY) * (zEave - zValley);
+        if (isShed) return zEave + (rmaxY - y) / depth * (zRidge - zEave);
+        return zEave + 0.3;
+      };
       var roofWinter = winter;
       objects.push({ kind: 'roof', depth: (rminX + rmaxX + rminY + rmaxY) / 2 + 1.2, draw: function () {
         var col = roofWinter ? '#e7ece7' : (d.roof_form.colour || '#245244');
+        var rs = '';
         if (isGable) {
           var south = [[rminX, rmaxY, zEave], [rmaxX, rmaxY, zEave], [rmaxX, ridgeY, zRidge], [rminX, ridgeY, zRidge]];
           var north = [[rminX, ridgeY, zRidge], [rmaxX, ridgeY, zRidge], [rmaxX, rminY, zEave], [rminX, rminY, zEave]];
-          var rs = '<path d="M' + polyScreen(south, S) + 'Z" fill="' + col + '" fill-opacity="0.98" stroke="#17392e" stroke-width="1.4"/>';
+          rs += '<path d="M' + polyScreen(south, S) + 'Z" fill="' + col + '" fill-opacity="0.98" stroke="#17392e" stroke-width="1.4"/>';
           rs += '<path d="M' + polyScreen(north, S) + 'Z" fill="' + (roofWinter ? '#d7e0d7' : '#1f4a3d') + '" fill-opacity="0.98" stroke="#17392e" stroke-width="1.4"/>';
           rs += '<path d="M' + polyScreen([[rminX, ridgeY, zRidge], [rmaxX, ridgeY, zRidge]], S) + '" stroke="#17392e" stroke-width="3"/>';
-          return rs;
+        } else if (isButterfly) {
+          var upS = [[rminX, rmaxY, zEave], [rmaxX, rmaxY, zEave], [rmaxX, ridgeY, zValley], [rminX, ridgeY, zValley]];
+          var upN = [[rminX, rminY, zEave], [rmaxX, rminY, zEave], [rmaxX, ridgeY, zValley], [rminX, ridgeY, zValley]];
+          rs += '<path d="M' + polyScreen(upS, S) + 'Z" fill="' + col + '" fill-opacity="0.98" stroke="#17392e" stroke-width="1.4"/>';
+          rs += '<path d="M' + polyScreen(upN, S) + 'Z" fill="' + (roofWinter ? '#d7e0d7' : '#1f4a3d') + '" fill-opacity="0.98" stroke="#17392e" stroke-width="1.4"/>';
+          rs += '<path d="M' + polyScreen([[rminX, ridgeY, zValley], [rmaxX, ridgeY, zValley]], S) + '" stroke="#8f5a21" stroke-width="2.4" stroke-dasharray="5 3"/>';
+          rs += '<text x="' + n(S([rminX + 0.6, ridgeY, zValley])[0]) + '" y="' + n(S([rminX + 0.6, ridgeY, zValley])[1]) + '" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#8f5a21">valley drainage</text>';
+        } else if (isShed) {
+          var shed = [[rminX, rmaxY, zEave], [rmaxX, rmaxY, zEave], [rmaxX, rminY, zRidge], [rminX, rminY, zRidge]];
+          rs += '<path d="M' + polyScreen(shed, S) + 'Z" fill="' + col + '" fill-opacity="0.97" stroke="#17392e" stroke-width="1.4"/>';
+          rs += '<path d="M' + polyScreen([shed[0], shed[1]], S) + '" stroke="#17392e" stroke-width="3"/>';
+          rs += '<path d="M' + polyScreen([shed[2], shed[3]], S) + '" stroke="#17392e" stroke-width="2"/>';
+        } else {
+          var flat = [[rminX, rminY, zEave + 0.3], [rmaxX, rminY, zEave + 0.3], [rmaxX, rmaxY, zEave + 0.3], [rminX, rmaxY, zEave + 0.3]];
+          rs += '<path d="M' + polyScreen(flat, S) + 'Z" fill="' + col + '" fill-opacity="0.97" stroke="#17392e" stroke-width="1.4"/>';
+          if (rg.type === 'green') {
+            for (var gi2 = 0; gi2 < 7; gi2++) {
+              var gx = rminX + 0.5 + gi2 * (rmaxX - rminX - 1) / 6;
+              rs += '<circle cx="' + n(S([gx, (rminY + rmaxY) / 2, zEave + 0.32])[0]) + '" cy="' + n(S([gx, (rminY + rmaxY) / 2, zEave + 0.32])[1]) + '" r="3" fill="#3f704b" fill-opacity="0.8"/>';
+            }
+          }
+          rs += '<text x="' + n(S([(rminX + rmaxX) / 2, (rminY + rmaxY) / 2, zEave + 0.32])[0]) + '" y="' + n(S([(rminX + rmaxX) / 2, (rminY + rmaxY) / 2, zEave + 0.32])[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#faf8f2" stroke="#17392e" stroke-width="2.2" paint-order="stroke">' + esc(rg.type === 'canopy' ? 'roof canopy · not occupied' : rg.type === 'green' ? 'green roof concept' : 'flat roof · drainage to review') + '</text>';
         }
-        var roofCorners = [[rminX, rmaxY, zEave], [rmaxX, rmaxY, zEave], [rmaxX, rminY, zRidge], [rminX, rminY, zRidge]];
-        return '<path d="M' + polyScreen(roofCorners, S) + 'Z" fill="' + col + '" fill-opacity="0.97" stroke="#17392e" stroke-width="1.4"/>' +
-          '<path d="M' + polyScreen([roofCorners[0], roofCorners[1]], S) + '" stroke="#17392e" stroke-width="3"/>' +
-          '<path d="M' + polyScreen([roofCorners[2], roofCorners[3]], S) + '" stroke="#17392e" stroke-width="2"/>';
+        return rs;
       } });
-      if (d.solar_array && d.solar_array.enabled) {
+      if (d.solar_array && d.solar_array.enabled && !isFlat) {
         var tilt = Math.max(0, Math.min(75, d.solar_array.tilt_deg || 39));
         var pdl = Math.min(7.0, (rmaxX - rminX) * 0.72);
         var southRun = isGable ? rmaxY - ridgeY : rmaxY - rminY;
@@ -969,7 +1494,269 @@
     out.push('<text x="30" y="68" font-family="system-ui, sans-serif" font-size="12" fill="#40583f">' + esc(label) + '</text>');
     if (focus) out.push('<text x="' + (parseFloat(viewBox.split(' ')[0]) + 20) + '" y="' + (parseFloat(viewBox.split(' ')[1]) + 24) + '" font-family="system-ui, sans-serif" font-size="16" font-weight="800" fill="#1d392c">Screened porch and deck detail</text>');
     out.push('<g aria-hidden="true"><circle cx="' + (W - 44) + '" cy="44" r="22" fill="#fffdf7" fill-opacity="0.9" stroke="#b9c3b2"/><path d="M' + (W - 44) + ' 28l6 30l-6 -8l-6 8z" fill="#1d392c"/><text x="' + (W - 44) + '" y="76" text-anchor="middle" font-size="10" font-weight="700" font-family="system-ui, sans-serif" fill="#1d392c">N</text></g>');
-    out.push('<text x="30" y="' + (H - 18) + '" font-family="system-ui, sans-serif" font-size="10" fill="#5e6a58">Illustrative concept · generated from the same geometry as the plan · not for construction · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
+    out.push('<text x="30" y="' + (H - 18) + '" font-family="system-ui, sans-serif" font-size="10" fill="#5e6a58">Illustrative concept · shadows are illustrative, not a solar or overshadowing study · generated from the same geometry · not for construction · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  /* ---------------- elevations, sections, exploded view, solar study ---------------- */
+
+  function roofProfile(rg, axis) {
+    var w = axis === 'x' ? rg.width : rg.depth;
+    var eave = rg.base_m + 0.12;
+    var top = rg.top_m;
+    var valley = eave - (rg.depth / 2) * Math.tan(rg.pitch_deg * Math.PI / 180) * 0.45;
+    if (axis === 'x') return { points: [[0, eave], [w, eave], [w, top], [0, top]], eave: eave, top: top, w: w };
+    if (rg.type === 'gable') return { points: [[0, eave], [w / 2, top], [w, eave]], eave: eave, top: top, w: w };
+    if (rg.type === 'butterfly') return { points: [[0, eave], [w / 2, valley], [w, eave]], eave: eave, top: eave, valley: valley, w: w };
+    if (rg.type === 'shed' || rg.type === 'solar-ready') return { points: [[0, eave], [w, top], [w, top + 0.16], [0, eave + 0.16]], eave: eave, top: top, w: w };
+    if (rg.type === 'canopy') return { points: [[0, eave + 0.25], [w, eave + 0.25], [w, eave], [0, eave]], eave: eave, top: top, w: w };
+    return { points: [[0, eave], [w, eave], [w, eave + 0.3], [0, eave + 0.3]], eave: eave, top: top, w: w };
+  }
+
+  function elevationSVG(design, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(design);
+    var side = ['north', 'south', 'east', 'west'].indexOf(opts.side) >= 0 ? opts.side : 'south';
+    var boxes = d.modules.map(moduleBox3D);
+    var rg = roofGeometry(d);
+    var uValues = [];
+    boxes.forEach(function (b) { b.corners.forEach(function (p) { uValues.push(side === 'east' || side === 'west' ? p[1] : p[0]); }); });
+    if (!uValues.length) uValues = [0, 1];
+    var uMin = Math.min.apply(null, uValues), uMax = Math.max.apply(null, uValues);
+    if (side === 'east' || side === 'west') { uMin = Math.min(uMin, rg.minY); uMax = Math.max(uMax, rg.maxY); }
+    else { uMin = Math.min(uMin, rg.minX); uMax = Math.max(uMax, rg.maxX); }
+    var zMax = Math.max(rg.top_m, 4.2) + 1.0;
+    var W = 1040, H = 720, pad = 96;
+    var scale = Math.min((W - 2 * pad) / Math.max(1, uMax - uMin), (H - 2 * pad) / Math.max(1, zMax));
+    var ox = (W - (uMax - uMin) * scale) / 2;
+    var oy = H - pad;
+    var uOf = function (p) {
+      if (side === 'south') return p[0] - uMin;
+      if (side === 'north') return uMax - p[0];
+      if (side === 'east') return p[1] - uMin;
+      return uMax - p[1];
+    };
+    var X = function (u) { return ox + u * scale; };
+    var Y = function (z) { return oy - z * scale; };
+    var pre = opts.idPrefix || ('elevation-' + side);
+    var title = d.name + ' · ' + side + ' elevation';
+    var desc = 'Concept ' + side + ' elevation of ' + d.name + ', generated from the same module geometry as the plan and section. ' + d.levels.length + ' occupied storey' + (d.levels.length === 1 ? '' : 's') + ', ' + n(rg.top_m) + ' metres to the roof. Ground, floor levels, openings, module boundaries and a ' + rg.type + ' roof are shown. Conceptual only; not a construction drawing.';
+    var out = [];
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + '>');
+    out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
+    out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
+    out.push('<text x="32" y="42" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#1d392c">' + esc(title) + '</text>');
+    out.push('<text x="32" y="64" font-family="system-ui, sans-serif" font-size="12" fill="#3f5a4c">' + esc((side === 'south' || side === 'north' ? 'Looking ' + (side === 'south' ? 'north' : 'south') : 'Looking ' + (side === 'east' ? 'west' : 'east')) + ' · ground datum 0.00 m · ' + d.levels.length + ' occupied storey' + (d.levels.length === 1 ? '' : 's')) + '</text>');
+    // ground
+    out.push('<rect x="0" y="' + n(Y(0)) + '" width="' + W + '" height="' + n(H - Y(0)) + '" fill="#e8ecdf"/>');
+    out.push('<line x1="20" y1="' + n(Y(0)) + '" x2="' + (W - 20) + '" y2="' + n(Y(0)) + '" stroke="#6f7b63" stroke-width="2.5"/>');
+    // foundation piles for ground modules
+    boxes.filter(function (b) { return b.storey === 0 && b.minZ > 0.05; }).forEach(function (b) {
+      var u0 = Math.min(uOf([b.minX, b.minY]), uOf([b.maxX, b.maxY]));
+      var u1 = Math.max(uOf([b.minX, b.minY]), uOf([b.maxX, b.maxY]));
+      [u0 + 0.12, (u0 + u1) / 2, u1 - 0.12].forEach(function (u) {
+        out.push('<line x1="' + n(X(u)) + '" y1="' + n(Y(0)) + '" x2="' + n(X(u)) + '" y2="' + n(Y(b.minZ)) + '" stroke="#5d6f6a" stroke-width="4"/>');
+      });
+    });
+    // modules, lower storey first
+    boxes.slice().sort(function (a, b) { return a.minZ - b.minZ; }).forEach(function (b) {
+      var m = moduleById(d, b.id);
+      var u0 = Math.min(uOf([b.minX, b.minY]), uOf([b.maxX, b.maxY]), uOf([b.minX, b.maxY]), uOf([b.maxX, b.minY]));
+      var u1 = Math.max(uOf([b.minX, b.minY]), uOf([b.maxX, b.maxY]), uOf([b.minX, b.maxY]), uOf([b.maxX, b.minY]));
+      var fill = m.cladding.colour || CC[m.cladding.type] || '#9a7350';
+      out.push('<rect x="' + n(X(u0)) + '" y="' + n(Y(b.maxZ)) + '" width="' + n((u1 - u0) * scale) + '" height="' + n((b.maxZ - b.minZ) * scale) + '" fill="' + fill + '" stroke="#253a33" stroke-width="2"/>');
+      out.push('<text x="' + n(X((u0 + u1) / 2)) + '" y="' + n(Y(b.maxZ) - 5) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#1d392c" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke">' + esc(m.id) + ' · L' + (num(m.storey, 0) + 1) + '</text>');
+      (m.openings || []).forEach(function (o) {
+        if (worldFace(m, o.face) !== side) return;
+        var seg = openingSegment(m, o);
+        var uu0 = Math.min(uOf(seg[0]), uOf(seg[1])), uu1 = Math.max(uOf(seg[0]), uOf(seg[1]));
+        var z0 = moduleBase(m) + o.sill_m, z1 = z0 + o.height_m;
+        var fillO = o.type === 'window' ? '#9fd3e0' : o.type === 'sliding-door' ? '#c6e8ee' : '#5d432c';
+        out.push('<rect x="' + n(X(uu0)) + '" y="' + n(Y(z1)) + '" width="' + n(Math.max(3, (uu1 - uu0) * scale)) + '" height="' + n((z1 - z0) * scale) + '" fill="' + fillO + '" stroke="#2d3a35" stroke-width="1.6"/>');
+        out.push('<text x="' + n(X((uu0 + uu1) / 2)) + '" y="' + n(Y(z0) - 3) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8" fill="#1d392c">' + esc(o.id) + '</text>');
+      });
+    });
+    // porches and decks, so covered outdoor areas appear in elevation
+    d.porches.forEach(function (p) {
+      var pm = moduleById(d, p.module);
+      if (!pm) return;
+      var poly = porchCorners(pm, p);
+      var us = poly.map(function (pt) { return uOf(pt); });
+      var u0 = Math.min.apply(null, us), u1 = Math.max.apply(null, us);
+      var z0 = moduleBase(pm), z1 = z0 + (p.roof ? 2.65 : 0.15);
+      out.push('<rect x="' + n(X(u0)) + '" y="' + n(Y(z1)) + '" width="' + n(Math.max(2, (u1 - u0) * scale)) + '" height="' + n((z1 - z0) * scale) + '" fill="#d8e6d3" fill-opacity="0.22" stroke="#4f7d64" stroke-width="1.6" stroke-dasharray="6 3"/>');
+      out.push('<text x="' + n(X((u0 + u1) / 2)) + '" y="' + n(Y(z0) + 11) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#31573f" stroke="#faf8f2" stroke-width="2" paint-order="stroke">' + esc((p.screened ? 'screened porch' : 'covered porch') + ' · ' + n(p.length_m) + ' m') + '</text>');
+    });
+    d.decks.forEach(function (dk) {
+      var p = porchById(d, dk.porch);
+      var pm = p && moduleById(d, p.module);
+      if (!pm) return;
+      var poly = deckCorners(pm, p, dk);
+      var us = poly.map(function (pt) { return uOf(pt); });
+      var u0 = Math.min.apply(null, us), u1 = Math.max.apply(null, us);
+      var z0 = moduleBase(pm);
+      out.push('<rect x="' + n(X(u0)) + '" y="' + n(Y(z0)) + '" width="' + n(Math.max(2, (u1 - u0) * scale)) + '" height="' + n(0.12 * scale) + '" fill="#c3a276" stroke="#8a6a44" stroke-width="1"/>');
+    });
+
+    // roof profile
+    var axis = (side === 'south' || side === 'north') ? 'x' : 'y';
+    var prof = roofProfile(rg, axis);
+    var roofU0 = axis === 'x' ? rg.minX : rg.minY;
+    var roofU1 = axis === 'x' ? rg.maxX : rg.maxY;
+    var roofMirror = side === 'west' && (rg.type === 'shed' || rg.type === 'solar-ready');
+    var pts = prof.points.map(function (p) { return [X(roofMirror ? prof.w - p[0] : p[0]), Y(p[1])]; });
+    out.push('<path d="M' + pts.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="' + (rg.green ? '#3f704b' : '#245244') + '" fill-opacity="0.95" stroke="#17392e" stroke-width="2"/>');
+    if (rg.type === 'gable' || rg.type === 'butterfly') {
+      var ridgeU = prof.w / 2;
+      out.push('<line x1="' + n(X(ridgeU)) + '" y1="' + n(Y(rg.top_m)) + '" x2="' + n(X(ridgeU)) + '" y2="' + n(Y(rg.top_m - 0.3)) + '" stroke="#faf8f2" stroke-width="2"/>');
+    }
+    // level lines and dimension
+    d.levels.forEach(function (l) {
+      out.push('<line x1="24" y1="' + n(Y(l.elevation_m)) + '" x2="' + (W - 130) + '" y2="' + n(Y(l.elevation_m)) + '" stroke="#8f5a21" stroke-width="1" stroke-dasharray="6 4"/>');
+      out.push('<text x="28" y="' + n(Y(l.elevation_m) - 5) + '" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#8f5a21">' + esc(l.name + ' +' + n(l.elevation_m, 2) + ' m') + '</text>');
+    });
+    var dimX = W - 52;
+    out.push('<line x1="' + dimX + '" y1="' + n(Y(0)) + '" x2="' + dimX + '" y2="' + n(Y(rg.top_m)) + '" stroke="#435a4a" stroke-width="1.2"/>');
+    out.push('<text x="' + (dimX - 6) + '" y="' + n(Y(rg.top_m / 2)) + '" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#1d392c">' + n(rg.top_m, 2) + ' m</text>');
+    out.push('<text x="32" y="' + (H - 16) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Concept elevation · generated from the same module geometry as the plan · not for construction · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  function sectionSVG(design, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(design);
+    var axis = opts.axis === 'x' ? 'x' : 'y';
+    var rg = roofGeometry(d);
+    var hMin = axis === 'y' ? rg.minX : rg.minY;
+    var hMax = axis === 'y' ? rg.maxX : rg.maxY;
+    var cut = opts.cut_m != null ? opts.cut_m : axis === 'y' ? (rg.minY + rg.maxY) / 2 : (rg.minX + rg.maxX) / 2;
+    var zMax = Math.max(rg.top_m, 4.2) + 1.0;
+    var W = 1040, H = 720, pad = 96;
+    var scale = Math.min((W - 2 * pad) / Math.max(1, hMax - hMin), (H - 2 * pad) / Math.max(1, zMax));
+    var ox = (W - (hMax - hMin) * scale) / 2;
+    var oy = H - pad;
+    var X = function (v) { return ox + (v - hMin) * scale; };
+    var Y = function (z) { return oy - z * scale; };
+    var pre = opts.idPrefix || 'section';
+    var title = d.name + ' · building section';
+    var desc = 'Concept building section through ' + d.name + ' at ' + n(cut, 2) + ' metres, generated from the same module geometry, levels and roof as the plans and elevations. It shows floor levels, modules, ' + (d.access.stair && d.access.stair.present ? 'a stair, ' : 'no stair, ') + 'the roof profile and the ground. Conceptual only; not a structural or construction section.';
+    var out = [];
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d"' + (opts.className ? ' class="' + opts.className + '"' : '') + '>');
+    out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
+    out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
+    out.push('<text x="32" y="42" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#1d392c">' + esc(title) + '</text>');
+    out.push('<text x="32" y="64" font-family="system-ui, sans-serif" font-size="12" fill="#3f5a4c">Cut at ' + n(cut, 2) + ' m · ' + d.levels.length + ' occupied storey' + (d.levels.length === 1 ? '' : 's') + ' · ' + n(rg.top_m, 2) + ' m to roof</text>');
+    out.push('<rect x="0" y="' + n(Y(0)) + '" width="' + W + '" height="' + n(H - Y(0)) + '" fill="#e8ecdf"/>');
+    out.push('<line x1="20" y1="' + n(Y(0)) + '" x2="' + (W - 20) + '" y2="' + n(Y(0)) + '" stroke="#6f7b63" stroke-width="2.5"/>');
+    d.modules.forEach(function (m) {
+      var box = moduleBox3D(m);
+      var lo = axis === 'y' ? box.minX : box.minY;
+      var hi = axis === 'y' ? box.maxX : box.maxY;
+      var intersects = axis === 'y' ? (cut >= box.minY && cut <= box.maxY) : (cut >= box.minX && cut <= box.maxX);
+      var fill = m.cladding.colour || CC[m.cladding.type] || '#9a7350';
+      out.push('<rect x="' + n(X(lo)) + '" y="' + n(Y(box.maxZ)) + '" width="' + n((hi - lo) * scale) + '" height="' + n((box.maxZ - box.minZ) * scale) + '" fill="' + (intersects ? fill : '#e7e0cf') + '" fill-opacity="' + (intersects ? '0.82' : '0.6') + '" stroke="#253a33" stroke-width="2" ' + (intersects ? '' : 'stroke-dasharray="6 4"') + '/>');
+      out.push('<text x="' + n(X((lo + hi) / 2)) + '" y="' + n(Y(box.minZ) + 14) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#1d392c" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke">' + esc(m.id + ' · L' + (num(m.storey, 0) + 1)) + '</text>');
+      (m.zones || []).forEach(function (z) {
+        var zx0 = -m.nominal.length_m / 2 + z.start_m, zx1 = -m.nominal.length_m / 2 + z.end_m;
+        var p0 = transform(m, [zx0, 0]), p1 = transform(m, [zx1, 0]);
+        var zl = axis === 'y' ? p0[0] : p0[1], zh = axis === 'y' ? p1[0] : p1[1];
+        var zmid = moduleBase(m) + 0.25;
+        if (Math.abs(zh - zl) * scale < 8) return;
+        out.push('<text x="' + n(X((zl + zh) / 2)) + '" y="' + n(Y(zmid) + 10) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8.5" fill="#3f5a4c" stroke="#faf8f2" stroke-width="2" paint-order="stroke">' + esc(z.name) + '</text>');
+      });
+    });
+    if (d.access.stair && d.access.stair.present) {
+      var sm = moduleById(d, d.access.stair.module) || d.modules.filter(function (m) { return num(m.storey, 0) === 0; })[0];
+      if (sm) {
+        var run = Math.max(1.2, Math.min(4.2, d.access.stair.run_m || 2.8));
+        var rise = Math.max(1.8, d.access.stair.rise_m || 2.9);
+        var sx = axis === 'y' ? sm.position_m[0] - run / 2 : sm.position_m[1] - run / 2;
+        var steps = 10;
+        var sBase = moduleBase(sm);
+        for (var si = 0; si < steps; si++) {
+          var t0 = si / steps, t1 = (si + 1) / steps;
+          out.push('<rect x="' + n(X(sx + run * t0)) + '" y="' + n(Y(sBase + rise * t1)) + '" width="' + n(run / steps * scale) + '" height="' + n(rise / steps * scale) + '" fill="#c9b28a" stroke="#7b6344" stroke-width="0.8"/>');
+        }
+        out.push('<text x="' + n(X(sx + run / 2)) + '" y="' + n(Y(sBase + rise) - 6) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#5c4c34">stair · ' + n(rise, 1) + ' m rise / ' + n(run, 1) + ' m run</text>');
+      }
+    }
+    var profAxis = axis === 'y' ? 'x' : 'y';
+    var prof = roofProfile(rg, profAxis);
+    var base = profAxis === 'x' ? rg.minX : rg.minY;
+    var pts = prof.points.map(function (p) { return [X(base + p[0]), Y(p[1])]; });
+    out.push('<path d="M' + pts.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="#245244" fill-opacity="0.95" stroke="#17392e" stroke-width="2"/>');
+    d.levels.forEach(function (l) {
+      out.push('<line x1="24" y1="' + n(Y(l.elevation_m)) + '" x2="' + (W - 130) + '" y2="' + n(Y(l.elevation_m)) + '" stroke="#8f5a21" stroke-width="1" stroke-dasharray="6 4"/>');
+      out.push('<text x="28" y="' + n(Y(l.elevation_m) - 5) + '" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#8f5a21">' + esc(l.name + ' +' + n(l.elevation_m, 2) + ' m') + '</text>');
+    });
+    out.push('<line x1="' + (W - 52) + '" y1="' + n(Y(0)) + '" x2="' + (W - 52) + '" y2="' + n(Y(rg.top_m)) + '" stroke="#435a4a" stroke-width="1.2"/>');
+    out.push('<text x="' + (W - 58) + '" y="' + n(Y(rg.top_m / 2)) + '" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#1d392c">' + n(rg.top_m, 2) + ' m</text>');
+    out.push('<text x="32" y="' + (H - 16) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Concept section · floor levels, modules, stair and roof are generated from one model · not for construction · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
+    out.push('</svg>');
+    return out.join('');
+  }
+
+  function explodedSVG(design, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(design);
+    var spread = opts.spread == null ? 2.2 : opts.spread;
+    var ex = cloneDesign(d);
+    ex.modules.forEach(function (m) { m.elevation_m = num(m.elevation_m, 0) + num(m.storey, 0) * spread; });
+    var svg = axoSVG(ex, { idPrefix: opts.idPrefix || 'exploded', season: opts.season });
+    var pre = opts.idPrefix || 'exploded';
+    var note = '<text x="30" y="' + (700 - 34) + '" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#8f5a21" stroke="#faf8f2" stroke-width="2.6" paint-order="stroke">Exploded levels · storeys separated by ' + n(spread, 1) + ' m for reading only · not a construction sequence</text>';
+    svg = svg.replace(/<text x="30" y="700"/, '<text x="30" y="700"');
+    svg = svg.replace('</svg>', note + '</svg>');
+    return svg;
+  }
+  function cloneDesign(d) { return JSON.parse(JSON.stringify(d)); }
+
+  function solarStudySVG(design, opts) {
+    opts = opts || {};
+    var d = Schema.canonicalize(design);
+    var season = opts.season === 'winter' ? 'winter' : 'summer';
+    var rg = roofGeometry(d);
+    var altitude = season === 'winter' ? 20 : 65;
+    var W = 1040, H = 520, pad = 90;
+    var width = Math.max(6, rg.width);
+    var scale = Math.min((W - 2 * pad) / width, (H - 160) / Math.max(3.5, rg.top_m));
+    var ox = (W - width * scale) / 2;
+    var oy = H - 96;
+    var X = function (x) { return ox + x * scale; };
+    var Y = function (z) { return oy - z * scale; };
+    var pre = opts.idPrefix || ('solar-study-' + season);
+    var title = d.name + ' · ' + season + ' solar study';
+    var desc = 'Concept ' + season + ' solar study for ' + d.name + '. A ' + altitude + ' degree sun altitude is shown against the south facade, roof overhang and glazing. It is a qualitative shading diagram, not an energy, daylight, glare or overheating calculation.';
+    var out = [];
+    out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d">');
+    out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
+    out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
+    out.push('<text x="32" y="42" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#1d392c">' + esc(title) + '</text>');
+    out.push('<text x="32" y="64" font-family="system-ui, sans-serif" font-size="12" fill="#3f5a4c">South-facing section · sun altitude about ' + altitude + '° · overhang ' + n(rg.overhang_m, 2) + ' m · qualitative shading only</text>');
+    out.push('<rect x="0" y="' + n(Y(0)) + '" width="' + W + '" height="' + n(H - Y(0)) + '" fill="#e8ecdf"/>');
+    out.push('<line x1="20" y1="' + n(Y(0)) + '" x2="' + (W - 20) + '" y2="' + n(Y(0)) + '" stroke="#6f7b63" stroke-width="2.5"/>');
+    // building mass and glazing
+    out.push('<rect x="' + n(X(0)) + '" y="' + n(Y(rg.base_m)) + '" width="' + n(width * scale) + '" height="' + n(rg.base_m * scale) + '" fill="#9a7350" stroke="#253a33" stroke-width="2"/>');
+    out.push('<rect x="' + n(X(width * 0.55)) + '" y="' + n(Y(2.4)) + '" width="' + n(width * 0.35 * scale) + '" height="' + n(1.6 * scale) + '" fill="#9fd3e0" stroke="#2d3a35" stroke-width="1.6"/>');
+    // roof
+    var prof = roofProfile(rg, 'x');
+    var pts = prof.points.map(function (p) { return [X(p[0]), Y(p[1])]; });
+    out.push('<path d="M' + pts.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="#245244" stroke="#17392e" stroke-width="2"/>');
+    // sun ray from south (left)
+    var sunX = 40, sunY = 100;
+    var reach = 620;
+    var dx = Math.cos(altitude * DEG) * reach, dz = Math.sin(altitude * DEG) * reach;
+    out.push('<circle cx="' + sunX + '" cy="' + sunY + '" r="14" fill="#e5b21c" stroke="#8f5a21" stroke-width="2"/>');
+    out.push('<text x="' + (sunX + 22) + '" y="' + (sunY + 5) + '" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#8f5a21">' + altitude + '° sun</text>');
+    out.push('<line x1="' + sunX + '" y1="' + sunY + '" x2="' + n(sunX + dx) + '" y2="' + n(sunY + dz) + '" stroke="#e5b21c" stroke-width="2.4" stroke-dasharray="7 4"/>');
+    // shadow band on the facade
+    var shadowY = Y(Math.max(rg.base_m, rg.top_m - Math.tan(altitude * DEG) * rg.overhang_m));
+    out.push('<rect x="' + n(X(0)) + '" y="' + n(Y(rg.top_m)) + '" width="' + n(width * scale) + '" height="' + n(Math.max(0, shadowY - Y(rg.top_m))) + '" fill="#3f5a4c" fill-opacity="0.22"/>');
+    out.push('<text x="' + (W - 32) + '" y="' + (H - 64) + '" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#1d392c">' + (season === 'summer' ? 'Summer: the overhang should shade high sun; west glazing needs a separate strategy.' : 'Winter: low sun should reach the glazing; snow shedding and glare need review.') + '</text>');
+    out.push('<text x="32" y="' + (H - 34) + '" font-family="system-ui, sans-serif" font-size="10" fill="#3f5a4c">No energy production, overheating, daylight or glare result is calculated. Confirm with a whole-building energy and shading model.</text>');
+    out.push('<text x="32" y="' + (H - 14) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Concept solar study · schematic · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
     out.push('</svg>');
     return out.join('');
   }
@@ -1002,6 +1789,7 @@
     if (!s || !s.enabled) return '';
     var g = shelterGeometry(m, s);
     var base = d.foundation ? Math.max(0, d.foundation.clearance_m || 0) : 0;
+    if (m) base = moduleBase(m);
     var zWall = base + m.nominal.height_m + 0.08;
     var zOut = zWall - 0.16;
     var p0 = transform(m, g.loc0), p1 = transform(m, g.loc1);
@@ -1031,7 +1819,7 @@
   function moduleDraw(d, m, cut, S, winter) {
     var colour = m.cladding.colour || CC[m.cladding.type] || '#9a7350';
     var ins = m.insulation.thickness_mm / 1000;
-    var baseZ = d.foundation ? Math.max(0, d.foundation.clearance_m || 0) : 0;
+    var baseZ = moduleBase(m);
     var zTop = baseZ + (cut ? 1.2 : m.nominal.height_m);
     var L = m.nominal.length_m + 2 * (ins + 0.03), W = m.nominal.width_m + 2 * (ins + 0.03);
     var faces = boxFaces(m.position_m[0], m.position_m[1], L, W, baseZ, zTop, m.rotation_deg || 0);
@@ -1039,7 +1827,7 @@
     // shadow
     var base = moduleCorners(m).map(function (p) { return [p[0] + 0.35, p[1] + 0.35, 0]; });
     s += '<path d="M' + polyScreen(base, S) + 'Z" fill="#9eae8d" fill-opacity="0.55"/>';
-    if (baseZ > 0.05) {
+    if (baseZ > 0.05 && num(m.storey, 0) === 0) {
       var pilePts = moduleCorners(m).concat([
         [(moduleCorners(m)[0][0] + moduleCorners(m)[1][0]) / 2, (moduleCorners(m)[0][1] + moduleCorners(m)[1][1]) / 2],
         [(moduleCorners(m)[2][0] + moduleCorners(m)[3][0]) / 2, (moduleCorners(m)[2][1] + moduleCorners(m)[3][1]) / 2]
@@ -1049,6 +1837,10 @@
         s += '<line x1="' + n(g[0]) + '" y1="' + n(g[1]) + '" x2="' + n(t[0]) + '" y2="' + n(t[1]) + '" stroke="#5d6f6a" stroke-width="4"/>';
         s += '<circle cx="' + n(g[0]) + '" cy="' + n(g[1]) + '" r="3" fill="#455955"/>';
       });
+    }
+    if (num(m.storey, 0) > 0) {
+      var lab = S([m.position_m[0], m.position_m[1], zTop + 0.1]);
+      s += '<text x="' + n(lab[0]) + '" y="' + n(lab[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#1d392c" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke">' + esc(m.id.toUpperCase()) + ' · LEVEL ' + (num(m.storey, 0) + 1) + '</text>';
     }
     faces.filter(visible).forEach(function (f) {
       var fill = f.name === 'top' ? (cut ? '#e6dfcd' : winter ? '#e4e9e5' : '#4b4a44') : colour;
@@ -1190,15 +1982,25 @@
     var d = Schema.canonicalize(input);
     var assessment = assess(d);
     var thermal = thermalProfile(d);
-    var structuralCodes = ['wall-removal', 'cantilever', 'crane', 'transport', 'transport-40', 'roof-loads', 'green-roof', 'connection-overlap'];
-    var structural = assessment.items.filter(function (i) { return structuralCodes.indexOf(i.code) >= 0; }).map(function (i) { return i.message; });
-    var accessibility = (d.features && d.features.accessibility ? [d.features.accessibility] : []).concat(assessment.items.filter(function (i) { return i.category === 'accessibility'; }).map(function (i) { return i.message; }));
+    var review = structuralReview(d);
+    var access = accessibilityProfile(d);
+    var structural = review.concerns.filter(function (c) { return c.status === 'requires-review' || c.status === 'not-assessed'; }).map(function (c) { return c.label + ': ' + c.notes; });
+    var accessibility = (d.features && d.features.accessibility ? [d.features.accessibility] : []).concat(access.issues.map(function (i) { return i.message; }));
     return {
       id: d.id,
       name: d.name,
+      group: d.group,
       editable: !!d.editable,
       container_count: d.modules.length,
       types: d.modules.map(function (m) { return m.type; }),
+      storeys: d.levels.length,
+      levels: d.levels,
+      architecture: architectureFeatures(d),
+      metrics: metrics(d),
+      support: supportAnalysis(d),
+      structural_review: review,
+      accessibility_profile: access,
+      sustainability: sustainabilityProfile(d),
       conditioned_area_m2: thermal.conditioned_area_m2,
       screened_porch_m2: thermal.screened_porch_m2,
       porch_m2: thermal.porch_m2,
@@ -1216,18 +2018,26 @@
   }
 
   function describe(design) {
-    var s = Schema.summary(design);
+    var d = Schema.canonicalize(design);
+    var s = Schema.summary(d);
     var zones = [];
-    design.modules.forEach(function (m) { m.zones.forEach(function (z) { zones.push(z.name + ' (' + n(z.end_m - z.start_m) + ' m)'); }); });
-    return design.name + ': ' + s.moduleCount + ' container module' + (s.moduleCount === 1 ? '' : 's') + ' (' + s.types.join(', ') + '), ' + s.nominalFootprint_m2 + ' m² nominal footprint. ' + (zones.length ? 'Interior zones: ' + zones.join('; ') + '. ' : '') + (s.solar ? 'Solar roof. ' : '') + (s.greenRoof ? 'Green roof. ' : '') + 'Concept only; not verified.';
+    d.modules.forEach(function (m) { m.zones.forEach(function (z) { zones.push(m.id + ' L' + (num(m.storey, 0) + 1) + ': ' + z.name + ' (' + n(z.end_m - z.start_m) + ' m)'); }); });
+    return d.name + ': ' + s.moduleCount + ' container module' + (s.moduleCount === 1 ? '' : 's') + ' (' + s.types.join(', ') + ') across ' + s.storeyCount + ' occupied storey' + (s.storeyCount === 1 ? '' : 's') + ', ' + n(s.grossFloorArea_m2) + ' m² gross floor area and ' + n(metrics(d).groundCoverage_m2) + ' m² ground coverage. ' + (zones.length ? 'Interior zones: ' + zones.join('; ') + '. ' : '') + (s.solar ? 'Solar roof. ' : '') + (s.greenRoof ? 'Green roof concept. ' : '') + 'Concept only; not verified.';
   }
 
   return {
     moduleCorners: moduleCorners, connectionCorners: connectionCorners, porchCorners: porchCorners, deckCorners: deckCorners,
     openingSegment: openingSegment, faceNormalWorld: faceNormalWorld, faceLength: faceLength,
     polygonsOverlap: polygonsOverlap, overlapArea: overlapArea, bounds: bounds,
-    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, exposureProfile: exposureProfile, designProfile: designProfile, envelopeFor: envelopeFor, wallSectionSVG: wallSectionSVG, solarSectionSVG: solarSectionSVG, foundationSectionSVG: foundationSectionSVG, ENVELOPE_LABEL: ENVELOPE_LABEL, VEG_LABEL: VEG_LABEL,
-    renderPlan: planSVG, renderAxo: axoSVG, describe: describe,
-    summary: Schema.summary, canonicalize: Schema.canonicalize
+    moduleBase: moduleBase, moduleTop: moduleTop, moduleBox3D: moduleBox3D, boxOverlap3D: boxOverlap3D, verticalGap: verticalGap,
+    supportAnalysis: supportAnalysis, metrics: metrics, roofGeometry: roofGeometry, structuralReview: structuralReview,
+    accessibilityProfile: accessibilityProfile, architectureFeatures: architectureFeatures, architecturalSimilarity: architecturalSimilarity,
+    findSimilarHomes: findSimilarHomes, sustainabilityProfile: sustainabilityProfile, singleStoreyAlternative: singleStoreyAlternative,
+    validateGeometry: validateGeometry, assess: assess, thermalProfile: thermalProfile, exposureProfile: exposureProfile, designProfile: designProfile,
+    envelopeFor: envelopeFor, wallSectionSVG: wallSectionSVG, solarSectionSVG: solarSectionSVG, foundationSectionSVG: foundationSectionSVG,
+    elevationSVG: elevationSVG, sectionSVG: sectionSVG, explodedSVG: explodedSVG, solarStudySVG: solarStudySVG,
+    ENVELOPE_LABEL: ENVELOPE_LABEL, VEG_LABEL: VEG_LABEL, PRIMARY_DIVERSITY_FEATURES: PRIMARY_DIVERSITY_FEATURES,
+    renderPlan: planSVG, renderAxo: axoSVG, renderElevation: elevationSVG, renderSection: sectionSVG, renderExploded: explodedSVG, renderSolarStudy: solarStudySVG,
+    describe: describe, summary: Schema.summary, canonicalize: Schema.canonicalize
   };
 });

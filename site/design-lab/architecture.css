@@ -72,3 +72,9 @@
   .season-pair figure, .seasonal-section, .assembly-section, .vegetation-section, .system-card, .system-figure { border: 1px solid CanvasText; }
   .season-pair img, .system-figure img { forced-color-adjust: none; }
 }
+
+/* Long review and exposure tables must reflow rather than force the page wide. */
+.exposure-table { table-layout: fixed; width: 100%; }
+.exposure-table th, .exposure-table td { overflow-wrap: anywhere; }
+.table-wrap { max-width: 100%; overflow-x: auto; }
+.fact-grid dd, .assembly-layers li, .season-pair figcaption { overflow-wrap: anywhere; }
