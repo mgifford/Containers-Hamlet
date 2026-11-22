@@ -26,6 +26,7 @@ The cabin services are documented separately from the drawing editor:
 
 - [`passive-ventilation.md`](passive-ventilation.md) — Cabin A end-to-end ventilation, filters, insect/weather exclusion and seasonal modes.
 - [`wood-heat-thermal-mass.md`](wood-heat-thermal-mass.md) — Cabin A stove, hearth, masonry heat wall, air gap, OAK and clearance caveats.
+- [`electrical-solar-battery.md`](electrical-solar-battery.md) — hybrid AC/DC service, interior EMT routing, PV entry, battery placement and grounding.
 - [`multi-container-services.md`](multi-container-services.md) — two-container pairs and the Common Lodge.
 
 These are Design Lab studies. They do not change `data/cabin-a.json`,
