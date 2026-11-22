@@ -1,0 +1,9 @@
+/* Illustration pipeline page. Code licence: AGPL-3.0-or-later. */
+.illustration-card { max-width: 62rem; }
+.illustration-card h2 { margin-top: .3rem; }
+.prompt-preview { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 24rem; overflow: auto; padding: .8rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--paper); color: var(--text); font-size: .82rem; line-height: 1.45; }
+.illustration-card details { margin: .7rem 0; }
+.illustration-card .button-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+.illustration-card .action { min-height: 44px; }
+@media (prefers-color-scheme: dark) { .prompt-preview { background: #121713; } }
+@media (forced-colors: active) { .prompt-preview { border: 1px solid CanvasText; } }

@@ -1,0 +1,164 @@
+{
+  "schema": "containers-hamlet-package-manifest/v1",
+  "designId": "hamlet-offset-stack",
+  "designRevision": "2.0.0",
+  "designSchema": "containers-hamlet-design/v2.0",
+  "designHash": "4cecbf83",
+  "sceneHash": "f80ff62d",
+  "presentationHash": "1cb1a254",
+  "generatorVersion": "1.0.0",
+  "generatedAt": "2026",
+  "artifacts": [
+    {
+      "id": "design-json",
+      "path": "design.json",
+      "type": "design",
+      "dependencies": [
+        "design"
+      ],
+      "hash": "494528e7"
+    },
+    {
+      "id": "description",
+      "path": "description.md",
+      "type": "description",
+      "dependencies": [
+        "design",
+        "scene"
+      ],
+      "hash": "aa7bb953"
+    },
+    {
+      "id": "exterior-prompt",
+      "path": "prompts/exterior.md",
+      "type": "prompt",
+      "dependencies": [
+        "design",
+        "scene",
+        "presentation"
+      ],
+      "hash": "64569cd4"
+    },
+    {
+      "id": "interior-prompt",
+      "path": "prompts/interior.md",
+      "type": "prompt",
+      "dependencies": [
+        "design",
+        "scene",
+        "presentation"
+      ],
+      "hash": "2e238afe"
+    },
+    {
+      "id": "negative-prompt",
+      "path": "prompts/negative.md",
+      "type": "prompt",
+      "dependencies": [
+        "design",
+        "scene"
+      ],
+      "hash": "41df74cf"
+    },
+    {
+      "id": "illustration-config",
+      "path": "prompts/illustration-config.json",
+      "type": "config",
+      "dependencies": [
+        "presentation"
+      ],
+      "hash": "bafb2f6e"
+    },
+    {
+      "id": "scene",
+      "path": "scene.json",
+      "type": "scene",
+      "dependencies": [
+        "design",
+        "presentation"
+      ],
+      "hash": "635a3861"
+    },
+    {
+      "id": "container-layout-plan",
+      "path": "drawings/container-layout-plan.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design"
+      ],
+      "hash": "ab7dba2f"
+    },
+    {
+      "id": "container-layout-elevation",
+      "path": "drawings/container-layout-elevation.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design"
+      ],
+      "hash": "69a300f3"
+    },
+    {
+      "id": "plan-ground",
+      "path": "drawings/plan-ground.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design"
+      ],
+      "hash": "a4ea6f1b"
+    },
+    {
+      "id": "roof-plan",
+      "path": "drawings/roof-plan.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design",
+        "roof"
+      ],
+      "hash": "32a1e132"
+    },
+    {
+      "id": "elevation-south",
+      "path": "drawings/elevation-south.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design"
+      ],
+      "hash": "6271b9f0"
+    },
+    {
+      "id": "section",
+      "path": "drawings/section.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design"
+      ],
+      "hash": "9ccb8ed9"
+    },
+    {
+      "id": "isometric",
+      "path": "drawings/isometric.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design",
+        "camera"
+      ],
+      "hash": "ef92a2fe"
+    },
+    {
+      "id": "exterior-reference",
+      "path": "references/exterior-reference.svg",
+      "type": "reference",
+      "dependencies": [
+        "design",
+        "camera"
+      ],
+      "hash": "049c6f19"
+    }
+  ],
+  "limitations": [
+    "Reference SVG views are deterministic concept references, not measured photographs.",
+    "Interior perspective is not available; rooms are longitudinal zones.",
+    "Illustrations generated from the prompt are interpretations, not authoritative drawings.",
+    "No structural, accessibility, energy or code compliance is verified."
+  ]
+}

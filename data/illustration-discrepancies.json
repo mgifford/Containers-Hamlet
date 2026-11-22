@@ -1,0 +1,117 @@
+{
+  "schema": "containers-hamlet-illustration-discrepancies/v1",
+  "generatedFrom": "docs/visualisation-prompts.md vs data/design-lab.json and data/site.json",
+  "generated": "2026-11-22",
+  "items": [
+    {
+      "id": "woodland-approach",
+      "designId": "hamlet-woodland-cottage",
+      "area": "site-approach",
+      "severity": "medium",
+      "promptRefs": ["A1", "A6"],
+      "promptSays": "Front-on perspective from the main south approach.",
+      "modelSays": "The site path approach is east; the design entrance is on the local south face; the principal view is 245 degrees (south-west).",
+      "decision": "unresolved-design-decision",
+      "resolution": "Generated prompts use the south garden/entrance side and state that the site path approach is east. They do not call it the main approach. The site approach remains a design decision for the hamlet layout."
+    },
+    {
+      "id": "offset-upper-balcony-face",
+      "designId": "hamlet-offset-stack",
+      "area": "balcony",
+      "severity": "high",
+      "promptRefs": ["B1", "B12"],
+      "promptSays": "The upper balcony is at the east end.",
+      "modelSays": "Upper porch p2 is on the south face of m2; the upper east opening is a door.",
+      "decision": "correct-prompt",
+      "resolution": "Generated prompts place the upper balcony on the south face. The east upper door remains a door, not a balcony."
+    },
+    {
+      "id": "courtyard-module-length",
+      "designId": "hamlet-courtyard-residence",
+      "area": "container-count-and-length",
+      "severity": "high",
+      "promptRefs": ["C1", "C2", "C6"],
+      "promptSays": "One long module and one shorter perpendicular module.",
+      "modelSays": "Both modules are 40-foot (12.192 m) containers; the glazed link c1 connects them.",
+      "decision": "correct-prompt",
+      "resolution": "Generated prompts say two 40-foot modules, one rotated 90 degrees, with a glazed link."
+    },
+    {
+      "id": "cross-upper-balcony",
+      "designId": "hamlet-cross-stacked-retreat",
+      "area": "balcony",
+      "severity": "high",
+      "promptRefs": ["D1", "D6"],
+      "promptSays": "An upper balcony at the east end.",
+      "modelSays": "There is an upper east door (m2-e1) but no balcony, porch or deck object attached to the upper module.",
+      "decision": "correct-prompt-and-record-unresolved",
+      "resolution": "Generated prompts describe the upper east door and explicitly say the balcony is not modeled. Do not show a balcony until the model defines a deck/porch, guarding and support."
+    },
+    {
+      "id": "cross-butterfly-ceiling",
+      "designId": "hamlet-cross-stacked-retreat",
+      "area": "roof-interior-ceiling",
+      "severity": "medium",
+      "promptRefs": ["D6"],
+      "promptSays": "The interior ceiling follows the butterfly roof with a visible ridge/valley line.",
+      "modelSays": "The roof_form is butterfly at 12 degrees. Interior ceiling geometry is not modeled.",
+      "decision": "unresolved-design-decision",
+      "resolution": "Generated prompts may describe the exterior butterfly roof but must not invent an interior ceiling. The ceiling is an unresolved design decision."
+    },
+    {
+      "id": "accessible-garden-claim",
+      "designId": "hamlet-accessible-garden-home",
+      "area": "accessibility",
+      "severity": "high",
+      "promptRefs": ["E1", "E2", "E3", "E4", "E5"],
+      "promptSays": "A fully accessible step-free home with adaptable bathroom and kitchen.",
+      "modelSays": "Two 20-foot modules with a 1.0 m entrance, 1.2 m circulation target, step-free design intent and an accessibility classification of fully-accessible-single-storey. Turning circles, fixtures and thresholds are not geometrically verified.",
+      "decision": "correct-prompt",
+      "resolution": "Generated prompts say step-free design intent and list the recorded features. They do not say fully accessible. A professional accessibility review is still required."
+    },
+    {
+      "id": "solar-pv-installed",
+      "designId": "hamlet-solar-studio-stack",
+      "area": "solar",
+      "severity": "low",
+      "promptRefs": ["F1", "F8"],
+      "promptSays": "Installed photovoltaic panels on the solar-ready roof.",
+      "modelSays": "The roof_form is solar-ready and solar_array.enabled is true; the upper module roof type is solar.",
+      "decision": "supported",
+      "resolution": "Generated prompts may show installed PV. They must not claim energy production or a specific panel count beyond the model."
+    },
+    {
+      "id": "solar-upper-balcony",
+      "designId": "hamlet-solar-studio-stack",
+      "area": "balcony",
+      "severity": "high",
+      "promptRefs": ["F1", "F10"],
+      "promptSays": "An upper balcony at the east end.",
+      "modelSays": "There is an upper east door (m2-e1) but no balcony, porch or deck object attached to the upper module.",
+      "decision": "correct-prompt-and-record-unresolved",
+      "resolution": "Generated prompts describe the upper east door and explicitly say the balcony is not modeled."
+    },
+    {
+      "id": "solar-alternating-stair",
+      "designId": "hamlet-solar-studio-stack",
+      "area": "stair-accessibility",
+      "severity": "high",
+      "promptRefs": ["F5"],
+      "promptSays": "A compact alternating-tread stair is shown.",
+      "modelSays": "The access.stair.type is alternating-tread, with a recorded warning about usability and code acceptability.",
+      "decision": "record-unresolved",
+      "resolution": "Generated prompts describe the stair type and carry the warning. They do not present it as an acceptable permanent-residence solution."
+    },
+    {
+      "id": "interior-perspective-accuracy",
+      "designId": "all",
+      "area": "interior-reference",
+      "severity": "high",
+      "promptRefs": ["A2-A5", "B2-B9", "C2-C9", "D2-D9", "E2-E6", "F2-F7"],
+      "promptSays": "Room-specific interior perspectives with accurate camera positions.",
+      "modelSays": "Rooms are longitudinal zones with start/end distances. Partitions, fixtures, door swings and camera geometry are not modeled.",
+      "decision": "limit-generated-output",
+      "resolution": "The pipeline does not claim a spatially accurate interior perspective. It can generate a room-zone plan and a descriptive prompt labelled as a conceptual interpretation, or refuse the interior view when geometry is insufficient."
+    }
+  ]
+}

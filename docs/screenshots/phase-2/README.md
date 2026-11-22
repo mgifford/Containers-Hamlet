@@ -19,6 +19,9 @@ drawings for construction.
 | `offset-stack-section.png` | The Offset Stack building section with levels, rooms, stair and roof. |
 | `offset-stack-exploded.png` | The Offset Stack exploded-level view. Storeys are separated for reading only. |
 | `compare-top.png` | The two-concept comparison with massing, floor area, accessibility and structural status. |
+| `illustration-top.png` | The public illustration-pipeline page: deterministic/generative distinction and package links. |
+| `illustration-full.jpg` | The full illustration page with six generated packages, prompts and manifests. |
+| `editor-illustration.png` | The editor's Illustrate output: deterministic reference view and generated prompt controls. |
 
 ## Visual acceptance questions
 

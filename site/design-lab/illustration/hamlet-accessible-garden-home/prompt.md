@@ -1,0 +1,23 @@
+Create a photorealistic architectural illustration of the Accessible Garden Home residence.
+Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
+The building has 1 occupied storey and 2 container modules.
+Module geometry:
+- m1: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
+- m2: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
+Roof: canopy at 0 degrees, 1.2 m overhang.
+Openings:
+- m1: south opening "Internal opening to bedroom module" at 3 m, 1.4 x 2.1 m, sill 0 m; north window "Living window" at 1.6 m, 1.4 x 1.3 m, sill 0.8 m; north window "Kitchen window" at 4.6 m, 1 x 1.2 m, sill 1.1 m; west window "West window" at 1 m, 1 x 1.3 m, sill 0.9 m.
+- m2: north opening "Internal opening to living module" at 3 m, 1.4 x 2.1 m, sill 0 m; south door "Step-free entrance" at 1.6 m, 1 x 2.1 m, sill 0 m; south sliding-door "Garden doors" at 4.4 m, 2.4 x 2.1 m, sill 0 m; west window "Bathroom window" at 1 m, 0.8 x 1 m, sill 1.4 m; east door "Utility door" at 1 m, 0.95 x 2.1 m, sill 0 m.
+Outdoor spaces:
+- p1: 4.6 m x 2.8 m covered porch on the south face of m2, roofed.
+- d1: deck beyond p1, projecting 1.2 m.
+Site: Cabin E. Principal view: Fern, hemlock and a distant plane of lake light. The view is more forest than water. Path approach recorded as east.
+Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 315 degrees.
+Presentation: late summer, late afternoon, clear, no people.
+Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.
+Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
+Unresolved matters to carry into the illustration notes:
+- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
+- The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.

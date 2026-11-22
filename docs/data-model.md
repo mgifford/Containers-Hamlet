@@ -118,6 +118,24 @@ The browser explorer runs the same `model.js` and `render.js` as the generator, 
 `terrain.seed` fixes the roughness phases. `trees.seed` fixes the tree scatter. The build writes an FNV hash of the 5 m elevation grid into `site/data/site-analysis.json` and `site/data/terrain.json`. The static checks rebuild the grid and compare it with the hash, so an accidental change to the surface is visible in review.
 
 
+## Design Lab illustration schemas
+
+Two additive schemas sit beside the architectural design model:
+
+- **`containers-hamlet-illustration/v1`** — presentation only: design id, view,
+  camera height/lens, style, season, time, weather, people and material policy.
+- **`containers-hamlet-scene/v1`** — a normalized scene derived from the design:
+  design hash, building facts, required module elements, openings, rooms,
+  outdoor spaces, materials, site/view, camera, constraints, capabilities,
+  unresolved matters, generated prompt, negative prompt and description.
+
+The scene does not replace the design and does not duplicate the whole geometry.
+It references source module ids and records the facts needed for outputs. The
+editor compares `designHash` and `presentationHash` to mark outputs current or
+outdated. `site/js/design-illustration.js` implements the schemas,
+`validateScene`, `promptFor`, `negativeFor`, `descriptionFor`, `artifactPlan` and
+`manifest`.
+
 ## Design Lab schema v2.0
 
 Phase 2 adds explicit vertical geometry and an architectural review model to the

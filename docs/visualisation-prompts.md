@@ -27,6 +27,36 @@ Use the shared base and negative prompt with every shot. Then copy the shot text
 > colours, distorted perspective, warped straight lines, duplicate openings,
 > missing railings, unsafe stairs, fake snow, tropical plants.
 
+## Source-data corrections
+
+These prompts are retained as **creative source material**. They are not the
+authoritative geometry. The generated pipeline in
+[`docs/illustration-pipeline.md`](illustration-pipeline.md) supersedes them for
+new work. The following contradictions with `data/design-lab.json` and
+`data/site.json` were corrected on 2026-11-22:
+
+- **Woodland Cottage:** the design entrance is on the local south face, but the
+  site path approach is east. The prompts below say “south garden/entrance side”,
+  not “main south approach”.
+- **Offset Stack:** the upper porch `p2` is on the **south** face, not the east
+  end. The upper east opening is a door. Access to the south balcony is
+  unresolved because there is no recorded door on that face.
+- **Courtyard Residence:** both modules are **40-foot** containers. There is no
+  shorter module; the glazed link `c1` connects the L.
+- **Cross-Stacked Retreat:** there is an upper east **door**, but no modeled
+  balcony. Do not show a balcony. The butterfly roof is modeled on the exterior;
+  the interior ceiling is not.
+- **Accessible Garden Home:** the step-free entrance and adaptable bathroom and
+  kitchen are **design intentions**, not a verified fully accessible home.
+- **Solar Studio Stack:** installed PV is supported by the model. There is an
+  upper east **door**, but no modeled balcony. The alternating-tread stair is
+  recorded with unresolved usability/code concerns.
+- **All homes:** interior prompts are conceptual. Rooms are longitudinal zones;
+  partitions, fixtures, door swings and interior camera geometry are not modeled.
+
+See [`data/illustration-discrepancies.json`](../data/illustration-discrepancies.json)
+for the machine-readable record.
+
 ## Consistent look across all six
 
 - **Season:** late summer, before leaf-off.
@@ -47,8 +77,8 @@ bathroom, kitchen and living room. **Site:** Cedar, above Heron Lake; the view i
 through shoreline cedar and pine to the water, with a low far shore.
 
 ### A1. Front approach — whole house
-> Front-on eye-level perspective from the main south approach, 35 mm lens, camera
-> about 14 m from the house. A compact single-storey 40-foot container home with a
+> Front-on eye-level perspective from the south garden/entrance side (the site path
+> approach is east), 35 mm lens, camera about 14 m from the house. A compact single-storey 40-foot container home with a
 > 24° gable roof, weathered cedar cladding, dark window frames and a covered
 > south-facing porch with a low step-free deck. The porch runs across the living
 > end; the entry door and garden sliding doors face the camera. Show the whole
@@ -112,8 +142,10 @@ sunlit birch glade, low rock shoulder, forest floor visible beneath trunks.
 > with a pale metal upper module shifted clearly to one side, creating a covered
 > ground-floor outdoor room under the overhang. 8° shed roof, dark window frames,
 > steel connections visible at the offset. Entry door on the east face at ground
-> level, stair window above, balcony door and small balcony at the upper east end.
-> Show the whole two-storey mass, the offset and the covered porch. Background:
+> level, stair window above, and a small upper balcony on the south face. The
+> upper east opening is a door; the south balcony has no recorded door on that
+> face, so treat access as unresolved. Show the whole two-storey mass, the offset
+> and the covered porch. Background:
 > sunlit birch glade, white birch trunks, low rock shoulder, scattered pine.
 
 ### B2. Ground-floor living room
@@ -150,8 +182,9 @@ sunlit birch glade, low rock shoulder, forest floor visible beneath trunks.
 > Interior shot of the upper-floor bedroom in the offset upper module. 24 mm lens,
 > eye height 1.5 m. A double bed under a north window, pale metal-lined walls with
 > timber accents, a low dresser, a chair, a small rug. The room feels like a calm
-> retreat above the trees. Daylight from the north window and the east balcony
-> door; birch canopy visible outside. Quiet, private, simple.
+> retreat above the trees. Daylight from the north window and the east upper
+> door; the modeled south balcony has unresolved access. Birch canopy visible
+> outside. Quiet, private, simple.
 
 ### B7. Upper bathroom
 > Interior shot of the small upper bathroom. 24 mm lens, eye height 1.5 m. Shower,
@@ -186,10 +219,11 @@ sunlit birch glade, low rock shoulder, forest floor visible beneath trunks.
 > genuine outdoor living space. Calm, shaded, sheltered.
 
 ### B12. Upper balcony
-> Eye-level view from the small upper balcony, camera at 1.2 m looking out over the
-> birch canopy. A simple metal guardrail, two folding chairs, a small side table,
-> the balcony door behind. Birch tops and the low rock shoulder beyond. Show the
-> guardrail clearly; the view is elevated but not vertiginous. Late light, quiet.
+> Eye-level view from the modeled upper south balcony, camera at 1.2 m looking out
+> over the birch canopy. A simple metal guardrail, two folding chairs, a small side
+> table. The balcony has no recorded door on the south face; do not show a door
+> onto it. Birch tops and the low rock shoulder beyond. Show the guardrail clearly;
+> the view is elevated but not vertiginous. Late light, quiet.
 
 ---
 
@@ -205,8 +239,8 @@ sky.
 ### C1. Front approach — whole house
 > Front-on eye-level perspective from the main east approach, 35 mm lens, camera
 > about 18 m away. A single-storey L-shaped container home around a sheltered
-> courtyard: one long timber module running left-right and a shorter perpendicular
-> module forming the L. Flat roof with a low green-roof edge, deep overhangs,
+> courtyard: two 40-foot timber modules, one running left-right and one rotated
+> 90° to form the L, joined by a glazed link. Flat roof with a low green-roof edge, deep overhangs,
 > timber cladding, dark windows. Entry door on the east face of the long module.
 > Show the whole L, the courtyard opening, the covered porch edge and the garden
 > beyond. Background: mature white pine and hemlock; a narrow strip of lake light
@@ -294,7 +328,7 @@ meadow, open sedge, alder and standing water, south knoll and rock shoulder beyo
 > strong cross silhouette and a deep shaded outdoor room beneath the crossing.
 > Butterfly roof with two shallow slopes meeting at a central valley, dark window
 > frames, visible steel connections at the crossing. Entry door on the east face of
-> the ground module; upper balcony door at the east end. Show the whole cross, the
+> the ground module; an upper east door, with no modeled balcony. Show the whole cross, the
 > shaded porch and the meadow beyond. Background: beaver meadow, sedge, alder,
 > standing water, low rock shoulder. Late light, long shadows.
 
@@ -325,9 +359,10 @@ meadow, open sedge, alder and standing water, south knoll and rock shoulder beyo
 ### D6. Upper sleeping room
 > Interior shot of the upper bedroom in the crossing timber module. 24 mm lens,
 > eye height 1.5 m. Double bed under a south window, timber-lined walls, a low
-> dresser, a chair, a rug. The ceiling follows the butterfly roof, with a shallow
-> slope and a visible ridge/valley line. Daylight from the south and east balcony
-> door; alder and meadow visible outside. Quiet, tucked-in, distinctive.
+> dresser, a chair, a rug. The butterfly roof is an exterior form; the interior
+> ceiling is not modeled, so do not invent a ridge or valley line. Daylight from
+> the south and east upper door; no balcony is modeled. Alder and meadow visible
+> outside. Quiet, tucked-in, distinctive.
 
 ### D7. Upper bathroom
 > Interior shot of the upper bathroom. 24 mm lens, eye height 1.5 m. Shower,
@@ -337,8 +372,9 @@ meadow, open sedge, alder and standing water, south knoll and rock shoulder beyo
 ### D8. Upper studio
 > Interior shot of the upper studio in the crossing module. 24 mm lens, eye
 > height 1.5 m. A long desk under the south window, task chair, shelves, pinboard,
-> a daybed. Timber walls, dark frames, the butterfly ceiling visible. Meadow and
-> alder through the south window. A quiet workspace with a strong roof line.
+> a daybed. Timber walls, dark frames. The butterfly roof is visible outside; do
+> not invent an interior ceiling. Meadow and alder through the south window. A quiet
+> workspace with a strong roof line.
 
 ### D9. Upper storage
 > Interior shot of the narrow upper storage room. 35 mm lens, eye height 1.5 m.
@@ -371,8 +407,8 @@ covered terrace and level deck. **Site:** Fern; fern, hemlock and a distant plan
 of lake light; more forest than water.
 
 ### E1. Front approach — whole house
-> Front-on eye-level perspective from the main south approach, 35 mm lens, camera
-> about 14 m away. A wide, low single-storey home made of two 20-foot container
+> Front-on eye-level perspective from the south garden side (the site path
+> approach is east), 35 mm lens, camera about 14 m away. A wide, low single-storey home made of two 20-foot container
 > modules side by side, with a shallow canopy roof extending over a covered
 > south-facing terrace. Timber cladding, dark window frames, a wide 1.0 m step-free
 > entrance door, a garden sliding door and a level deck. Show the whole low
@@ -436,13 +472,13 @@ terrace. **Site:** Juniper; the southern cove of Heron Lake through juniper and
 cedar, opposite shore close enough to read the rock.
 
 ### F1. Front approach — whole house
-> Front-on eye-level perspective from the main south approach, 35 mm lens, camera
-> about 15 m away. A compact two-storey home made of two 20-foot container modules,
+> Front-on eye-level perspective from the south garden/lake side (the site path
+> approach is north-east), 35 mm lens, camera about 15 m away. A compact two-storey home made of two 20-foot container modules,
 > the pale metal upper module slightly offset from the dark timber ground module.
 > A 12° solar-ready shed roof with dark PV panels on the south slope, a deep south
 > overhang and a covered terrace. Ground-floor entry door and living sliding door;
-> upper studio glazing and a balcony door. Show the whole compact mass, the roof
-> and the terrace. Background: juniper, cedar and red pine, the southern cove of
+> upper studio glazing and an east upper door; no balcony is modeled. Show the
+> whole compact mass, the roof and the terrace. Background: juniper, cedar and red pine, the southern cove of
 > Heron Lake with the opposite rocky shore. Late-afternoon light.
 
 ### F2. Ground-floor living room
@@ -464,10 +500,11 @@ cedar, opposite shore close enough to read the rock.
 > grab-bar blocking. Clean, warm, modest.
 
 ### F5. Compact stair
-> Interior shot looking up the compact alternating-tread or straight stair.
-> 24 mm lens, eye height 1.5 m. Timber treads, steel stringer, a simple handrail,
-> a landing or turn, a small window lighting the stair, exposed container wall.
-> Show that it is compact but usable; no open risers or unsafe detail.
+> Interior shot looking up the compact stair. 24 mm lens, eye height 1.5 m. The
+> model records an alternating-tread stair; its usability and code acceptability
+> are unresolved. Timber treads, steel stringer, a simple handrail, a landing or
+> turn, a small window lighting the stair, exposed container wall. Do not present
+> it as an acceptable permanent-residence solution.
 
 ### F6. Upper studio
 > Interior shot of the upper studio. 24 mm lens, eye height 1.5 m. A long desk
@@ -495,11 +532,12 @@ cedar, opposite shore close enough to read the rock.
 > cedar framing the water. Show the shaded terrace as a place to sit and watch the
 > cove. Calm, private, sheltered.
 
-### F10. Upper balcony
-> Eye-level view from the upper balcony, camera at 1.2 m looking south over the
-> juniper and cedar toward the lake cove. A simple metal guardrail, one folding
-> chair, a small table, the balcony door behind. The opposite rocky shore is close
-> enough to read. Show the guardrail and the compact scale. Late light, quiet.
+### F10. Upper east door / unresolved balcony
+> Eye-level view from the upper level beside the east door, camera at 1.2 m looking
+> south over the juniper and cedar toward the lake cove. The model records a door
+> but no balcony, so do not draw a balcony, guardrail or chair outside it. Show the
+> compact scale and the unresolved access condition in the accompanying notes. The
+> opposite rocky shore is close enough to read. Late light, quiet.
 
 ---
 

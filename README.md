@@ -35,11 +35,11 @@ These are conceptual studies, not construction drawings or engineering approvals
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 466 main-site static checks
-   node tools/check-design-lab.mjs   # 2,200+ Design Lab schema, vertical geometry, stacking, support, diversity, accessibility, roof, rendering and comparison checks
+   node tools/check.mjs       # 508 main-site static checks
+   node tools/check-design-lab.mjs   # 2,399 Design Lab schema, geometry, vertical, stacking, illustration, prompt and comparison checks
    npm install
    npm run test:browser       # 107 main-site browser checks
-   npm run test:design-lab    # 194 Design Lab browser checks
+   npm run test:design-lab    # 208 Design Lab browser checks
    ```
 
    The build refuses data that cannot be built or that breaks a site rule, such as a home inside the shoreline setback, an overlapping container module, a porch beyond its face, or a concept with no valid editable presets. See [`docs/data-model.md`](docs/data-model.md) and [`docs/design-lab.md`](docs/design-lab.md).
@@ -72,7 +72,7 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its floor-specific plans and elevations, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, its six-home comparison and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 259 KB uncompressed / 64 KB compressed. The whole published site is about 5220 KB, under the revised 6 MB budget for sixteen concepts and their detailed drawing sets.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 259 KB uncompressed / 64 KB compressed. The whole published site is about 5955 KB, under the 6 MB budget for sixteen concepts, their detailed drawing sets and six illustration packages.
 
 ## The fictional landscape
 
