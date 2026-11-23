@@ -109,12 +109,13 @@ Physical accessibility is a separate question from WCAG. Each concept records:
 - the connection to the shared hamlet path
 - a vertical-access strategy
 
-A two-storey home is **not** described as fully accessible because its entrance
-is step-free. The model distinguishes:
+A home is **not** described as fully accessible because its entrance is
+step-free or because it is single-storey. The model distinguishes:
 
 | Classification | Meaning |
 | --- | --- |
-| `fully-accessible-single-storey` | A single-storey, step-free concept. A design target, not a verified fully accessible dwelling. |
+| `fully-accessible-single-storey` | Legacy label. No selected home is assigned this label. It requires documented professional evidence, not just a single storey. |
+| `single-storey-step-free-candidate` | All modeled evidence targets are met: single storey, step-free, essential rooms, door/circulation widths, bathroom turning space, kitchen approach and path connection. Still not a professional certification. |
 | `ground-floor-accessible-living` | Essential living and a bathroom are on the ground floor; the upper floor is reached by stairs and is not accessible. |
 | `potentially-adaptable` | Some functions or vertical access remain unresolved. |
 | `unresolved-vertical-access` | A material vertical-access barrier exists. Do not describe the home as accessible. |
@@ -126,11 +127,20 @@ ground-floor bedroom or essential functions, a narrow entrance, a raised
 threshold or an unresolved path connection. These are project targets informed
 by CSA B651 and the Ontario Building Code, not a compliance assessment.
 
-The **Accessible Garden Home** and **Woodland Cottage** are single-storey
-step-free concepts. The **Offset Stack**, **Cross-Stacked Retreat** and **Solar
-Studio Stack** are ground-floor accessible living arrangements; their upper
-floors are stair-only. The **Courtyard Residence** is single-storey but has a
-larger footprint and courtyard thresholds that still need detailing.
+All six selected homes are single-storey: **Woodland Cottage**, **Offset Pair**,
+**Courtyard Residence**, **Cross-Wing House**, **Accessible Garden Home** and
+**Solar Studio**. Their classification is derived from the interior evidence.
+At this milestone none meets every candidate condition, so they report
+`potentially-adaptable`, not `fully-accessible-single-storey`.
+
+The **Accessible Garden Home** is the most demanding demonstration interior. Its
+1.7 m bathroom cannot fit the 1.5 m turning circle alongside the recorded
+fixtures, so it reports an unresolved design condition. The project does not
+reduce the target to make it pass. The **Offset Pair** has larger bathrooms but
+still lacks a modeled turning circle, so it also remains unresolved.
+
+The three historical two-storey studies are retained in the Experimental
+archive. They are not selected homes and are not presented as accessible.
 
 A future lift is not assumed to be feasible. A concept must reserve space and
 record structural implications before a lift can be considered. The model does

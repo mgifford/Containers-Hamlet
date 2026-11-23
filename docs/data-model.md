@@ -118,6 +118,25 @@ The browser explorer runs the same `model.js` and `render.js` as the generator, 
 `terrain.seed` fixes the roughness phases. `trees.seed` fixes the tree scatter. The build writes an FNV hash of the 5 m elevation grid into `site/data/site-analysis.json` and `site/data/terrain.json`. The static checks rebuild the grid and compare it with the hash, so an accidental change to the surface is visible in review.
 
 
+## Interior spatial schema
+
+`containers-hamlet-interior/v1` is an optional design-level `interior` object.
+It adds room polygons, partitions, interior doors, fixture references, circulation,
+clearances and service areas in module-local metres. The architectural schema
+remains v2.0 so existing imports stay valid.
+
+Room bands (`start_m`/`end_m`) remain the simple editing representation and are
+not overwritten. `DesignInterior.fromZones()` converts bands to provisional room
+rectangles and marks them `inferred-from-zone`; it does not invent partitions,
+doors, fixtures or clearances. Authored interiors are marked `status: "authored"`.
+Ids are stable and reference their module, level and containing room.
+
+The model distinguishes `invalid-geometry`, `unresolved-design` and
+`review-required`. Accessibility classification is derived from recorded
+interior evidence and cannot be overridden by a manually supplied
+`fully-accessible-single-storey` string. See
+[`interior-spatial-model.md`](interior-spatial-model.md).
+
 ## Design Lab illustration schemas
 
 Two additive schemas sit beside the architectural design model:

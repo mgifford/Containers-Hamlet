@@ -20,6 +20,24 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 
 It is not a generic home builder. The container is the core of every design; timber, glass, screens, decks, roofs and planting are supporting layers.
 
+## Phase 3: single-storey homes and interiors
+
+All six selected homes are single-storey. The selected Offset Pair, Cross-Wing
+House and Solar Studio replace the former stacked concepts without an occupied
+upper floor; the original two-storey studies remain in the Experimental archive.
+Historical two-storey JSON imports are still supported.
+
+The editor now has a **Detailed interior plan** mode with room polygons,
+partitions, interior doors, fixtures and validation. Offset Pair and Accessible
+Garden Home have authored demonstration interiors; the other four selected homes
+use provisional interiors inferred from their room bands. See
+[`interior-spatial-model.md`](interior-spatial-model.md) and
+[`phase-3-audit.md`](phase-3-audit.md).
+
+The site comparison page reconciles the selected footprints and entrances with
+the older site models and flags conflicts. The site's parcel, clearing and path
+geometry is not silently rewritten.
+
 ## Illustration pipeline
 
 The Design Lab now has a reproducible illustration pipeline. It generates a
@@ -193,7 +211,7 @@ Each concept or edited design is one JSON object:
 
 ## Source of truth
 
-`data/design-lab.json` is the source for the sixteen gallery concepts (nine archive concepts, six hamlet residences and the common lodge). `tools/build.mjs` generates:
+`data/design-lab.json` is the source for the nineteen gallery concepts (nine legacy concepts, six selected single-storey residences, three experimental archive two-storey studies and the common lodge). `tools/build.mjs` generates:
 
 - `site/design-lab/views/<id>-plan.svg`
 - `site/design-lab/views/<id>-exterior.svg`
@@ -264,7 +282,7 @@ Every design has an architectural page under `site/design-lab/architecture/<id>/
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 2,399 schema, geometry, vertical, stacking, illustration, prompt and comparison checks
+node tools/check-design-lab.mjs      # 2,813 schema, geometry, interior, illustration, migration and comparison checks
 node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 

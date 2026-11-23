@@ -78,11 +78,19 @@ It does **not** calculate:
 | Home | Structural character | Main review issues |
 | --- | --- | --- |
 | Woodland Cottage | Single-storey gable | Openings, roof-to-wall connection, foundation, wind uplift. |
-| Offset Stack | Upper module offset 2.6 m | Partial support, transfer/cantilever, lateral stability, inter-storey connections. |
+| Offset Pair | Two ground modules, 2.6 m stagger | Independent foundations, shared link, roof junction, wind uplift. |
 | Courtyard Residence | Two ground modules, L-shape, partial wall removal | Corner connection, large opening framing, flat green roof loads and drainage. |
-| Cross-Stacked Retreat | Perpendicular upper module | Small bearing area, torsion, transfer, lateral stability, fire separation. |
+| Cross-Wing House | Two ground modules, T-wing | Junction transfer, roof valley, lateral stability, foundation on slope. |
 | Accessible Garden Home | Two ground 20-foot modules | Shared-wall connection, wide opening framing, canopy uplift. |
-| Solar Studio Stack | Aligned 20-foot stack with 0.8 m offset | Partial support, compact stair, roof PV fixing, uplift. |
+| Solar Studio | Two ground 20-foot modules, 0.8 m offset | Shared connection, roof PV fixing, uplift, compact foundation. |
+
+## Experimental archive
+
+The historical two-storey **Offset Stack**, **Cross-Stacked Retreat** and **Solar
+Studio Stack** are retained in the Experimental archive. Their previous
+inter-storey, cantilever and stair concerns remain documented there; they are
+not current selected homes and are not covered by the Phase 3 single-storey
+geometry.
 
 ## Professional evidence
 

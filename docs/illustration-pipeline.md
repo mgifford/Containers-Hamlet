@@ -183,6 +183,26 @@ A package manifest records:
 The editor's **Download package ZIP** includes the design, description, scene,
 prompt, negative prompt, configuration, drawings, reference and manifest.
 
+## Interior illustration readiness
+
+The Phase 3 interior model adds room polygons, partitions, doors, fixtures and
+clearances to the scene. Capabilities are explicit:
+
+- exterior reference available;
+- interior zone diagram available;
+- detailed interior floor plan available when room polygons exist;
+- interior illustration prompt available when rooms exist;
+- spatially accurate interior perspective **unavailable** — no interior camera
+  or perspective renderer is implemented.
+
+Room polygons and fixtures can support a richer prompt without supporting a
+geometrically accurate perspective. The generated interior prompt uses room
+areas, module references, partitions, door connections, fixtures and unresolved
+items. It states the camera limitation and does not invent windows or furniture.
+
+Interior changes invalidate the design hash and dependent interior drawings,
+scenes and prompts. Presentation-only changes do not alter the design hash.
+
 ## Editor
 
 The **Illustrate** section of `/design-lab/editor/` provides:
@@ -220,9 +240,9 @@ does so for portability.
 
 ## Known limits
 
-- Interior perspective is unavailable: rooms are longitudinal zones, not
-  partitioned volumes. The pipeline refuses to claim a spatially accurate
-  interior view.
+- Interior perspective is unavailable: no interior camera or perspective
+  renderer exists. Room polygons and fixtures support a detailed prompt and
+  plan, but the pipeline refuses to claim a spatially accurate interior view.
 - Reference views are approximate SVG projections, not measured photographs.
 - The prompt is a structured interpretation; the external image can still add or
   remove detail. It must not be treated as a drawing.
