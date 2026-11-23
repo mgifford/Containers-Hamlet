@@ -1,0 +1,8 @@
+.visual-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); margin: 1.2rem 0; }
+.visual-card { margin: 0; background: var(--paper); border: 1px solid var(--border); border-radius: .6rem; overflow: hidden; }
+.visual-card img { display: block; width: 100%; height: auto; }
+.visual-card figcaption { padding: .75rem .9rem; font-size: .85rem; line-height: 1.45; }
+.gap-list li, .checklist li { margin: .55rem 0; line-height: 1.5; }
+.prompt-block { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 32rem; overflow: auto; padding: .9rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--paper); font-size: .82rem; line-height: 1.45; }
+@media (prefers-color-scheme: dark) { .prompt-block { background: #121713; } }
+@media (forced-colors: active) { .visual-card, .prompt-block { border: 1px solid CanvasText; } }

@@ -25,3 +25,9 @@ The selected set is three single-storey and three two-storey homes. Woodland
 Cottage and Accessible Garden Home are the only two whole-home wheelchair
 accessibility demonstrations. The other four are not failed for lacking
 accessible bathrooms or clearances.
+
+## Concept visualisation placeholders
+
+[`visualisations-top.png`](visualisations-top.png) shows the new
+`/design-lab/visualisations/` page: three v1 AI-assisted placeholders with
+explicit limitations and the version 2 checklist.

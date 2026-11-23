@@ -21,6 +21,7 @@ export function designSubnav(depth, current) {
   ${link(p + 'design-lab/', 'Gallery', 'gallery')}
   ${link(p + 'design-lab/residences/', 'Residences', 'residences')}
   ${link(p + 'design-lab/illustration/', 'Illustrate', 'illustrate')}
+  ${link(p + 'design-lab/visualisations/', 'Visualisations', 'visualisations')}
   ${link(p + 'design-lab/editor/', 'Editor', 'editor')}
   ${link(p + 'design-lab/guides/', 'Guides', 'guides')}
   ${link(p + 'design-lab/compare/', 'Compare', 'compare')}

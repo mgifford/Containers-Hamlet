@@ -2,7 +2,7 @@
 
 The published site was 6370 KB and the selected gallery, architecture pages and
 editor were larger than necessary. The refactor reduces both individual page
-weight and the total to **5987 KB**, back under the original 6 MB budget.
+weight and the total to **5987 KB**, back under the original 6 MB budget. The later v1 concept-visualisation placeholders add about 143 KB, bringing the total to **6130 KB**, still under 6 MB.
 
 ## What changed
 
@@ -63,8 +63,9 @@ uncompressed because they are tiny.
 | Offset Stack architecture | 216 KB | 90 KB |
 | Editor (selected preset) | 907 KB | 767 KB |
 | Whole published site | 6370 KB | **5987 KB** |
+| Whole site with v1 concept images | 5987 KB | **6130 KB** |
 
-The 6 MB budget is restored in `tools/check.mjs`.
+The 6 MB budget is restored in `tools/check.mjs`. The concept images are AVIF at 1000 px to keep the addition small.
 
 ## Trade-offs
 

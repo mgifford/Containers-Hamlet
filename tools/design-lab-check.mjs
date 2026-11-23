@@ -106,6 +106,18 @@ try {
   await shot(archive.page, 'archive-top');
   await archive.context.close();
 
+  section('Concept visualisation placeholders');
+  const visuals = await open('design-lab/visualisations/');
+  ok(visuals.errors.length === 0, `visualisations: no console errors${visuals.errors.length ? ': ' + visuals.errors.join(' | ') : ''}`);
+  const visualState = await visuals.page.evaluate(() => ({ images: document.querySelectorAll('.visual-card img').length, alts: [...document.querySelectorAll('.visual-card img')].every((i) => i.alt.length > 40), notice: /not model-verified/i.test(document.body.textContent), checklist: /Version 2 completion checklist/.test(document.body.textContent) }));
+  ok(visualState.images === 3 && visualState.alts && visualState.notice && visualState.checklist, 'visualisation page shows three placeholders, descriptive alternatives, limits and the v2 checklist');
+  await visuals.page.locator('.visual-card img').first().scrollIntoViewIfNeeded();
+  await visuals.page.waitForTimeout(500);
+  ok(await visuals.page.locator('.visual-card img').first().evaluate((i) => i.naturalWidth > 0), 'visualisation placeholder image loads');
+  await axe(visuals.page, 'concept visualisations');
+  await shot(visuals.page, 'visualisations-top');
+  await visuals.context.close();
+
   section('Architectural gallery and accessible slideshow');
   let arch = await open('design-lab/architecture/common-lodge/');
   ok(arch.errors.length === 0, `architecture: no console errors${arch.errors.length ? ': ' + arch.errors.join(' | ') : ''}`);
@@ -735,6 +747,11 @@ try {
   ok(await smallGallery.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'gallery has no horizontal scrolling at 320 px');
   await axe(smallGallery.page, 'gallery at 320 px');
   await smallGallery.context.close();
+  const smallVisuals = await open('design-lab/visualisations/', { viewport: { width: 320, height: 640 } });
+  await smallVisuals.page.waitForTimeout(300);
+  ok(await smallVisuals.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'concept visualisations have no horizontal scrolling at 320 px');
+  await axe(smallVisuals.page, 'concept visualisations at 320 px');
+  await smallVisuals.context.close();
   const small = await open('design-lab/editor/', { viewport: { width: 320, height: 640 } });
   await small.page.waitForSelector('#plan svg');
   await small.page.waitForTimeout(250);
