@@ -74,7 +74,7 @@ Scenarios link to relevant pattern entries rather than using patterns as a score
 | --- | --- |
 | `node tools/build.mjs --check` | 503 generated files current |
 | `node tools/check.mjs` | 520 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,526 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,533 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 261 passed, 0 failed |
-| Whole site | 6332 KB (6.25 MB budget) |
+| `node tools/design-lab-check.mjs` | 266 passed, 0 failed |
+| Whole site | 6361 KB (6.25 MB budget) |

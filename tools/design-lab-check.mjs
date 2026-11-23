@@ -247,6 +247,23 @@ try {
   ok(nojsState.visible >= 12 && nojsState.controls === false && nojsState.note, 'architecture: no-JavaScript fallback shows all views and explains itself');
   await nojsArch.context.close();
 
+  section('Pattern lens annotations');
+  const lens = await open('design-lab/architecture/hamlet-woodland-cottage/');
+  ok(lens.errors.length === 0, `pattern lens: no console errors${lens.errors.length ? ': ' + lens.errors.join(' | ') : ''}`);
+  await lens.page.waitForTimeout(700);
+  const lensState = await lens.page.evaluate(() => { const o = document.getElementById('pattern-lens-plan'); return { buttons: document.querySelectorAll('.lens-button').length, object: !!(o && o.contentDocument && o.contentDocument.getElementById('room-w-hall')), details: document.querySelectorAll('.lens-detail').length }; });
+  ok(lensState.buttons === 5 && lensState.object && lensState.details === 5, 'pattern lens exposes five annotations, the authored room plan and all limitations');
+  await lens.page.locator('.lens-button').first().click();
+  await lens.page.waitForTimeout(350);
+  const lensMarked = await lens.page.evaluate(() => { const o = document.getElementById('pattern-lens-plan'); return { status: document.querySelector('#pattern-lens-status').textContent, marks: o && o.contentDocument ? o.contentDocument.querySelectorAll('.pattern-highlight').length : 0, list: document.querySelectorAll('#pattern-lens-list li').length, pressed: document.querySelector('.lens-button').getAttribute('aria-pressed') }; });
+  ok(/Pattern 127/.test(lensMarked.status) && lensMarked.marks >= 2 && lensMarked.list >= 3 && lensMarked.pressed === 'true', 'selecting a lens pattern highlights authored rooms and lists observations, limits and question');
+  await lens.page.locator('#lens-clear').click();
+  await lens.page.waitForTimeout(200);
+  ok(await lens.page.evaluate(() => document.querySelector('#pattern-lens-list').children.length === 0 && document.querySelectorAll('.pattern-highlight').length === 0), 'pattern lens clear control removes room highlights');
+  await axe(lens.page, 'pattern lens');
+  await shot(lens.page, 'pattern-lens');
+  await lens.context.close();
+
   section('Gallery-to-editor navigation');
   const fromArch = await open('design-lab/architecture/woodland-retreat/');
   await Promise.all([

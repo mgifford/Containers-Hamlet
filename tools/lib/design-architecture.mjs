@@ -1,5 +1,6 @@
 // Code: MIT.
 import { designShellNav } from './design-nav.mjs';
+import { patternLensSection } from './design-annotations.mjs';
 // // Generated page content: CC BY-SA 4.0.
 const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const n = (v) => (Math.round(v * 10) / 10).toString();
@@ -43,7 +44,7 @@ function slide(c, kind, title, src, size) {
         </figure>`;
 }
 
-export function architecturePage(c, sizes, profile) {
+export function architecturePage(c, sizes, profile, annotationData, patterns) {
   const multi = c.levels.length > 1;
   const slides = [
     slide(c, 'exterior', 'Exterior architectural view', `../../views/${c.id}-exterior.svg`, sizes.exterior),
@@ -234,6 +235,7 @@ ${slides}
     <p class="small">See <a href="../../fire/">fire resilience</a> and <a href="../../water/">water and resilience</a>. No building separation, inter-storey fire separation, cavity barrier, hydrant flow, cistern volume or potable-water treatment is designed here.</p>
   </section>
 
+  ${patternLensSection(c, annotationData, patterns)}
   <section class="architecture-facts" aria-labelledby="facts-title">
     <h2 id="facts-title">Concept facts</h2>
     <dl class="fact-grid">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>

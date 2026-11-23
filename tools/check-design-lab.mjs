@@ -14,6 +14,7 @@ const Illustration = require('../site/js/design-illustration.js');
 const Interior = require('../site/js/design-interior.js');
 const { validatePatterns, validateSiteElements, VERIFIED_TITLES } = require('./lib/patterns.mjs');
 const { validateScenarios } = require('./lib/scenarios.mjs');
+const { validateDesignAnnotations } = require('./lib/design-annotations.mjs');
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const exists = (p) => fs.existsSync(path.join(ROOT, p));
@@ -230,6 +231,20 @@ scenarioData.scenarios.forEach((s) => {
   const svg = read(`site/design-lab/scenarios/${s.id}.svg`);
   ok(new RegExp('data-scenario-diagram="' + s.id + '"').test(svg) && /<title/.test(svg) && /<desc/.test(svg) && /CC BY-SA 4\.0/.test(svg) && /not to scale|not a construction layout/.test(svg), `scenario ${s.id} SVG has an accessible title, description, licence and schematic caveat`);
 });
+const annotationData = JSON.parse(read('data/patterns/design-annotations.json'));
+const annotationValidation = validateDesignAnnotations(annotationData, patternData, data.concepts);
+ok(annotationValidation.ok, `design annotations validate${annotationValidation.errors.length ? ': ' + annotationValidation.errors.join('; ') : ''}`);
+const woodlandPage = read('site/design-lab/architecture/hamlet-woodland-cottage/index.html');
+const accessiblePage = read('site/design-lab/architecture/hamlet-accessible-garden-home/index.html');
+const lodgePage = read('site/design-lab/architecture/common-lodge/index.html');
+const woodlandPlan = read('site/design-lab/views/hamlet-woodland-cottage-interior-plan.svg');
+ok(/Pattern lens/.test(woodlandPage) && (woodlandPage.match(/lens-button/g) || []).length === 5 && woodlandPage.includes('pattern-lens-plan'), 'Woodland architecture page carries the five-pattern lens and interior overlay');
+ok(woodlandPage.includes('Read pattern 127') && woodlandPage.includes('../pattern-language/#pattern-127') && woodlandPage.includes('A reading aid, not a finding'), 'pattern lens links back to the Explorer and states its limits');
+ok(woodlandPlan.includes('id="room-w-hall"') && woodlandPlan.includes('id="room-w-living"') && woodlandPlan.includes('id="room-w-bed"'), 'interior plan carries stable room IDs for the annotation overlay');
+ok(/Pattern lens/.test(accessiblePage) && accessiblePage.includes('room-e-living') && accessiblePage.includes('No entrance hall is modelled'), 'Accessible Garden Home has an evidence-aware pattern lens');
+ok(/Pattern lens/.test(lodgePage) && lodgePage.includes('No authored interior room plan exists') && !lodgePage.includes('pattern-lens-plan'), 'common lodge has text-only annotations without a fabricated interior overlay');
+const lensText = (woodlandPage.match(/<section class="assembly-section pattern-lens"[\s\S]*?<\/section>/) || [''])[0];
+ok(!/pattern is satisfied|satisfies the pattern/i.test(lensText + accessiblePage + lodgePage), 'pattern-lens pages do not claim the pattern is satisfied');
 
 const patternPage = read('site/design-lab/pattern-language/index.html');
 const siteElementData = JSON.parse(read('data/patterns/site-elements.json'));
