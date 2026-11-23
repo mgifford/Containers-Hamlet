@@ -32,7 +32,11 @@ section('Generated files');
 const { files, issues, models, analysis } = generate();
 const errors = issues.filter((i) => i.level === 'error');
 ok(errors.length === 0, `data builds without errors${errors.length ? ': ' + errors.map((e) => e.message).join('; ') : ''}`);
-const stale = [...files].filter(([p, c]) => !exists(p) || read(p) !== c).map(([p]) => p);
+const stale = [...files].filter(([p, c]) => {
+  if (!exists(p)) return true;
+  const current = fs.readFileSync(path.join(ROOT, p));
+  return Buffer.isBuffer(c) ? Buffer.compare(current, c) !== 0 : current.toString('utf8') !== c;
+}).map(([p]) => p);
 ok(stale.length === 0, `all ${files.size} generated files match the data${stale.length ? ' (stale: ' + stale.join(', ') + ')' : ''}`);
 
 /* ------------------------------------------------------------------ */
@@ -347,7 +351,7 @@ let total = 0;
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).forEach((e) => { const f = path.join(d, e.name); if (e.isDirectory()) walk(f); else total += fs.statSync(f).size; });
 walk(path.join(ROOT, 'site'));
 console.log(`       whole published site: ${(total / 1024).toFixed(0)} KB`);
-ok(total <= 7 * 1024 * 1024, 'whole published site stays under the 7 MB budget for nineteen concepts, interior plans, reference views and six illustration packages');
+ok(total <= 6 * 1024 * 1024, 'whole published site stays under the 6 MB budget for sixteen concepts, interior plans, reference views and six illustration packages');
 ok(/loading="lazy"/.test(html), 'below-the-fold drawings load lazily');
 ok(!/@import|@font-face|url\(http/.test(read('site/style.css')), 'no web fonts or remote CSS');
 

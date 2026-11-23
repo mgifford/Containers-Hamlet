@@ -25,7 +25,8 @@
     return;
   }
 
-  var EDITABLE = DATA.concepts.filter(function (c) { return c.editable; });
+  var EDITABLE = DATA.concepts.filter(function (c) { return c.editable; }).concat(DATA.archivePresets || []);
+  var archiveLoading = null;
   var DEFAULT_PRESET_ID = 'hamlet-woodland-cottage';
   var state = {
     design: null,
@@ -95,8 +96,39 @@
     if ($('redo')) $('redo').disabled = state.future.length === 0;
   }
 
+  function allConcepts() {
+    return DATA.concepts.concat((window.DesignLabArchiveConcepts && window.DesignLabArchiveConcepts.concepts) || []);
+  }
+  function loadArchive() {
+    if (window.DesignLabArchiveConcepts) return Promise.resolve();
+    if (archiveLoading) return archiveLoading;
+    archiveLoading = new Promise(function (resolve, reject) {
+      var script = document.createElement('script');
+      script.src = '../concepts-archive.js';
+      script.onload = function () {
+        if (window.DesignLabArchiveConcepts && window.DesignLabArchiveConcepts.concepts) {
+          var known = {};
+          DATA.concepts.forEach(function (c) { known[c.id] = true; });
+          window.DesignLabArchiveConcepts.concepts.forEach(function (c) { if (!known[c.id]) DATA.concepts.push(c); });
+        }
+        resolve();
+      };
+      script.onerror = function () { archiveLoading = null; reject(new Error('The archive preset script did not load.')); };
+      document.head.appendChild(script);
+    });
+    return archiveLoading;
+  }
   function loadPreset(id, silent) {
-    var concept = EDITABLE.filter(function (c) { return c.id === id; })[0] || EDITABLE.filter(function (c) { return c.id === DEFAULT_PRESET_ID; })[0] || EDITABLE[0];
+    var concept = allConcepts().filter(function (c) { return c.id === id; })[0];
+    if (!concept) {
+      var meta = EDITABLE.filter(function (c) { return c.id === id; })[0];
+      if (meta) {
+        announce('Loading archive preset ' + meta.name + '…');
+        loadArchive().then(function () { loadPreset(id, silent); }).catch(function (err) { announce(err.message); });
+        return;
+      }
+      concept = allConcepts().filter(function (c) { return c.id === DEFAULT_PRESET_ID; })[0] || allConcepts()[0];
+    }
     if (!concept) return;
     state.preset = concept.id;
     state.design = clone(concept);
@@ -1737,7 +1769,7 @@
     var requested = params.get('preset');
     var initial = EDITABLE.filter(function (c) { return c.id === requested; })[0] || EDITABLE.filter(function (c) { return c.id === DEFAULT_PRESET_ID; })[0] || EDITABLE[0];
     loadPreset(initial.id, true);
-    renderArrangementFromState();
+    if (state.design) renderArrangementFromState();
     announce('Loaded ' + initial.name + '. Six hamlet residences and three archive concepts are editable; the gallery also preserves six inspiration concepts.');
 
     $('preset').addEventListener('change', function () { if ($('preset').value) loadPreset($('preset').value); });

@@ -108,7 +108,8 @@ ${designShellNav(2, 'compare')}
 <footer class="site-footer"><p><a href="../../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>
 <script src="../../js/design-schema.js"></script>
 <script src="../../js/design-model.js"></script>
-<script src="../concepts.js"></script>
+<script src="../concepts-selected.js"></script>
+<script src="../concepts-archive.js"></script>
 <script src="../compare.js"></script>
 </body>
 </html>`;

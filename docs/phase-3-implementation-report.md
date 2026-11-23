@@ -96,13 +96,13 @@ No separate experimental archive duplicates the selected homes.
 
 | Command | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | OK — 495 generated files current |
+| `node tools/build.mjs --check` | OK — 497 generated files current |
 | `node tools/check.mjs` | 517 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,474 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,477 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 226 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 230 passed, 0 failed |
 
-Published site: about 6370 KB, under the 7 MB budget.
+Published site: about 5987 KB, under the 6 MB budget.
 
 ## Screenshots
 

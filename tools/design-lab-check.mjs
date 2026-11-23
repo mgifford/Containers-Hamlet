@@ -72,8 +72,8 @@ try {
   let { context, page, errors, foreign } = await open('design-lab/');
   ok(errors.length === 0, `gallery: no console errors${errors.length ? ': ' + errors.join(' | ') : ''}`);
   const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card:not(.arrangement-card)').length, editable: document.querySelectorAll('.concept-badge.editable').length, hamlet: document.querySelectorAll('.concept-badge.hamlet').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, archive: [...document.querySelectorAll('.concept-badge')].filter((b) => /Experimental archive/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
-  ok(count.cards === 16 && count.editable === 3 && count.hamlet === 6 && count.inspiration === 7 && count.archive === 0 && count.headings === 1, 'gallery shows sixteen concept cards, six hamlet residences, three editable legacy presets, seven inspiration-only concepts and the lodge');
-  ok(await page.locator('.arrangement-card').count() === 4, 'gallery shows four arrangement studies');
+  ok(count.cards === 6 && count.editable === 0 && count.hamlet === 6 && count.inspiration === 0 && count.archive === 0 && count.headings === 1, 'selected gallery shows six concept cards and six hamlet residences');
+  ok(await page.locator('.arrangement-card').count() === 0, 'selected gallery does not load the arrangement studies');
   ok(await page.locator('.concept-specs').first().evaluate((d) => !d.open), 'technical specification lists start collapsed');
   await page.locator('.concept-specs').first().locator('summary').click();
   ok(await page.locator('.concept-specs').first().evaluate((d) => d.open), 'specification disclosure opens by keyboard or pointer');
@@ -83,7 +83,7 @@ try {
   await page.waitForTimeout(1200);
   const imgs = await page.evaluate(() => [...document.querySelectorAll('.concept-card-media img')].map((i) => ({ w: i.naturalWidth, alt: i.alt })));
   ok(imgs.every((i) => i.w > 0 && i.alt.length > 20), 'every gallery illustration loads with descriptive alt text');
-  ok(await visible(page, '#concept-woodland-retreat details'), 'gallery exposes further views and source files');
+  ok(await page.locator('.concept-card').count() === 6 && await page.locator('a[href="concepts/"]').count() > 0, 'selected gallery exposes source files and links to the archive');
   await axe(page, 'gallery');
   await shot(page, 'gallery-top');
   await shot(page, 'gallery-full', true);
@@ -93,6 +93,18 @@ try {
   for (const h of hrefs) { const r = await page.request.get(new URL(h, BASE + 'design-lab/').href); if (r.status() !== 200) broken.push(h); }
   ok(broken.length === 0, `gallery: all ${hrefs.length} local links return 200${broken.length ? ': ' + broken.join(', ') : ''}`);
   await context.close();
+
+  section('Concept archive page');
+  const archive = await open('design-lab/concepts/');
+  ok(archive.errors.length === 0, `archive: no console errors${archive.errors.length ? ': ' + archive.errors.join(' | ') : ''}`);
+  const archiveState = await archive.page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card:not(.arrangement-card)').length, editable: document.querySelectorAll('.concept-badge.editable').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, arrangements: document.querySelectorAll('.arrangement-card').length, headings: document.querySelectorAll('h1').length }));
+  ok(archiveState.cards === 10 && archiveState.editable === 3 && archiveState.inspiration === 7 && archiveState.arrangements === 4 && archiveState.headings === 1, 'archive page carries ten concepts, three editable presets and four arrangement studies');
+  await archive.page.locator('.concept-card-media img').first().scrollIntoViewIfNeeded();
+  await archive.page.waitForTimeout(600);
+  ok(await archive.page.locator('.concept-card-media img').first().evaluate((i) => i.naturalWidth > 0), 'archive loads its first illustration');
+  await axe(archive.page, 'concept archive');
+  await shot(archive.page, 'archive-top');
+  await archive.context.close();
 
   section('Architectural gallery and accessible slideshow');
   let arch = await open('design-lab/architecture/common-lodge/');
@@ -117,6 +129,7 @@ try {
   ok(archState.geometry >= 9 && archState.illustrative >= 2, 'architecture: geometry-backed drawings and illustrative studies are labelled');
   ok(archState.caps && archState.imgs && (await arch.page.evaluate(() => document.querySelector('[data-slide].is-current img').naturalWidth > 0)), 'architecture: every view has a descriptive caption and alt text');
   ok(archState.seasonal >= 2 && archState.wall && archState.veg && archState.solar && archState.foundation, 'architecture: seasonal pair, wall, solar, foundation and vegetation sections are present');
+  for (const sel of ['.season-pair', '.assembly-section', '.solar-section', '.foundation-section']) { await arch.page.locator(sel).first().scrollIntoViewIfNeeded(); await arch.page.waitForTimeout(250); }
   ok(await arch.page.evaluate(() => [...document.querySelectorAll('.season-pair img, .assembly-section img, .solar-section img, .foundation-section img')].every((i) => i.naturalWidth > 0)), 'architecture: seasonal, wall-section, solar and foundation images load');
   await arch.page.waitForTimeout(900);
   ok(new RegExp('View 1 of ' + archState.slides).test(await arch.page.textContent('[data-slide-status]')), 'architecture: does not advance automatically');
@@ -131,7 +144,8 @@ try {
   await arch.page.waitForTimeout(150);
   const allShown = await arch.page.evaluate(() => ({ count: [...document.querySelectorAll('[data-slide]')].filter((e) => e.offsetParent !== null).length, expanded: document.querySelector('[data-slide-all]').getAttribute('aria-expanded') }));
   ok(allShown.count === archState.slides && allShown.expanded === 'true', 'architecture: Show all views exposes the non-carousel alternative');
-  await arch.page.waitForTimeout(500);
+  for (const img of await arch.page.locator('[data-slide] img').all()) { await img.scrollIntoViewIfNeeded(); await arch.page.waitForTimeout(40); }
+  await arch.page.waitForTimeout(700);
   ok(await arch.page.evaluate(() => [...document.querySelectorAll('[data-slide] img')].every((i) => i.naturalWidth > 0)), 'architecture: all views load when the non-carousel alternative is shown');
   await arch.page.click('[data-slide-all]');
   await arch.page.waitForTimeout(150);

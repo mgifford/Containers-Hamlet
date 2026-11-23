@@ -47,13 +47,13 @@ Current limits:
 |---|---:|---:|
 | Initial view, compressed | 120 KB | 64 KB |
 | Initial view, uncompressed | 400 KB | 259 KB |
-| Whole published site | 7 MB | 6370 KB |
+| Whole published site | 6 MB | 5987 KB |
 
-The initial view is under 400 KB by about **165 KB**. The whole site is under the 7 MB budget by about **320 KB** after Phase 3 adds interior plans, selected-home packages and three archived concepts. Adding another substantial page or gallery item will still require either:
+The initial view is under 400 KB by about **165 KB**. The whole site is under the 6 MB budget by about **157 KB** after the selected-gallery split, architecture lazy-loading, editor concept split, compact package data and gzip-compressed OBJ downloads. See [`page-weight-refactor.md`](page-weight-refactor.md). Adding another substantial page or gallery item will still require either:
 
 - compressing the duplicate full-size site-plan asset;
 - reducing the optional potential-building/tree layers; or
-- deliberately raising the total budget above 7 MB.
+- deliberately raising the total budget above 6 MB.
 
 Lazy loading improves **when bytes are requested**, not the total byte count. A lazy image still counts in the whole-site budget once published.
 
@@ -71,18 +71,18 @@ Lazy loading improves **when bytes are requested**, not the total byte count. A 
 |---|---|
 | `node tools/build.mjs --check` | 395 generated files current |
 | `node tools/check.mjs` | 517 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,474 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,477 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 226 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 230 passed, 0 failed |
 | Initial view | 259 KB / 64 KB compressed |
-| Whole site | 6370 KB |
+| Whole site | 5987 KB |
 
 Browser checks cover the homes index, all seven cards, the Cabin C page, `#main-view`, each section ID, lazy card diagrams, no-JavaScript cards and axe-core.
 
 ## Deferred
 
 - Split living/nature/materials/downloads if still needed after the map and model pages move.
-- Keep the 7 MB budget under review; interior plans and packages add output weight.
+- Keep the 6 MB budget under review; interior plans and packages add output weight.
 - Real screen-reader/disabled-person testing.
 
 **Do not merge automatically.**

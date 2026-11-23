@@ -2,9 +2,10 @@
 
 The Design Lab is a container-first design gallery and editor at `/design-lab/`. It is a separate, explicitly scoped part of Containers Hamlet:
 
-- **Gallery:** `/design-lab/` — six hamlet residences, a nine-concept archive and the common lodge
+- **Gallery:** `/design-lab/` — six selected hamlet residences
+- **Concept archive:** `/design-lab/concepts/` — nine legacy concepts, the common lodge and four arrangement studies
 - **Residences comparison:** `/design-lab/residences/` — all six homes, sortable/filterable table, diversity heuristic, structural/accessibility summaries and stacked-versus-single-storey translations
-- **Architecture pages:** `/design-lab/architecture/<id>/` — combined and floor-specific plans, four elevations, section, exploded levels, isometric, solar studies, seasonal pair, approximate exposure and envelope section
+- **Architecture pages:** `/design-lab/architecture/<id>/` — combined and floor-specific plans, interior plans, four elevations, section, exploded levels, isometric, solar studies, seasonal pair, approximate exposure and envelope section
 - **Editor:** `/design-lab/editor/`
 - **Vegetation guide:** `/design-lab/vegetation/` — four systems, evidence and sources
 - **Ground guide:** `/design-lab/ground/` — Ontario foundation options, no-compaction and a footbridge concept
@@ -288,7 +289,7 @@ Every design has an architectural page under `site/design-lab/architecture/<id>/
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 2,474 schema, geometry, interior, illustration, migration and comparison checks
+node tools/check-design-lab.mjs      # 2,477 schema, geometry, interior, illustration, migration and comparison checks
 node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 
