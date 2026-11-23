@@ -432,8 +432,17 @@
             "negativePrompt": "second storey, second module, balcony, chimney, wood stove, hydrant, fire cistern, potable water label, drinking water claim, rain barrel, battery, inverter, off-grid plant, noncombustible deck claim, firewood, snow guards, accessible ramp, lift, handrail, waterfront lawn, lake against the house, extra buildings, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 697035595
+          },
+          "patterns": [
+            112,
+            163,
+            105
+          ],
+          "patternRole": "primary",
+          "patternCue": "Entrance Transition and Outdoor Room: a sheltered, legible arrival that leads to a covered south porch with a floor, edge and a reason to stay.",
+          "defaultSet": true
         },
         {
           "id": "woodland-cottage-interior-hero",
@@ -554,7 +563,15 @@
             "designHash": "d142126a",
             "sceneHash": "4af580f8",
             "reference": "interior-plan.svg"
-          }
+          },
+          "patterns": [
+            127,
+            159,
+            180
+          ],
+          "patternRole": "primary",
+          "patternCue": "Intimacy Gradient and Light on Two Sides: a public-to-private sequence with daylight from more than one direction.",
+          "defaultSet": false
         },
         {
           "id": "woodland-cottage-fire-edge",
@@ -676,8 +693,16 @@
             "negativePrompt": "fire resistance rating, fireproof label, WUI approval sign, chimney, wood stove, hydrant, fire cistern, firewood, underfloor storage, noncombustible deck claim, snow guards, balcony, accessible ramp, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "elevation-south.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 46511572
+          },
+          "patterns": [
+            104,
+            171
+          ],
+          "patternRole": "supporting",
+          "patternCue": "Site Repair and Tree Places: keep fuel away from the building, preserve the trees and repair the disturbed ground.",
+          "defaultSet": true
         },
         {
           "id": "woodland-cottage-water-edge",
@@ -791,8 +816,15 @@
             "negativePrompt": "cistern in view, water tank, rain barrel, hydrant, fire cistern, draft point, potable tap, water filter, drinking water label, pump, pressure tank, treatment plant, chimney, wood stove, battery, inverter, snow guards, balcony, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "elevation-south.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 125213091
+          },
+          "patterns": [
+            104
+          ],
+          "patternRole": "supporting",
+          "patternCue": "Site Repair: place the water collection at the edge so it does not damage the building or the ground.",
+          "defaultSet": true
         },
         {
           "id": "woodland-cottage-service-core",
@@ -926,8 +958,13 @@
             "negativePrompt": "wood stove, chimney, stove outside air kit, gas supply, propane tank, combustion appliance, battery, inverter, off-grid plant, recirculating microwave hood, sealed service wall, concealed equipment, equipment brand, pipe route, electrical layout, loose furniture, rug, lamp, indoor plant, wall art, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 642782706
+          },
+          "patterns": [],
+          "patternRole": "supporting",
+          "patternCue": "Supporting technical detail: it enables comfort and resilience but is not itself a Pattern Language image.",
+          "defaultSet": false
         },
         {
           "id": "woodland-cottage-accessible-entry",
@@ -1032,8 +1069,16 @@
             "negativePrompt": "ramp, lift, stair, level change, grab bar, handrail, doormat, loose furniture, potted plant, fully accessible claim, code compliance label, snow bank, ice, chimney, wood stove, hydrant, fire cistern, potable tap, battery, inverter, balcony, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "elevation-south.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 872682298
+          },
+          "patterns": [
+            112,
+            155
+          ],
+          "patternRole": "primary",
+          "patternCue": "Entrance Transition and Old Age Cottage: a step-free, sheltered arrival for a small accessible home.",
+          "defaultSet": true
         },
         {
           "id": "woodland-cottage-envelope-reveal",
@@ -1136,13 +1181,22 @@
             "negativePrompt": "bare steel container wall, thin wall, missing insulation, exposed spray foam, thermal bridge, stone foundation, concrete plinth, chimney, flue, wood stove, dormer, second gable, extra storey, extra module, timber feature wall, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects",
             "risk": "medium",
             "reference": "section.svg",
-            "referenceRequired": true
+            "referenceRequired": true,
+            "seed": 353521320,
+            "referencePath": "site/design-lab/systems/wall-mineral-wool.svg"
           },
           "source": {
             "designHash": "d142126a",
             "sceneHash": "4af580f8",
             "reference": "section.svg"
-          }
+          },
+          "patterns": [
+            159,
+            180
+          ],
+          "patternRole": "primary",
+          "patternCue": "Light on Two Sides and Window Place: a deep reveal that gives the window a place to pause and light from more than one direction.",
+          "defaultSet": true
         }
       ],
       "envelope": {
@@ -1422,8 +1476,17 @@
             "negativePrompt": "third module, third storey, balcony, upper balcony railing, external stair, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, firewood, snow guards, lake, meadow, potable water label, battery, inverter, off-grid plant, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 211122480
+          },
+          "patterns": [
+            112,
+            163,
+            127
+          ],
+          "patternRole": "primary",
+          "patternCue": "Entrance Transition, Outdoor Room and Intimacy Gradient: a sheltered arrival, a ground outdoor room and a clear separation between shared and upper private life.",
+          "defaultSet": true
         },
         {
           "id": "offset-stack-interior-hero",
@@ -1541,8 +1604,17 @@
             "negativePrompt": "partition walls, interior doors, bathroom enclosure, stair enclosure, bed, sofa, kitchen counter, toilet, fixtures, loose furniture, rug, lamp, indoor plant, unlisted window, kitchen hood, bathroom exhaust, service core, HRV terminal, external stair, sculptural stair, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 293019681
+          },
+          "patterns": [
+            127,
+            159,
+            180
+          ],
+          "patternRole": "primary",
+          "patternCue": "Intimacy Gradient and Light on Two Sides: a shared ground floor, a stair threshold and daylight from more than one direction.",
+          "defaultSet": true
         }
       ],
       "envelope": {
@@ -1820,8 +1892,17 @@
             "negativePrompt": "green roof drainage outlet, gutter, downspout, installed PV array, solar panels, second storey, third module, warm roof claim, dry roof claim, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, potable water label, battery, inverter, extra buildings, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 833011685
+          },
+          "patterns": [
+            163,
+            106,
+            105
+          ],
+          "patternRole": "primary",
+          "patternCue": "Outdoor Room, Positive Outdoor Space and South Facing Outdoors: the L shapes a sheltered courtyard with a clear edge and a sunny side.",
+          "defaultSet": true
         },
         {
           "id": "courtyard-residence-interior-hero",
@@ -1937,8 +2018,17 @@
             "negativePrompt": "partitions, interior walls, interior doors, bathroom enclosure, bed, sofa, dining table, kitchen counter, toilet, fixtures, loose furniture, rug, lamp, indoor plant, kitchen hood, service core, HRV terminal, green roof visible through ceiling, coffered ceiling, pitched ceiling, unlisted window, room layout, fully accessible claim, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 299776458
+          },
+          "patterns": [
+            127,
+            159,
+            180
+          ],
+          "patternRole": "primary",
+          "patternCue": "Intimacy Gradient and Light on Two Sides: a public-to-private sequence around the courtyard, with daylight from more than one direction.",
+          "defaultSet": true
         }
       ],
       "envelope": {
@@ -2225,8 +2315,17 @@
             "negativePrompt": "balcony, upper balcony railing, interior butterfly ridge, interior valley, sloping interior ceiling, third module, third storey, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, firewood, lake, boreal waterfront, snow guards, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 593808422
+          },
+          "patterns": [
+            112,
+            163,
+            127
+          ],
+          "patternRole": "primary",
+          "patternCue": "Entrance Transition, Outdoor Room and Intimacy Gradient: a sheltered arrival, a shaded outdoor room and a clear separation between shared and upper private life.",
+          "defaultSet": true
         },
         {
           "id": "cross-stacked-retreat-interior-hero",
@@ -2344,8 +2443,17 @@
             "negativePrompt": "partitions, interior walls, interior doors, bathroom enclosure, sofa, kitchen counter, bed, fixtures, loose furniture, rug, lamp, indoor plant, interior butterfly ridge, interior valley, sloping ceiling, stair enclosure, external stair, kitchen hood, service core, HRV terminal, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 922568845
+          },
+          "patterns": [
+            127,
+            159,
+            180
+          ],
+          "patternRole": "primary",
+          "patternCue": "Intimacy Gradient and Light on Two Sides: a shared ground floor, a stair threshold and daylight from more than one direction.",
+          "defaultSet": true
         }
       ],
       "envelope": {
@@ -2639,8 +2747,17 @@
             "negativePrompt": "third module, second storey, ramp, lift, stair, level change, fully accessible claim, code compliance label, grab bar, handrail, chimney, wood stove, hydrant, fire cistern, installed PV array, solar panels, noncombustible deck claim, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 865419585
+          },
+          "patterns": [
+            112,
+            155,
+            163
+          ],
+          "patternRole": "primary",
+          "patternCue": "Entrance Transition, Old Age Cottage and Outdoor Room: a step-free, sheltered arrival and a terrace that works as an outdoor room.",
+          "defaultSet": true
         },
         {
           "id": "accessible-garden-home-interior-hero",
@@ -2753,7 +2870,15 @@
             "designHash": "98e11bf7",
             "sceneHash": "61536ceb",
             "reference": "interior-plan.svg"
-          }
+          },
+          "patterns": [
+            127,
+            155,
+            159
+          ],
+          "patternRole": "primary",
+          "patternCue": "Intimacy Gradient and Old Age Cottage: an accessible, public-to-private sequence with daylight from more than one direction.",
+          "defaultSet": false
         }
       ],
       "envelope": {
@@ -3040,8 +3165,17 @@
             "negativePrompt": "balcony, upper balcony railing, third module, third storey, wide cabin, single storey bungalow, snow guards, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 430919421
+          },
+          "patterns": [
+            112,
+            163,
+            127
+          ],
+          "patternRole": "primary",
+          "patternCue": "Entrance Transition, Outdoor Room and Intimacy Gradient: a sheltered arrival, a compact terrace and a clear separation between shared and upper private life.",
+          "defaultSet": true
         },
         {
           "id": "solar-studio-stack-interior-hero",
@@ -3156,8 +3290,17 @@
             "negativePrompt": "partitions, interior walls, interior doors, sleeping alcove, bed, desk, sofa, fixtures, loose furniture, rug, lamp, indoor plant, balcony, guardrail, outdoor platform, sloping ceiling, butterfly ceiling, kitchen hood, service core, HRV terminal, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
-            "referenceRequired": true
-          }
+            "referenceRequired": true,
+            "seed": 569465523
+          },
+          "patterns": [
+            127,
+            159,
+            180
+          ],
+          "patternRole": "primary",
+          "patternCue": "Intimacy Gradient and Light on Two Sides: a compact public-to-private sequence with daylight from more than one direction.",
+          "defaultSet": true
         }
       ],
       "envelope": {
@@ -3203,6 +3346,100 @@
         ],
         "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
       }
+    }
+  },
+  "patternDefaults": {
+    "note": "The default image set is chosen for Pattern Language fit, not for room count. The five primary patterns are those the hamlet is trying to build: 112 Entrance Transition, 127 Intimacy Gradient, 159 Light on Two Sides, 163 Outdoor Room and 180 Window Place. 104 Site Repair, 105 South Facing Outdoors, 106 Positive Outdoor Space, 155 Old Age Cottage and 171 Tree Places are supporting patterns. Technical detail images may be supporting only. The generation harness prepends the image patternCue to the generation prompt. defaultSet marks the pattern-led default; the service-core technical detail is optional and excluded unless --include-optional is used.",
+    "primary": [
+      112,
+      127,
+      159,
+      163,
+      180
+    ],
+    "supporting": [
+      104,
+      105,
+      106,
+      155,
+      171
+    ],
+    "cues": {
+      "112": "Entrance Transition: a legible, sheltered arrival with a path, a threshold and a place to pause before the shared room.",
+      "127": "Intimacy Gradient: a public-to-private sequence with a clear threshold between shared and private rooms.",
+      "159": "Light on Two Sides: daylight from more than one direction, with openings on more than one face.",
+      "163": "Outdoor Room: a porch, terrace or courtyard with a floor, shelter, edge and a reason to stay.",
+      "180": "Window Place: a comfortable place to sit at a window, with light, a view and a sense of enclosure.",
+      "104": "Site Repair: place the building and its services to avoid damage and repair already disturbed ground.",
+      "105": "South Facing Outdoors: put the main outdoor places on the sunny side and shelter them from wind.",
+      "106": "Positive Outdoor Space: shape the outdoor space with the buildings so it has a clear form, not leftover space.",
+      "155": "Old Age Cottage: a small, accessible dwelling close to community support.",
+      "171": "Tree Places: preserve special trees and make places around them for sitting and gathering."
+    },
+    "coverage": {
+      "104": [
+        "woodland-cottage-fire-edge",
+        "woodland-cottage-water-edge"
+      ],
+      "105": [
+        "woodland-cottage-exterior-hero",
+        "courtyard-residence-exterior-hero"
+      ],
+      "106": [
+        "courtyard-residence-exterior-hero"
+      ],
+      "112": [
+        "woodland-cottage-exterior-hero",
+        "woodland-cottage-accessible-entry",
+        "offset-stack-exterior-hero",
+        "cross-stacked-retreat-exterior-hero",
+        "accessible-garden-home-exterior-hero",
+        "solar-studio-stack-exterior-hero"
+      ],
+      "127": [
+        "woodland-cottage-interior-hero",
+        "offset-stack-exterior-hero",
+        "offset-stack-interior-hero",
+        "courtyard-residence-interior-hero",
+        "cross-stacked-retreat-exterior-hero",
+        "cross-stacked-retreat-interior-hero",
+        "accessible-garden-home-interior-hero",
+        "solar-studio-stack-exterior-hero",
+        "solar-studio-stack-interior-hero"
+      ],
+      "155": [
+        "woodland-cottage-accessible-entry",
+        "accessible-garden-home-exterior-hero",
+        "accessible-garden-home-interior-hero"
+      ],
+      "159": [
+        "woodland-cottage-interior-hero",
+        "woodland-cottage-envelope-reveal",
+        "offset-stack-interior-hero",
+        "courtyard-residence-interior-hero",
+        "cross-stacked-retreat-interior-hero",
+        "accessible-garden-home-interior-hero",
+        "solar-studio-stack-interior-hero"
+      ],
+      "163": [
+        "woodland-cottage-exterior-hero",
+        "offset-stack-exterior-hero",
+        "courtyard-residence-exterior-hero",
+        "cross-stacked-retreat-exterior-hero",
+        "accessible-garden-home-exterior-hero",
+        "solar-studio-stack-exterior-hero"
+      ],
+      "171": [
+        "woodland-cottage-fire-edge"
+      ],
+      "180": [
+        "woodland-cottage-interior-hero",
+        "woodland-cottage-envelope-reveal",
+        "offset-stack-interior-hero",
+        "courtyard-residence-interior-hero",
+        "cross-stacked-retreat-interior-hero",
+        "solar-studio-stack-interior-hero"
+      ]
     }
   }
 }

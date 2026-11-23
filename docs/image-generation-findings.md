@@ -105,5 +105,6 @@ plausible cabins, not model-faithful container homes.
 ## Related
 
 - [`image-descriptions.md`](image-descriptions.md)
+- [`reference-conditioned-generation.md`](reference-conditioned-generation.md)
 - [`visualisation-v2-brief.md`](visualisation-v2-brief.md)
 - [`../data/image-descriptions.json`](../data/image-descriptions.json)

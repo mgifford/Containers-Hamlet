@@ -118,6 +118,8 @@ export function validateImageDescriptions(data, designs, siteData, options) {
   const warnings = [];
   const unresolved = [];
   const designById = new Map((designs || []).map((d) => [d.id, d]));
+  const patternNumbers = new Set((opts.patterns || []).map((p) => p.number));
+  const primaryPatterns = (data && data.patternDefaults && data.patternDefaults.primary) || [];
   const allImageIds = new Set();
   const sceneCache = new Map();
   const sceneHashFor = (design) => {
@@ -134,6 +136,20 @@ export function validateImageDescriptions(data, designs, siteData, options) {
   }
   if (!data.designs || typeof data.designs !== 'object') {
     return { ok: false, errors: ['image descriptions must contain a designs object'], warnings, unresolved, summary };
+  }
+  if (!data.patternDefaults || typeof data.patternDefaults !== 'object') {
+    errors.push('image descriptions must contain patternDefaults.');
+  } else {
+    const pd = data.patternDefaults;
+    if (!isString(pd.note)) errors.push('patternDefaults.note required.');
+    if (!Array.isArray(pd.primary) || !pd.primary.length) errors.push('patternDefaults.primary required.');
+    if (!Array.isArray(pd.supporting)) errors.push('patternDefaults.supporting array required.');
+    if (!pd.cues || typeof pd.cues !== 'object') errors.push('patternDefaults.cues required.');
+    for (const n of pd.primary || []) {
+      if (!patternNumbers.has(n)) errors.push('patternDefaults.primary references unknown pattern ' + n + '.');
+      if (!isString((pd.cues || {})[String(n)])) errors.push('patternDefaults.cues missing cue for pattern ' + n + '.');
+    }
+    if (![112,127,159,163,180].every((n) => (pd.primary || []).includes(n))) errors.push('patternDefaults.primary must include 112, 127, 159, 163 and 180.');
   }
 
   for (const [designId, entry] of Object.entries(data.designs)) {
@@ -277,6 +293,21 @@ export function validateImageDescriptions(data, designs, siteData, options) {
         if (p.status === 'not-resolved') errors.push(iwhere + ': placement ' + sid + ' is not resolved and cannot be visible.');
       }
 
+      if (!Array.isArray(image.patterns)) errors.push(iwhere + ': patterns array required.');
+      if (!['primary', 'supporting'].includes(image.patternRole)) errors.push(iwhere + ': patternRole must be primary or supporting.');
+      if (!isString(image.patternCue)) errors.push(iwhere + ': patternCue required.');
+      if (typeof image.defaultSet !== 'boolean') errors.push(iwhere + ': defaultSet must be boolean.');
+      if (image.status !== 'ready' && image.defaultSet !== false) errors.push(iwhere + ': blocked images must not be in the default set.');
+      for (const n of image.patterns || []) if (!patternNumbers.has(n)) errors.push(iwhere + ': unknown pattern ' + n + '.');
+      if (image.patternRole === 'primary' && !(image.patterns || []).some((n) => primaryPatterns.includes(n))) errors.push(iwhere + ': a primary image needs at least one primary pattern.');
+      if (image.patternRole === 'supporting' && (image.patterns || []).some((n) => primaryPatterns.includes(n))) errors.push(iwhere + ': a supporting image cannot claim a primary pattern.');
+      if (image.patterns && image.patterns.length && data.patternDefaults && data.patternDefaults.coverage) {
+        for (const n of image.patterns) {
+          const covered = (data.patternDefaults.coverage[String(n)] || []);
+          if (!covered.includes(image.id)) errors.push(iwhere + ': patternDefaults.coverage[' + n + '] does not list this image.');
+        }
+      }
+
       if (image.status === 'ready') {
         const g = image.generation;
         if (!g || typeof g !== 'object') errors.push(iwhere + ': ready images need a generation object.');
@@ -286,6 +317,7 @@ export function validateImageDescriptions(data, designs, siteData, options) {
           if (!['low', 'medium', 'high'].includes(g.risk)) errors.push(iwhere + ': generation.risk must be low, medium or high.');
           if (!isString(g.reference)) errors.push(iwhere + ': generation.reference required.');
           if (typeof g.referenceRequired !== 'boolean') errors.push(iwhere + ': generation.referenceRequired must be boolean.');
+          if (!Number.isInteger(g.seed) || g.seed < 0) errors.push(iwhere + ': generation.seed must be a non-negative integer.');
           if (isString(g.prompt)) {
             const words = g.prompt.trim().split(/\s+/).length;
             if (words < 40 || words > 230) warnings.push(iwhere + ': generation.prompt is ' + words + ' words; aim for 40–230.');
@@ -306,6 +338,9 @@ export function validateImageDescriptions(data, designs, siteData, options) {
           if (isString(g.reference)) {
             const genRef = path.join('site', 'design-lab', 'views', design.id + '-' + g.reference);
             if (opts.checkFile ? !opts.checkFile(genRef) : !existsSync(genRef)) errors.push(iwhere + ': generation.reference ' + genRef + ' does not exist.');
+          }
+          if (isString(g.referencePath)) {
+            if (opts.checkFile ? !opts.checkFile(g.referencePath) : !existsSync(g.referencePath)) errors.push(iwhere + ': generation.referencePath ' + g.referencePath + ' does not exist.');
           }
         }
       } else if (image.status === 'blocked-pending-reconciliation') {

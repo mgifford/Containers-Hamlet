@@ -92,6 +92,41 @@ What no image may show as resolved:
 Conceptual placements are allowed only where the caption discloses them. A
 conceptual downspout is not a designed downspout.
 
+## Pattern defaults
+
+The default image set is chosen for **Pattern Language fit**, not for room count.
+Each ready record names:
+
+- `patterns` — numbers from [`data/patterns/patterns.json`](../data/patterns/patterns.json);
+- `patternRole` — `primary` or `supporting`;
+- `patternCue` — one sentence that the generation harness prepends to the
+  geometry prompt.
+
+The five primary patterns are the ones the hamlet is trying to build:
+
+| Pattern | Ready images |
+| --- | ---: |
+| 112 · Entrance Transition | 6 |
+| 127 · Intimacy Gradient | 7 |
+| 159 · Light on Two Sides | 5 |
+| 163 · Outdoor Room | 6 |
+| 180 · Window Place | 5 |
+
+Supporting patterns: 104 Site Repair (2), 105 South Facing Outdoors (2),
+106 Positive Outdoor Space (1), 155 Old Age Cottage (2) and 171 Tree Places (1).
+
+The technical detail images are explicit about their role. The service core is
+`supporting` with no primary pattern and `defaultSet: false`: it is necessary for
+comfort and resilience, but it is not itself a Pattern Language image, so it is
+outside the pattern-led default set. The reference harness generates the 14
+default images unless `--include-optional` is used. The fire and water edges are
+supporting under 104/171; the envelope reveal is primary under 159/180.
+
+This is the default because a home image is not a catalogue of rooms. It should
+make a pattern legible: a sheltered arrival, a public-to-private sequence, light
+from two sides, an outdoor room, a window place. The pattern cue leads the
+generation prompt; the geometry and envelope constraints follow.
+
 ## The finished envelope, not the bare container
 
 The design model records the **container module** dimensions, but the published
@@ -179,7 +214,7 @@ Each of the 15 ready records now also carries a `generation` object:
 - `reference` and `referenceRequired` — the deterministic drawing that should
   condition the image, not just prose.
 
-The `mustShow` / `mustNotShow` lists remain the review contract. The generation
+The reference-conditioned harness prepends the image's `patternCue`, then the reference-drawing instruction, then this prompt, so the default order is **pattern → reference → geometry**. The `mustShow` / `mustNotShow` lists remain the review contract. The generation
 prompt must agree with them and must not introduce an element the record
 excludes. Critical exclusions are repeated in the positive prompt because
 guidance-1 distilled models often ignore a negative prompt.
@@ -211,6 +246,7 @@ open zone plan; the reference drawing is required.
 
 ```sh
 node tools/check-image-descriptions.mjs
+node tools/check-reference-generation.mjs
 ```
 
 The check validates schema, design and scene hashes, geometry counts, room and
@@ -230,6 +266,7 @@ the status tags and exclusions carried into the text.
 - [`visualisation-v2-brief.md`](visualisation-v2-brief.md)
 - [`illustration-pipeline.md`](illustration-pipeline.md)
 - [`image-generation-findings.md`](image-generation-findings.md)
+- [`reference-conditioned-generation.md`](reference-conditioned-generation.md)
 - [`water-fire-services.md`](water-fire-services.md)
 - [`pattern-lens.md`](pattern-lens.md)
 - [`../data/image-descriptions.json`](../data/image-descriptions.json)

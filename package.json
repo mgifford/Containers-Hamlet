@@ -9,11 +9,13 @@
   },
   "scripts": {
     "build": "node tools/build.mjs",
-    "check": "node tools/build.mjs --check && node tools/check.mjs && node tools/check-design-lab.mjs && node tools/check-image-descriptions.mjs",
+    "check": "node tools/build.mjs --check && node tools/check.mjs && node tools/check-design-lab.mjs && node tools/check-image-descriptions.mjs && node tools/check-reference-generation.mjs",
     "test:browser": "node tools/browser-check.mjs",
     "test": "npm run check && npm run test:browser && npm run test:design-lab",
     "screenshots": "node tools/screenshots.mjs screenshots",
-    "test:design-lab": "node tools/design-lab-check.mjs"
+    "test:design-lab": "node tools/design-lab-check.mjs",
+    "generate:references": "node tools/generate-reference-images.mjs",
+    "check:references": "node tools/check-reference-generation.mjs"
   },
   "devDependencies": {
     "axe-core": "4.14.0",

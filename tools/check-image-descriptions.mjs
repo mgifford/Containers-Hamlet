@@ -8,6 +8,7 @@ const data = JSON.parse(read('data/image-descriptions.json'));
 const designLab = JSON.parse(read('data/design-lab.json'));
 const siteData = JSON.parse(read('data/site.json'));
 const designs = designLab.concepts.filter((c) => c.role === 'hamlet-selected');
+const patterns = JSON.parse(read('data/patterns/patterns.json')).patterns;
 
 let failed = 0;
 const ok = (condition, label) => {
@@ -16,6 +17,7 @@ const ok = (condition, label) => {
 };
 
 const result = validateImageDescriptions(data, designs, siteData, {
+  patterns,
   checkFile: (rel) => {
     try { read(rel); return true; } catch { return false; }
   }
@@ -60,6 +62,15 @@ const env = ready.find((i) => i.id === 'woodland-cottage-envelope-reveal');
 ok(!!env && env.generation && env.generation.reference === 'section.svg', 'Woodland has an envelope-reveal detail tied to the wall section');
 ok(!!env && env.mustShow.some((x) => /150 mm mineral wool/i.test(x.item)) && env.mustShow.some((x) => /205 mm/i.test(x.item)), 'envelope-reveal records the insulation and the added wall thickness');
 ok(ready.filter((i) => i.view === 'exterior-three-quarter').every((i) => /finished|205 mm/i.test(i.generation.prompt)), 'exterior prompts describe the finished envelope, not only the container');
+
+const defaults = data.patternDefaults || {};
+ok([112, 127, 159, 163, 180].every((n) => (defaults.primary || []).includes(n)), 'the default set is organized around Entrance Transition, Intimacy Gradient, Light on Two Sides, Outdoor Room and Window Place');
+ok(ready.every((i) => i.patternCue && i.patternRole), 'every ready image has a pattern cue and a pattern role');
+ok(ready.filter((i) => i.patternRole === 'primary').every((i) => (i.patterns || []).some((n) => (defaults.primary || []).includes(n))), 'every primary image names at least one primary pattern');
+ok([112, 127, 159, 163, 180].every((n) => (defaults.coverage[String(n)] || []).filter((id) => ready.some((i) => i.id === id)).length >= 3), 'each primary pattern is covered by at least three ready images');
+const serviceCore = ready.find((i) => i.id === 'woodland-cottage-service-core');
+ok(serviceCore && serviceCore.patternRole === 'supporting' && serviceCore.patterns.length === 0 && serviceCore.defaultSet === false, 'the service-core detail is explicitly supporting and outside the pattern-led default set');
+ok(ready.filter((i) => i.defaultSet).length === 14, 'the pattern-led default set has fourteen ready images');
 
 if (failed) {
   console.error('\n' + failed + ' image-description checks failed.');
