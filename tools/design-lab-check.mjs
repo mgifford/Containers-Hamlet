@@ -189,6 +189,22 @@ try {
   ok(scenarioNojsState.cards === 3 && scenarioNojsState.compare === 'none' && scenarioNojsState.baseline, 'scenario page remains complete without JavaScript and hides the inert comparator');
   await scenarioNojs.context.close();
 
+  section('Resident evaluation records');
+  const evaluation = await open('design-lab/evaluation/');
+  ok(evaluation.errors.length === 0, `evaluation: no console errors${evaluation.errors.length ? ': ' + evaluation.errors.join(' | ') : ''}`);
+  const evalState = await evaluation.page.evaluate(() => ({ cards: document.querySelectorAll('.evaluation-card').length, rows: document.querySelectorAll('tbody tr').length, statuses: [...document.querySelectorAll('.record-status')].every((e) => /Not evaluated/.test(e.textContent)), zero: /0 of 6 records contain observations/.test(document.body.textContent), forms: document.querySelectorAll('form, input, textarea').length, template: !!document.querySelector('a[href="record-template.json"]') }));
+  ok(evalState.cards === 6 && evalState.rows === 6 && evalState.statuses && evalState.zero && evalState.forms === 0 && evalState.template, 'evaluation page lists six scenarios and six open records with no personal-data form');
+  const templateResponse = await evaluation.page.request.get(BASE + 'design-lab/evaluation/record-template.json');
+  const templateJson = templateResponse.status() === 200 ? await templateResponse.json() : null;
+  ok(templateJson && templateJson.status === 'not-evaluated' && templateJson.reviewer === null && templateJson.observations.length === 0, 'blank evaluation template downloads and remains unfilled');
+  await axe(evaluation.page, 'evaluation page');
+  await shot(evaluation.page, 'evaluation');
+  await evaluation.context.close();
+
+  const evaluationNojs = await open('design-lab/evaluation/', { javaScriptEnabled: false });
+  ok(await evaluationNojs.page.locator('.evaluation-card').count() === 6, 'evaluation page remains complete without JavaScript');
+  await evaluationNojs.context.close();
+
   section('Architectural gallery and accessible slideshow');
   let arch = await open('design-lab/architecture/common-lodge/');
   ok(arch.errors.length === 0, `architecture: no console errors${arch.errors.length ? ': ' + arch.errors.join(' | ') : ''}`);
@@ -246,6 +262,23 @@ try {
   const nojsState = await nojsArch.page.evaluate(() => ({ visible: [...document.querySelectorAll('[data-slide]')].filter((e) => e.offsetParent !== null).length, controls: !!document.querySelector('[data-slide-controls]') && document.querySelector('[data-slide-controls]').offsetParent !== null, note: /JavaScript is off/.test(document.body.textContent) }));
   ok(nojsState.visible >= 12 && nojsState.controls === false && nojsState.note, 'architecture: no-JavaScript fallback shows all views and explains itself');
   await nojsArch.context.close();
+
+  section('Pattern lens annotations');
+  const lens = await open('design-lab/architecture/hamlet-woodland-cottage/');
+  ok(lens.errors.length === 0, `pattern lens: no console errors${lens.errors.length ? ': ' + lens.errors.join(' | ') : ''}`);
+  await lens.page.waitForTimeout(700);
+  const lensState = await lens.page.evaluate(() => { const o = document.getElementById('pattern-lens-plan'); return { buttons: document.querySelectorAll('.lens-button').length, object: !!(o && o.contentDocument && o.contentDocument.getElementById('room-w-hall')), details: document.querySelectorAll('.lens-detail').length }; });
+  ok(lensState.buttons === 5 && lensState.object && lensState.details === 5, 'pattern lens exposes five annotations, the authored room plan and all limitations');
+  await lens.page.locator('.lens-button').first().click();
+  await lens.page.waitForTimeout(350);
+  const lensMarked = await lens.page.evaluate(() => { const o = document.getElementById('pattern-lens-plan'); return { status: document.querySelector('#pattern-lens-status').textContent, marks: o && o.contentDocument ? o.contentDocument.querySelectorAll('.pattern-highlight').length : 0, list: document.querySelectorAll('#pattern-lens-list li').length, pressed: document.querySelector('.lens-button').getAttribute('aria-pressed') }; });
+  ok(/Pattern 127/.test(lensMarked.status) && lensMarked.marks >= 2 && lensMarked.list >= 3 && lensMarked.pressed === 'true', 'selecting a lens pattern highlights authored rooms and lists observations, limits and question');
+  await lens.page.locator('#lens-clear').click();
+  await lens.page.waitForTimeout(200);
+  ok(await lens.page.evaluate(() => document.querySelector('#pattern-lens-list').children.length === 0 && document.querySelectorAll('.pattern-highlight').length === 0), 'pattern lens clear control removes room highlights');
+  await axe(lens.page, 'pattern lens');
+  await shot(lens.page, 'pattern-lens');
+  await lens.context.close();
 
   section('Gallery-to-editor navigation');
   const fromArch = await open('design-lab/architecture/woodland-retreat/');
@@ -819,6 +852,11 @@ try {
   ok(await smallGallery.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'gallery has no horizontal scrolling at 320 px');
   await axe(smallGallery.page, 'gallery at 320 px');
   await smallGallery.context.close();
+  const smallEvaluation = await open('design-lab/evaluation/', { viewport: { width: 320, height: 640 } });
+  await smallEvaluation.page.waitForTimeout(300);
+  ok(await smallEvaluation.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'evaluation page has no horizontal scrolling at 320 px');
+  await axe(smallEvaluation.page, 'evaluation page at 320 px');
+  await smallEvaluation.context.close();
   const smallScenario = await open('design-lab/scenarios/', { viewport: { width: 320, height: 640 } });
   await smallScenario.page.waitForTimeout(300);
   ok(await smallScenario.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'scenario comparison has no horizontal scrolling at 320 px');

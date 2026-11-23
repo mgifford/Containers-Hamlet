@@ -29,9 +29,9 @@ scenarios are future phases; they must not be embedded in the pattern catalogue.
 Passing a pattern check is not building-code, accessibility or ecological
 compliance.
 
-## Evaluation record (future)
+## Evaluation record
 
-Each record will reference:
+Each record references:
 
 - pattern number and design element;
 - design version or scene hash;
@@ -47,7 +47,7 @@ added, it needs a definition, inputs, units, method and limitations.
 
 ## Resident scenarios
 
-Future scenarios should describe an activity sequence, not a stereotype. Example:
+Scenarios describe an activity sequence, not a stereotype. Example:
 
 - leave home;
 - use a shared path;
@@ -55,9 +55,9 @@ Future scenarios should describe an activity sequence, not a stereotype. Example
 - use a facility;
 - return home.
 
-Scenarios can be applied to the baseline and conceptual arrangements. They record
+Scenarios are applied to the baseline and conceptual arrangements. They record
 whether the design supports the activity, what evidence is missing and what
-trade-off is exposed.
+trade-off is exposed. Phase 5 provides six open records; none has been completed.
 
 ## Pattern relationships
 
@@ -84,5 +84,6 @@ numbers. It does not claim to reproduce the book's complete network.
 Phase 1 implements definitions, validation, public explanation and Explorer
 navigation. Phase 2 adds stable site-element mappings, map highlighting and text
 alternatives. Phase 3 adds three schematic arrangements and a baseline-preserving
-comparison. Annotations, resident scenarios and evaluation records remain later
-phases.
+comparison. Phase 4 adds an initial room-level pattern lens for three designs. Phase 5 adds
+six resident activity sequences and open evaluation records; no walkthrough has
+been completed. Phase 6 and the remaining home annotations remain later work.

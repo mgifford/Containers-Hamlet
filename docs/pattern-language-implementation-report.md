@@ -84,17 +84,17 @@ configuration guide at `/design-lab/patterns/`.
 
 | Command | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | OK — 503 generated files current |
+| `node tools/build.mjs --check` | OK — 505 generated files current |
 | `node tools/check.mjs` | 520 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,526 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,542 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 261 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 273 passed, 0 failed |
 
 Browser tests cover search, scale and evidence filters, reset, shareable
 fragments, related-pattern links, live status, no-JS readability, axe-core and
 320 px reflow.
 
-The published site is about **6332 KB**, under the 6.25 MB budget.
+The published site is about **6380 KB**, under the 6.25 MB budget.
 
 ## Phase 3 scenario comparison
 
@@ -103,6 +103,23 @@ The published site is about **6332 KB**, under the 6.25 MB budget.
 - Added three original schematic SVGs with titles, descriptions, licence and “not to scale / not a site plan” caveats.
 - Added validation that requires three arrangements, a single baseline, trade-offs, questions, pattern references and no “best/winning” label.
 - Added browser tests for comparison, URL, reset, no-JS, axe and 320 px reflow.
+
+## Phase 4 pattern lens
+
+- Added annotations for patterns 127, 112, 159, 163 and 180.
+- Woodland Cottage and Accessible Garden Home use authored room polygons; the common lodge is explicitly text-only.
+- Interior plans now carry stable `#room-*` IDs.
+- The lens lists observations, questions, limits and links back to the Explorer.
+- No annotation means a pattern is satisfied.
+- The remaining four homes still need room-level annotations.
+
+## Phase 5 evaluation framework
+
+- Added six resident activity sequences and six open records.
+- Added a blank record template and explicit completion rules.
+- Every record is `not-evaluated` with null reviewer/date and no observations.
+- Added page, validation, no-JS, axe, 320 px and template-download tests.
+- No resident was consulted; no finding is claimed.
 
 ## What remains uncertain
 

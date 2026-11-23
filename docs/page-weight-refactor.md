@@ -2,7 +2,7 @@
 
 The published site was 6370 KB and the selected gallery, architecture pages and
 editor were larger than necessary. The refactor reduces both individual page
-weight and the total to **5987 KB**, back under the original 6 MB budget. The later v1 concept placeholders, Pattern Language Explorer, fire/water layer and scenario comparison add about 345 KB, bringing the total to **6332 KB**, still under the revised 6.25 MB.
+weight and the total to **5987 KB**, back under the original 6 MB budget. The later v1 concept placeholders, Pattern Language Explorer, fire/water layer and scenario comparison add about 345 KB, bringing the total to **6380 KB**, still under the revised 6.25 MB.
 
 ## What changed
 
@@ -63,7 +63,7 @@ uncompressed because they are tiny.
 | Offset Stack architecture | 216 KB | 90 KB |
 | Editor (selected preset) | 907 KB | 767 KB |
 | Whole published site | 6370 KB | **5987 KB** |
-| Whole site with concept placeholders, patterns, services and scenarios | 5987 KB | **6332 KB** |
+| Whole site with concept placeholders, patterns, services and scenarios | 5987 KB | **6380 KB** |
 
 The budget is 6.25 MB in `tools/check.mjs`. The concept images are AVIF at 800 px to keep the addition small.
 
