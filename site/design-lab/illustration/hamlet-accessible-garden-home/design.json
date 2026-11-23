@@ -90,14 +90,14 @@
   "name": "Accessible Garden Home",
   "group": "Single storey",
   "tagline": "Two compact modules side by side, designed around a step-free route, generous circulation and an adaptable bathroom and kitchen.",
-  "description": "Two 20-foot modules sit side by side to make a compact single-storey home. The entrance, garden doors and internal route are step-free, with a ground-floor bedroom, an adaptable bathroom and a kitchen designed for seated use. A roof canopy covers the garden terrace. Accessibility is a design target across the whole home, not a badge on one room.",
+  "description": "A wide, low single-storey home made of two 20-foot container modules placed side by side to create a double-width plan. The extra width supports a step-free entrance, a 1.2 m circulation route and a bathroom with a 1.5 m turning circle. The bathroom and kitchen remain concept layouts; the shared-path grades have not been surveyed.",
   "primary_view_deg": 180,
   "visual_seed": 45,
   "architecture": {
     "family": "Accessible Garden Home",
     "intent": "Compact single-storey home organised around step-free circulation and adaptability.",
     "arrangement": "parallel-pair",
-    "footprint_type": "compact"
+    "footprint_type": "double-width"
   },
   "roof_form": {
     "type": "canopy",
@@ -390,7 +390,8 @@
     },
     "classification": "potentially-adaptable",
     "standards": "Project targets informed by the Ontario Building Code and CSA B651. No code compliance, licence or professional accessibility review is claimed.",
-    "assessment": "not-verified"
+    "assessment": "not-verified",
+    "target": "accessible"
   },
   "features": {
     "solar": "Solar-ready roof intent; no energy production is calculated.",
@@ -531,13 +532,24 @@
         "room": "e-kitchen",
         "type": "work-zone",
         "center_m": [
-          1.5,
+          0.85,
           0
         ],
         "size_m": [
-          1.2,
+          1.8,
           0.6
         ],
+        "status": "not-verified"
+      },
+      {
+        "id": "e-turn",
+        "room": "e-bath",
+        "type": "turning-circle",
+        "center_m": [
+          1.4,
+          0
+        ],
+        "diameter_m": 1.5,
         "status": "not-verified"
       }
     ],
@@ -554,11 +566,11 @@
             -1.149
           ],
           [
-            0.1,
+            -0.2,
             -1.149
           ],
           [
-            0.1,
+            -0.2,
             1.149
           ],
           [
@@ -583,19 +595,19 @@
         "level": 0,
         "polygon": [
           [
-            0.1,
+            -0.2,
             -1.149
           ],
           [
-            2.9,
+            1.9,
             -1.149
           ],
           [
-            2.9,
+            1.9,
             1.149
           ],
           [
-            0.1,
+            -0.2,
             1.149
           ]
         ],
@@ -603,6 +615,37 @@
         "openingIds": [
           "m1-n2"
         ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-store",
+        "name": "Storage",
+        "type": "storage",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            1.9,
+            -1.149
+          ],
+          [
+            2.9,
+            -1.149
+          ],
+          [
+            2.9,
+            1.149
+          ],
+          [
+            1.9,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [],
         "accessibility": {
           "assessment": "not-verified",
           "notes": ""
@@ -620,11 +663,11 @@
             -1.149
           ],
           [
-            0.1,
+            -0.2,
             -1.149
           ],
           [
-            0.1,
+            -0.2,
             1.149
           ],
           [
@@ -649,19 +692,19 @@
         "level": 0,
         "polygon": [
           [
-            0.1,
+            -0.2,
             -1.149
           ],
           [
-            1.8,
+            2.9,
             -1.149
           ],
           [
-            1.8,
+            2.9,
             1.149
           ],
           [
-            0.1,
+            -0.2,
             1.149
           ]
         ],
@@ -671,38 +714,7 @@
         ],
         "accessibility": {
           "assessment": "not-verified",
-          "notes": ""
-        }
-      },
-      {
-        "id": "e-store",
-        "name": "Storage",
-        "type": "storage",
-        "module": "m2",
-        "level": 0,
-        "polygon": [
-          [
-            1.8,
-            -1.149
-          ],
-          [
-            2.9,
-            -1.149
-          ],
-          [
-            2.9,
-            1.149
-          ],
-          [
-            1.8,
-            1.149
-          ]
-        ],
-        "provenance": "authored",
-        "openingIds": [],
-        "accessibility": {
-          "assessment": "not-verified",
-          "notes": ""
+          "notes": "Double-width bathroom with a modeled 1.5 m turning circle. Fixtures and transfers still require professional review."
         }
       }
     ],
@@ -711,11 +723,11 @@
         "id": "e-p1",
         "module": "m1",
         "from": [
-          0.1,
+          -0.2,
           -1.149
         ],
         "to": [
-          0.1,
+          -0.2,
           1.149
         ],
         "thickness_m": 0.1,
@@ -725,11 +737,11 @@
         "id": "e-p2",
         "module": "m2",
         "from": [
-          0.1,
+          -0.2,
           -1.149
         ],
         "to": [
-          0.1,
+          -0.2,
           1.149
         ],
         "thickness_m": 0.1,
@@ -737,13 +749,13 @@
       },
       {
         "id": "e-p3",
-        "module": "m2",
+        "module": "m1",
         "from": [
-          1.8,
+          1.9,
           -1.149
         ],
         "to": [
-          1.8,
+          1.9,
           1.149
         ],
         "thickness_m": 0.1,
@@ -782,7 +794,7 @@
         "id": "e-d2",
         "partition": "e-p2",
         "type": "swing",
-        "width_m": 0.85,
+        "width_m": 0.9,
         "position_m": 0.5,
         "connects": [
           "e-bed",
@@ -795,10 +807,10 @@
         "id": "e-d3",
         "partition": "e-p3",
         "type": "swing",
-        "width_m": 0.8,
+        "width_m": 0.9,
         "position_m": 0.5,
         "connects": [
-          "e-bath",
+          "e-kitchen",
           "e-store"
         ],
         "swing": "in",
@@ -808,7 +820,7 @@
         "id": "e-d4",
         "partition": "e-link",
         "type": "swing",
-        "width_m": 0.95,
+        "width_m": 1,
         "position_m": 0.5,
         "connects": [
           "e-kitchen",
@@ -824,12 +836,12 @@
         "room": "e-bath",
         "type": "wc",
         "position_m": [
-          1.55,
+          2.45,
           0.85
         ],
         "rotation_deg": 0,
         "size_m": [
-          0.45,
+          0.3,
           0.5
         ],
         "provenance": "authored"
@@ -839,12 +851,12 @@
         "room": "e-bath",
         "type": "sink",
         "position_m": [
-          0.45,
+          0.25,
           0.95
         ],
         "rotation_deg": 0,
         "size_m": [
-          0.4,
+          0.35,
           0.3
         ],
         "provenance": "authored"
@@ -854,13 +866,13 @@
         "room": "e-bath",
         "type": "shower",
         "position_m": [
-          1,
+          2.45,
           -0.55
         ],
         "rotation_deg": 0,
         "size_m": [
-          0.7,
-          0.7
+          0.45,
+          0.8
         ],
         "provenance": "authored"
       },
@@ -869,12 +881,12 @@
         "room": "e-kitchen",
         "type": "counter",
         "position_m": [
-          1.5,
+          0.85,
           0.85
         ],
         "rotation_deg": 0,
         "size_m": [
-          2.3,
+          1.8,
           0.55
         ],
         "provenance": "authored"
@@ -884,7 +896,7 @@
         "room": "e-bed",
         "type": "bed",
         "position_m": [
-          -0.6,
+          -1.5,
           0
         ],
         "rotation_deg": 0,
@@ -899,7 +911,7 @@
         "room": "e-living",
         "type": "table",
         "position_m": [
-          -1.5,
+          -2.2,
           0
         ],
         "rotation_deg": 0,
@@ -929,7 +941,7 @@
           ]
         ],
         "status": "not-verified",
-        "note": "Concept route; clear width, thresholds and turning are not verified."
+        "note": "Concept 1.2 m route; thresholds, crossfall and turning are not surveyed."
       }
     ],
     "service": [

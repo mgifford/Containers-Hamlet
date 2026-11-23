@@ -1,6 +1,6 @@
 # Accessible Garden Home — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 641cb707
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash dcc8871e
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -45,13 +45,13 @@ This description is generated from the canonical design model. The reference SVG
 - Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 315°.
 
 ## Interior schedule
-- Living (living) — 6.89 m², m1, authored, fixtures: table.
-- Kitchen (kitchen) — 6.43 m², m1, authored, fixtures: counter.
-- Bedroom (sleeping) — 6.89 m², m2, authored, fixtures: bed.
-- Bathroom (bathroom) — 3.91 m², m2, authored, fixtures: wc, sink, shower.
-- Storage (storage) — 2.53 m², m2, authored.
+- Living (living) — 6.2 m², m1, authored, fixtures: table.
+- Kitchen (kitchen) — 4.83 m², m1, authored, fixtures: counter.
+- Storage (storage) — 2.3 m², m1, authored.
+- Bedroom (sleeping) — 6.2 m², m2, authored, fixtures: bed.
+- Bathroom (bathroom) — 7.12 m², m2, authored, fixtures: wc, sink, shower.
 - Partitions: 4 · doors: 4 · fixtures: 6.
-- Validation: 0 invalid, 2 unresolved, 7 review.
+- Validation: 0 invalid, 0 unresolved, 6 review.
 
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
@@ -61,8 +61,6 @@ This description is generated from the canonical design model. The reference SVG
 ## Unresolved matters
 - **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
 - **site-approach**: The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
-- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
-- **bathroom-turning-circle**: Bathroom e-bath has no modeled 1.5 m turning circle.
 
 ## Capability notes
 - Exterior reference: available

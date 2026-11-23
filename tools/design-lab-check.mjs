@@ -383,7 +383,7 @@ try {
   await intEditor.context.close();
   const accessibleEditor = await open('design-lab/editor/?preset=hamlet-accessible-garden-home');
   await accessibleEditor.page.waitForTimeout(500);
-  ok(/bathroom-turning-circle/.test(await accessibleEditor.page.textContent('#interior-details')) && !/fully accessible/i.test(await accessibleEditor.page.textContent('#interior-status')), 'Accessible Garden Home reports the unresolved turning circle and does not claim full accessibility');
+  ok(!/bathroom-turning-circle/.test(await accessibleEditor.page.textContent('#interior-details')) && /potentially adaptable/.test(await accessibleEditor.page.textContent('#interior-status')) && !/fully accessible/i.test(await accessibleEditor.page.textContent('#interior-status')), 'Accessible Garden Home has a modeled turning circle and does not claim full accessibility');
   const archiveEditor = await open('design-lab/editor/?preset=archive-offset-stack');
   await archiveEditor.page.waitForTimeout(500);
   ok(await archiveEditor.page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 2 && document.querySelectorAll('#edit-storey option').length === 3), 'the two-storey Offset Stack remains available as an editable experimental archive');

@@ -270,8 +270,9 @@
     var pathOk = !!(d.access && d.access.path_connection && !/not (surveyed|assessed|verified|measured)/i.test(d.access.path_connection) && /(surveyed|assessed|verified|measured)/i.test(d.access.path_connection));
     var entrance = num(d.access && d.access.entrance_door_width_m, 0);
     var circulation = Math.max(0, num(d.access && d.access.circulation_width_m, 0));
-    var complete = !!(d.interior.status === 'authored' && d.access && d.access.step_free_entrance && essential && doors.length && minDoor >= 0.86 && turning && work && pathOk && entrance >= 0.86 && circulation >= 0.9);
-    return { rooms: rooms.length, doors: doors.length, essential: essential, minDoorWidth_m: minDoor, bathroomTurningCircle: turning, kitchenWorkZone: work, pathConnection: pathOk, entranceWidth_m: entrance, circulation_m: circulation, complete: complete, status: d.interior.status };
+    var target = d.access && d.access.target ? d.access.target : 'not-required';
+    var complete = !!(target === 'accessible' && d.interior.status === 'authored' && d.access && d.access.step_free_entrance && essential && doors.length && minDoor >= 0.86 && turning && work && pathOk && entrance >= 0.86 && circulation >= 0.9);
+    return { target: target, rooms: rooms.length, doors: doors.length, essential: essential, minDoorWidth_m: minDoor, bathroomTurningCircle: turning, kitchenWorkZone: work, pathConnection: pathOk, entranceWidth_m: entrance, circulation_m: circulation, complete: complete, status: d.interior.status };
   }
 
   function accessibilityProfile(input) {
@@ -309,7 +310,9 @@
     var evidence = interiorAccessEvidence(d);
     if (storeyCount > 1 && classification === 'fully-accessible-single-storey') classification = 'unresolved-vertical-access';
     if (storeyCount === 1 && evidence) {
-      if (evidence.complete) classification = 'single-storey-step-free-candidate';
+      if (evidence.target === 'not-required') classification = 'accessibility-not-required';
+      else if (evidence.target === 'adaptable') classification = 'potentially-adaptable';
+      else if (evidence.complete) classification = 'single-storey-step-free-candidate';
       else if (a.step_free_entrance && evidence.essential) classification = 'potentially-adaptable';
       else classification = 'not-assessed';
     }
@@ -317,6 +320,7 @@
     var labels = {
       'fully-accessible-single-storey': 'Single-storey, step-free concept. This is a design target, not a verified fully accessible dwelling.',
       'single-storey-step-free-candidate': 'Single-storey, step-free candidate. Recorded geometry supports the design targets, but no professional accessibility assessment has been completed.',
+      'accessibility-not-required': 'Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.',
       'ground-floor-accessible-living': 'Ground-floor accessible living arrangement; the upper floor is reached by stairs and is not accessible.',
       'potentially-adaptable': 'Potentially adaptable, but some essential functions, clearances or vertical access are unresolved.',
       'unresolved-vertical-access': 'Unresolved vertical-access barrier. Do not describe this home as accessible.',

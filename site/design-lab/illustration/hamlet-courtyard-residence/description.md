@@ -1,6 +1,6 @@
 # Courtyard Residence — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 570e7410
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash d488beaf
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -60,7 +60,7 @@ This description is generated from the canonical design model. The reference SVG
 - Storage (storage) — 4.27 m², m2, inferred-from-zone.
 - Circulation (circulation) — 5.65 m², m2, inferred-from-zone.
 - Partitions: 0 · doors: 0 · fixtures: 0.
-- Validation: 0 invalid, 11 unresolved, 8 review.
+- Validation: 0 invalid, 10 unresolved, 8 review.
 
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
@@ -79,7 +79,6 @@ This description is generated from the canonical design model. The reference SVG
 - **inferred-room**: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
 - **inferred-room**: Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.
 - **inferred-room**: Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.
-- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
 - **doors-missing**: No interior doors are modeled. Room connectivity cannot be assessed.
 
 ## Capability notes

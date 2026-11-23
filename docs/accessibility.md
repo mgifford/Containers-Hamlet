@@ -117,7 +117,8 @@ step-free or because it is single-storey. The model distinguishes:
 | `fully-accessible-single-storey` | Legacy label. No selected home is assigned this label. It requires documented professional evidence, not just a single storey. |
 | `single-storey-step-free-candidate` | All modeled evidence targets are met: single storey, step-free, essential rooms, door/circulation widths, bathroom turning space, kitchen approach and path connection. Still not a professional certification. |
 | `ground-floor-accessible-living` | Essential living and a bathroom are on the ground floor; the upper floor is reached by stairs and is not accessible. |
-| `potentially-adaptable` | Some functions or vertical access remain unresolved. |
+| `potentially-adaptable` | The home is single-storey and step-free, but an adaptable/accessibility target or evidence item remains unresolved. |
+| `accessibility-not-required` | Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present. |
 | `unresolved-vertical-access` | A material vertical-access barrier exists. Do not describe the home as accessible. |
 | `not-assessed` | Accessibility has not been recorded. |
 
@@ -133,11 +134,22 @@ All six selected homes are single-storey: **Woodland Cottage**, **Offset Pair**,
 At this milestone none meets every candidate condition, so they report
 `potentially-adaptable`, not `fully-accessible-single-storey`.
 
-The **Accessible Garden Home** is the most demanding demonstration interior. Its
-1.7 m bathroom cannot fit the 1.5 m turning circle alongside the recorded
-fixtures, so it reports an unresolved design condition. The project does not
-reduce the target to make it pass. The **Offset Pair** has larger bathrooms but
-still lacks a modeled turning circle, so it also remains unresolved.
+Accessibility is a **per-building target**, not a universal requirement:
+
+- **Accessible Garden Home** is the only selected home designed as an
+  accessible unit (`access.target: "accessible"`). It is a double-width pair of
+  20-foot modules and now has a 3.0 m bathroom with a modeled 1.5 m turning
+  circle. The circle fits and the recorded door widths are at least 0.9 m. The
+  home remains `potentially-adaptable` because the shared-path grades, transfers
+  and professional review are not complete—not because the washroom is missing.
+- The other five selected homes use `access.target: "adaptable"`. They keep
+  step-free entrances and adaptable features, but they are **not failed** for
+  lacking an accessible bathroom. Their bathrooms are ordinary concept
+  bathrooms, not accessible washrooms.
+- No home is described as fully accessible. A future accessible unit should
+  budget for the extra width needed by the 1.5 m turning circle, door clearances
+  and circulation; the model now demonstrates this with the double-width
+  Accessible Garden Home.
 
 The three historical two-storey studies are retained in the Experimental
 archive. They are not selected homes and are not presented as accessible.

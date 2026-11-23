@@ -4,7 +4,7 @@
   "name": "Offset Pair",
   "revision": "2.0.0",
   "designSchema": "containers-hamlet-design/v2.0",
-  "designHash": "1dfe5d1e",
+  "designHash": "adf74f01",
   "sceneType": "exterior-three-quarter",
   "camera": {
     "view": "exterior-three-quarter",
@@ -1024,23 +1024,7 @@
     "validation": {
       "ok": true,
       "invalid": [],
-      "unresolved": [
-        {
-          "category": "unresolved-design",
-          "code": "room-coverage",
-          "message": "Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved."
-        },
-        {
-          "category": "unresolved-design",
-          "code": "bathroom-turning-circle",
-          "message": "Bathroom b-bath has no modeled 1.5 m turning circle."
-        },
-        {
-          "category": "unresolved-design",
-          "code": "bathroom-turning-circle",
-          "message": "Bathroom b-bath2 has no modeled 1.5 m turning circle."
-        }
-      ],
+      "unresolved": [],
       "review": [
         {
           "category": "review-required",
@@ -1100,21 +1084,6 @@
       ],
       "items": [
         {
-          "category": "unresolved-design",
-          "code": "room-coverage",
-          "message": "Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved."
-        },
-        {
-          "category": "unresolved-design",
-          "code": "bathroom-turning-circle",
-          "message": "Bathroom b-bath has no modeled 1.5 m turning circle."
-        },
-        {
-          "category": "unresolved-design",
-          "code": "bathroom-turning-circle",
-          "message": "Bathroom b-bath2 has no modeled 1.5 m turning circle."
-        },
-        {
           "category": "review-required",
           "code": "room-accessibility",
           "message": "Room b-living accessibility is not professionally verified."
@@ -1173,6 +1142,7 @@
     },
     "accessibilityEvidence": {
       "classification": "potentially-adaptable",
+      "target": "adaptable",
       "stepFree": true,
       "singleStorey": true,
       "essentialFunctions": true,
@@ -1185,21 +1155,6 @@
       "turningCircles": 0,
       "workZones": 1,
       "issues": [
-        {
-          "category": "unresolved-design",
-          "code": "room-coverage",
-          "message": "Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved."
-        },
-        {
-          "category": "unresolved-design",
-          "code": "bathroom-turning-circle",
-          "message": "Bathroom b-bath has no modeled 1.5 m turning circle."
-        },
-        {
-          "category": "unresolved-design",
-          "code": "bathroom-turning-circle",
-          "message": "Bathroom b-bath2 has no modeled 1.5 m turning circle."
-        },
         {
           "category": "review-required",
           "code": "room-accessibility",
@@ -1374,21 +1329,6 @@
       "code": "site-approach",
       "severity": "unresolved",
       "message": "The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification."
-    },
-    {
-      "code": "room-coverage",
-      "severity": "unresolved",
-      "message": "Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved."
-    },
-    {
-      "code": "bathroom-turning-circle",
-      "severity": "unresolved",
-      "message": "Bathroom b-bath has no modeled 1.5 m turning circle."
-    },
-    {
-      "code": "bathroom-turning-circle",
-      "severity": "unresolved",
-      "message": "Bathroom b-bath2 has no modeled 1.5 m turning circle."
     }
   ],
   "presentation": {
@@ -1400,7 +1340,7 @@
   },
   "materialPolicy": "strict-documented",
   "prompt": {
-    "text": "Create a photorealistic architectural illustration of the Offset Pair residence.\nUse the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.\nThe building has 1 occupied storey and 2 container modules.\nModule geometry:\n- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.\n- m2: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.\nRoof: shed at 8 degrees, 0.7 m overhang, installed PV array.\nOpenings:\n- m1: north window \"Stair window\" at 9.6 m, 0.9 x 1.2 m, sill 1 m; south sliding-door \"Living doors\" at 3.2 m, 2.4 x 2.1 m, sill 0 m; south window \"Kitchen window\" at 8.4 m, 1.2 x 1.2 m, sill 1 m; east door \"Entry door\" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window \"West window\" at 1.4 m, 1 x 1.2 m, sill 1 m.\n- m2: north window \"Bedroom window\" at 2.4 m, 1.4 x 1.3 m, sill 0.9 m; south window \"Studio window\" at 7 m, 1.6 x 1.4 m, sill 0.8 m; east door \"Studio entry door\" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window \"Stair window\" at 1.2 m, 0.8 x 1.2 m, sill 1.2 m; south door \"Garden door\" at 8.4 m, 0.95 x 2.1 m, sill 0 m.\nOutdoor spaces:\n- p1: 4 m x 2.6 m covered porch on the north face of m1, roofed.\n- p2: 2.4 m x 1.4 m covered porch on the south face of m2, roofed.\nSite: Cabin B. Principal view: A sunlit birch glade and a low rock shoulder, with the forest floor visible beneath the trunks. Path approach recorded as south-west.\nCamera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 173 degrees.\nPresentation: late summer, late afternoon, clear, no people.\nMaterial policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.\nRestrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.\nUnresolved matters to carry into the illustration notes:\n- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.\n- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.\n- Bathroom b-bath has no modeled 1.5 m turning circle.\n- Bathroom b-bath2 has no modeled 1.5 m turning circle.\nThis is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.",
+    "text": "Create a photorealistic architectural illustration of the Offset Pair residence.\nUse the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.\nThe building has 1 occupied storey and 2 container modules.\nModule geometry:\n- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.\n- m2: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.\nRoof: shed at 8 degrees, 0.7 m overhang, installed PV array.\nOpenings:\n- m1: north window \"Stair window\" at 9.6 m, 0.9 x 1.2 m, sill 1 m; south sliding-door \"Living doors\" at 3.2 m, 2.4 x 2.1 m, sill 0 m; south window \"Kitchen window\" at 8.4 m, 1.2 x 1.2 m, sill 1 m; east door \"Entry door\" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window \"West window\" at 1.4 m, 1 x 1.2 m, sill 1 m.\n- m2: north window \"Bedroom window\" at 2.4 m, 1.4 x 1.3 m, sill 0.9 m; south window \"Studio window\" at 7 m, 1.6 x 1.4 m, sill 0.8 m; east door \"Studio entry door\" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window \"Stair window\" at 1.2 m, 0.8 x 1.2 m, sill 1.2 m; south door \"Garden door\" at 8.4 m, 0.95 x 2.1 m, sill 0 m.\nOutdoor spaces:\n- p1: 4 m x 2.6 m covered porch on the north face of m1, roofed.\n- p2: 2.4 m x 1.4 m covered porch on the south face of m2, roofed.\nSite: Cabin B. Principal view: A sunlit birch glade and a low rock shoulder, with the forest floor visible beneath the trunks. Path approach recorded as south-west.\nCamera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 173 degrees.\nPresentation: late summer, late afternoon, clear, no people.\nMaterial policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.\nRestrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.\nUnresolved matters to carry into the illustration notes:\n- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.\nThis is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.",
     "lines": [
       "Create a photorealistic architectural illustration of the Offset Pair residence.",
       "Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.",
@@ -1423,9 +1363,6 @@
       "Unresolved matters to carry into the illustration notes:",
       "- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
       "- The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.",
-      "- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.",
-      "- Bathroom b-bath has no modeled 1.5 m turning circle.",
-      "- Bathroom b-bath2 has no modeled 1.5 m turning circle.",
       "This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance."
     ]
   },
@@ -1455,11 +1392,11 @@
     ]
   },
   "description": {
-    "text": "# Offset Pair — illustration reference\n\nDesign revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 1dfe5d1e\n\nThis description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.\n\n## Architectural facts\n- 1 occupied storey\n- 2 container modules (40ft, 40ft)\n- shed roof at 8 degrees\n- 59.5 m2 gross floor area\n- 59.5 m2 ground coverage\n- 4.38 m to the roof\n\n## Modules\n- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.\n- **m2** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding.\n\n## Openings\n- m1 / Stair window — north window, 0.9 × 1.2 m, sill 1 m.\n- m1 / Living doors — south sliding-door, 2.4 × 2.1 m, sill 0 m.\n- m1 / Kitchen window — south window, 1.2 × 1.2 m, sill 1 m.\n- m1 / Entry door — east door, 0.95 × 2.1 m, sill 0 m.\n- m1 / West window — west window, 1 × 1.2 m, sill 1 m.\n- m2 / Bedroom window — north window, 1.4 × 1.3 m, sill 0.9 m.\n- m2 / Studio window — south window, 1.6 × 1.4 m, sill 0.8 m.\n- m2 / Studio entry door — east door, 0.9 × 2.1 m, sill 0 m.\n- m2 / Stair window — west window, 0.8 × 1.2 m, sill 1.2 m.\n- m2 / Garden door — south door, 0.95 × 2.1 m, sill 0 m.\n\n## Rooms and zones\n- m1 / Living — living, 0–4.6 m. Ground-floor essential living function.\n- m1 / Kitchen — kitchen, 4.6–7.4 m. Ground-floor kitchen; verify clear approach.\n- m1 / Bathroom — bathroom, 7.4–9.2 m. Ground-floor bathroom; adaptable layout target.\n- m1 / Stair — circulation, 9.2–12 m. Internal stair to the upper floor; not step-free.\n- m2 / Sleeping — sleeping, 0–4.2 m. Upper floor reached by stair only.\n- m2 / Bathroom — bathroom, 4.2–6.2 m. Upper bathroom; not accessible without a lift.\n- m2 / Studio — work, 6.2–10.2 m. Upper studio; stair access only.\n- m2 / Storage — storage, 10.2–12 m. Upper storage.\n\n## Outdoor spaces\n- p1: 4 × 2.6 m covered porch on the north face of m1.\n- p2: 2.4 × 1.4 m covered porch on the south face of m2.\n\n## Site and camera\n- Assigned site: Cabin B (site rotation -42°).\n- Principal view: A sunlit birch glade and a low rock shoulder, with the forest floor visible beneath the trunks.\n- Path approach: south-west\n- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 173°.\n\n## Interior schedule\n- Living (living) — 9.88 m², m1, authored, fixtures: sofa, table.\n- Kitchen (kitchen) — 6.2 m², m1, authored, fixtures: counter.\n- Bathroom (bathroom) — 5.29 m², m1, authored, fixtures: wc, sink, shower.\n- Hall (circulation) — 5.75 m², m1, authored.\n- Bedroom (sleeping) — 10.34 m², m2, authored.\n- Bathroom 2 (bathroom) — 4.14 m², m2, authored, fixtures: wc, sink.\n- Studio (work) — 9.19 m², m2, authored.\n- Storage (storage) — 3.45 m², m2, authored.\n- Partitions: 7 · doors: 7 · fixtures: 8.\n- Validation: 0 invalid, 3 unresolved, 11 review.\n\n## Intentions\n- Step-free entrance is a design intent, not a verified measurement.\n- Adaptable bathroom is a design intent, not a verified layout.\n- Adaptable kitchen is a design intent, not a verified layout.\n\n## Unresolved matters\n- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- **site-approach**: The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.\n- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.\n- **bathroom-turning-circle**: Bathroom b-bath has no modeled 1.5 m turning circle.\n- **bathroom-turning-circle**: Bathroom b-bath2 has no modeled 1.5 m turning circle.\n\n## Capability notes\n- Exterior reference: available\n- Interior perspective: not available — no interior camera or perspective renderer is implemented\n- Room-zone plan: available\n- Roof plan: available\n\n## Licence and status\nConcept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.",
+    "text": "# Offset Pair — illustration reference\n\nDesign revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash adf74f01\n\nThis description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.\n\n## Architectural facts\n- 1 occupied storey\n- 2 container modules (40ft, 40ft)\n- shed roof at 8 degrees\n- 59.5 m2 gross floor area\n- 59.5 m2 ground coverage\n- 4.38 m to the roof\n\n## Modules\n- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.\n- **m2** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding.\n\n## Openings\n- m1 / Stair window — north window, 0.9 × 1.2 m, sill 1 m.\n- m1 / Living doors — south sliding-door, 2.4 × 2.1 m, sill 0 m.\n- m1 / Kitchen window — south window, 1.2 × 1.2 m, sill 1 m.\n- m1 / Entry door — east door, 0.95 × 2.1 m, sill 0 m.\n- m1 / West window — west window, 1 × 1.2 m, sill 1 m.\n- m2 / Bedroom window — north window, 1.4 × 1.3 m, sill 0.9 m.\n- m2 / Studio window — south window, 1.6 × 1.4 m, sill 0.8 m.\n- m2 / Studio entry door — east door, 0.9 × 2.1 m, sill 0 m.\n- m2 / Stair window — west window, 0.8 × 1.2 m, sill 1.2 m.\n- m2 / Garden door — south door, 0.95 × 2.1 m, sill 0 m.\n\n## Rooms and zones\n- m1 / Living — living, 0–4.6 m. Ground-floor essential living function.\n- m1 / Kitchen — kitchen, 4.6–7.4 m. Ground-floor kitchen; verify clear approach.\n- m1 / Bathroom — bathroom, 7.4–9.2 m. Ground-floor bathroom; adaptable layout target.\n- m1 / Stair — circulation, 9.2–12 m. Internal stair to the upper floor; not step-free.\n- m2 / Sleeping — sleeping, 0–4.2 m. Upper floor reached by stair only.\n- m2 / Bathroom — bathroom, 4.2–6.2 m. Upper bathroom; not accessible without a lift.\n- m2 / Studio — work, 6.2–10.2 m. Upper studio; stair access only.\n- m2 / Storage — storage, 10.2–12 m. Upper storage.\n\n## Outdoor spaces\n- p1: 4 × 2.6 m covered porch on the north face of m1.\n- p2: 2.4 × 1.4 m covered porch on the south face of m2.\n\n## Site and camera\n- Assigned site: Cabin B (site rotation -42°).\n- Principal view: A sunlit birch glade and a low rock shoulder, with the forest floor visible beneath the trunks.\n- Path approach: south-west\n- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 173°.\n\n## Interior schedule\n- Living (living) — 9.88 m², m1, authored, fixtures: sofa, table.\n- Kitchen (kitchen) — 6.2 m², m1, authored, fixtures: counter.\n- Bathroom (bathroom) — 5.29 m², m1, authored, fixtures: wc, sink, shower.\n- Hall (circulation) — 5.75 m², m1, authored.\n- Bedroom (sleeping) — 10.34 m², m2, authored.\n- Bathroom 2 (bathroom) — 4.14 m², m2, authored, fixtures: wc, sink.\n- Studio (work) — 9.19 m², m2, authored.\n- Storage (storage) — 3.45 m², m2, authored.\n- Partitions: 7 · doors: 7 · fixtures: 8.\n- Validation: 0 invalid, 0 unresolved, 11 review.\n\n## Intentions\n- Step-free entrance is a design intent, not a verified measurement.\n- Adaptable bathroom is a design intent, not a verified layout.\n- Adaptable kitchen is a design intent, not a verified layout.\n\n## Unresolved matters\n- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- **site-approach**: The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.\n\n## Capability notes\n- Exterior reference: available\n- Interior perspective: not available — no interior camera or perspective renderer is implemented\n- Room-zone plan: available\n- Roof plan: available\n\n## Licence and status\nConcept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.",
     "lines": [
       "# Offset Pair — illustration reference",
       "",
-      "Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 1dfe5d1e",
+      "Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash adf74f01",
       "",
       "This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.",
       "",
@@ -1517,7 +1454,7 @@
       "- Studio (work) — 9.19 m², m2, authored.",
       "- Storage (storage) — 3.45 m², m2, authored.",
       "- Partitions: 7 · doors: 7 · fixtures: 8.",
-      "- Validation: 0 invalid, 3 unresolved, 11 review.",
+      "- Validation: 0 invalid, 0 unresolved, 11 review.",
       "",
       "## Intentions",
       "- Step-free entrance is a design intent, not a verified measurement.",
@@ -1527,9 +1464,6 @@
       "## Unresolved matters",
       "- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
       "- **site-approach**: The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.",
-      "- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.",
-      "- **bathroom-turning-circle**: Bathroom b-bath has no modeled 1.5 m turning circle.",
-      "- **bathroom-turning-circle**: Bathroom b-bath2 has no modeled 1.5 m turning circle.",
       "",
       "## Capability notes",
       "- Exterior reference: available",
@@ -1542,7 +1476,7 @@
     ]
   },
   "interiorPrompt": {
-    "text": "# Interior illustration prompt — Offset Pair\n\nUse the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.\n\nRooms:\n- Living (living, b-living): 9.88 m², m1, authored, fixtures: sofa, table.\n- Kitchen (kitchen, b-kitchen): 6.2 m², m1, authored, fixtures: counter.\n- Bathroom (bathroom, b-bath): 5.29 m², m1, authored, fixtures: wc, sink, shower.\n- Hall (circulation, b-hall): 5.75 m², m1, authored.\n- Bedroom (sleeping, b-bed): 10.34 m², m2, authored.\n- Bathroom 2 (bathroom, b-bath2): 4.14 m², m2, authored, fixtures: wc, sink.\n- Studio (work, b-studio): 9.19 m², m2, authored.\n- Storage (storage, b-store): 3.45 m², m2, authored.\n\nPartitions and doors: 7 partitions and 7 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.\nFixtures: wc in b-bath; sink in b-bath; shower in b-bath; wc in b-bath2; sink in b-bath2; counter in b-kitchen; sofa in b-living; table in b-living.\nWindows: the room polygons reference the documented opening ids. Do not add windows or move them.\n\nCamera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.\nPresentation: late summer, late afternoon, no people.\n\nRestrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.\n\nUnresolved interior matters:\n- room-coverage: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.\n- bathroom-turning-circle: Bathroom b-bath has no modeled 1.5 m turning circle.\n- bathroom-turning-circle: Bathroom b-bath2 has no modeled 1.5 m turning circle.\n- room-accessibility: Room b-living accessibility is not professionally verified.\n- room-accessibility: Room b-kitchen accessibility is not professionally verified.\n- room-accessibility: Room b-bath accessibility is not professionally verified.\n- room-accessibility: Room b-hall accessibility is not professionally verified.\n- room-accessibility: Room b-bed accessibility is not professionally verified.\n- room-accessibility: Room b-bath2 accessibility is not professionally verified.\n- room-accessibility: Room b-studio accessibility is not professionally verified.\n- room-accessibility: Room b-store accessibility is not professionally verified.\n- door-clearance: Door b-d2 is narrower than the 0.86 m project target.\n- door-clearance: Door b-d4 is narrower than the 0.86 m project target.\n- door-clearance: Door b-d6 is narrower than the 0.86 m project target.\n\nNo accessibility, code or construction claim is made.\n",
+    "text": "# Interior illustration prompt — Offset Pair\n\nUse the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.\n\nRooms:\n- Living (living, b-living): 9.88 m², m1, authored, fixtures: sofa, table.\n- Kitchen (kitchen, b-kitchen): 6.2 m², m1, authored, fixtures: counter.\n- Bathroom (bathroom, b-bath): 5.29 m², m1, authored, fixtures: wc, sink, shower.\n- Hall (circulation, b-hall): 5.75 m², m1, authored.\n- Bedroom (sleeping, b-bed): 10.34 m², m2, authored.\n- Bathroom 2 (bathroom, b-bath2): 4.14 m², m2, authored, fixtures: wc, sink.\n- Studio (work, b-studio): 9.19 m², m2, authored.\n- Storage (storage, b-store): 3.45 m², m2, authored.\n\nPartitions and doors: 7 partitions and 7 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.\nFixtures: wc in b-bath; sink in b-bath; shower in b-bath; wc in b-bath2; sink in b-bath2; counter in b-kitchen; sofa in b-living; table in b-living.\nWindows: the room polygons reference the documented opening ids. Do not add windows or move them.\n\nCamera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.\nPresentation: late summer, late afternoon, no people.\n\nRestrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.\n\nUnresolved interior matters:\n- room-accessibility: Room b-living accessibility is not professionally verified.\n- room-accessibility: Room b-kitchen accessibility is not professionally verified.\n- room-accessibility: Room b-bath accessibility is not professionally verified.\n- room-accessibility: Room b-hall accessibility is not professionally verified.\n- room-accessibility: Room b-bed accessibility is not professionally verified.\n- room-accessibility: Room b-bath2 accessibility is not professionally verified.\n- room-accessibility: Room b-studio accessibility is not professionally verified.\n- room-accessibility: Room b-store accessibility is not professionally verified.\n- door-clearance: Door b-d2 is narrower than the 0.86 m project target.\n- door-clearance: Door b-d4 is narrower than the 0.86 m project target.\n- door-clearance: Door b-d6 is narrower than the 0.86 m project target.\n\nNo accessibility, code or construction claim is made.\n",
     "lines": [
       "# Interior illustration prompt — Offset Pair",
       "",
@@ -1568,9 +1502,6 @@
       "Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.",
       "",
       "Unresolved interior matters:",
-      "- room-coverage: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.",
-      "- bathroom-turning-circle: Bathroom b-bath has no modeled 1.5 m turning circle.",
-      "- bathroom-turning-circle: Bathroom b-bath2 has no modeled 1.5 m turning circle.",
       "- room-accessibility: Room b-living accessibility is not professionally verified.",
       "- room-accessibility: Room b-kitchen accessibility is not professionally verified.",
       "- room-accessibility: Room b-bath accessibility is not professionally verified.",

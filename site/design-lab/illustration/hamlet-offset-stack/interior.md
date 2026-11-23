@@ -22,9 +22,6 @@ Presentation: late summer, late afternoon, no people.
 Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.
 
 Unresolved interior matters:
-- room-coverage: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
-- bathroom-turning-circle: Bathroom b-bath has no modeled 1.5 m turning circle.
-- bathroom-turning-circle: Bathroom b-bath2 has no modeled 1.5 m turning circle.
 - room-accessibility: Room b-living accessibility is not professionally verified.
 - room-accessibility: Room b-kitchen accessibility is not professionally verified.
 - room-accessibility: Room b-bath accessibility is not professionally verified.

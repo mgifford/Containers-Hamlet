@@ -146,7 +146,7 @@ Information is missing or only inferred:
 - provisional interior;
 - inferred room;
 - no doors, so connectivity cannot be assessed;
-- bathroom without a 1.5 m turning circle;
+- bathroom without a 1.5 m turning circle when the home's accessibility target is `accessible`;
 - kitchen without a modeled work-zone approach;
 - low room coverage.
 
@@ -189,27 +189,27 @@ remain assessment targets, not claims of conformity.
 - seven partitions and seven doors;
 - bathroom, kitchen counter and second-bath fixtures;
 - kitchen work zone;
-- no modeled 1.5 m bathroom turning circle, so both bathrooms remain unresolved
-  rather than being declared accessible.
+- no modeled 1.5 m bathroom turning circle; this home's target is `adaptable`, not
+  `accessible`, so its ordinary bathrooms are not failed for missing one.
 
-The offset massing, shed roof and covered outdoor room preserve the original
-stacked home's identity without an upper floor.
+The offset massing, shed roof and stepped plan preserve the original stacked
+home's identity without an upper floor.
 
 ### Accessible Garden Home (`hamlet-accessible-garden-home`)
 
-- five rooms across two 20-foot modules: living, kitchen, bedroom, bathroom,
-  storage;
-- three partitions, three internal doors and a shared-wall link door;
-- bathroom fixtures, kitchen counter and bed;
-- kitchen work zone;
-- the 1.7 m bathroom length cannot fit the 1.5 m turning circle alongside the
-  recorded fixtures. The model reports `bathroom-turning-circle`, keeps the
-  target and classifies the home `potentially-adaptable`.
+- five rooms across two 20-foot modules placed **double-width**: living, kitchen,
+  bedroom, bathroom and storage;
+- four partitions, four internal/shared-wall doors;
+- bathroom fixtures, kitchen counter, bed and table;
+- kitchen work zone and a 3.0 m bathroom with a 1.5 m turning circle;
+- the turning circle fits and the recorded doors are at least 0.9 m. The home is
+  still `potentially-adaptable` because the shared-path grades, transfers and
+  professional review are unresolved—not because the washroom is missing.
 
-This is the demonstration that nominal 20-foot modules constrain the accessible
-layout. A better arrangement would need a longer/wider bathroom bay or a
-different module composition; the project does not lower the clearance target to
-make the current model pass.
+This is the demonstration that an accessible unit needs the extra width: the
+double-width pair supports a real turning circle and circulation route. The
+other five selected homes are `adaptable`, not accessible units, and their
+bathrooms are not held to the accessible-washroom target.
 
 The other four selected homes currently use provisional zone-derived interiors.
 They are published as provisional and are not presented as authored room

@@ -43,7 +43,7 @@ foundations, and the same review process.
 | B | Offset Pair | 1 | 2 × 40 ft | Offset pair, 2.6 m | Staggered | Shed, 8° | East | Single level | Yes |
 | C | Courtyard Residence | 1 | 2 × 40 ft | L-shape | L-shaped | Flat with green-roof concept | North | Single level | Yes, bedroom/bath/kitchen/living |
 | D | Cross-Wing House | 1 | 2 × 40 ft | T-wing | T-shaped | Butterfly, 12° | East | Single level | Yes |
-| E | Accessible Garden Home | 1 | 2 × 20 ft | Parallel pair | Compact | Canopy | South | Single level | Yes, bedroom/bath/kitchen/living |
+| E | Accessible Garden Home | 1 | 2 × 20 ft | Double-width parallel pair | Wide | Canopy | South | Single level | Yes, bedroom/bath/kitchen/living |
 | F | Solar Studio | 1 | 2 × 20 ft | Offset pair, 0.8 m | Compact | Solar-ready shed, 12° | East | Single level | Yes |
 
 The dimensions and areas are nominal. The **architectural intent** is the
@@ -84,11 +84,12 @@ review concerns.
 
 ### Home E — Accessible Garden Home
 
-Two 20-foot modules side by side, organised around a step-free route. The design
-records a 1.0 m entrance door, 1.2 m circulation target, ground-floor bedroom,
-adaptable bathroom and adaptable kitchen. Accessibility is treated as a
-whole-home property, not a feature added to one room. The home is still a
-concept; the classification is a design target, not a compliance finding.
+Two 20-foot modules side by side, forming a **double-width** plan. The extra
+width supports a 1.0 m entrance door, a 1.2 m circulation route and a 3.0 m
+bathroom with a 1.5 m turning circle. The other selected homes are not designed
+as accessible units and their bathrooms are not held to this target. The home is
+still a concept; the classification is a design target, not a compliance
+finding, and the shared-path grades are not surveyed.
 
 ### Home F — Solar Studio
 

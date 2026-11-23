@@ -408,9 +408,13 @@ const offsetInterior = selectedHomes.find((c) => c.id === 'hamlet-offset-stack')
 ok(offsetInterior.rooms.length === 8 && offsetInterior.doors.length >= 7 && offsetInterior.fixtures.length >= 5, 'Offset Pair has rooms, doors and fixtures');
 const eHome = selectedHomes.find((c) => c.id === 'hamlet-accessible-garden-home');
 const eV = Interior.validate(eHome);
-ok(eV.invalid.length === 0 && eV.unresolved.some((i) => i.code === 'bathroom-turning-circle'), 'Accessible Garden Home documents the unresolved bathroom turning-circle constraint instead of lowering the target');
+ok(eV.invalid.length === 0 && !eV.unresolved.some((i) => i.code === 'bathroom-turning-circle') && eHome.access.target === 'accessible', 'Accessible Garden Home has a modeled accessible bathroom because it is the accessible design target');
 const eAccess = Interior.accessibilityEvidence(eHome);
-ok(eAccess.classification === 'potentially-adaptable' && !eAccess.bathroomTurningCircle, 'Accessible Garden Home is a potential adaptation, not a fully accessible claim');
+ok(eAccess.classification === 'potentially-adaptable' && eAccess.bathroomTurningCircle, 'Accessible Garden Home has a modeled turning circle but remains potentially adaptable pending path and professional review');
+const nonAccessibleHome = selectedHomes.find((c) => c.id === 'hamlet-offset-stack');
+ok(nonAccessibleHome.access.target === 'adaptable' && !Interior.validate(nonAccessibleHome).unresolved.some((i) => i.code === 'bathroom-turning-circle'), 'a non-accessible home is not failed for lacking an accessible bathroom');
+const notRequired = clone(nonAccessibleHome); notRequired.access.target = 'not-required';
+ok(Model.accessibilityProfile(notRequired).classification === 'accessibility-not-required', 'a home with no accessibility target is not assessed against accessible-washroom requirements');
 const overclaim = clone(eHome); overclaim.access.classification = 'fully-accessible-single-storey';
 ok(Model.accessibilityProfile(overclaim).classification !== 'fully-accessible-single-storey', 'a manually supplied fully-accessible classification cannot override missing interior evidence');
 const zoneSource = clone(data.concepts.find((c) => c.id === 'hamlet-woodland-cottage'));
@@ -510,7 +514,7 @@ ok(illOffsetScene.outdoor.some((o) => o.type === 'porch' && o.module === 'm2' &&
 ok(!illOffsetScene.unresolved.some((u) => u.code === 'unmodeled-balcony') && illOffsetScene.building.storeys === 1, 'Offset Pair is single-storey and has no unmodeled upper balcony');
 ok(illCourtyardScene.building.moduleTypes.every((t) => t === '40ft'), 'Courtyard Residence is described as two 40-foot modules');
 ok(illCrossScene.unresolved.some((u) => u.code === 'interior-ceiling') && illCrossScene.building.storeys === 1, 'Cross-Wing House is single-storey and its butterfly interior ceiling limitation is explicit');
-ok(!/fully accessible/i.test(illAccessibleScene.prompt.text) && illAccessibleScene.interior.validation.unresolved.some((u) => u.code === 'bathroom-turning-circle'), 'Accessible Garden Home prompt does not claim full accessibility and records the bathroom turning-circle limit');
+ok(!/fully accessible/i.test(illAccessibleScene.prompt.text) && illAccessibleScene.interior.accessibilityEvidence.bathroomTurningCircle && !illAccessibleScene.interior.validation.unresolved.some((u) => u.code === 'bathroom-turning-circle'), 'Accessible Garden Home prompt does not claim full accessibility and its accessible bathroom is modeled');
 ok(illSolarScene.building.installedPv === true && /installed PV array/i.test(illSolarScene.prompt.text), 'Solar Studio Stack prompt may show installed PV');
 ok(illSolarScene.building.storeys === 1 && !illSolarScene.unresolved.some((u) => u.code === 'alternating-tread-stair'), 'Solar Studio is single-storey and no longer carries the archived alternating stair');
 ok(/path approach recorded as east/i.test(illCottageScene.prompt.text) && !/main south approach/i.test(illCottageScene.prompt.text), 'Woodland Cottage prompt records the east site path approach and does not call it the main approach');

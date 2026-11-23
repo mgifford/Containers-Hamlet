@@ -298,7 +298,8 @@
     },
     "classification": "potentially-adaptable",
     "standards": "Project targets informed by the Ontario Building Code and CSA B651. No code compliance, licence or professional accessibility review is claimed.",
-    "assessment": "not-verified"
+    "assessment": "not-verified",
+    "target": "adaptable"
   },
   "features": {
     "solar": "South roof slope is solar-ready; no production is calculated.",

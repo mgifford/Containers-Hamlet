@@ -14,7 +14,7 @@ All six selected hamlet residences are now **single-storey**:
 | Offset Pair | Offset Stack | 2 × 40 ft | offset pair | shed |
 | Courtyard Residence | — | 2 × 40 ft | L-shape | flat/green concept |
 | Cross-Wing House | Cross-Stacked Retreat | 2 × 40 ft | T-wing | butterfly |
-| Accessible Garden Home | — | 2 × 20 ft | parallel pair | canopy |
+| Accessible Garden Home | — | 2 × 20 ft | double-width parallel pair | canopy |
 | Solar Studio | Solar Studio Stack | 2 × 20 ft | offset pair | solar-ready |
 
 The three former two-storey selected studies are retained as
@@ -43,9 +43,9 @@ selected illustration packages.
   - **Woodland Cottage, Courtyard Residence, Cross-Wing House, Solar Studio:**
     provisional interiors inferred from room bands, with no invented partitions
     or doors.
-- Access classifications replaced overclaims with evidence-derived status. No
-  selected home is fully accessible; all currently report
-  `potentially-adaptable`.
+- Accessibility targets are per home. Only Accessible Garden Home is designed as
+  an accessible unit; the other five are `adaptable` and are not failed for
+  lacking an accessible bathroom. No selected home is fully accessible.
 
 ### Schema
 
@@ -151,7 +151,7 @@ New `site/js/design-interior.js`:
 | --- | --- |
 | `node tools/build.mjs --check` | OK — 540 generated files current |
 | `node tools/check.mjs` | 556 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,813 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,815 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 226 passed, 0 failed |
 
@@ -159,7 +159,7 @@ Browser tests include interior editing, invalid-geometry announcement, undo,
 add/remove room/partition/fixture, package interior files, 320 px reflow, dark
 mode, forced colours, reduced motion, axe and archive access.
 
-Published site: 540 files, about 6844 KB, under the revised 7 MB budget.
+Published site: 540 files, about 6829 KB, under the revised 7 MB budget.
 
 ## Screenshots
 
@@ -169,12 +169,13 @@ interior mode, Accessible Garden Home constraint and site reconciliation.
 
 ## Unresolved architectural decisions
 
-1. **Offset Pair bathrooms** do not have a modeled 1.5 m turning circle. Decide
-   whether to enlarge/rearrange the bathrooms or accept a non-accessible
-   bathroom.
-2. **Accessible Garden Home bathroom** is 1.7 m long and cannot fit the 1.5 m
-   turning circle alongside the recorded fixtures. A longer/wider bathroom bay or
-   different module composition is required; the target was not reduced.
+1. **Accessible Garden Home:** the bathroom now has a modeled 1.5 m turning
+   circle and the unit is double-width. Shared-path grades, transfers and a
+   professional accessibility review remain unresolved. A real accessible unit
+   should budget for the extra width demonstrated here.
+2. **Non-accessible homes:** their bathrooms are deliberately not required to be
+   accessible. Do not add a turning circle unless the home's accessibility target
+   changes.
 3. **Provisional interiors** for Woodland Cottage, Courtyard Residence,
    Cross-Wing House and Solar Studio. Partition, door and fixture positions are
    not authored.
@@ -187,8 +188,8 @@ interior mode, Accessible Garden Home constraint and site reconciliation.
 6. **Entrance/path mismatches** at several sites. A path can turn at the door, so
    these are review flags, not automatic design failures.
 7. **Interior perspective** remains unavailable; no camera or renderer.
-8. **Accessibility, structure, fire, energy and code** remain unverified. The
-   model is not a professional assessment.
+8. **Structure, fire, energy and code** remain unverified. The model is not a
+   professional assessment.
 
 ## Explicit non-claims
 

@@ -1,6 +1,6 @@
 # Offset Pair — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 1dfe5d1e
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash adf74f01
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -58,7 +58,7 @@ This description is generated from the canonical design model. The reference SVG
 - Studio (work) — 9.19 m², m2, authored.
 - Storage (storage) — 3.45 m², m2, authored.
 - Partitions: 7 · doors: 7 · fixtures: 8.
-- Validation: 0 invalid, 3 unresolved, 11 review.
+- Validation: 0 invalid, 0 unresolved, 11 review.
 
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
@@ -68,9 +68,6 @@ This description is generated from the canonical design model. The reference SVG
 ## Unresolved matters
 - **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
 - **site-approach**: The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.
-- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
-- **bathroom-turning-circle**: Bathroom b-bath has no modeled 1.5 m turning circle.
-- **bathroom-turning-circle**: Bathroom b-bath2 has no modeled 1.5 m turning circle.
 
 ## Capability notes
 - Exterior reference: available

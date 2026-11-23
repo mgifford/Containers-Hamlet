@@ -27,7 +27,6 @@ Unresolved interior matters:
 - inferred-room: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
 - inferred-room: Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.
 - inferred-room: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
-- room-coverage: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
 - doors-missing: No interior doors are modeled. Room connectivity cannot be assessed.
 - room-accessibility: Room room-m1-m1-z1 accessibility is not professionally verified.
 - room-accessibility: Room room-m1-m1-z2 accessibility is not professionally verified.

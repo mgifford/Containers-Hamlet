@@ -1,6 +1,6 @@
 # Solar Studio — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 1bfe2c66
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash a108e9b7
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -53,7 +53,7 @@ This description is generated from the canonical design model. The reference SVG
 - Studio (work) — 7.49 m², m2, inferred-from-zone.
 - Sleeping (sleeping) — 5.65 m², m2, inferred-from-zone.
 - Partitions: 0 · doors: 0 · fixtures: 0.
-- Validation: 0 invalid, 9 unresolved, 6 review.
+- Validation: 0 invalid, 8 unresolved, 6 review.
 
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
@@ -69,7 +69,6 @@ This description is generated from the canonical design model. The reference SVG
 - **inferred-room**: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
 - **inferred-room**: Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.
 - **inferred-room**: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
-- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
 - **doors-missing**: No interior doors are modeled. Room connectivity cannot be assessed.
 
 ## Capability notes

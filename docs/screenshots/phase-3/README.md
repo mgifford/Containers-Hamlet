@@ -7,7 +7,8 @@ Before/after evidence for the single-storey conversion and interior spatial mode
 | [`offset-pair-architecture.png`](offset-pair-architecture.png) | Selected Offset Pair architectural page: one storey, offset massing, shed roof and 21 generated views. |
 | [`offset-pair-interior-plan.png`](offset-pair-interior-plan.png) | Authored interior plan with room polygons, partitions, doors, fixtures and room areas. |
 | [`offset-pair-editor-interior.png`](offset-pair-editor-interior.png) | Editor interior mode for Offset Pair, including the generated plan. |
-| [`accessible-garden-editor-interior.png`](accessible-garden-editor-interior.png) | Accessible Garden Home interior: the 1.7 m bathroom cannot fit the 1.5 m turning circle alongside the recorded fixtures. |
+| [`accessible-garden-editor-interior.png`](accessible-garden-editor-interior.png) | Accessible Garden Home editor interior: double-width plan with a 3.0 m bathroom and 1.5 m turning circle. |
+| [`accessible-garden-interior-plan.png`](accessible-garden-interior-plan.png) | Accessible Garden Home interior plan showing the accessible bathroom, turning circle and 1.2 m circulation route. |
 | [`site-reconciliation.png`](site-reconciliation.png) | Site/residence reconciliation table with footprint differences and clearing conflicts. |
 
 ## Before

@@ -37,7 +37,7 @@
   var FOUNDATION_SYSTEMS = ['helical-piles', 'ground-screws', 'concrete-piers', 'timber-posts', 'bedrock-anchors'];
   var SUPPORT_TYPES = ['ground', 'module', 'engineered-transfer', 'not-assessed'];
   var REVIEW_STATUSES = ['not-assessed', 'requires-review', 'conceptually-resolved', 'professionally-verified'];
-  var ACCESS_CLASSIFICATIONS = ['fully-accessible-single-storey', 'single-storey-step-free-candidate', 'ground-floor-accessible-living', 'potentially-adaptable', 'unresolved-vertical-access', 'not-assessed'];
+  var ACCESS_CLASSIFICATIONS = ['fully-accessible-single-storey', 'single-storey-step-free-candidate', 'ground-floor-accessible-living', 'potentially-adaptable', 'accessibility-not-required', 'unresolved-vertical-access', 'not-assessed'];
   var STAIR_TYPES = ['straight-run', 'dog-leg', 'spiral', 'alternating-tread', 'external', 'none'];
   var INTER_STOREY_FLOOR_M = 0.4;
 

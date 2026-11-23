@@ -282,7 +282,7 @@ Every design has an architectural page under `site/design-lab/architecture/<id>/
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 2,813 schema, geometry, interior, illustration, migration and comparison checks
+node tools/check-design-lab.mjs      # 2,815 schema, geometry, interior, illustration, migration and comparison checks
 node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 

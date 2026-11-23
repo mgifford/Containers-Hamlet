@@ -153,6 +153,7 @@
     (interior.doors || []).forEach(function (x) { if (ids[x.id]) err('duplicate-door-id', 'Door id ' + x.id + ' is duplicated.'); ids[x.id] = true; });
     (interior.fixtures || []).forEach(function (x) { if (ids[x.id]) err('duplicate-fixture-id', 'Fixture id ' + x.id + ' is duplicated.'); ids[x.id] = true; });
     var totalRoomArea = 0, totalClearArea = 0;
+    d.modules.forEach(function (m) { totalClearArea += clearEnvelope(m).area_m2; });
     (interior.rooms || []).forEach(function (r) {
       var m = moduleById(d, r.module);
       if (!m) { err('room-module', 'Room ' + r.id + ' references unknown module ' + r.module + '.'); return; }
@@ -167,7 +168,6 @@
       var a = polygonArea(r.polygon);
       if (a < 0.5) err('room-area', 'Room ' + r.id + ' has an unusable area.');
       totalRoomArea += a;
-      totalClearArea += env.area_m2;
       (interior.rooms || []).forEach(function (other) {
         if (other.id <= r.id || other.module !== r.module) return;
         if (polygonOverlap(r.polygon, other.polygon) > 0.05) err('room-overlap', 'Rooms ' + r.id + ' and ' + other.id + ' overlap.');
@@ -253,7 +253,7 @@
     (interior.circulation || []).forEach(function (c) {
       if (!num(c.width_m, 0) || c.width_m < 0.9) rev('circulation-width', 'Circulation route ' + c.id + ' is narrower than the 0.9 m project target.');
     });
-    if (interior.status === 'authored') {
+    if (interior.status === 'authored' && d.access && d.access.target === 'accessible') {
       (interior.rooms || []).forEach(function (r) {
         if (r.type === 'bathroom') {
           var has = (interior.clearances || []).some(function (c) { return c.room === r.id && c.type === 'turning-circle' && num(c.diameter_m, 0) >= 1.5; });
@@ -287,14 +287,18 @@
     var kitchenApproach = kitchens.length > 0 && kitchens.every(function (r) { return workZones.some(function (c) { return c.room === r.id; }); });
     var doorsOk = doors.length > 0 && doors.every(function (x) { return x.width_m >= 0.86; });
     var single = d.levels.length === 1;
+    var target = d.access && d.access.target ? d.access.target : 'not-required';
     var classification = 'not-assessed';
-    if (single && stepFree && essential) {
+    if (target === 'not-required') classification = 'accessibility-not-required';
+    else if (target === 'adaptable') classification = single && stepFree && essential ? 'potentially-adaptable' : 'not-assessed';
+    else if (single && stepFree && essential) {
       classification = (bathroomTurning && kitchenApproach && doorsOk && entrance >= 0.86 && circulation >= 0.9 && pathOk && v.ok) ? 'single-storey-step-free-candidate' : 'potentially-adaptable';
     } else if (!single) {
       classification = stepFree ? 'ground-floor-accessible-living' : 'unresolved-vertical-access';
     }
     return {
       classification: classification,
+      target: target,
       stepFree: stepFree,
       singleStorey: single,
       essentialFunctions: essential,

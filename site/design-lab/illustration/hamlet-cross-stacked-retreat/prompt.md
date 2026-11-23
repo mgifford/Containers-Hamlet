@@ -29,6 +29,5 @@ Unresolved matters to carry into the illustration notes:
 - Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
 - Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.
 - Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.
-- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
 - No interior doors are modeled. Room connectivity cannot be assessed.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.

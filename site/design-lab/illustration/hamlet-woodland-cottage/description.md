@@ -1,6 +1,6 @@
 # Woodland Cottage — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash a6428e88
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 79828fb3
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -45,7 +45,7 @@ This description is generated from the canonical design model. The reference SVG
 - Kitchen (kitchen) — 5.65 m², m1, inferred-from-zone.
 - Living (living) — 8.87 m², m1, inferred-from-zone.
 - Partitions: 0 · doors: 0 · fixtures: 0.
-- Validation: 0 invalid, 7 unresolved, 4 review.
+- Validation: 0 invalid, 6 unresolved, 4 review.
 
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
@@ -60,7 +60,6 @@ This description is generated from the canonical design model. The reference SVG
 - **inferred-room**: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
 - **inferred-room**: Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
 - **inferred-room**: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
-- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
 - **doors-missing**: No interior doors are modeled. Room connectivity cannot be assessed.
 
 ## Capability notes
