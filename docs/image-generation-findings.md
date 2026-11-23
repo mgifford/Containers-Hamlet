@@ -12,7 +12,7 @@ model-verified.
 - **Runtime:** `mflux` on Apple Silicon, Python 3.12, MLX.
 - **Cost:** about 10 GB of model download, 3.36 GB peak MLX memory, roughly
   2–6 minutes per image, and noticeable system-wide memory pressure.
-- **Scope:** the 14 `ready` descriptions; the two blocked interiors were skipped.
+- **Scope:** the 15 `ready` descriptions; the two blocked interiors were skipped. Four were generated.
 - **Result:** four drafts before stopping: Woodland Cottage exterior, fire edge,
   water edge and service core.
 
@@ -30,6 +30,14 @@ plausible cabins, not model-faithful container homes.
 
 ## What this teaches the descriptions
 
+0. **The container is not the building.** The model records a 12.19 × 2.44 m
+   module, but the finished wall adds 205 mm per side (150 mm mineral wool,
+   10 mm thermal break, 25 mm drained cavity, 20 mm cladding). The finished
+   envelope is about 12.60 × 2.85 m, or roughly 4.4:1, not 5:1. Window reveals
+   are about 205 mm deep; the roof adds 250 mm and the floor 200 mm. Every
+   exterior description now uses the finished dimensions and requires a clad,
+   insulated, drained wall, not a bare container. The new
+   `woodland-cottage-envelope-reveal` detail makes the layer sequence visible.
 1. **Negative prompts are model-dependent.** Guidance-1 distilled models often
    ignore them. Critical exclusions must be written into the positive prompt:
    "no dormer, no cross-gable", "no stone base", "no steps", "no chimney or
@@ -64,7 +72,7 @@ plausible cabins, not model-faithful container homes.
 
 ## Changes made to the descriptions
 
-- Added a `generation` object to each of the 14 ready records:
+- Added a `generation` object to each of the 15 ready records:
   `prompt`, `negativePrompt`, `risk` (`low` / `medium` / `high`), `reference`
   and `referenceRequired`.
 - Added the Woodland guards learned from the drafts: no dormer/cross-gable/loft,
@@ -75,6 +83,8 @@ plausible cabins, not model-faithful container homes.
 - Added a validator check that every ready image has a generation prompt, every
   prompt ends with the no-people/no-text/no-watermark constraint, and the
   observed Woodland guards are present.
+- Added a per-design `envelope` object with the wall layers, finished module dimensions, roof and floor insulation.
+- Added the `woodland-cottage-envelope-reveal` detail image, tied to `section.svg`, to show the 205 mm wall and deep reveals.
 - Left the two blocked interiors without generation prompts.
 
 ## What is still needed

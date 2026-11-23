@@ -188,7 +188,10 @@ Three additive schemas sit beside the architectural design model:
 - **`containers-hamlet-image-descriptions/v1`** — the v2 per-image brief: purpose,
   camera and framing, must-show and must-not-show items, visible service
   placements, caption, alt text, limitations, source hashes and a compact
-  generation brief (`prompt`, `negativePrompt`, `risk`, `reference`). The visible-
+  generation brief (`prompt`, `negativePrompt`, `risk`, `reference`). It also
+  records the finished envelope: the wall layers, the 205 mm added outside the
+  steel, and the finished module dimensions, so a description does not confuse
+  the container with the clad building. The visible-
   services placements are illustration aids, not a water, fire, ventilation or
   electrical design. `tools/lib/image-descriptions.mjs` validates the set against
   the model. See [`image-descriptions.md`](image-descriptions.md).

@@ -147,6 +147,25 @@ export function validateImageDescriptions(data, designs, siteData, options) {
     if (entry.interiorProvenance !== interiorStatus) errors.push(where + ': interiorProvenance ' + entry.interiorProvenance + ' does not match the model ' + interiorStatus + '.');
     if (entry.interiorReconciliation && !isString(entry.interiorReconciliation)) errors.push(where + ': interiorReconciliation must be a string when present.');
 
+    if (!entry.envelope || typeof entry.envelope !== 'object') errors.push(where + ': envelope object required.');
+    else {
+      const env = entry.envelope;
+      if (!Number.isFinite(env.addedExterior_mm) || env.addedExterior_mm <= 0) errors.push(where + ': envelope.addedExterior_mm must be positive.');
+      if (!env.layers_mm || typeof env.layers_mm !== 'object') errors.push(where + ': envelope.layers_mm required.');
+      if (!Array.isArray(env.modules) || !env.modules.length) errors.push(where + ': envelope.modules required.');
+      for (const em of env.modules || []) {
+        const dm = (design.modules || []).find((m) => m.id === em.id);
+        if (!dm) { errors.push(where + ': envelope references unknown module ' + em.id + '.'); continue; }
+        const expectL = dm.nominal.length_m + 2 * env.addedExterior_mm / 1000;
+        const expectW = dm.nominal.width_m + 2 * env.addedExterior_mm / 1000;
+        if (!em.finished_m || !near(em.finished_m[0], expectL, 0.005) || !near(em.finished_m[1], expectW, 0.005)) {
+          errors.push(where + ': envelope finished dimensions for ' + em.id + ' must be nominal + 2 x ' + env.addedExterior_mm + ' mm.');
+        }
+      }
+      if (env.roofInsulation_mm !== design.thermal.roof_insulation_mm) errors.push(where + ': envelope.roofInsulation_mm does not match the model.');
+      if (env.floorInsulation_mm !== design.thermal.floor_insulation_mm) errors.push(where + ': envelope.floorInsulation_mm does not match the model.');
+    }
+
     const images = Array.isArray(entry.images) ? entry.images : [];
     if (!images.length) errors.push(where + ': at least one image description is required.');
     const localImageIds = new Set(images.map((i) => i.id));
@@ -242,6 +261,7 @@ export function validateImageDescriptions(data, designs, siteData, options) {
         }
       }
 
+      if (image.status === 'ready' && !(image.mustShow || []).some((x) => /external envelope|insulation|reveal/i.test(x.item || ''))) errors.push(iwhere + ': mustShow needs an envelope, insulation or reveal item.');
       if (!Array.isArray(image.mustNotShow) || !image.mustNotShow.length) errors.push(iwhere + ': mustNotShow required.');
       for (const item of image.mustNotShow || []) {
         if (!isString(item.item) || !isString(item.reason)) errors.push(iwhere + ': every mustNotShow item needs text and a reason.');

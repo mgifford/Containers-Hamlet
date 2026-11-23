@@ -83,6 +83,22 @@ The following cannot be made to disappear:
 - Building separation, fire-rated assemblies and protected egress only where modelled; no "fireproof" claim.
 - Pile caps, rock anchors and cross-bracing that read as structural, not decorative.
 
+### Finished envelope, not the bare container
+
+The design model records container dimensions. The finished building adds
+external insulation, a thermal break, a drained cavity and cladding:
+
+- 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm
+  cladding = **205 mm added per side** outside the 3 mm steel wall;
+- a 40 ft module is **12.19 × 2.44 m nominal** but about **12.60 × 2.85 m
+  finished** (about 4.4:1, not 5:1);
+- window and door reveals are about **205 mm deep**;
+- the roof adds 250 mm of insulation and the floor 200 mm, so the roof edge and
+  the undercroft are visibly thicker than a bare container.
+
+Do not describe or draw a thin bare container wall, a shallow reveal, a stone
+plinth or a slab-on-grade floor. Show the clad, insulated, drained assembly.
+
 ### Container expression
 
 The house currently reads as a conventional timber cabin. At least one of these

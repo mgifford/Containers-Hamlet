@@ -15,7 +15,8 @@
     "finishes": "Interior linings, floor finishes, ceiling finishes, joinery and window-frame colours are not documented. Use a neutral pale lining with exposed container steel at reveals and a neutral dark frame; disclose both as illustrative defaults. Do not present a timber species, stain, tile or paint colour as specified.",
     "services": "A service element may appear only where the visible-services layer records a modeled or conceptual placement for that image. Elements marked not-resolved or excluded must not appear as resolved. Conceptual placements must be captioned.",
     "claim": "No image may claim fire resistance, WUI approval, potable water, water independence, full accessibility, structural capacity or code compliance.",
-    "generation": "The mustShow and mustNotShow lists are the review contract. The generation.prompt is a compact model-facing brief; it must agree with the lists and must not introduce an element that the record excludes. Negative prompts are model-dependent: guidance-1 distilled models often ignore them, so critical exclusions must also appear in the positive prompt as positive constraints. A reference drawing is required for geometry-critical images; text alone is not enough. Any generated image is a draft, not a model-verified drawing, and its caption must record known deviations."
+    "generation": "The mustShow and mustNotShow lists are the review contract. The generation.prompt is a compact model-facing brief; it must agree with the lists and must not introduce an element that the record excludes. Negative prompts are model-dependent: guidance-1 distilled models often ignore them, so critical exclusions must also appear in the positive prompt as positive constraints. A reference drawing is required for geometry-critical images; text alone is not enough. Any generated image is a draft, not a model-verified drawing, and its caption must record known deviations.",
+    "envelope": "The design model records the container module dimensions. The finished building adds external insulation, a thermal break, a drained cavity and cladding outside the steel wall. All six homes use 150 mm mineral wool + 10 mm thermal break + 25 mm ventilated drained cavity + 20 mm cladding: about 205 mm added per side (209 mm including the 3 mm steel and 1 mm air/vapour layers). A 40 ft module is 12.19 x 2.44 m nominal but about 12.60 x 2.85 m finished; the visual proportion is about 4.4:1, not 5:1. Images must show the finished envelope: deep window reveals, a thick roof edge, a rainscreen and a clad wall, not a bare container. The roof adds 250 mm insulation and the floor 200 mm; both affect the visible edge and the undercroft."
   },
   "designs": {
     "hamlet-woodland-cottage": {
@@ -269,6 +270,11 @@
               "evidence": "modules[0]"
             },
             {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
+            },
+            {
               "item": "gable roof at 24 degrees with a 0.8 m overhang and a standing-seam metal finish",
               "status": "modeled",
               "evidence": "roof_form; water.catchment.roof"
@@ -422,7 +428,7 @@
             "reference": "site-facing.svg"
           },
           "generation": {
-            "prompt": "Photorealistic architectural visualization of Woodland Cottage: a long, narrow single-storey container home, one 12.19 x 2.44 m module wide (about 5:1 length to width), in cedar and pine. Camera at 1.6 m eye level from the south-west garden approach, 35 mm lens, framing the whole house with the covered south porch and west gable end. Timber-clad ISO container module on a 0.6 m exposed helical-pile base, visible steel corner castings and module joint, one simple 24-degree gable with two roof planes and a 0.8 m overhang, no dormer or cross-gable, installed PV panels clearly visible on the south slope, south bathroom window, flush step-free entrance, level timber deck, garden sliding doors. Conceptual south gutter, east downspout, ember-resistant fine-mesh vent and defensible-space planting with low fuel within 1.5 m; the lake is only a distant glimpse through trunks, not a waterfront. Clear late-afternoon summer light, No people, no text, no watermark.",
+            "prompt": "Photorealistic architectural visualization of Woodland Cottage: a long, narrow single-storey container home, one 40 ft module, 12.19 x 2.44 m nominal and about 12.60 x 2.85 m finished (about 4.4:1 length to width). Camera at 1.6 m eye level from the south-west garden approach, 35 mm lens, framing the whole house with the south porch and west gable end. Timber-clad ISO container on a 0.6 m exposed helical-pile base, visible corner castings and module joint, one simple 24-degree gable with two roof planes and a 0.8 m overhang, no dormer or cross-gable, PV panels visible on the south slope, flush step-free entrance, level deck, garden sliding doors. The finished wall is about 205 mm outside the steel: 150 mm mineral wool, 10 mm thermal break, 25 mm drained cavity and 20 mm timber rainscreen, with deep reveals; the container is clad and lined, not a bare steel box. Conceptual gutter, downspout, fine-mesh ember vent and low-fuel defensible planting; the lake is only a glimpse through trunks, not a waterfront. Clear late-afternoon summer light. No people, no text, no watermark.",
             "negativePrompt": "second storey, second module, balcony, chimney, wood stove, hydrant, fire cistern, potable water label, drinking water claim, rain barrel, battery, inverter, off-grid plant, noncombustible deck claim, firewood, snow guards, accessible ramp, lift, handrail, waterfront lawn, lake against the house, extra buildings, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
@@ -575,6 +581,11 @@
               "evidence": "roof_form"
             },
             {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
+            },
+            {
               "item": "closed, noncombustible soffit and fascia at the eave",
               "status": "conceptual",
               "evidence": "fire.noncombustible_eaves = true; the assembly is not modeled"
@@ -661,7 +672,7 @@
             "reference": "elevation-south.svg"
           },
           "generation": {
-            "prompt": "Photorealistic wide detail of the Woodland Cottage south-west roof edge and immediate ground plane. Camera at 1.6 m with a 50 mm lens, three-quarter view; the lower third of the frame is ground and wall base, the roof edge sits in the upper third. Standing-seam gable roof with a 0.8 m overhang, closed noncombustible soffit and fascia, one fine stainless-mesh ember-resistant vent (not a louver), tempered glazing, conceptual gutter and downspout, low-fuel ground cover within 1.5 m and reduced fuel to 10 m, exposed helical piles and a clear undercroft, no stone foundation. Soft raking daylight; No people, no text, no watermark.",
+            "prompt": "Photorealistic wide detail of the Woodland Cottage south-west roof edge and immediate ground plane. Camera at 1.6 m with a 50 mm lens, three-quarter view; the lower third of the frame is ground and wall base, the roof edge sits in the upper third. Standing-seam gable roof with a 0.8 m overhang, closed noncombustible soffit and fascia, one fine stainless-mesh ember-resistant vent (not a louver), tempered glazing, conceptual gutter and downspout, low-fuel ground cover within 1.5 m and reduced fuel to 10 m, exposed helical piles and a clear undercroft, no stone foundation. Soft raking daylight; The wall is a thick clad and insulated assembly with a deep ~205 mm reveal, not a thin bare container edge. No people, no text, no watermark.",
             "negativePrompt": "fire resistance rating, fireproof label, WUI approval sign, chimney, wood stove, hydrant, fire cistern, firewood, underfloor storage, noncombustible deck claim, snow guards, balcony, accessible ramp, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "elevation-south.svg",
@@ -691,6 +702,11 @@
               "item": "standing-seam metal roof and a gutter with a fine leaf guard",
               "status": "conceptual",
               "evidence": "water.catchment.roof; water.collection.gutters; v-leaf-guard"
+            },
+            {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
             },
             {
               "item": "one downspout at the east end of the south eave",
@@ -771,7 +787,7 @@
             "reference": "elevation-south.svg"
           },
           "generation": {
-            "prompt": "Photorealistic close view of the Woodland Cottage rainwater-collection edge. Camera at 1.6 m with a 50 mm lens, looking up the south-east downspout and along the garden edge. Standing-seam metal roof, gutter with a fine mesh leaf guard, one downspout at the east end of the south eave, a vertical cylindrical first-flush chamber with a screw cap at its base, and a small inlet pipe turning into the garden soil beyond frame. Timber wall on a 0.6 m exposed pile base, no stone foundation, no splash block. Conceptual collection hardware in clear late-afternoon summer light; No people, no text, no watermark.",
+            "prompt": "Photorealistic close view of the Woodland Cottage rainwater-collection edge. Camera at 1.6 m with a 50 mm lens, looking up the south-east downspout and along the garden edge. Standing-seam metal roof, gutter with a fine mesh leaf guard, one downspout at the east end of the south eave, a vertical cylindrical first-flush chamber with a screw cap at its base, and a small inlet pipe turning into the garden soil beyond frame. Timber wall on a 0.6 m exposed pile base, no stone foundation, no splash block. Conceptual collection hardware in clear late-afternoon summer light; The wall is a thick clad and insulated assembly with a deep ~205 mm reveal, not a thin bare container edge. No people, no text, no watermark.",
             "negativePrompt": "cistern in view, water tank, rain barrel, hydrant, fire cistern, draft point, potable tap, water filter, drinking water label, pump, pressure tank, treatment plant, chimney, wood stove, battery, inverter, snow guards, balcony, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "elevation-south.svg",
@@ -813,6 +829,11 @@
               "item": "a compact service wall with accessible, labelled panels; no concealed equipment without an access door",
               "status": "conceptual",
               "evidence": "visualisation-v2-brief service-core requirements; v-service-wall"
+            },
+            {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
             },
             {
               "item": "a compact HRV with a replaceable filter, frost control and a condensate drain",
@@ -901,7 +922,7 @@
             "reference": "interior-plan.svg"
           },
           "generation": {
-            "prompt": "Photorealistic interior visualization of the Woodland Cottage service core. Camera at 1.5 m with a 24 mm lens, standing in the entrance hall with a three-quarter view of a compact utility wall at the kitchen and bathroom end. Neutral pale lining with exposed container steel at the reveals; accessible labelled panels, a rectangular wall-mounted heat-recovery ventilator with two insulated ducts, replaceable filter, frost control and condensate drain, a small electrical panel, and an electric heat-pump water heater with drain and relief valve. Low 200 mm fresh-air intake, high 200 mm exhaust, clear floor in front of every panel. Sealed electric appliances only: no chimney, no flue, no gas vent. Soft interior daylight; No people, no text, no watermark.",
+            "prompt": "Photorealistic interior visualization of the Woodland Cottage service core. Camera at 1.5 m with a 24 mm lens, standing in the entrance hall with a three-quarter view of a compact utility wall at the kitchen and bathroom end. Neutral pale lining with exposed container steel at the reveals; accessible labelled panels, a rectangular wall-mounted heat-recovery ventilator with two insulated ducts, replaceable filter, frost control and condensate drain, a small electrical panel, and an electric heat-pump water heater with drain and relief valve. Low 200 mm fresh-air intake, high 200 mm exhaust, clear floor in front of every panel. Sealed electric appliances only: no chimney, no flue, no gas vent. Soft interior daylight; The wall is a thick clad and insulated assembly with a deep ~205 mm reveal, not a thin bare container edge. No people, no text, no watermark.",
             "negativePrompt": "wood stove, chimney, stove outside air kit, gas supply, propane tank, combustion appliance, battery, inverter, off-grid plant, recirculating microwave hood, sealed service wall, concealed equipment, equipment brand, pipe route, electrical layout, loose furniture, rug, lamp, indoor plant, wall art, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
@@ -931,6 +952,11 @@
               "item": "a level deck and a level threshold at the entrance, with no step and no ramp",
               "status": "modeled",
               "evidence": "access.entrance_threshold_m = 0; decks[d1]"
+            },
+            {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
             },
             {
               "item": "the 0.95 m entrance door, open, with a clear approach",
@@ -1002,14 +1028,154 @@
             "reference": "elevation-south.svg"
           },
           "generation": {
-            "prompt": "Photorealistic eye-level view of the Woodland Cottage step-free entrance. Camera at 1.5 m with a 35 mm lens from the garden deck, centred on the open 0.95 m entrance door and the covered south porch. Level deck and flush threshold, no step, porch 5.4 x 2.8 m with roof and posts, continuous slip-resistant surface, clear 1.2 m route through the hall toward the 1.0 m hall-to-kitchen door. Timber cladding, neutral lining and exposed steel reveals beyond. Clear late-afternoon daylight through cedar and pine; No people, no text, no watermark.",
+            "prompt": "Photorealistic eye-level view of the Woodland Cottage step-free entrance. Camera at 1.5 m with a 35 mm lens from the garden deck, centred on the open 0.95 m entrance door and the covered south porch. Level deck and flush threshold, no step, porch 5.4 x 2.8 m with roof and posts, continuous slip-resistant surface, clear 1.2 m route through the hall toward the 1.0 m hall-to-kitchen door. Timber cladding, neutral lining and exposed steel reveals beyond. Clear late-afternoon daylight through cedar and pine; The wall is a thick clad and insulated assembly with a deep ~205 mm reveal, not a thin bare container edge. No people, no text, no watermark.",
             "negativePrompt": "ramp, lift, stair, level change, grab bar, handrail, doormat, loose furniture, potted plant, fully accessible claim, code compliance label, snow bank, ice, chimney, wood stove, hydrant, fire cistern, potable tap, battery, inverter, balcony, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "elevation-south.svg",
             "referenceRequired": true
           }
+        },
+        {
+          "id": "woodland-cottage-envelope-reveal",
+          "title": "Woodland Cottage — wall build-up and window reveal",
+          "view": "detail",
+          "status": "ready",
+          "purpose": "Show the finished external envelope and the depth added outside the container, so the cottage does not read as a bare steel box.",
+          "camera": {
+            "position": "close three-quarter view of a south window reveal at the porch, from outside, eye level",
+            "height_m": 1.6,
+            "lens_mm": 50,
+            "framing": "the reveal in the middle third; exterior cladding and cavity on one side, interior lining on the other, the roof edge above and the pile below"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 1,
+            "roofType": "gable",
+            "roofPitch_deg": 24
+          },
+          "mustShow": [
+            {
+              "item": "3 mm steel container wall, 1 mm air/vapour control, 150 mm mineral wool, 10 mm thermal break, 25 mm ventilated drained cavity and 20 mm timber rainscreen",
+              "status": "modeled",
+              "evidence": "envelope.layers"
+            },
+            {
+              "item": "about 205 mm added outside the steel wall (209 mm total wall), producing a deep window reveal",
+              "status": "modeled",
+              "evidence": "envelope.layers"
+            },
+            {
+              "item": "continuous external insulation with a thermal break at the opening and pile cap; no visible thermal bridge",
+              "status": "modeled",
+              "evidence": "thermal.thermal_bridge_mitigation"
+            },
+            {
+              "item": "a drained and ventilated cavity behind the timber rainscreen",
+              "status": "modeled",
+              "evidence": "envelope.rainscreen"
+            },
+            {
+              "item": "a roof edge with 250 mm insulation and a standing-seam metal finish",
+              "status": "modeled",
+              "evidence": "thermal.roof_insulation_mm; water.catchment.roof"
+            },
+            {
+              "item": "a floor with 200 mm insulation over exposed helical piles and a 0.6 m undercroft",
+              "status": "modeled",
+              "evidence": "thermal.floor_insulation_mm; foundation"
+            },
+            {
+              "item": "one visible corner casting and the module joint at the reveal",
+              "status": "inferred",
+              "evidence": "modules[0].type"
+            },
+            {
+              "item": "neutral interior lining and exposed steel at the inner reveal",
+              "status": "conceptual",
+              "evidence": "no interior finish is documented"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a bare steel container wall as the finished exterior",
+              "reason": "The wall is externally insulated, drained, ventilated and clad.",
+              "check": "custom"
+            },
+            {
+              "item": "a thin wall, an uninsulated wall or exposed spray foam",
+              "reason": "The assembly is 150 mm mineral wool with a thermal break; spray foam is not selected.",
+              "check": "custom"
+            },
+            {
+              "item": "a stone or concrete foundation",
+              "reason": "The model uses exposed helical piles.",
+              "check": "custom"
+            },
+            {
+              "item": "a chimney, flue or stove",
+              "reason": "None is recorded; heating is a heat pump.",
+              "check": "no-chimney"
+            },
+            {
+              "item": "an extra storey, module or dormer",
+              "reason": "One storey, one module and one gable are modeled.",
+              "check": "no-extra-geometry"
+            }
+          ],
+          "servicesVisible": [],
+          "caption": "Wall build-up study for Woodland Cottage. The finished wall adds about 205 mm outside the steel: 150 mm mineral wool, a 10 mm thermal break, a 25 mm drained cavity and a 20 mm timber rainscreen, producing deep window reveals. The roof adds 250 mm insulation and the floor 200 mm over helical piles. The interior lining is illustrative, not specified. Not a construction drawing.",
+          "alt": "Conceptual close view of a deep window reveal cut through a timber-clad container wall, showing mineral-wool insulation, a thermal break, a drained cavity and a rainscreen, with the metal roof edge above and an exposed pile below. No bare steel or stone base is visible.",
+          "limitations": [
+            "The wall, roof and floor build-ups are modeled as layers, not as a tested assembly.",
+            "Thermal bridging, moisture performance, fire and air-tightness are not verified.",
+            "The interior lining is illustrative, not specified.",
+            "The reveal depth is the sum of the modeled layers; the window fixing and sill detail are unresolved."
+          ],
+          "generation": {
+            "prompt": "Photorealistic close three-quarter detail of the Woodland Cottage south window reveal and wall build-up. Camera at 1.6 m with a 50 mm lens, from outside at the porch. The reveal is deep, about 205 mm. From the interior out: neutral lining, 3 mm steel container wall, 1 mm air/vapour control, 150 mm mineral wool, 10 mm thermal break, 25 mm ventilated drained cavity and 20 mm vertical timber rainscreen. Show the continuous insulation, a clean thermal break at the opening, the drained cavity, the 250 mm roof edge above and the 200 mm floor over an exposed helical pile below; one steel corner casting at the module joint. No visible thermal bridge, no bare steel, no spray foam, no stone base, no chimney. Clear late-afternoon light. No people, no text, no watermark.",
+            "negativePrompt": "bare steel container wall, thin wall, missing insulation, exposed spray foam, thermal bridge, stone foundation, concrete plinth, chimney, flue, wood stove, dormer, second gable, extra storey, extra module, timber feature wall, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects",
+            "risk": "medium",
+            "reference": "section.svg",
+            "referenceRequired": true
+          },
+          "source": {
+            "designHash": "d142126a",
+            "sceneHash": "4af580f8",
+            "reference": "section.svg"
+          }
         }
-      ]
+      ],
+      "envelope": {
+        "addedExterior_mm": 205,
+        "layers_mm": {
+          "structure": 3,
+          "air-vapour": 1,
+          "insulation": 150,
+          "thermal break": 10,
+          "rainscreen": 25,
+          "cladding": 20
+        },
+        "totalWall_mm": 209,
+        "roofInsulation_mm": 250,
+        "floorInsulation_mm": 200,
+        "cladding": [
+          "timber"
+        ],
+        "modules": [
+          {
+            "id": "m1",
+            "nominal_m": [
+              12.192,
+              2.438
+            ],
+            "finished_m": [
+              12.602,
+              2.848
+            ]
+          }
+        ],
+        "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      }
     },
     "hamlet-offset-stack": {
       "label": "Offset Stack",
@@ -1149,6 +1315,11 @@
               "evidence": "modules[0], modules[1]"
             },
             {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
+            },
+            {
               "item": "m2 offset 2.6 m east of m1; a clear structural overhang and exposed support at the offset",
               "status": "modeled",
               "evidence": "modules[1].position_m; architecture"
@@ -1247,7 +1418,7 @@
             "reference": "site-facing.svg"
           },
           "generation": {
-            "prompt": "Photorealistic architectural visualization of the Offset Stack, two 40 ft container modules stacked into two storeys. Camera at 1.6 m on the birch glade approach at the south-east corner, 35 mm lens, framing the whole stack, the upper offset and the ground porch. Timber lower module at 0.6 m, metal upper module at 3.896 m offset 2.6 m east with exposed structural support, 8-degree shed roof with a 0.7 m overhang and installed PV, covered ground porch 4 x 2.6 m, open upper south porch, east entry doors, one visible corner casting and module joint, conceptual gutter, downspout, ember vent and defensible-space planting. Birch and rock shoulder, low sun. One simple 8-degree shed roof, no dormer or cross-gable; exposed helical piles, no stone base; no steps; visible steel corner castings; birch glade, no lake or meadow. No people, no text, no watermark.",
+            "prompt": "Photorealistic architectural visualization of the Offset Stack, two 40 ft container modules stacked into two storeys. Camera at 1.6 m on the birch glade approach at the south-east corner, 35 mm lens, framing the whole stack, the upper offset and the ground porch. Timber lower module at 0.6 m, metal upper module at 3.896 m offset 2.6 m east with exposed structural support, 8-degree shed roof with a 0.7 m overhang and installed PV, covered ground porch 4 x 2.6 m, open upper south porch, east entry doors, one visible corner casting and module joint, conceptual gutter, downspout, ember vent and defensible-space planting. Birch and rock shoulder, low sun. One simple 8-degree shed roof, no dormer or cross-gable; exposed helical piles, no stone base; no steps; visible steel corner castings; birch glade, no lake or meadow. Each 40 ft module is finished about 12.60 x 2.85 m with 205 mm external insulation, drained cavity and rainscreen; deep reveals; not a bare container. No people, no text, no watermark.",
             "negativePrompt": "third module, third storey, balcony, upper balcony railing, external stair, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, firewood, snow guards, lake, meadow, potable water label, battery, inverter, off-grid plant, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
@@ -1293,6 +1464,11 @@
               "item": "one open ground-floor volume 12.19 m long and 2.44 m wide; no partitions",
               "status": "modeled",
               "evidence": "interior.status = provisional; partitions = 0"
+            },
+            {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
             },
             {
               "item": "the south sliding door (m1-s1), south kitchen window (m1-s2), north stair window (m1-n1), east entry (m1-e1) and west window (m1-w1)",
@@ -1361,14 +1537,57 @@
             "reference": "interior-plan.svg"
           },
           "generation": {
-            "prompt": "Photorealistic open zone study, no partitions, inside the Offset Stack ground floor. Camera at 1.5 m with a 24 mm lens at the west end looking east down the 12.19 x 2.44 m volume. South sliding door, south kitchen window, north stair window, east entry and west window; a conceptual straight-run stair, 0.9 m wide, at the far east end with a landing. Zone changes in floor finish and ceiling rhythm only, neutral lining and exposed container ribs, flat ceiling. Daylight from the south openings. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. No people, no text, no watermark.",
+            "prompt": "Photorealistic open zone study, no partitions, inside the Offset Stack ground floor. Camera at 1.5 m with a 24 mm lens at the west end looking east down the 12.19 x 2.44 m volume. South sliding door, south kitchen window, north stair window, east entry and west window; a conceptual straight-run stair, 0.9 m wide, at the far east end with a landing. Zone changes in floor finish and ceiling rhythm only, neutral lining and exposed container ribs, flat ceiling. Daylight from the south openings. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. Window and door reveals are deep because of the 205 mm external envelope. No people, no text, no watermark.",
             "negativePrompt": "partition walls, interior doors, bathroom enclosure, stair enclosure, bed, sofa, kitchen counter, toilet, fixtures, loose furniture, rug, lamp, indoor plant, unlisted window, kitchen hood, bathroom exhaust, service core, HRV terminal, external stair, sculptural stair, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
             "referenceRequired": true
           }
         }
-      ]
+      ],
+      "envelope": {
+        "addedExterior_mm": 205,
+        "layers_mm": {
+          "structure": 3,
+          "air-vapour": 1,
+          "insulation": 150,
+          "thermal break": 10,
+          "rainscreen": 25,
+          "cladding": 20
+        },
+        "totalWall_mm": 209,
+        "roofInsulation_mm": 250,
+        "floorInsulation_mm": 200,
+        "cladding": [
+          "metal",
+          "timber"
+        ],
+        "modules": [
+          {
+            "id": "m1",
+            "nominal_m": [
+              12.192,
+              2.438
+            ],
+            "finished_m": [
+              12.602,
+              2.848
+            ]
+          },
+          {
+            "id": "m2",
+            "nominal_m": [
+              12.192,
+              2.438
+            ],
+            "finished_m": [
+              12.602,
+              2.848
+            ]
+          }
+        ],
+        "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      }
     },
     "hamlet-courtyard-residence": {
       "label": "Courtyard Residence",
@@ -1501,6 +1720,11 @@
               "evidence": "modules[0], modules[1]"
             },
             {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
+            },
+            {
               "item": "flat roof with a 0.5 m overhang and a low green-roof edge",
               "status": "conceptual",
               "evidence": "roof_form.green_roof = true; assembly is unresolved"
@@ -1592,7 +1816,7 @@
             "reference": "site-facing.svg"
           },
           "generation": {
-            "prompt": "Photorealistic architectural visualization of the Courtyard Residence, an L-shaped single-storey home of two 40 ft timber modules. Camera at 1.6 m on the east approach at the courtyard corner, 35 mm lens, framing the whole L, courtyard opening, covered north porch and glazed timber link. Flat roof with a 0.5 m overhang and low green-roof edge, courtyard deck projecting 1.4 m, east entry, courtyard sliding doors and documented windows, one visible corner casting, conceptual ember-resistant vents and defensible-space planting. Pine trunks and a narrow strip of lake light beyond. Soft daylight. One flat roof, no dormer; exposed helical piles, no stone base; no steps; visible steel corner castings; no waterfront. No people, no text, no watermark.",
+            "prompt": "Photorealistic architectural visualization of the Courtyard Residence, an L-shaped single-storey home of two 40 ft timber modules. Camera at 1.6 m on the east approach at the courtyard corner, 35 mm lens, framing the whole L, courtyard opening, covered north porch and glazed timber link. Flat roof with a 0.5 m overhang and low green-roof edge, courtyard deck projecting 1.4 m, east entry, courtyard sliding doors and documented windows, one visible corner casting, conceptual ember-resistant vents and defensible-space planting. Pine trunks and a narrow strip of lake light beyond. Soft daylight. One flat roof, no dormer; exposed helical piles, no stone base; no steps; visible steel corner castings; no waterfront. Each 40 ft module is finished about 12.60 x 2.85 m with 205 mm external insulation, drained cavity and rainscreen; deep reveals; not a bare container. No people, no text, no watermark.",
             "negativePrompt": "green roof drainage outlet, gutter, downspout, installed PV array, solar panels, second storey, third module, warm roof claim, dry roof claim, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, potable water label, battery, inverter, extra buildings, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
@@ -1635,6 +1859,11 @@
               "item": "one open module volume with no partitions; living, dining and sleeping are zone bands only",
               "status": "modeled",
               "evidence": "interior.status = provisional; partitions = 0"
+            },
+            {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
             },
             {
               "item": "the north sliding courtyard doors (m1-n1) and the courtyard beyond",
@@ -1704,14 +1933,56 @@
             "reference": "interior-plan.svg"
           },
           "generation": {
-            "prompt": "Photorealistic open zone study, no partitions, inside the Courtyard Residence living and dining side. Camera at 1.5 m with a 24 mm lens at the east end looking west toward the north courtyard sliding doors and the open volume of one module. The courtyard beyond the doors, the 0.8 m and 1.4 m south windows on the opposite wall, and the glazed link at the edge of frame. Neutral lining, flat container ceiling, exposed steel at the reveals, zone bands in floor finish only. Soft daylight from the courtyard. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. No people, no text, no watermark.",
+            "prompt": "Photorealistic open zone study, no partitions, inside the Courtyard Residence living and dining side. Camera at 1.5 m with a 24 mm lens at the east end looking west toward the north courtyard sliding doors and the open volume of one module. The courtyard beyond the doors, the 0.8 m and 1.4 m south windows on the opposite wall, and the glazed link at the edge of frame. Neutral lining, flat container ceiling, exposed steel at the reveals, zone bands in floor finish only. Soft daylight from the courtyard. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. Window and door reveals are deep because of the 205 mm external envelope. No people, no text, no watermark.",
             "negativePrompt": "partitions, interior walls, interior doors, bathroom enclosure, bed, sofa, dining table, kitchen counter, toilet, fixtures, loose furniture, rug, lamp, indoor plant, kitchen hood, service core, HRV terminal, green roof visible through ceiling, coffered ceiling, pitched ceiling, unlisted window, room layout, fully accessible claim, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
             "referenceRequired": true
           }
         }
-      ]
+      ],
+      "envelope": {
+        "addedExterior_mm": 205,
+        "layers_mm": {
+          "structure": 3,
+          "air-vapour": 1,
+          "insulation": 150,
+          "thermal break": 10,
+          "rainscreen": 25,
+          "cladding": 20
+        },
+        "totalWall_mm": 209,
+        "roofInsulation_mm": 250,
+        "floorInsulation_mm": 200,
+        "cladding": [
+          "timber"
+        ],
+        "modules": [
+          {
+            "id": "m1",
+            "nominal_m": [
+              12.192,
+              2.438
+            ],
+            "finished_m": [
+              12.602,
+              2.848
+            ]
+          },
+          {
+            "id": "m2",
+            "nominal_m": [
+              12.192,
+              2.438
+            ],
+            "finished_m": [
+              12.602,
+              2.848
+            ]
+          }
+        ],
+        "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      }
     },
     "hamlet-cross-stacked-retreat": {
       "label": "Cross-Stacked Retreat",
@@ -1857,6 +2128,11 @@
               "evidence": "modules[0], modules[1]"
             },
             {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
+            },
+            {
               "item": "butterfly roof at 12 degrees with a 0.8 m overhang and installed PV",
               "status": "modeled",
               "evidence": "roof_form; solar_array"
@@ -1945,7 +2221,7 @@
             "reference": "site-facing.svg"
           },
           "generation": {
-            "prompt": "Photorealistic architectural visualization of the Cross-Stacked Retreat, a two-storey cross of two 40 ft modules. Camera at 1.6 m on the beaver-meadow approach at the south-east corner, 35 mm lens, framing the whole cross, butterfly roof, shaded ground porch and upper east door. Metal lower module at 0.6 m, timber upper module at 3.896 m rotated 90 degrees, butterfly roof at 12 degrees with a 0.8 m overhang and installed PV, covered ground porch 4.2 x 2.8 m, exposed steel cross-beam, lower and upper windows, conceptual gutter, downspout, ember vent and defensible-space planting. Beaver meadow, sedge, alder, standing water and the south knoll. Clear late-afternoon summer light. One butterfly roof, no dormer or second gable; exposed helical piles, no stone base; no steps; visible steel corner castings; beaver meadow, no lake. No people, no text, no watermark.",
+            "prompt": "Photorealistic architectural visualization of the Cross-Stacked Retreat, a two-storey cross of two 40 ft modules. Camera at 1.6 m on the beaver-meadow approach at the south-east corner, 35 mm lens, framing the whole cross, butterfly roof, shaded ground porch and upper east door. Metal lower module at 0.6 m, timber upper module at 3.896 m rotated 90 degrees, butterfly roof at 12 degrees with a 0.8 m overhang and installed PV, covered ground porch 4.2 x 2.8 m, exposed steel cross-beam, lower and upper windows, conceptual gutter, downspout, ember vent and defensible-space planting. Beaver meadow, sedge, alder, standing water and the south knoll. Clear late-afternoon summer light. One butterfly roof, no dormer or second gable; exposed helical piles, no stone base; no steps; visible steel corner castings; beaver meadow, no lake. Each 40 ft module is finished about 12.60 x 2.85 m with 205 mm external insulation, drained cavity and rainscreen; deep reveals; not a bare container. No people, no text, no watermark.",
             "negativePrompt": "balcony, upper balcony railing, interior butterfly ridge, interior valley, sloping interior ceiling, third module, third storey, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, firewood, lake, boreal waterfront, snow guards, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
@@ -1990,6 +2266,11 @@
               "item": "one open ground-floor volume with no partitions",
               "status": "modeled",
               "evidence": "interior.status = provisional; partitions = 0"
+            },
+            {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
             },
             {
               "item": "the south sliding doors (m1-s1), north window (m1-n1), east entry (m1-e1) and west window (m1-w1)",
@@ -2059,14 +2340,57 @@
             "reference": "interior-plan.svg"
           },
           "generation": {
-            "prompt": "Photorealistic open zone study, no partitions, inside the Cross-Stacked Retreat ground floor beneath the cross. Camera at 1.5 m with a 24 mm lens at the west end looking east through the open volume. South sliding doors, north window, east entry and west window, the flat underside of the upper module where it crosses, and a conceptual dog-leg stair, 0.9 m wide, at the east end with a landing. Neutral lining, exposed container ribs, flat ceiling, zone bands in floor finish only. Daylight from the south doors. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. No people, no text, no watermark.",
+            "prompt": "Photorealistic open zone study, no partitions, inside the Cross-Stacked Retreat ground floor beneath the cross. Camera at 1.5 m with a 24 mm lens at the west end looking east through the open volume. South sliding doors, north window, east entry and west window, the flat underside of the upper module where it crosses, and a conceptual dog-leg stair, 0.9 m wide, at the east end with a landing. Neutral lining, exposed container ribs, flat ceiling, zone bands in floor finish only. Daylight from the south doors. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. Window and door reveals are deep because of the 205 mm external envelope. No people, no text, no watermark.",
             "negativePrompt": "partitions, interior walls, interior doors, bathroom enclosure, sofa, kitchen counter, bed, fixtures, loose furniture, rug, lamp, indoor plant, interior butterfly ridge, interior valley, sloping ceiling, stair enclosure, external stair, kitchen hood, service core, HRV terminal, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
             "referenceRequired": true
           }
         }
-      ]
+      ],
+      "envelope": {
+        "addedExterior_mm": 205,
+        "layers_mm": {
+          "structure": 3,
+          "air-vapour": 1,
+          "insulation": 150,
+          "thermal break": 10,
+          "rainscreen": 25,
+          "cladding": 20
+        },
+        "totalWall_mm": 209,
+        "roofInsulation_mm": 250,
+        "floorInsulation_mm": 200,
+        "cladding": [
+          "metal",
+          "timber"
+        ],
+        "modules": [
+          {
+            "id": "m1",
+            "nominal_m": [
+              12.192,
+              2.438
+            ],
+            "finished_m": [
+              12.602,
+              2.848
+            ]
+          },
+          {
+            "id": "m2",
+            "nominal_m": [
+              12.192,
+              2.438
+            ],
+            "finished_m": [
+              12.602,
+              2.848
+            ]
+          }
+        ],
+        "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      }
     },
     "hamlet-accessible-garden-home": {
       "label": "Accessible Garden Home",
@@ -2213,6 +2537,11 @@
               "evidence": "modules[0], modules[1]"
             },
             {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
+            },
+            {
               "item": "canopy roof with a 1.2 m overhang",
               "status": "modeled",
               "evidence": "roof_form"
@@ -2306,7 +2635,7 @@
             "reference": "site-facing.svg"
           },
           "generation": {
-            "prompt": "Photorealistic architectural visualization of the Accessible Garden Home, a compact single-storey double-width home of two 20 ft timber modules. Camera at 1.6 m on the garden approach at the south-west corner, 35 mm lens, framing both modules, the canopy roof, covered terrace and level route. Two 6.06 x 2.44 m modules at 0.6 m, canopy with a 1.2 m overhang, covered south terrace 4.6 x 2.8 m, level terrace projecting 1.2 m, south step-free entrance, garden sliding doors, east utility door, internal 1.4 m opening and one corner casting. Conceptual gutter, downspout, ember vent and defensible-space planting; fern, hemlock and distant lake light. Soft daylight. One canopy roof, no dormer; exposed helical piles, no stone base; no steps or ramp; visible steel corner castings; forest, no waterfront. No people, no text, no watermark.",
+            "prompt": "Photorealistic architectural visualization of the Accessible Garden Home, a compact single-storey double-width home of two 20 ft timber modules. Camera at 1.6 m on the garden approach at the south-west corner, 35 mm lens, framing both modules, the canopy roof, covered terrace and level route. Two 6.06 x 2.44 m modules at 0.6 m, canopy with a 1.2 m overhang, covered south terrace 4.6 x 2.8 m, level terrace projecting 1.2 m, south step-free entrance, garden sliding doors, east utility door, internal 1.4 m opening and one corner casting. Conceptual gutter, downspout, ember vent and defensible-space planting; fern, hemlock and distant lake light. Soft daylight. One canopy roof, no dormer; exposed helical piles, no stone base; no steps or ramp; visible steel corner castings; forest, no waterfront. Each 20 ft module is finished about 6.47 x 2.85 m with 205 mm external insulation, drained cavity and rainscreen; deep reveals; not a bare container. No people, no text, no watermark.",
             "negativePrompt": "third module, second storey, ramp, lift, stair, level change, fully accessible claim, code compliance label, grab bar, handrail, chimney, wood stove, hydrant, fire cistern, installed PV array, solar panels, noncombustible deck claim, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
@@ -2426,7 +2755,49 @@
             "reference": "interior-plan.svg"
           }
         }
-      ]
+      ],
+      "envelope": {
+        "addedExterior_mm": 205,
+        "layers_mm": {
+          "structure": 3,
+          "air-vapour": 1,
+          "insulation": 150,
+          "thermal break": 10,
+          "rainscreen": 25,
+          "cladding": 20
+        },
+        "totalWall_mm": 209,
+        "roofInsulation_mm": 250,
+        "floorInsulation_mm": 200,
+        "cladding": [
+          "timber"
+        ],
+        "modules": [
+          {
+            "id": "m1",
+            "nominal_m": [
+              6.058,
+              2.438
+            ],
+            "finished_m": [
+              6.468,
+              2.848
+            ]
+          },
+          {
+            "id": "m2",
+            "nominal_m": [
+              6.058,
+              2.438
+            ],
+            "finished_m": [
+              6.468,
+              2.848
+            ]
+          }
+        ],
+        "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      }
     },
     "hamlet-solar-studio-stack": {
       "label": "Solar Studio Stack",
@@ -2572,6 +2943,11 @@
               "evidence": "modules[0], modules[1]"
             },
             {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
+            },
+            {
               "item": "solar-ready shed roof at 12 degrees with a 0.9 m overhang and installed PV",
               "status": "modeled",
               "evidence": "roof_form; solar_array"
@@ -2660,7 +3036,7 @@
             "reference": "site-facing.svg"
           },
           "generation": {
-            "prompt": "Photorealistic architectural visualization of the Solar Studio Stack, a two-storey home of two 20 ft modules. Camera at 1.6 m on the cove approach at the south-west corner, 35 mm lens, framing both modules, the upper offset, shed roof, PV, shaded terrace and upper studio glazing. Timber lower module at 0.6 m, metal upper module at 3.896 m offset 0.8 m east, 12-degree solar-ready shed roof with a 0.9 m overhang and installed PV, covered terrace 4.4 x 2.4 m, south sliding doors and entry, upper studio glazing, north window, upper east door, one corner casting, conceptual gutter, downspout, ember vent and defensible-space planting. Juniper, cedar and a rocky cove shore. Soft daylight. One 12-degree shed roof, no dormer or cross-gable; exposed helical piles, no stone base; no steps; visible steel corner castings; rocky cove, no open lake at the door. No people, no text, no watermark.",
+            "prompt": "Photorealistic architectural visualization of the Solar Studio Stack, a two-storey home of two 20 ft modules. Camera at 1.6 m on the cove approach at the south-west corner, 35 mm lens, framing both modules, the upper offset, shed roof, PV, shaded terrace and upper studio glazing. Timber lower module at 0.6 m, metal upper module at 3.896 m offset 0.8 m east, 12-degree solar-ready shed roof with a 0.9 m overhang and installed PV, covered terrace 4.4 x 2.4 m, south sliding doors and entry, upper studio glazing, north window, upper east door, one corner casting, conceptual gutter, downspout, ember vent and defensible-space planting. Juniper, cedar and a rocky cove shore. Soft daylight. One 12-degree shed roof, no dormer or cross-gable; exposed helical piles, no stone base; no steps; visible steel corner castings; rocky cove, no open lake at the door. Each 20 ft module is finished about 6.47 x 2.85 m with 205 mm external insulation, drained cavity and rainscreen; deep reveals; not a bare container. No people, no text, no watermark.",
             "negativePrompt": "balcony, upper balcony railing, third module, third storey, wide cabin, single storey bungalow, snow guards, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "medium",
             "reference": "site-facing.svg",
@@ -2702,6 +3078,11 @@
               "item": "one open upper volume 6.06 m long and 2.44 m wide; no partitions",
               "status": "modeled",
               "evidence": "interior.status = provisional; partitions = 0"
+            },
+            {
+              "item": "finished external envelope: 150 mm mineral wool + 10 mm thermal break + 25 mm drained cavity + 20 mm cladding (about 205 mm added per side), with deep window reveals and a clad wall, not a bare container",
+              "status": "modeled",
+              "evidence": "envelope.layers; thermal.wall_insulation_strategy"
             },
             {
               "item": "the south studio glazing (2.4 x 1.6 m, sill 0.6 m) and the north window (1.2 x 1.2 m, sill 0.9 m)",
@@ -2771,14 +3152,57 @@
             "reference": "interior-plan.svg"
           },
           "generation": {
-            "prompt": "Photorealistic open zone study, no partitions, inside the Solar Studio Stack upper floor. Camera at 1.5 m with a 24 mm lens at the east end looking west across the compact 6.06 x 2.44 m volume. South studio glazing 2.4 x 1.6 m with a 0.6 m sill, north window 1.2 x 1.2 m, east door 0.9 x 2.1 m opening directly outside, flat ceiling under the roof, exposed container ribs, neutral lining, zone bands only. Daylight from the south glazing and north window. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. No people, no text, no watermark.",
+            "prompt": "Photorealistic open zone study, no partitions, inside the Solar Studio Stack upper floor. Camera at 1.5 m with a 24 mm lens at the east end looking west across the compact 6.06 x 2.44 m volume. South studio glazing 2.4 x 1.6 m with a 0.6 m sill, north window 1.2 x 1.2 m, east door 0.9 x 2.1 m opening directly outside, flat ceiling under the roof, exposed container ribs, neutral lining, zone bands only. Daylight from the south glazing and north window. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. Window and door reveals are deep because of the 205 mm external envelope. No people, no text, no watermark.",
             "negativePrompt": "partitions, interior walls, interior doors, sleeping alcove, bed, desk, sofa, fixtures, loose furniture, rug, lamp, indoor plant, balcony, guardrail, outdoor platform, sloping ceiling, butterfly ceiling, kitchen hood, service core, HRV terminal, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
             "risk": "high",
             "reference": "interior-plan.svg",
             "referenceRequired": true
           }
         }
-      ]
+      ],
+      "envelope": {
+        "addedExterior_mm": 205,
+        "layers_mm": {
+          "structure": 3,
+          "air-vapour": 1,
+          "insulation": 150,
+          "thermal break": 10,
+          "rainscreen": 25,
+          "cladding": 20
+        },
+        "totalWall_mm": 209,
+        "roofInsulation_mm": 250,
+        "floorInsulation_mm": 200,
+        "cladding": [
+          "metal",
+          "timber"
+        ],
+        "modules": [
+          {
+            "id": "m1",
+            "nominal_m": [
+              6.058,
+              2.438
+            ],
+            "finished_m": [
+              6.468,
+              2.848
+            ]
+          },
+          {
+            "id": "m2",
+            "nominal_m": [
+              6.058,
+              2.438
+            ],
+            "finished_m": [
+              6.468,
+              2.848
+            ]
+          }
+        ],
+        "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      }
     }
   }
 }

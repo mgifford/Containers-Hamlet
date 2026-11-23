@@ -72,7 +72,7 @@ Lazy loading improves **when bytes are requested**, not the total byte count. A 
 | `node tools/build.mjs --check` | 505 generated files current |
 | `node tools/check.mjs` | 520 passed, 0 failed |
 | `node tools/check-design-lab.mjs` | 2,554 passed, 0 failed |
-| `node tools/check-image-descriptions.mjs` | 16 descriptions validated, 14 ready, 2 blocked |
+| `node tools/check-image-descriptions.mjs` | 17 descriptions validated, 15 ready, 2 blocked |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 273 passed, 0 failed |
 | Initial view | 259 KB / 64 KB compressed |
