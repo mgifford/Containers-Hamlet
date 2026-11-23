@@ -20,17 +20,23 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 
 It is not a generic home builder. The container is the core of every design; timber, glass, screens, decks, roofs and planting are supporting layers.
 
-## Phase 3: single-storey homes and interiors
+## Phase 3: interiors, two-storey homes and accessible demonstrations
 
-All six selected homes are single-storey. The selected Offset Pair, Cross-Wing
-House and Solar Studio replace the former stacked concepts without an occupied
-upper floor; the original two-storey studies remain in the Experimental archive.
-Historical two-storey JSON imports are still supported.
+The selected set has **three single-storey and three two-storey homes**.
+Woodland Cottage, Courtyard Residence and Accessible Garden Home are
+single-storey; Offset Stack, Cross-Stacked Retreat and Solar Studio Stack are
+two-storey. Historical two-storey JSON imports are still supported.
 
-The editor now has a **Detailed interior plan** mode with room polygons,
-partitions, interior doors, fixtures and validation. Offset Pair and Accessible
-Garden Home have authored demonstration interiors; the other four selected homes
-use provisional interiors inferred from their room bands. See
+**Woodland Cottage** and **Accessible Garden Home** are the two whole-home
+wheelchair-accessible demonstrations. Their interiors are authored, with
+accessible bathrooms and turning circles. Offset Stack, Courtyard Residence,
+Cross-Stacked Retreat and Solar Studio Stack use provisional interiors inferred
+from room bands; their bathrooms are ordinary concept bathrooms and are not
+failed for lacking accessible clearances.
+
+The editor has a **Detailed interior plan** mode with room polygons, partitions,
+interior doors, fixtures and validation. Two-storey homes generate ground and
+upper interior plans separately. See
 [`interior-spatial-model.md`](interior-spatial-model.md) and
 [`phase-3-audit.md`](phase-3-audit.md).
 
@@ -211,7 +217,7 @@ Each concept or edited design is one JSON object:
 
 ## Source of truth
 
-`data/design-lab.json` is the source for the nineteen gallery concepts (nine legacy concepts, six selected single-storey residences, three experimental archive two-storey studies and the common lodge). `tools/build.mjs` generates:
+`data/design-lab.json` is the source for the sixteen gallery concepts (nine legacy concepts, six selected residences and the common lodge). `tools/build.mjs` generates:
 
 - `site/design-lab/views/<id>-plan.svg`
 - `site/design-lab/views/<id>-exterior.svg`
@@ -282,7 +288,7 @@ Every design has an architectural page under `site/design-lab/architecture/<id>/
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 2,815 schema, geometry, interior, illustration, migration and comparison checks
+node tools/check-design-lab.mjs      # 2,474 schema, geometry, interior, illustration, migration and comparison checks
 node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 

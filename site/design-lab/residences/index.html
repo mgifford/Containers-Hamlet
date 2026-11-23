@@ -34,7 +34,7 @@
 <main id="main" class="lab-main">
   <p class="eyebrow">Hamlet-wide comparison</p>
   <h1>Six homes, one construction language</h1>
-  <p class="lede">The six residences are all single-storey and deliberately different in massing, footprint, roof, entrance, circulation and relationship to the garden. They share construction principles: reused containers, a drained and ventilated exterior assembly, independent foundations, and a design review before construction. Architectural diversity is not achieved by changing paint colours.</p>
+  <p class="lede">The six residences are deliberately different in storeys, massing, footprint, roof, entrance, circulation and relationship to the garden. Three are single-storey and three are two-storey. They share construction principles: reused containers, a drained and ventilated exterior assembly, independent foundations, and a design review before construction. Architectural diversity is not achieved by changing paint colours.</p>
   <p class="notice"><strong>Concept only.</strong> Nothing on this page is engineered, permit-ready, costed or professionally reviewed. Areas are nominal geometry. Sustainability evidence is qualitative and identifies missing inputs rather than inventing carbon, energy or cost results.</p>
 
   <form class="compare-controls" id="residence-controls" aria-label="Sort and filter the residence table">
@@ -52,6 +52,7 @@
       <select id="filter-storeys">
         <option value="all">All homes</option>
         <option value="1">Single storey</option>
+        <option value="2">Two storeys</option>
       </select>
     </label>
     <label>Arrangement
@@ -60,8 +61,9 @@
         <option value="single">Single module</option>
         <option value="parallel-pair">Parallel pair</option>
         <option value="l-shape">L-shape</option>
-        <option value="offset-pair">Offset pair</option>
-        <option value="t-wing">T-wing</option>
+        <option value="offset-stack">Offset stack</option>
+        <option value="perpendicular-stack">Perpendicular stack</option>
+        <option value="aligned-stack">Aligned stack</option>
       </select>
     </label>
     <button type="button" id="apply-residences">Apply</button>
@@ -89,18 +91,18 @@
     <td>9 of 17<br><span class="small">requires review</span></td>
     <td>Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</td>
     <td>Concept only<br><span class="small">not professionally reviewed</span></td>
-  </tr><tr data-home="hamlet-offset-stack" data-storeys="1" data-arrangement="offset-pair" data-name="Offset Pair" data-floor="59.45" data-cover="59.45" data-height="4.38" data-review="13">
-    <th scope="row"><a href="../architecture/hamlet-offset-stack/">Offset Pair</a><br><span class="small">Offset Pair</span></th>
-    <td>offset pair<br><span class="small">staggered</span></td>
-    <td>1</td>
+  </tr><tr data-home="hamlet-offset-stack" data-storeys="2" data-arrangement="offset-stack" data-name="Offset Stack" data-floor="59.45" data-cover="36.06" data-height="7.33" data-review="16">
+    <th scope="row"><a href="../architecture/hamlet-offset-stack/">Offset Stack</a><br><span class="small">Offset Stack</span></th>
+    <td>offset stack<br><span class="small">rectangular</span></td>
+    <td>2</td>
     <td>2 × 40ft + 40ft</td>
     <td>59.5</td>
-    <td>59.5</td>
-    <td>shed<br><span class="small">4.4 m to roof</span></td>
+    <td>36.1</td>
+    <td>shed<br><span class="small">7.3 m to roof</span></td>
     <td>Yes</td>
-    <td>potentially adaptable<br><span class="small">No stair</span></td>
-    <td>13 of 17<br><span class="small">requires review</span></td>
-    <td>Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</td>
+    <td>accessibility not required<br><span class="small">Stair; no lift space reserved</span></td>
+    <td>16 of 17<br><span class="small">requires review</span></td>
+    <td>Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</td>
     <td>Concept only<br><span class="small">not professionally reviewed</span></td>
   </tr><tr data-home="hamlet-courtyard-residence" data-storeys="1" data-arrangement="l-shape" data-name="Courtyard Residence" data-floor="63.29" data-cover="63.29" data-height="3.8" data-review="14">
     <th scope="row"><a href="../architecture/hamlet-courtyard-residence/">Courtyard Residence</a><br><span class="small">Courtyard Residence</span></th>
@@ -111,22 +113,22 @@
     <td>63.3</td>
     <td>flat<br><span class="small">3.8 m to roof</span></td>
     <td>Yes</td>
-    <td>potentially adaptable<br><span class="small">No stair</span></td>
+    <td>accessibility not required<br><span class="small">No stair</span></td>
     <td>14 of 17<br><span class="small">requires review</span></td>
     <td>Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</td>
     <td>Concept only<br><span class="small">not professionally reviewed</span></td>
-  </tr><tr data-home="hamlet-cross-stacked-retreat" data-storeys="1" data-arrangement="t-wing" data-name="Cross-Wing House" data-floor="59.45" data-cover="59.45" data-height="5.22" data-review="14">
-    <th scope="row"><a href="../architecture/hamlet-cross-stacked-retreat/">Cross-Wing House</a><br><span class="small">Cross-Wing House</span></th>
-    <td>t wing<br><span class="small">t shaped</span></td>
-    <td>1</td>
+  </tr><tr data-home="hamlet-cross-stacked-retreat" data-storeys="2" data-arrangement="perpendicular-stack" data-name="Cross-Stacked Retreat" data-floor="59.45" data-cover="53.5" data-height="8.26" data-review="17">
+    <th scope="row"><a href="../architecture/hamlet-cross-stacked-retreat/">Cross-Stacked Retreat</a><br><span class="small">Cross-Stacked Retreat</span></th>
+    <td>perpendicular stack<br><span class="small">cross</span></td>
+    <td>2</td>
     <td>2 × 40ft + 40ft</td>
     <td>59.5</td>
-    <td>59.5</td>
-    <td>butterfly<br><span class="small">5.2 m to roof</span></td>
+    <td>53.5</td>
+    <td>butterfly<br><span class="small">8.3 m to roof</span></td>
     <td>Yes</td>
-    <td>potentially adaptable<br><span class="small">No stair</span></td>
-    <td>14 of 17<br><span class="small">requires review</span></td>
-    <td>Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</td>
+    <td>accessibility not required<br><span class="small">Stair; no lift space reserved</span></td>
+    <td>17 of 17<br><span class="small">requires review</span></td>
+    <td>Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</td>
     <td>Concept only<br><span class="small">not professionally reviewed</span></td>
   </tr><tr data-home="hamlet-accessible-garden-home" data-storeys="1" data-arrangement="parallel-pair" data-name="Accessible Garden Home" data-floor="29.54" data-cover="29.54" data-height="3.75" data-review="12">
     <th scope="row"><a href="../architecture/hamlet-accessible-garden-home/">Accessible Garden Home</a><br><span class="small">Accessible Garden Home</span></th>
@@ -141,37 +143,37 @@
     <td>12 of 17<br><span class="small">requires review</span></td>
     <td>Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</td>
     <td>Concept only<br><span class="small">not professionally reviewed</span></td>
-  </tr><tr data-home="hamlet-solar-studio-stack" data-storeys="1" data-arrangement="parallel-pair" data-name="Solar Studio" data-floor="29.54" data-cover="29.54" data-height="4.92" data-review="12">
-    <th scope="row"><a href="../architecture/hamlet-solar-studio-stack/">Solar Studio</a><br><span class="small">Solar Studio</span></th>
-    <td>parallel pair<br><span class="small">compact</span></td>
-    <td>1</td>
+  </tr><tr data-home="hamlet-solar-studio-stack" data-storeys="2" data-arrangement="aligned-stack" data-name="Solar Studio Stack" data-floor="29.54" data-cover="16.72" data-height="7.69" data-review="15">
+    <th scope="row"><a href="../architecture/hamlet-solar-studio-stack/">Solar Studio Stack</a><br><span class="small">Solar Studio Stack</span></th>
+    <td>aligned stack<br><span class="small">rectangular</span></td>
+    <td>2</td>
     <td>2 × 20ft + 20ft</td>
     <td>29.5</td>
-    <td>29.5</td>
-    <td>solar ready<br><span class="small">4.9 m to roof</span></td>
+    <td>16.7</td>
+    <td>solar ready<br><span class="small">7.7 m to roof</span></td>
     <td>Yes</td>
-    <td>potentially adaptable<br><span class="small">No stair</span></td>
-    <td>12 of 17<br><span class="small">requires review</span></td>
-    <td>Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</td>
+    <td>accessibility not required<br><span class="small">Stair; no lift space reserved</span></td>
+    <td>15 of 17<br><span class="small">requires review</span></td>
+    <td>Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</td>
     <td>Concept only<br><span class="small">not professionally reviewed</span></td>
   </tr></tbody>
     </table></div>
   </section>
 
   <section aria-labelledby="alternatives-title">
-    <h2 id="alternatives-title">Historical stacked alternatives</h2>
-    <p>All six selected homes are single-storey. The three historical two-storey studies are retained in the <a href="../index.html#experimental-archive">Experimental archive</a>: they are not selected homes and are not compared as current designs. The table below would show a geometry-only single-storey translation for any two-storey selected home; it is empty in this milestone by design.</p>
+    <h2 id="alternatives-title">Stacked and single-storey alternatives</h2>
+    <p>For each two-storey home, the table below shows a <strong>derived single-storey translation</strong>: the same modules and openings moved to the ground beside the stack, with the stair and stacking structure removed. It is a geometry comparison, not a redesign. It shows why a smaller footprint is not the same as a smaller environmental or accessibility burden.</p>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Stacked and single-storey alternatives table"><table id="alternatives-table"><caption>Two-storey designs and a geometry-only single-storey translation with approximately the same gross floor area.</caption><thead><tr><th scope="col">Home</th><th scope="col">Stacked</th><th scope="col">Stacked ground cover</th><th scope="col">Stacked height</th><th scope="col">Stacked access</th><th scope="col">Single-storey translation</th><th scope="col">Translation ground cover</th><th scope="col">Translation height</th><th scope="col">Translation access</th></tr></thead><tbody>
-
+      <tr><th scope="row">Offset Stack</th><td>2 storeys<br>59.5 m²</td><td>36.1 m²</td><td>7.3 m</td><td>accessibility not required</td><td>1 storey<br>59.5 m²</td><td>59.5 m² <span class="small">(+23.4 m²)</span></td><td>4.6 m <span class="small">(-2.7 m)</span></td><td>accessibility not required</td></tr><tr><th scope="row">Cross-Stacked Retreat</th><td>2 storeys<br>59.5 m²</td><td>53.5 m²</td><td>8.3 m</td><td>accessibility not required</td><td>1 storey<br>59.5 m²</td><td>59.5 m² <span class="small">(+6 m²)</span></td><td>5.4 m <span class="small">(-2.9 m)</span></td><td>accessibility not required</td></tr><tr><th scope="row">Solar Studio Stack</th><td>2 storeys<br>29.5 m²</td><td>16.7 m²</td><td>7.7 m</td><td>accessibility not required</td><td>1 storey<br>29.5 m²</td><td>29.5 m² <span class="small">(+12.8 m²)</span></td><td>5.2 m <span class="small">(-2.5 m)</span></td><td>accessibility not required</td></tr>
     </tbody></table></div>
     <p class="small">A single-storey translation usually increases ground coverage and roof area while removing stairs and upper-floor access barriers. It can also increase foundation and site disturbance. The model does not calculate which is better; it exposes the trade.</p>
   </section>
 
   <section aria-labelledby="site-reconciliation-title" id="site-reconciliation">
     <h2 id="site-reconciliation-title">Site and residence reconciliation</h2>
-    <p>The site plan keeps its fictional parcel, clearing and path geometry. The selected Design Lab models have been compared with the older simplified site buildings so differences are visible rather than silently overwritten. A negative clearance margin or an entrance/path mismatch is an unresolved site-placement conflict.</p>
+    <p>The site plan keeps its fictional parcel, clearing and path geometry. The selected Design Lab models have been compared with the older simplified site buildings so differences are visible rather than silently overwritten. Two homes are designed as accessible demonstrations; the others are ordinary concept homes and their bathrooms are not held to accessible-washroom targets. A negative clearance margin or an entrance/path mismatch is an unresolved site-placement conflict.</p>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Design Lab and site geometry reconciliation table"><table id="site-reconciliation-table"><caption>Selected residence geometry compared with the recorded site building. Footprint and height are derived from the Design Lab model; the site footprint is the older site model.</caption><thead><tr><th scope="col">Site</th><th scope="col">Selected design</th><th scope="col">Design footprint</th><th scope="col">Site footprint</th><th scope="col">Difference</th><th scope="col">Height</th><th scope="col">Entrance / path</th><th scope="col">Clearing margin</th><th scope="col">Conflict</th></tr></thead><tbody>
-      <tr><th scope="row">Cabin A</th><td>Woodland Cottage</td><td>29.7 m²</td><td>35.6 m²</td><td>-16.6%</td><td>4.4 m</td><td>south / east</td><td>3 m</td><td>design entrance south does not match the recorded path approach east</td></tr><tr><th scope="row">Cabin B</th><td>Offset Pair</td><td>59.5 m²</td><td>66.3 m²</td><td>-10.3%</td><td>4.4 m</td><td>east / south-west</td><td>-1 m</td><td>footprint reaches 1.0 m beyond the recorded clearing radius; design entrance east does not match the recorded path approach south-west</td></tr><tr><th scope="row">Cabin C</th><td>Courtyard Residence</td><td>63.3 m²</td><td>35.6 m²</td><td>+77.6%</td><td>3.8 m</td><td>east / east</td><td>-5.7 m</td><td>footprint reaches 5.7 m beyond the recorded clearing radius</td></tr><tr><th scope="row">Cabin D</th><td>Cross-Wing House</td><td>59.5 m²</td><td>66.3 m²</td><td>-10.3%</td><td>5.2 m</td><td>east / north</td><td>-5.3 m</td><td>footprint reaches 5.3 m beyond the recorded clearing radius; design entrance east does not match the recorded path approach north</td></tr><tr><th scope="row">Cabin E</th><td>Accessible Garden Home</td><td>29.5 m²</td><td>66.3 m²</td><td>-55.4%</td><td>3.8 m</td><td>south / east</td><td>3.5 m</td><td>design entrance south does not match the recorded path approach east</td></tr><tr><th scope="row">Cabin F</th><td>Solar Studio</td><td>29.5 m²</td><td>18.3 m²</td><td>+61.7%</td><td>4.9 m</td><td>east / north-east</td><td>2.3 m</td><td>design entrance east does not match the recorded path approach north-east</td></tr><tr><th scope="row">Common lodge</th><td>Common Lodge</td><td>215.2 m²</td><td>141.8 m²</td><td>+51.7%</td><td>5.1 m</td><td>north / east</td><td>1.3 m</td><td>design entrance north does not match the recorded path approach east</td></tr>
+      <tr><th scope="row">Cabin A</th><td>Woodland Cottage</td><td>29.7 m²</td><td>35.6 m²</td><td>-16.6%</td><td>4.4 m</td><td>south / east</td><td>3 m</td><td>design entrance south does not match the recorded path approach east</td></tr><tr><th scope="row">Cabin B</th><td>Offset Stack</td><td>36.1 m²</td><td>66.3 m²</td><td>-45.6%</td><td>7.3 m</td><td>east / south-west</td><td>-0.4 m</td><td>footprint reaches 0.4 m beyond the recorded clearing radius; design entrance east does not match the recorded path approach south-west</td></tr><tr><th scope="row">Cabin C</th><td>Courtyard Residence</td><td>63.3 m²</td><td>35.6 m²</td><td>+77.6%</td><td>3.8 m</td><td>east / east</td><td>-5.7 m</td><td>footprint reaches 5.7 m beyond the recorded clearing radius</td></tr><tr><th scope="row">Cabin D</th><td>Cross-Stacked Retreat</td><td>53.5 m²</td><td>66.3 m²</td><td>-19.3%</td><td>8.3 m</td><td>east / north</td><td>2 m</td><td>design entrance east does not match the recorded path approach north</td></tr><tr><th scope="row">Cabin E</th><td>Accessible Garden Home</td><td>29.5 m²</td><td>66.3 m²</td><td>-55.4%</td><td>3.8 m</td><td>south / east</td><td>3.5 m</td><td>design entrance south does not match the recorded path approach east</td></tr><tr><th scope="row">Cabin F</th><td>Solar Studio Stack</td><td>16.7 m²</td><td>18.3 m²</td><td>-8.5%</td><td>7.7 m</td><td>south / north-east</td><td>3.6 m</td><td>design entrance south does not match the recorded path approach north-east</td></tr><tr><th scope="row">Common lodge</th><td>Common Lodge</td><td>215.2 m²</td><td>141.8 m²</td><td>+51.7%</td><td>5.1 m</td><td>north / east</td><td>1.3 m</td><td>design entrance north does not match the recorded path approach east</td></tr>
     </tbody></table></div>
     <p class="small">The reconciliation is a design check, not a survey, setback assessment, geotechnical review or permission. See <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/phase-3-site-reconciliation.md">the site reconciliation note</a> for the method and unresolved conflicts.</p>
   </section>
@@ -180,7 +182,7 @@
     <h2 id="diversity-title">Architectural diversity assessment</h2>
     <p>Similarity is a rule-based heuristic over primary architectural characteristics: storey count, arrangement, footprint type, roof type, entrance orientation, circulation type and approximate proportions. Colour, cladding and planting are excluded. A score of 0.8 or more is flagged for inspection. The threshold is not an architectural standard, and repetition can be the right choice for accessibility, affordability, construction or maintenance.</p>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Architectural similarity table"><table id="similarity-table"><caption>Rule-based architectural similarity. A high score is a prompt to inspect, not a finding that the design is bad.</caption><thead><tr><th scope="col">Home</th><th scope="col">Home</th><th scope="col">Similarity</th><th scope="col">Matching primary features</th><th scope="col">Flag</th></tr></thead><tbody>
-    <tr><th scope="row">Courtyard Residence</th><td>Cross-Wing House</td><td>57%</td><td>storeys, entrance_orientation, circulation_type, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Courtyard Residence</th><td>Solar Studio</td><td>57%</td><td>storeys, entrance_orientation, circulation_type, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Cross-Wing House</th><td>Solar Studio</td><td>57%</td><td>storeys, entrance_orientation, circulation_type, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Accessible Garden Home</th><td>Solar Studio</td><td>57%</td><td>storeys, arrangement, circulation_type, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Offset Pair</td><td>43%</td><td>storeys, circulation_type, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Accessible Garden Home</td><td>43%</td><td>storeys, entrance_orientation, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Offset Pair</th><td>Courtyard Residence</td><td>43%</td><td>storeys, entrance_orientation, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Offset Pair</th><td>Cross-Wing House</td><td>43%</td><td>storeys, entrance_orientation, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Offset Pair</th><td>Solar Studio</td><td>43%</td><td>storeys, entrance_orientation, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Courtyard Residence</th><td>Accessible Garden Home</td><td>43%</td><td>storeys, circulation_type, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Cross-Wing House</th><td>Accessible Garden Home</td><td>43%</td><td>storeys, circulation_type, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Courtyard Residence</td><td>29%</td><td>storeys, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Cross-Wing House</td><td>29%</td><td>storeys, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Solar Studio</td><td>29%</td><td>storeys, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Offset Pair</th><td>Accessible Garden Home</td><td>29%</td><td>storeys, circulation_type</td><td>Below the 0.8 heuristic</td></tr>
+    <tr><th scope="row">Woodland Cottage</th><td>Accessible Garden Home</td><td>43%</td><td>storeys, entrance_orientation, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Offset Stack</th><td>Cross-Stacked Retreat</td><td>43%</td><td>storeys, entrance_orientation, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Offset Stack</th><td>Solar Studio Stack</td><td>43%</td><td>storeys, footprint_type, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Courtyard Residence</th><td>Accessible Garden Home</td><td>43%</td><td>storeys, circulation_type, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Courtyard Residence</td><td>29%</td><td>storeys, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Solar Studio Stack</td><td>29%</td><td>footprint_type, entrance_orientation</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Courtyard Residence</th><td>Cross-Stacked Retreat</td><td>29%</td><td>entrance_orientation, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Cross-Stacked Retreat</th><td>Solar Studio Stack</td><td>29%</td><td>storeys, circulation_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Offset Stack</td><td>14%</td><td>footprint_type</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Offset Stack</th><td>Courtyard Residence</td><td>14%</td><td>entrance_orientation</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Cross-Stacked Retreat</th><td>Accessible Garden Home</td><td>14%</td><td>none, similar proportions</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Accessible Garden Home</th><td>Solar Studio Stack</td><td>14%</td><td>entrance_orientation</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Woodland Cottage</th><td>Cross-Stacked Retreat</td><td>0%</td><td>none</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Offset Stack</th><td>Accessible Garden Home</td><td>0%</td><td>none</td><td>Below the 0.8 heuristic</td></tr><tr><th scope="row">Courtyard Residence</th><td>Solar Studio Stack</td><td>0%</td><td>none</td><td>Below the 0.8 heuristic</td></tr>
   </tbody></table></div>
     <p class="small">No pair is above the 0.8 heuristic threshold in this set. This does not prove the designs are good, only that their primary characteristics differ.</p>
   </section>
@@ -209,18 +211,18 @@
     </div>
   </article><article class="concept-card residence-card">
     <div class="concept-card-body">
-      <span class="concept-badge hamlet">Hamlet selected · Single storey</span>
-      <h3><a href="../architecture/hamlet-offset-stack/">Offset Pair</a></h3>
-      <p class="tagline">Two 40-foot modules staggered on one level around a sheltered outdoor room.</p>
+      <span class="concept-badge hamlet">Hamlet selected · Two storeys</span>
+      <h3><a href="../architecture/hamlet-offset-stack/">Offset Stack</a></h3>
+      <p class="tagline">Two 40-foot modules stacked with a deliberate offset, creating a covered ground-floor room and a distinct upper volume.</p>
       <dl class="concept-facts">
-        <div><dt>Family</dt><dd>Offset Pair</dd></div>
-        <div><dt>Massing</dt><dd>offset pair · staggered · shed roof</dd></div>
-        <div><dt>Floor area</dt><dd>59.5 m² gross · 59.5 m² ground coverage · 4.4 m high</dd></div>
-        <div><dt>Accessibility</dt><dd>Potentially adaptable, but some essential functions, clearances or vertical access are unresolved.</dd></div>
-        <div><dt>Structural review</dt><dd>13 concerns need review. 13 of 17 concerns need review.</dd></div>
-        <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</dd></div>
+        <div><dt>Family</dt><dd>Offset Stack</dd></div>
+        <div><dt>Massing</dt><dd>offset stack · rectangular · shed roof</dd></div>
+        <div><dt>Floor area</dt><dd>59.5 m² gross · 36.1 m² ground coverage · 7.3 m high</dd></div>
+        <div><dt>Accessibility</dt><dd>Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.</dd></div>
+        <div><dt>Structural review</dt><dd>16 concerns need review. 16 of 17 concerns need review.</dd></div>
+        <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</dd></div>
       </dl>
-      <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li><li><strong>Lateral stability and racking:</strong> Connected single-storey modules need a designed lateral system across the links.</li></ul></details>
+      <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Vertical load transfer:</strong> Stacked modules need an explicit, continuous load path through posts, beams or an engineered transfer structure.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li></ul></details>
       <div class="card-actions">
         <a class="action" href="../architecture/hamlet-offset-stack/">Plans, elevations and review</a>
         <a class="action secondary" href="../editor/?preset=hamlet-offset-stack">Open in the editor</a>
@@ -236,7 +238,7 @@
         <div><dt>Family</dt><dd>Courtyard Residence</dd></div>
         <div><dt>Massing</dt><dd>l shape · l shaped · flat roof</dd></div>
         <div><dt>Floor area</dt><dd>63.3 m² gross · 63.3 m² ground coverage · 3.8 m high</dd></div>
-        <div><dt>Accessibility</dt><dd>Potentially adaptable, but some essential functions, clearances or vertical access are unresolved.</dd></div>
+        <div><dt>Accessibility</dt><dd>Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.</dd></div>
         <div><dt>Structural review</dt><dd>14 concerns need review. 14 of 17 concerns need review.</dd></div>
         <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</dd></div>
       </dl>
@@ -249,18 +251,18 @@
     </div>
   </article><article class="concept-card residence-card">
     <div class="concept-card-body">
-      <span class="concept-badge hamlet">Hamlet selected · Single storey</span>
-      <h3><a href="../architecture/hamlet-cross-stacked-retreat/">Cross-Wing House</a></h3>
-      <p class="tagline">Two 40-foot wings meet in a single-storey T beneath a butterfly roof.</p>
+      <span class="concept-badge hamlet">Hamlet selected · Two storeys</span>
+      <h3><a href="../architecture/hamlet-cross-stacked-retreat/">Cross-Stacked Retreat</a></h3>
+      <p class="tagline">A ground-floor living bar crossed by a perpendicular upper volume, producing a strong silhouette and a shaded outdoor room.</p>
       <dl class="concept-facts">
-        <div><dt>Family</dt><dd>Cross-Wing House</dd></div>
-        <div><dt>Massing</dt><dd>t wing · t shaped · butterfly roof</dd></div>
-        <div><dt>Floor area</dt><dd>59.5 m² gross · 59.5 m² ground coverage · 5.2 m high</dd></div>
-        <div><dt>Accessibility</dt><dd>Potentially adaptable, but some essential functions, clearances or vertical access are unresolved.</dd></div>
-        <div><dt>Structural review</dt><dd>14 concerns need review. 14 of 17 concerns need review.</dd></div>
-        <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</dd></div>
+        <div><dt>Family</dt><dd>Cross-Stacked Retreat</dd></div>
+        <div><dt>Massing</dt><dd>perpendicular stack · cross · butterfly roof</dd></div>
+        <div><dt>Floor area</dt><dd>59.5 m² gross · 53.5 m² ground coverage · 8.3 m high</dd></div>
+        <div><dt>Accessibility</dt><dd>Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.</dd></div>
+        <div><dt>Structural review</dt><dd>17 concerns need review. 17 of 17 concerns need review.</dd></div>
+        <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</dd></div>
       </dl>
-      <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li><li><strong>Removed structural walls:</strong> A removed sidewall changes the load path and may require a transfer frame or additional columns.</li></ul></details>
+      <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Vertical load transfer:</strong> Stacked modules need an explicit, continuous load path through posts, beams or an engineered transfer structure.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li></ul></details>
       <div class="card-actions">
         <a class="action" href="../architecture/hamlet-cross-stacked-retreat/">Plans, elevations and review</a>
         <a class="action secondary" href="../editor/?preset=hamlet-cross-stacked-retreat">Open in the editor</a>
@@ -289,18 +291,18 @@
     </div>
   </article><article class="concept-card residence-card">
     <div class="concept-card-body">
-      <span class="concept-badge hamlet">Hamlet selected · Single storey</span>
-      <h3><a href="../architecture/hamlet-solar-studio-stack/">Solar Studio</a></h3>
-      <p class="tagline">Two 20-foot modules offset on one level under a solar-ready shed roof.</p>
+      <span class="concept-badge hamlet">Hamlet selected · Two storeys</span>
+      <h3><a href="../architecture/hamlet-solar-studio-stack/">Solar Studio Stack</a></h3>
+      <p class="tagline">Two 20-foot modules stacked with a slight offset, giving a compact footprint, a solar-ready roof and an upper studio.</p>
       <dl class="concept-facts">
-        <div><dt>Family</dt><dd>Solar Studio</dd></div>
-        <div><dt>Massing</dt><dd>parallel pair · compact · solar-ready roof</dd></div>
-        <div><dt>Floor area</dt><dd>29.5 m² gross · 29.5 m² ground coverage · 4.9 m high</dd></div>
-        <div><dt>Accessibility</dt><dd>Potentially adaptable, but some essential functions, clearances or vertical access are unresolved.</dd></div>
-        <div><dt>Structural review</dt><dd>12 concerns need review. 12 of 17 concerns need review.</dd></div>
-        <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</dd></div>
+        <div><dt>Family</dt><dd>Solar Studio Stack</dd></div>
+        <div><dt>Massing</dt><dd>aligned stack · rectangular · solar-ready roof</dd></div>
+        <div><dt>Floor area</dt><dd>29.5 m² gross · 16.7 m² ground coverage · 7.7 m high</dd></div>
+        <div><dt>Accessibility</dt><dd>Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.</dd></div>
+        <div><dt>Structural review</dt><dd>15 concerns need review. 15 of 17 concerns need review.</dd></div>
+        <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</dd></div>
       </dl>
-      <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li><li><strong>Lateral stability and racking:</strong> Connected single-storey modules need a designed lateral system across the links.</li></ul></details>
+      <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Vertical load transfer:</strong> Stacked modules need an explicit, continuous load path through posts, beams or an engineered transfer structure.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li></ul></details>
       <div class="card-actions">
         <a class="action" href="../architecture/hamlet-solar-studio-stack/">Plans, elevations and review</a>
         <a class="action secondary" href="../editor/?preset=hamlet-solar-studio-stack">Open in the editor</a>

@@ -3,8 +3,8 @@
   "designId": "hamlet-solar-studio-stack",
   "designRevision": "2.0.0",
   "designSchema": "containers-hamlet-design/v2.0",
-  "designHash": "a108e9b7",
-  "sceneHash": "f5064f18",
+  "designHash": "36f05352",
+  "sceneHash": "b82be51a",
   "presentationHash": "81e87100",
   "generatorVersion": "1.0.0",
   "generatedAt": "2026",
@@ -16,7 +16,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "1d9dd7af"
+      "hash": "42bbbdb6"
     },
     {
       "id": "description",
@@ -26,7 +26,7 @@
         "design",
         "scene"
       ],
-      "hash": "bea3faa8"
+      "hash": "358d258c"
     },
     {
       "id": "exterior-prompt",
@@ -48,7 +48,7 @@
         "scene",
         "presentation"
       ],
-      "hash": "a801a7a8"
+      "hash": "63a2d438"
     },
     {
       "id": "negative-prompt",
@@ -77,7 +77,7 @@
         "design",
         "presentation"
       ],
-      "hash": "b579f28c"
+      "hash": "12f117c4"
     },
     {
       "id": "container-layout-plan",
@@ -95,7 +95,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "96d33f79"
+      "hash": "649b8fa8"
     },
     {
       "id": "plan-ground",
@@ -104,7 +104,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "b577adc5"
+      "hash": "b876a113"
     },
     {
       "id": "interior-plan",
@@ -114,7 +114,7 @@
         "design",
         "interior"
       ],
-      "hash": "1b5c28bf"
+      "hash": "725ac869"
     },
     {
       "id": "roof-plan",
@@ -124,7 +124,7 @@
         "design",
         "roof"
       ],
-      "hash": "bdfbda20"
+      "hash": "c014c30a"
     },
     {
       "id": "elevation-south",
@@ -133,7 +133,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "c3759e42"
+      "hash": "7d13ac84"
     },
     {
       "id": "section",
@@ -142,7 +142,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "072f2872"
+      "hash": "cabbd118"
     },
     {
       "id": "isometric",
@@ -162,7 +162,7 @@
         "design",
         "camera"
       ],
-      "hash": "6eb2ec8a"
+      "hash": "e626e903"
     }
   ],
   "limitations": [

@@ -172,48 +172,55 @@ missing. Selected homes report:
   recorded: single storey, step-free entrance, essential ground-floor rooms,
   doors ≥0.86 m, bathroom 1.5 m turning circle, kitchen work zone, circulation
   ≥0.9 m, and a recorded path connection;
-- `potentially-adaptable` when the home is single-storey and step-free but one
-  or more of those items is missing or unresolved;
+- `potentially-adaptable` when an accessible or adaptable target is declared but
+  one or more evidence items remain unresolved;
+- `accessibility-not-required` when physical accessibility is not a design target;
 - `not-assessed` when the essential programme is not modeled.
 
-No selected home is classified as fully accessible. The candidate label still
+No selected home is classified as fully accessible. Only two selected homes are
+held to the accessible-washroom target. The candidate label still
 requires professional assessment and evidence. CSA B651 and Ontario requirements
 remain assessment targets, not claims of conformity.
 
 ## Demonstration interiors
 
-### Offset Pair (`hamlet-offset-stack`)
+### Woodland Cottage (`hamlet-woodland-cottage`)
 
-- eight rooms across two 40-foot modules: living, kitchen, bathroom, hall,
-  bedroom, second bathroom, studio and storage;
-- seven partitions and seven doors;
-- bathroom, kitchen counter and second-bath fixtures;
-- kitchen work zone;
-- no modeled 1.5 m bathroom turning circle; this home's target is `adaptable`, not
-  `accessible`, so its ordinary bathrooms are not failed for missing one.
+- five rooms in one 40-foot module: bedroom, bathroom, entrance hall, kitchen
+  and living;
+- four partitions and four doors;
+- a 2.8 m bathroom with a modeled 1.5 m turning circle;
+- kitchen work zone and a 1.2 m circulation route;
+- `access.target: "accessible"`.
 
-The offset massing, shed roof and stepped plan preserve the original stacked
-home's identity without an upper floor.
+This is the constrained accessible demonstration: a single 2.4 m-wide module can
+fit a 1.5 m circle in a 2.8 m bathroom, but the plan is tight and needs
+professional review. It does not have the generous double-width of Accessible
+Garden Home.
 
 ### Accessible Garden Home (`hamlet-accessible-garden-home`)
 
 - five rooms across two 20-foot modules placed **double-width**: living, kitchen,
   bedroom, bathroom and storage;
-- four partitions, four internal/shared-wall doors;
+- four partitions, four doors;
 - bathroom fixtures, kitchen counter, bed and table;
 - kitchen work zone and a 3.0 m bathroom with a 1.5 m turning circle;
-- the turning circle fits and the recorded doors are at least 0.9 m. The home is
-  still `potentially-adaptable` because the shared-path grades, transfers and
-  professional review are unresolved—not because the washroom is missing.
+- the turning circle fits and the recorded doors are at least 0.9 m;
+- `access.target: "accessible"`.
 
-This is the demonstration that an accessible unit needs the extra width: the
-double-width pair supports a real turning circle and circulation route. The
-other five selected homes are `adaptable`, not accessible units, and their
-bathrooms are not held to the accessible-washroom target.
+This is the generous accessible demonstration: the double-width pair supports a
+real turning circle and circulation route. Both accessible homes remain
+`potentially-adaptable` because shared-path grades, transfers and professional
+review are unresolved—not because the washroom is missing.
 
-The other four selected homes currently use provisional zone-derived interiors.
-They are published as provisional and are not presented as authored room
-layouts.
+### Provisional interiors
+
+Offset Stack, Cross-Stacked Retreat, Solar Studio Stack and Courtyard Residence
+use provisional interiors inferred from room bands. Offset Stack,
+Cross-Stacked Retreat and Solar Studio Stack are two-storey; their ground and
+upper interior plans are generated separately from the provisional bands.
+Courtyard Residence is single-storey. None of these four is an accessible unit,
+and their bathrooms are not held to accessible-washroom clearances.
 
 ## Drawings and prompts
 

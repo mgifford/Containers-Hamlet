@@ -31,10 +31,10 @@ function roofLabel(concept) {
   return (concept.roof_form && concept.roof_form.type ? concept.roof_form.type : 'flat').replace(/-/g, ' ');
 }
 
-const GROUP_ORDER = ['Single storey', 'Experimental archive', 'One container', 'Two containers', 'Three containers', 'Common lodge'];
+const GROUP_ORDER = ['Single storey', 'Two storeys', 'One container', 'Two containers', 'Three containers', 'Common lodge'];
 const GROUP_TEXT = {
-  'Single storey': 'Ground-level homes. They differ in footprint, roof, arrangement and relationship to the garden, not just in colour.',
-  'Experimental archive': 'Historical two-storey studies retained for provenance and comparison. They are not selected homes and are not part of the single-storey hamlet.',
+  'Single storey': 'Single-storey homes. Two are whole-home accessibility demonstrations; the others are ordinary concept homes.',
+  'Two storeys': 'Container homes with an occupied upper level. They add stairs, structure, fire separation and vertical-access questions.',
   'One container': 'Archived one-module concepts. Preserved for provenance and comparison, not removed.',
   'Two containers': 'Archived two-module concepts. Some are editable; others remain inspiration only.',
   'Three containers': 'Archived three-module concepts, including the courtyard studies.',

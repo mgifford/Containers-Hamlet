@@ -34,11 +34,11 @@ reconciliation layer, not a replacement survey.
 | Site | Design | Design m² | Site model m² | Difference | Entrance / path | Clearing margin | Conflict |
 | --- | --- | ---: | ---: | ---: | --- | ---: | --- |
 | Cabin A | Woodland Cottage | 29.72 | 35.64 | −16.6% | south / east | +3.0 m | entrance/path mismatch |
-| Cabin B | Offset Pair | 59.45 | 66.30 | −10.3% | east / south-west | −1.0 m | reach beyond clearing; entrance/path mismatch |
+| Cabin B | Offset Stack | 36.06 | 66.30 | −45.6% | east / south-west | −0.4 m | reach beyond clearing; entrance/path mismatch |
 | Cabin C | Courtyard Residence | 63.29 | 35.64 | +77.6% | east / east | −5.7 m | reach beyond clearing; footprint much larger than the old site model |
-| Cabin D | Cross-Wing House | 59.45 | 66.30 | −10.3% | east / north | −5.3 m | reach beyond clearing; entrance/path mismatch |
+| Cabin D | Cross-Stacked Retreat | 53.50 | 66.30 | −19.3% | east / north | +2.0 m | reach beyond clearing; entrance/path mismatch |
 | Cabin E | Accessible Garden Home | 29.54 | 66.30 | −55.4% | south / east | +3.5 m | entrance/path mismatch; old site model much larger |
-| Cabin F | Solar Studio | 29.54 | 18.27 | +61.7% | east / north-east | +2.3 m | entrance/path mismatch; footprint much larger than the old site model |
+| Cabin F | Solar Studio Stack | 16.72 | 18.27 | −8.5% | south / north-east | +3.6 m | entrance/path mismatch; footprint much larger than the old site model |
 | Lodge | Common Lodge | 215.17 | 141.84 | +51.7% | north / east | +1.3 m | entrance/path mismatch; existing lodge model not replaced |
 
 The numbers are nominal concept geometry. The site footprint is the older
@@ -46,12 +46,15 @@ simplified building model, not a design of the selected home.
 
 ## Unresolved site decisions
 
-- Cabin B and Cabin C exceed their recorded clearing radius. A real placement
-  needs a site survey, tree/rock preservation review and a revised clearing.
-- Cabin C is nearly twice the footprint of the old site model. It may not fit the
-  same bench without redesign or a different site assignment.
-- Cabin F is substantially larger than the compact old model. Its L/offset
-  relationship to the path and neighbour needs review.
+- Cabin B and Cabin C are the tight/oversized placements. Cabin B is slightly
+  over its clearing radius; Cabin C is nearly twice the footprint of the old site
+  model. Both need a site survey, tree/rock preservation review and a revised
+  clearing or different assignment.
+- Cabin D and Cabin F fit within their recorded clearing radii, but their
+  entrance directions and the old site-model footprints still differ.
+- The two-storey stacked homes have a smaller ground footprint than their
+  single-storey translations; the trade-off is stairs, structure and vertical
+  access.
 - The entrance side and path approach differ at most sites. A path can turn at the
   door, so this is a review flag, not necessarily an error.
 - The lodge is a separate community building; its existing model was not replaced

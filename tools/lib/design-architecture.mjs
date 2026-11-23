@@ -12,6 +12,7 @@ function viewCaption(c, kind) {
   if (kind === 'container-layout') return `Proportional container block plan: ${c.modules.length} modules across ${levels} storey${levels === 1 ? '' : 's'}, with ground modules solid and upper modules dashed and hatched. Dimensions are nominal.`;
   if (kind === 'container-layout-elevation') return `Proportional container block elevation with ground and upper modules at their explicit elevations. This is a schematic, not a construction elevation.`;
   if (kind === 'roof-plan') return `Roof plan generated from the roof geometry: form, pitch, overhang, ridge/valley and slope direction. Roof drainage, snow, wind and structure still need review.`;
+  if (kind === 'interior-plan-upper') return `Concept upper-floor interior plan generated from the provisional room bands. It is not a construction drawing or a verified accessibility assessment.`;
   if (kind === 'interior-plan') return `Concept interior floor plan generated from the room polygons, partitions, doors, fixtures and clearances. Inferred rooms are hatched. The plan is a spatial model, not a construction drawing or a verified accessibility assessment.`;
   if (kind === 'exterior-opposite') return `Opposite exterior reference from the same geometry and a rotated camera. It is a concept reference, not a measured photograph.`;
   if (kind === 'approach') return `Approach reference. This is an orthographic elevation of the entrance facade; the world bearing in the prompt describes the site orientation.`;
@@ -30,7 +31,7 @@ function viewCaption(c, kind) {
 }
 
 function slide(c, kind, title, src, size) {
-  const geometry = ['plan', 'plan-ground', 'plan-upper', 'cutaway', 'porch', 'section', 'exploded', 'elevation-south', 'elevation-north', 'elevation-east', 'elevation-west', 'container-layout', 'container-layout-elevation', 'roof-plan', 'interior-plan', 'exterior-opposite', 'approach', 'site-facing'].indexOf(kind) >= 0;
+  const geometry = ['plan', 'plan-ground', 'plan-upper', 'cutaway', 'porch', 'section', 'exploded', 'elevation-south', 'elevation-north', 'elevation-east', 'elevation-west', 'container-layout', 'container-layout-elevation', 'roof-plan', 'interior-plan', 'interior-plan-upper', 'exterior-opposite', 'approach', 'site-facing'].indexOf(kind) >= 0;
   const badge = geometry ? 'Geometry-backed drawing' : 'Illustrative / explanatory study';
   const badgeClass = geometry ? 'geometry' : 'illustrative';
   const alt = kind && kind.indexOf('elevation') === 0
@@ -56,7 +57,8 @@ export function architecturePage(c, sizes, profile) {
     slide(c, 'elevation-east', 'East elevation', `../../views/${c.id}-elevation-east.svg`, sizes['elevation-east']),
     slide(c, 'elevation-west', 'West elevation', `../../views/${c.id}-elevation-west.svg`, sizes['elevation-west']),
     sizes['roof-plan'] ? slide(c, 'roof-plan', 'Roof plan', `../../views/${c.id}-roof-plan.svg`, sizes['roof-plan']) : '',
-    sizes['interior-plan'] ? slide(c, 'interior-plan', 'Interior floor plan', `../../views/${c.id}-interior-plan.svg`, sizes['interior-plan']) : '',
+    sizes['interior-plan'] ? slide(c, 'interior-plan', 'Ground-floor interior plan', `../../views/${c.id}-interior-plan.svg`, sizes['interior-plan']) : '',
+    sizes['interior-plan-upper'] ? slide(c, 'interior-plan-upper', 'Upper-floor interior plan', `../../views/${c.id}-interior-plan-upper.svg`, sizes['interior-plan-upper']) : '',
     slide(c, 'section', 'Building section', `../../views/${c.id}-section.svg`, sizes.section),
     slide(c, 'exploded', 'Exploded levels', `../../views/${c.id}-exploded.svg`, sizes.exploded),
     sizes['exterior-opposite'] ? slide(c, 'exterior-opposite', 'Opposite exterior reference', `../../views/${c.id}-exterior-opposite.svg`, sizes['exterior-opposite']) : '',

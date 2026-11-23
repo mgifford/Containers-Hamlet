@@ -114,7 +114,7 @@ ${designShellNav(2, 'residences')}
 <main id="main" class="lab-main">
   <p class="eyebrow">Hamlet-wide comparison</p>
   <h1>Six homes, one construction language</h1>
-  <p class="lede">The six residences are all single-storey and deliberately different in massing, footprint, roof, entrance, circulation and relationship to the garden. They share construction principles: reused containers, a drained and ventilated exterior assembly, independent foundations, and a design review before construction. Architectural diversity is not achieved by changing paint colours.</p>
+  <p class="lede">The six residences are deliberately different in storeys, massing, footprint, roof, entrance, circulation and relationship to the garden. Three are single-storey and three are two-storey. They share construction principles: reused containers, a drained and ventilated exterior assembly, independent foundations, and a design review before construction. Architectural diversity is not achieved by changing paint colours.</p>
   <p class="notice"><strong>Concept only.</strong> Nothing on this page is engineered, permit-ready, costed or professionally reviewed. Areas are nominal geometry. Sustainability evidence is qualitative and identifies missing inputs rather than inventing carbon, energy or cost results.</p>
 
   <form class="compare-controls" id="residence-controls" aria-label="Sort and filter the residence table">
@@ -132,6 +132,7 @@ ${designShellNav(2, 'residences')}
       <select id="filter-storeys">
         <option value="all">All homes</option>
         <option value="1">Single storey</option>
+        <option value="2">Two storeys</option>
       </select>
     </label>
     <label>Arrangement
@@ -140,8 +141,9 @@ ${designShellNav(2, 'residences')}
         <option value="single">Single module</option>
         <option value="parallel-pair">Parallel pair</option>
         <option value="l-shape">L-shape</option>
-        <option value="offset-pair">Offset pair</option>
-        <option value="t-wing">T-wing</option>
+        <option value="offset-stack">Offset stack</option>
+        <option value="perpendicular-stack">Perpendicular stack</option>
+        <option value="aligned-stack">Aligned stack</option>
       </select>
     </label>
     <button type="button" id="apply-residences">Apply</button>
@@ -161,8 +163,8 @@ ${designShellNav(2, 'residences')}
   </section>
 
   <section aria-labelledby="alternatives-title">
-    <h2 id="alternatives-title">Historical stacked alternatives</h2>
-    <p>All six selected homes are single-storey. The three historical two-storey studies are retained in the <a href="../index.html#experimental-archive">Experimental archive</a>: they are not selected homes and are not compared as current designs. The table below would show a geometry-only single-storey translation for any two-storey selected home; it is empty in this milestone by design.</p>
+    <h2 id="alternatives-title">Stacked and single-storey alternatives</h2>
+    <p>For each two-storey home, the table below shows a <strong>derived single-storey translation</strong>: the same modules and openings moved to the ground beside the stack, with the stair and stacking structure removed. It is a geometry comparison, not a redesign. It shows why a smaller footprint is not the same as a smaller environmental or accessibility burden.</p>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Stacked and single-storey alternatives table"><table id="alternatives-table"><caption>Two-storey designs and a geometry-only single-storey translation with approximately the same gross floor area.</caption><thead><tr><th scope="col">Home</th><th scope="col">Stacked</th><th scope="col">Stacked ground cover</th><th scope="col">Stacked height</th><th scope="col">Stacked access</th><th scope="col">Single-storey translation</th><th scope="col">Translation ground cover</th><th scope="col">Translation height</th><th scope="col">Translation access</th></tr></thead><tbody>
       ${profiles.filter((p) => p.storeys > 1).map((p) => altRow(p, alternatives[p.id], byId[p.id] || concepts.find((c) => c.id === p.id))).join('')}
     </tbody></table></div>
@@ -171,7 +173,7 @@ ${designShellNav(2, 'residences')}
 
   <section aria-labelledby="site-reconciliation-title" id="site-reconciliation">
     <h2 id="site-reconciliation-title">Site and residence reconciliation</h2>
-    <p>The site plan keeps its fictional parcel, clearing and path geometry. The selected Design Lab models have been compared with the older simplified site buildings so differences are visible rather than silently overwritten. A negative clearance margin or an entrance/path mismatch is an unresolved site-placement conflict.</p>
+    <p>The site plan keeps its fictional parcel, clearing and path geometry. The selected Design Lab models have been compared with the older simplified site buildings so differences are visible rather than silently overwritten. Two homes are designed as accessible demonstrations; the others are ordinary concept homes and their bathrooms are not held to accessible-washroom targets. A negative clearance margin or an entrance/path mismatch is an unresolved site-placement conflict.</p>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Design Lab and site geometry reconciliation table"><table id="site-reconciliation-table"><caption>Selected residence geometry compared with the recorded site building. Footprint and height are derived from the Design Lab model; the site footprint is the older site model.</caption><thead><tr><th scope="col">Site</th><th scope="col">Selected design</th><th scope="col">Design footprint</th><th scope="col">Site footprint</th><th scope="col">Difference</th><th scope="col">Height</th><th scope="col">Entrance / path</th><th scope="col">Clearing margin</th><th scope="col">Conflict</th></tr></thead><tbody>
       ${(siteReconciliation || []).map((r) => `<tr><th scope="row">${esc(r.site_name)}</th><td>${esc(r.design_name)}</td><td>${n(r.design_footprint_m2)} m²</td><td>${r.site_footprint_m2 == null ? '—' : n(r.site_footprint_m2) + ' m²'}</td><td>${r.difference_pct == null ? '—' : (r.difference_pct > 0 ? '+' : '') + n(r.difference_pct) + '%'}</td><td>${n(r.design_height_m)} m</td><td>${esc(r.entrance)} / ${esc(r.path_approach || 'not recorded')}</td><td>${n(r.clearance_margin_m)} m</td><td>${r.conflicts && r.conflicts.length ? r.conflicts.map(esc).join('; ') : 'No recorded conflict'}</td></tr>`).join('')}
     </tbody></table></div>

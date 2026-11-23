@@ -1,19 +1,19 @@
-# Interior illustration prompt — Offset Pair
+# Interior illustration prompt — Offset Stack
 
 Use the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.
 
 Rooms:
-- Living (living, b-living): 9.88 m², m1, authored, fixtures: sofa, table.
-- Kitchen (kitchen, b-kitchen): 6.2 m², m1, authored, fixtures: counter.
-- Bathroom (bathroom, b-bath): 5.29 m², m1, authored, fixtures: wc, sink, shower.
-- Hall (circulation, b-hall): 5.75 m², m1, authored.
-- Bedroom (sleeping, b-bed): 10.34 m², m2, authored.
-- Bathroom 2 (bathroom, b-bath2): 4.14 m², m2, authored, fixtures: wc, sink.
-- Studio (work, b-studio): 9.19 m², m2, authored.
-- Storage (storage, b-store): 3.45 m², m2, authored.
+- Living (living, room-m1-m1-z1): 10.25 m², m1, inferred-from-zone.
+- Kitchen (kitchen, room-m1-m1-z2): 6.11 m², m1, inferred-from-zone.
+- Bathroom (bathroom, room-m1-m1-z3): 3.81 m², m1, inferred-from-zone.
+- Stair (circulation, room-m1-m1-z4): 6.11 m², m1, inferred-from-zone.
+- Sleeping (sleeping, room-m2-m2-z1): 9.33 m², m2, inferred-from-zone.
+- Bathroom (bathroom, room-m2-m2-z2): 4.27 m², m2, inferred-from-zone.
+- Studio (work, room-m2-m2-z3): 8.87 m², m2, inferred-from-zone.
+- Storage (storage, room-m2-m2-z4): 3.81 m², m2, inferred-from-zone.
 
-Partitions and doors: 7 partitions and 7 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.
-Fixtures: wc in b-bath; sink in b-bath; shower in b-bath; wc in b-bath2; sink in b-bath2; counter in b-kitchen; sofa in b-living; table in b-living.
+Partitions and doors: 0 partitions and 0 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.
+Fixtures: none recorded.
 Windows: the room polygons reference the documented opening ids. Do not add windows or move them.
 
 Camera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.
@@ -22,17 +22,24 @@ Presentation: late summer, late afternoon, no people.
 Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.
 
 Unresolved interior matters:
-- room-accessibility: Room b-living accessibility is not professionally verified.
-- room-accessibility: Room b-kitchen accessibility is not professionally verified.
-- room-accessibility: Room b-bath accessibility is not professionally verified.
-- room-accessibility: Room b-hall accessibility is not professionally verified.
-- room-accessibility: Room b-bed accessibility is not professionally verified.
-- room-accessibility: Room b-bath2 accessibility is not professionally verified.
-- room-accessibility: Room b-studio accessibility is not professionally verified.
-- room-accessibility: Room b-store accessibility is not professionally verified.
-- door-clearance: Door b-d2 is narrower than the 0.86 m project target.
-- door-clearance: Door b-d4 is narrower than the 0.86 m project target.
-- door-clearance: Door b-d6 is narrower than the 0.86 m project target.
+- provisional-interior: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
+- inferred-room: Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
+- inferred-room: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
+- inferred-room: Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
+- inferred-room: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
+- inferred-room: Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.
+- inferred-room: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
+- inferred-room: Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.
+- inferred-room: Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.
+- doors-missing: No interior doors are modeled. Room connectivity cannot be assessed.
+- room-accessibility: Room room-m1-m1-z1 accessibility is not professionally verified.
+- room-accessibility: Room room-m1-m1-z2 accessibility is not professionally verified.
+- room-accessibility: Room room-m1-m1-z3 accessibility is not professionally verified.
+- room-accessibility: Room room-m1-m1-z4 accessibility is not professionally verified.
+- room-accessibility: Room room-m2-m2-z1 accessibility is not professionally verified.
+- room-accessibility: Room room-m2-m2-z2 accessibility is not professionally verified.
+- room-accessibility: Room room-m2-m2-z3 accessibility is not professionally verified.
+- room-accessibility: Room room-m2-m2-z4 accessibility is not professionally verified.
 
 No accessibility, code or construction claim is made.
 

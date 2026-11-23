@@ -1,4 +1,4 @@
-# Interior illustration prompt — Solar Studio
+# Interior illustration prompt — Solar Studio Stack
 
 Use the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.
 

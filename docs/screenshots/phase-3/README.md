@@ -1,28 +1,27 @@
 # Phase 3 screenshots
 
-Before/after evidence for the single-storey conversion and interior spatial model.
+Interior and accessibility evidence for the revised milestone.
 
 | Image | What it shows |
 | --- | --- |
-| [`offset-pair-architecture.png`](offset-pair-architecture.png) | Selected Offset Pair architectural page: one storey, offset massing, shed roof and 21 generated views. |
-| [`offset-pair-interior-plan.png`](offset-pair-interior-plan.png) | Authored interior plan with room polygons, partitions, doors, fixtures and room areas. |
-| [`offset-pair-editor-interior.png`](offset-pair-editor-interior.png) | Editor interior mode for Offset Pair, including the generated plan. |
-| [`accessible-garden-editor-interior.png`](accessible-garden-editor-interior.png) | Accessible Garden Home editor interior: double-width plan with a 3.0 m bathroom and 1.5 m turning circle. |
-| [`accessible-garden-interior-plan.png`](accessible-garden-interior-plan.png) | Accessible Garden Home interior plan showing the accessible bathroom, turning circle and 1.2 m circulation route. |
-| [`site-reconciliation.png`](site-reconciliation.png) | Site/residence reconciliation table with footprint differences and clearing conflicts. |
+| [`offset-stack-two-storey-architecture.png`](offset-stack-two-storey-architecture.png) | Offset Stack remains a selected two-storey container home. |
+| [`woodland-accessible-plan.png`](woodland-accessible-plan.png) | Woodland Cottage: single-storey accessible plan, 2.8 m bathroom and 1.5 m turning circle. |
+| [`accessible-garden-plan.png`](accessible-garden-plan.png) | Accessible Garden Home: double-width plan, 3.0 m bathroom and 1.5 m turning circle. |
+| [`woodland-editor-interior.png`](woodland-editor-interior.png) | Interior editing for the accessible Woodland Cottage. |
+| [`site-reconciliation.png`](site-reconciliation.png) | Site/residence reconciliation with three single-storey and three two-storey selected homes. |
 
 ## Before
 
-The Phase 2 selected Offset Stack was a two-storey home:
+The Phase 2 pages show the same three two-storey selected homes before interiors
+were modeled:
 
 - [`../phase-2/offset-stack-architecture.png`](../phase-2/offset-stack-architecture.png)
 - [`../phase-2/offset-stack-elevation.png`](../phase-2/offset-stack-elevation.png)
 - [`../phase-2/offset-stack-section.png`](../phase-2/offset-stack-section.png)
 
-The Phase 2 screenshots remain the historical evidence. They are not edited.
-
 ## After
 
-The selected Offset Pair is single-storey. Its former two-storey study remains
-available in the Experimental archive with the original drawings, plan, section
-and illustration identity.
+The selected set is three single-storey and three two-storey homes. Woodland
+Cottage and Accessible Garden Home are the only two whole-home wheelchair
+accessibility demonstrations. The other four are not failed for lacking
+accessible bathrooms or clearances.

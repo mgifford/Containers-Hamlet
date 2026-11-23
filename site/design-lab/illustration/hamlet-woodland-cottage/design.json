@@ -90,7 +90,7 @@
   "name": "Woodland Cottage",
   "group": "Single storey",
   "tagline": "A compact, step-free cottage under a pitched roof, with a covered porch and direct garden access.",
-  "description": "One 40-foot module holds a ground-level bedroom, bathroom, kitchen and living room under a gable roof. A covered porch faces the garden. The simple footprint, conventional circulation and step-free entrance make this the baseline against which the other homes are compared.",
+  "description": "A single-storey 40-foot container cottage with an accessible internal route and washroom. The plan is deliberately simple: bedroom, bathroom, entrance hall, kitchen and living. The 2.8 m bathroom contains a modeled 1.5 m turning circle; the shared-path grades and professional accessibility review remain outstanding.",
   "primary_view_deg": 180,
   "visual_seed": 41,
   "architecture": {
@@ -281,7 +281,7 @@
     "ground_floor_bathroom": true,
     "adaptable_bathroom": true,
     "adaptable_kitchen": true,
-    "circulation_width_m": 0.95,
+    "circulation_width_m": 1.2,
     "path_connection": "Step-free route to the shared path is a design intent; the connection and grades are not surveyed.",
     "vertical_access_strategy": "Single occupied storey; no internal stair.",
     "stair": {
@@ -299,7 +299,7 @@
     "classification": "potentially-adaptable",
     "standards": "Project targets informed by the Ontario Building Code and CSA B651. No code compliance, licence or professional accessibility review is claimed.",
     "assessment": "not-verified",
-    "target": "adaptable"
+    "target": "accessible"
   },
   "features": {
     "solar": "South roof slope is solar-ready; no production is calculated.",
@@ -431,156 +431,441 @@
   "professional_review_required": true,
   "interior": {
     "schema": "containers-hamlet-interior/v1",
-    "status": "provisional",
-    "clearances": [],
+    "status": "authored",
+    "clearances": [
+      {
+        "id": "w-work",
+        "room": "w-kitchen",
+        "type": "work-zone",
+        "center_m": [
+          2.4,
+          0
+        ],
+        "size_m": [
+          1.6,
+          0.6
+        ],
+        "status": "not-verified"
+      },
+      {
+        "id": "w-turn",
+        "room": "w-bath",
+        "type": "turning-circle",
+        "center_m": [
+          -1.4,
+          0
+        ],
+        "diameter_m": 1.5,
+        "status": "not-verified"
+      }
+    ],
     "rooms": [
       {
-        "id": "room-m1-m1-z1",
-        "name": "Sleeping",
+        "id": "w-bed",
+        "name": "Bedroom",
         "type": "sleeping",
         "module": "m1",
         "level": 0,
         "polygon": [
           [
-            -6.026,
+            -5.9,
             -1.149
           ],
           [
-            -2.766,
+            -2.8,
             -1.149
           ],
           [
-            -2.766,
+            -2.8,
             1.149
           ],
           [
-            -6.026,
+            -5.9,
             1.149
           ]
         ],
-        "provenance": "inferred-from-zone",
-        "sourceZoneId": "m1-z1",
+        "provenance": "authored",
         "openingIds": [
           "m1-n1"
         ],
         "accessibility": {
           "assessment": "not-verified",
-          "notes": "Ground-floor bedroom; verify a 1.5 m turning circle and a 0.9 m route."
+          "notes": ""
         }
       },
       {
-        "id": "room-m1-m1-z2",
+        "id": "w-bath",
         "name": "Bathroom",
         "type": "bathroom",
         "module": "m1",
         "level": 0,
         "polygon": [
           [
-            -2.6260000000000003,
+            -2.8,
             -1.149
           ],
           [
-            -0.7659999999999998,
+            0,
             -1.149
           ],
           [
-            -0.7659999999999998,
+            0,
             1.149
           ],
           [
-            -2.6260000000000003,
+            -2.8,
             1.149
           ]
         ],
-        "provenance": "inferred-from-zone",
-        "sourceZoneId": "m1-z2",
+        "provenance": "authored",
         "openingIds": [
           "m1-s1"
         ],
         "accessibility": {
           "assessment": "not-verified",
-          "notes": "Adaptable bathroom intent; verify transfer space, grab-bar blocking and door clearance."
+          "notes": "2.8 m bathroom with a modeled 1.5 m turning circle. Fixtures and transfers still require professional review."
         }
       },
       {
-        "id": "room-m1-m1-z3",
+        "id": "w-hall",
+        "name": "Entrance hall",
+        "type": "entry",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            0,
+            -1.149
+          ],
+          [
+            1.4,
+            -1.149
+          ],
+          [
+            1.4,
+            1.149
+          ],
+          [
+            0,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m1-s3"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "w-kitchen",
         "name": "Kitchen",
         "type": "kitchen",
         "module": "m1",
         "level": 0,
         "polygon": [
           [
-            -0.6259999999999997,
+            1.4,
             -1.149
           ],
           [
-            1.8339999999999999,
+            3.4,
             -1.149
           ],
           [
-            1.8339999999999999,
+            3.4,
             1.149
           ],
           [
-            -0.6259999999999997,
+            1.4,
             1.149
           ]
         ],
-        "provenance": "inferred-from-zone",
-        "sourceZoneId": "m1-z3",
+        "provenance": "authored",
         "openingIds": [
-          "m1-n2",
-          "m1-s3"
+          "m1-n2"
         ],
         "accessibility": {
           "assessment": "not-verified",
-          "notes": "Provide a lowered work section and clear approach."
+          "notes": ""
         }
       },
       {
-        "id": "room-m1-m1-z4",
+        "id": "w-living",
         "name": "Living",
         "type": "living",
         "module": "m1",
         "level": 0,
         "polygon": [
           [
-            1.974,
+            3.4,
             -1.149
           ],
           [
-            5.834,
+            5.9,
             -1.149
           ],
           [
-            5.834,
+            5.9,
             1.149
           ],
           [
-            1.974,
+            3.4,
             1.149
           ]
         ],
-        "provenance": "inferred-from-zone",
-        "sourceZoneId": "m1-z4",
+        "provenance": "authored",
         "openingIds": [
-          "m1-s2"
+          "m1-s2",
+          "m1-w1"
         ],
         "accessibility": {
           "assessment": "not-verified",
-          "notes": "Direct step-free garden doors."
+          "notes": ""
         }
       }
     ],
-    "partitions": [],
-    "doors": [],
-    "fixtures": [],
-    "circulation": [],
-    "service": [],
+    "partitions": [
+      {
+        "id": "w-p1",
+        "module": "m1",
+        "from": [
+          -2.8,
+          -1.149
+        ],
+        "to": [
+          -2.8,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "w-p2",
+        "module": "m1",
+        "from": [
+          0,
+          -1.149
+        ],
+        "to": [
+          0,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "w-p3",
+        "module": "m1",
+        "from": [
+          1.4,
+          -1.149
+        ],
+        "to": [
+          1.4,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "w-p4",
+        "module": "m1",
+        "from": [
+          3.4,
+          -1.149
+        ],
+        "to": [
+          3.4,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      }
+    ],
+    "doors": [
+      {
+        "id": "w-d1",
+        "partition": "w-p1",
+        "type": "swing",
+        "width_m": 0.9,
+        "position_m": 0.5,
+        "connects": [
+          "w-bed",
+          "w-bath"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "w-d2",
+        "partition": "w-p2",
+        "type": "swing",
+        "width_m": 0.9,
+        "position_m": 0.5,
+        "connects": [
+          "w-bath",
+          "w-hall"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "w-d3",
+        "partition": "w-p3",
+        "type": "swing",
+        "width_m": 1,
+        "position_m": 0.5,
+        "connects": [
+          "w-hall",
+          "w-kitchen"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "w-d4",
+        "partition": "w-p4",
+        "type": "swing",
+        "width_m": 1,
+        "position_m": 0.5,
+        "connects": [
+          "w-kitchen",
+          "w-living"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      }
+    ],
+    "fixtures": [
+      {
+        "id": "w-wc",
+        "room": "w-bath",
+        "type": "wc",
+        "position_m": [
+          -0.35,
+          0.85
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.3,
+          0.5
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "w-sink",
+        "room": "w-bath",
+        "type": "sink",
+        "position_m": [
+          -2.55,
+          0.95
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.35,
+          0.3
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "w-shower",
+        "room": "w-bath",
+        "type": "shower",
+        "position_m": [
+          -2.55,
+          -0.55
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.45,
+          0.8
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "w-counter",
+        "room": "w-kitchen",
+        "type": "counter",
+        "position_m": [
+          2.4,
+          0.85
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          1.6,
+          0.55
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "w-bedf",
+        "room": "w-bed",
+        "type": "bed",
+        "position_m": [
+          -4.3,
+          0
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          1.4,
+          1.9
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "w-sofa",
+        "room": "w-living",
+        "type": "sofa",
+        "position_m": [
+          5,
+          0
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          1.5,
+          0.8
+        ],
+        "provenance": "authored"
+      }
+    ],
+    "circulation": [
+      {
+        "id": "w-circ",
+        "rooms": [
+          "w-hall",
+          "w-kitchen",
+          "w-living"
+        ],
+        "width_m": 1.2,
+        "path": [
+          [
+            0.7,
+            0
+          ],
+          [
+            5.4,
+            0
+          ]
+        ],
+        "status": "not-verified",
+        "note": "Concept 1.2 m route; thresholds and crossfall are not surveyed."
+      }
+    ],
+    "service": [
+      {
+        "id": "w-service",
+        "room": "w-kitchen",
+        "type": "mechanical",
+        "note": "Water heater and electrical service reserve; not sized."
+      }
+    ],
     "provenance": {
-      "method": "Inferred from longitudinal room bands. No partition or door positions were invented.",
-      "source": "design-lab room zones",
-      "verification": "None. Provisional geometry."
+      "method": "Authored accessible concept interior for Phase 3.",
+      "source": "design-lab",
+      "verification": "None. Conceptual; not a professional accessibility assessment."
     }
   }
 }
