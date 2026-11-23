@@ -141,6 +141,24 @@ Accessibility classification is derived from recorded interior evidence and cann
 `fully-accessible-single-storey` string. See
 [`interior-spatial-model.md`](interior-spatial-model.md).
 
+## Pattern-language schema
+
+`data/patterns/patterns.json` uses `containers-hamlet-patterns/v1`. It is a
+curated reference catalogue, not a copy of the book:
+
+- pattern number/title and verified source map;
+- original summary, problem, proposal and hamlet interpretation;
+- current response, alternatives, trade-offs and unresolved issues;
+- related patterns and relationship notes;
+- applicable site/building element IDs;
+- evaluation questions, evidence state and limitations.
+
+`data/patterns/schema.json` documents the structure. `tools/lib/patterns.mjs`
+validates unique IDs/numbers, verified titles, source attribution, related
+patterns, element references, evidence states and required content. Evaluation
+records and resident scenarios are separate future data, not fields of a pattern
+definition.
+
 ## Design Lab illustration schemas
 
 Two additive schemas sit beside the architectural design model:

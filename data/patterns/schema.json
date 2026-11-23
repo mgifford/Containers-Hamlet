@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mgifford.github.io/Containers-Hamlet/data/patterns/schema.json",
+  "title": "Containers Hamlet Pattern Language catalogue",
+  "description": "Curated references to A Pattern Language with original summaries, hamlet interpretations, relationships and evidence limitations. Titles and numbers are referenced; the book text is not reproduced.",
+  "type": "object",
+  "required": ["schema", "title", "source", "attribution", "copyrightNote", "verification", "scales", "elements", "evidenceStates", "patterns"],
+  "properties": {
+    "schema": { "const": "containers-hamlet-patterns/v1" },
+    "title": { "type": "string", "minLength": 1 },
+    "edition": { "type": "string" },
+    "attribution": { "type": "string", "minLength": 1 },
+    "copyrightNote": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "object",
+      "required": ["work", "authors", "year", "publisher", "url"],
+      "properties": {
+        "work": { "const": "A Pattern Language" },
+        "authors": { "type": "array", "minItems": 3, "items": { "type": "string" } },
+        "year": { "const": 1977 },
+        "publisher": { "type": "string" },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "required": ["status", "method", "date", "scope"],
+      "properties": {
+        "status": { "const": "titles-and-numbers-verified" },
+        "method": { "type": "string" },
+        "date": { "type": "string" },
+        "scope": { "type": "string" }
+      }
+    },
+    "scales": { "type": "array", "uniqueItems": true, "items": { "enum": ["landscape", "community", "infrastructure", "building", "interior"] } },
+    "elements": { "type": "array", "uniqueItems": true, "items": { "enum": ["site-plan", "landscape", "common-land", "paths", "lodge", "homes", "porches", "interiors", "shared-workshop", "visitor-arrival"] } },
+    "evidenceStates": { "type": "array", "uniqueItems": true, "items": { "enum": ["not-evaluated", "conceptual", "evidence-needed", "evidence-supported", "trade-off-identified", "not-applicable"] } },
+    "patterns": {
+      "type": "array",
+      "minItems": 15,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "title", "scale", "summary", "problem", "proposal", "hamletInterpretation", "currentResponse", "alternatives", "tradeoffs", "unresolved", "relatedPatterns", "applicableElements", "evaluationQuestions", "evidenceStatus", "limitations", "relationshipNote", "sourceVerified"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "number": { "type": "integer", "minimum": 1 },
+          "title": { "type": "string" },
+          "scale": { "enum": ["landscape", "community", "infrastructure", "building", "interior"] },
+          "summary": { "type": "string", "minLength": 20 },
+          "problem": { "type": "string" },
+          "proposal": { "type": "string" },
+          "hamletInterpretation": { "type": "string" },
+          "currentResponse": { "type": "string" },
+          "alternatives": { "type": "string" },
+          "tradeoffs": { "type": "string" },
+          "unresolved": { "type": "string" },
+          "relatedPatterns": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "integer" } },
+          "applicableElements": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+          "evaluationQuestions": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+          "evidenceStatus": { "enum": ["not-evaluated", "conceptual", "evidence-needed", "evidence-supported", "trade-off-identified", "not-applicable"] },
+          "limitations": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "relationshipNote": { "type": "string" },
+          "sourceVerified": { "const": true }
+        }
+      }
+    }
+  }
+}

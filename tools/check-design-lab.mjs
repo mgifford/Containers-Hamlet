@@ -12,6 +12,7 @@ const Schema = require('../site/js/design-schema.js');
 const Model = require('../site/js/design-model.js');
 const Illustration = require('../site/js/design-illustration.js');
 const Interior = require('../site/js/design-interior.js');
+const { validatePatterns, VERIFIED_TITLES } = require('./lib/patterns.mjs');
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const exists = (p) => fs.existsSync(path.join(ROOT, p));
@@ -204,6 +205,28 @@ for (const c of data.concepts) {
   ok(exists(`site/design-lab/data/${c.id}.json`), `${c.id}: downloadable JSON exists`);
   ok(JSON.parse(read(`site/design-lab/data/${c.id}.json`)).id === c.id, `${c.id}: downloaded JSON matches the source`);
 }
+
+section('Pattern language library');
+const patternData = JSON.parse(read('data/patterns/patterns.json'));
+const patternValidation = validatePatterns(patternData);
+ok(patternValidation.ok, `pattern catalogue validates${patternValidation.errors.length ? ': ' + patternValidation.errors.join('; ') : ''}`);
+ok(patternData.patterns.length >= 15 && patternData.patterns.length <= 20, 'pattern catalogue has a bounded curated set');
+ok(patternData.patterns.every((p) => VERIFIED_TITLES[p.number] === p.title), 'every pattern number/title mapping matches the verified source map');
+ok(patternData.patterns.every((p) => p.sourceVerified && p.relatedPatterns.length > 0 && p.applicableElements.length > 0), 'every pattern has a verified source, related patterns and applicable elements');
+ok(patternData.patterns.every((p) => patternData.patterns.some((q) => q.number !== p.number && q.relatedPatterns.includes(p.number))), 'no catalogue pattern is completely isolated from the relationship graph');
+ok(patternData.patterns.every((p) => p.evaluationQuestions.length >= 2 && p.limitations.length >= 1), 'every pattern records questions and limitations');
+ok(JSON.parse(read('data/patterns/schema.json')).properties.patterns.maxItems === 20, 'the pattern JSON Schema documents the catalogue bound');
+const patternPage = read('site/design-lab/pattern-language/index.html');
+ok((patternPage.match(/class="pattern-card"/g) || []).length === 20, 'Pattern Language Explorer publishes twenty patterns');
+ok(patternData.patterns.every((p) => patternPage.includes(`id="pattern-${p.number}"`) && patternPage.includes(p.title)), 'every pattern has a stable fragment and title');
+ok(patternPage.includes('Pattern Language Explorer') && patternPage.includes('not a rulebook') && patternPage.includes('Pattern titles/numbers were checked'), 'Explorer explains purpose and source verification');
+ok(patternPage.includes('id="pattern-search"') && patternPage.includes('id="pattern-scale"') && patternPage.includes('id="pattern-element"') && patternPage.includes('id="pattern-evidence"'), 'Explorer provides search and scale/element/evidence filters');
+ok(patternPage.includes('pattern-status') && patternPage.includes('aria-live="polite"'), 'Explorer has an accessible live result status');
+ok(patternPage.includes('#pattern-104') && patternPage.includes('pattern-37'), 'Explorer exposes stable and related pattern fragments');
+ok(patternPage.includes('https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf') && !/<script[^>]+src="https?:/i.test(patternPage) && !/<link[^>]+href="https?:/i.test(patternPage), 'Explorer links the primary source without remote scripts/styles');
+ok(exists('site/design-lab/pattern-language/patterns.js') && !/fetch\(|XMLHttpRequest|localStorage|sessionStorage|document\.cookie/.test(read('site/design-lab/pattern-language/patterns.js')), 'Explorer filtering is local and does not store or transmit data');
+ok(read('site/design-lab/index.html').includes('pattern-language/'), 'Design Lab gallery links the Pattern Language Explorer');
+ok(read('site/design-lab/pattern-language/patterns.js').includes('card.hidden = !ok'), 'Explorer hides non-matching cards rather than removing them from the document');
 
 section('Gallery, editor and residences pages');
 const gallery = read('site/design-lab/index.html');

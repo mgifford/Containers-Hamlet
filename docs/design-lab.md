@@ -15,11 +15,16 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 - **Two-storey study:** `/design-lab/two-storey/` — three stacking options with structural, fire, egress and hillside questions
 - **Resilience:** `/design-lab/resilience/` — fire beyond one house, heat, flood, drought, power and social capacity
 - **Water:** `/design-lab/water/` — rainwater, greywater, blackwater, fire reserve and an illustrative calculator
+- **Pattern Language Explorer:** `/design-lab/pattern-language/` — 20 source-verified patterns with original hamlet interpretations, related-pattern navigation, evidence states and limitations
 - **Comparison:** `/design-lab/compare/`
 - **Schema:** `containers-hamlet-design/v2.0` (v1.0 is migrated explicitly)
 - **Legacy import:** `containers-hamlet-editor/v0.1` (the supplied starter schema)
 
 It is not a generic home builder. The container is the core of every design; timber, glass, screens, decks, roofs and planting are supporting layers.
+
+## Pattern Language Explorer
+
+The Design Lab now includes a curated [`Pattern Language Explorer`](pattern-language.md) at `/design-lab/pattern-language/`. It references 20 pattern numbers/titles from *A Pattern Language*, with original summaries, hamlet interpretations, related-pattern links, evidence states and limitations. It is not a code, a scorecard or a replacement for professional assessment. Site-plan highlighting, scenario comparison, lodge/cabin annotations and resident evaluation are later phases.
 
 ## Phase 3: interiors, two-storey homes and accessible demonstrations
 
@@ -289,7 +294,7 @@ Every design has an architectural page under `site/design-lab/architecture/<id>/
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 2,477 schema, geometry, interior, illustration, migration and comparison checks
+node tools/check-design-lab.mjs      # 2,494 schema, geometry, interior, illustration, migration and comparison checks
 node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 
