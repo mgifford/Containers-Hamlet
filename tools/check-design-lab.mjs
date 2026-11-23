@@ -220,6 +220,12 @@ ok((archivePage.match(/<img /g) || []).length >= 10 && [...archivePage.matchAll(
 ok(['hamlet-woodland-cottage', 'hamlet-offset-stack', 'hamlet-accessible-garden-home'].every((id) => gallery.includes('editor/?preset=' + id)) && ['woodland-retreat', 'l-shaped-haven', 'woodland-courtyard'].every((id) => archivePage.includes('editor/?preset=' + id)), 'selected gallery and archive link their editable homes');
 ok(gallery.includes('residences/') && gallery.includes('Compare the six residences'), 'selected gallery links the hamlet-wide comparison');
 ok(gallery.includes('LICENSE.txt') && gallery.includes('CONTENT-LICENSE.md') && archivePage.includes('LICENSE.txt'), 'gallery and archive link their licences');
+const visualisations = read('site/design-lab/visualisations/index.html');
+ok(exists('site/design-lab/visualisations/index.html') && (visualisations.match(/<img /g) || []).length === 3, 'v1 concept-visualisation page publishes three image placeholders');
+ok(/not model-verified|AI-assisted concept visualisations/i.test(visualisations) && /Known gaps in v1/.test(visualisations) && /Version 2 completion checklist/.test(visualisations), 'v1 visualisations page states its limits and the v2 checklist');
+ok(/Woodland Cottage/.test(visualisations) && /Offset Stack/.test(visualisations) && /Accessible Garden Home/.test(visualisations) && /Solar Studio Stack/.test(visualisations), 'visualisation page gives per-home guidance rather than a generic cabin template');
+ok((visualisations.match(/<img /g) || []).length === 3 && [...visualisations.matchAll(/<img [^>]*>/g)].every((m) => /alt="[^"]{40,}"/.test(m[0]) && /loading=/.test(m[0])), 'v1 concept images have descriptive alternatives and loading policy');
+ok(!/<script[^>]+src="https?:/i.test(visualisations) && !/<link[^>]+href="https?:/i.test(visualisations), 'v1 visualisation page has no remote scripts or styles');
 const editor = read('site/design-lab/editor/index.html');
 ok(editor.includes('id="controls"') && editor.includes('id="plan"') && editor.includes('id="exterior"') && editor.includes('id="cutaway"'), 'editor has controls and the primary synchronized views');
 ok(editor.includes('id="edit-storey"') && editor.includes('id="stack-above"') && editor.includes('id="inspect-support"'), 'editor has level selection and stacking operations');
