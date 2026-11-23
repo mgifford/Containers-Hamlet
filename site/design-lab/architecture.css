@@ -78,3 +78,14 @@
 .exposure-table th, .exposure-table td { overflow-wrap: anywhere; }
 .table-wrap { max-width: 100%; overflow-x: auto; }
 .fact-grid dd, .assembly-layers li, .season-pair figcaption { overflow-wrap: anywhere; }
+.pattern-lens .lens-layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 1fr); gap: 1rem; margin: 1rem 0; }
+.pattern-lens .lens-plan { border: 1px solid var(--border); border-radius: .6rem; padding: .5rem; background: var(--paper); min-width: 0; }
+.pattern-lens .lens-plan object { display: block; width: 100%; height: auto; aspect-ratio: 1200 / 820; border: 0; }
+.pattern-lens .lens-panel { min-width: 0; }
+.lens-controls { display: flex; flex-wrap: wrap; gap: .4rem; }
+.lens-button { min-height: 2.2rem; }
+.lens-status { display: inline-block; margin-left: .4rem; padding: .05rem .35rem; border: 1px solid currentColor; border-radius: .25rem; font-size: .7rem; font-weight: 500; text-transform: none; }
+.lens-detail { margin: .5rem 0; padding: .5rem; border: 1px solid var(--border); border-radius: .4rem; }
+.lens-detail summary { cursor: pointer; }
+@media (max-width: 54rem) { .pattern-lens .lens-layout { grid-template-columns: 1fr; } }
+@media (forced-colors: active) { .pattern-lens .lens-plan { border: 1px solid CanvasText; } }

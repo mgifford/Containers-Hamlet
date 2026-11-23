@@ -26,6 +26,7 @@ import { patternLanguagePage } from './lib/pattern-language-page.mjs';
 import { scenariosPage as siteScenariosPage, scenarioSVG } from './lib/scenario-page.mjs';
 import { validateScenarios } from './lib/scenarios.mjs';
 import { validatePatterns, validateSiteElements } from './lib/patterns.mjs';
+import { validateDesignAnnotations } from './lib/design-annotations.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { modelPage } from './lib/model-pages.mjs';
 import { accessibleHomePage, accessiblePlanSVG } from './lib/accessible-home.mjs';
@@ -142,6 +143,9 @@ export function generate() {
   const patternCheck = validatePatterns(patternData);
   patternCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'patterns: ' + message }));
   patternCheck.warnings.forEach((message) => issues.push({ level: 'warning', message: 'patterns: ' + message }));
+  const annotationData = JSON.parse(readText('data/patterns/design-annotations.json'));
+  const annotationCheck = validateDesignAnnotations(annotationData, patternData, designLab.concepts);
+  annotationCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'design annotations: ' + message }));
   const siteElementData = JSON.parse(readText('data/patterns/site-elements.json'));
   const scenarioData = JSON.parse(readText('data/scenarios/site-layouts.json'));
   const scenarioCheck = validateScenarios(scenarioData, patternData);
@@ -289,7 +293,7 @@ export function generate() {
   });
   const designProfiles = designLab.concepts.map((concept) => DesignModel.designProfile(concept));
   const profileById = Object.fromEntries(designProfiles.map((p) => [p.id, p]));
-  designLab.concepts.forEach((concept) => put(`site/design-lab/architecture/${concept.id}/index.html`, architecturePage(concept, designViews[concept.id], profileById[concept.id]).replace(/[ \t]+$/gm, '')));
+  designLab.concepts.forEach((concept) => put(`site/design-lab/architecture/${concept.id}/index.html`, architecturePage(concept, designViews[concept.id], profileById[concept.id], annotationData, patternData).replace(/[ \t]+$/gm, '')));
   put('site/design-lab/compare/index.html', comparePage(designProfiles, designLab.concepts));
   put('site/design-lab/illustration/index.html', illustrationPage(illustrationEntries, designLab));
   const hamletProfiles = hamletSelected.map((c) => profileById[c.id]);

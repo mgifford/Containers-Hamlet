@@ -359,7 +359,7 @@
       if (!m) return;
       var world = r.polygon.map(function (p) { return Model.transformModulePoint(m, p); });
       var sp = world.map(P);
-      out.push('<path d="M' + sp.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="' + (r.provenance === 'inferred-from-zone' ? 'url(#' + pre + '-inferred)' : (typeFill[r.type] || '#eee8d9')) + '" stroke="#6f7b63" stroke-width="1.6"/>');
+      out.push('<path id="room-' + esc(r.id) + '" data-room-id="' + esc(r.id) + '" d="M' + sp.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="' + (r.provenance === 'inferred-from-zone' ? 'url(#' + pre + '-inferred)' : (typeFill[r.type] || '#eee8d9')) + '" stroke="#6f7b63" stroke-width="1.6"/>');
       var c = P([world.reduce(function (t, p) { return t + p[0]; }, 0) / world.length, world.reduce(function (t, p) { return t + p[1]; }, 0) / world.length]);
       out.push('<text x="' + n(c[0]) + '" y="' + n(c[1] - 3) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#1d392c" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke">' + esc(r.name) + '</text>');
       out.push('<text x="' + n(c[0]) + '" y="' + n(c[1] + 12) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" fill="#3f5a4c" stroke="#faf8f2" stroke-width="2" paint-order="stroke">' + n(polygonArea(r.polygon)) + ' m² · ' + esc(r.type) + '</text>');
