@@ -189,6 +189,22 @@ try {
   ok(scenarioNojsState.cards === 3 && scenarioNojsState.compare === 'none' && scenarioNojsState.baseline, 'scenario page remains complete without JavaScript and hides the inert comparator');
   await scenarioNojs.context.close();
 
+  section('Resident evaluation records');
+  const evaluation = await open('design-lab/evaluation/');
+  ok(evaluation.errors.length === 0, `evaluation: no console errors${evaluation.errors.length ? ': ' + evaluation.errors.join(' | ') : ''}`);
+  const evalState = await evaluation.page.evaluate(() => ({ cards: document.querySelectorAll('.evaluation-card').length, rows: document.querySelectorAll('tbody tr').length, statuses: [...document.querySelectorAll('.record-status')].every((e) => /Not evaluated/.test(e.textContent)), zero: /0 of 6 records contain observations/.test(document.body.textContent), forms: document.querySelectorAll('form, input, textarea').length, template: !!document.querySelector('a[href="record-template.json"]') }));
+  ok(evalState.cards === 6 && evalState.rows === 6 && evalState.statuses && evalState.zero && evalState.forms === 0 && evalState.template, 'evaluation page lists six scenarios and six open records with no personal-data form');
+  const templateResponse = await evaluation.page.request.get(BASE + 'design-lab/evaluation/record-template.json');
+  const templateJson = templateResponse.status() === 200 ? await templateResponse.json() : null;
+  ok(templateJson && templateJson.status === 'not-evaluated' && templateJson.reviewer === null && templateJson.observations.length === 0, 'blank evaluation template downloads and remains unfilled');
+  await axe(evaluation.page, 'evaluation page');
+  await shot(evaluation.page, 'evaluation');
+  await evaluation.context.close();
+
+  const evaluationNojs = await open('design-lab/evaluation/', { javaScriptEnabled: false });
+  ok(await evaluationNojs.page.locator('.evaluation-card').count() === 6, 'evaluation page remains complete without JavaScript');
+  await evaluationNojs.context.close();
+
   section('Architectural gallery and accessible slideshow');
   let arch = await open('design-lab/architecture/common-lodge/');
   ok(arch.errors.length === 0, `architecture: no console errors${arch.errors.length ? ': ' + arch.errors.join(' | ') : ''}`);
@@ -836,6 +852,11 @@ try {
   ok(await smallGallery.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'gallery has no horizontal scrolling at 320 px');
   await axe(smallGallery.page, 'gallery at 320 px');
   await smallGallery.context.close();
+  const smallEvaluation = await open('design-lab/evaluation/', { viewport: { width: 320, height: 640 } });
+  await smallEvaluation.page.waitForTimeout(300);
+  ok(await smallEvaluation.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'evaluation page has no horizontal scrolling at 320 px');
+  await axe(smallEvaluation.page, 'evaluation page at 320 px');
+  await smallEvaluation.context.close();
   const smallScenario = await open('design-lab/scenarios/', { viewport: { width: 320, height: 640 } });
   await smallScenario.page.waitForTimeout(300);
   ok(await smallScenario.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'scenario comparison has no horizontal scrolling at 320 px');

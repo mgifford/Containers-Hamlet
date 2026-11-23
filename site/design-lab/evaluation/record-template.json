@@ -1,0 +1,20 @@
+{
+  "schema": "containers-hamlet-evaluation-record/v1",
+  "note": "Blank record. Do not add observations until a real walkthrough has occurred. Remove this note only when the record is complete.",
+  "id": null,
+  "scenario": null,
+  "design": null,
+  "designVersion": null,
+  "pattern": null,
+  "element": null,
+  "question": null,
+  "method": null,
+  "evidence": [],
+  "observations": [],
+  "limitations": [],
+  "status": "not-evaluated",
+  "reviewer": null,
+  "reviewerRole": null,
+  "date": null,
+  "consent": null
+}

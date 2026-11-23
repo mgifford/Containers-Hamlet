@@ -27,6 +27,8 @@ import { scenariosPage as siteScenariosPage, scenarioSVG } from './lib/scenario-
 import { validateScenarios } from './lib/scenarios.mjs';
 import { validatePatterns, validateSiteElements } from './lib/patterns.mjs';
 import { validateDesignAnnotations } from './lib/design-annotations.mjs';
+import { evaluationPage, blankRecordTemplate } from './lib/evaluation-page.mjs';
+import { validateEvaluation } from './lib/evaluation.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { modelPage } from './lib/model-pages.mjs';
 import { accessibleHomePage, accessiblePlanSVG } from './lib/accessible-home.mjs';
@@ -143,6 +145,10 @@ export function generate() {
   const patternCheck = validatePatterns(patternData);
   patternCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'patterns: ' + message }));
   patternCheck.warnings.forEach((message) => issues.push({ level: 'warning', message: 'patterns: ' + message }));
+  const evaluationScenarios = JSON.parse(readText('data/evaluation/scenarios.json'));
+  const evaluationRecords = JSON.parse(readText('data/evaluation/records.json'));
+  const evaluationCheck = validateEvaluation(evaluationScenarios, evaluationRecords, patternData, designLab.concepts);
+  evaluationCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'evaluation: ' + message }));
   const annotationData = JSON.parse(readText('data/patterns/design-annotations.json'));
   const annotationCheck = validateDesignAnnotations(annotationData, patternData, designLab.concepts);
   annotationCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'design annotations: ' + message }));
@@ -408,6 +414,8 @@ export function generate() {
   put('site/design-lab/pattern-language/index.html', patternLanguagePage(patternData, siteElementData).replace(/\n\s+/g, '\n'));
   scenarioData.scenarios.forEach((scenario) => put(`site/design-lab/scenarios/${scenario.id}.svg`, scenarioSVG(scenario)));
   put('site/design-lab/scenarios/index.html', siteScenariosPage(scenarioData, patternData).replace(/\n\s+/g, '\n'));
+  put('site/design-lab/evaluation/index.html', evaluationPage(evaluationScenarios, evaluationRecords, patternData, designLab.concepts).replace(/\n\s+/g, '\n'));
+  put('site/design-lab/evaluation/record-template.json', JSON.stringify(blankRecordTemplate(), null, 2) + '\n');
   put('site/design-lab/visualisations/index.html', visualisationsPage().replace(/\n\s+/g, '\n'));
   put('site/design-lab/guides/index.html', guidesPage());
   const editorPath = 'site/design-lab/editor/index.html';
