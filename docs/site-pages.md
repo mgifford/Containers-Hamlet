@@ -47,9 +47,9 @@ Current limits:
 |---|---:|---:|
 | Initial view, compressed | 120 KB | 64 KB |
 | Initial view, uncompressed | 400 KB | 259 KB |
-| Whole published site | 6.25 MB | 6361 KB |
+| Whole published site | 6.25 MB | 6380 KB |
 
-The initial view is under 400 KB by about **165 KB**. The whole site is under the 6.25 MB budget by about **39 KB** after the selected-gallery split, architecture lazy-loading, editor concept split, compact package data, gzip-compressed OBJ downloads, v1 concept placeholders and the pattern-language Explorer. See [`page-weight-refactor.md`](page-weight-refactor.md). Adding another substantial page or gallery item will still require either:
+The initial view is under 400 KB by about **165 KB**. The whole site is under the 6.25 MB budget by about **20 KB** after the selected-gallery split, architecture lazy-loading, editor concept split, compact package data, gzip-compressed OBJ downloads, v1 concept placeholders and the pattern-language Explorer. See [`page-weight-refactor.md`](page-weight-refactor.md). Adding another substantial page or gallery item will still require either:
 
 - compressing the duplicate full-size site-plan asset;
 - reducing the optional potential-building/tree layers; or
@@ -69,13 +69,13 @@ Lazy loading improves **when bytes are requested**, not the total byte count. A 
 
 | Check | Result |
 |---|---|
-| `node tools/build.mjs --check` | 503 generated files current |
+| `node tools/build.mjs --check` | 505 generated files current |
 | `node tools/check.mjs` | 520 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,533 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,542 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 266 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 273 passed, 0 failed |
 | Initial view | 259 KB / 64 KB compressed |
-| Whole site | 6361 KB |
+| Whole site | 6380 KB |
 
 Browser checks cover the homes index, all seven cards, the Cabin C page, `#main-view`, each section ID, lazy card diagrams, no-JavaScript cards and axe-core.
 

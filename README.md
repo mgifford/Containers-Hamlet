@@ -36,10 +36,10 @@ These are conceptual studies, not construction drawings or engineering approvals
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
    node tools/check.mjs       # 520 main-site static checks
-   node tools/check-design-lab.mjs   # 2,533 Design Lab schema, geometry, interior, illustration, migration and pattern-language checks
+   node tools/check-design-lab.mjs   # 2,542 Design Lab schema, geometry, interior, illustration, migration and pattern-language checks
    npm install
    npm run test:browser       # 107 main-site browser checks
-   npm run test:design-lab    # 266 Design Lab browser checks
+   npm run test:design-lab    # 273 Design Lab browser checks
    ```
 
    The build refuses data that cannot be built or that breaks a site rule, such as a home inside the shoreline setback, an overlapping container module, a porch beyond its face, or a concept with no valid editable presets. See [`docs/data-model.md`](docs/data-model.md) and [`docs/design-lab.md`](docs/design-lab.md).
@@ -72,7 +72,7 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its floor-specific plans and elevations, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, its six-home comparison and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 259 KB uncompressed / 64 KB compressed. The whole published site is about 6361 KB, under the 6.25 MB budget for sixteen concepts, their detailed drawing sets, interior plans, six illustration packages, the pattern-language Explorer and v1 concept placeholders.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 259 KB uncompressed / 64 KB compressed. The whole published site is about 6380 KB, under the 6.25 MB budget for sixteen concepts, their detailed drawing sets, interior plans, six illustration packages, the pattern-language Explorer and v1 concept placeholders.
 
 ## The fictional landscape
 
@@ -111,7 +111,7 @@ site/design-lab/residences/            six-home comparison
 site/design-lab/editor/                editor
 ```
 
-The [`Pattern Language Explorer`](https://mgifford.github.io/Containers-Hamlet/design-lab/pattern-language/) extends the Design Lab. Start with the [design philosophy](docs/design-philosophy.md), [pattern-language method](docs/pattern-language.md), [evaluation methodology](docs/pattern-methodology.md) and [Phase 0 audit](docs/pattern-language-audit.md); the current [implementation report](docs/pattern-language-implementation-report.md) records Phases 0–4; the [scenario comparison](docs/scenario-comparison.md) records the baseline and two schematic alternatives, and the [pattern lens](docs/pattern-lens.md) records the initial room-level annotations. Page-splitting, lazy-loading and download-compression decisions are recorded in [`docs/page-weight-refactor.md`](docs/page-weight-refactor.md). The v1 concept-image placeholders and the version 2 completion brief are documented in [`docs/visualisation-v2-brief.md`](docs/visualisation-v2-brief.md). The existing `data/cabin-a.json` remains authoritative for Cabin A. The interior model is documented in [`docs/interior-spatial-model.md`](docs/interior-spatial-model.md); the Phase 3 audit and limitations are in [`docs/phase-3-audit.md`](docs/phase-3-audit.md) and [`docs/phase-3-implementation-report.md`](docs/phase-3-implementation-report.md). `tools/lib/design-adapter.mjs` provides an explicit, reported conversion in both directions; it never writes Cabin A data and lists everything it cannot preserve.
+The [`Pattern Language Explorer`](https://mgifford.github.io/Containers-Hamlet/design-lab/pattern-language/) extends the Design Lab. Start with the [design philosophy](docs/design-philosophy.md), [pattern-language method](docs/pattern-language.md), [evaluation methodology](docs/pattern-methodology.md) and [Phase 0 audit](docs/pattern-language-audit.md); the current [implementation report](docs/pattern-language-implementation-report.md) records Phases 0–5; the [scenario comparison](docs/scenario-comparison.md) records the baseline and two schematic alternatives, the [pattern lens](docs/pattern-lens.md) records the initial room-level annotations, and the [evaluation framework](docs/evaluation.md) records six open resident sequences with no completed observations. Page-splitting, lazy-loading and download-compression decisions are recorded in [`docs/page-weight-refactor.md`](docs/page-weight-refactor.md). The v1 concept-image placeholders and the version 2 completion brief are documented in [`docs/visualisation-v2-brief.md`](docs/visualisation-v2-brief.md). The existing `data/cabin-a.json` remains authoritative for Cabin A. The interior model is documented in [`docs/interior-spatial-model.md`](docs/interior-spatial-model.md); the Phase 3 audit and limitations are in [`docs/phase-3-audit.md`](docs/phase-3-audit.md) and [`docs/phase-3-implementation-report.md`](docs/phase-3-implementation-report.md). `tools/lib/design-adapter.mjs` provides an explicit, reported conversion in both directions; it never writes Cabin A data and lists everything it cannot preserve.
 
 ## Assets
 

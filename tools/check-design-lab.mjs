@@ -15,6 +15,7 @@ const Interior = require('../site/js/design-interior.js');
 const { validatePatterns, validateSiteElements, VERIFIED_TITLES } = require('./lib/patterns.mjs');
 const { validateScenarios } = require('./lib/scenarios.mjs');
 const { validateDesignAnnotations } = require('./lib/design-annotations.mjs');
+const { validateEvaluation } = require('./lib/evaluation.mjs');
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const exists = (p) => fs.existsSync(path.join(ROOT, p));
@@ -245,6 +246,21 @@ ok(/Pattern lens/.test(accessiblePage) && accessiblePage.includes('room-e-living
 ok(/Pattern lens/.test(lodgePage) && lodgePage.includes('No authored interior room plan exists') && !lodgePage.includes('pattern-lens-plan'), 'common lodge has text-only annotations without a fabricated interior overlay');
 const lensText = (woodlandPage.match(/<section class="assembly-section pattern-lens"[\s\S]*?<\/section>/) || [''])[0];
 ok(!/pattern is satisfied|satisfies the pattern/i.test(lensText + accessiblePage + lodgePage), 'pattern-lens pages do not claim the pattern is satisfied');
+
+const evalScenarios = JSON.parse(read('data/evaluation/scenarios.json'));
+const evalRecords = JSON.parse(read('data/evaluation/records.json'));
+const evalValidation = validateEvaluation(evalScenarios, evalRecords, patternData, data.concepts);
+ok(evalValidation.ok, `resident scenarios and evaluation records validate${evalValidation.errors.length ? ': ' + evalValidation.errors.join('; ') : ''}`);
+ok(evalScenarios.scenarios.length === 6 && evalRecords.records.length === 6 && evalRecords.records.every((r) => r.status === 'not-evaluated' && r.reviewer === null && r.date === null && r.observations.length === 0), 'six open records exist and none fabricates an observation, reviewer or date');
+const evalPage = read('site/design-lab/evaluation/index.html');
+ok((evalPage.match(/class="scenario-card evaluation-card"/g) || []).length === 6 && (evalPage.match(/<tr><th scope="row">/g) || []).length >= 6, 'evaluation page publishes six scenarios and six open records');
+ok(evalPage.includes('0 of 6 records contain observations') && evalPage.includes('Not evaluated') && evalPage.includes('No score, index or community-quality rating'), 'evaluation page states zero completed records and avoids scores');
+ok(evalPage.includes('record-template.json') && evalPage.includes('How a record is completed') && evalPage.includes('Do not turn the outcome into a score'), 'evaluation page explains the completion method and offers a blank template');
+ok(evalPage.includes('../architecture/hamlet-woodland-cottage/') && evalPage.includes('../pattern-language/#pattern-127') && evalPage.includes('../../community/scenarios/'), 'evaluation records link to designs, patterns and the resident scenarios');
+ok(!/<form|<input|<textarea/i.test(evalPage), 'evaluation page collects no personal data and uses no form');
+const template = JSON.parse(read('site/design-lab/evaluation/record-template.json'));
+ok(template.schema === 'containers-hamlet-evaluation-record/v1' && template.status === 'not-evaluated' && template.observations.length === 0 && template.reviewer === null && template.consent === null, 'blank evaluation template requires reviewer, evidence, consent and status');
+ok(JSON.parse(read('site/design-lab/evaluation/record-template.json')).note.includes('Do not add observations'), 'blank template warns against invented observations');
 
 const patternPage = read('site/design-lab/pattern-language/index.html');
 const siteElementData = JSON.parse(read('data/patterns/site-elements.json'));

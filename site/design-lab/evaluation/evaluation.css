@@ -1,0 +1,11 @@
+.evaluation-steps { max-width: 55rem; }
+.evaluation-steps li { margin: .5rem 0; }
+.evaluation-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem 1rem; margin: .8rem 0; }
+.evaluation-facts div { border-top: 1px solid var(--border); padding-top: .35rem; }
+.evaluation-facts dt { font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.evaluation-facts dd { margin: .15rem 0 0; }
+.evaluation-card { border: 1px solid var(--border); border-radius: .7rem; padding: 1rem; background: var(--paper); }
+.evaluation-list { display: grid; gap: 1rem; }
+.record-status { display: inline-block; padding: .12rem .45rem; border: 1px solid #8a5a32; border-radius: .3rem; background: #f6e2cf; color: #5e3a1c; font-size: .75rem; font-weight: 800; white-space: nowrap; }
+@media (max-width: 44rem) { .evaluation-facts { grid-template-columns: 1fr; } }
+@media (forced-colors: active) { .evaluation-card, .record-status { border: 1px solid CanvasText; } }

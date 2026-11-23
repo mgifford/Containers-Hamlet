@@ -1,0 +1,78 @@
+{
+  "schema": "containers-hamlet-resident-scenarios/v1",
+  "note": "Illustrative activity sequences for evaluation. They are not resident profiles, stereotypes, a waiting list or evidence that any design works. Design pairings are for testing only.",
+  "scenarios": [
+    {
+      "id": "solo",
+      "title": "Living alone, year-round",
+      "resident": "A permanent resident who wants a compact home, a short walk to the lodge and a clear maintenance routine.",
+      "design": "hamlet-woodland-cottage",
+      "designLabel": "Woodland Cottage",
+      "steps": ["Leave the home through the accessible entrance.", "Walk the shared path to the lodge.", "Collect a parcel or use the laundry.", "Speak to a neighbour without entering a private home.", "Return home and close the door."],
+      "patterns": [127, 112, 36],
+      "question": "Can a solo resident make an ordinary errand and a small social contact without a car?",
+      "status": "not-evaluated",
+      "evidenceNeeded": ["A resident walkthrough with timings and rest points.", "Winter surface and lighting check.", "A privacy observation at the porch and living-room edge."]
+    },
+    {
+      "id": "remote",
+      "title": "A couple working remotely",
+      "resident": "Two people who need reliable work space, power and bandwidth without turning the home into an office.",
+      "design": "hamlet-offset-stack",
+      "designLabel": "Offset Stack",
+      "steps": ["Start two simultaneous calls in separate rooms.", "Make coffee without crossing a call.", "Walk to the lodge for a shared meeting.", "Receive a delivery at the entrance.", "End the day without work spreading into the bedroom."],
+      "patterns": [127, 159, 180],
+      "question": "Can two people work at once without acoustic or circulation conflict?",
+      "status": "not-evaluated",
+      "evidenceNeeded": ["Measured bandwidth, latency and backup power.", "Acoustic separation test between work rooms.", "A week-long workday observation."]
+    },
+    {
+      "id": "seasonal",
+      "title": "A seasonal resident",
+      "resident": "A summer and shoulder-season resident who does not need a year-round home and should not pretend a compact cabin is one.",
+      "design": "hamlet-solar-studio-stack",
+      "designLabel": "Solar Studio Stack",
+      "steps": ["Open the home for the season.", "Bring in water and supplies.", "Use the lodge for laundry and a shared meal.", "Close down water and heat before leaving.", "Lock the home and leave the shared path clear."],
+      "patterns": [112, 163],
+      "question": "Can opening and closing be done safely without relying on a year-round occupant?",
+      "status": "not-evaluated",
+      "evidenceNeeded": ["A seasonal opening/closing trial.", "Water drain-down and freeze protection review.", "Insurance and winter-access confirmation."]
+    },
+    {
+      "id": "aging",
+      "title": "Planning for changing mobility",
+      "resident": "An older resident who wants to stay in the community as mobility changes, without assuming the current plan is accessible.",
+      "design": "hamlet-accessible-garden-home",
+      "designLabel": "Accessible Garden Home",
+      "steps": ["Arrive by the accessible drop-off.", "Reach the entrance without a step.", "Move from the bedroom to the bathroom with a mobility aid.", "Reach the kitchen and a seated work surface.", "Ask for help without crossing a private threshold."],
+      "patterns": [112, 127, 180],
+      "question": "Can a resident with changing mobility complete the day's essential tasks without a redesign?",
+      "status": "not-evaluated",
+      "evidenceNeeded": ["Measured clearances and turning circles.", "An occupational therapist walkthrough.", "A personal emergency-response plan.", "Winter path and power-outage test."]
+    },
+    {
+      "id": "hosts",
+      "title": "A household that hosts guests",
+      "resident": "A resident who wants occasional family and friends to stay without letting visitors take over the hamlet.",
+      "design": "hamlet-cross-stacked-retreat",
+      "designLabel": "Cross-Stacked Retreat",
+      "steps": ["Greet a guest at the shared arrival point.", "Give the guest a separate sleeping place.", "Share a meal at the lodge.", "Manage an extra shower and laundry load.", "Say goodbye without a parking or noise conflict."],
+      "patterns": [127, 112, 163],
+      "question": "Can a guest stay be private and generous without consuming shared capacity?",
+      "status": "not-evaluated",
+      "evidenceNeeded": ["Guest-room acoustic and bathroom test.", "Septic and water-load calculation.", "Parking and quiet-hours trial.", "Insurance and hosting rules."]
+    },
+    {
+      "id": "gardener",
+      "title": "Gardening and land stewardship",
+      "resident": "A resident who wants to grow food, compost and care for the forest, with realistic water and wildlife constraints.",
+      "design": "hamlet-courtyard-residence",
+      "designLabel": "Courtyard Residence",
+      "steps": ["Carry tools from storage to the garden.", "Water without emptying the fire reserve.", "Compost and clean tools.", "Share produce at the lodge.", "Close the garden against wildlife."],
+      "patterns": [163, 36, 171],
+      "question": "Can gardening fit the water, fire, wildlife and shared-land rules?",
+      "status": "not-evaluated",
+      "evidenceNeeded": ["Water budget with a separate fire reserve.", "Soil and contamination test.", "Wildlife and invasive-species plan.", "A shared harvest agreement."]
+    }
+  ]
+}
