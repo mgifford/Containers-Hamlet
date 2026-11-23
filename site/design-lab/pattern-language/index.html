@@ -15,573 +15,570 @@
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header">
-  <a class="brand" href="../../index.html">Containers Hamlet</a>
-  <nav aria-label="Main">
-    <a href="../../community/">Community</a>
-    <a href="../../hamlet/">Map</a>
-    <a href="../../homes/">Homes</a>
-    <a href="../../design-lab/" aria-current="page">Design Lab</a>
-    <a href="../../living/">Living Here</a>
-    <a href="../../participate/">Participate</a>
-  </nav>
+<a class="brand" href="../../index.html">Containers Hamlet</a>
+<nav aria-label="Main">
+<a href="../../community/">Community</a>
+<a href="../../hamlet/">Map</a>
+<a href="../../homes/">Homes</a>
+<a href="../../design-lab/" aria-current="page">Design Lab</a>
+<a href="../../living/">Living Here</a>
+<a href="../../participate/">Participate</a>
+</nav>
 </header>
 <nav class="subnav" aria-label="Design Lab sections">
-  <a href="../../design-lab/">Gallery</a>
-  <a href="../../design-lab/pattern-language/" aria-current="page">Pattern language</a>
-  <a href="../../design-lab/residences/">Residences</a>
-  <a href="../../design-lab/illustration/">Illustrate</a>
-  <a href="../../design-lab/editor/">Editor</a>
-  <a href="../../design-lab/guides/">Guides</a>
-  <a href="../../design-lab/compare/">Compare</a>
+<a href="../../design-lab/">Gallery</a>
+<a href="../../design-lab/pattern-language/" aria-current="page">Pattern language</a>
+<a href="../../design-lab/residences/">Residences</a>
+<a href="../../design-lab/illustration/">Illustrate</a>
+<a href="../../design-lab/visualisations/">Visualisations</a>
+<a href="../../design-lab/editor/">Editor</a>
+<a href="../../design-lab/guides/">Guides</a>
+<a href="../../design-lab/compare/">Compare</a>
 </nav>
 <main id="main" class="lab-main">
-  <p class="eyebrow">Design Lab · pattern language</p>
-  <h1>Designing a Hamlet: Patterns, People and Place</h1>
-  <p class="lede">A Pattern Language is useful here as a set of questions about relationships — between private homes and shared places, between paths and destinations, between a room and the weather outside. It is not a rulebook, a code or a scorecard.</p>
-  <p class="notice"><strong>How to read this:</strong> the pattern number and title are referenced from the 1977 book by Christopher Alexander, Sara Ishikawa and Murray Silverstein, with Max Jacobson, Ingrid Fiksdahl-King and Shlomo Angel. Every summary, hamlet interpretation and evaluation here is new text. Pattern titles/numbers were checked against the primary source; the interpretations are design propositions, not claims about the authors’ intent. The book is copyrighted; no book text or illustrations are reproduced.</p>
-
-  <section aria-labelledby="philosophy-title">
-    <h2 id="philosophy-title">The design philosophy</h2>
-    <p>Containers Hamlet starts with six private homes, a shared lodge and a fictional Canadian Shield landscape. The homes should support independence and privacy. The community should support cooperation, companionship and mutual assistance. Neither objective should dominate the other.</p>
-    <p>The aim is <strong>voluntary community</strong>: opportunities for contact without compulsory participation, and private places to withdraw without feeling excluded. The landscape is not a backdrop; ecological protection, water, biodiversity, climate resilience and maintenance shape every decision.</p>
-    <ol class="principles">
-      <li><strong>Protect the landscape first.</strong> Buildings and infrastructure respond to existing conditions rather than forcing the land to fit an arbitrary plan.</li>
-      <li><strong>Support voluntary community.</strong> Shared spaces invite participation without making residents dependent on communal activity.</li>
-      <li><strong>Preserve meaningful privacy.</strong> Each home needs visual, acoustic and social independence.</li>
-      <li><strong>Make walking useful and pleasant.</strong> Routes connect real destinations and everyday activities.</li>
-      <li><strong>Create positive outdoor spaces.</strong> Outdoor areas are usable places, not leftover gaps.</li>
-      <li><strong>Build for diverse residents.</strong> Accessibility, mobility, sensory differences, ageing, visitors and changing households shape the design.</li>
-      <li><strong>Design for the actual climate.</strong> Winter, rain, heat, snow, smoke, wildfire, power interruptions and changing weather matter.</li>
-      <li><strong>Prefer simplicity and repairability.</strong> Avoid unnecessary technical complexity and fragile infrastructure.</li>
-      <li><strong>Evaluate materials honestly.</strong> Shipping containers are an option, not an assumed environmental advantage.</li>
-      <li><strong>Make assumptions visible.</strong> Separate conceptual design, evidence and questions requiring professional assessment.</li>
-      <li><strong>Support adaptation.</strong> Homes, shared spaces and infrastructure should accommodate changing residents and needs.</li>
-      <li><strong>Avoid false precision.</strong> Do not invent costs, energy savings, ecological benefits or accessibility conformance.</li>
-    </ol>
-    <p class="small">This is a conceptual, fictional project. The site is not surveyed, the buildings are not construction-ready, and the pattern language is not a compliance standard. See the <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/design-philosophy.md">design philosophy notes</a> and <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-language.md">pattern-language method</a>.</p>
-  </section>
-
-  <section aria-labelledby="explorer-title">
-    <h2 id="explorer-title">Pattern Explorer</h2>
-    <p>Start with a plain-language problem. Filter by scale, hamlet element or evidence state. Each pattern has a stable fragment link such as <code>#pattern-104</code>; related-pattern links stay inside the page and work with the keyboard.</p>
-    <form id="pattern-controls" class="pattern-controls" role="search" aria-label="Search and filter patterns">
-      <label>Search <input type="search" id="pattern-search" placeholder="Name, number or phrase" autocomplete="off"></label>
-      <label>Scale <select id="pattern-scale"><option value="">All scales</option><option value="landscape">Landscape</option><option value="community">Community</option><option value="infrastructure">Infrastructure</option><option value="building">Building</option><option value="interior">Interior</option></select></label>
-      <label>Hamlet element <select id="pattern-element"><option value="">All elements</option><option value="site-plan">Site plan</option><option value="landscape">Landscape</option><option value="common-land">Common land</option><option value="paths">Paths</option><option value="lodge">Common lodge</option><option value="homes">Individual homes</option><option value="porches">Porches and outdoor rooms</option><option value="interiors">Interiors</option><option value="shared-workshop">Shared workshop</option><option value="visitor-arrival">Visitor arrival</option></select></label>
-      <label>Evidence <select id="pattern-evidence"><option value="">All evidence states</option><option value="not-evaluated">Not evaluated</option><option value="conceptual">Conceptual</option><option value="evidence-needed">Evidence needed</option><option value="evidence-supported">Evidence-supported within scope</option><option value="trade-off-identified">Trade-off identified</option><option value="not-applicable">Not applicable</option></select></label>
-      <button type="button" id="pattern-reset" class="secondary">Reset</button>
-    </form>
-    <p id="pattern-status" class="status" role="status" aria-live="polite">Showing all 20 patterns.</p>
-    <noscript><p class="notice">Filtering needs JavaScript. All 20 patterns are listed below and remain readable without it.</p></noscript>
-    <div class="pattern-list" id="pattern-list">
-      <article class="pattern-card" id="pattern-36" data-pattern data-number="36" data-title="Degrees of Publicness" data-scale="community" data-elements="site-plan paths homes lodge visitor-arrival" data-evidence="conceptual" data-search="36 Degrees of Publicness Make the change from public arrival to shared, semi-private and private places gradual and legible. The lane, forecourt, shared paths, lodge terrace, home porches and door thresholds should form a readable gradient. Not every route should pass directly beside a bedroom window. The baseline has an entrance, shared lanes and trails, private homes and porches, but the transitions are not consistently modelled, named or evaluated.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 36 · Community</p>
-    <h3><a href="#pattern-36">Degrees of Publicness</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Make the change from public arrival to shared, semi-private and private places gradual and legible.</p>
-  <p><strong>In Containers Hamlet:</strong> The lane, forecourt, shared paths, lodge terrace, home porches and door thresholds should form a readable gradient. Not every route should pass directly beside a bedroom window.</p>
-  <p class="small"><strong>Current response:</strong> The baseline has an entrance, shared lanes and trails, private homes and porches, but the transitions are not consistently modelled, named or evaluated.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Can a visitor tell which places are public, shared, semi-private and private?</li><li>Can a resident reach a shared facility without crossing a private room or window?</li><li>Are thresholds usable in snow, rain and low light?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Compare the dispersed baseline with the central clearing and woodland-spine scenarios, especially where shared paths meet private porches.</p><h4>Trade-offs and competing priorities</h4><p>More thresholds can make a place feel welcoming or over-controlled. Signs, gates and lighting can clarify or exclude.</p></section>
-      <section><h4>What is unresolved</h4><p>No observational evidence of how residents, visitors or service people actually experience the edges.</p><h4>Limitations</h4><ul><li>No post-occupancy observation</li><li>No privacy or lighting study</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> Publicness depends on the cluster, the small gathering place and the entrance transition; those patterns make the gradient physical.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-61">61 · Small Public Squares</a> · <a href="#pattern-112">112 · Entrance Transition</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 36. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<p class="eyebrow">Design Lab · pattern language</p>
+<h1>Designing a Hamlet: Patterns, People and Place</h1>
+<p class="lede">A Pattern Language is useful here as a set of questions about relationships — between private homes and shared places, between paths and destinations, between a room and the weather outside. It is not a rulebook, a code or a scorecard.</p>
+<p class="notice"><strong>How to read this:</strong> the pattern number and title are referenced from the 1977 book by Christopher Alexander, Sara Ishikawa and Murray Silverstein, with Max Jacobson, Ingrid Fiksdahl-King and Shlomo Angel. Every summary, hamlet interpretation and evaluation here is new text. Pattern titles/numbers were checked against the primary source; the interpretations are design propositions, not claims about the authors’ intent. The book is copyrighted; no book text or illustrations are reproduced.</p>
+<section aria-labelledby="philosophy-title">
+<h2 id="philosophy-title">The design philosophy</h2>
+<p>Containers Hamlet starts with six private homes, a shared lodge and a fictional Canadian Shield landscape. The homes should support independence and privacy. The community should support cooperation, companionship and mutual assistance. Neither objective should dominate the other.</p>
+<p>The aim is <strong>voluntary community</strong>: opportunities for contact without compulsory participation, and private places to withdraw without feeling excluded. The landscape is not a backdrop; ecological protection, water, biodiversity, climate resilience and maintenance shape every decision.</p>
+<ol class="principles">
+<li><strong>Protect the landscape first.</strong> Buildings and infrastructure respond to existing conditions rather than forcing the land to fit an arbitrary plan.</li>
+<li><strong>Support voluntary community.</strong> Shared spaces invite participation without making residents dependent on communal activity.</li>
+<li><strong>Preserve meaningful privacy.</strong> Each home needs visual, acoustic and social independence.</li>
+<li><strong>Make walking useful and pleasant.</strong> Routes connect real destinations and everyday activities.</li>
+<li><strong>Create positive outdoor spaces.</strong> Outdoor areas are usable places, not leftover gaps.</li>
+<li><strong>Build for diverse residents.</strong> Accessibility, mobility, sensory differences, ageing, visitors and changing households shape the design.</li>
+<li><strong>Design for the actual climate.</strong> Winter, rain, heat, snow, smoke, wildfire, power interruptions and changing weather matter.</li>
+<li><strong>Prefer simplicity and repairability.</strong> Avoid unnecessary technical complexity and fragile infrastructure.</li>
+<li><strong>Evaluate materials honestly.</strong> Shipping containers are an option, not an assumed environmental advantage.</li>
+<li><strong>Make assumptions visible.</strong> Separate conceptual design, evidence and questions requiring professional assessment.</li>
+<li><strong>Support adaptation.</strong> Homes, shared spaces and infrastructure should accommodate changing residents and needs.</li>
+<li><strong>Avoid false precision.</strong> Do not invent costs, energy savings, ecological benefits or accessibility conformance.</li>
+</ol>
+<p class="small">This is a conceptual, fictional project. The site is not surveyed, the buildings are not construction-ready, and the pattern language is not a compliance standard. See the <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/design-philosophy.md">design philosophy notes</a> and <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-language.md">pattern-language method</a>.</p>
+</section>
+<section aria-labelledby="explorer-title">
+<h2 id="explorer-title">Pattern Explorer</h2>
+<p>Start with a plain-language problem. Filter by scale, hamlet element or evidence state. Each pattern has a stable fragment link such as <code>#pattern-104</code>; related-pattern links stay inside the page and work with the keyboard.</p>
+<form id="pattern-controls" class="pattern-controls" role="search" aria-label="Search and filter patterns">
+<label>Search <input type="search" id="pattern-search" placeholder="Name, number or phrase" autocomplete="off"></label>
+<label>Scale <select id="pattern-scale"><option value="">All scales</option><option value="landscape">Landscape</option><option value="community">Community</option><option value="infrastructure">Infrastructure</option><option value="building">Building</option><option value="interior">Interior</option></select></label>
+<label>Hamlet element <select id="pattern-element"><option value="">All elements</option><option value="site-plan">Site plan</option><option value="landscape">Landscape</option><option value="common-land">Common land</option><option value="paths">Paths</option><option value="lodge">Common lodge</option><option value="homes">Individual homes</option><option value="porches">Porches and outdoor rooms</option><option value="interiors">Interiors</option><option value="shared-workshop">Shared workshop</option><option value="visitor-arrival">Visitor arrival</option></select></label>
+<label>Evidence <select id="pattern-evidence"><option value="">All evidence states</option><option value="not-evaluated">Not evaluated</option><option value="conceptual">Conceptual</option><option value="evidence-needed">Evidence needed</option><option value="evidence-supported">Evidence-supported within scope</option><option value="trade-off-identified">Trade-off identified</option><option value="not-applicable">Not applicable</option></select></label>
+<button type="button" id="pattern-reset" class="secondary">Reset</button>
+</form>
+<p id="pattern-status" class="status" role="status" aria-live="polite">Showing all 20 patterns.</p>
+<noscript><p class="notice">Filtering needs JavaScript. All 20 patterns are listed below and remain readable without it.</p></noscript>
+<div class="pattern-list" id="pattern-list">
+<article class="pattern-card" id="pattern-36" data-pattern data-number="36" data-title="Degrees of Publicness" data-scale="community" data-elements="site-plan paths homes lodge visitor-arrival" data-evidence="conceptual" data-search="36 Degrees of Publicness Make the change from public arrival to shared, semi-private and private places gradual and legible. The lane, forecourt, shared paths, lodge terrace, home porches and door thresholds should form a readable gradient. Not every route should pass directly beside a bedroom window. The baseline has an entrance, shared lanes and trails, private homes and porches, but the transitions are not consistently modelled, named or evaluated.">
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 36 · Community</p>
+<h3><a href="#pattern-36">Degrees of Publicness</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Make the change from public arrival to shared, semi-private and private places gradual and legible.</p>
+<p><strong>In Containers Hamlet:</strong> The lane, forecourt, shared paths, lodge terrace, home porches and door thresholds should form a readable gradient. Not every route should pass directly beside a bedroom window.</p>
+<p class="small"><strong>Current response:</strong> The baseline has an entrance, shared lanes and trails, private homes and porches, but the transitions are not consistently modelled, named or evaluated.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Can a visitor tell which places are public, shared, semi-private and private?</li><li>Can a resident reach a shared facility without crossing a private room or window?</li><li>Are thresholds usable in snow, rain and low light?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Compare the dispersed baseline with the central clearing and woodland-spine scenarios, especially where shared paths meet private porches.</p><h4>Trade-offs and competing priorities</h4><p>More thresholds can make a place feel welcoming or over-controlled. Signs, gates and lighting can clarify or exclude.</p></section>
+<section><h4>What is unresolved</h4><p>No observational evidence of how residents, visitors or service people actually experience the edges.</p><h4>Limitations</h4><ul><li>No post-occupancy observation</li><li>No privacy or lighting study</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> Publicness depends on the cluster, the small gathering place and the entrance transition; those patterns make the gradient physical.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-61">61 · Small Public Squares</a> · <a href="#pattern-112">112 · Entrance Transition</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 36. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-37" data-pattern data-number="37" data-title="House Cluster" data-scale="community" data-elements="site-plan homes common-land paths" data-evidence="conceptual" data-search="37 House Cluster Arrange a small number of dwellings so they form a recognisable neighbourhood while retaining private territory. The six homes can remain dispersed but should be evaluated as clusters around shared paths, a glade or a service point. The lodge is not a substitute for neighbourliness. The baseline disperses six homes across the site and places the lodge near the entrance. The current arrangement has no formal cluster evaluation.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 37 · Community</p>
-    <h3><a href="#pattern-37">House Cluster</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Site plan +3</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Arrange a small number of dwellings so they form a recognisable neighbourhood while retaining private territory.</p>
-  <p><strong>In Containers Hamlet:</strong> The six homes can remain dispersed but should be evaluated as clusters around shared paths, a glade or a service point. The lodge is not a substitute for neighbourliness.</p>
-  <p class="small"><strong>Current response:</strong> The baseline disperses six homes across the site and places the lodge near the entrance. The current arrangement has no formal cluster evaluation.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Can residents recognise a small cluster without a gate or private road?</li><li>Does each home retain a private edge?</li><li>Are shared facilities reachable from more than one cluster?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Test Scenario B (central clearing) and Scenario C (woodland spine with social pockets) against the baseline.</p><h4>Trade-offs and competing priorities</h4><p>Clustering shortens some infrastructure and increases casual contact, but can reduce visual privacy and concentrate disturbance.</p></section>
-      <section><h4>What is unresolved</h4><p>No resident preference data or measured walking distances for the alternatives.</p><h4>Limitations</h4><ul><li>Fictional site</li><li>No household survey</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> A cluster needs common land and a legible publicness gradient to avoid becoming either a private compound or an unprotected shared yard.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-36">36 · Degrees of Publicness</a> · <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-129">129 · Common Areas at the Heart</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 37. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 37 · Community</p>
+<h3><a href="#pattern-37">House Cluster</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Site plan +3</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Arrange a small number of dwellings so they form a recognisable neighbourhood while retaining private territory.</p>
+<p><strong>In Containers Hamlet:</strong> The six homes can remain dispersed but should be evaluated as clusters around shared paths, a glade or a service point. The lodge is not a substitute for neighbourliness.</p>
+<p class="small"><strong>Current response:</strong> The baseline disperses six homes across the site and places the lodge near the entrance. The current arrangement has no formal cluster evaluation.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Can residents recognise a small cluster without a gate or private road?</li><li>Does each home retain a private edge?</li><li>Are shared facilities reachable from more than one cluster?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Test Scenario B (central clearing) and Scenario C (woodland spine with social pockets) against the baseline.</p><h4>Trade-offs and competing priorities</h4><p>Clustering shortens some infrastructure and increases casual contact, but can reduce visual privacy and concentrate disturbance.</p></section>
+<section><h4>What is unresolved</h4><p>No resident preference data or measured walking distances for the alternatives.</p><h4>Limitations</h4><ul><li>Fictional site</li><li>No household survey</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> A cluster needs common land and a legible publicness gradient to avoid becoming either a private compound or an unprotected shared yard.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-36">36 · Degrees of Publicness</a> · <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-129">129 · Common Areas at the Heart</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 37. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-61" data-pattern data-number="61" data-title="Small Public Squares" data-scale="community" data-elements="common-land paths lodge visitor-arrival" data-evidence="conceptual" data-search="61 Small Public Squares Provide small, enclosed outdoor gathering places at the scale of everyday encounters. A widened path, a rock glade or a lodge forecourt can serve this role. A formal urban square is not assumed to be appropriate in the woodland. The baseline has informal outdoor areas and a lodge porch, but no dedicated small gathering place.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 61 · Community</p>
-    <h3><a href="#pattern-61">Small Public Squares</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Common land +3</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Provide small, enclosed outdoor gathering places at the scale of everyday encounters.</p>
-  <p><strong>In Containers Hamlet:</strong> A widened path, a rock glade or a lodge forecourt can serve this role. A formal urban square is not assumed to be appropriate in the woodland.</p>
-  <p class="small"><strong>Current response:</strong> The baseline has informal outdoor areas and a lodge porch, but no dedicated small gathering place.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Is there a small place to pause within a short walk of each home?</li><li>Does it have a sense of enclosure without becoming a trap?</li><li>Is it usable in winter and by people with reduced mobility?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>The woodland-spine scenario can add two or three small pockets rather than one central square.</p><h4>Trade-offs and competing priorities</h4><p>More small places spread maintenance and may fragment activity. One central place is easier to service but less private.</p></section>
-      <section><h4>What is unresolved</h4><p>No assessment of sun, wind, snow clearing, seating or acoustic comfort at candidate places.</p><h4>Limitations</h4><ul><li>No microclimate study</li><li>No furniture or maintenance plan</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> A small square works when it is part of the publicness sequence and on a path with a real destination.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-36">36 · Degrees of Publicness</a> · <a href="#pattern-69">69 · Public Outdoor Room</a> · <a href="#pattern-120">120 · Paths and Goals</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 61. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 61 · Community</p>
+<h3><a href="#pattern-61">Small Public Squares</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Common land +3</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Provide small, enclosed outdoor gathering places at the scale of everyday encounters.</p>
+<p><strong>In Containers Hamlet:</strong> A widened path, a rock glade or a lodge forecourt can serve this role. A formal urban square is not assumed to be appropriate in the woodland.</p>
+<p class="small"><strong>Current response:</strong> The baseline has informal outdoor areas and a lodge porch, but no dedicated small gathering place.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Is there a small place to pause within a short walk of each home?</li><li>Does it have a sense of enclosure without becoming a trap?</li><li>Is it usable in winter and by people with reduced mobility?</li></ul></section>
+<section><h4>Design alternatives</h4><p>The woodland-spine scenario can add two or three small pockets rather than one central square.</p><h4>Trade-offs and competing priorities</h4><p>More small places spread maintenance and may fragment activity. One central place is easier to service but less private.</p></section>
+<section><h4>What is unresolved</h4><p>No assessment of sun, wind, snow clearing, seating or acoustic comfort at candidate places.</p><h4>Limitations</h4><ul><li>No microclimate study</li><li>No furniture or maintenance plan</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> A small square works when it is part of the publicness sequence and on a path with a real destination.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-36">36 · Degrees of Publicness</a> · <a href="#pattern-69">69 · Public Outdoor Room</a> · <a href="#pattern-120">120 · Paths and Goals</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 61. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-67" data-pattern data-number="67" data-title="Common Land" data-scale="landscape" data-elements="site-plan landscape common-land lodge" data-evidence="evidence-needed" data-search="67 Common Land Set aside shared land that residents collectively use and care for, distinct from private lots and public park. The community land trust should identify the glade, shoreline buffers, woodland and lodge grounds as shared land with different rules; not all land is equally public. The fiction includes shared landscape and a community land trust, but ownership, access and stewardship are not mapped consistently.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 67 · Landscape</p>
-    <h3><a href="#pattern-67">Common Land</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +3</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Set aside shared land that residents collectively use and care for, distinct from private lots and public park.</p>
-  <p><strong>In Containers Hamlet:</strong> The community land trust should identify the glade, shoreline buffers, woodland and lodge grounds as shared land with different rules; not all land is equally public.</p>
-  <p class="small"><strong>Current response:</strong> The fiction includes shared landscape and a community land trust, but ownership, access and stewardship are not mapped consistently.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Which land is commonly held, which is private and which is protected?</li><li>Who maintains each shared place?</li><li>Does shared use damage sensitive habitat?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Scenario B gives a central common clearing; Scenario C uses a linear spine of smaller common pockets.</p><h4>Trade-offs and competing priorities</h4><p>More common land can support shared life but increases maintenance and may disturb habitat. Protected land may need to remain inaccessible.</p></section>
-      <section><h4>What is unresolved</h4><p>No legal survey, stewardship agreement or ecological assessment.</p><h4>Limitations</h4><ul><li>Fictional parcel and ownership</li><li>No ecology survey</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> Common land needs site repair and positive outdoor space so shared use does not become an excuse to develop sensitive ground.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-104">104 · Site Repair</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-171">171 · Tree Places</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 67. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 67 · Landscape</p>
+<h3><a href="#pattern-67">Common Land</a></h3>
+<p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +3</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Set aside shared land that residents collectively use and care for, distinct from private lots and public park.</p>
+<p><strong>In Containers Hamlet:</strong> The community land trust should identify the glade, shoreline buffers, woodland and lodge grounds as shared land with different rules; not all land is equally public.</p>
+<p class="small"><strong>Current response:</strong> The fiction includes shared landscape and a community land trust, but ownership, access and stewardship are not mapped consistently.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Which land is commonly held, which is private and which is protected?</li><li>Who maintains each shared place?</li><li>Does shared use damage sensitive habitat?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Scenario B gives a central common clearing; Scenario C uses a linear spine of smaller common pockets.</p><h4>Trade-offs and competing priorities</h4><p>More common land can support shared life but increases maintenance and may disturb habitat. Protected land may need to remain inaccessible.</p></section>
+<section><h4>What is unresolved</h4><p>No legal survey, stewardship agreement or ecological assessment.</p><h4>Limitations</h4><ul><li>Fictional parcel and ownership</li><li>No ecology survey</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> Common land needs site repair and positive outdoor space so shared use does not become an excuse to develop sensitive ground.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-104">104 · Site Repair</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-171">171 · Tree Places</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 67. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-69" data-pattern data-number="69" data-title="Public Outdoor Room" data-scale="community" data-elements="common-land lodge porches paths" data-evidence="conceptual" data-search="69 Public Outdoor Room Make a sheltered outdoor place that feels like a room and supports informal gathering. The lodge porch and a sheltered picnic/workshop edge could be public outdoor rooms. The six cabin porches are more private and should not be treated as the same social space. The lodge has a covered porch; individual homes have porches. Their social role and weather protection are not evaluated.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 69 · Community</p>
-    <h3><a href="#pattern-69">Public Outdoor Room</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Common land +3</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Make a sheltered outdoor place that feels like a room and supports informal gathering.</p>
-  <p><strong>In Containers Hamlet:</strong> The lodge porch and a sheltered picnic/workshop edge could be public outdoor rooms. The six cabin porches are more private and should not be treated as the same social space.</p>
-  <p class="small"><strong>Current response:</strong> The lodge has a covered porch; individual homes have porches. Their social role and weather protection are not evaluated.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Does the place have a clear edge and a reason to linger?</li><li>Can it be used by one person without booking an event?</li><li>Is it sheltered from wind, rain and snow?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Test a sheltered shared terrace between the lodge and the path, or a small covered pocket on the spine.</p><h4>Trade-offs and competing priorities</h4><p>A generous shared room supports events but can create noise and reduce privacy for nearby homes.</p></section>
-      <section><h4>What is unresolved</h4><p>No acoustic, wind, snow or furniture study.</p><h4>Limitations</h4><ul><li>No microclimate or acoustic measurement</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> A public outdoor room is a shared version of the private outdoor room and should sit near common areas, not on a private porch.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-61">61 · Small Public Squares</a> · <a href="#pattern-129">129 · Common Areas at the Heart</a> · <a href="#pattern-163">163 · Outdoor Room</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 69. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 69 · Community</p>
+<h3><a href="#pattern-69">Public Outdoor Room</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Common land +3</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Make a sheltered outdoor place that feels like a room and supports informal gathering.</p>
+<p><strong>In Containers Hamlet:</strong> The lodge porch and a sheltered picnic/workshop edge could be public outdoor rooms. The six cabin porches are more private and should not be treated as the same social space.</p>
+<p class="small"><strong>Current response:</strong> The lodge has a covered porch; individual homes have porches. Their social role and weather protection are not evaluated.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Does the place have a clear edge and a reason to linger?</li><li>Can it be used by one person without booking an event?</li><li>Is it sheltered from wind, rain and snow?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Test a sheltered shared terrace between the lodge and the path, or a small covered pocket on the spine.</p><h4>Trade-offs and competing priorities</h4><p>A generous shared room supports events but can create noise and reduce privacy for nearby homes.</p></section>
+<section><h4>What is unresolved</h4><p>No acoustic, wind, snow or furniture study.</p><h4>Limitations</h4><ul><li>No microclimate or acoustic measurement</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> A public outdoor room is a shared version of the private outdoor room and should sit near common areas, not on a private porch.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-61">61 · Small Public Squares</a> · <a href="#pattern-129">129 · Common Areas at the Heart</a> · <a href="#pattern-163">163 · Outdoor Room</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 69. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-104" data-pattern data-number="104" data-title="Site Repair" data-scale="landscape" data-elements="site-plan landscape homes lodge paths" data-evidence="evidence-needed" data-search="104 Site Repair Place buildings and infrastructure where they avoid unnecessary damage and help repair already disturbed ground. Test each home, path and service corridor against rock, wetland, drainage, tree roots and habitat. A buffer on a drawing is not proof that damage is avoided. The baseline has illustrative buffers, rock and wetland constraints, and elevated foundations, but no survey or construction-impact assessment.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 104 · Landscape</p>
-    <h3><a href="#pattern-104">Site Repair</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Place buildings and infrastructure where they avoid unnecessary damage and help repair already disturbed ground.</p>
-  <p><strong>In Containers Hamlet:</strong> Test each home, path and service corridor against rock, wetland, drainage, tree roots and habitat. A buffer on a drawing is not proof that damage is avoided.</p>
-  <p class="small"><strong>Current response:</strong> The baseline has illustrative buffers, rock and wetland constraints, and elevated foundations, but no survey or construction-impact assessment.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Is this footprint on already disturbed ground?</li><li>What vegetation, drainage or habitat is affected?</li><li>Can the damage be restored, and who is responsible?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>The scenario comparison should show which footprints and paths move into or out of sensitive areas.</p><h4>Trade-offs and competing priorities</h4><p>A compact cluster may shorten services but concentrate damage; a dispersed layout may protect one glade while fragmenting habitat elsewhere.</p></section>
-      <section><h4>What is unresolved</h4><p>No ecological survey, arborist assessment, drainage model or construction-access plan.</p><h4>Limitations</h4><ul><li>Fictional landscape</li><li>No professional ecological assessment</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> Site repair constrains the house cluster, common land and paths; those patterns should follow the land rather than force a geometry.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-120">120 · Paths and Goals</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 104. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 104 · Landscape</p>
+<h3><a href="#pattern-104">Site Repair</a></h3>
+<p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Place buildings and infrastructure where they avoid unnecessary damage and help repair already disturbed ground.</p>
+<p><strong>In Containers Hamlet:</strong> Test each home, path and service corridor against rock, wetland, drainage, tree roots and habitat. A buffer on a drawing is not proof that damage is avoided.</p>
+<p class="small"><strong>Current response:</strong> The baseline has illustrative buffers, rock and wetland constraints, and elevated foundations, but no survey or construction-impact assessment.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Is this footprint on already disturbed ground?</li><li>What vegetation, drainage or habitat is affected?</li><li>Can the damage be restored, and who is responsible?</li></ul></section>
+<section><h4>Design alternatives</h4><p>The scenario comparison should show which footprints and paths move into or out of sensitive areas.</p><h4>Trade-offs and competing priorities</h4><p>A compact cluster may shorten services but concentrate damage; a dispersed layout may protect one glade while fragmenting habitat elsewhere.</p></section>
+<section><h4>What is unresolved</h4><p>No ecological survey, arborist assessment, drainage model or construction-access plan.</p><h4>Limitations</h4><ul><li>Fictional landscape</li><li>No professional ecological assessment</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> Site repair constrains the house cluster, common land and paths; those patterns should follow the land rather than force a geometry.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-120">120 · Paths and Goals</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 104. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-105" data-pattern data-number="105" data-title="South Facing Outdoors" data-scale="landscape" data-elements="site-plan landscape homes porches lodge" data-evidence="evidence-needed" data-search="105 South Facing Outdoors Put the main outdoor places on the sunny side and use the building to shelter them from wind. Check porch orientation, roof overhangs and snow shedding. A lake view may justify a west or north porch, but the trade-off must be explicit. The baseline orients homes to views and access; porch orientation is not systematically evaluated for winter sun.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 105 · Landscape</p>
-    <h3><a href="#pattern-105">South Facing Outdoors</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Put the main outdoor places on the sunny side and use the building to shelter them from wind.</p>
-  <p><strong>In Containers Hamlet:</strong> Check porch orientation, roof overhangs and snow shedding. A lake view may justify a west or north porch, but the trade-off must be explicit.</p>
-  <p class="small"><strong>Current response:</strong> The baseline orients homes to views and access; porch orientation is not systematically evaluated for winter sun.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Which outdoor places receive useful winter sun?</li><li>Are they sheltered from prevailing wind and snow?</li><li>Does the orientation trade a view for comfort?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>A scenario-level solar/wind study could test whether the lodge terrace and cabin porches have a usable winter microclimate.</p><h4>Trade-offs and competing priorities</h4><p>South glazing and porches gain sun but can overheat, lose heat and reduce privacy. A view orientation may outweigh solar gain.</p></section>
-      <section><h4>What is unresolved</h4><p>No solar, wind or snowdrift model; no measured microclimate.</p><h4>Limitations</h4><ul><li>No site-specific solar or wind study</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> South-facing outdoor space and positive outdoor space reinforce one another; light on two sides affects the interior side of the same decision.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-163">163 · Outdoor Room</a> · <a href="#pattern-159">159 · Light on Two Sides of Every Room</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 105. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 105 · Landscape</p>
+<h3><a href="#pattern-105">South Facing Outdoors</a></h3>
+<p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Put the main outdoor places on the sunny side and use the building to shelter them from wind.</p>
+<p><strong>In Containers Hamlet:</strong> Check porch orientation, roof overhangs and snow shedding. A lake view may justify a west or north porch, but the trade-off must be explicit.</p>
+<p class="small"><strong>Current response:</strong> The baseline orients homes to views and access; porch orientation is not systematically evaluated for winter sun.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Which outdoor places receive useful winter sun?</li><li>Are they sheltered from prevailing wind and snow?</li><li>Does the orientation trade a view for comfort?</li></ul></section>
+<section><h4>Design alternatives</h4><p>A scenario-level solar/wind study could test whether the lodge terrace and cabin porches have a usable winter microclimate.</p><h4>Trade-offs and competing priorities</h4><p>South glazing and porches gain sun but can overheat, lose heat and reduce privacy. A view orientation may outweigh solar gain.</p></section>
+<section><h4>What is unresolved</h4><p>No solar, wind or snowdrift model; no measured microclimate.</p><h4>Limitations</h4><ul><li>No site-specific solar or wind study</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> South-facing outdoor space and positive outdoor space reinforce one another; light on two sides affects the interior side of the same decision.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-163">163 · Outdoor Room</a> · <a href="#pattern-159">159 · Light on Two Sides of Every Room</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 105. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-106" data-pattern data-number="106" data-title="Positive Outdoor Space" data-scale="landscape" data-elements="site-plan landscape common-land homes lodge" data-evidence="conceptual" data-search="106 Positive Outdoor Space Shape outdoor space with buildings, walls, levels or planting so it has a clear form rather than being leftover gap. Evaluate the lodge forecourt, the space between paired homes, the courtyard and the woodland gaps as rooms with clear edges and uses. The Courtyard Residence has an explicit courtyard; other homes have porches and decks. Site-wide outdoor space is not evaluated as positive or residual.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 106 · Landscape</p>
-    <h3><a href="#pattern-106">Positive Outdoor Space</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Shape outdoor space with buildings, walls, levels or planting so it has a clear form rather than being leftover gap.</p>
-  <p><strong>In Containers Hamlet:</strong> Evaluate the lodge forecourt, the space between paired homes, the courtyard and the woodland gaps as rooms with clear edges and uses.</p>
-  <p class="small"><strong>Current response:</strong> The Courtyard Residence has an explicit courtyard; other homes have porches and decks. Site-wide outdoor space is not evaluated as positive or residual.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Does the space have a clear edge and a use?</li><li>Is it more than leftover space between buildings?</li><li>Does enclosure harm access, daylight or ecology?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Scenario B makes a central outdoor room; Scenario C makes a sequence of smaller pockets.</p><h4>Trade-offs and competing priorities</h4><p>Strong enclosure improves comfort but can block views, light, drainage or wildlife movement.</p></section>
-      <section><h4>What is unresolved</h4><p>No spatial-quality or use observation; no wind/sun study.</p><h4>Limitations</h4><ul><li>No observational or microclimate study</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> Positive outdoor space gives the house cluster and common land their physical shape; the outdoor room is its smaller, sheltered version.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-163">163 · Outdoor Room</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 106. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 106 · Landscape</p>
+<h3><a href="#pattern-106">Positive Outdoor Space</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Shape outdoor space with buildings, walls, levels or planting so it has a clear form rather than being leftover gap.</p>
+<p><strong>In Containers Hamlet:</strong> Evaluate the lodge forecourt, the space between paired homes, the courtyard and the woodland gaps as rooms with clear edges and uses.</p>
+<p class="small"><strong>Current response:</strong> The Courtyard Residence has an explicit courtyard; other homes have porches and decks. Site-wide outdoor space is not evaluated as positive or residual.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Does the space have a clear edge and a use?</li><li>Is it more than leftover space between buildings?</li><li>Does enclosure harm access, daylight or ecology?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Scenario B makes a central outdoor room; Scenario C makes a sequence of smaller pockets.</p><h4>Trade-offs and competing priorities</h4><p>Strong enclosure improves comfort but can block views, light, drainage or wildlife movement.</p></section>
+<section><h4>What is unresolved</h4><p>No spatial-quality or use observation; no wind/sun study.</p><h4>Limitations</h4><ul><li>No observational or microclimate study</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> Positive outdoor space gives the house cluster and common land their physical shape; the outdoor room is its smaller, sheltered version.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-163">163 · Outdoor Room</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 106. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-112" data-pattern data-number="112" data-title="Entrance Transition" data-scale="building" data-elements="homes porches paths interiors" data-evidence="conceptual" data-search="112 Entrance Transition Make arrival gradual: path, gate, porch and threshold should give people time and shelter to shift from public to private. Each home needs a legible, step-free arrival sequence with room for a visitor, deliveries, snow and wet clothing. The accessible homes need the threshold detail to work. Homes have porches and step-free entrance intent, but threshold dimensions, door clearances, visitor space and winter maintenance are not fully modelled.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 112 · Building</p>
-    <h3><a href="#pattern-112">Entrance Transition</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +3</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Make arrival gradual: path, gate, porch and threshold should give people time and shelter to shift from public to private.</p>
-  <p><strong>In Containers Hamlet:</strong> Each home needs a legible, step-free arrival sequence with room for a visitor, deliveries, snow and wet clothing. The accessible homes need the threshold detail to work.</p>
-  <p class="small"><strong>Current response:</strong> Homes have porches and step-free entrance intent, but threshold dimensions, door clearances, visitor space and winter maintenance are not fully modelled.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Can a visitor pause out of the weather before entering?</li><li>Is the route step-free and clear of snow storage?</li><li>Can residents reach the door without passing a private window?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Test a deeper covered entry or a small entrance hall in the two accessible homes.</p><h4>Trade-offs and competing priorities</h4><p>A generous transition improves comfort and privacy but consumes floor area and may add heat loss.</p></section>
-      <section><h4>What is unresolved</h4><p>No door/threshold construction detail, no snow or drainage detail.</p><h4>Limitations</h4><ul><li>No construction detail</li><li>No winter maintenance plan</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> The entrance transition is where the publicness gradient becomes a physical threshold; it depends on the path and outdoor space.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-36">36 · Degrees of Publicness</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-120">120 · Paths and Goals</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 112. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 112 · Building</p>
+<h3><a href="#pattern-112">Entrance Transition</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +3</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Make arrival gradual: path, gate, porch and threshold should give people time and shelter to shift from public to private.</p>
+<p><strong>In Containers Hamlet:</strong> Each home needs a legible, step-free arrival sequence with room for a visitor, deliveries, snow and wet clothing. The accessible homes need the threshold detail to work.</p>
+<p class="small"><strong>Current response:</strong> Homes have porches and step-free entrance intent, but threshold dimensions, door clearances, visitor space and winter maintenance are not fully modelled.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Can a visitor pause out of the weather before entering?</li><li>Is the route step-free and clear of snow storage?</li><li>Can residents reach the door without passing a private window?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Test a deeper covered entry or a small entrance hall in the two accessible homes.</p><h4>Trade-offs and competing priorities</h4><p>A generous transition improves comfort and privacy but consumes floor area and may add heat loss.</p></section>
+<section><h4>What is unresolved</h4><p>No door/threshold construction detail, no snow or drainage detail.</p><h4>Limitations</h4><ul><li>No construction detail</li><li>No winter maintenance plan</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> The entrance transition is where the publicness gradient becomes a physical threshold; it depends on the path and outdoor space.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-36">36 · Degrees of Publicness</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-120">120 · Paths and Goals</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 112. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-119" data-pattern data-number="119" data-title="Arcades" data-scale="infrastructure" data-elements="paths lodge porches shared-workshop" data-evidence="conceptual" data-search="119 Arcades A covered walk or gallery can connect entrances and outdoor rooms while giving shelter and a social edge. Consider a covered link at the lodge or between a home and a shared workshop, not a continuous enclosed mall. Snow, ice, drainage and maintenance matter. The baseline has porches but no shared arcade. The cold-climate idea is not tested.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 119 · Infrastructure</p>
-    <h3><a href="#pattern-119">Arcades</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Paths +3</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">A covered walk or gallery can connect entrances and outdoor rooms while giving shelter and a social edge.</p>
-  <p><strong>In Containers Hamlet:</strong> Consider a covered link at the lodge or between a home and a shared workshop, not a continuous enclosed mall. Snow, ice, drainage and maintenance matter.</p>
-  <p class="small"><strong>Current response:</strong> The baseline has porches but no shared arcade. The cold-climate idea is not tested.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Which shared destinations need weather protection?</li><li>Can the route be kept clear of snow and ice?</li><li>Does the cover create a dark or unsafe place?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Test a short covered link at the lodge entrance and a sheltered waiting place on the spine.</p><h4>Trade-offs and competing priorities</h4><p>Cover improves winter use but adds structure, snow load, shading, maintenance and cost; it can also create dark or unsafe edges.</p></section>
-      <section><h4>What is unresolved</h4><p>No snow-load, drainage, daylight or maintenance assessment.</p><h4>Limitations</h4><ul><li>No structural or snow-load design</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> An arcade is a path with a roof and a social edge; it should not substitute for a good outdoor room or a clear entrance transition.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-120">120 · Paths and Goals</a> · <a href="#pattern-163">163 · Outdoor Room</a> · <a href="#pattern-36">36 · Degrees of Publicness</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 119. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 119 · Infrastructure</p>
+<h3><a href="#pattern-119">Arcades</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Paths +3</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">A covered walk or gallery can connect entrances and outdoor rooms while giving shelter and a social edge.</p>
+<p><strong>In Containers Hamlet:</strong> Consider a covered link at the lodge or between a home and a shared workshop, not a continuous enclosed mall. Snow, ice, drainage and maintenance matter.</p>
+<p class="small"><strong>Current response:</strong> The baseline has porches but no shared arcade. The cold-climate idea is not tested.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Which shared destinations need weather protection?</li><li>Can the route be kept clear of snow and ice?</li><li>Does the cover create a dark or unsafe place?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Test a short covered link at the lodge entrance and a sheltered waiting place on the spine.</p><h4>Trade-offs and competing priorities</h4><p>Cover improves winter use but adds structure, snow load, shading, maintenance and cost; it can also create dark or unsafe edges.</p></section>
+<section><h4>What is unresolved</h4><p>No snow-load, drainage, daylight or maintenance assessment.</p><h4>Limitations</h4><ul><li>No structural or snow-load design</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> An arcade is a path with a roof and a social edge; it should not substitute for a good outdoor room or a clear entrance transition.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-120">120 · Paths and Goals</a> · <a href="#pattern-163">163 · Outdoor Room</a> · <a href="#pattern-36">36 · Degrees of Publicness</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 119. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-120" data-pattern data-number="120" data-title="Paths and Goals" data-scale="infrastructure" data-elements="site-plan paths homes lodge common-land" data-evidence="evidence-needed" data-search="120 Paths and Goals Connect meaningful destinations with paths shaped by the places they pass, not just the shortest line. Map the lodge, homes, workshop, parking, drop-off and shared outdoor places. Distinguish everyday routes from recreational trails and emergency access. The site has lanes and trails linking the entrance, homes and lodge, but accessibility, winter maintenance and destination hierarchy are not evaluated.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 120 · Infrastructure</p>
-    <h3><a href="#pattern-120">Paths and Goals</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Connect meaningful destinations with paths shaped by the places they pass, not just the shortest line.</p>
-  <p><strong>In Containers Hamlet:</strong> Map the lodge, homes, workshop, parking, drop-off and shared outdoor places. Distinguish everyday routes from recreational trails and emergency access.</p>
-  <p class="small"><strong>Current response:</strong> The site has lanes and trails linking the entrance, homes and lodge, but accessibility, winter maintenance and destination hierarchy are not evaluated.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>What everyday destinations does this path connect?</li><li>Is it usable by someone with reduced mobility in winter?</li><li>Does it cross sensitive land or private space?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Scenario C makes the spine explicit; Scenario A relies on dispersed routes; Scenario B shortens some trips but concentrates them.</p><h4>Trade-offs and competing priorities</h4><p>More direct paths reduce walking but may cross sensitive ground or private edges. Longer scenic routes may be pleasant but unsuitable for daily accessibility.</p></section>
-      <section><h4>What is unresolved</h4><p>No route-by-route grade, surface, width, lighting or winter assessment.</p><h4>Limitations</h4><ul><li>No topographic route survey</li><li>No winter maintenance plan</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> Paths and goals give the publicness sequence and common land a network; an arcade is a special covered segment, not a replacement for the whole network.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-36">36 · Degrees of Publicness</a> · <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-112">112 · Entrance Transition</a> · <a href="#pattern-119">119 · Arcades</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 120. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 120 · Infrastructure</p>
+<h3><a href="#pattern-120">Paths and Goals</a></h3>
+<p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Connect meaningful destinations with paths shaped by the places they pass, not just the shortest line.</p>
+<p><strong>In Containers Hamlet:</strong> Map the lodge, homes, workshop, parking, drop-off and shared outdoor places. Distinguish everyday routes from recreational trails and emergency access.</p>
+<p class="small"><strong>Current response:</strong> The site has lanes and trails linking the entrance, homes and lodge, but accessibility, winter maintenance and destination hierarchy are not evaluated.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>What everyday destinations does this path connect?</li><li>Is it usable by someone with reduced mobility in winter?</li><li>Does it cross sensitive land or private space?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Scenario C makes the spine explicit; Scenario A relies on dispersed routes; Scenario B shortens some trips but concentrates them.</p><h4>Trade-offs and competing priorities</h4><p>More direct paths reduce walking but may cross sensitive ground or private edges. Longer scenic routes may be pleasant but unsuitable for daily accessibility.</p></section>
+<section><h4>What is unresolved</h4><p>No route-by-route grade, surface, width, lighting or winter assessment.</p><h4>Limitations</h4><ul><li>No topographic route survey</li><li>No winter maintenance plan</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> Paths and goals give the publicness sequence and common land a network; an arcade is a special covered segment, not a replacement for the whole network.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-36">36 · Degrees of Publicness</a> · <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-112">112 · Entrance Transition</a> · <a href="#pattern-119">119 · Arcades</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 120. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-127" data-pattern data-number="127" data-title="Intimacy Gradient" data-scale="interior" data-elements="homes interiors porches" data-evidence="conceptual" data-search="127 Intimacy Gradient Arrange rooms and outdoor spaces from more public to more private, so people can withdraw without crossing private territory. Test the authored accessible interiors and the room-band models for a legible gradient. The long container makes the far end valuable private space. Woodland Cottage and Accessible Garden Home have authored room polygons; the other four use provisional bands. The interiors have not been evaluated as a full gradient.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 127 · Interior</p>
-    <h3><a href="#pattern-127">Intimacy Gradient</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +2</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Arrange rooms and outdoor spaces from more public to more private, so people can withdraw without crossing private territory.</p>
-  <p><strong>In Containers Hamlet:</strong> Test the authored accessible interiors and the room-band models for a legible gradient. The long container makes the far end valuable private space.</p>
-  <p class="small"><strong>Current response:</strong> Woodland Cottage and Accessible Garden Home have authored room polygons; the other four use provisional bands. The interiors have not been evaluated as a full gradient.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Can a resident reach a private room without crossing a shared room?</li><li>Can a visitor be received without entering the private zone?</li><li>Is there a private outdoor place?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Compare a central-service plan with a linear front-to-back plan in the 40-foot homes.</p><h4>Trade-offs and competing priorities</h4><p>A strong gradient protects privacy but can make the far room feel isolated or make plumbing runs longer.</p></section>
-      <section><h4>What is unresolved</h4><p>No acoustic separation, door-swing or occupant-flow analysis.</p><h4>Limitations</h4><ul><li>Concept interiors</li><li>No acoustic or occupancy study</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> The intimacy gradient relies on a clear entrance transition and gives meaning to a room of one’s own, alcoves and window places.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-112">112 · Entrance Transition</a> · <a href="#pattern-141">141 · A Room of One’s Own</a> · <a href="#pattern-179">179 · Alcoves</a> · <a href="#pattern-180">180 · Window Place</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 127. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 127 · Interior</p>
+<h3><a href="#pattern-127">Intimacy Gradient</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +2</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Arrange rooms and outdoor spaces from more public to more private, so people can withdraw without crossing private territory.</p>
+<p><strong>In Containers Hamlet:</strong> Test the authored accessible interiors and the room-band models for a legible gradient. The long container makes the far end valuable private space.</p>
+<p class="small"><strong>Current response:</strong> Woodland Cottage and Accessible Garden Home have authored room polygons; the other four use provisional bands. The interiors have not been evaluated as a full gradient.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Can a resident reach a private room without crossing a shared room?</li><li>Can a visitor be received without entering the private zone?</li><li>Is there a private outdoor place?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Compare a central-service plan with a linear front-to-back plan in the 40-foot homes.</p><h4>Trade-offs and competing priorities</h4><p>A strong gradient protects privacy but can make the far room feel isolated or make plumbing runs longer.</p></section>
+<section><h4>What is unresolved</h4><p>No acoustic separation, door-swing or occupant-flow analysis.</p><h4>Limitations</h4><ul><li>Concept interiors</li><li>No acoustic or occupancy study</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> The intimacy gradient relies on a clear entrance transition and gives meaning to a room of one’s own, alcoves and window places.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-112">112 · Entrance Transition</a> · <a href="#pattern-141">141 · A Room of One’s Own</a> · <a href="#pattern-179">179 · Alcoves</a> · <a href="#pattern-180">180 · Window Place</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 127. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-129" data-pattern data-number="129" data-title="Common Areas at the Heart" data-scale="community" data-elements="lodge common-land paths homes" data-evidence="evidence-needed" data-search="129 Common Areas at the Heart Put shared facilities where everyday activity passes and where people can see and reach them, not at a remote edge. The lodge is near the entrance. Test whether it is socially central, whether residents pass it on ordinary walks, and whether shared facilities can be used without joining a large event. The lodge is a single shared building near the entrance with kitchen, laundry, workshop and gathering space. Its social centrality is asserted, not measured.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 129 · Community</p>
-    <h3><a href="#pattern-129">Common Areas at the Heart</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Common lodge +3</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Put shared facilities where everyday activity passes and where people can see and reach them, not at a remote edge.</p>
-  <p><strong>In Containers Hamlet:</strong> The lodge is near the entrance. Test whether it is socially central, whether residents pass it on ordinary walks, and whether shared facilities can be used without joining a large event.</p>
-  <p class="small"><strong>Current response:</strong> The lodge is a single shared building near the entrance with kitchen, laundry, workshop and gathering space. Its social centrality is asserted, not measured.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Does daily life pass the common area?</li><li>Can a resident use one facility without joining an event?</li><li>Are quiet and noisy activities separated?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>A small shared kitchen/workshop pocket on the spine, or a satellite mailbox/tool shed, could complement the lodge.</p><h4>Trade-offs and competing priorities</h4><p>A central lodge supports shared activity but concentrates noise and may dominate the community. Satellite facilities add maintenance but reduce dependence on one building.</p></section>
-      <section><h4>What is unresolved</h4><p>No resident activity data, no acoustic or management study.</p><h4>Limitations</h4><ul><li>No post-occupancy or resident survey</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> Common areas need a house cluster and public outdoor room to become a heart; a remote lodge alone cannot create community.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-69">69 · Public Outdoor Room</a> · <a href="#pattern-61">61 · Small Public Squares</a> · <a href="#pattern-155">155 · Old Age Cottage</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 129. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 129 · Community</p>
+<h3><a href="#pattern-129">Common Areas at the Heart</a></h3>
+<p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Common lodge +3</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Put shared facilities where everyday activity passes and where people can see and reach them, not at a remote edge.</p>
+<p><strong>In Containers Hamlet:</strong> The lodge is near the entrance. Test whether it is socially central, whether residents pass it on ordinary walks, and whether shared facilities can be used without joining a large event.</p>
+<p class="small"><strong>Current response:</strong> The lodge is a single shared building near the entrance with kitchen, laundry, workshop and gathering space. Its social centrality is asserted, not measured.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Does daily life pass the common area?</li><li>Can a resident use one facility without joining an event?</li><li>Are quiet and noisy activities separated?</li></ul></section>
+<section><h4>Design alternatives</h4><p>A small shared kitchen/workshop pocket on the spine, or a satellite mailbox/tool shed, could complement the lodge.</p><h4>Trade-offs and competing priorities</h4><p>A central lodge supports shared activity but concentrates noise and may dominate the community. Satellite facilities add maintenance but reduce dependence on one building.</p></section>
+<section><h4>What is unresolved</h4><p>No resident activity data, no acoustic or management study.</p><h4>Limitations</h4><ul><li>No post-occupancy or resident survey</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> Common areas need a house cluster and public outdoor room to become a heart; a remote lodge alone cannot create community.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-37">37 · House Cluster</a> · <a href="#pattern-69">69 · Public Outdoor Room</a> · <a href="#pattern-61">61 · Small Public Squares</a> · <a href="#pattern-155">155 · Old Age Cottage</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 129. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-141" data-pattern data-number="141" data-title="A Room of One’s Own" data-scale="interior" data-elements="homes interiors" data-evidence="conceptual" data-search="141 A Room of One’s Own Give each resident a private room they can close, personalise and use without negotiating shared space. Check bedroom counts and private space in each home. A one-bedroom home works for one resident or a couple; it is not a universal household model. The six homes include one-bedroom and studio arrangements. The accessible homes have one bedroom and no dedicated guest room.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 141 · Interior</p>
-    <h3><a href="#pattern-141">A Room of One’s Own</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +1</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Give each resident a private room they can close, personalise and use without negotiating shared space.</p>
-  <p><strong>In Containers Hamlet:</strong> Check bedroom counts and private space in each home. A one-bedroom home works for one resident or a couple; it is not a universal household model.</p>
-  <p class="small"><strong>Current response:</strong> The six homes include one-bedroom and studio arrangements. The accessible homes have one bedroom and no dedicated guest room.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Does every resident have a door they can close?</li><li>Can the room be used for sleep, work or retreat?</li><li>Is there daylight and a place for personal belongings?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Test a small alcove/workspace within the bedroom or a separate garden studio where site and budget allow.</p><h4>Trade-offs and competing priorities</h4><p>More private rooms increase floor area, cost and energy demand; a small home may need a flexible room instead.</p></section>
-      <section><h4>What is unresolved</h4><p>No household composition assumptions or furniture/clearance study.</p><h4>Limitations</h4><ul><li>No defined household sizes</li><li>No furniture layout</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> A private room depends on a clear intimacy gradient and is made usable by alcoves and a window place.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-127">127 · Intimacy Gradient</a> · <a href="#pattern-179">179 · Alcoves</a> · <a href="#pattern-180">180 · Window Place</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 141. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 141 · Interior</p>
+<h3><a href="#pattern-141">A Room of One’s Own</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +1</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Give each resident a private room they can close, personalise and use without negotiating shared space.</p>
+<p><strong>In Containers Hamlet:</strong> Check bedroom counts and private space in each home. A one-bedroom home works for one resident or a couple; it is not a universal household model.</p>
+<p class="small"><strong>Current response:</strong> The six homes include one-bedroom and studio arrangements. The accessible homes have one bedroom and no dedicated guest room.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Does every resident have a door they can close?</li><li>Can the room be used for sleep, work or retreat?</li><li>Is there daylight and a place for personal belongings?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Test a small alcove/workspace within the bedroom or a separate garden studio where site and budget allow.</p><h4>Trade-offs and competing priorities</h4><p>More private rooms increase floor area, cost and energy demand; a small home may need a flexible room instead.</p></section>
+<section><h4>What is unresolved</h4><p>No household composition assumptions or furniture/clearance study.</p><h4>Limitations</h4><ul><li>No defined household sizes</li><li>No furniture layout</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> A private room depends on a clear intimacy gradient and is made usable by alcoves and a window place.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-127">127 · Intimacy Gradient</a> · <a href="#pattern-179">179 · Alcoves</a> · <a href="#pattern-180">180 · Window Place</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 141. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-155" data-pattern data-number="155" data-title="Old Age Cottage" data-scale="building" data-elements="homes paths lodge" data-evidence="conceptual" data-search="155 Old Age Cottage Provide a small, accessible dwelling close to community support so people can remain in the hamlet as they age. The two accessible homes demonstrate this idea. Test whether they are close enough to the lodge and whether care, deliveries and emergency access work in winter. Woodland Cottage and Accessible Garden Home are single-storey accessible demonstrations; the other four are not held to that target.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 155 · Building</p>
-    <h3><a href="#pattern-155">Old Age Cottage</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +2</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Provide a small, accessible dwelling close to community support so people can remain in the hamlet as they age.</p>
-  <p><strong>In Containers Hamlet:</strong> The two accessible homes demonstrate this idea. Test whether they are close enough to the lodge and whether care, deliveries and emergency access work in winter.</p>
-  <p class="small"><strong>Current response:</strong> Woodland Cottage and Accessible Garden Home are single-storey accessible demonstrations; the other four are not held to that target.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Can an older resident reach the lodge without stairs or a car?</li><li>Can a carer or visitor reach the door?</li><li>Does the home have a private room and a step-free bathroom?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Assign one accessible home near the lodge or a shared path, or add a guest/carer room to the lodge.</p><h4>Trade-offs and competing priorities</h4><p>A cottage close to the lodge gains support but may lose privacy; a remote cottage gains quiet but makes care harder.</p></section>
-      <section><h4>What is unresolved</h4><p>No care model, emergency response time or ageing-in-place review.</p><h4>Limitations</h4><ul><li>No care or health assessment</li><li>No emergency response study</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> An old-age cottage should be part of the common heart and entrance/path network, not an isolated accessible unit at the edge.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-129">129 · Common Areas at the Heart</a> · <a href="#pattern-112">112 · Entrance Transition</a> · <a href="#pattern-141">141 · A Room of One’s Own</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 155. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 155 · Building</p>
+<h3><a href="#pattern-155">Old Age Cottage</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +2</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Provide a small, accessible dwelling close to community support so people can remain in the hamlet as they age.</p>
+<p><strong>In Containers Hamlet:</strong> The two accessible homes demonstrate this idea. Test whether they are close enough to the lodge and whether care, deliveries and emergency access work in winter.</p>
+<p class="small"><strong>Current response:</strong> Woodland Cottage and Accessible Garden Home are single-storey accessible demonstrations; the other four are not held to that target.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Can an older resident reach the lodge without stairs or a car?</li><li>Can a carer or visitor reach the door?</li><li>Does the home have a private room and a step-free bathroom?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Assign one accessible home near the lodge or a shared path, or add a guest/carer room to the lodge.</p><h4>Trade-offs and competing priorities</h4><p>A cottage close to the lodge gains support but may lose privacy; a remote cottage gains quiet but makes care harder.</p></section>
+<section><h4>What is unresolved</h4><p>No care model, emergency response time or ageing-in-place review.</p><h4>Limitations</h4><ul><li>No care or health assessment</li><li>No emergency response study</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> An old-age cottage should be part of the common heart and entrance/path network, not an isolated accessible unit at the edge.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-129">129 · Common Areas at the Heart</a> · <a href="#pattern-112">112 · Entrance Transition</a> · <a href="#pattern-141">141 · A Room of One’s Own</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 155. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-159" data-pattern data-number="159" data-title="Light on Two Sides of Every Room" data-scale="building" data-elements="homes interiors porches" data-evidence="evidence-needed" data-search="159 Light on Two Sides of Every Room Daylight from two directions makes a room feel more balanced and reduces glare compared with a single bright wall. Test existing rooms for two-sided light. A 2.35 m clear width makes cross-light difficult; end windows, roof lights and open-plan connections may help but add heat loss and structural work. The models record openings and orientations, but do not calculate daylight, glare or two-sidedness for every room.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 159 · Building</p>
-    <h3><a href="#pattern-159">Light on Two Sides of Every Room</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Individual homes +2</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Daylight from two directions makes a room feel more balanced and reduces glare compared with a single bright wall.</p>
-  <p><strong>In Containers Hamlet:</strong> Test existing rooms for two-sided light. A 2.35 m clear width makes cross-light difficult; end windows, roof lights and open-plan connections may help but add heat loss and structural work.</p>
-  <p class="small"><strong>Current response:</strong> The models record openings and orientations, but do not calculate daylight, glare or two-sidedness for every room.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Does the room receive light from more than one direction?</li><li>Is there glare or a dark back wall?</li><li>What are the heat-loss and privacy costs?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Compare end-window, opposite-window and clerestory strategies in the 40-foot homes.</p><h4>Trade-offs and competing priorities</h4><p>More glazing improves daylight but increases heat loss, solar gain, privacy loss and structural complexity.</p></section>
-      <section><h4>What is unresolved</h4><p>No daylight simulation, glare analysis or overheating study.</p><h4>Limitations</h4><ul><li>No daylight model</li><li>No energy or glare simulation</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> Two-sided light supports south-facing outdoor space and the window place; it can conflict with privacy and heat loss.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-105">105 · South Facing Outdoors</a> · <a href="#pattern-163">163 · Outdoor Room</a> · <a href="#pattern-180">180 · Window Place</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 159. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 159 · Building</p>
+<h3><a href="#pattern-159">Light on Two Sides of Every Room</a></h3>
+<p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Individual homes +2</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Daylight from two directions makes a room feel more balanced and reduces glare compared with a single bright wall.</p>
+<p><strong>In Containers Hamlet:</strong> Test existing rooms for two-sided light. A 2.35 m clear width makes cross-light difficult; end windows, roof lights and open-plan connections may help but add heat loss and structural work.</p>
+<p class="small"><strong>Current response:</strong> The models record openings and orientations, but do not calculate daylight, glare or two-sidedness for every room.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Does the room receive light from more than one direction?</li><li>Is there glare or a dark back wall?</li><li>What are the heat-loss and privacy costs?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Compare end-window, opposite-window and clerestory strategies in the 40-foot homes.</p><h4>Trade-offs and competing priorities</h4><p>More glazing improves daylight but increases heat loss, solar gain, privacy loss and structural complexity.</p></section>
+<section><h4>What is unresolved</h4><p>No daylight simulation, glare analysis or overheating study.</p><h4>Limitations</h4><ul><li>No daylight model</li><li>No energy or glare simulation</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> Two-sided light supports south-facing outdoor space and the window place; it can conflict with privacy and heat loss.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-105">105 · South Facing Outdoors</a> · <a href="#pattern-163">163 · Outdoor Room</a> · <a href="#pattern-180">180 · Window Place</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 159. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-163" data-pattern data-number="163" data-title="Outdoor Room" data-scale="building" data-elements="homes porches lodge common-land" data-evidence="conceptual" data-search="163 Outdoor Room Treat a porch, terrace or courtyard as a real room with a floor, shelter, edge and furniture. Evaluate the six cabin porches and lodge porch for depth, wind, rain, snow, insects, privacy, step-free access and furniture. Porches are modelled in the Design Lab; their usability and seasonal performance are not evaluated.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 163 · Building</p>
-    <h3><a href="#pattern-163">Outdoor Room</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +3</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Treat a porch, terrace or courtyard as a real room with a floor, shelter, edge and furniture.</p>
-  <p><strong>In Containers Hamlet:</strong> Evaluate the six cabin porches and lodge porch for depth, wind, rain, snow, insects, privacy, step-free access and furniture.</p>
-  <p class="small"><strong>Current response:</strong> Porches are modelled in the Design Lab; their usability and seasonal performance are not evaluated.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Can two people sit, eat or talk in the space?</li><li>Is it sheltered from rain, wind and snow?</li><li>Can it be reached step-free?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Test a deeper screened porch or a courtyard edge in the accessible homes.</p><h4>Trade-offs and competing priorities</h4><p>A deeper porch improves outdoor living but increases roof area, cost, heat loss and snow load.</p></section>
-      <section><h4>What is unresolved</h4><p>No furniture layout, wind-driven rain or snow study.</p><h4>Limitations</h4><ul><li>No furniture or microclimate study</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> The outdoor room is the private or shared version of positive outdoor space; it needs sun, shelter and a window/indoor connection.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-69">69 · Public Outdoor Room</a> · <a href="#pattern-105">105 · South Facing Outdoors</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-180">180 · Window Place</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 163. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 163 · Building</p>
+<h3><a href="#pattern-163">Outdoor Room</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +3</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Treat a porch, terrace or courtyard as a real room with a floor, shelter, edge and furniture.</p>
+<p><strong>In Containers Hamlet:</strong> Evaluate the six cabin porches and lodge porch for depth, wind, rain, snow, insects, privacy, step-free access and furniture.</p>
+<p class="small"><strong>Current response:</strong> Porches are modelled in the Design Lab; their usability and seasonal performance are not evaluated.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Can two people sit, eat or talk in the space?</li><li>Is it sheltered from rain, wind and snow?</li><li>Can it be reached step-free?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Test a deeper screened porch or a courtyard edge in the accessible homes.</p><h4>Trade-offs and competing priorities</h4><p>A deeper porch improves outdoor living but increases roof area, cost, heat loss and snow load.</p></section>
+<section><h4>What is unresolved</h4><p>No furniture layout, wind-driven rain or snow study.</p><h4>Limitations</h4><ul><li>No furniture or microclimate study</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> The outdoor room is the private or shared version of positive outdoor space; it needs sun, shelter and a window/indoor connection.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-69">69 · Public Outdoor Room</a> · <a href="#pattern-105">105 · South Facing Outdoors</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a> · <a href="#pattern-180">180 · Window Place</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 163. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-171" data-pattern data-number="171" data-title="Tree Places" data-scale="landscape" data-elements="site-plan landscape common-land paths homes" data-evidence="evidence-needed" data-search="171 Tree Places Preserve special trees and make places around them for sitting, play or gathering rather than clearing every tree. The woodland is the hamlet’s character. Map candidate tree places, root protection zones and views; do not treat the whole site as buildable. The site has forest, rock and buffers, but no tree survey or root-protection plan. The site plan is illustrative.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 171 · Landscape</p>
-    <h3><a href="#pattern-171">Tree Places</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Preserve special trees and make places around them for sitting, play or gathering rather than clearing every tree.</p>
-  <p><strong>In Containers Hamlet:</strong> The woodland is the hamlet’s character. Map candidate tree places, root protection zones and views; do not treat the whole site as buildable.</p>
-  <p class="small"><strong>Current response:</strong> The site has forest, rock and buffers, but no tree survey or root-protection plan. The site plan is illustrative.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Which trees are irreplaceable or culturally important?</li><li>Is the root zone protected from construction?</li><li>Does the design use the tree as a place, not just an obstacle?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Shift a path, porch or parking area to preserve a significant tree; use a tree place as a small shared destination.</p><h4>Trade-offs and competing priorities</h4><p>Preserving trees can constrain foundations, solar access, snow clearing and emergency access; removing them can damage character and habitat.</p></section>
-      <section><h4>What is unresolved</h4><p>No arborist survey, root mapping or species/habitat assessment.</p><h4>Limitations</h4><ul><li>No tree survey</li><li>Fictional ecology</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> Tree places make common land and site repair tangible; a preserved tree can anchor a positive outdoor space or a path destination.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-104">104 · Site Repair</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 171. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 171 · Landscape</p>
+<h3><a href="#pattern-171">Tree Places</a></h3>
+<p class="pattern-badges"><span class="badge evidence-evidence-needed">Evidence needed</span> <span class="badge">Site plan +4</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Preserve special trees and make places around them for sitting, play or gathering rather than clearing every tree.</p>
+<p><strong>In Containers Hamlet:</strong> The woodland is the hamlet’s character. Map candidate tree places, root protection zones and views; do not treat the whole site as buildable.</p>
+<p class="small"><strong>Current response:</strong> The site has forest, rock and buffers, but no tree survey or root-protection plan. The site plan is illustrative.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Which trees are irreplaceable or culturally important?</li><li>Is the root zone protected from construction?</li><li>Does the design use the tree as a place, not just an obstacle?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Shift a path, porch or parking area to preserve a significant tree; use a tree place as a small shared destination.</p><h4>Trade-offs and competing priorities</h4><p>Preserving trees can constrain foundations, solar access, snow clearing and emergency access; removing them can damage character and habitat.</p></section>
+<section><h4>What is unresolved</h4><p>No arborist survey, root mapping or species/habitat assessment.</p><h4>Limitations</h4><ul><li>No tree survey</li><li>Fictional ecology</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> Tree places make common land and site repair tangible; a preserved tree can anchor a positive outdoor space or a path destination.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-67">67 · Common Land</a> · <a href="#pattern-104">104 · Site Repair</a> · <a href="#pattern-106">106 · Positive Outdoor Space</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 171. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-179" data-pattern data-number="179" data-title="Alcoves" data-scale="interior" data-elements="homes interiors" data-evidence="conceptual" data-search="179 Alcoves Small, semi-enclosed nooks let people be together without being on display. Use alcoves for reading, work, a guest bed or a quiet seat in the long container. They must not block the accessible route. Not modelled. The interiors have rooms and furniture but no alcove geometry.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 179 · Interior</p>
-    <h3><a href="#pattern-179">Alcoves</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +1</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Small, semi-enclosed nooks let people be together without being on display.</p>
-  <p><strong>In Containers Hamlet:</strong> Use alcoves for reading, work, a guest bed or a quiet seat in the long container. They must not block the accessible route.</p>
-  <p class="small"><strong>Current response:</strong> Not modelled. The interiors have rooms and furniture but no alcove geometry.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Is there a place to sit apart without leaving the room?</li><li>Does the alcove have light and a view?</li><li>Does it obstruct the accessible route?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Test a window alcove or a shelf-backed seat in the 40-foot homes.</p><h4>Trade-offs and competing priorities</h4><p>Alcoves add enclosure and intimacy but reduce open floor area and can complicate circulation and light.</p></section>
-      <section><h4>What is unresolved</h4><p>No furniture, reach-range or route-clearance study.</p><h4>Limitations</h4><ul><li>Not modelled in the current interiors</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> An alcove supports the intimacy gradient and a room of one’s own at a smaller scale; a window place can be its edge.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-127">127 · Intimacy Gradient</a> · <a href="#pattern-141">141 · A Room of One’s Own</a> · <a href="#pattern-180">180 · Window Place</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 179. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 179 · Interior</p>
+<h3><a href="#pattern-179">Alcoves</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +1</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Small, semi-enclosed nooks let people be together without being on display.</p>
+<p><strong>In Containers Hamlet:</strong> Use alcoves for reading, work, a guest bed or a quiet seat in the long container. They must not block the accessible route.</p>
+<p class="small"><strong>Current response:</strong> Not modelled. The interiors have rooms and furniture but no alcove geometry.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Is there a place to sit apart without leaving the room?</li><li>Does the alcove have light and a view?</li><li>Does it obstruct the accessible route?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Test a window alcove or a shelf-backed seat in the 40-foot homes.</p><h4>Trade-offs and competing priorities</h4><p>Alcoves add enclosure and intimacy but reduce open floor area and can complicate circulation and light.</p></section>
+<section><h4>What is unresolved</h4><p>No furniture, reach-range or route-clearance study.</p><h4>Limitations</h4><ul><li>Not modelled in the current interiors</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> An alcove supports the intimacy gradient and a room of one’s own at a smaller scale; a window place can be its edge.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-127">127 · Intimacy Gradient</a> · <a href="#pattern-141">141 · A Room of One’s Own</a> · <a href="#pattern-180">180 · Window Place</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 179. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
 <article class="pattern-card" id="pattern-180" data-pattern data-number="180" data-title="Window Place" data-scale="interior" data-elements="homes interiors porches" data-evidence="conceptual" data-search="180 Window Place Make a comfortable place to sit at a window, with light, a view and a sense of enclosure. Use window places in the long cabins for reading, work and landscape connection. Include accessible seating and safe window operation; do not block the route. Not modelled. Windows are recorded, but no seat or clear floor zone is assigned.">
-  <header class="pattern-card-header">
-    <p class="eyebrow">Pattern 180 · Interior</p>
-    <h3><a href="#pattern-180">Window Place</a></h3>
-    <p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +2</span> <span class="badge verified">Title/number verified</span></p>
-  </header>
-  <p class="pattern-summary">Make a comfortable place to sit at a window, with light, a view and a sense of enclosure.</p>
-  <p><strong>In Containers Hamlet:</strong> Use window places in the long cabins for reading, work and landscape connection. Include accessible seating and safe window operation; do not block the route.</p>
-  <p class="small"><strong>Current response:</strong> Not modelled. Windows are recorded, but no seat or clear floor zone is assigned.</p>
-  <details>
-    <summary>Design questions, trade-offs, evidence and limits</summary>
-    <div class="pattern-detail-grid">
-      <section><h4>Questions to ask</h4><ul><li>Can a person sit at the window comfortably?</li><li>Is the seat accessible and easy to leave?</li><li>Is there glare, privacy or overheating?</li></ul></section>
-      <section><h4>Design alternatives</h4><p>Test a built-in bench with a lift-out accessible seat, or a movable chair for flexibility.</p><h4>Trade-offs and competing priorities</h4><p>Built-ins save space but are hard to change and may not suit all bodies; movable furniture is flexible but can block routes.</p></section>
-      <section><h4>What is unresolved</h4><p>No seat height, reach, glare, privacy or window-operation study.</p><h4>Limitations</h4><ul><li>No ergonomic or daylight study</li></ul></section>
-    </div>
-    <p><strong>Why these patterns are linked:</strong> A window place is a small room of one’s own and an alcove at the building edge; it connects the interior to the outdoor room and two-sided light.</p>
-    <p class="small"><strong>Related patterns:</strong> <a href="#pattern-127">127 · Intimacy Gradient</a> · <a href="#pattern-141">141 · A Room of One’s Own</a> · <a href="#pattern-159">159 · Light on Two Sides of Every Room</a> · <a href="#pattern-163">163 · Outdoor Room</a> · <a href="#pattern-179">179 · Alcoves</a></p>
-  </details>
-  <footer class="pattern-card-footer">
-    <p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 180. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
-    <p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
-  </footer>
+<header class="pattern-card-header">
+<p class="eyebrow">Pattern 180 · Interior</p>
+<h3><a href="#pattern-180">Window Place</a></h3>
+<p class="pattern-badges"><span class="badge evidence-conceptual">Conceptual</span> <span class="badge">Individual homes +2</span> <span class="badge verified">Title/number verified</span></p>
+</header>
+<p class="pattern-summary">Make a comfortable place to sit at a window, with light, a view and a sense of enclosure.</p>
+<p><strong>In Containers Hamlet:</strong> Use window places in the long cabins for reading, work and landscape connection. Include accessible seating and safe window operation; do not block the route.</p>
+<p class="small"><strong>Current response:</strong> Not modelled. Windows are recorded, but no seat or clear floor zone is assigned.</p>
+<details>
+<summary>Design questions, trade-offs, evidence and limits</summary>
+<div class="pattern-detail-grid">
+<section><h4>Questions to ask</h4><ul><li>Can a person sit at the window comfortably?</li><li>Is the seat accessible and easy to leave?</li><li>Is there glare, privacy or overheating?</li></ul></section>
+<section><h4>Design alternatives</h4><p>Test a built-in bench with a lift-out accessible seat, or a movable chair for flexibility.</p><h4>Trade-offs and competing priorities</h4><p>Built-ins save space but are hard to change and may not suit all bodies; movable furniture is flexible but can block routes.</p></section>
+<section><h4>What is unresolved</h4><p>No seat height, reach, glare, privacy or window-operation study.</p><h4>Limitations</h4><ul><li>No ergonomic or daylight study</li></ul></section>
+</div>
+<p><strong>Why these patterns are linked:</strong> A window place is a small room of one’s own and an alcove at the building edge; it connects the interior to the outdoor room and two-sided light.</p>
+<p class="small"><strong>Related patterns:</strong> <a href="#pattern-127">127 · Intimacy Gradient</a> · <a href="#pattern-141">141 · A Room of One’s Own</a> · <a href="#pattern-159">159 · Light on Two Sides of Every Room</a> · <a href="#pattern-163">163 · Outdoor Room</a> · <a href="#pattern-179">179 · Alcoves</a></p>
+</details>
+<footer class="pattern-card-footer">
+<p class="small"><strong>Source:</strong> A Pattern Language (1977), pattern 180. <a href="https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf" rel="noopener">Open the primary source PDF</a>. Title and number checked against the source.</p>
+<p class="small">This is an original interpretation, not a quotation from the book. It is not a building-code, accessibility or ecological-compliance finding.</p>
+</footer>
 </article>
-    </div>
-    <p class="small">A pattern may be partially applicable or deliberately rejected. There are no pass/fail scores and no single “community quality” index. Evidence states describe the <em>current</em> application, not the pattern’s worth.</p>
-  </section>
-
-  <section aria-labelledby="reading-title">
-    <h2 id="reading-title">What the evidence labels mean</h2>
-    <div class="table-wrap" tabindex="0" role="region" aria-label="Evidence states"><table><caption>Evidence states used in the Explorer.</caption><thead><tr><th scope="col">State</th><th scope="col">Meaning</th></tr></thead><tbody>
-      <tr><th scope="row">Not evaluated</th><td>The design question has not been considered.</td></tr>
-      <tr><th scope="row">Conceptual</th><td>A potential response has been illustrated but not tested.</td></tr>
-      <tr><th scope="row">Evidence needed</th><td>A relevant concern is identified, but the supporting information is missing.</td></tr>
-      <tr><th scope="row">Evidence-supported</th><td>A conclusion is supported only within the stated scope.</td></tr>
-      <tr><th scope="row">Trade-off identified</th><td>The design improves one consideration while potentially weakening another.</td></tr>
-      <tr><th scope="row">Not applicable</th><td>The pattern is not relevant here, with an explanation.</td></tr>
-    </tbody></table></div>
-    <p class="small">Evidence states are stored on the application, not the pattern definition. The same pattern may be conceptual for one home, evidence-needed for the site and not applicable to the lodge.</p>
-  </section>
-
-  <section aria-labelledby="next-title">
-    <h2 id="next-title">Where this connects</h2>
-    <ul>
-      <li><a href="../">Design Lab gallery</a> — the six selected homes.</li>
-      <li><a href="../architecture/hamlet-woodland-cottage/">Woodland Cottage drawings</a> — the canonical SVG reference.</li>
-      <li><a href="../illustration/">Illustration pipeline</a> — scene, prompt and manifest rules.</li>
-      <li><a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-language.md">Pattern-language method and copyright notes</a></li>
-      <li><a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-methodology.md">Evaluation methodology and evidence policy</a></li>
-    </ul>
-    <p class="small">This Explorer is Phase 1 of the pattern-language work. Site-plan highlighting, scenario comparison, lodge/cabin annotations, resident scenarios and structured evaluation records are the next phases. They are not implied by this page.</p>
-  </section>
+</div>
+<p class="small">A pattern may be partially applicable or deliberately rejected. There are no pass/fail scores and no single “community quality” index. Evidence states describe the <em>current</em> application, not the pattern’s worth.</p>
+</section>
+<section aria-labelledby="reading-title">
+<h2 id="reading-title">What the evidence labels mean</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Evidence states"><table><caption>Evidence states used in the Explorer.</caption><thead><tr><th scope="col">State</th><th scope="col">Meaning</th></tr></thead><tbody>
+<tr><th scope="row">Not evaluated</th><td>The design question has not been considered.</td></tr>
+<tr><th scope="row">Conceptual</th><td>A potential response has been illustrated but not tested.</td></tr>
+<tr><th scope="row">Evidence needed</th><td>A relevant concern is identified, but the supporting information is missing.</td></tr>
+<tr><th scope="row">Evidence-supported</th><td>A conclusion is supported only within the stated scope.</td></tr>
+<tr><th scope="row">Trade-off identified</th><td>The design improves one consideration while potentially weakening another.</td></tr>
+<tr><th scope="row">Not applicable</th><td>The pattern is not relevant here, with an explanation.</td></tr>
+</tbody></table></div>
+<p class="small">Evidence states are stored on the application, not the pattern definition. The same pattern may be conceptual for one home, evidence-needed for the site and not applicable to the lodge.</p>
+</section>
+<section aria-labelledby="next-title">
+<h2 id="next-title">Where this connects</h2>
+<ul>
+<li><a href="../">Design Lab gallery</a> — the six selected homes.</li>
+<li><a href="../architecture/hamlet-woodland-cottage/">Woodland Cottage drawings</a> — the canonical SVG reference.</li>
+<li><a href="../illustration/">Illustration pipeline</a> — scene, prompt and manifest rules.</li>
+<li><a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-language.md">Pattern-language method and copyright notes</a></li>
+<li><a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-methodology.md">Evaluation methodology and evidence policy</a></li>
+</ul>
+<p class="small">This Explorer is Phase 1 of the pattern-language work. Site-plan highlighting, scenario comparison, lodge/cabin annotations, resident scenarios and structured evaluation records are the next phases. They are not implied by this page.</p>
+</section>
 </main>
 <footer class="site-footer"><p><a href="../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>
 <script src="patterns.js" defer></script>

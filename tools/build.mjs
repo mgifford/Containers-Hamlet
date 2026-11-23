@@ -38,6 +38,7 @@ import { waterPage, waterSVG } from './lib/design-water.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import { residencesPage } from './lib/design-residences.mjs';
 import { illustrationPage } from './lib/design-illustration-page.mjs';
+import { visualisationsPage } from './lib/design-visualisations-page.mjs';
 import {
   replaceFragments, factsList, roomsTable, drawingsBlock, siteChecks, passportTables,
   provenanceList, reviewsTables, downloadsList, homeTabs, homeDossiers, landscapeFacts,
@@ -390,7 +391,8 @@ export function generate() {
   const archiveOut = archiveNav.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${archiveGallery}\n${arrangementCards('../')}\n<!-- /gen:gallery -->`);
   if (!archiveTemplate.includes('<!-- gen:gallery -->') || !archiveTemplate.includes('<!-- /gen:gallery -->')) issues.push({ level: 'error', message: 'site/design-lab/concepts/index.html is missing the gen:gallery markers' });
   put(archivePagePath, archiveOut.replace(/[ \t]+$/gm, ''));
-  put('site/design-lab/pattern-language/index.html', patternLanguagePage(patternData));
+  put('site/design-lab/pattern-language/index.html', patternLanguagePage(patternData).replace(/\n\s+/g, '\n'));
+  put('site/design-lab/visualisations/index.html', visualisationsPage().replace(/\n\s+/g, '\n'));
   put('site/design-lab/guides/index.html', guidesPage());
   const editorPath = 'site/design-lab/editor/index.html';
   const editorHtml = readText(editorPath).replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(2, 'editor'));

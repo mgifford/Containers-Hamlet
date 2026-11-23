@@ -4,6 +4,7 @@ The Design Lab is a container-first design gallery and editor at `/design-lab/`.
 
 - **Gallery:** `/design-lab/` — six selected hamlet residences
 - **Concept archive:** `/design-lab/concepts/` — nine legacy concepts, the common lodge and four arrangement studies
+- **Concept visualisations:** `/design-lab/visualisations/` — three v1 AI-assisted placeholders with explicit limits and a version 2 checklist
 - **Residences comparison:** `/design-lab/residences/` — all six homes, sortable/filterable table, diversity heuristic, structural/accessibility summaries and stacked-versus-single-storey translations
 - **Architecture pages:** `/design-lab/architecture/<id>/` — combined and floor-specific plans, interior plans, four elevations, section, exploded levels, isometric, solar studies, seasonal pair, approximate exposure and envelope section
 - **Editor:** `/design-lab/editor/`
@@ -294,7 +295,7 @@ Every design has an architectural page under `site/design-lab/architecture/<id>/
 ## Tests
 
 ```sh
-node tools/check-design-lab.mjs      # 2,494 schema, geometry, interior, illustration, migration and comparison checks
+node tools/check-design-lab.mjs      # 2,499 schema, geometry, interior, illustration, pattern-language and comparison checks
 node tools/design-lab-check.mjs      # 126 browser checks: gallery, carousel keyboard, editor, envelope/vegetation/solar/foundation persistence, seasonal views, comparison, 320 px, axe
 ```
 
