@@ -64,7 +64,13 @@ plausible cabins, not model-faithful container homes.
    interior plan as a reference, and do not publish a text-only room layout.
 7. **A generic caption is not enough for a generated draft.** The caption must
    record the known deviations ("dormer invented", "stone base invented",
-   "first-flush device omitted"), not only "not a construction drawing".
+   "first-flush device omitted"), not only "not a construction drawing". Example
+   for the Woodland exterior draft:
+
+   > AI concept draft, not a model-verified drawing. Known deviations: a dormer
+   > and cross-gable were invented; the plan reads wider than the finished
+   > 12.60 m module; steps were added; the lake is too close; the PV array is
+   > missing. Do not use for dimensions, structure or code.
 8. **Do not run this on a working laptop.** A 4B diffusion model with a 10 GB
    download and multi-minute generations competes with the rest of the session.
    Use a hosted image API or a dedicated machine, and keep the model cache out

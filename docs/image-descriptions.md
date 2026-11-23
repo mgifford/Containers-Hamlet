@@ -184,8 +184,10 @@ prompt must agree with them and must not introduce an element the record
 excludes. Critical exclusions are repeated in the positive prompt because
 guidance-1 distilled models often ignore a negative prompt.
 
-The local FLUX.2 pilot and the four observed failure cases are recorded in
-[`image-generation-findings.md`](image-generation-findings.md). The main lesson:
+Any generated draft must also carry a `knownDeviations` list in its review
+record and in the visible caption; a generic "not a construction drawing" is not
+enough. The local FLUX.2 pilot and the four observed failure cases are recorded
+in [`image-generation-findings.md`](image-generation-findings.md). The main lesson:
 text alone cannot hold a 5:1 container proportion, a specific window layout or an
 open zone plan; the reference drawing is required.
 
