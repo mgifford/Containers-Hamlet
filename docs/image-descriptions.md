@@ -1,9 +1,9 @@
 # Image descriptions for v2
 
-**Status:** Working definition. Sixteen image descriptions are recorded in
+**Status:** Working definition. Seventeen image descriptions are recorded in
 [`data/image-descriptions.json`](../data/image-descriptions.json): twelve hero
-images (one exterior and one interior for each selected home) and four Woodland
-Cottage detail shots. Fourteen are ready; two authored interiors are blocked
+images (one exterior and one interior for each selected home) and five Woodland
+Cottage detail shots. Fifteen are ready; two authored interiors are blocked
 because the room polygons and the recorded opening positions do not reconcile.
 
 This document defines **what each image is supposed to draw**. It is not a
@@ -32,7 +32,7 @@ element in an image is tagged:
 | **not-resolved** | A known gap. It must not appear as a resolved element. |
 | **excluded** | Explicitly kept out of the image, with a reason and, where possible, a machine check. |
 
-## The sixteen images
+## The seventeen images
 
 | ID | Home | View | Status | Purpose |
 | --- | --- | --- | --- | --- |
@@ -42,6 +42,7 @@ element in an image is tagged:
 | `woodland-cottage-water-edge` | Woodland Cottage | detail | ready | Gutter, downspout, first flush, cistern inlet |
 | `woodland-cottage-service-core` | Woodland Cottage | detail | ready | Accessible service wall, HRV, filter, condensate |
 | `woodland-cottage-accessible-entry` | Woodland Cottage | detail | ready | Level threshold, porch and 1.2 m route |
+| `woodland-cottage-envelope-reveal` | Woodland Cottage | detail | ready | Wall build-up, deep window reveal, roof and floor insulation |
 | `offset-stack-exterior-hero` | Offset Stack | exterior | ready | Two-storey offset, shed roof, ground porch |
 | `offset-stack-interior-hero` | Offset Stack | interior | ready | Ground-floor zone study with conceptual stair |
 | `courtyard-residence-exterior-hero` | Courtyard Residence | exterior | ready | L, courtyard, glazed link, green-roof concept |
@@ -91,6 +92,78 @@ What no image may show as resolved:
 Conceptual placements are allowed only where the caption discloses them. A
 conceptual downspout is not a designed downspout.
 
+## Pattern defaults
+
+The default image set is chosen for **Pattern Language fit**, not for room count.
+Each ready record names:
+
+- `patterns` — numbers from [`data/patterns/patterns.json`](../data/patterns/patterns.json);
+- `patternRole` — `primary` or `supporting`;
+- `patternCue` — one sentence that the generation harness prepends to the
+  geometry prompt.
+
+The five primary patterns are the ones the hamlet is trying to build:
+
+| Pattern | Ready images |
+| --- | ---: |
+| 112 · Entrance Transition | 6 |
+| 127 · Intimacy Gradient | 7 |
+| 159 · Light on Two Sides | 5 |
+| 163 · Outdoor Room | 6 |
+| 180 · Window Place | 5 |
+
+Supporting patterns: 104 Site Repair (2), 105 South Facing Outdoors (2),
+106 Positive Outdoor Space (1), 155 Old Age Cottage (2) and 171 Tree Places (1).
+
+The technical detail images are explicit about their role. The service core is
+`supporting` with no primary pattern and `defaultSet: false`: it is necessary for
+comfort and resilience, but it is not itself a Pattern Language image, so it is
+outside the pattern-led default set. The reference harness generates the 14
+default images unless `--include-optional` is used. The fire and water edges are
+supporting under 104/171; the envelope reveal is primary under 159/180.
+
+This is the default because a home image is not a catalogue of rooms. It should
+make a pattern legible: a sheltered arrival, a public-to-private sequence, light
+from two sides, an outdoor room, a window place. The pattern cue leads the
+generation prompt; the geometry and envelope constraints follow.
+
+## The finished envelope, not the bare container
+
+The design model records the **container module** dimensions, but the published
+home is not a bare container. Every selected home adds, outside the 3 mm steel
+wall and 1 mm air/vapour layer:
+
+| Layer | Thickness |
+| --- | ---: |
+| Mineral-wool insulation | 150 mm |
+| Continuous thermal break | 10 mm |
+| Ventilated, drained cavity | 25 mm |
+| Timber rainscreen / cladding | 20 mm |
+| **Added outside the steel wall** | **205 mm** |
+
+The finished wall is about **209 mm** thick including the steel and air/vapour
+layers. A 40 ft module is **12.19 × 2.44 m nominal** but about
+**12.60 × 2.85 m finished**, so its visual proportion is about **4.4:1**, not
+5:1. A 20 ft module is about 6.47 × 2.85 m. The roof adds 250 mm of insulation
+and the floor 200 mm, so the roof edge and undercroft are visibly thicker than a
+bare container.
+
+This matters for every exterior and every window detail:
+
+- window and door reveals are about **205 mm deep**;
+- the roof edge shows insulation, a metal or green finish and a fascia, not a
+  thin container top;
+- the wall base shows the insulated floor edge and exposed helical piles, not a
+  stone plinth;
+- the exterior is a **clad, insulated, drained assembly**, not raw container
+  steel.
+
+The new `woodland-cottage-envelope-reveal` detail image exists to make that
+build-up visible. It follows the wall section and shows the layer sequence at a
+deep window reveal. The other exterior prompts now state the finished dimensions
+and the 205 mm envelope so the model does not default to a bare container or a
+thin cabin wall.
+
 ## Interior policy
 
 Only **Woodland Cottage** and **Accessible Garden Home** have authored interiors.
@@ -130,6 +203,29 @@ two records are marked `blocked-pending-reconciliation` and the validator report
 the mismatch. The next step is to correct the interior model or the opening
 positions, then regenerate the scene hashes.
 
+## Generation briefs
+
+Each of the 15 ready records now also carries a `generation` object:
+
+- `prompt` — an 89–150 word model-facing brief, front-loading proportion,
+  container identity and the view's main visual anchors;
+- `negativePrompt` — a model-dependent exclusion list;
+- `risk` — `low`, `medium` or `high`;
+- `reference` and `referenceRequired` — the deterministic drawing that should
+  condition the image, not just prose.
+
+The reference-conditioned harness prepends the image's `patternCue`, then the reference-drawing instruction, then this prompt, so the default order is **pattern → reference → geometry**. The `mustShow` / `mustNotShow` lists remain the review contract. The generation
+prompt must agree with them and must not introduce an element the record
+excludes. Critical exclusions are repeated in the positive prompt because
+guidance-1 distilled models often ignore a negative prompt.
+
+Any generated draft must also carry a `knownDeviations` list in its review
+record and in the visible caption; a generic "not a construction drawing" is not
+enough. The local FLUX.2 pilot and the four observed failure cases are recorded
+in [`image-generation-findings.md`](image-generation-findings.md). The main lesson:
+text alone cannot hold a 5:1 container proportion, a specific window layout or an
+open zone plan; the reference drawing is required.
+
 ## What is intentionally excluded
 
 - Loose furniture, rugs, lamps, art, plants, books and dishes. Only the modeled
@@ -141,7 +237,7 @@ positions, then regenerate the scene hashes.
 - The 58-shot library in
   [`visualisation-prompts.md`](visualisation-prompts.md). It remains creative
   source material, but it is not model-verified and it invents room-specific
-  windows, furniture and uses. The sixteen descriptions here supersede it for the
+  windows, furniture and uses. The seventeen descriptions here supersede it for the
   v2 hero set.
 - Lodge interiors. The lodge has no authored interior model; its annotations
   remain text-only.
@@ -150,12 +246,15 @@ positions, then regenerate the scene hashes.
 
 ```sh
 node tools/check-image-descriptions.mjs
+node tools/check-reference-generation.mjs
 ```
 
 The check validates schema, design and scene hashes, geometry counts, room and
-opening provenance, service visibility, exclusions against the model and
-reference-file existence. It reports the two blocked interiors and the
-room-opening mismatches as unresolved rather than failing silently.
+opening provenance, service visibility, exclusions against the model, reference-
+file existence and the generation brief (present for every ready image, absent
+for blocked ones, no positive mention of an excluded service). It reports the two
+blocked interiors and the room-opening mismatches as unresolved rather than
+failing silently.
 
 The image descriptions are not yet wired into the prompt generator. That is the
 next integration step: `promptFor()` should compose the exterior prompt from the
@@ -166,6 +265,8 @@ the status tags and exclusions carried into the text.
 
 - [`visualisation-v2-brief.md`](visualisation-v2-brief.md)
 - [`illustration-pipeline.md`](illustration-pipeline.md)
+- [`image-generation-findings.md`](image-generation-findings.md)
+- [`reference-conditioned-generation.md`](reference-conditioned-generation.md)
 - [`water-fire-services.md`](water-fire-services.md)
 - [`pattern-lens.md`](pattern-lens.md)
 - [`../data/image-descriptions.json`](../data/image-descriptions.json)

@@ -263,6 +263,7 @@ does so for portability.
 ## Related documents
 
 - [`image-descriptions.md`](image-descriptions.md)
+- [`reference-conditioned-generation.md`](reference-conditioned-generation.md)
 - [`illustration-pipeline-audit.md`](illustration-pipeline-audit.md)
 - [`../data/illustration-discrepancies.json`](../data/illustration-discrepancies.json)
 - [`visualisation-prompts.md`](visualisation-prompts.md)
