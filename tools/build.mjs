@@ -22,6 +22,8 @@ import { vegetationPage } from './lib/design-vegetation.mjs';
 import { vegetationComparisonSVG } from './lib/design-systems.mjs';
 import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
+import { patternLanguagePage } from './lib/pattern-language-page.mjs';
+import { validatePatterns } from './lib/patterns.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { modelPage } from './lib/model-pages.mjs';
 import { accessibleHomePage, accessiblePlanSVG } from './lib/accessible-home.mjs';
@@ -134,6 +136,10 @@ export function generate() {
     lodge: { slug: 'Lodge-3-community', name: 'Common-Lodge', configuration: 'Two containers + hall · community' }
   };
   const designLab = JSON.parse(readText('data/design-lab.json'));
+  const patternData = JSON.parse(readText('data/patterns/patterns.json'));
+  const patternCheck = validatePatterns(patternData);
+  patternCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'patterns: ' + message }));
+  patternCheck.warnings.forEach((message) => issues.push({ level: 'warning', message: 'patterns: ' + message }));
   const selectedBySite = {};
   designLab.concepts.filter((c) => c.role === 'hamlet-selected').forEach((c) => { selectedBySite[c.site.homesite] = c; });
   const siteReconciliation = site.buildings.filter((b) => b.design_lab_home).map((b) => {
@@ -373,8 +379,9 @@ export function generate() {
   });
   const archivePagePath = 'site/design-lab/concepts/index.html';
   const archiveTemplate = readText(archivePagePath);
+  const patternLink = '<p class="notice"><strong>Pattern Language Explorer.</strong> Explore 20 source-verified patterns, their hamlet interpretations, trade-offs and evidence limits. <a href="pattern-language/">Open the Pattern Language Explorer</a>.</p>';
   const archiveLink = '<p class="notice"><strong>Looking for the legacy concepts?</strong> The nine original concepts, the common lodge and four arrangement studies are on the <a href="concepts/">concept archive page</a>. The main gallery now carries only the six selected homes.</p>';
-  const gallery = hamletGallery + '\n' + archiveLink;
+  const gallery = hamletGallery + '\n' + patternLink + '\n' + archiveLink;
   ['stacked','cantilever','courtyard','creek'].forEach((k) => put(`site/design-lab/arrangements/${k}.svg`, arrangementSVG(k)));
   const galleryTemplateWithNav = galleryTemplate.replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(1, 'gallery'));
   const galleryOut = galleryTemplateWithNav.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${gallery}\n<!-- /gen:gallery -->`);
@@ -384,7 +391,8 @@ export function generate() {
   const archiveOut = archiveNav.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${archiveGallery}\n${arrangementCards('../')}\n<!-- /gen:gallery -->`);
   if (!archiveTemplate.includes('<!-- gen:gallery -->') || !archiveTemplate.includes('<!-- /gen:gallery -->')) issues.push({ level: 'error', message: 'site/design-lab/concepts/index.html is missing the gen:gallery markers' });
   put(archivePagePath, archiveOut.replace(/[ \t]+$/gm, ''));
-  put('site/design-lab/visualisations/index.html', visualisationsPage());
+  put('site/design-lab/pattern-language/index.html', patternLanguagePage(patternData).replace(/\n\s+/g, '\n'));
+  put('site/design-lab/visualisations/index.html', visualisationsPage().replace(/\n\s+/g, '\n'));
   put('site/design-lab/guides/index.html', guidesPage());
   const editorPath = 'site/design-lab/editor/index.html';
   const editorHtml = readText(editorPath).replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(2, 'editor'));

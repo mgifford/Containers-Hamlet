@@ -1,0 +1,794 @@
+{
+  "schema": "containers-hamlet-patterns/v1",
+  "title": "A Pattern Language — curated Containers Hamlet catalogue",
+  "edition": "Initial curated catalogue, 20 patterns",
+  "attribution": "Pattern numbers and titles are referenced from Christopher Alexander, Sara Ishikawa and Murray Silverstein, with Max Jacobson, Ingrid Fiksdahl-King and Shlomo Angel, A Pattern Language (Oxford University Press, 1977). Summaries and hamlet interpretations here are original text, not quotations.",
+  "source": {
+    "work": "A Pattern Language",
+    "authors": [
+      "Christopher Alexander",
+      "Sara Ishikawa",
+      "Murray Silverstein",
+      "Max Jacobson",
+      "Ingrid Fiksdahl-King",
+      "Shlomo Angel"
+    ],
+    "year": 1977,
+    "publisher": "Oxford University Press",
+    "url": "https://arl.human.cornell.edu/linked%20docs/Alexander_A_Pattern_Language.pdf"
+  },
+  "copyrightNote": "The source book is copyrighted. This catalogue references pattern numbers and titles, links to the source, and uses new summaries and interpretations. It does not reproduce the book text or illustrations.",
+  "verification": {
+    "status": "titles-and-numbers-verified",
+    "method": "Pattern numbers and titles checked against the contents and summary pages of the 1977 edition PDF.",
+    "date": "2026-11-23",
+    "scope": "Title/number mapping only. Interpretations are original design notes, not claims about the authors’ intent."
+  },
+  "scales": [
+    "landscape",
+    "community",
+    "infrastructure",
+    "building",
+    "interior"
+  ],
+  "elements": [
+    "site-plan",
+    "landscape",
+    "common-land",
+    "paths",
+    "lodge",
+    "homes",
+    "porches",
+    "interiors",
+    "shared-workshop",
+    "visitor-arrival"
+  ],
+  "evidenceStates": [
+    "not-evaluated",
+    "conceptual",
+    "evidence-needed",
+    "evidence-supported",
+    "trade-off-identified",
+    "not-applicable"
+  ],
+  "patterns": [
+    {
+      "id": "degrees-of-publicness",
+      "number": 36,
+      "title": "Degrees of Publicness",
+      "scale": "community",
+      "summary": "Make the change from public arrival to shared, semi-private and private places gradual and legible.",
+      "problem": "A single hard edge between public and private makes community life either exposed or inaccessible.",
+      "proposal": "Use a sequence of thresholds, shared edges and clearly private territory rather than one binary boundary.",
+      "hamletInterpretation": "The lane, forecourt, shared paths, lodge terrace, home porches and door thresholds should form a readable gradient. Not every route should pass directly beside a bedroom window.",
+      "currentResponse": "The baseline has an entrance, shared lanes and trails, private homes and porches, but the transitions are not consistently modelled, named or evaluated.",
+      "alternatives": "Compare the dispersed baseline with the central clearing and woodland-spine scenarios, especially where shared paths meet private porches.",
+      "tradeoffs": "More thresholds can make a place feel welcoming or over-controlled. Signs, gates and lighting can clarify or exclude.",
+      "unresolved": "No observational evidence of how residents, visitors or service people actually experience the edges.",
+      "relatedPatterns": [
+        37,
+        61,
+        112
+      ],
+      "applicableElements": [
+        "site-plan",
+        "paths",
+        "homes",
+        "lodge",
+        "visitor-arrival"
+      ],
+      "evaluationQuestions": [
+        "Can a visitor tell which places are public, shared, semi-private and private?",
+        "Can a resident reach a shared facility without crossing a private room or window?",
+        "Are thresholds usable in snow, rain and low light?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No post-occupancy observation",
+        "No privacy or lighting study"
+      ],
+      "relationshipNote": "Publicness depends on the cluster, the small gathering place and the entrance transition; those patterns make the gradient physical.",
+      "sourceVerified": true
+    },
+    {
+      "id": "house-cluster",
+      "number": 37,
+      "title": "House Cluster",
+      "scale": "community",
+      "summary": "Arrange a small number of dwellings so they form a recognisable neighbourhood while retaining private territory.",
+      "problem": "Scattered homes can miss casual neighbourliness; too much clustering can erase privacy.",
+      "proposal": "Group homes around a shared edge or outdoor place at a scale where residents can recognise one another.",
+      "hamletInterpretation": "The six homes can remain dispersed but should be evaluated as clusters around shared paths, a glade or a service point. The lodge is not a substitute for neighbourliness.",
+      "currentResponse": "The baseline disperses six homes across the site and places the lodge near the entrance. The current arrangement has no formal cluster evaluation.",
+      "alternatives": "Test Scenario B (central clearing) and Scenario C (woodland spine with social pockets) against the baseline.",
+      "tradeoffs": "Clustering shortens some infrastructure and increases casual contact, but can reduce visual privacy and concentrate disturbance.",
+      "unresolved": "No resident preference data or measured walking distances for the alternatives.",
+      "relatedPatterns": [
+        36,
+        67,
+        129
+      ],
+      "applicableElements": [
+        "site-plan",
+        "homes",
+        "common-land",
+        "paths"
+      ],
+      "evaluationQuestions": [
+        "Can residents recognise a small cluster without a gate or private road?",
+        "Does each home retain a private edge?",
+        "Are shared facilities reachable from more than one cluster?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "Fictional site",
+        "No household survey"
+      ],
+      "relationshipNote": "A cluster needs common land and a legible publicness gradient to avoid becoming either a private compound or an unprotected shared yard.",
+      "sourceVerified": true
+    },
+    {
+      "id": "small-public-squares",
+      "number": 61,
+      "title": "Small Public Squares",
+      "scale": "community",
+      "summary": "Provide small, enclosed outdoor gathering places at the scale of everyday encounters.",
+      "problem": "One large central space may be too formal or too far away for casual use.",
+      "proposal": "Create several modest outdoor places where a few people can pause, talk or wait.",
+      "hamletInterpretation": "A widened path, a rock glade or a lodge forecourt can serve this role. A formal urban square is not assumed to be appropriate in the woodland.",
+      "currentResponse": "The baseline has informal outdoor areas and a lodge porch, but no dedicated small gathering place.",
+      "alternatives": "The woodland-spine scenario can add two or three small pockets rather than one central square.",
+      "tradeoffs": "More small places spread maintenance and may fragment activity. One central place is easier to service but less private.",
+      "unresolved": "No assessment of sun, wind, snow clearing, seating or acoustic comfort at candidate places.",
+      "relatedPatterns": [
+        36,
+        69,
+        120
+      ],
+      "applicableElements": [
+        "common-land",
+        "paths",
+        "lodge",
+        "visitor-arrival"
+      ],
+      "evaluationQuestions": [
+        "Is there a small place to pause within a short walk of each home?",
+        "Does it have a sense of enclosure without becoming a trap?",
+        "Is it usable in winter and by people with reduced mobility?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No microclimate study",
+        "No furniture or maintenance plan"
+      ],
+      "relationshipNote": "A small square works when it is part of the publicness sequence and on a path with a real destination.",
+      "sourceVerified": true
+    },
+    {
+      "id": "common-land",
+      "number": 67,
+      "title": "Common Land",
+      "scale": "landscape",
+      "summary": "Set aside shared land that residents collectively use and care for, distinct from private lots and public park.",
+      "problem": "Without explicit common land, shared outdoor life becomes accidental or privately claimed.",
+      "proposal": "Define common land with clear use, access and stewardship, and connect it to the homes it serves.",
+      "hamletInterpretation": "The community land trust should identify the glade, shoreline buffers, woodland and lodge grounds as shared land with different rules; not all land is equally public.",
+      "currentResponse": "The fiction includes shared landscape and a community land trust, but ownership, access and stewardship are not mapped consistently.",
+      "alternatives": "Scenario B gives a central common clearing; Scenario C uses a linear spine of smaller common pockets.",
+      "tradeoffs": "More common land can support shared life but increases maintenance and may disturb habitat. Protected land may need to remain inaccessible.",
+      "unresolved": "No legal survey, stewardship agreement or ecological assessment.",
+      "relatedPatterns": [
+        37,
+        104,
+        106,
+        171
+      ],
+      "applicableElements": [
+        "site-plan",
+        "landscape",
+        "common-land",
+        "lodge"
+      ],
+      "evaluationQuestions": [
+        "Which land is commonly held, which is private and which is protected?",
+        "Who maintains each shared place?",
+        "Does shared use damage sensitive habitat?"
+      ],
+      "evidenceStatus": "evidence-needed",
+      "limitations": [
+        "Fictional parcel and ownership",
+        "No ecology survey"
+      ],
+      "relationshipNote": "Common land needs site repair and positive outdoor space so shared use does not become an excuse to develop sensitive ground.",
+      "sourceVerified": true
+    },
+    {
+      "id": "public-outdoor-room",
+      "number": 69,
+      "title": "Public Outdoor Room",
+      "scale": "community",
+      "summary": "Make a sheltered outdoor place that feels like a room and supports informal gathering.",
+      "problem": "Outdoor shared space without enclosure, shelter or a reason to stay becomes circulation space.",
+      "proposal": "Use a roof, wall, screen, level change or planting to create a defined outdoor room with seating and a view.",
+      "hamletInterpretation": "The lodge porch and a sheltered picnic/workshop edge could be public outdoor rooms. The six cabin porches are more private and should not be treated as the same social space.",
+      "currentResponse": "The lodge has a covered porch; individual homes have porches. Their social role and weather protection are not evaluated.",
+      "alternatives": "Test a sheltered shared terrace between the lodge and the path, or a small covered pocket on the spine.",
+      "tradeoffs": "A generous shared room supports events but can create noise and reduce privacy for nearby homes.",
+      "unresolved": "No acoustic, wind, snow or furniture study.",
+      "relatedPatterns": [
+        61,
+        129,
+        163
+      ],
+      "applicableElements": [
+        "common-land",
+        "lodge",
+        "porches",
+        "paths"
+      ],
+      "evaluationQuestions": [
+        "Does the place have a clear edge and a reason to linger?",
+        "Can it be used by one person without booking an event?",
+        "Is it sheltered from wind, rain and snow?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No microclimate or acoustic measurement"
+      ],
+      "relationshipNote": "A public outdoor room is a shared version of the private outdoor room and should sit near common areas, not on a private porch.",
+      "sourceVerified": true
+    },
+    {
+      "id": "site-repair",
+      "number": 104,
+      "title": "Site Repair",
+      "scale": "landscape",
+      "summary": "Place buildings and infrastructure where they avoid unnecessary damage and help repair already disturbed ground.",
+      "problem": "Convenient building sites can destroy the most valuable vegetation, drainage or habitat.",
+      "proposal": "Read the land first, use already disturbed areas where possible, and restore the damage that construction causes.",
+      "hamletInterpretation": "Test each home, path and service corridor against rock, wetland, drainage, tree roots and habitat. A buffer on a drawing is not proof that damage is avoided.",
+      "currentResponse": "The baseline has illustrative buffers, rock and wetland constraints, and elevated foundations, but no survey or construction-impact assessment.",
+      "alternatives": "The scenario comparison should show which footprints and paths move into or out of sensitive areas.",
+      "tradeoffs": "A compact cluster may shorten services but concentrate damage; a dispersed layout may protect one glade while fragmenting habitat elsewhere.",
+      "unresolved": "No ecological survey, arborist assessment, drainage model or construction-access plan.",
+      "relatedPatterns": [
+        37,
+        67,
+        106,
+        120
+      ],
+      "applicableElements": [
+        "site-plan",
+        "landscape",
+        "homes",
+        "lodge",
+        "paths"
+      ],
+      "evaluationQuestions": [
+        "Is this footprint on already disturbed ground?",
+        "What vegetation, drainage or habitat is affected?",
+        "Can the damage be restored, and who is responsible?"
+      ],
+      "evidenceStatus": "evidence-needed",
+      "limitations": [
+        "Fictional landscape",
+        "No professional ecological assessment"
+      ],
+      "relationshipNote": "Site repair constrains the house cluster, common land and paths; those patterns should follow the land rather than force a geometry.",
+      "sourceVerified": true
+    },
+    {
+      "id": "south-facing-outdoors",
+      "number": 105,
+      "title": "South Facing Outdoors",
+      "scale": "landscape",
+      "summary": "Put the main outdoor places on the sunny side and use the building to shelter them from wind.",
+      "problem": "A porch or garden on the cold, shaded side will be used less, even if it has a good view.",
+      "proposal": "Orient the principal outdoor room toward winter sun and provide wind shelter without blocking summer shade.",
+      "hamletInterpretation": "Check porch orientation, roof overhangs and snow shedding. A lake view may justify a west or north porch, but the trade-off must be explicit.",
+      "currentResponse": "The baseline orients homes to views and access; porch orientation is not systematically evaluated for winter sun.",
+      "alternatives": "A scenario-level solar/wind study could test whether the lodge terrace and cabin porches have a usable winter microclimate.",
+      "tradeoffs": "South glazing and porches gain sun but can overheat, lose heat and reduce privacy. A view orientation may outweigh solar gain.",
+      "unresolved": "No solar, wind or snowdrift model; no measured microclimate.",
+      "relatedPatterns": [
+        106,
+        163,
+        159
+      ],
+      "applicableElements": [
+        "site-plan",
+        "landscape",
+        "homes",
+        "porches",
+        "lodge"
+      ],
+      "evaluationQuestions": [
+        "Which outdoor places receive useful winter sun?",
+        "Are they sheltered from prevailing wind and snow?",
+        "Does the orientation trade a view for comfort?"
+      ],
+      "evidenceStatus": "evidence-needed",
+      "limitations": [
+        "No site-specific solar or wind study"
+      ],
+      "relationshipNote": "South-facing outdoor space and positive outdoor space reinforce one another; light on two sides affects the interior side of the same decision.",
+      "sourceVerified": true
+    },
+    {
+      "id": "positive-outdoor-space",
+      "number": 106,
+      "title": "Positive Outdoor Space",
+      "scale": "landscape",
+      "summary": "Shape outdoor space with buildings, walls, levels or planting so it has a clear form rather than being leftover gap.",
+      "problem": "Space left between buildings often feels like a passage or a residual strip, not a place.",
+      "proposal": "Design the outdoor space first, then place the building edges that enclose it.",
+      "hamletInterpretation": "Evaluate the lodge forecourt, the space between paired homes, the courtyard and the woodland gaps as rooms with clear edges and uses.",
+      "currentResponse": "The Courtyard Residence has an explicit courtyard; other homes have porches and decks. Site-wide outdoor space is not evaluated as positive or residual.",
+      "alternatives": "Scenario B makes a central outdoor room; Scenario C makes a sequence of smaller pockets.",
+      "tradeoffs": "Strong enclosure improves comfort but can block views, light, drainage or wildlife movement.",
+      "unresolved": "No spatial-quality or use observation; no wind/sun study.",
+      "relatedPatterns": [
+        37,
+        67,
+        163
+      ],
+      "applicableElements": [
+        "site-plan",
+        "landscape",
+        "common-land",
+        "homes",
+        "lodge"
+      ],
+      "evaluationQuestions": [
+        "Does the space have a clear edge and a use?",
+        "Is it more than leftover space between buildings?",
+        "Does enclosure harm access, daylight or ecology?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No observational or microclimate study"
+      ],
+      "relationshipNote": "Positive outdoor space gives the house cluster and common land their physical shape; the outdoor room is its smaller, sheltered version.",
+      "sourceVerified": true
+    },
+    {
+      "id": "entrance-transition",
+      "number": 112,
+      "title": "Entrance Transition",
+      "scale": "building",
+      "summary": "Make arrival gradual: path, gate, porch and threshold should give people time and shelter to shift from public to private.",
+      "problem": "A door directly on a shared route gives no place to pause, no weather protection and no privacy.",
+      "proposal": "Use a sequence of transitional spaces and a visible, sheltered threshold.",
+      "hamletInterpretation": "Each home needs a legible, step-free arrival sequence with room for a visitor, deliveries, snow and wet clothing. The accessible homes need the threshold detail to work.",
+      "currentResponse": "Homes have porches and step-free entrance intent, but threshold dimensions, door clearances, visitor space and winter maintenance are not fully modelled.",
+      "alternatives": "Test a deeper covered entry or a small entrance hall in the two accessible homes.",
+      "tradeoffs": "A generous transition improves comfort and privacy but consumes floor area and may add heat loss.",
+      "unresolved": "No door/threshold construction detail, no snow or drainage detail.",
+      "relatedPatterns": [
+        36,
+        106,
+        120
+      ],
+      "applicableElements": [
+        "homes",
+        "porches",
+        "paths",
+        "interiors"
+      ],
+      "evaluationQuestions": [
+        "Can a visitor pause out of the weather before entering?",
+        "Is the route step-free and clear of snow storage?",
+        "Can residents reach the door without passing a private window?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No construction detail",
+        "No winter maintenance plan"
+      ],
+      "relationshipNote": "The entrance transition is where the publicness gradient becomes a physical threshold; it depends on the path and outdoor space.",
+      "sourceVerified": true
+    },
+    {
+      "id": "arcades",
+      "number": 119,
+      "title": "Arcades",
+      "scale": "infrastructure",
+      "summary": "A covered walk or gallery can connect entrances and outdoor rooms while giving shelter and a social edge.",
+      "problem": "In cold, wet or snowy conditions, an exposed path can make shared life optional in theory but difficult in practice.",
+      "proposal": "Use a roofed or screened edge to connect destinations without making every route an interior corridor.",
+      "hamletInterpretation": "Consider a covered link at the lodge or between a home and a shared workshop, not a continuous enclosed mall. Snow, ice, drainage and maintenance matter.",
+      "currentResponse": "The baseline has porches but no shared arcade. The cold-climate idea is not tested.",
+      "alternatives": "Test a short covered link at the lodge entrance and a sheltered waiting place on the spine.",
+      "tradeoffs": "Cover improves winter use but adds structure, snow load, shading, maintenance and cost; it can also create dark or unsafe edges.",
+      "unresolved": "No snow-load, drainage, daylight or maintenance assessment.",
+      "relatedPatterns": [
+        120,
+        163,
+        36
+      ],
+      "applicableElements": [
+        "paths",
+        "lodge",
+        "porches",
+        "shared-workshop"
+      ],
+      "evaluationQuestions": [
+        "Which shared destinations need weather protection?",
+        "Can the route be kept clear of snow and ice?",
+        "Does the cover create a dark or unsafe place?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No structural or snow-load design"
+      ],
+      "relationshipNote": "An arcade is a path with a roof and a social edge; it should not substitute for a good outdoor room or a clear entrance transition.",
+      "sourceVerified": true
+    },
+    {
+      "id": "paths-and-goals",
+      "number": 120,
+      "title": "Paths and Goals",
+      "scale": "infrastructure",
+      "summary": "Connect meaningful destinations with paths shaped by the places they pass, not just the shortest line.",
+      "problem": "Paths without destinations become maintenance liabilities; paths that ignore terrain become inaccessible or destructive.",
+      "proposal": "Start from destinations and daily activities, then shape the route around land, views, shelter and accessibility.",
+      "hamletInterpretation": "Map the lodge, homes, workshop, parking, drop-off and shared outdoor places. Distinguish everyday routes from recreational trails and emergency access.",
+      "currentResponse": "The site has lanes and trails linking the entrance, homes and lodge, but accessibility, winter maintenance and destination hierarchy are not evaluated.",
+      "alternatives": "Scenario C makes the spine explicit; Scenario A relies on dispersed routes; Scenario B shortens some trips but concentrates them.",
+      "tradeoffs": "More direct paths reduce walking but may cross sensitive ground or private edges. Longer scenic routes may be pleasant but unsuitable for daily accessibility.",
+      "unresolved": "No route-by-route grade, surface, width, lighting or winter assessment.",
+      "relatedPatterns": [
+        36,
+        67,
+        112,
+        119
+      ],
+      "applicableElements": [
+        "site-plan",
+        "paths",
+        "homes",
+        "lodge",
+        "common-land"
+      ],
+      "evaluationQuestions": [
+        "What everyday destinations does this path connect?",
+        "Is it usable by someone with reduced mobility in winter?",
+        "Does it cross sensitive land or private space?"
+      ],
+      "evidenceStatus": "evidence-needed",
+      "limitations": [
+        "No topographic route survey",
+        "No winter maintenance plan"
+      ],
+      "relationshipNote": "Paths and goals give the publicness sequence and common land a network; an arcade is a special covered segment, not a replacement for the whole network.",
+      "sourceVerified": true
+    },
+    {
+      "id": "intimacy-gradient",
+      "number": 127,
+      "title": "Intimacy Gradient",
+      "scale": "interior",
+      "summary": "Arrange rooms and outdoor spaces from more public to more private, so people can withdraw without crossing private territory.",
+      "problem": "A plan that puts the bed beside the front door or makes every room a passage undermines privacy and rest.",
+      "proposal": "Place shared living near the entry, then kitchen, then bedrooms and private outdoor places, with a clear route that does not pass through private rooms.",
+      "hamletInterpretation": "Test the authored accessible interiors and the room-band models for a legible gradient. The long container makes the far end valuable private space.",
+      "currentResponse": "Woodland Cottage and Accessible Garden Home have authored room polygons; the other four use provisional bands. The interiors have not been evaluated as a full gradient.",
+      "alternatives": "Compare a central-service plan with a linear front-to-back plan in the 40-foot homes.",
+      "tradeoffs": "A strong gradient protects privacy but can make the far room feel isolated or make plumbing runs longer.",
+      "unresolved": "No acoustic separation, door-swing or occupant-flow analysis.",
+      "relatedPatterns": [
+        112,
+        141,
+        179,
+        180
+      ],
+      "applicableElements": [
+        "homes",
+        "interiors",
+        "porches"
+      ],
+      "evaluationQuestions": [
+        "Can a resident reach a private room without crossing a shared room?",
+        "Can a visitor be received without entering the private zone?",
+        "Is there a private outdoor place?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "Concept interiors",
+        "No acoustic or occupancy study"
+      ],
+      "relationshipNote": "The intimacy gradient relies on a clear entrance transition and gives meaning to a room of one’s own, alcoves and window places.",
+      "sourceVerified": true
+    },
+    {
+      "id": "common-areas-at-the-heart",
+      "number": 129,
+      "title": "Common Areas at the Heart",
+      "scale": "community",
+      "summary": "Put shared facilities where everyday activity passes and where people can see and reach them, not at a remote edge.",
+      "problem": "A common building at the entrance may be convenient for infrastructure but socially peripheral if daily life happens elsewhere.",
+      "proposal": "Locate common activities at a crossing of everyday routes and make them visible, accessible and easy to enter for a small purpose.",
+      "hamletInterpretation": "The lodge is near the entrance. Test whether it is socially central, whether residents pass it on ordinary walks, and whether shared facilities can be used without joining a large event.",
+      "currentResponse": "The lodge is a single shared building near the entrance with kitchen, laundry, workshop and gathering space. Its social centrality is asserted, not measured.",
+      "alternatives": "A small shared kitchen/workshop pocket on the spine, or a satellite mailbox/tool shed, could complement the lodge.",
+      "tradeoffs": "A central lodge supports shared activity but concentrates noise and may dominate the community. Satellite facilities add maintenance but reduce dependence on one building.",
+      "unresolved": "No resident activity data, no acoustic or management study.",
+      "relatedPatterns": [
+        37,
+        69,
+        61,
+        155
+      ],
+      "applicableElements": [
+        "lodge",
+        "common-land",
+        "paths",
+        "homes"
+      ],
+      "evaluationQuestions": [
+        "Does daily life pass the common area?",
+        "Can a resident use one facility without joining an event?",
+        "Are quiet and noisy activities separated?"
+      ],
+      "evidenceStatus": "evidence-needed",
+      "limitations": [
+        "No post-occupancy or resident survey"
+      ],
+      "relationshipNote": "Common areas need a house cluster and public outdoor room to become a heart; a remote lodge alone cannot create community.",
+      "sourceVerified": true
+    },
+    {
+      "id": "room-of-ones-own",
+      "number": 141,
+      "title": "A Room of One’s Own",
+      "scale": "interior",
+      "summary": "Give each resident a private room they can close, personalise and use without negotiating shared space.",
+      "problem": "Shared living can leave no place to withdraw, work, rest or host a private conversation.",
+      "proposal": "Provide at least one genuinely private room per resident, with a door, daylight and space for their own things.",
+      "hamletInterpretation": "Check bedroom counts and private space in each home. A one-bedroom home works for one resident or a couple; it is not a universal household model.",
+      "currentResponse": "The six homes include one-bedroom and studio arrangements. The accessible homes have one bedroom and no dedicated guest room.",
+      "alternatives": "Test a small alcove/workspace within the bedroom or a separate garden studio where site and budget allow.",
+      "tradeoffs": "More private rooms increase floor area, cost and energy demand; a small home may need a flexible room instead.",
+      "unresolved": "No household composition assumptions or furniture/clearance study.",
+      "relatedPatterns": [
+        127,
+        179,
+        180
+      ],
+      "applicableElements": [
+        "homes",
+        "interiors"
+      ],
+      "evaluationQuestions": [
+        "Does every resident have a door they can close?",
+        "Can the room be used for sleep, work or retreat?",
+        "Is there daylight and a place for personal belongings?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No defined household sizes",
+        "No furniture layout"
+      ],
+      "relationshipNote": "A private room depends on a clear intimacy gradient and is made usable by alcoves and a window place.",
+      "sourceVerified": true
+    },
+    {
+      "id": "old-age-cottage",
+      "number": 155,
+      "title": "Old Age Cottage",
+      "scale": "building",
+      "summary": "Provide a small, accessible dwelling close to community support so people can remain in the hamlet as they age.",
+      "problem": "A remote or stair-only home forces older residents to leave the community when their mobility changes.",
+      "proposal": "Include a dwelling that is small, step-free, close to shared facilities and able to accommodate care and visits.",
+      "hamletInterpretation": "The two accessible homes demonstrate this idea. Test whether they are close enough to the lodge and whether care, deliveries and emergency access work in winter.",
+      "currentResponse": "Woodland Cottage and Accessible Garden Home are single-storey accessible demonstrations; the other four are not held to that target.",
+      "alternatives": "Assign one accessible home near the lodge or a shared path, or add a guest/carer room to the lodge.",
+      "tradeoffs": "A cottage close to the lodge gains support but may lose privacy; a remote cottage gains quiet but makes care harder.",
+      "unresolved": "No care model, emergency response time or ageing-in-place review.",
+      "relatedPatterns": [
+        129,
+        112,
+        141
+      ],
+      "applicableElements": [
+        "homes",
+        "paths",
+        "lodge"
+      ],
+      "evaluationQuestions": [
+        "Can an older resident reach the lodge without stairs or a car?",
+        "Can a carer or visitor reach the door?",
+        "Does the home have a private room and a step-free bathroom?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No care or health assessment",
+        "No emergency response study"
+      ],
+      "relationshipNote": "An old-age cottage should be part of the common heart and entrance/path network, not an isolated accessible unit at the edge.",
+      "sourceVerified": true
+    },
+    {
+      "id": "light-on-two-sides",
+      "number": 159,
+      "title": "Light on Two Sides of Every Room",
+      "scale": "building",
+      "summary": "Daylight from two directions makes a room feel more balanced and reduces glare compared with a single bright wall.",
+      "problem": "A narrow container with windows on only one side can be dark at the back and glaring at the front.",
+      "proposal": "Use openings on opposite or adjacent sides, end glazing, clerestories or reflected light where the structure allows.",
+      "hamletInterpretation": "Test existing rooms for two-sided light. A 2.35 m clear width makes cross-light difficult; end windows, roof lights and open-plan connections may help but add heat loss and structural work.",
+      "currentResponse": "The models record openings and orientations, but do not calculate daylight, glare or two-sidedness for every room.",
+      "alternatives": "Compare end-window, opposite-window and clerestory strategies in the 40-foot homes.",
+      "tradeoffs": "More glazing improves daylight but increases heat loss, solar gain, privacy loss and structural complexity.",
+      "unresolved": "No daylight simulation, glare analysis or overheating study.",
+      "relatedPatterns": [
+        105,
+        163,
+        180
+      ],
+      "applicableElements": [
+        "homes",
+        "interiors",
+        "porches"
+      ],
+      "evaluationQuestions": [
+        "Does the room receive light from more than one direction?",
+        "Is there glare or a dark back wall?",
+        "What are the heat-loss and privacy costs?"
+      ],
+      "evidenceStatus": "evidence-needed",
+      "limitations": [
+        "No daylight model",
+        "No energy or glare simulation"
+      ],
+      "relationshipNote": "Two-sided light supports south-facing outdoor space and the window place; it can conflict with privacy and heat loss.",
+      "sourceVerified": true
+    },
+    {
+      "id": "outdoor-room",
+      "number": 163,
+      "title": "Outdoor Room",
+      "scale": "building",
+      "summary": "Treat a porch, terrace or courtyard as a real room with a floor, shelter, edge and furniture.",
+      "problem": "A narrow strip beside a building may be called a porch but cannot support sitting, eating or visiting.",
+      "proposal": "Give the outdoor space enough depth, shelter, enclosure and furniture to be used like an indoor room.",
+      "hamletInterpretation": "Evaluate the six cabin porches and lodge porch for depth, wind, rain, snow, insects, privacy, step-free access and furniture.",
+      "currentResponse": "Porches are modelled in the Design Lab; their usability and seasonal performance are not evaluated.",
+      "alternatives": "Test a deeper screened porch or a courtyard edge in the accessible homes.",
+      "tradeoffs": "A deeper porch improves outdoor living but increases roof area, cost, heat loss and snow load.",
+      "unresolved": "No furniture layout, wind-driven rain or snow study.",
+      "relatedPatterns": [
+        69,
+        105,
+        106,
+        180
+      ],
+      "applicableElements": [
+        "homes",
+        "porches",
+        "lodge",
+        "common-land"
+      ],
+      "evaluationQuestions": [
+        "Can two people sit, eat or talk in the space?",
+        "Is it sheltered from rain, wind and snow?",
+        "Can it be reached step-free?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No furniture or microclimate study"
+      ],
+      "relationshipNote": "The outdoor room is the private or shared version of positive outdoor space; it needs sun, shelter and a window/indoor connection.",
+      "sourceVerified": true
+    },
+    {
+      "id": "tree-places",
+      "number": 171,
+      "title": "Tree Places",
+      "scale": "landscape",
+      "summary": "Preserve special trees and make places around them for sitting, play or gathering rather than clearing every tree.",
+      "problem": "Conventional site clearing removes the trees that give a place its identity and shade.",
+      "proposal": "Identify valued trees early, protect their root zones and design paths and outdoor places around them.",
+      "hamletInterpretation": "The woodland is the hamlet’s character. Map candidate tree places, root protection zones and views; do not treat the whole site as buildable.",
+      "currentResponse": "The site has forest, rock and buffers, but no tree survey or root-protection plan. The site plan is illustrative.",
+      "alternatives": "Shift a path, porch or parking area to preserve a significant tree; use a tree place as a small shared destination.",
+      "tradeoffs": "Preserving trees can constrain foundations, solar access, snow clearing and emergency access; removing them can damage character and habitat.",
+      "unresolved": "No arborist survey, root mapping or species/habitat assessment.",
+      "relatedPatterns": [
+        67,
+        104,
+        106
+      ],
+      "applicableElements": [
+        "site-plan",
+        "landscape",
+        "common-land",
+        "paths",
+        "homes"
+      ],
+      "evaluationQuestions": [
+        "Which trees are irreplaceable or culturally important?",
+        "Is the root zone protected from construction?",
+        "Does the design use the tree as a place, not just an obstacle?"
+      ],
+      "evidenceStatus": "evidence-needed",
+      "limitations": [
+        "No tree survey",
+        "Fictional ecology"
+      ],
+      "relationshipNote": "Tree places make common land and site repair tangible; a preserved tree can anchor a positive outdoor space or a path destination.",
+      "sourceVerified": true
+    },
+    {
+      "id": "alcoves",
+      "number": 179,
+      "title": "Alcoves",
+      "scale": "interior",
+      "summary": "Small, semi-enclosed nooks let people be together without being on display.",
+      "problem": "An open-plan room offers no place for a quiet conversation, a hobby or a person who wants to be nearby but not central.",
+      "proposal": "Shape a small recess or partial enclosure with a seat, light and view, connected to a larger room.",
+      "hamletInterpretation": "Use alcoves for reading, work, a guest bed or a quiet seat in the long container. They must not block the accessible route.",
+      "currentResponse": "Not modelled. The interiors have rooms and furniture but no alcove geometry.",
+      "alternatives": "Test a window alcove or a shelf-backed seat in the 40-foot homes.",
+      "tradeoffs": "Alcoves add enclosure and intimacy but reduce open floor area and can complicate circulation and light.",
+      "unresolved": "No furniture, reach-range or route-clearance study.",
+      "relatedPatterns": [
+        127,
+        141,
+        180
+      ],
+      "applicableElements": [
+        "homes",
+        "interiors"
+      ],
+      "evaluationQuestions": [
+        "Is there a place to sit apart without leaving the room?",
+        "Does the alcove have light and a view?",
+        "Does it obstruct the accessible route?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "Not modelled in the current interiors"
+      ],
+      "relationshipNote": "An alcove supports the intimacy gradient and a room of one’s own at a smaller scale; a window place can be its edge.",
+      "sourceVerified": true
+    },
+    {
+      "id": "window-place",
+      "number": 180,
+      "title": "Window Place",
+      "scale": "interior",
+      "summary": "Make a comfortable place to sit at a window, with light, a view and a sense of enclosure.",
+      "problem": "A window can provide light and view but no usable place to pause, read or watch the weather.",
+      "proposal": "Shape a seat, table or alcove at the window with comfortable height, light and a view.",
+      "hamletInterpretation": "Use window places in the long cabins for reading, work and landscape connection. Include accessible seating and safe window operation; do not block the route.",
+      "currentResponse": "Not modelled. Windows are recorded, but no seat or clear floor zone is assigned.",
+      "alternatives": "Test a built-in bench with a lift-out accessible seat, or a movable chair for flexibility.",
+      "tradeoffs": "Built-ins save space but are hard to change and may not suit all bodies; movable furniture is flexible but can block routes.",
+      "unresolved": "No seat height, reach, glare, privacy or window-operation study.",
+      "relatedPatterns": [
+        127,
+        141,
+        159,
+        163,
+        179
+      ],
+      "applicableElements": [
+        "homes",
+        "interiors",
+        "porches"
+      ],
+      "evaluationQuestions": [
+        "Can a person sit at the window comfortably?",
+        "Is the seat accessible and easy to leave?",
+        "Is there glare, privacy or overheating?"
+      ],
+      "evidenceStatus": "conceptual",
+      "limitations": [
+        "No ergonomic or daylight study"
+      ],
+      "relationshipNote": "A window place is a small room of one’s own and an alcove at the building edge; it connects the interior to the outdoor room and two-sided light.",
+      "sourceVerified": true
+    }
+  ]
+}

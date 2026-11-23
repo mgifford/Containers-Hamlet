@@ -19,6 +19,7 @@ export function designSubnav(depth, current) {
   const link = (href, label, id) => `<a href="${href}"${current === id ? ' aria-current="page"' : ''}>${label}</a>`;
   return `<nav class="subnav" aria-label="Design Lab sections">
   ${link(p + 'design-lab/', 'Gallery', 'gallery')}
+  ${link(p + 'design-lab/pattern-language/', 'Pattern language', 'pattern-language')}
   ${link(p + 'design-lab/residences/', 'Residences', 'residences')}
   ${link(p + 'design-lab/illustration/', 'Illustrate', 'illustrate')}
   ${link(p + 'design-lab/visualisations/', 'Visualisations', 'visualisations')}

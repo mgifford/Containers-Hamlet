@@ -106,6 +106,30 @@ try {
   await shot(archive.page, 'archive-top');
   await archive.context.close();
 
+  section('Pattern Language Explorer');
+  const patternExplorer = await open('design-lab/pattern-language/');
+  ok(patternExplorer.errors.length === 0, `pattern language: no console errors${patternExplorer.errors.length ? ': ' + patternExplorer.errors.join(' | ') : ''}`);
+  const patternCount = await patternExplorer.page.evaluate(() => ({ cards: document.querySelectorAll('[data-pattern]').length, visible: [...document.querySelectorAll('[data-pattern]')].filter((c) => !c.hidden).length, status: document.querySelector('#pattern-status').textContent }));
+  ok(patternCount.cards === 20 && patternCount.visible === 20 && /Showing all 20/.test(patternCount.status), 'pattern Explorer lists twenty patterns and all are visible initially');
+  await patternExplorer.page.fill('#pattern-search', 'site repair');
+  await patternExplorer.page.waitForTimeout(200);
+  ok(await patternExplorer.page.locator('[data-pattern]:not([hidden])').count() === 1 && /Showing 1 of 20/.test(await patternExplorer.page.textContent('#pattern-status')), 'pattern search filters by name and updates the live status');
+  await patternExplorer.page.click('#pattern-reset');
+  await patternExplorer.page.waitForTimeout(200);
+  ok(await patternExplorer.page.locator('[data-pattern]:not([hidden])').count() === 20, 'pattern reset restores all results');
+  await patternExplorer.page.selectOption('#pattern-scale', 'interior');
+  await patternExplorer.page.waitForTimeout(200);
+  ok(await patternExplorer.page.locator('[data-pattern]:not([hidden])').count() === 4, 'pattern scale filter returns the four interior patterns');
+  await patternExplorer.page.selectOption('#pattern-scale', '');
+  await patternExplorer.page.selectOption('#pattern-evidence', 'evidence-needed');
+  await patternExplorer.page.waitForTimeout(200);
+  ok(await patternExplorer.page.locator('[data-pattern]:not([hidden])').count() === 7, 'pattern evidence filter returns the seven evidence-needed patterns');
+  await patternExplorer.page.click('#pattern-reset');
+  await patternExplorer.page.waitForTimeout(200);
+  await axe(patternExplorer.page, 'pattern language');
+  await shot(patternExplorer.page, 'pattern-language-top');
+  await patternExplorer.context.close();
+
   section('Concept visualisation placeholders');
   const visuals = await open('design-lab/visualisations/');
   ok(visuals.errors.length === 0, `visualisations: no console errors${visuals.errors.length ? ': ' + visuals.errors.join(' | ') : ''}`);
@@ -117,6 +141,20 @@ try {
   await axe(visuals.page, 'concept visualisations');
   await shot(visuals.page, 'visualisations-top');
   await visuals.context.close();
+
+  const patternHash = await open('design-lab/pattern-language/#pattern-104');
+  await patternHash.page.waitForTimeout(300);
+  ok(await patternHash.page.evaluate(() => document.querySelector('#pattern-104 details').open === true && location.hash === '#pattern-104'), 'shareable pattern fragment opens the matching detail');
+  await patternHash.page.locator('#pattern-104 a[href="#pattern-37"]').first().click();
+  await patternHash.page.waitForTimeout(250);
+  ok(await patternHash.page.evaluate(() => location.hash === '#pattern-37'), 'related-pattern navigation keeps a shareable fragment');
+  await axe(patternHash.page, 'pattern language detail');
+  await patternHash.context.close();
+
+  const patternNojs = await open('design-lab/pattern-language/', { javaScriptEnabled: false });
+  const patternNojsState = await patternNojs.page.evaluate(() => ({ cards: document.querySelectorAll('[data-pattern]').length, controls: getComputedStyle(document.querySelector('#pattern-controls')).display, note: /Filtering needs JavaScript/.test(document.body.textContent) }));
+  ok(patternNojsState.cards === 20 && patternNojsState.controls === 'none' && patternNojsState.note, 'pattern Explorer remains readable without JavaScript and hides the inert filters');
+  await patternNojs.context.close();
 
   section('Architectural gallery and accessible slideshow');
   let arch = await open('design-lab/architecture/common-lodge/');
@@ -747,6 +785,11 @@ try {
   ok(await smallGallery.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'gallery has no horizontal scrolling at 320 px');
   await axe(smallGallery.page, 'gallery at 320 px');
   await smallGallery.context.close();
+  const smallPattern = await open('design-lab/pattern-language/', { viewport: { width: 320, height: 640 } });
+  await smallPattern.page.waitForTimeout(300);
+  ok(await smallPattern.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'Pattern Language Explorer has no horizontal scrolling at 320 px');
+  await axe(smallPattern.page, 'pattern language at 320 px');
+  await smallPattern.context.close();
   const smallVisuals = await open('design-lab/visualisations/', { viewport: { width: 320, height: 640 } });
   await smallVisuals.page.waitForTimeout(300);
   ok(await smallVisuals.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'concept visualisations have no horizontal scrolling at 320 px');
@@ -759,15 +802,15 @@ try {
   ok(smallWidth <= 320, `editor has no horizontal scrolling at 320 px (${smallWidth}px)`);
   await axe(small.page, 'editor at 320 px');
   await small.context.close();
-  const forcedEditor = await open('design-lab/editor/?preset=hamlet-offset-stack', { forcedEditorColors: 'active' });
+  const forcedEditor = await open('design-lab/editor/?preset=hamlet-offset-stack', { forcedColors: 'active' });
   await forcedEditor.page.waitForTimeout(400);
-  ok(await forcedEditor.page.evaluate(() => !!document.querySelector('#interior-plan svg') && !!document.querySelector('#illustration-prompt')), 'forcedEditor-colours mode keeps the interior plan and prompt available');
-  await axe(forcedEditor.page, 'editor in forcedEditor-colours mode');
+  ok(await forcedEditor.page.evaluate(() => !!document.querySelector('#interior-plan svg') && !!document.querySelector('#illustration-prompt')), 'forced-colours mode keeps the interior plan and prompt available');
+  await axe(forcedEditor.page, 'editor in forced-colours mode');
   await forcedEditor.context.close();
-  const reducedMotionPage = await open('design-lab/illustration/', { reducedMotionPageMotion: 'reduce' });
+  const reducedMotionPage = await open('design-lab/illustration/', { reducedMotion: 'reduce' });
   await reducedMotionPage.page.waitForTimeout(300);
-  ok(await reducedMotionPage.page.evaluate(() => document.documentElement.scrollWidth <= 1280 && !!document.querySelector('main')), 'reducedMotionPage-motion mode preserves the illustration page content');
-  await axe(reducedMotionPage.page, 'illustration page with reducedMotionPage motion');
+  ok(await reducedMotionPage.page.evaluate(() => document.documentElement.scrollWidth <= 1280 && !!document.querySelector('main')), 'reduced-motion mode preserves the illustration page content');
+  await axe(reducedMotionPage.page, 'illustration page with reduced motion');
   await reducedMotionPage.context.close();
   const smallArch = await open('design-lab/architecture/woodland-retreat/', { viewport: { width: 320, height: 640 } });
   await smallArch.page.waitForTimeout(300);

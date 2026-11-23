@@ -61,11 +61,11 @@ ${designShellNav(2, 'visualisations')}
     <p>All three are placeholders. The captions say what each image is useful for and what it does not show.</p>
     <div class="visual-grid">
       ${images.map((img, i) => `<figure class="visual-card">
-        <img src="../../assets/concept-visuals/${esc(img.file)}" width="1000" height="563" alt="${esc(img.alt)}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async">
+        <img src="../../assets/concept-visuals/${esc(img.file)}" width="800" height="450" alt="${esc(img.alt)}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async">
         <figcaption><strong>${esc(img.title)}</strong><br>${esc(img.note)}</figcaption>
       </figure>`).join('\n')}
     </div>
-    <p class="small">The images are AVIF, 1000 px wide, to keep them lightweight. They are not supplied as evidence files; the canonical SVG drawings and JSON remain authoritative.</p>
+    <p class="small">The images are AVIF, 800 px wide, to keep them lightweight. They are not supplied as evidence files; the canonical SVG drawings and JSON remain authoritative.</p>
   </section>
 
   <section aria-labelledby="are-title">
