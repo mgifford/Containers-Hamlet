@@ -453,14 +453,21 @@
       lines.push('- ' + r.name + ' (' + r.type + ', ' + r.id + '): ' + r.area_m2 + ' m², ' + r.module + ', ' + r.provenance + (r.fixtures.length ? ', fixtures: ' + r.fixtures.join(', ') : '') + '.');
     });
     lines.push('');
-    lines.push('Partitions and doors: ' + (interior.partitions || []).length + ' partitions and ' + (interior.doors || []).length + ' doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.');
-    lines.push('Fixtures: ' + ((interior.fixtures || []).map(function (f) { return f.type + ' in ' + f.room; }).join('; ') || 'none recorded') + '.');
-    lines.push('Windows: the room polygons reference the documented opening ids. Do not add windows or move them.');
+    var provisional = interior.status === 'provisional' || ((interior.rooms || []).length && (interior.rooms || []).every(function (r) { return r.provenance === 'inferred-from-zone'; }));
+    if (provisional) {
+      lines.push('The room bands are provisional: no partitions, doors or fixtures are modeled. Do not invent walls, doorways, furniture or room-specific uses. The zone labels describe areas, not rooms.');
+    } else {
+      lines.push('Partitions and doors: ' + (interior.partitions || []).length + ' partitions and ' + (interior.doors || []).length + ' doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.');
+      lines.push('The plan does not reconcile every recorded opening with a room. Do not move or resize an opening to make a room work; report the conflict instead.');
+    }
+    lines.push('Fixtures: ' + ((interior.fixtures || []).map(function (f) { return f.type + ' in ' + f.room; }).join('; ') || 'none recorded') + '. Show only these modeled fixtures. Do not add loose furniture, rugs, lamps, art or dishes.');
+    if (provisional) lines.push('Windows: only the documented openings listed below exist. Do not add or move a window, and do not assign a window to a room by name.');
+    else lines.push('Windows: the room polygons reference the documented opening ids. Do not add windows or move them.');
     lines.push('');
     lines.push('Camera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.');
     lines.push('Presentation: ' + scene.presentation.season.replace(/-/g, ' ') + ', ' + scene.presentation.time.replace(/-/g, ' ') + ', ' + (scene.presentation.people ? 'people may be shown' : 'no people') + '.');
     lines.push('');
-    lines.push('Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.');
+    lines.push('Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures or level changes. Do not change room proportions. Do not imply that the view is spatially accurate or that the room-opening assignment is resolved.');
     if (interior.validation && interior.validation.items.length) {
       lines.push('');
       lines.push('Unresolved interior matters:');
@@ -581,7 +588,7 @@
     return { ok: errors.length === 0, errors: errors, warnings: warnings };
   }
 
-  function manifest(scene, designInput, artifacts, generatedAt) {
+  function manifestRecord(scene, designInput, artifacts, sharedArtifacts, generatedAt) {
     var design = Schema.canonicalize(designInput);
     return {
       schema: 'containers-hamlet-package-manifest/v1',
@@ -594,6 +601,7 @@
       generatorVersion: GENERATOR_VERSION,
       generatedAt: generatedAt || new Date().toISOString(),
       artifacts: artifacts || [],
+      sharedArtifacts: sharedArtifacts || [],
       limitations: [
         'Reference SVG views are deterministic concept references, not measured photographs.',
         'Interior drawings are conceptual or provisional; no interior perspective or verified clearances are claimed.',
@@ -603,6 +611,43 @@
         'No structural, accessibility, energy or code compliance is verified.'
       ]
     };
+  }
+
+  function manifest(scene, designInput, artifacts, generatedAt) {
+    return manifestRecord(scene, designInput, artifacts, [], generatedAt);
+  }
+
+  function manifestWithShared(scene, designInput, artifacts, sharedArtifacts, generatedAt) {
+    return manifestRecord(scene, designInput, artifacts, sharedArtifacts, generatedAt);
+  }
+
+  function publishedArtifactPlan() {
+    return [
+      { id: 'design-json', path: 'design.json', type: 'design', dependencies: ['design'] },
+      { id: 'description', path: 'description.md', type: 'description', dependencies: ['design', 'scene'] },
+      { id: 'exterior-prompt', path: 'prompt.md', type: 'prompt', dependencies: ['design', 'scene', 'presentation'] },
+      { id: 'interior-prompt', path: 'interior.md', type: 'prompt', dependencies: ['design', 'scene', 'presentation'] },
+      { id: 'negative-prompt', path: 'negative.md', type: 'prompt', dependencies: ['design', 'scene'] },
+      { id: 'illustration-config', path: 'config.json', type: 'config', dependencies: ['presentation'] },
+      { id: 'scene', path: 'scene.json', type: 'scene', dependencies: ['design', 'presentation'] }
+    ];
+  }
+
+  function sharedArtifactPlan(designInput) {
+    var design = Schema.canonicalize(designInput);
+    var base = '../../views/' + design.id + '-';
+    var out = [
+      { id: 'container-layout-plan', view: 'container-layout', path: base + 'container-layout.svg', type: 'drawing', dependencies: ['design'] },
+      { id: 'container-layout-elevation', view: 'container-layout-elevation', path: base + 'container-layout-elevation.svg', type: 'drawing', dependencies: ['design'] },
+      { id: 'plan-ground', view: 'plan-ground', path: base + 'plan-ground.svg', type: 'drawing', dependencies: ['design'] },
+      { id: 'roof-plan', view: 'roof-plan', path: base + 'roof-plan.svg', type: 'drawing', dependencies: ['design', 'roof'] },
+      { id: 'elevation-south', view: 'elevation-south', path: base + 'elevation-south.svg', type: 'drawing', dependencies: ['design'] },
+      { id: 'section', view: 'section', path: base + 'section.svg', type: 'drawing', dependencies: ['design'] },
+      { id: 'isometric', view: 'exterior', path: base + 'exterior.svg', type: 'drawing', dependencies: ['design', 'camera'] },
+      { id: 'exterior-reference', view: 'site-facing', path: base + 'site-facing.svg', type: 'reference', dependencies: ['design', 'camera'] }
+    ];
+    if (design.interior && design.interior.rooms && design.interior.rooms.length) out.splice(3, 0, { id: 'interior-plan', view: 'interior-plan', path: base + 'interior-plan.svg', type: 'drawing', dependencies: ['design', 'interior'] });
+    return out;
   }
 
   function artifactPlan(scene) {
@@ -635,6 +680,6 @@
     defaultConfig: defaultConfig, validateConfig: validateConfig, siteFor: siteFor, principalView: principalView,
     worldAzimuth: worldAzimuth, entranceBearing: entranceBearing, viewAzimuth: viewAzimuth, referenceRotation: referenceRotation,
     sceneSpec: sceneSpec, promptFor: promptFor, interiorPromptFor: interiorPromptFor, negativeFor: negativeFor, descriptionFor: descriptionFor,
-    validateScene: validateScene, manifest: manifest, artifactPlan: artifactPlan, unresolvedFor: unresolvedFor
+    validateScene: validateScene, manifest: manifest, manifestWithShared: manifestWithShared, publishedArtifactPlan: publishedArtifactPlan, sharedArtifactPlan: sharedArtifactPlan, artifactPlan: artifactPlan, unresolvedFor: unresolvedFor
   };
 });

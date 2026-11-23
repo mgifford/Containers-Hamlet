@@ -281,17 +281,14 @@ export function generate() {
         'scene.json': JSON.stringify(_scene) + '\n'
       };
       Object.entries(files).forEach(([name, content]) => put(`${base}/${name}`, content));
-      const artifacts = DesignIllustration.artifactPlan(_scene).map((a) => {
-        let content = files[a.path];
-        if (!content && a.path === 'prompts/interior.md') content = files['interior.md'];
-        if (!content && a.path.indexOf('drawings/') === 0) {
-          const viewName = a.path.replace('drawings/', '').replace('.svg', '');
-          content = views[viewName] || '';
-        }
-        if (!content && a.path.indexOf('references/') === 0) content = views['site-facing'] || views['exterior'] || '';
-        return { ...a, hash: DesignIllustration.hashString(content || a.path + ':' + concept.id) };
-      });
-      put(`${base}/manifest.json`, JSON.stringify(DesignIllustration.manifest(_scene, concept, artifacts, designLab.generated || '2026-11-22')) + '\n');
+      const artifacts = DesignIllustration.publishedArtifactPlan().map((a) => ({
+        ...a, hash: DesignIllustration.hashString(files[a.path] || '')
+      }));
+      const sharedArtifacts = DesignIllustration.sharedArtifactPlan(concept).map((a) => ({
+        id: a.id, path: a.path, type: a.type, dependencies: a.dependencies,
+        hash: DesignIllustration.hashString(views[a.view] || '')
+      }));
+      put(`${base}/manifest.json`, JSON.stringify(DesignIllustration.manifestWithShared(_scene, concept, artifacts, sharedArtifacts, designLab.generated || '2026-11-22')) + '\n');
       illustrationEntries.push({ concept, scene: _scene, config: _illusConfig, views });
     }
     put(`site/design-lab/data/${concept.id}.json`, JSON.stringify(concept) + '\n');

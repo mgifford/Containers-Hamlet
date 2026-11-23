@@ -1,0 +1,2635 @@
+{
+  "schema": "containers-hamlet-image-descriptions/v1",
+  "note": "Authoritative description of what each v2 illustration is meant to draw. A description is not an architectural fact: every item carries a status. The design model remains the source for geometry, openings, materials, storeys and site. The visible-services layer is an illustration aid, not a water, fire, ventilation or electrical design.",
+  "generatedFrom": "data/design-lab.json, data/site.json, docs/visualisation-v2-brief.md and the Phase 4 fire/water layer",
+  "policies": {
+    "authority": "The design model is authoritative for geometry, materials, openings, storeys and site. A description adds visual intent; it does not create architecture.",
+    "status": {
+      "modeled": "Recorded in data/design-lab.json and checkable against the model.",
+      "inferred": "Follows directly from a modeled element (for example, a corner casting on a modeled container) but is not individually authored.",
+      "conceptual": "An illustration placement or intent from the project brief. It is not designed; the caption must say so.",
+      "not-resolved": "A known gap. Do not draw it as a resolved element; record it in the image limitations."
+    },
+    "interior": "Only Woodland Cottage and Accessible Garden Home have authored interiors. The other four use provisional zone bands. Do not invent partitions, doors, fixtures or room-specific windows for a provisional interior.",
+    "furniture": "Show only the modeled fixtures listed in the interior schedule. Do not add loose furniture, rugs, lamps, art, plants, books or dishes. An empty room is preferable to an invented one.",
+    "finishes": "Interior linings, floor finishes, ceiling finishes, joinery and window-frame colours are not documented. Use a neutral pale lining with exposed container steel at reveals and a neutral dark frame; disclose both as illustrative defaults. Do not present a timber species, stain, tile or paint colour as specified.",
+    "services": "A service element may appear only where the visible-services layer records a modeled or conceptual placement for that image. Elements marked not-resolved or excluded must not appear as resolved. Conceptual placements must be captioned.",
+    "claim": "No image may claim fire resistance, WUI approval, potable water, water independence, full accessibility, structural capacity or code compliance."
+  },
+  "designs": {
+    "hamlet-woodland-cottage": {
+      "label": "Woodland Cottage",
+      "interiorProvenance": "authored",
+      "interiorReconciliation": "opening-room-mapping-unresolved",
+      "services": {
+        "placements": [
+          {
+            "id": "v-pv",
+            "kind": "pv-array",
+            "label": "Installed PV array on the south roof slope",
+            "status": "modeled",
+            "visibleIn": [
+              "woodland-cottage-exterior-hero"
+            ],
+            "evidence": "solar_array.enabled = true; solar_array.side = south",
+            "note": "Tilted racks; no production claim."
+          },
+          {
+            "id": "v-gutter-south",
+            "kind": "gutter",
+            "label": "Gutter along the south eave",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-exterior-hero",
+              "woodland-cottage-water-edge",
+              "woodland-cottage-fire-edge"
+            ],
+            "evidence": "water.collection.gutters = required",
+            "note": "Conceptual line and fixing; roof drainage is not detailed."
+          },
+          {
+            "id": "v-downspout-east",
+            "kind": "downspout",
+            "label": "Downspout at the east end of the south eave",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-exterior-hero",
+              "woodland-cottage-water-edge",
+              "woodland-cottage-fire-edge"
+            ],
+            "evidence": "water.collection.downspouts = 2",
+            "note": "One of two required downspouts; the exact position is not designed."
+          },
+          {
+            "id": "v-leaf-guard",
+            "kind": "leaf-guard",
+            "label": "Leaf guard on the gutter",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-water-edge"
+            ],
+            "evidence": "water.collection.leafGuards = required",
+            "note": "Show as a fine mesh, not a solid cover."
+          },
+          {
+            "id": "v-first-flush",
+            "kind": "first-flush",
+            "label": "First-flush diverter at the downspout base",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-water-edge"
+            ],
+            "evidence": "water.collection.firstFlush = required",
+            "note": "Location and size are illustrative."
+          },
+          {
+            "id": "v-cistern-inlet",
+            "kind": "cistern-inlet",
+            "label": "Cistern inlet pipe disappearing into the garden edge",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-water-edge"
+            ],
+            "evidence": "water.storage.type = cistern; water.storage.location = not-resolved",
+            "note": "The cistern itself is not shown; only the inlet route is implied."
+          },
+          {
+            "id": "v-hrv-intake",
+            "kind": "hrv-intake",
+            "label": "200 mm low fresh-air intake",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-service-core"
+            ],
+            "evidence": "thermal.heat_recovery_ventilation = true; visualisation-v2-brief gives 200 mm and 0.40 m",
+            "note": "The face and height are an illustration placement, not a designed penetration."
+          },
+          {
+            "id": "v-hrv-exhaust",
+            "kind": "hrv-exhaust",
+            "label": "200 mm high exhaust",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-service-core"
+            ],
+            "evidence": "thermal.heat_recovery_ventilation = true; visualisation-v2-brief gives 200 mm and 2.0 m",
+            "note": "The face and height are an illustration placement, not a designed penetration."
+          },
+          {
+            "id": "v-service-wall",
+            "kind": "service-core",
+            "label": "Compact service wall with labelled access panels",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-service-core"
+            ],
+            "evidence": "visualisation-v2-brief service-core requirements; no service-core geometry is modeled",
+            "note": "Show generic, accessible panels; do not specify equipment sizes, brands or final positions."
+          },
+          {
+            "id": "v-ember-vent",
+            "kind": "ember-resistant-vent",
+            "label": "Closed, ember-resistant soffit or gable vent",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-exterior-hero",
+              "woodland-cottage-fire-edge"
+            ],
+            "evidence": "fire.ember_resistant_vents = true",
+            "note": "Intent only; the vent product, area and location are not designed."
+          },
+          {
+            "id": "v-defensible-space",
+            "kind": "defensible-space",
+            "label": "Low-fuel ground cover and reduced fuel within 10 m",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-exterior-hero",
+              "woodland-cottage-fire-edge"
+            ],
+            "evidence": "fire.defensible_space_m = 10",
+            "note": "Landscape treatment is conceptual; no WUI approval is claimed."
+          },
+          {
+            "id": "v-accessible-threshold",
+            "kind": "accessible-threshold",
+            "label": "Level entrance threshold",
+            "status": "modeled",
+            "visibleIn": [
+              "woodland-cottage-accessible-entry"
+            ],
+            "evidence": "access.entrance_threshold_m = 0; access.step_free_entrance = true",
+            "note": "Design intent, not a surveyed or verified measurement."
+          },
+          {
+            "id": "v-accessible-route",
+            "kind": "accessible-route",
+            "label": "1.2 m clear route from porch through hall to living",
+            "status": "conceptual",
+            "visibleIn": [
+              "woodland-cottage-accessible-entry"
+            ],
+            "evidence": "access.circulation_width_m = 1.2",
+            "note": "The route is a design target; clearances are not verified."
+          }
+        ],
+        "excluded": [
+          {
+            "kind": "stove",
+            "label": "Wood stove",
+            "reason": "No wood stove is recorded; the recorded heating is a cold-climate air-source heat pump.",
+            "check": "no-stove"
+          },
+          {
+            "kind": "chimney",
+            "label": "Chimney",
+            "reason": "No chimney is recorded or designed.",
+            "check": "no-chimney"
+          },
+          {
+            "kind": "hydrant",
+            "label": "Fire hydrant",
+            "reason": "fire.water_access is false; fire-service water access is not confirmed.",
+            "check": "no-hydrant"
+          },
+          {
+            "kind": "fire-cistern",
+            "label": "Verified fire cistern or draft point",
+            "reason": "The fire reserve is separate in intent but has no volume, connection or verification.",
+            "check": "no-fire-cistern"
+          },
+          {
+            "kind": "potable-water",
+            "label": "Potable rainwater supply",
+            "reason": "water.treatment.potable is false; treatment and testing are not designed.",
+            "check": "no-potable"
+          },
+          {
+            "kind": "battery",
+            "label": "Battery or inverter",
+            "reason": "No battery, inverter or off-grid electrical plant is recorded.",
+            "check": "no-battery"
+          },
+          {
+            "kind": "rain-barrel",
+            "label": "Single rain barrel presented as the system",
+            "reason": "A rain barrel is not a system and is not a fire reserve.",
+            "check": "custom"
+          },
+          {
+            "kind": "noncombustible-deck",
+            "label": "Resolved noncombustible deck",
+            "reason": "fire.noncombustible_deck is false; the deck/porch status is unresolved.",
+            "check": "no-deck-claim"
+          },
+          {
+            "kind": "snow-guards",
+            "label": "Installed snow guards",
+            "reason": "Snow guards and entry protection are recorded as needing review, not as designed.",
+            "check": "custom"
+          },
+          {
+            "kind": "ramp",
+            "label": "Accessible ramp",
+            "reason": "The entrance is recorded as level and step-free; no ramp is modeled.",
+            "check": "custom"
+          },
+          {
+            "kind": "extra-geometry",
+            "label": "Extra storeys, modules, balconies, dormers or skylights",
+            "reason": "The model has one storey and one module; no balcony, dormer or skylight is recorded.",
+            "check": "no-extra-geometry"
+          }
+        ]
+      },
+      "images": [
+        {
+          "id": "woodland-cottage-exterior-hero",
+          "title": "Woodland Cottage — garden approach and whole house",
+          "view": "exterior-three-quarter",
+          "status": "ready",
+          "purpose": "Show the single-storey 40 ft home as a modest, step-free cottage in the woods. Establish massing, porch, roof, PV and the fire/water edge without implying a finished service design.",
+          "camera": {
+            "position": "on the garden approach at the south-west corner, eye level",
+            "height_m": 1.6,
+            "lens_mm": 35,
+            "framing": "whole house with the south porch and west gable end; room for site context and defensible-space planting; no other buildings"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 1,
+            "roofType": "gable",
+            "roofPitch_deg": 24
+          },
+          "mustShow": [
+            {
+              "item": "one 40 ft module, 12.19 x 2.44 m, base 0.6 m, timber cladding",
+              "status": "modeled",
+              "evidence": "modules[0]"
+            },
+            {
+              "item": "gable roof at 24 degrees with a 0.8 m overhang and a standing-seam metal finish",
+              "status": "modeled",
+              "evidence": "roof_form; water.catchment.roof"
+            },
+            {
+              "item": "installed PV array on the south roof slope, tilted racks",
+              "status": "modeled",
+              "evidence": "solar_array"
+            },
+            {
+              "item": "south face: bathroom window at 4.4 m (0.8 x 1 m, sill 1.4 m), step-free entrance at 6.1 m (0.95 x 2.1 m), garden sliding doors at 8.4 m (2.4 x 2.1 m)",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-s1,m1-s3,m1-s2]"
+            },
+            {
+              "item": "west face: one 1 x 1.3 m window at 1.2 m, sill 0.9 m; north windows remain out of view",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-w1,m1-n1,m1-n2]"
+            },
+            {
+              "item": "covered south porch 5.4 x 2.8 m, roofed, and a level deck projecting 1 m",
+              "status": "modeled",
+              "evidence": "porches[p1]; decks[d1]"
+            },
+            {
+              "item": "a level, step-free threshold at the entrance; no ramp",
+              "status": "modeled",
+              "evidence": "access.entrance_threshold_m = 0; access.step_free_entrance = true"
+            },
+            {
+              "item": "one visible corner casting and the module joint at the porch end, consistent with an ISO container",
+              "status": "inferred",
+              "evidence": "modules[0].type = 40ft; no corner casting is individually modeled"
+            },
+            {
+              "item": "a gutter along the south eave and one downspout at its east end",
+              "status": "conceptual",
+              "evidence": "v-gutter-south; v-downspout-east"
+            },
+            {
+              "item": "closed noncombustible eaves and one fine-mesh ember-resistant vent",
+              "status": "conceptual",
+              "evidence": "fire.noncombustible_eaves; fire.ember_resistant_vents"
+            },
+            {
+              "item": "defensible-space planting: low fuel within 1.5 m, reduced fuel to 10 m, no firewood against the house",
+              "status": "conceptual",
+              "evidence": "fire.defensible_space_m = 10"
+            },
+            {
+              "item": "cedar and pine, with the lake seen only as a glimpse through trunks; no other buildings",
+              "status": "modeled",
+              "evidence": "site Cabin A principal view"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a second storey, a second module or a balcony",
+              "reason": "The model has one storey and one module.",
+              "check": "no-extra-geometry"
+            },
+            {
+              "item": "a chimney or a wood stove",
+              "reason": "Neither is recorded; heating is a heat pump.",
+              "check": "no-stove"
+            },
+            {
+              "item": "a hydrant or a fire cistern",
+              "reason": "Fire-service water access is not confirmed.",
+              "check": "no-hydrant"
+            },
+            {
+              "item": "a potable-water label or drinking-water claim",
+              "reason": "The rainwater system is non-potable and treatment is not designed.",
+              "check": "no-potable"
+            },
+            {
+              "item": "a rain barrel as the water system",
+              "reason": "A rain barrel is not a system or a fire reserve.",
+              "check": "custom"
+            },
+            {
+              "item": "a battery, inverter or off-grid plant",
+              "reason": "None is recorded.",
+              "check": "no-battery"
+            },
+            {
+              "item": "a deck presented as noncombustible, or firewood under the floor or against the wall",
+              "reason": "The deck is not recorded as noncombustible; storage is unresolved.",
+              "check": "no-deck-claim"
+            },
+            {
+              "item": "snow guards installed above the entry",
+              "reason": "Snow guards are unresolved, not designed.",
+              "check": "custom"
+            },
+            {
+              "item": "an accessible ramp, lift or handrail not modeled",
+              "reason": "The entrance is level; no ramp or lift is recorded.",
+              "check": "custom"
+            },
+            {
+              "item": "a waterfront lawn or a lake immediately at the house",
+              "reason": "The site view is through cedar and pine, with the far shore low on the horizon.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [
+            "v-pv",
+            "v-gutter-south",
+            "v-downspout-east",
+            "v-ember-vent",
+            "v-defensible-space"
+          ],
+          "caption": "Conceptual v2 exterior of Woodland Cottage from the garden approach: one 40 ft module, a 24-degree gable, a covered south porch and level deck, and installed PV. The gutter, downspout, ember vent and defensible-space planting are conceptual placements. The cistern, fire reserve and service core are not shown because they are not designed. Not a construction drawing.",
+          "alt": "Conceptual illustration of a single-storey timber-clad container cottage with a 24-degree gable roof, solar panels, a covered south porch and a level deck, seen from a garden path through cedar and pine. A gutter and downspout are shown as conceptual placements; no chimney, hydrant or cistern is shown.",
+          "limitations": [
+            "Gutter and downspout positions are conceptual; roof drainage is not detailed.",
+            "Fire resistance, WUI performance and fire-service water access are not designed or verified.",
+            "Cistern size and location and the separate fire reserve are not designed.",
+            "The deck is not recorded as noncombustible; snow guards are unresolved."
+          ],
+          "source": {
+            "designHash": "d142126a",
+            "sceneHash": "4af580f8",
+            "reference": "site-facing.svg"
+          }
+        },
+        {
+          "id": "woodland-cottage-interior-hero",
+          "title": "Woodland Cottage — entrance hall, kitchen and living",
+          "view": "interior",
+          "status": "blocked-pending-reconciliation",
+          "blockedBy": [
+            "modules[0].openings[m1-n2] is named Kitchen window but its position (6.2 m) falls in the authored entrance hall band.",
+            "modules[0].openings[m1-s2] is named Garden doors but its position (8.4 m) falls at the kitchen/living boundary, not inside the authored living room.",
+            "modules[0].openings[m1-w1] is named Living window but it is on the west face, which is the bedroom end in the authored plan.",
+            "The interior plan does not draw the perimeter openings, so the room-opening assignment cannot be checked visually."
+          ],
+          "purpose": "Show the authored room sequence, the narrow 2.44 m interior, the modeled fixtures and the direct garden doors. This image is blocked until the room polygons and opening positions are reconciled.",
+          "camera": {
+            "position": "inside the entrance hall, looking east through the kitchen toward the living room; the south garden doors are at the right edge",
+            "height_m": 1.5,
+            "lens_mm": 24,
+            "framing": "one-point view down the module; partitions, 1 m doors, kitchen counter, sofa and garden doors in frame; no furniture beyond modeled fixtures"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 1,
+            "roofType": "gable",
+            "roofPitch_deg": 24
+          },
+          "interior": {
+            "provenance": "authored",
+            "rooms": [
+              "w-hall",
+              "w-kitchen",
+              "w-living"
+            ],
+            "openings": [
+              "m1-s3",
+              "m1-n2",
+              "m1-s2"
+            ]
+          },
+          "mustShow": [
+            {
+              "item": "the authored room sequence west to east: bedroom, bathroom, entrance hall, kitchen, living",
+              "status": "modeled",
+              "evidence": "interior.rooms"
+            },
+            {
+              "item": "four full-height partitions and four 0.9-1.0 m doors; doors are drawn as open connections, not missing walls",
+              "status": "modeled",
+              "evidence": "interior.partitions; interior.doors"
+            },
+            {
+              "item": "the narrow 2.44 m internal width and the container's flat ceiling; no raised or pitched interior ceiling",
+              "status": "inferred",
+              "evidence": "modules[0].nominal.width_m; no interior ceiling geometry is modeled"
+            },
+            {
+              "item": "the entrance door (m1-s3) and the south garden doors (m1-s2) at their recorded positions",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-s3,m1-s2]"
+            },
+            {
+              "item": "the kitchen counter (1.6 x 0.55 m) and the living sofa (1.5 x 0.8 m) only",
+              "status": "modeled",
+              "evidence": "interior.fixtures[w-counter,w-sofa]"
+            },
+            {
+              "item": "a neutral pale interior lining with exposed container steel at the door and window reveals",
+              "status": "conceptual",
+              "evidence": "no interior finish is documented; disclose as an illustrative default"
+            },
+            {
+              "item": "the 1.0 m hall-to-kitchen door and the 1.0 m kitchen-to-living door, both open",
+              "status": "modeled",
+              "evidence": "interior.doors[w-d3,w-d4]"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a wood stove, chimney, range hood or bathroom exhaust fan",
+              "reason": "None is recorded or designed; heating is a heat pump.",
+              "check": "no-stove"
+            },
+            {
+              "item": "loose furniture, rugs, lamps, art, plants, books or dishes",
+              "reason": "Only the modeled fixtures may be shown; loose furniture is not modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a wall, door or window that is not in the interior model",
+              "reason": "The interior has four partitions and four doors only.",
+              "check": "custom"
+            },
+            {
+              "item": "a timber species, stain, tile or paint colour presented as specified",
+              "reason": "Interior finishes are not documented.",
+              "check": "custom"
+            },
+            {
+              "item": "the garden doors forced into the middle of the living room, or the west window called a living window",
+              "reason": "The recorded positions and the authored room names do not reconcile; do not correct the plan in the image.",
+              "check": "custom"
+            },
+            {
+              "item": "an accessible route or turning circle claim beyond the modeled 1.5 m bathroom circle",
+              "reason": "Clearances are not professionally verified.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [],
+          "caption": "Conceptual interior of Woodland Cottage from the entrance hall toward the kitchen and living room. The room sequence and partitions are authored; the garden-door position and the kitchen-window room assignment are unresolved in the current model. Interior finishes are illustrative, not specified. Not a construction drawing.",
+          "alt": "Conceptual interior view down a narrow timber-framed container home from an entrance hall toward a kitchen counter and a living sofa, with full-height partitions and open doors. Interior finishes are illustrative; no stove or loose furniture is shown.",
+          "limitations": [
+            "Blocked: the room polygons and the recorded opening positions do not reconcile.",
+            "No interior camera or perspective renderer is implemented; the view is a conceptual interpretation, not a measured perspective.",
+            "Interior finishes and window-frame colours are illustrative defaults, not specifications.",
+            "Accessibility clearances are not professionally verified."
+          ],
+          "source": {
+            "designHash": "d142126a",
+            "sceneHash": "4af580f8",
+            "reference": "interior-plan.svg"
+          }
+        },
+        {
+          "id": "woodland-cottage-fire-edge",
+          "title": "Woodland Cottage — fire-resilient roof edge and defensible space",
+          "view": "detail",
+          "status": "ready",
+          "purpose": "Show the fire-resilience intent at the roof edge, eave and immediate ground plane, without claiming a fire-resistance rating or WUI approval.",
+          "camera": {
+            "position": "close three-quarter view of the south-west corner at the porch edge, eye level to slightly low",
+            "height_m": 1.6,
+            "lens_mm": 50,
+            "framing": "roof edge, gutter, closed soffit, ember vent, wall base and the first 3 m of ground; porch roof and wall in frame"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 1,
+            "roofType": "gable",
+            "roofPitch_deg": 24
+          },
+          "mustShow": [
+            {
+              "item": "standing-seam metal roof edge with a 0.8 m overhang",
+              "status": "modeled",
+              "evidence": "roof_form"
+            },
+            {
+              "item": "closed, noncombustible soffit and fascia at the eave",
+              "status": "conceptual",
+              "evidence": "fire.noncombustible_eaves = true; the assembly is not modeled"
+            },
+            {
+              "item": "one fine-mesh ember-resistant vent, closed and defended",
+              "status": "conceptual",
+              "evidence": "fire.ember_resistant_vents = true"
+            },
+            {
+              "item": "tempered glazing at the windows in frame; no combustible trim against the glass",
+              "status": "conceptual",
+              "evidence": "fire.tempered_glazing = true; glass make-up is not modeled"
+            },
+            {
+              "item": "a gutter and downspout at the eave",
+              "status": "conceptual",
+              "evidence": "v-gutter-south; v-downspout-east"
+            },
+            {
+              "item": "low-fuel ground cover within 1.5 m, reduced fuel from 1.5 m to 10 m, and no firewood, propane or storage against the wall",
+              "status": "conceptual",
+              "evidence": "fire.defensible_space_m = 10"
+            },
+            {
+              "item": "an elevated floor on piles with a clear, non-storage undercroft",
+              "status": "modeled",
+              "evidence": "foundation.clearance_m = 0.6; foundation.independent_deck = true"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a fire-resistance rating, fireproof label or WUI approval",
+              "reason": "No rating or approval is designed.",
+              "check": "custom"
+            },
+            {
+              "item": "a chimney, stove, hydrant or fire cistern",
+              "reason": "None is recorded or verified.",
+              "check": "no-chimney"
+            },
+            {
+              "item": "firewood stacked under the floor or against the house",
+              "reason": "This is an unresolved fire risk, not a design feature.",
+              "check": "custom"
+            },
+            {
+              "item": "a noncombustible deck claim",
+              "reason": "The deck is not recorded as noncombustible.",
+              "check": "no-deck-claim"
+            },
+            {
+              "item": "snow guards as installed",
+              "reason": "Snow guards and entry protection are unresolved.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [
+            "v-gutter-south",
+            "v-downspout-east",
+            "v-ember-vent",
+            "v-defensible-space"
+          ],
+          "caption": "Detail of the Woodland Cottage roof edge and immediate ground plane. Closed eaves, an ember-resistant vent and defensible-space planting are design intents, not a fire-resistance rating or WUI approval. The deck is not recorded as noncombustible. Not a construction drawing.",
+          "alt": "Close conceptual view of a metal gable roof edge over a timber-clad wall, with a closed soffit, a fine-mesh vent, a gutter and downspout, and low-fuel planting with a clear undercroft. No chimney or hydrant is visible.",
+          "limitations": [
+            "The eave, vent and glazing assemblies are not modeled; they are shown as intents.",
+            "Defensible-space planting is conceptual; no WUI assessment exists.",
+            "The deck and undercroft storage remain unresolved fire risks."
+          ],
+          "source": {
+            "designHash": "d142126a",
+            "sceneHash": "4af580f8",
+            "reference": "elevation-south.svg"
+          }
+        },
+        {
+          "id": "woodland-cottage-water-edge",
+          "title": "Woodland Cottage — rainwater collection edge",
+          "view": "detail",
+          "status": "ready",
+          "purpose": "Show the logical path from roof to gutter, downspout, first flush and cistern inlet, while making clear that the cistern and fire reserve are not designed.",
+          "camera": {
+            "position": "close view of the south-east roof edge and wall base, looking up the downspout and along the garden edge",
+            "height_m": 1.6,
+            "lens_mm": 50,
+            "framing": "gutter, downspout, first-flush device and the inlet pipe disappearing into the ground; no tank, hydrant or potable fixture"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 1,
+            "roofType": "gable",
+            "roofPitch_deg": 24
+          },
+          "mustShow": [
+            {
+              "item": "standing-seam metal roof and a gutter with a fine leaf guard",
+              "status": "conceptual",
+              "evidence": "water.catchment.roof; water.collection.gutters; v-leaf-guard"
+            },
+            {
+              "item": "one downspout at the east end of the south eave",
+              "status": "conceptual",
+              "evidence": "water.collection.downspouts = 2; v-downspout-east"
+            },
+            {
+              "item": "a first-flush diverter at the downspout base",
+              "status": "conceptual",
+              "evidence": "water.collection.firstFlush = required; v-first-flush"
+            },
+            {
+              "item": "an inlet pipe turning into the garden edge, with the cistern itself out of frame",
+              "status": "conceptual",
+              "evidence": "water.storage.type = cistern; water.storage.location = not-resolved; v-cistern-inlet"
+            },
+            {
+              "item": "a splash pad or stone apron at the wall base, not a stored-water feature",
+              "status": "conceptual",
+              "evidence": "water.collection; no splash detail is modeled"
+            },
+            {
+              "item": "the clear undercroft and no storage against the wall",
+              "status": "modeled",
+              "evidence": "foundation.clearance_m = 0.6"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a cistern, tank or barrel in a resolved location",
+              "reason": "Cistern type is recorded but volume and location are not resolved.",
+              "check": "custom"
+            },
+            {
+              "item": "a hydrant, fire cistern or draft point",
+              "reason": "Fire-service water access is not confirmed.",
+              "check": "no-hydrant"
+            },
+            {
+              "item": "a potable-water tap, filter or drinking-water label",
+              "reason": "The system is non-potable; treatment and testing are not designed.",
+              "check": "no-potable"
+            },
+            {
+              "item": "a single rain barrel presented as the system",
+              "reason": "A rain barrel is not a system or a fire reserve.",
+              "check": "custom"
+            },
+            {
+              "item": "a pump, pressure tank or treatment plant",
+              "reason": "None is recorded.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [
+            "v-gutter-south",
+            "v-downspout-east",
+            "v-leaf-guard",
+            "v-first-flush",
+            "v-cistern-inlet"
+          ],
+          "caption": "Detail of the Woodland Cottage rainwater-collection edge. The gutter, leaf guard, downspout and first-flush device are conceptual placements. The cistern and the separate fire reserve are not shown because their volume, location and connection are not designed. The water is not potable. Not a construction drawing.",
+          "alt": "Close conceptual view of a metal roof gutter and downspout with a leaf guard and first-flush device at a timber wall base, with an inlet pipe turning into a garden edge. No tank, hydrant or drinking-water tap is shown.",
+          "limitations": [
+            "All collection hardware positions are conceptual; roof drainage is not detailed.",
+            "Cistern volume, location, freeze protection and overflow are not designed.",
+            "The water is non-potable; treatment and testing are not designed.",
+            "Fire-service water access and the separate fire reserve are unverified."
+          ],
+          "source": {
+            "designHash": "d142126a",
+            "sceneHash": "4af580f8",
+            "reference": "elevation-south.svg"
+          }
+        },
+        {
+          "id": "woodland-cottage-service-core",
+          "title": "Woodland Cottage — service core and ventilation",
+          "view": "detail",
+          "status": "ready",
+          "purpose": "Show that a compact, accessible service core and a balanced ventilation system are required, while making clear that their layout, equipment and penetrations are not designed.",
+          "camera": {
+            "position": "interior three-quarter view of a compact utility wall at the kitchen/bathroom end; the camera stands in the hall",
+            "height_m": 1.5,
+            "lens_mm": 24,
+            "framing": "one wall with labelled access panels, an HRV with filter and condensate drain, a small electrical panel and a water heater; no loose furniture"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 1,
+            "roofType": "gable",
+            "roofPitch_deg": 24
+          },
+          "interior": {
+            "provenance": "authored",
+            "rooms": [
+              "w-hall",
+              "w-kitchen",
+              "w-bath"
+            ],
+            "openings": [
+              "m1-s3",
+              "m1-s1"
+            ]
+          },
+          "mustShow": [
+            {
+              "item": "a compact service wall with accessible, labelled panels; no concealed equipment without an access door",
+              "status": "conceptual",
+              "evidence": "visualisation-v2-brief service-core requirements; v-service-wall"
+            },
+            {
+              "item": "a compact HRV with a replaceable filter, frost control and a condensate drain",
+              "status": "conceptual",
+              "evidence": "thermal.heat_recovery_ventilation = true; the unit is not modeled"
+            },
+            {
+              "item": "a low fresh-air intake and a high exhaust, each a 200 mm insulated wall sleeve",
+              "status": "conceptual",
+              "evidence": "v-hrv-intake; v-hrv-exhaust"
+            },
+            {
+              "item": "a small electrical panel and a water heater with a drain and TPR relief",
+              "status": "conceptual",
+              "evidence": "visualisation-v2-brief; neither is modeled"
+            },
+            {
+              "item": "a clear floor in front of every panel and a door or access panel that opens fully",
+              "status": "conceptual",
+              "evidence": "access.circulation_width_m = 1.2"
+            },
+            {
+              "item": "a neutral lining with exposed steel at the reveals; no applied timber feature wall",
+              "status": "conceptual",
+              "evidence": "no interior finish is documented"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a wood stove, chimney or stove OAK",
+              "reason": "No stove is recorded; the recorded heating is a heat pump.",
+              "check": "no-stove"
+            },
+            {
+              "item": "a gas supply, propane tank or combustion appliance",
+              "reason": "No gas or propane is recorded.",
+              "check": "custom"
+            },
+            {
+              "item": "a battery, inverter or off-grid plant",
+              "reason": "None is recorded.",
+              "check": "no-battery"
+            },
+            {
+              "item": "a recirculating microwave presented as kitchen ventilation",
+              "reason": "A recirculating hood is not a moisture solution; the brief requires a ducted hood.",
+              "check": "custom"
+            },
+            {
+              "item": "specific equipment brands, sizes, pipe routes or electrical layouts presented as designed",
+              "reason": "The service core is not designed; show generic, labelled equipment only.",
+              "check": "custom"
+            },
+            {
+              "item": "a sealed service wall with no access",
+              "reason": "Every concealed service must have an access panel.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [
+            "v-hrv-intake",
+            "v-hrv-exhaust",
+            "v-service-wall"
+          ],
+          "caption": "Conceptual service-core study for Woodland Cottage. The accessible service wall, HRV, filter, condensate drain, electrical panel and water heater are shown as requirements, not as a designed layout. Equipment sizes, routes and penetration positions are unresolved. Not a construction drawing.",
+          "alt": "Conceptual interior view of a compact utility wall with labelled access panels, a small heat-recovery ventilator with a filter and drain, an electrical panel and a water heater. No stove, battery or gas supply is shown.",
+          "limitations": [
+            "The service core, equipment and penetrations are not designed; the arrangement is illustrative.",
+            "No ducted kitchen hood or bathroom exhaust is modeled; both remain requirements.",
+            "No wood stove or chimney is recorded; the home is heat-pump heated in the model.",
+            "Clearances around panels are a design target, not a verified measurement."
+          ],
+          "source": {
+            "designHash": "d142126a",
+            "sceneHash": "4af580f8",
+            "reference": "interior-plan.svg"
+          }
+        },
+        {
+          "id": "woodland-cottage-accessible-entry",
+          "title": "Woodland Cottage — step-free entry and accessible route",
+          "view": "detail",
+          "status": "ready",
+          "purpose": "Show the level entrance, the covered porch and the clear route into the hall, without claiming a verified accessible home.",
+          "camera": {
+            "position": "eye-level view from the garden deck, centred on the entrance door and the porch",
+            "height_m": 1.5,
+            "lens_mm": 35,
+            "framing": "deck, threshold, entrance door, porch posts and roof; the hall beyond the open door; no ramp"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 1,
+            "roofType": "gable",
+            "roofPitch_deg": 24
+          },
+          "mustShow": [
+            {
+              "item": "a level deck and a level threshold at the entrance, with no step and no ramp",
+              "status": "modeled",
+              "evidence": "access.entrance_threshold_m = 0; decks[d1]"
+            },
+            {
+              "item": "the 0.95 m entrance door, open, with a clear approach",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-s3]; access.entrance_door_width_m"
+            },
+            {
+              "item": "the covered porch 5.4 x 2.8 m with a roof and posts",
+              "status": "modeled",
+              "evidence": "porches[p1]"
+            },
+            {
+              "item": "a 1.2 m clear route from the threshold through the hall, without a loose mat or furniture",
+              "status": "conceptual",
+              "evidence": "access.circulation_width_m = 1.2"
+            },
+            {
+              "item": "a continuous, slip-resistant surface across deck and threshold",
+              "status": "conceptual",
+              "evidence": "access.path_connection; the surface is not specified"
+            },
+            {
+              "item": "the hall and the 1.0 m hall-to-kitchen door beyond",
+              "status": "modeled",
+              "evidence": "interior.rooms[w-hall]; interior.doors[w-d3]"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a ramp, lift, stair or level change at the entrance",
+              "reason": "No ramp, lift or stair is modeled; the entrance is level.",
+              "check": "custom"
+            },
+            {
+              "item": "a grab bar, handrail or accessible fixture not in the model",
+              "reason": "Only the bathroom turning circle is modeled; no grab bars are recorded.",
+              "check": "custom"
+            },
+            {
+              "item": "a doormat, loose furniture or planting that narrows the route",
+              "reason": "The 1.2 m route is a design target and must stay clear.",
+              "check": "custom"
+            },
+            {
+              "item": "a 'fully accessible' or code-compliance claim",
+              "reason": "Accessibility is a design target, not a verified assessment.",
+              "check": "custom"
+            },
+            {
+              "item": "a snow bank or ice on the route presented as resolved",
+              "reason": "Winter access and snow clearing are unresolved.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [
+            "v-accessible-threshold",
+            "v-accessible-route"
+          ],
+          "caption": "Conceptual view of the Woodland Cottage step-free entrance and covered porch. The level threshold, 0.95 m door and 1.2 m route are design intents; they are not a verified accessibility assessment. Winter clearing and surface slip resistance are unresolved. Not a construction drawing.",
+          "alt": "Conceptual eye-level view of a level timber deck and covered porch leading to an open 0.95-metre door into a narrow container home. The threshold is flush; no ramp, grab bar or loose furniture is shown.",
+          "limitations": [
+            "The step-free entrance and 1.2 m route are design intents, not surveyed or professionally verified.",
+            "The deck surface, slip resistance and winter clearing are not designed.",
+            "Grab bars, transfer space and fixture clearances are not modeled beyond the bathroom turning circle."
+          ],
+          "source": {
+            "designHash": "d142126a",
+            "sceneHash": "4af580f8",
+            "reference": "elevation-south.svg"
+          }
+        }
+      ]
+    },
+    "hamlet-offset-stack": {
+      "label": "Offset Stack",
+      "interiorProvenance": "provisional",
+      "services": {
+        "placements": [
+          {
+            "id": "o-pv",
+            "kind": "pv-array",
+            "label": "Installed PV array on the upper south roof slope",
+            "status": "modeled",
+            "visibleIn": [
+              "offset-stack-exterior-hero"
+            ],
+            "evidence": "solar_array.enabled = true",
+            "note": "Tilted racks; no production claim."
+          },
+          {
+            "id": "o-gutter",
+            "kind": "gutter",
+            "label": "Gutter along the low south eave",
+            "status": "conceptual",
+            "visibleIn": [
+              "offset-stack-exterior-hero"
+            ],
+            "evidence": "water.collection.gutters = required",
+            "note": "Conceptual line; shed-roof drainage is not detailed."
+          },
+          {
+            "id": "o-downspout",
+            "kind": "downspout",
+            "label": "Downspout at the east end of the low eave",
+            "status": "conceptual",
+            "visibleIn": [
+              "offset-stack-exterior-hero"
+            ],
+            "evidence": "water.collection.downspouts = 2",
+            "note": "One of two required; exact position not designed."
+          },
+          {
+            "id": "o-ember-vent",
+            "kind": "ember-resistant-vent",
+            "label": "Closed ember-resistant soffit vent",
+            "status": "conceptual",
+            "visibleIn": [
+              "offset-stack-exterior-hero"
+            ],
+            "evidence": "fire.ember_resistant_vents = true",
+            "note": "Intent only."
+          },
+          {
+            "id": "o-defensible-space",
+            "kind": "defensible-space",
+            "label": "Low-fuel ground cover and reduced fuel within 10 m",
+            "status": "conceptual",
+            "visibleIn": [
+              "offset-stack-exterior-hero"
+            ],
+            "evidence": "fire.defensible_space_m = 10",
+            "note": "Conceptual landscape treatment."
+          }
+        ],
+        "excluded": [
+          {
+            "kind": "stove",
+            "label": "Wood stove",
+            "reason": "No stove is recorded.",
+            "check": "no-stove"
+          },
+          {
+            "kind": "chimney",
+            "label": "Chimney",
+            "reason": "No chimney is recorded.",
+            "check": "no-chimney"
+          },
+          {
+            "kind": "hydrant",
+            "label": "Fire hydrant",
+            "reason": "Fire-service water access is not confirmed.",
+            "check": "no-hydrant"
+          },
+          {
+            "kind": "fire-cistern",
+            "label": "Verified fire cistern",
+            "reason": "The fire reserve is unverified.",
+            "check": "no-fire-cistern"
+          },
+          {
+            "kind": "potable-water",
+            "label": "Potable rainwater supply",
+            "reason": "The system is non-potable.",
+            "check": "no-potable"
+          },
+          {
+            "kind": "battery",
+            "label": "Battery or inverter",
+            "reason": "None is recorded.",
+            "check": "no-battery"
+          },
+          {
+            "kind": "noncombustible-deck",
+            "label": "Resolved noncombustible deck",
+            "reason": "The deck is not recorded as noncombustible.",
+            "check": "no-deck-claim"
+          },
+          {
+            "kind": "upper-balcony-access",
+            "label": "An accessible upper balcony",
+            "reason": "The upper east door has no modeled balcony; the south upper porch has no door.",
+            "check": "custom"
+          }
+        ]
+      },
+      "images": [
+        {
+          "id": "offset-stack-exterior-hero",
+          "title": "Offset Stack — approach and whole house",
+          "view": "exterior-three-quarter",
+          "status": "ready",
+          "purpose": "Show the two-storey offset stack as two 40 ft modules, with the upper volume shifted 2.6 m east and the ground porch sheltered by the overhang.",
+          "camera": {
+            "position": "on the birch glade approach at the south-east corner, eye level",
+            "height_m": 1.6,
+            "lens_mm": 35,
+            "framing": "whole two-storey stack, the upper offset, the ground porch and the east entry; no other buildings"
+          },
+          "geometry": {
+            "storeys": 2,
+            "modules": 2,
+            "roofType": "shed",
+            "roofPitch_deg": 8
+          },
+          "mustShow": [
+            {
+              "item": "two 40 ft modules: m1 timber at 0.6 m, m2 metal at 3.896 m",
+              "status": "modeled",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "m2 offset 2.6 m east of m1; a clear structural overhang and exposed support at the offset",
+              "status": "modeled",
+              "evidence": "modules[1].position_m; architecture"
+            },
+            {
+              "item": "shed roof at 8 degrees with a 0.7 m overhang and installed PV on the upper south slope",
+              "status": "modeled",
+              "evidence": "roof_form; solar_array"
+            },
+            {
+              "item": "covered ground porch p1 4 x 2.6 m on the south face, created by the upper offset",
+              "status": "modeled",
+              "evidence": "porches[p1]"
+            },
+            {
+              "item": "upper south porch p2 2.4 x 1.4 m, open and unroofed",
+              "status": "modeled",
+              "evidence": "porches[p2]"
+            },
+            {
+              "item": "the east ground entry door and the upper east door; no balcony at either door",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-e1]; modules[1].openings[m2-e1]"
+            },
+            {
+              "item": "the ground-floor south sliding door and kitchen window; upper bedroom and studio windows",
+              "status": "modeled",
+              "evidence": "openings"
+            },
+            {
+              "item": "a gutter and one downspout on the low south eave",
+              "status": "conceptual",
+              "evidence": "o-gutter; o-downspout"
+            },
+            {
+              "item": "one visible corner casting and the module joint between the two containers",
+              "status": "inferred",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "birch glade and a low rock shoulder; no lake or meadow",
+              "status": "modeled",
+              "evidence": "site Cabin B principal view"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a third module or a third storey",
+              "reason": "Two modules and two storeys are modeled.",
+              "check": "no-extra-geometry"
+            },
+            {
+              "item": "an accessible balcony at the upper east door or a railing on p2",
+              "reason": "No upper balcony or guarding is modeled; access is unresolved.",
+              "check": "custom"
+            },
+            {
+              "item": "a stair, lift or external access to the upper floor",
+              "reason": "Only an internal straight-run stair is recorded; no external stair is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a chimney, stove, hydrant or fire cistern",
+              "reason": "None is recorded or verified.",
+              "check": "no-chimney"
+            },
+            {
+              "item": "a noncombustible deck claim or firewood against the house",
+              "reason": "The deck is unresolved; firewood storage is a fire risk.",
+              "check": "no-deck-claim"
+            },
+            {
+              "item": "a lake or meadow in the background",
+              "reason": "The site is a birch glade with a rock shoulder.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [
+            "o-pv",
+            "o-gutter",
+            "o-downspout",
+            "o-ember-vent",
+            "o-defensible-space"
+          ],
+          "caption": "Conceptual v2 exterior of Offset Stack: two 40 ft modules, the upper volume offset 2.6 m east, a shed roof with PV and a covered ground porch under the overhang. The upper east door and upper south porch have no modeled access or guarding. Not a construction drawing.",
+          "alt": "Conceptual illustration of a two-storey container home with a timber lower module and a metal upper module shifted to one side, a shallow shed roof with solar panels, a covered ground porch and an open upper porch. Birch trees and a rock shoulder are behind.",
+          "limitations": [
+            "Upper balcony access and guarding are unresolved.",
+            "Gutter and downspout positions are conceptual.",
+            "No fire rating, fire water or noncombustible deck is designed.",
+            "Interior is not visible."
+          ],
+          "source": {
+            "designHash": "12ecfb76",
+            "sceneHash": "9e294428",
+            "reference": "site-facing.svg"
+          }
+        },
+        {
+          "id": "offset-stack-interior-hero",
+          "title": "Offset Stack — ground-floor zone study",
+          "view": "interior",
+          "status": "ready",
+          "purpose": "Show the ground-floor volume, the recorded stair and the south porch opening as a zone study, without inventing partitions, doors or fixtures.",
+          "camera": {
+            "position": "inside the ground-floor living zone at the west end, looking east down the module",
+            "height_m": 1.5,
+            "lens_mm": 24,
+            "framing": "full 2.44 m width, south sliding door, east entry, stair zone at the far end; no partitions"
+          },
+          "geometry": {
+            "storeys": 2,
+            "modules": 2,
+            "roofType": "shed",
+            "roofPitch_deg": 8
+          },
+          "interior": {
+            "provenance": "provisional",
+            "rooms": [
+              "room-m1-m1-z1",
+              "room-m1-m1-z2",
+              "room-m1-m1-z3",
+              "room-m1-m1-z4"
+            ],
+            "openings": [
+              "m1-s1",
+              "m1-s2",
+              "m1-n1",
+              "m1-e1",
+              "m1-w1"
+            ]
+          },
+          "mustShow": [
+            {
+              "item": "one open ground-floor volume 12.19 m long and 2.44 m wide; no partitions",
+              "status": "modeled",
+              "evidence": "interior.status = provisional; partitions = 0"
+            },
+            {
+              "item": "the south sliding door (m1-s1), south kitchen window (m1-s2), north stair window (m1-n1), east entry (m1-e1) and west window (m1-w1)",
+              "status": "modeled",
+              "evidence": "modules[0].openings"
+            },
+            {
+              "item": "the recorded straight-run stair at the east end: 0.9 m wide, 3.2 m run, 2.9 m rise, with a landing",
+              "status": "conceptual",
+              "evidence": "access.stair; stair geometry is not modeled"
+            },
+            {
+              "item": "zone bands only: living, kitchen, bathroom, stair; use changes in floor finish or ceiling rhythm, not walls",
+              "status": "inferred",
+              "evidence": "interior.rooms provenance = inferred-from-zone"
+            },
+            {
+              "item": "a neutral lining and exposed container ribs; no applied feature wall",
+              "status": "conceptual",
+              "evidence": "no interior finish is documented"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "partitions, doors, a bathroom enclosure or a stair enclosure",
+              "reason": "None is modeled; the interior is a provisional zone band.",
+              "check": "no-partitions"
+            },
+            {
+              "item": "a bed, sofa, kitchen counter, toilet or other fixture",
+              "reason": "No fixtures are modeled.",
+              "check": "no-fixtures"
+            },
+            {
+              "item": "a room-specific window that does not exist in the opening list",
+              "reason": "Only the listed openings are recorded.",
+              "check": "custom"
+            },
+            {
+              "item": "a kitchen hood, bathroom exhaust, service core or HRV terminal",
+              "reason": "No service-core geometry is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "an external or sculptural stair",
+              "reason": "The recorded stair is internal; no external stair is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a 'room layout' claim",
+              "reason": "The image is a zone study, not a room layout.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [],
+          "caption": "Zone study of the Offset Stack ground floor. The interior is an open 12.19 x 2.44 m volume with the recorded perimeter openings and a conceptual internal stair. No partitions, doors or fixtures are modeled. Not a room layout or a construction drawing.",
+          "alt": "Conceptual interior view down a narrow open container volume with a south sliding door, windows and a straight stair at the far end. No partitions, furniture or fixtures are shown.",
+          "limitations": [
+            "Interior geometry is provisional; partitions, doors and fixtures are not modeled.",
+            "The stair is conceptual and its rise, run, headroom and guarding are not verified.",
+            "No service core or ventilation layout is modeled."
+          ],
+          "source": {
+            "designHash": "12ecfb76",
+            "sceneHash": "9e294428",
+            "reference": "interior-plan.svg"
+          }
+        }
+      ]
+    },
+    "hamlet-courtyard-residence": {
+      "label": "Courtyard Residence",
+      "interiorProvenance": "provisional",
+      "services": {
+        "placements": [
+          {
+            "id": "c-green-edge",
+            "kind": "green-roof-edge",
+            "label": "Low green-roof edge and planted parapet",
+            "status": "conceptual",
+            "visibleIn": [
+              "courtyard-residence-exterior-hero"
+            ],
+            "evidence": "roof_form.green_roof = true",
+            "note": "Saturated load, drainage, root protection and fire are unresolved."
+          },
+          {
+            "id": "c-overflow",
+            "kind": "roof-overflow",
+            "label": "Roof overflow or scupper",
+            "status": "not-resolved",
+            "visibleIn": [],
+            "evidence": "roof_form.drainage; water.collection",
+            "note": "The flat green roof has no resolved slope, outlet or overflow; do not draw a resolved drainage layout."
+          },
+          {
+            "id": "c-ember-vent",
+            "kind": "ember-resistant-vent",
+            "label": "Closed ember-resistant vent at the roof edge",
+            "status": "conceptual",
+            "visibleIn": [
+              "courtyard-residence-exterior-hero"
+            ],
+            "evidence": "fire.ember_resistant_vents = true",
+            "note": "Intent only."
+          },
+          {
+            "id": "c-defensible-space",
+            "kind": "defensible-space",
+            "label": "Low-fuel ground cover and reduced fuel within 10 m",
+            "status": "conceptual",
+            "visibleIn": [
+              "courtyard-residence-exterior-hero"
+            ],
+            "evidence": "fire.defensible_space_m = 10",
+            "note": "Conceptual landscape treatment."
+          }
+        ],
+        "excluded": [
+          {
+            "kind": "gutters",
+            "label": "Resolved gutter and downspout layout",
+            "reason": "The flat green-roof drainage, outlet and overflow are unresolved.",
+            "check": "custom"
+          },
+          {
+            "kind": "stove",
+            "label": "Wood stove",
+            "reason": "No stove is recorded.",
+            "check": "no-stove"
+          },
+          {
+            "kind": "chimney",
+            "label": "Chimney",
+            "reason": "No chimney is recorded.",
+            "check": "no-chimney"
+          },
+          {
+            "kind": "hydrant",
+            "label": "Fire hydrant",
+            "reason": "Fire-service water access is not confirmed.",
+            "check": "no-hydrant"
+          },
+          {
+            "kind": "fire-cistern",
+            "label": "Verified fire cistern",
+            "reason": "The fire reserve is unverified.",
+            "check": "no-fire-cistern"
+          },
+          {
+            "kind": "potable-water",
+            "label": "Potable rainwater supply",
+            "reason": "The system is non-potable.",
+            "check": "no-potable"
+          },
+          {
+            "kind": "battery",
+            "label": "Battery or inverter",
+            "reason": "None is recorded.",
+            "check": "no-battery"
+          },
+          {
+            "kind": "pv",
+            "label": "Installed PV array",
+            "reason": "No installed PV is recorded for this home.",
+            "check": "no-pv"
+          },
+          {
+            "kind": "noncombustible-deck",
+            "label": "Resolved noncombustible deck",
+            "reason": "The deck is not recorded as noncombustible.",
+            "check": "no-deck-claim"
+          }
+        ]
+      },
+      "images": [
+        {
+          "id": "courtyard-residence-exterior-hero",
+          "title": "Courtyard Residence — east approach and courtyard",
+          "view": "exterior-three-quarter",
+          "status": "ready",
+          "purpose": "Show the L-shaped single-storey plan, the sheltered courtyard and the glazed link, with the flat green roof treated as a concept rather than a resolved assembly.",
+          "camera": {
+            "position": "on the east approach at the courtyard corner, eye level",
+            "height_m": 1.6,
+            "lens_mm": 35,
+            "framing": "whole L, courtyard opening, covered north porch, glazed link and the west lake glimpse; no other buildings"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 2,
+            "roofType": "flat",
+            "roofPitch_deg": 0
+          },
+          "mustShow": [
+            {
+              "item": "two 40 ft timber modules, one rotated 90 degrees to form an L",
+              "status": "modeled",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "flat roof with a 0.5 m overhang and a low green-roof edge",
+              "status": "conceptual",
+              "evidence": "roof_form.green_roof = true; assembly is unresolved"
+            },
+            {
+              "item": "covered north porch p1 6.4 x 2.8 m at the courtyard edge",
+              "status": "modeled",
+              "evidence": "porches[p1]"
+            },
+            {
+              "item": "courtyard deck d1 projecting 1.4 m",
+              "status": "modeled",
+              "evidence": "decks[d1]"
+            },
+            {
+              "item": "glazed timber link c1 between the modules",
+              "status": "modeled",
+              "evidence": "connections[c1]"
+            },
+            {
+              "item": "east entry door, courtyard sliding doors and the documented windows on both modules",
+              "status": "modeled",
+              "evidence": "openings"
+            },
+            {
+              "item": "a narrow strip of lake light beyond the west end, seen through pine trunks",
+              "status": "modeled",
+              "evidence": "site Cabin C principal view"
+            },
+            {
+              "item": "one visible corner casting and the module joint at the link",
+              "status": "inferred",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "closed ember-resistant vents and defensible-space planting",
+              "status": "conceptual",
+              "evidence": "c-ember-vent; c-defensible-space"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a resolved green-roof drainage outlet, gutter or downspout",
+              "reason": "Flat green-roof slope, outlet, overflow and ponding are unresolved.",
+              "check": "custom"
+            },
+            {
+              "item": "an installed PV array",
+              "reason": "No installed PV is recorded.",
+              "check": "no-pv"
+            },
+            {
+              "item": "a second storey or a third module",
+              "reason": "Two modules and one storey are modeled.",
+              "check": "no-extra-geometry"
+            },
+            {
+              "item": "a flat roof presented as a warm or dry assembly",
+              "reason": "Saturated load, drainage, root protection and fire are unresolved.",
+              "check": "custom"
+            },
+            {
+              "item": "a chimney, stove, hydrant or fire cistern",
+              "reason": "None is recorded or verified.",
+              "check": "no-chimney"
+            },
+            {
+              "item": "a noncombustible deck claim",
+              "reason": "The deck is not recorded as noncombustible.",
+              "check": "no-deck-claim"
+            }
+          ],
+          "servicesVisible": [
+            "c-green-edge",
+            "c-ember-vent",
+            "c-defensible-space"
+          ],
+          "caption": "Conceptual v2 exterior of Courtyard Residence: two 40 ft timber modules in an L around a sheltered courtyard, a glazed link and a flat green-roof concept. Roof drainage, saturated load, root protection and fire performance are unresolved. No PV or resolved gutter is shown. Not a construction drawing.",
+          "alt": "Conceptual illustration of a single-storey L-shaped timber container home around a planted courtyard, with a flat green roof edge, a covered courtyard porch and a glazed link between the two modules. Pine trunks and a narrow strip of lake light are beyond.",
+          "limitations": [
+            "The green roof is a concept; drainage, load, root protection and fire are unresolved.",
+            "No gutter, downspout or overflow is resolved.",
+            "The deck is not recorded as noncombustible.",
+            "No PV is installed."
+          ],
+          "source": {
+            "designHash": "30eb578a",
+            "sceneHash": "6669c001",
+            "reference": "site-facing.svg"
+          }
+        },
+        {
+          "id": "courtyard-residence-interior-hero",
+          "title": "Courtyard Residence — living and dining zone",
+          "view": "interior",
+          "status": "ready",
+          "purpose": "Show the courtyard-facing interior as a zone study, with the north sliding doors and the L of the two modules, without inventing partitions or fixtures.",
+          "camera": {
+            "position": "inside the living zone at the east end, looking west toward the dining zone and the north courtyard doors",
+            "height_m": 1.5,
+            "lens_mm": 24,
+            "framing": "one open volume, the north sliding doors and courtyard, the link in the side of frame; no partitions"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 2,
+            "roofType": "flat",
+            "roofPitch_deg": 0
+          },
+          "interior": {
+            "provenance": "provisional",
+            "rooms": [
+              "room-m1-m1-z3",
+              "room-m1-m1-z4",
+              "room-m1-m1-z1"
+            ],
+            "openings": [
+              "m1-n1",
+              "m1-s2",
+              "m1-s1"
+            ]
+          },
+          "mustShow": [
+            {
+              "item": "one open module volume with no partitions; living, dining and sleeping are zone bands only",
+              "status": "modeled",
+              "evidence": "interior.status = provisional; partitions = 0"
+            },
+            {
+              "item": "the north sliding courtyard doors (m1-n1) and the courtyard beyond",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-n1]"
+            },
+            {
+              "item": "the 0.8 m south window (m1-s2) and the 1.4 m south window (m1-s1) on the opposite wall",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-s1,m1-s2]"
+            },
+            {
+              "item": "the glazed link c1 visible at the edge of frame, connecting to the second module",
+              "status": "modeled",
+              "evidence": "connections[c1]"
+            },
+            {
+              "item": "a neutral lining and the flat container ceiling; no pitched or coffered ceiling",
+              "status": "conceptual",
+              "evidence": "no interior finish is documented"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "partitions, doors or a defined bathroom enclosure",
+              "reason": "None is modeled.",
+              "check": "no-partitions"
+            },
+            {
+              "item": "a bed, sofa, table, kitchen counter or other fixture",
+              "reason": "No fixtures are modeled.",
+              "check": "no-fixtures"
+            },
+            {
+              "item": "a room-specific window not in the opening list",
+              "reason": "Only the listed openings are recorded.",
+              "check": "custom"
+            },
+            {
+              "item": "a kitchen hood, service core or HRV terminal",
+              "reason": "No service-core geometry is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a green-roof planting visible through the ceiling",
+              "reason": "The green roof is an exterior concept; no interior ceiling geometry is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a room layout or fully accessible claim",
+              "reason": "The image is a zone study; accessibility is not a target for this home.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [],
+          "caption": "Zone study of the Courtyard Residence living and dining side. The interior is an open volume with the recorded courtyard doors and windows; no partitions, doors or fixtures are modeled. The green roof is an exterior concept, not an interior ceiling. Not a room layout or a construction drawing.",
+          "alt": "Conceptual interior view of an open container volume with wide north sliding doors opening to a planted courtyard, a south window on the opposite wall and a glazed link at the edge of frame. No partitions, furniture or fixtures are shown.",
+          "limitations": [
+            "Interior geometry is provisional; no partitions, doors or fixtures are modeled.",
+            "The green roof is an exterior concept; no interior ceiling is modeled.",
+            "No service core or ventilation layout is modeled.",
+            "The opening names and the room bands do not fully agree; the windows are described by id, not by room label."
+          ],
+          "source": {
+            "designHash": "30eb578a",
+            "sceneHash": "6669c001",
+            "reference": "interior-plan.svg"
+          }
+        }
+      ]
+    },
+    "hamlet-cross-stacked-retreat": {
+      "label": "Cross-Stacked Retreat",
+      "interiorProvenance": "provisional",
+      "services": {
+        "placements": [
+          {
+            "id": "x-pv",
+            "kind": "pv-array",
+            "label": "Installed PV array on the upper south roof slope",
+            "status": "modeled",
+            "visibleIn": [
+              "cross-stacked-retreat-exterior-hero"
+            ],
+            "evidence": "solar_array.enabled = true",
+            "note": "Tilted racks; no production claim."
+          },
+          {
+            "id": "x-gutter",
+            "kind": "gutter",
+            "label": "Gutter along the low south eave",
+            "status": "conceptual",
+            "visibleIn": [
+              "cross-stacked-retreat-exterior-hero"
+            ],
+            "evidence": "water.collection.gutters = required",
+            "note": "Butterfly-roof drainage and valley are not detailed."
+          },
+          {
+            "id": "x-downspout",
+            "kind": "downspout",
+            "label": "Downspout at the east end of the low eave",
+            "status": "conceptual",
+            "visibleIn": [
+              "cross-stacked-retreat-exterior-hero"
+            ],
+            "evidence": "water.collection.downspouts = 2",
+            "note": "One of two required; exact position not designed."
+          },
+          {
+            "id": "x-ember-vent",
+            "kind": "ember-resistant-vent",
+            "label": "Closed ember-resistant soffit vent",
+            "status": "conceptual",
+            "visibleIn": [
+              "cross-stacked-retreat-exterior-hero"
+            ],
+            "evidence": "fire.ember_resistant_vents = true",
+            "note": "Intent only."
+          },
+          {
+            "id": "x-defensible-space",
+            "kind": "defensible-space",
+            "label": "Low-fuel ground cover and reduced fuel within 10 m",
+            "status": "conceptual",
+            "visibleIn": [
+              "cross-stacked-retreat-exterior-hero"
+            ],
+            "evidence": "fire.defensible_space_m = 10",
+            "note": "Conceptual landscape treatment."
+          }
+        ],
+        "excluded": [
+          {
+            "kind": "stove",
+            "label": "Wood stove",
+            "reason": "No stove is recorded.",
+            "check": "no-stove"
+          },
+          {
+            "kind": "chimney",
+            "label": "Chimney",
+            "reason": "No chimney is recorded.",
+            "check": "no-chimney"
+          },
+          {
+            "kind": "hydrant",
+            "label": "Fire hydrant",
+            "reason": "Fire-service water access is not confirmed.",
+            "check": "no-hydrant"
+          },
+          {
+            "kind": "fire-cistern",
+            "label": "Verified fire cistern",
+            "reason": "The fire reserve is unverified.",
+            "check": "no-fire-cistern"
+          },
+          {
+            "kind": "potable-water",
+            "label": "Potable rainwater supply",
+            "reason": "The system is non-potable.",
+            "check": "no-potable"
+          },
+          {
+            "kind": "battery",
+            "label": "Battery or inverter",
+            "reason": "None is recorded.",
+            "check": "no-battery"
+          },
+          {
+            "kind": "noncombustible-deck",
+            "label": "Resolved noncombustible deck",
+            "reason": "The deck is not recorded as noncombustible.",
+            "check": "no-deck-claim"
+          },
+          {
+            "kind": "upper-balcony",
+            "label": "Upper balcony at the east door",
+            "reason": "No upper balcony, deck or guarding is modeled.",
+            "check": "custom"
+          },
+          {
+            "kind": "interior-valley",
+            "label": "Interior butterfly ridge or valley",
+            "reason": "The butterfly roof is an exterior form; no interior ceiling is modeled.",
+            "check": "custom"
+          }
+        ]
+      },
+      "images": [
+        {
+          "id": "cross-stacked-retreat-exterior-hero",
+          "title": "Cross-Stacked Retreat — meadow approach and cross volume",
+          "view": "exterior-three-quarter",
+          "status": "ready",
+          "purpose": "Show the perpendicular two-storey cross, the butterfly roof, the shaded ground porch and the upper east door without inventing a balcony.",
+          "camera": {
+            "position": "on the beaver-meadow approach at the south-east corner, eye level",
+            "height_m": 1.6,
+            "lens_mm": 35,
+            "framing": "whole cross, butterfly roof, shaded ground porch and upper east door; meadow and knoll beyond"
+          },
+          "geometry": {
+            "storeys": 2,
+            "modules": 2,
+            "roofType": "butterfly",
+            "roofPitch_deg": 12
+          },
+          "mustShow": [
+            {
+              "item": "two 40 ft modules: m1 metal at 0.6 m, m2 timber at 3.896 m, rotated 90 degrees to cross",
+              "status": "modeled",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "butterfly roof at 12 degrees with a 0.8 m overhang and installed PV",
+              "status": "modeled",
+              "evidence": "roof_form; solar_array"
+            },
+            {
+              "item": "covered ground porch p1 4.2 x 2.8 m beneath the cross",
+              "status": "modeled",
+              "evidence": "porches[p1]"
+            },
+            {
+              "item": "east ground entry door and the upper east door; no balcony or guardrail at the upper door",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-e1]; modules[1].openings[m2-e1]"
+            },
+            {
+              "item": "the exposed steel connection and cross-beam at the crossing",
+              "status": "inferred",
+              "evidence": "modules[1].support.type = module; connection details are not modeled"
+            },
+            {
+              "item": "lower and upper windows on the meadow and south faces",
+              "status": "modeled",
+              "evidence": "openings"
+            },
+            {
+              "item": "a gutter and one downspout on the low south eave",
+              "status": "conceptual",
+              "evidence": "x-gutter; x-downspout"
+            },
+            {
+              "item": "beaver meadow, sedge, alder, standing water and the south knoll",
+              "status": "modeled",
+              "evidence": "site Cabin D principal view"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a balcony, deck or guardrail at the upper east door",
+              "reason": "No upper balcony is modeled; guarding, support and egress are unresolved.",
+              "check": "custom"
+            },
+            {
+              "item": "an interior butterfly ridge or valley visible through a window",
+              "reason": "The interior ceiling is not modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a third module or a third storey",
+              "reason": "Two modules and two storeys are modeled.",
+              "check": "no-extra-geometry"
+            },
+            {
+              "item": "a chimney, stove, hydrant or fire cistern",
+              "reason": "None is recorded or verified.",
+              "check": "no-chimney"
+            },
+            {
+              "item": "a noncombustible deck claim or firewood against the house",
+              "reason": "The deck is unresolved; firewood storage is a fire risk.",
+              "check": "no-deck-claim"
+            },
+            {
+              "item": "a lake or a boreal waterfront",
+              "reason": "The site is a beaver meadow, not a lake shore.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [
+            "x-pv",
+            "x-gutter",
+            "x-downspout",
+            "x-ember-vent",
+            "x-defensible-space"
+          ],
+          "caption": "Conceptual v2 exterior of Cross-Stacked Retreat: a metal ground module crossed by a timber upper module, a butterfly roof with PV and a shaded ground porch. The upper east door has no modeled balcony or guardrail. The interior butterfly ceiling is not modeled. Not a construction drawing.",
+          "alt": "Conceptual illustration of a two-storey cross-stacked container home, with a dark metal lower bar, a pale timber upper bar crossing it, a butterfly roof with solar panels and a deep shaded porch. Beaver meadow and a low rock knoll are beyond.",
+          "limitations": [
+            "Upper east door access and guarding are unresolved.",
+            "The interior butterfly ceiling is not modeled.",
+            "Gutter and downspout positions are conceptual.",
+            "No fire rating, fire water or noncombustible deck is designed."
+          ],
+          "source": {
+            "designHash": "a8e30d3c",
+            "sceneHash": "c59b780d",
+            "reference": "site-facing.svg"
+          }
+        },
+        {
+          "id": "cross-stacked-retreat-interior-hero",
+          "title": "Cross-Stacked Retreat — ground-floor zone study",
+          "view": "interior",
+          "status": "ready",
+          "purpose": "Show the ground-floor volume beneath the cross, the south sliding doors and the recorded stair as a zone study, without inventing partitions, fixtures or an interior butterfly ceiling.",
+          "camera": {
+            "position": "inside the ground-floor living zone at the west end, looking east beneath the cross volume",
+            "height_m": 1.5,
+            "lens_mm": 24,
+            "framing": "open volume, the underside of the upper module, south sliding doors and the stair zone; no interior ridge or valley"
+          },
+          "geometry": {
+            "storeys": 2,
+            "modules": 2,
+            "roofType": "butterfly",
+            "roofPitch_deg": 12
+          },
+          "interior": {
+            "provenance": "provisional",
+            "rooms": [
+              "room-m1-m1-z1",
+              "room-m1-m1-z2",
+              "room-m1-m1-z3",
+              "room-m1-m1-z4"
+            ],
+            "openings": [
+              "m1-s1",
+              "m1-n1",
+              "m1-e1",
+              "m1-w1"
+            ]
+          },
+          "mustShow": [
+            {
+              "item": "one open ground-floor volume with no partitions",
+              "status": "modeled",
+              "evidence": "interior.status = provisional; partitions = 0"
+            },
+            {
+              "item": "the south sliding doors (m1-s1), north window (m1-n1), east entry (m1-e1) and west window (m1-w1)",
+              "status": "modeled",
+              "evidence": "modules[0].openings"
+            },
+            {
+              "item": "the flat underside of the upper module where it crosses; no interior butterfly ridge or valley",
+              "status": "inferred",
+              "evidence": "modules[1]; interior ceiling is not modeled"
+            },
+            {
+              "item": "the recorded dog-leg stair at the east end: 0.9 m wide, 3 m run, 2.9 m rise, with a landing",
+              "status": "conceptual",
+              "evidence": "access.stair; stair geometry is not modeled"
+            },
+            {
+              "item": "zone bands only: living, kitchen, bathroom, stair; no walls",
+              "status": "inferred",
+              "evidence": "interior.rooms provenance = inferred-from-zone"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "partitions, doors or a bathroom enclosure",
+              "reason": "None is modeled.",
+              "check": "no-partitions"
+            },
+            {
+              "item": "a sofa, counter, bed or other fixture",
+              "reason": "No fixtures are modeled.",
+              "check": "no-fixtures"
+            },
+            {
+              "item": "an interior butterfly ridge, valley or sloping ceiling",
+              "reason": "The butterfly roof is an exterior form; the interior ceiling is not modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a stair enclosure or an external stair",
+              "reason": "Only an internal dog-leg stair is recorded.",
+              "check": "custom"
+            },
+            {
+              "item": "a kitchen hood, service core or HRV terminal",
+              "reason": "No service-core geometry is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a room layout claim",
+              "reason": "The image is a zone study, not a room layout.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [],
+          "caption": "Zone study of the Cross-Stacked Retreat ground floor. The interior is an open volume beneath the cross, with the recorded perimeter openings and a conceptual dog-leg stair. No partitions, doors or fixtures are modeled, and the butterfly ceiling is not drawn. Not a room layout or a construction drawing.",
+          "alt": "Conceptual interior view of an open ground-floor container volume beneath a crossing upper module, with south sliding doors, a north window and a dog-leg stair at the far end. No partitions, furniture or butterfly ceiling are shown.",
+          "limitations": [
+            "Interior geometry is provisional; partitions, doors and fixtures are not modeled.",
+            "The interior butterfly ceiling is not modeled.",
+            "The stair is conceptual; headroom, handrails, guarding and egress are not verified.",
+            "No service core or ventilation layout is modeled."
+          ],
+          "source": {
+            "designHash": "a8e30d3c",
+            "sceneHash": "c59b780d",
+            "reference": "interior-plan.svg"
+          }
+        }
+      ]
+    },
+    "hamlet-accessible-garden-home": {
+      "label": "Accessible Garden Home",
+      "interiorProvenance": "authored",
+      "interiorReconciliation": "opening-room-mapping-unresolved",
+      "services": {
+        "placements": [
+          {
+            "id": "a-gutter",
+            "kind": "gutter",
+            "label": "Gutter along the south canopy edge",
+            "status": "conceptual",
+            "visibleIn": [
+              "accessible-garden-home-exterior-hero"
+            ],
+            "evidence": "water.collection.gutters = required",
+            "note": "Canopy drainage is not detailed."
+          },
+          {
+            "id": "a-downspout",
+            "kind": "downspout",
+            "label": "Downspout at the east end of the canopy",
+            "status": "conceptual",
+            "visibleIn": [
+              "accessible-garden-home-exterior-hero"
+            ],
+            "evidence": "water.collection.downspouts = 2",
+            "note": "One of two required; exact position not designed."
+          },
+          {
+            "id": "a-ember-vent",
+            "kind": "ember-resistant-vent",
+            "label": "Closed ember-resistant vent at the canopy edge",
+            "status": "conceptual",
+            "visibleIn": [
+              "accessible-garden-home-exterior-hero"
+            ],
+            "evidence": "fire.ember_resistant_vents = true",
+            "note": "Intent only."
+          },
+          {
+            "id": "a-defensible-space",
+            "kind": "defensible-space",
+            "label": "Low-fuel ground cover and reduced fuel within 10 m",
+            "status": "conceptual",
+            "visibleIn": [
+              "accessible-garden-home-exterior-hero"
+            ],
+            "evidence": "fire.defensible_space_m = 10",
+            "note": "Conceptual landscape treatment."
+          },
+          {
+            "id": "a-threshold",
+            "kind": "accessible-threshold",
+            "label": "Level threshold at the south entrance",
+            "status": "modeled",
+            "visibleIn": [
+              "accessible-garden-home-exterior-hero"
+            ],
+            "evidence": "access.entrance_threshold_m = 0; access.step_free_entrance = true",
+            "note": "Design intent, not a surveyed measurement."
+          }
+        ],
+        "excluded": [
+          {
+            "kind": "stove",
+            "label": "Wood stove",
+            "reason": "No stove is recorded.",
+            "check": "no-stove"
+          },
+          {
+            "kind": "chimney",
+            "label": "Chimney",
+            "reason": "No chimney is recorded.",
+            "check": "no-chimney"
+          },
+          {
+            "kind": "hydrant",
+            "label": "Fire hydrant",
+            "reason": "Fire-service water access is not confirmed.",
+            "check": "no-hydrant"
+          },
+          {
+            "kind": "fire-cistern",
+            "label": "Verified fire cistern",
+            "reason": "The fire reserve is unverified.",
+            "check": "no-fire-cistern"
+          },
+          {
+            "kind": "potable-water",
+            "label": "Potable rainwater supply",
+            "reason": "The system is non-potable.",
+            "check": "no-potable"
+          },
+          {
+            "kind": "battery",
+            "label": "Battery or inverter",
+            "reason": "None is recorded.",
+            "check": "no-battery"
+          },
+          {
+            "kind": "pv",
+            "label": "Installed PV array",
+            "reason": "No installed PV is recorded for this home.",
+            "check": "no-pv"
+          },
+          {
+            "kind": "noncombustible-deck",
+            "label": "Resolved noncombustible deck",
+            "reason": "The deck is not recorded as noncombustible.",
+            "check": "no-deck-claim"
+          },
+          {
+            "kind": "full-accessibility",
+            "label": "Fully accessible home claim",
+            "reason": "Accessibility is a design target, not a verified assessment.",
+            "check": "custom"
+          }
+        ]
+      },
+      "images": [
+        {
+          "id": "accessible-garden-home-exterior-hero",
+          "title": "Accessible Garden Home — garden approach and terrace",
+          "view": "exterior-three-quarter",
+          "status": "ready",
+          "purpose": "Show the compact double-width single-storey home, the canopy, the covered terrace and the level entrance as a design intent, without claiming a fully accessible home.",
+          "camera": {
+            "position": "on the garden approach at the south-west corner, eye level",
+            "height_m": 1.6,
+            "lens_mm": 35,
+            "framing": "both 20 ft modules, canopy, covered terrace and level route; fern and hemlock beyond"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 2,
+            "roofType": "canopy",
+            "roofPitch_deg": 0
+          },
+          "mustShow": [
+            {
+              "item": "two 20 ft modules side by side, timber, at 0.6 m; a 6.06 m double-width footprint",
+              "status": "modeled",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "canopy roof with a 1.2 m overhang",
+              "status": "modeled",
+              "evidence": "roof_form"
+            },
+            {
+              "item": "covered terrace p1 4.6 x 2.8 m on the south face of m2",
+              "status": "modeled",
+              "evidence": "porches[p1]"
+            },
+            {
+              "item": "level terrace d1 projecting 1.2 m; no step to the garden",
+              "status": "modeled",
+              "evidence": "decks[d1]; access.step_free_entrance"
+            },
+            {
+              "item": "south step-free entrance (1.0 m) and garden sliding doors (2.4 m); east utility door",
+              "status": "modeled",
+              "evidence": "modules[1].openings[m2-s1,m2-s2,m2-e1]"
+            },
+            {
+              "item": "the internal 1.4 m opening between the modules, visible as a glazed or open connection",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-s1]; modules[1].openings[m2-n1]"
+            },
+            {
+              "item": "one visible corner casting at the terrace edge",
+              "status": "inferred",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "a gutter and one downspout at the canopy edge",
+              "status": "conceptual",
+              "evidence": "a-gutter; a-downspout"
+            },
+            {
+              "item": "fern, hemlock and a distant plane of lake light; more forest than water",
+              "status": "modeled",
+              "evidence": "site Cabin E principal view"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a third module or a second storey",
+              "reason": "Two modules and one storey are modeled.",
+              "check": "no-extra-geometry"
+            },
+            {
+              "item": "a ramp, lift or stair",
+              "reason": "The home is single-storey and step-free; no ramp or lift is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a fully accessible, code-compliant or certified-accessible claim",
+              "reason": "Accessibility is a potential, not a verified assessment.",
+              "check": "custom"
+            },
+            {
+              "item": "a chimney, stove, hydrant or fire cistern",
+              "reason": "None is recorded or verified.",
+              "check": "no-chimney"
+            },
+            {
+              "item": "an installed PV array",
+              "reason": "No installed PV is recorded.",
+              "check": "no-pv"
+            },
+            {
+              "item": "a noncombustible deck claim",
+              "reason": "The deck is not recorded as noncombustible.",
+              "check": "no-deck-claim"
+            }
+          ],
+          "servicesVisible": [
+            "a-gutter",
+            "a-downspout",
+            "a-ember-vent",
+            "a-defensible-space",
+            "a-threshold"
+          ],
+          "caption": "Conceptual v2 exterior of Accessible Garden Home: two 20 ft modules, a canopy roof, a covered terrace and a level entrance. Step-free access is a design intent, not a verified accessible home. The deck is not recorded as noncombustible. Not a construction drawing.",
+          "alt": "Conceptual illustration of a compact single-storey double-width timber container home with a broad canopy roof, a covered garden terrace and a level path. Fern and hemlock are behind, with a distant plane of lake light.",
+          "limitations": [
+            "Step-free access and adaptability are design intents, not verified.",
+            "The deck is not recorded as noncombustible.",
+            "Gutter and downspout positions are conceptual.",
+            "No fire rating, fire water or PV is designed."
+          ],
+          "source": {
+            "designHash": "98e11bf7",
+            "sceneHash": "61536ceb",
+            "reference": "site-facing.svg"
+          }
+        },
+        {
+          "id": "accessible-garden-home-interior-hero",
+          "title": "Accessible Garden Home — living, kitchen and link",
+          "view": "interior",
+          "status": "blocked-pending-reconciliation",
+          "blockedBy": [
+            "modules[1].openings[m2-s1] is named Step-free entrance but its position (1.6 m) falls in the authored bedroom band of m2, not the living/kitchen module.",
+            "modules[1].openings[m2-s2] is named Garden doors but its position (4.4 m) falls in the authored bathroom band of m2.",
+            "modules[0].openings[m1-s1] and modules[1].openings[m2-n1] are named internal openings to the other module, but the authored link is the 1.0 m door e-d4 in partition e-link; the two internal openings are not the link.",
+            "The authored rooms put living and kitchen in m1 and bedroom and bathroom in m2, while the entrance, garden doors and covered terrace are on m2.",
+            "The authored 1.0 m link door e-d4 sits in the interface partition, but the entrance and garden doors remain on the module whose rooms are bedroom and bathroom."
+          ],
+          "purpose": "Show the accessible living/kitchen, the 1.5 m bathroom turning circle and the link between the two 20 ft modules. This image is blocked until the room polygons, openings and terrace are reconciled.",
+          "camera": {
+            "position": "inside the living zone at the west end, looking east through the kitchen toward the link door",
+            "height_m": 1.5,
+            "lens_mm": 24,
+            "framing": "open living and kitchen, the 1.0 m link door, the bathroom turn beyond; no loose furniture"
+          },
+          "geometry": {
+            "storeys": 1,
+            "modules": 2,
+            "roofType": "canopy",
+            "roofPitch_deg": 0
+          },
+          "interior": {
+            "provenance": "authored",
+            "rooms": [
+              "e-living",
+              "e-kitchen",
+              "e-store",
+              "e-bath"
+            ],
+            "openings": [
+              "m1-n1",
+              "m1-n2",
+              "m2-w1"
+            ]
+          },
+          "mustShow": [
+            {
+              "item": "the authored rooms: living, kitchen and store in m1; bedroom and bathroom in m2",
+              "status": "modeled",
+              "evidence": "interior.rooms"
+            },
+            {
+              "item": "a 1.0 m link door between the kitchen and the bedroom module",
+              "status": "modeled",
+              "evidence": "interior.doors[e-d4]"
+            },
+            {
+              "item": "the 1.5 m bathroom turning circle",
+              "status": "modeled",
+              "evidence": "interior.clearances[e-turn]"
+            },
+            {
+              "item": "the kitchen counter (1.8 x 0.55 m) and the living table (0.7 x 0.7 m) only",
+              "status": "modeled",
+              "evidence": "interior.fixtures[e-counter,e-table]"
+            },
+            {
+              "item": "a neutral lining and the flat container ceiling",
+              "status": "conceptual",
+              "evidence": "no interior finish is documented"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a fully accessible, code-compliant or certified-accessible claim",
+              "reason": "The home is potentially adaptable, not verified.",
+              "check": "custom"
+            },
+            {
+              "item": "loose furniture, rugs, lamps, plants or dishes",
+              "reason": "Only modeled fixtures may be shown.",
+              "check": "custom"
+            },
+            {
+              "item": "a second entrance or garden doors in the living module",
+              "reason": "The recorded entrance and garden doors are on m2, which the authored rooms use for bedroom and bathroom; the assignment is unresolved.",
+              "check": "custom"
+            },
+            {
+              "item": "grab bars or a transfer seat not in the model",
+              "reason": "Only the turning circle is modeled; no grab bars are recorded.",
+              "check": "custom"
+            },
+            {
+              "item": "a stair, lift or level change",
+              "reason": "The home is single-storey.",
+              "check": "custom"
+            },
+            {
+              "item": "a service core, hood or HRV terminal",
+              "reason": "No service-core geometry is modeled.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [],
+          "caption": "Conceptual interior study of Accessible Garden Home. The authored rooms, the 1.0 m link door and the 1.5 m bathroom turning circle are modeled. The entrance, garden doors and terrace do not currently reconcile with the room polygons, so this image is blocked. Not an accessibility certification or a construction drawing.",
+          "alt": "Conceptual interior view of a compact single-storey container home with a living area, kitchen counter and a 1.0-metre link door toward a bathroom with a marked turning circle. No loose furniture is shown.",
+          "limitations": [
+            "Blocked: the entrance and garden doors are on the bedroom/bathroom module, while living and kitchen are in the other module.",
+            "The 1.5 m turning circle is a modeled check, not a professional accessibility assessment.",
+            "Interior finishes are illustrative, not specified.",
+            "No service core or ventilation layout is modeled."
+          ],
+          "source": {
+            "designHash": "98e11bf7",
+            "sceneHash": "61536ceb",
+            "reference": "interior-plan.svg"
+          }
+        }
+      ]
+    },
+    "hamlet-solar-studio-stack": {
+      "label": "Solar Studio Stack",
+      "interiorProvenance": "provisional",
+      "services": {
+        "placements": [
+          {
+            "id": "s-pv",
+            "kind": "pv-array",
+            "label": "Installed PV array on the upper south roof slope",
+            "status": "modeled",
+            "visibleIn": [
+              "solar-studio-stack-exterior-hero"
+            ],
+            "evidence": "solar_array.enabled = true",
+            "note": "Tilted racks; no production claim."
+          },
+          {
+            "id": "s-gutter",
+            "kind": "gutter",
+            "label": "Gutter along the low south eave",
+            "status": "conceptual",
+            "visibleIn": [
+              "solar-studio-stack-exterior-hero"
+            ],
+            "evidence": "water.collection.gutters = required",
+            "note": "Shed-roof drainage is not detailed."
+          },
+          {
+            "id": "s-downspout",
+            "kind": "downspout",
+            "label": "Downspout at the east end of the low eave",
+            "status": "conceptual",
+            "visibleIn": [
+              "solar-studio-stack-exterior-hero"
+            ],
+            "evidence": "water.collection.downspouts = 2",
+            "note": "One of two required; exact position not designed."
+          },
+          {
+            "id": "s-ember-vent",
+            "kind": "ember-resistant-vent",
+            "label": "Closed ember-resistant soffit vent",
+            "status": "conceptual",
+            "visibleIn": [
+              "solar-studio-stack-exterior-hero"
+            ],
+            "evidence": "fire.ember_resistant_vents = true",
+            "note": "Intent only."
+          },
+          {
+            "id": "s-defensible-space",
+            "kind": "defensible-space",
+            "label": "Low-fuel ground cover and reduced fuel within 10 m",
+            "status": "conceptual",
+            "visibleIn": [
+              "solar-studio-stack-exterior-hero"
+            ],
+            "evidence": "fire.defensible_space_m = 10",
+            "note": "Conceptual landscape treatment."
+          }
+        ],
+        "excluded": [
+          {
+            "kind": "stove",
+            "label": "Wood stove",
+            "reason": "No stove is recorded.",
+            "check": "no-stove"
+          },
+          {
+            "kind": "chimney",
+            "label": "Chimney",
+            "reason": "No chimney is recorded.",
+            "check": "no-chimney"
+          },
+          {
+            "kind": "hydrant",
+            "label": "Fire hydrant",
+            "reason": "Fire-service water access is not confirmed.",
+            "check": "no-hydrant"
+          },
+          {
+            "kind": "fire-cistern",
+            "label": "Verified fire cistern",
+            "reason": "The fire reserve is unverified.",
+            "check": "no-fire-cistern"
+          },
+          {
+            "kind": "potable-water",
+            "label": "Potable rainwater supply",
+            "reason": "The system is non-potable.",
+            "check": "no-potable"
+          },
+          {
+            "kind": "battery",
+            "label": "Battery or inverter",
+            "reason": "None is recorded.",
+            "check": "no-battery"
+          },
+          {
+            "kind": "noncombustible-deck",
+            "label": "Resolved noncombustible deck",
+            "reason": "The deck is not recorded as noncombustible.",
+            "check": "no-deck-claim"
+          },
+          {
+            "kind": "upper-balcony",
+            "label": "Upper balcony at the east door",
+            "reason": "No upper balcony, deck or guarding is modeled.",
+            "check": "custom"
+          },
+          {
+            "kind": "snow-guards",
+            "label": "Installed snow guards",
+            "reason": "Snow guards over the entry and terrace are required by the roof note but unresolved.",
+            "check": "custom"
+          }
+        ]
+      },
+      "images": [
+        {
+          "id": "solar-studio-stack-exterior-hero",
+          "title": "Solar Studio Stack — cove approach and compact stack",
+          "view": "exterior-three-quarter",
+          "status": "ready",
+          "purpose": "Show the compact two-storey stack, the solar-ready shed roof with installed PV, the shaded terrace and the upper studio glazing, without inventing an upper balcony.",
+          "camera": {
+            "position": "on the cove approach at the south-west corner, eye level",
+            "height_m": 1.6,
+            "lens_mm": 35,
+            "framing": "both 20 ft modules, upper offset, shed roof, PV, terrace and upper studio glazing; juniper and cedar beyond"
+          },
+          "geometry": {
+            "storeys": 2,
+            "modules": 2,
+            "roofType": "solar-ready",
+            "roofPitch_deg": 12
+          },
+          "mustShow": [
+            {
+              "item": "two 20 ft modules: m1 timber at 0.6 m, m2 metal at 3.896 m, offset 0.8 m east",
+              "status": "modeled",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "solar-ready shed roof at 12 degrees with a 0.9 m overhang and installed PV",
+              "status": "modeled",
+              "evidence": "roof_form; solar_array"
+            },
+            {
+              "item": "covered terrace p1 4.4 x 2.4 m on the south face, shaded by the upper offset and overhang",
+              "status": "modeled",
+              "evidence": "porches[p1]"
+            },
+            {
+              "item": "south sliding doors (2 m) and south entry door (0.95 m) under the terrace",
+              "status": "modeled",
+              "evidence": "modules[0].openings[m1-s1,m1-s2]"
+            },
+            {
+              "item": "upper studio south glazing (2.4 x 1.6 m), upper north window and upper east door; no balcony",
+              "status": "modeled",
+              "evidence": "modules[1].openings[m2-s1,m2-n1,m2-e1]"
+            },
+            {
+              "item": "one visible corner casting at the terrace edge",
+              "status": "inferred",
+              "evidence": "modules[0], modules[1]"
+            },
+            {
+              "item": "a gutter and one downspout on the low south eave",
+              "status": "conceptual",
+              "evidence": "s-gutter; s-downspout"
+            },
+            {
+              "item": "juniper and cedar, with the opposite shore of the cove close enough to read the rock",
+              "status": "modeled",
+              "evidence": "site Cabin F principal view"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "a balcony, deck or guardrail at the upper east door",
+              "reason": "No upper balcony is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a third module or a third storey",
+              "reason": "Two modules and two storeys are modeled.",
+              "check": "no-extra-geometry"
+            },
+            {
+              "item": "a wide cabin or a single-storey bungalow",
+              "reason": "The home is a compact two-storey 20 ft stack.",
+              "check": "custom"
+            },
+            {
+              "item": "snow guards installed over the entry and terrace",
+              "reason": "Snow guards are required by the roof note but unresolved.",
+              "check": "custom"
+            },
+            {
+              "item": "a chimney, stove, hydrant or fire cistern",
+              "reason": "None is recorded or verified.",
+              "check": "no-chimney"
+            },
+            {
+              "item": "a noncombustible deck claim",
+              "reason": "The deck is not recorded as noncombustible.",
+              "check": "no-deck-claim"
+            }
+          ],
+          "servicesVisible": [
+            "s-pv",
+            "s-gutter",
+            "s-downspout",
+            "s-ember-vent",
+            "s-defensible-space"
+          ],
+          "caption": "Conceptual v2 exterior of Solar Studio Stack: two 20 ft modules, an upper studio offset 0.8 m east, a 12-degree shed roof with installed PV and a shaded south terrace. The upper east door has no modeled balcony. Snow guards are unresolved. Not a construction drawing.",
+          "alt": "Conceptual illustration of a compact two-storey container home with a timber lower module, a metal upper module shifted to one side, a shallow shed roof with solar panels, a shaded south terrace and a large upper studio window. Juniper and cedar are behind, with a rocky cove shore.",
+          "limitations": [
+            "Upper east door access and guarding are unresolved.",
+            "Snow guards over the entry and terrace are unresolved.",
+            "Gutter and downspout positions are conceptual.",
+            "No fire rating, fire water or noncombustible deck is designed."
+          ],
+          "source": {
+            "designHash": "0ac1e7b3",
+            "sceneHash": "56dd76bb",
+            "reference": "site-facing.svg"
+          }
+        },
+        {
+          "id": "solar-studio-stack-interior-hero",
+          "title": "Solar Studio Stack — upper studio zone",
+          "view": "interior",
+          "status": "ready",
+          "purpose": "Show the compact upper studio, the south glazing and the ceiling volume without inventing partitions, fixtures or a sloping interior ceiling.",
+          "camera": {
+            "position": "inside the upper studio at the east end, looking west toward the south glazing",
+            "height_m": 1.5,
+            "lens_mm": 24,
+            "framing": "compact 6.06 x 2.44 m upper volume, south glazing and north window; no partitions"
+          },
+          "geometry": {
+            "storeys": 2,
+            "modules": 2,
+            "roofType": "solar-ready",
+            "roofPitch_deg": 12
+          },
+          "interior": {
+            "provenance": "provisional",
+            "rooms": [
+              "room-m2-m2-z1",
+              "room-m2-m2-z2"
+            ],
+            "openings": [
+              "m2-s1",
+              "m2-n1",
+              "m2-e1"
+            ]
+          },
+          "mustShow": [
+            {
+              "item": "one open upper volume 6.06 m long and 2.44 m wide; no partitions",
+              "status": "modeled",
+              "evidence": "interior.status = provisional; partitions = 0"
+            },
+            {
+              "item": "the south studio glazing (2.4 x 1.6 m, sill 0.6 m) and the north window (1.2 x 1.2 m, sill 0.9 m)",
+              "status": "modeled",
+              "evidence": "modules[1].openings[m2-s1,m2-n1]"
+            },
+            {
+              "item": "the east door (0.9 x 2.1 m) with no balcony beyond; the door opens to the outside",
+              "status": "modeled",
+              "evidence": "modules[1].openings[m2-e1]"
+            },
+            {
+              "item": "the flat underside of the roof or the top of the container; no invented sloping ceiling",
+              "status": "inferred",
+              "evidence": "roof geometry is exterior; interior ceiling is not modeled"
+            },
+            {
+              "item": "a neutral lining and exposed container ribs",
+              "status": "conceptual",
+              "evidence": "no interior finish is documented"
+            }
+          ],
+          "mustNotShow": [
+            {
+              "item": "partitions, doors or a defined sleeping alcove",
+              "reason": "None is modeled.",
+              "check": "no-partitions"
+            },
+            {
+              "item": "a bed, desk, sofa or other fixture",
+              "reason": "No fixtures are modeled.",
+              "check": "no-fixtures"
+            },
+            {
+              "item": "a balcony, guardrail or outdoor platform beyond the east door",
+              "reason": "No upper balcony is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a sloping or butterfly interior ceiling",
+              "reason": "The roof is an exterior form; the interior ceiling is not modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a kitchen hood, service core or HRV terminal",
+              "reason": "No service-core geometry is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "a room layout claim",
+              "reason": "The image is a zone study, not a room layout.",
+              "check": "custom"
+            }
+          ],
+          "servicesVisible": [],
+          "caption": "Zone study of the Solar Studio Stack upper floor. The interior is an open 6.06 x 2.44 m volume with the recorded studio glazing, north window and east door. No partitions, fixtures or interior sloping ceiling are modeled; the east door has no balcony. Not a room layout or a construction drawing.",
+          "alt": "Conceptual interior view of a compact upper container studio with a wide south window, a small north window and an east door, under a flat ceiling. No furniture, partitions or balcony are shown.",
+          "limitations": [
+            "Interior geometry is provisional; partitions, doors and fixtures are not modeled.",
+            "The east door has no modeled balcony or guarding.",
+            "No interior sloping ceiling is modeled.",
+            "No service core or ventilation layout is modeled."
+          ],
+          "source": {
+            "designHash": "0ac1e7b3",
+            "sceneHash": "56dd76bb",
+            "reference": "interior-plan.svg"
+          }
+        }
+      ]
+    }
+  }
+}

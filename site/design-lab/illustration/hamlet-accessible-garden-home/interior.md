@@ -10,13 +10,14 @@ Rooms:
 - Bathroom (bathroom, e-bath): 7.12 m², m2, authored, fixtures: wc, sink, shower.
 
 Partitions and doors: 4 partitions and 4 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.
-Fixtures: wc in e-bath; sink in e-bath; shower in e-bath; counter in e-kitchen; bed in e-bed; table in e-living.
+The plan does not reconcile every recorded opening with a room. Do not move or resize an opening to make a room work; report the conflict instead.
+Fixtures: wc in e-bath; sink in e-bath; shower in e-bath; counter in e-kitchen; bed in e-bed; table in e-living. Show only these modeled fixtures. Do not add loose furniture, rugs, lamps, art or dishes.
 Windows: the room polygons reference the documented opening ids. Do not add windows or move them.
 
 Camera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.
 Presentation: late summer, late afternoon, no people.
 
-Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.
+Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures or level changes. Do not change room proportions. Do not imply that the view is spatially accurate or that the room-opening assignment is resolved.
 
 Unresolved interior matters:
 - room-accessibility: Room e-living accessibility is not professionally verified.

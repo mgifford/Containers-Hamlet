@@ -177,7 +177,7 @@ limits. See [`water-fire-services.md`](water-fire-services.md).
 
 ## Design Lab illustration schemas
 
-Two additive schemas sit beside the architectural design model:
+Three additive schemas sit beside the architectural design model:
 
 - **`containers-hamlet-illustration/v1`** — presentation only: design id, view,
   camera height/lens, style, season, time, weather, people and material policy.
@@ -185,6 +185,12 @@ Two additive schemas sit beside the architectural design model:
   design hash, building facts, required module elements, openings, rooms,
   outdoor spaces, materials, site/view, camera, constraints, capabilities,
   unresolved matters, generated prompt, negative prompt and description.
+- **`containers-hamlet-image-descriptions/v1`** — the v2 per-image brief: purpose,
+  camera and framing, must-show and must-not-show items, visible service
+  placements, caption, alt text, limitations and source hashes. The visible-
+  services placements are illustration aids, not a water, fire, ventilation or
+  electrical design. `tools/lib/image-descriptions.mjs` validates the set against
+  the model. See [`image-descriptions.md`](image-descriptions.md).
 
 The scene does not replace the design and does not duplicate the whole geometry.
 It references source module ids and records the facts needed for outputs. The
