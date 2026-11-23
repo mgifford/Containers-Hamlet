@@ -126,6 +126,16 @@ try {
   ok(await patternExplorer.page.locator('[data-pattern]:not([hidden])').count() === 7, 'pattern evidence filter returns the seven evidence-needed patterns');
   await patternExplorer.page.click('#pattern-reset');
   await patternExplorer.page.waitForTimeout(200);
+  const siteReady = await patternExplorer.page.evaluate(() => { const o = document.getElementById('pattern-site-plan'); return !!(o && o.contentDocument && o.contentDocument.documentElement); });
+  ok(siteReady, 'pattern Explorer loads the generated site plan in an object');
+  await patternExplorer.page.locator('[data-highlight-pattern="104"]').click();
+  await patternExplorer.page.waitForTimeout(500);
+  const siteHighlight = await patternExplorer.page.evaluate(() => { const o = document.getElementById('pattern-site-plan'); return { status: document.querySelector('#site-highlight-status').textContent, rows: document.querySelectorAll('#site-highlight-list li').length, marks: o && o.contentDocument ? o.contentDocument.querySelectorAll('.pattern-highlight').length : 0, pressed: document.querySelector('[data-highlight-pattern="104"]').getAttribute('aria-pressed') }; });
+  ok(/Pattern 104/.test(siteHighlight.status) && siteHighlight.rows >= 3 && siteHighlight.marks > 0 && siteHighlight.pressed === 'true', 'selecting a pattern highlights site-plan layers and lists text alternatives');
+  await patternExplorer.page.locator('#site-clear').click();
+  await patternExplorer.page.waitForTimeout(200);
+  const siteCleared = await patternExplorer.page.evaluate(() => { const o = document.getElementById('pattern-site-plan'); return { rows: document.querySelectorAll('#site-highlight-list li').length, marks: o && o.contentDocument ? o.contentDocument.querySelectorAll('.pattern-highlight').length : 0, status: document.querySelector('#site-highlight-status').textContent }; });
+  ok(siteCleared.rows === 0 && siteCleared.marks === 0 && /No pattern selected/.test(siteCleared.status), 'site highlight can be cleared and restores the neutral plan');
   await axe(patternExplorer.page, 'pattern language');
   await shot(patternExplorer.page, 'pattern-language-top');
   await patternExplorer.context.close();
@@ -152,8 +162,8 @@ try {
   await patternHash.context.close();
 
   const patternNojs = await open('design-lab/pattern-language/', { javaScriptEnabled: false });
-  const patternNojsState = await patternNojs.page.evaluate(() => ({ cards: document.querySelectorAll('[data-pattern]').length, controls: getComputedStyle(document.querySelector('#pattern-controls')).display, note: /Filtering needs JavaScript/.test(document.body.textContent) }));
-  ok(patternNojsState.cards === 20 && patternNojsState.controls === 'none' && patternNojsState.note, 'pattern Explorer remains readable without JavaScript and hides the inert filters');
+  const patternNojsState = await patternNojs.page.evaluate(() => ({ cards: document.querySelectorAll('[data-pattern]').length, controls: getComputedStyle(document.querySelector('#pattern-controls')).display, site: !!document.querySelector('#pattern-site-plan'), key: /Site-element key and limitations/.test(document.body.textContent), note: /Filtering needs JavaScript/.test(document.body.textContent) }));
+  ok(patternNojsState.cards === 20 && patternNojsState.controls === 'none' && patternNojsState.site && patternNojsState.key && patternNojsState.note, 'pattern Explorer remains readable without JavaScript, includes the site plan/key, and hides the inert filters');
   await patternNojs.context.close();
 
   section('Architectural gallery and accessible slideshow');

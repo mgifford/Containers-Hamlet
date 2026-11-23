@@ -82,5 +82,6 @@ numbers. It does not claim to reproduce the book's complete network.
 ## Phase status
 
 Phase 1 implements definitions, validation, public explanation and Explorer
-navigation. Site highlighting, scenario comparison, annotations, resident
-scenarios and evaluation records remain later phases.
+navigation. Phase 2 adds stable site-element mappings, map highlighting and text
+alternatives. Scenario comparison, annotations, resident scenarios and
+evaluation records remain later phases.

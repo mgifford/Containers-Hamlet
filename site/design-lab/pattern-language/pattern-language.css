@@ -26,3 +26,16 @@
 @media (prefers-color-scheme: dark) { .pattern-card, .pattern-controls { background: #151d18; } .evidence-conceptual, .evidence-evidence-needed, .evidence-evidence-supported, .evidence-trade-off-identified, .evidence-not-evaluated, .evidence-not-applicable, .verified { filter: brightness(.82) saturate(.85); } }
 @media (forced-colors: active) { .pattern-card, .pattern-controls { border: 1px solid CanvasText; } .pattern-card:target { outline: 3px solid Highlight; } }
 @media print { .pattern-controls, #pattern-status { display: none; } .pattern-card[hidden] { display: block; } }
+.site-pattern-layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(16rem, .9fr); gap: 1rem; margin: 1rem 0; }
+.site-plan-frame { border: 1px solid var(--border); border-radius: .6rem; background: var(--paper); padding: .5rem; min-width: 0; }
+.site-plan-frame object { display: block; width: 100%; height: auto; aspect-ratio: 1008 / 781; border: 0; }
+.site-highlight-panel { border: 1px solid var(--border); border-radius: .6rem; background: var(--paper); padding: .8rem; }
+.site-highlight-panel h3 { margin-top: 0; }
+.highlight-list { margin: .5rem 0; padding-left: 1.1rem; }
+.highlight-list li { margin: .55rem 0; line-height: 1.45; }
+.pattern-card.is-selected { outline: 3px solid var(--accent); outline-offset: 2px; }
+.pattern-card.is-selected .pattern-site-button { font-weight: 800; }
+.site-key { margin-top: 1rem; }
+.site-key table { font-size: .82rem; }
+@media (max-width: 60rem) { .site-pattern-layout { grid-template-columns: 1fr; } }
+@media (forced-colors: active) { .site-plan-frame, .site-highlight-panel { border: 1px solid CanvasText; } .pattern-card.is-selected { outline: 3px solid Highlight; } }

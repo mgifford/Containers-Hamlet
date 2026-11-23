@@ -9,6 +9,15 @@ extend the existing site plan and Design Lab rather than replace them.
 
 ## What changed
 
+### Phase 2 site-plan integration
+
+- Added `data/patterns/site-elements.json` with stable selectors for the generated site plan (landscape, common land, paths, lodge, homes, visitor arrival) and explicit text-only elements for porches/interiors.
+- Explorer now embeds the canonical `site-plan.svg` as an `<object>` and adds a **Highlight on site plan** button to every pattern.
+- Highlighting uses same-origin DOM access, not a duplicated map or fetch/XHR.
+- Every highlight has a text list of the mapped elements, evidence state, limitation and a **not shown at site-plan scale** note where applicable.
+- A site-element key and clear-highlight control are available; the map/key remain usable without JavaScript.
+
+
 ### New canonical data
 
 - `data/patterns/patterns.json` — 20 curated patterns with:
@@ -77,17 +86,21 @@ configuration guide at `/design-lab/patterns/`.
 | --- | --- |
 | `node tools/build.mjs --check` | OK — 499 generated files current |
 | `node tools/check.mjs` | 517 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,508 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,517 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 249 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 252 passed, 0 failed |
 
 Browser tests cover search, scale and evidence filters, reset, shareable
 fragments, related-pattern links, live status, no-JS readability, axe-core and
 320 px reflow.
 
-The published site is about **6277 KB**, under the 6.25 MB budget.
+The published site is about **6294 KB**, under the 6.25 MB budget.
 
 ## What remains uncertain
+
+- Site-plan highlighting is a reading aid; it does not prove the pattern is achieved.
+- Common-land ownership/stewardship is not mapped.
+- Path widths/grades/winter access are placeholders.
 
 - The pattern-to-hamlet interpretations are conceptual; no resident, ecological
   or post-occupancy evidence exists.

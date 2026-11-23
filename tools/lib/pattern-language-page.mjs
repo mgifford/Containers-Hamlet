@@ -22,6 +22,7 @@ function card(p, patterns) {
   <p class="pattern-summary">${esc(p.summary)}</p>
   <p><strong>In Containers Hamlet:</strong> ${esc(p.hamletInterpretation)}</p>
   <p class="small"><strong>Current response:</strong> ${esc(p.currentResponse)}</p>
+  <p><button type="button" class="secondary pattern-site-button" data-highlight-pattern="${p.number}">Highlight on site plan</button></p>
   <details>
     <summary>Design questions, trade-offs, evidence and limits</summary>
     <div class="pattern-detail-grid">
@@ -39,7 +40,7 @@ function card(p, patterns) {
 </article>`;
 }
 
-export function patternLanguagePage(patterns) {
+export function patternLanguagePage(patterns, siteElements) {
   const scaleOptions = patterns.scales.map((s) => `<option value="${esc(s)}">${esc(label(SCALE_LABEL, s))}</option>`).join('');
   const elementOptions = patterns.elements.map((e) => `<option value="${esc(e)}">${esc(label(ELEMENT_LABEL, e))}</option>`).join('');
   const evidenceOptions = patterns.evidenceStates.map((s) => `<option value="${esc(s)}">${esc(label(EVIDENCE_LABEL, s))}</option>`).join('');
@@ -55,7 +56,7 @@ export function patternLanguagePage(patterns) {
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="pattern-language.css">
 <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
-<noscript><style>#pattern-controls{display:none}</style></noscript>
+<noscript><style>#pattern-controls,.pattern-site-button,#site-clear{display:none}</style></noscript>
 </head>
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -85,6 +86,32 @@ ${designShellNav(2, 'pattern-language')}
       <li><strong>Avoid false precision.</strong> Do not invent costs, energy savings, ecological benefits or accessibility conformance.</li>
     </ol>
     <p class="small">This is a conceptual, fictional project. The site is not surveyed, the buildings are not construction-ready, and the pattern language is not a compliance standard. See the <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/design-philosophy.md">design philosophy notes</a> and <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-language.md">pattern-language method</a>.</p>
+  </section>
+
+  <section id="site-plan-section" aria-labelledby="site-plan-title">
+    <h2 id="site-plan-title">Pattern and the site plan</h2>
+    <p>Select a pattern’s <strong>Highlight on site plan</strong> button. The panel highlights the mapped site-plan layers and lists the same elements as text. Highlights are a reading aid, not a finding that the layout satisfies the pattern.</p>
+    <div class="site-pattern-layout">
+      <div class="site-plan-frame">
+        <object id="pattern-site-plan" data="${esc(siteElements.sitePlan)}" type="image/svg+xml" aria-label="Containers Hamlet site plan. Use the pattern list for highlights and text alternatives.">
+          <p>Your browser cannot display the inline site plan. <a href="${esc(siteElements.sitePlan)}">Open the site plan SVG</a>.</p>
+        </object>
+        <p class="small">The site plan is the same generated fictional plan used elsewhere; no coordinates are duplicated here. Select a pattern to outline the relevant layers.</p>
+      </div>
+      <aside class="site-highlight-panel" aria-labelledby="highlight-title">
+        <h3 id="highlight-title">Highlighted elements</h3>
+        <p id="site-highlight-status" class="status" role="status" aria-live="polite">No pattern selected. The full site plan and the element key below are available without JavaScript.</p>
+        <ul id="site-highlight-list" class="highlight-list"></ul>
+        <button type="button" id="site-clear" class="secondary" disabled>Clear highlight</button>
+        <noscript><p class="small">Highlighting needs JavaScript; the site plan, element key and pattern text remain available.</p></noscript>
+      </aside>
+    </div>
+    <details class="site-key">
+      <summary>Site-element key and limitations</summary>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Site-element key"><table><caption>Stable site elements used by the pattern Explorer.</caption><thead><tr><th scope="col">Element</th><th scope="col">What it covers</th><th scope="col">Evidence / limitation</th></tr></thead><tbody>
+        ${siteElements.elements.map((e) => `<tr><th scope="row">${esc(e.label)}</th><td>${esc(e.description)}${e.selectors.length ? '' : ' <strong>Not shown at site-plan scale.</strong>'}</td><td>${esc(label(EVIDENCE_LABEL, e.evidenceStatus))}. ${esc(e.note)}</td></tr>`).join('')}
+      </tbody></table></div>
+    </details>
   </section>
 
   <section aria-labelledby="explorer-title">
@@ -127,10 +154,11 @@ ${designShellNav(2, 'pattern-language')}
       <li><a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-language.md">Pattern-language method and copyright notes</a></li>
       <li><a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-methodology.md">Evaluation methodology and evidence policy</a></li>
     </ul>
-    <p class="small">This Explorer is Phase 1 of the pattern-language work. Site-plan highlighting, scenario comparison, lodge/cabin annotations, resident scenarios and structured evaluation records are the next phases. They are not implied by this page.</p>
+    <p class="small">This Explorer now includes the Phase 2 site-plan highlighting layer. Scenario comparison, lodge/cabin annotations, resident scenarios and structured evaluation records remain later phases. They are not implied by this page.</p>
   </section>
 </main>
 <footer class="site-footer"><p><a href="../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>
+<script type="application/json" id="pattern-site-elements">${JSON.stringify(siteElements).replace(/</g, "\\u003c")}</script>
 <script src="patterns.js" defer></script>
 </body>
 </html>`;
