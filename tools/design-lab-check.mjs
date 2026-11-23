@@ -72,8 +72,8 @@ try {
   let { context, page, errors, foreign } = await open('design-lab/');
   ok(errors.length === 0, `gallery: no console errors${errors.length ? ': ' + errors.join(' | ') : ''}`);
   const count = await page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card:not(.arrangement-card)').length, editable: document.querySelectorAll('.concept-badge.editable').length, hamlet: document.querySelectorAll('.concept-badge.hamlet').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, archive: [...document.querySelectorAll('.concept-badge')].filter((b) => /Experimental archive/.test(b.textContent)).length, headings: document.querySelectorAll('h1').length }));
-  ok(count.cards === 19 && count.editable === 6 && count.hamlet === 6 && count.inspiration === 7 && count.archive === 3 && count.headings === 1, 'gallery shows nineteen concept cards, six hamlet residences, three experimental archives, six editable archive/legacy concepts, seven inspiration-only concepts and the lodge');
-  ok(await page.locator('.arrangement-card').count() === 4, 'gallery shows four arrangement studies');
+  ok(count.cards === 6 && count.editable === 0 && count.hamlet === 6 && count.inspiration === 0 && count.archive === 0 && count.headings === 1, 'selected gallery shows six concept cards and six hamlet residences');
+  ok(await page.locator('.arrangement-card').count() === 0, 'selected gallery does not load the arrangement studies');
   ok(await page.locator('.concept-specs').first().evaluate((d) => !d.open), 'technical specification lists start collapsed');
   await page.locator('.concept-specs').first().locator('summary').click();
   ok(await page.locator('.concept-specs').first().evaluate((d) => d.open), 'specification disclosure opens by keyboard or pointer');
@@ -83,7 +83,7 @@ try {
   await page.waitForTimeout(1200);
   const imgs = await page.evaluate(() => [...document.querySelectorAll('.concept-card-media img')].map((i) => ({ w: i.naturalWidth, alt: i.alt })));
   ok(imgs.every((i) => i.w > 0 && i.alt.length > 20), 'every gallery illustration loads with descriptive alt text');
-  ok(await visible(page, '#concept-woodland-retreat details'), 'gallery exposes further views and source files');
+  ok(await page.locator('.concept-card').count() === 6 && await page.locator('a[href="concepts/"]').count() > 0, 'selected gallery exposes source files and links to the archive');
   await axe(page, 'gallery');
   await shot(page, 'gallery-top');
   await shot(page, 'gallery-full', true);
@@ -93,6 +93,18 @@ try {
   for (const h of hrefs) { const r = await page.request.get(new URL(h, BASE + 'design-lab/').href); if (r.status() !== 200) broken.push(h); }
   ok(broken.length === 0, `gallery: all ${hrefs.length} local links return 200${broken.length ? ': ' + broken.join(', ') : ''}`);
   await context.close();
+
+  section('Concept archive page');
+  const archive = await open('design-lab/concepts/');
+  ok(archive.errors.length === 0, `archive: no console errors${archive.errors.length ? ': ' + archive.errors.join(' | ') : ''}`);
+  const archiveState = await archive.page.evaluate(() => ({ cards: document.querySelectorAll('.concept-card:not(.arrangement-card)').length, editable: document.querySelectorAll('.concept-badge.editable').length, inspiration: [...document.querySelectorAll('.concept-badge')].filter((b) => /Inspiration only/.test(b.textContent)).length, arrangements: document.querySelectorAll('.arrangement-card').length, headings: document.querySelectorAll('h1').length }));
+  ok(archiveState.cards === 10 && archiveState.editable === 3 && archiveState.inspiration === 7 && archiveState.arrangements === 4 && archiveState.headings === 1, 'archive page carries ten concepts, three editable presets and four arrangement studies');
+  await archive.page.locator('.concept-card-media img').first().scrollIntoViewIfNeeded();
+  await archive.page.waitForTimeout(600);
+  ok(await archive.page.locator('.concept-card-media img').first().evaluate((i) => i.naturalWidth > 0), 'archive loads its first illustration');
+  await axe(archive.page, 'concept archive');
+  await shot(archive.page, 'archive-top');
+  await archive.context.close();
 
   section('Architectural gallery and accessible slideshow');
   let arch = await open('design-lab/architecture/common-lodge/');
@@ -117,6 +129,7 @@ try {
   ok(archState.geometry >= 9 && archState.illustrative >= 2, 'architecture: geometry-backed drawings and illustrative studies are labelled');
   ok(archState.caps && archState.imgs && (await arch.page.evaluate(() => document.querySelector('[data-slide].is-current img').naturalWidth > 0)), 'architecture: every view has a descriptive caption and alt text');
   ok(archState.seasonal >= 2 && archState.wall && archState.veg && archState.solar && archState.foundation, 'architecture: seasonal pair, wall, solar, foundation and vegetation sections are present');
+  for (const sel of ['.season-pair', '.assembly-section', '.solar-section', '.foundation-section']) { await arch.page.locator(sel).first().scrollIntoViewIfNeeded(); await arch.page.waitForTimeout(250); }
   ok(await arch.page.evaluate(() => [...document.querySelectorAll('.season-pair img, .assembly-section img, .solar-section img, .foundation-section img')].every((i) => i.naturalWidth > 0)), 'architecture: seasonal, wall-section, solar and foundation images load');
   await arch.page.waitForTimeout(900);
   ok(new RegExp('View 1 of ' + archState.slides).test(await arch.page.textContent('[data-slide-status]')), 'architecture: does not advance automatically');
@@ -131,7 +144,8 @@ try {
   await arch.page.waitForTimeout(150);
   const allShown = await arch.page.evaluate(() => ({ count: [...document.querySelectorAll('[data-slide]')].filter((e) => e.offsetParent !== null).length, expanded: document.querySelector('[data-slide-all]').getAttribute('aria-expanded') }));
   ok(allShown.count === archState.slides && allShown.expanded === 'true', 'architecture: Show all views exposes the non-carousel alternative');
-  await arch.page.waitForTimeout(500);
+  for (const img of await arch.page.locator('[data-slide] img').all()) { await img.scrollIntoViewIfNeeded(); await arch.page.waitForTimeout(40); }
+  await arch.page.waitForTimeout(700);
   ok(await arch.page.evaluate(() => [...document.querySelectorAll('[data-slide] img')].every((i) => i.naturalWidth > 0)), 'architecture: all views load when the non-carousel alternative is shown');
   await arch.page.click('[data-slide-all]');
   await arch.page.waitForTimeout(150);
@@ -163,7 +177,7 @@ try {
   let compare = await open('design-lab/compare/');
   ok(compare.errors.length === 0, `compare: no console errors${compare.errors.length ? ': ' + compare.errors.join(' | ') : ''}`);
   const compareState = await compare.page.evaluate(() => ({ options: document.querySelectorAll('#compare-a option').length, panels: document.querySelectorAll('.compare-panel').length, rows: document.querySelectorAll('.all-concepts tbody tr').length, text: document.body.textContent }));
-  ok(compareState.options === 19 && compareState.panels === 2 && compareState.rows === 19, 'compare: two side-by-side panels and all nineteen concepts in the table');
+  ok(compareState.options === 16 && compareState.panels === 2 && compareState.rows === 16, 'compare: two side-by-side panels and all sixteen concepts in the table');
   ok(!/\b(kWh|kgCO2|cost \$|\$\d)/i.test(compareState.text), 'compare: no invented energy, carbon or cost figures');
   await compare.page.selectOption('#compare-a', 'common-lodge');
   await compare.page.waitForTimeout(250);
@@ -180,7 +194,7 @@ try {
 
   const nojsCompare = await open('design-lab/compare/', { javaScriptEnabled: false });
   const nojsCompareState = await nojsCompare.page.evaluate(() => ({ panels: document.querySelectorAll('.compare-panel').length, rows: document.querySelectorAll('.all-concepts tbody tr').length, note: /JavaScript is off/.test(document.body.textContent) }));
-  ok(nojsCompareState.panels === 2 && nojsCompareState.rows === 19 && nojsCompareState.note, 'compare: no-JavaScript fallback keeps the default comparison and table');
+  ok(nojsCompareState.panels === 2 && nojsCompareState.rows === 16 && nojsCompareState.note, 'compare: no-JavaScript fallback keeps the default comparison and table');
   await nojsCompare.context.close();
 
   section('Hamlet residences comparison');
@@ -190,12 +204,12 @@ try {
   ok(resState.rows === 6 && resState.cards === 6 && resState.options >= 6, 'residences page shows six accessible rows and six cards with sorting controls');
   const siteRecon = await residences.page.evaluate(() => ({ rows: document.querySelectorAll('#site-reconciliation-table tbody tr').length, conflicts: /unresolved|conflict/i.test(document.querySelector('#site-reconciliation-table').textContent) }));
   ok(siteRecon.rows === 7 && siteRecon.conflicts, 'residences page reconciles seven site buildings and records placement conflicts');
-  ok(resState.similarity === 15 && resState.alternatives === 0, 'residences page shows pairwise diversity and no selected two-storey alternatives');
-  await residences.page.selectOption('#filter-storeys', '1');
+  ok(resState.similarity === 15 && resState.alternatives === 3, 'residences page shows pairwise diversity and three two-storey alternatives');
+  await residences.page.selectOption('#filter-storeys', '2');
   await residences.page.click('#apply-residences');
   await residences.page.waitForTimeout(250);
   const filtered = await residences.page.evaluate(() => [...document.querySelectorAll('#residence-table tbody tr')].filter((r) => !r.hidden).length);
-  ok(filtered === 6 && /Showing 6 of 6/.test(await residences.page.textContent('#residence-status')), 'storey filter confirms all six selected homes are single-storey');
+  ok(filtered === 3 && /Showing 3 of 6/.test(await residences.page.textContent('#residence-status')), 'storey filter shows the three two-storey homes');
   await residences.page.click('#reset-residences');
   await residences.page.waitForTimeout(250);
   ok(/Showing all 6/.test(await residences.page.textContent('#residence-status')), 'reset restores all six residences');
@@ -223,7 +237,7 @@ try {
     status: document.querySelector('#assessment-status').textContent,
     warnings: document.querySelectorAll('.warning-group').length
   }));
-  ok(initial.presets === 12, 'editor lists the twelve editable concepts');
+  ok(initial.presets === 9, 'editor lists the nine editable concepts');
   ok(initial.modules === 1 && initial.openings > 0 && initial.zones > 0, 'editor loads modules, openings and room zones');
   ok(initial.plan && initial.exterior && initial.cutaway, 'editor renders plan, exterior and cutaway from the start');
   ok(/No invalid data or geometry/.test(initial.status) && initial.warnings > 0, 'editor starts with valid geometry and professional-review prompts');
@@ -236,7 +250,7 @@ try {
   await shot(page, 'editor-full', true);
 
   section('Editor: storeys, stacking and support');
-  await page.selectOption('#preset', 'archive-offset-stack');
+  await page.selectOption('#preset', 'hamlet-offset-stack');
   await page.waitForTimeout(400);
   ok(await page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 2), 'two-storey preset loads both modules');
   ok(await page.evaluate(() => document.querySelectorAll('#edit-storey option').length === 3 && document.querySelectorAll('#plan-level option').length === 3), 'editor offers all-levels, ground and upper level selectors');
@@ -340,13 +354,13 @@ try {
   await illusPage.context.close();
 
   section('Phase 3: interior editing and single-storey homes');
-  const intEditor = await open('design-lab/editor/?preset=hamlet-offset-stack');
+  const intEditor = await open('design-lab/editor/?preset=hamlet-woodland-cottage');
   ok(intEditor.errors.length === 0, `interior editor: no console errors${intEditor.errors.length ? ': ' + intEditor.errors.join(' | ') : ''}`);
   await intEditor.page.waitForTimeout(500);
-  ok(/authored interior · 8 rooms · 0 invalid/.test(await intEditor.page.textContent('#interior-status')), 'Offset Pair opens with an authored eight-room interior and no invalid geometry');
-  ok(await intEditor.page.locator('[data-interior-room]').count() === 8 && !!(await intEditor.page.$('#interior-plan svg')), 'interior editor shows eight room cards and the generated interior plan');
-  const interiorBeforeX = await intEditor.page.inputValue('[data-interior-room="b-living"] [data-interior-room-field="x"]');
-  const interiorX = intEditor.page.locator('[data-interior-room="b-living"] [data-interior-room-field="x"]');
+  ok(/authored interior · 5 rooms · 0 invalid/.test(await intEditor.page.textContent('#interior-status')), 'Woodland Cottage opens with an authored five-room accessible interior and no invalid geometry');
+  ok(await intEditor.page.locator('[data-interior-room]').count() === 5 && !!(await intEditor.page.$('#interior-plan svg')), 'interior editor shows five room cards and the generated interior plan');
+  const interiorBeforeX = await intEditor.page.inputValue('[data-interior-room="w-living"] [data-interior-room-field="x"]');
+  const interiorX = intEditor.page.locator('[data-interior-room="w-living"] [data-interior-room-field="x"]');
   await interiorX.focus();
   await interiorX.fill('-2');
   await interiorX.press('Tab');
@@ -354,13 +368,13 @@ try {
   ok(/[1-9]\d* invalid/.test(await intEditor.page.textContent('#interior-status')), 'moving a room into another room is announced as invalid geometry');
   await intEditor.page.click('#undo');
   await intEditor.page.waitForTimeout(300);
-  ok(/0 invalid/.test(await intEditor.page.textContent('#interior-status')) && await intEditor.page.inputValue('[data-interior-room="b-living"] [data-interior-room-field="x"]') === interiorBeforeX, 'undo restores the room geometry and validity');
+  ok(/0 invalid/.test(await intEditor.page.textContent('#interior-status')) && await intEditor.page.inputValue('[data-interior-room="w-living"] [data-interior-room-field="x"]') === interiorBeforeX, 'undo restores the room geometry and validity');
   await intEditor.page.click('#add-interior-room');
   await intEditor.page.waitForTimeout(300);
-  ok(await intEditor.page.locator('[data-interior-room]').count() === 9, 'Add room adds an editable room');
+  ok(await intEditor.page.locator('[data-interior-room]').count() === 6, 'Add room adds an editable room');
   await intEditor.page.locator('[data-action="remove-interior-room"]').last().click();
   await intEditor.page.waitForTimeout(300);
-  ok(await intEditor.page.locator('[data-interior-room]').count() === 8, 'Remove room removes the selected room');
+  ok(await intEditor.page.locator('[data-interior-room]').count() === 5, 'Remove room removes the selected room');
   await intEditor.page.click('#add-partition');
   await intEditor.page.waitForTimeout(300);
   ok(/Partitions/.test(await intEditor.page.textContent('#interior-details')), 'Add partition adds a removable partition');
@@ -384,9 +398,9 @@ try {
   const accessibleEditor = await open('design-lab/editor/?preset=hamlet-accessible-garden-home');
   await accessibleEditor.page.waitForTimeout(500);
   ok(!/bathroom-turning-circle/.test(await accessibleEditor.page.textContent('#interior-details')) && /potentially adaptable/.test(await accessibleEditor.page.textContent('#interior-status')) && !/fully accessible/i.test(await accessibleEditor.page.textContent('#interior-status')), 'Accessible Garden Home has a modeled turning circle and does not claim full accessibility');
-  const archiveEditor = await open('design-lab/editor/?preset=archive-offset-stack');
+  const archiveEditor = await open('design-lab/editor/?preset=hamlet-offset-stack');
   await archiveEditor.page.waitForTimeout(500);
-  ok(await archiveEditor.page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 2 && document.querySelectorAll('#edit-storey option').length === 3), 'the two-storey Offset Stack remains available as an editable experimental archive');
+  ok(await archiveEditor.page.evaluate(() => document.querySelectorAll('[data-module-card]').length === 2 && document.querySelectorAll('#edit-storey option').length === 3), 'Offset Stack is an editable two-storey selected home');
   await archiveEditor.context.close();
   await accessibleEditor.context.close();
 

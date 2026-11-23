@@ -1,4 +1,4 @@
-# Interior illustration prompt — Cross-Wing House
+# Interior illustration prompt — Cross-Stacked Retreat
 
 Use the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.
 

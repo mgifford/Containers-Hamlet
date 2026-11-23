@@ -1,6 +1,6 @@
 # Woodland Cottage — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 79828fb3
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 2c2def2f
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -40,12 +40,13 @@ This description is generated from the canonical design model. The reference SVG
 - Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 280°.
 
 ## Interior schedule
-- Sleeping (sleeping) — 7.49 m², m1, inferred-from-zone.
-- Bathroom (bathroom) — 4.27 m², m1, inferred-from-zone.
-- Kitchen (kitchen) — 5.65 m², m1, inferred-from-zone.
-- Living (living) — 8.87 m², m1, inferred-from-zone.
-- Partitions: 0 · doors: 0 · fixtures: 0.
-- Validation: 0 invalid, 6 unresolved, 4 review.
+- Bedroom (sleeping) — 7.12 m², m1, authored, fixtures: bed.
+- Bathroom (bathroom) — 6.43 m², m1, authored, fixtures: wc, sink, shower.
+- Entrance hall (entry) — 3.22 m², m1, authored.
+- Kitchen (kitchen) — 4.6 m², m1, authored, fixtures: counter.
+- Living (living) — 5.75 m², m1, authored, fixtures: sofa.
+- Partitions: 4 · doors: 4 · fixtures: 6.
+- Validation: 0 invalid, 0 unresolved, 6 review.
 
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
@@ -55,12 +56,6 @@ This description is generated from the canonical design model. The reference SVG
 ## Unresolved matters
 - **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
 - **site-approach**: The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
-- **provisional-interior**: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
-- **inferred-room**: Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
-- **inferred-room**: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
-- **inferred-room**: Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
-- **inferred-room**: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
-- **doors-missing**: No interior doors are modeled. Room connectivity cannot be assessed.
 
 ## Capability notes
 - Exterior reference: available

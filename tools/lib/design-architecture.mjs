@@ -12,6 +12,7 @@ function viewCaption(c, kind) {
   if (kind === 'container-layout') return `Proportional container block plan: ${c.modules.length} modules across ${levels} storey${levels === 1 ? '' : 's'}, with ground modules solid and upper modules dashed and hatched. Dimensions are nominal.`;
   if (kind === 'container-layout-elevation') return `Proportional container block elevation with ground and upper modules at their explicit elevations. This is a schematic, not a construction elevation.`;
   if (kind === 'roof-plan') return `Roof plan generated from the roof geometry: form, pitch, overhang, ridge/valley and slope direction. Roof drainage, snow, wind and structure still need review.`;
+  if (kind === 'interior-plan-upper') return `Concept upper-floor interior plan generated from the provisional room bands. It is not a construction drawing or a verified accessibility assessment.`;
   if (kind === 'interior-plan') return `Concept interior floor plan generated from the room polygons, partitions, doors, fixtures and clearances. Inferred rooms are hatched. The plan is a spatial model, not a construction drawing or a verified accessibility assessment.`;
   if (kind === 'exterior-opposite') return `Opposite exterior reference from the same geometry and a rotated camera. It is a concept reference, not a measured photograph.`;
   if (kind === 'approach') return `Approach reference. This is an orthographic elevation of the entrance facade; the world bearing in the prompt describes the site orientation.`;
@@ -30,14 +31,14 @@ function viewCaption(c, kind) {
 }
 
 function slide(c, kind, title, src, size) {
-  const geometry = ['plan', 'plan-ground', 'plan-upper', 'cutaway', 'porch', 'section', 'exploded', 'elevation-south', 'elevation-north', 'elevation-east', 'elevation-west', 'container-layout', 'container-layout-elevation', 'roof-plan', 'interior-plan', 'exterior-opposite', 'approach', 'site-facing'].indexOf(kind) >= 0;
+  const geometry = ['plan', 'plan-ground', 'plan-upper', 'cutaway', 'porch', 'section', 'exploded', 'elevation-south', 'elevation-north', 'elevation-east', 'elevation-west', 'container-layout', 'container-layout-elevation', 'roof-plan', 'interior-plan', 'interior-plan-upper', 'exterior-opposite', 'approach', 'site-facing'].indexOf(kind) >= 0;
   const badge = geometry ? 'Geometry-backed drawing' : 'Illustrative / explanatory study';
   const badgeClass = geometry ? 'geometry' : 'illustrative';
   const alt = kind && kind.indexOf('elevation') === 0
     ? `${c.name}: ${title}. The ${kind.split('-')[1]} elevation is generated from the same module elevations, openings and roof as the plan. Conceptual only.`
     : `${c.name}: ${title.toLowerCase()}. ${viewCaption(c, kind)}`;
   return `        <figure class="slide" data-slide data-title="${esc(title)}">
-          <img src="${src}" alt="${esc(alt)}" width="${size.width}" height="${size.height}" loading="eager" decoding="async">
+          <img src="${src}" alt="${esc(alt)}" width="${size.width}" height="${size.height}" loading="${kind === 'exterior' ? 'eager' : 'lazy'}" decoding="async">
           <figcaption><span class="badge ${badgeClass}">${badge}</span> <strong>${esc(title)}</strong> ${esc(viewCaption(c, kind))}</figcaption>
         </figure>`;
 }
@@ -56,7 +57,8 @@ export function architecturePage(c, sizes, profile) {
     slide(c, 'elevation-east', 'East elevation', `../../views/${c.id}-elevation-east.svg`, sizes['elevation-east']),
     slide(c, 'elevation-west', 'West elevation', `../../views/${c.id}-elevation-west.svg`, sizes['elevation-west']),
     sizes['roof-plan'] ? slide(c, 'roof-plan', 'Roof plan', `../../views/${c.id}-roof-plan.svg`, sizes['roof-plan']) : '',
-    sizes['interior-plan'] ? slide(c, 'interior-plan', 'Interior floor plan', `../../views/${c.id}-interior-plan.svg`, sizes['interior-plan']) : '',
+    sizes['interior-plan'] ? slide(c, 'interior-plan', 'Ground-floor interior plan', `../../views/${c.id}-interior-plan.svg`, sizes['interior-plan']) : '',
+    sizes['interior-plan-upper'] ? slide(c, 'interior-plan-upper', 'Upper-floor interior plan', `../../views/${c.id}-interior-plan-upper.svg`, sizes['interior-plan-upper']) : '',
     slide(c, 'section', 'Building section', `../../views/${c.id}-section.svg`, sizes.section),
     slide(c, 'exploded', 'Exploded levels', `../../views/${c.id}-exploded.svg`, sizes.exploded),
     sizes['exterior-opposite'] ? slide(c, 'exterior-opposite', 'Opposite exterior reference', `../../views/${c.id}-exterior-opposite.svg`, sizes['exterior-opposite']) : '',
@@ -130,13 +132,13 @@ ${slides}
     <h2 id="seasonal-title">Summer and winter</h2>
     <p>Both views use the same building and vegetation geometry. Evergreen systems remain visible in winter; deciduous climbers and edible planting are shown as dormant. No energy, daylight or privacy score is calculated.</p>
     <div class="season-pair">
-      <figure><img src="../../views/${c.id}-exterior.svg" width="1040" height="700" alt="Summer exterior of ${esc(c.name)} with vegetation and seasonal foliage." loading="eager" decoding="async"><figcaption><span class="badge illustrative">Illustrative study</span> Summer: planting, shade and outdoor use.</figcaption></figure>
-      <figure><img src="../../views/${c.id}-winter.svg" width="1040" height="700" alt="Winter exterior of ${esc(c.name)} showing evergreen screening and dormant deciduous planting." loading="eager" decoding="async"><figcaption><span class="badge illustrative">Illustrative study</span> Winter: evergreen screening, dormant deciduous planting and snow.</figcaption></figure>
+      <figure><img src="../../views/${c.id}-exterior.svg" width="1040" height="700" alt="Summer exterior of ${esc(c.name)} with vegetation and seasonal foliage." loading="lazy" decoding="async"><figcaption><span class="badge illustrative">Illustrative study</span> Summer: planting, shade and outdoor use.</figcaption></figure>
+      <figure><img src="../../views/${c.id}-winter.svg" width="1040" height="700" alt="Winter exterior of ${esc(c.name)} showing evergreen screening and dormant deciduous planting." loading="lazy" decoding="async"><figcaption><span class="badge illustrative">Illustrative study</span> Winter: evergreen screening, dormant deciduous planting and snow.</figcaption></figure>
     </div>
     <h3>Summer and winter solar studies</h3>
     <div class="season-pair">
-      <figure><img src="../../views/${c.id}-solar-summer.svg" width="1040" height="520" alt="Summer solar study for ${esc(c.name)}: a high sun angle and the roof overhang are shown qualitatively." loading="eager" decoding="async"><figcaption><span class="badge illustrative">Explanatory study</span> Summer: high sun and overhang.</figcaption></figure>
-      <figure><img src="../../views/${c.id}-solar-winter.svg" width="1040" height="520" alt="Winter solar study for ${esc(c.name)}: a low sun angle and the south glazing are shown qualitatively." loading="eager" decoding="async"><figcaption><span class="badge illustrative">Explanatory study</span> Winter: low sun and south glazing.</figcaption></figure>
+      <figure><img src="../../views/${c.id}-solar-summer.svg" width="1040" height="520" alt="Summer solar study for ${esc(c.name)}: a high sun angle and the roof overhang are shown qualitatively." loading="lazy" decoding="async"><figcaption><span class="badge illustrative">Explanatory study</span> Summer: high sun and overhang.</figcaption></figure>
+      <figure><img src="../../views/${c.id}-solar-winter.svg" width="1040" height="520" alt="Winter solar study for ${esc(c.name)}: a low sun angle and the south glazing are shown qualitatively." loading="lazy" decoding="async"><figcaption><span class="badge illustrative">Explanatory study</span> Winter: low sun and south glazing.</figcaption></figure>
     </div>
     <h3>Approximate window exposure</h3>
     <table class="exposure-table"><caption>Approximate glazing area by world-facing side. Not an energy or daylight model.</caption><thead><tr><th scope="col">Side</th><th scope="col">Approximate glazing</th></tr></thead><tbody>
@@ -189,7 +191,7 @@ ${slides}
   <section class="assembly-section" aria-labelledby="assembly-title">
     <h2 id="assembly-title">Envelope assembly</h2>
     <p><strong>${esc((c.envelope && c.envelope.assembly) || 'unknown')}</strong> · version ${esc((c.envelope && c.envelope.version) || '—')}. The diagram is explanatory, not a construction detail; it is not code-compliant or moisture-safe without engineering review.</p>
-    <img src="../../systems/wall-${esc(c.envelope.assembly)}.svg" width="1040" height="640" alt="Explanatory wall section for the ${esc(c.envelope.assembly)} assembly: steel container wall, air and vapour control, insulation, thermal break, ventilated cavity and cladding, with vegetation clearance." loading="eager" decoding="async">
+    <img src="../../systems/wall-${esc(c.envelope.assembly)}.svg" width="1040" height="640" alt="Explanatory wall section for the ${esc(c.envelope.assembly)} assembly: steel container wall, air and vapour control, insulation, thermal break, ventilated cavity and cladding, with vegetation clearance." loading="lazy" decoding="async">
     <h3>Layers</h3>
     <ul class="assembly-layers">${c.envelope.layers.map((l) => `<li>${esc(l.material)} — ${l.thickness_mm} mm (${esc(l.role)})</li>`).join('')}</ul>
     <p class="small">Condensation, fire, moisture, fastening, structural penetrations and maintenance all need project review. The designer does not claim this assembly is compliant or moisture-safe.</p>
@@ -198,13 +200,13 @@ ${slides}
   <section class="foundation-section" aria-labelledby="foundation-title">
     <h2 id="foundation-title">Foundation and ground</h2>
     <p><strong>${esc(c.foundation.system)}</strong> · ${c.foundation.clearance_m} m clearance · ${c.foundation.no_compaction ? 'no compaction intent' : 'compaction unresolved'} · independent decks: ${c.foundation.independent_deck ? 'yes' : 'no'}.</p>
-    <img src="../../systems/foundation-${esc(c.foundation.system)}.svg" width="1040" height="430" alt="Elevated ${esc(c.foundation.system)} foundation section with piles, floor, no fill and a root protection zone." loading="eager" decoding="async">
+    <img src="../../systems/foundation-${esc(c.foundation.system)}.svg" width="1040" height="430" alt="Elevated ${esc(c.foundation.system)} foundation section with piles, floor, no fill and a root protection zone." loading="lazy" decoding="async">
     <p class="small">${esc(c.foundation.note)} Geotechnical, frost-uplift, corrosion, lateral, slope, permit and conservation-authority review are required. No fill, slab or compaction is the intent; the construction sequence still needs an arborist and erosion-control plan.</p>
   </section>
 
   <section class="solar-section" aria-labelledby="solar-title">
     <h2 id="solar-title">Solar tilt and azimuth</h2>
-    ${(() => { const sm = c.solar_array || (c.modules.find((m) => m.solar && m.solar.enabled) || c.modules[0]).solar; return `<p><strong>${sm.tilt_deg}° tilt</strong> · ${sm.azimuth_deg}° azimuth · ${esc(sm.season_mode)} strategy. ${esc(sm.note || '')}</p>${c.roof_form ? `<p class="small">Roof: one ${c.roof_form.pitch_deg}° ${c.roof_form.type.replace(/-/g, ' ')} roof${c.roof_form.type === 'gable' ? ' with a clear ridge' : ''}. Solar is mounted only on the south slope; the north slope has no array. Array azimuth is true south, independent of building rotation.</p>` : ''}<img src="../../systems/solar-${sm.tilt_deg}.svg" width="1040" height="400" alt="Explanatory solar section with a ${sm.tilt_deg} degree tilted array facing azimuth ${sm.azimuth_deg} degrees." loading="eager" decoding="async">`; })()}
+    ${(() => { const sm = c.solar_array || (c.modules.find((m) => m.solar && m.solar.enabled) || c.modules[0]).solar; return `<p><strong>${sm.tilt_deg}° tilt</strong> · ${sm.azimuth_deg}° azimuth · ${esc(sm.season_mode)} strategy. ${esc(sm.note || '')}</p>${c.roof_form ? `<p class="small">Roof: one ${c.roof_form.pitch_deg}° ${c.roof_form.type.replace(/-/g, ' ')} roof${c.roof_form.type === 'gable' ? ' with a clear ridge' : ''}. Solar is mounted only on the south slope; the north slope has no array. Array azimuth is true south, independent of building rotation.</p>` : ''}<img src="../../systems/solar-${sm.tilt_deg}.svg" width="1040" height="400" alt="Explanatory solar section with a ${sm.tilt_deg} degree tilted array facing azimuth ${sm.azimuth_deg} degrees." loading="lazy" decoding="async">`; })()}
     <p class="small">Ottawa reference: the year-round fixed range is 36–39° (SolarCalculator.CA reports 39° optimal), winter is about 60° and summer about 30°, facing true south within a few degrees. No energy production, snow-shedding, wind-uplift or code compliance is calculated.</p>
   </section>
 

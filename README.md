@@ -2,7 +2,7 @@
 
 Six individual woodland retreats that happen to share a community.
 
-A fictional 15-acre Canadian Shield hamlet beside Heron Lake: six single-storey homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Phase 3 makes the six selected homes single-storey and adds a real interior spatial model: room polygons, partitions, interior doors, fixtures, clearances and circulation. The homes remain intentionally different in massing, roof, footprint, entrance and circulation: Woodland Cottage, Offset Pair, Courtyard Residence, Cross-Wing House, Accessible Garden Home and Solar Studio. The former stacked versions of Offset Pair, Cross-Wing House and Solar Studio are retained in an Experimental archive. The Design Lab generates floor plans, an interior plan, four elevations, building sections, roof plans, isometrics and summer/winter solar studies from one canonical model; reports invalid, unresolved and review-required conditions instead of hiding them; and reconciles the selected footprints with the older site models. The illustration pipeline now generates interior prompts from modeled rooms, fixtures and constraints without claiming perspective accuracy. The preserved Phase 1.5 community guide, Phase 1.3 landscape and Design Studio, authoritative Cabin A and lodge models, downloads, cutaway explorer and validation workflow are all retained. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
+A fictional 15-acre Canadian Shield hamlet beside Heron Lake: six homes, one common lodge, a beaver meadow, rock ridges, mixed forest and a community land trust. Three selected homes are single-storey and three are two-storey container homes. Phase 3 adds a real interior spatial model: room polygons, partitions, interior doors, fixtures, clearances and circulation. Two homes—Woodland Cottage and Accessible Garden Home—are designed as whole-home wheelchair-accessible demonstrations; the other four are ordinary concept homes and are not held to accessible-washroom targets. The selected homes are Woodland Cottage, Offset Stack, Courtyard Residence, Cross-Stacked Retreat, Accessible Garden Home and Solar Studio Stack. The Design Lab generates floor plans, an interior plan, four elevations, building sections, roof plans, isometrics and summer/winter solar studies from one canonical model; reports invalid, unresolved and review-required conditions instead of hiding them; and reconciles the selected footprints with the older site models. The illustration pipeline now generates interior prompts from modeled rooms, fixtures and constraints without claiming perspective accuracy. The preserved Phase 1.5 community guide, Phase 1.3 landscape and Design Studio, authoritative Cabin A and lodge models, downloads, cutaway explorer and validation workflow are all retained. This is a **vision and collaboration project**, not a real property, development proposal, lease offer, engineering design or building permit package.
 
 Phase 2 preserves the Phase 1.2 landscape, the authoritative Cabin A and lodge models, every original Design Lab concept, all drawings, downloads, the cutaway explorer and the validation workflow. The original nine concepts are retained as an archive and migrated to the v2 schema. The common lodge keeps its single-storey default. The v0.1 and v1.0 schemas still import through explicit migrations. See the [visualisation prompt set](docs/visualisation-prompts.md) for image-generation prompts for every room, approach view, nature view and outdoor seating space, the [`architecture and diversity audit`](docs/architecture-diversity-audit.md), [`architectural variation`](docs/architectural-variation.md), [`stacked containers`](docs/stacked-containers.md), [`structural review`](docs/structural-review.md), [`accessibility`](docs/accessibility.md), [`implementation report`](docs/implementation-report.md), [`LICENSING.md`](LICENSING.md), [`docs/phase-1.5.md`](docs/phase-1.5.md), the [gallery/thermal extension](docs/phase-1.3-extension.md), the [envelope/vegetation extension](docs/phase-1.3-envelope-vegetation.md), the [foundations and access study](docs/foundations-and-access.md), the [container patterns and security study](docs/container-patterns.md), the [home variation notes](docs/home-variation.md), the [fire-resilience study](docs/fire-resilience.md), the [two-storey study](docs/two-storey.md), the [community resilience and water study](docs/resilience-water.md) and the [site-structure and page-weight notes](docs/site-pages.md).
 
@@ -35,11 +35,11 @@ These are conceptual studies, not construction drawings or engineering approvals
 
    ```sh
    node tools/build.mjs       # Node.js 22+ (CI uses 26 LTS, see .nvmrc), no dependencies
-   node tools/check.mjs       # 556 main-site static checks
-   node tools/check-design-lab.mjs   # 2,815 Design Lab schema, geometry, interior, illustration, migration and comparison checks
+   node tools/check.mjs       # 517 main-site static checks
+   node tools/check-design-lab.mjs   # 2,477 Design Lab schema, geometry, interior, illustration, migration and comparison checks
    npm install
    npm run test:browser       # 107 main-site browser checks
-   npm run test:design-lab    # 226 Design Lab browser checks
+   npm run test:design-lab    # 230 Design Lab browser checks
    ```
 
    The build refuses data that cannot be built or that breaks a site rule, such as a home inside the shoreline setback, an overlapping container module, a porch beyond its face, or a concept with no valid editable presets. See [`docs/data-model.md`](docs/data-model.md) and [`docs/design-lab.md`](docs/design-lab.md).
@@ -72,7 +72,7 @@ The site includes:
 - a long-form community, construction and adaptability narrative
 - a **Design** section that introduces the Design Lab, its floor-specific plans and elevations, the common lodge concept, its thermal and envelope options, its vegetation systems, its elevated foundations and footbridge study, its six-home comparison and its comparison tool
 
-No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 259 KB uncompressed / 64 KB compressed. The whole published site is about 6829 KB, under the 7 MB budget for nineteen concepts, their detailed drawing sets, interior plans and six illustration packages.
+No tracking, data-collecting forms, cookies, remote scripts, web fonts or WebGL dependency. The first page view is about 259 KB uncompressed / 64 KB compressed. The whole published site is about 5987 KB, under the 6 MB budget for sixteen concepts, their detailed drawing sets, interior plans and six illustration packages.
 
 ## The fictional landscape
 
@@ -93,13 +93,14 @@ The elevation grid is exported to `site/data/terrain.json`; `site/data/homes.jso
 
 ```
 data/design-lab.json (schema v2.0 + optional interior v1)
-   ├─ concepts (19: 9 legacy, 6 selected single-storey homes, 3 experimental archives, common lodge)
+   ├─ concepts (16: 9 legacy, 6 selected homes, common lodge)
    ├─ modules with storey + elevation_m + support, openings, zones, porches, decks, connections
    ├─ interior rooms, partitions, doors, fixtures, clearances, circulation
+   ├─ per-home accessibility target (accessible, adaptable, not-required)
    ├─ levels, roof_form, review register, accessibility evidence
    └─ provenance, material notes, warnings (derived)
         ↓ tools/build.mjs + site/js/design-model.js
-site/design-lab/views/*.svg            plans (combined/ground/upper), interior plan,
+site/design-lab/views/*.svg            plans (combined/ground/upper), per-level interior plans,
                                        4 elevations, section, roof plan, isometric, solar studies
 site/design-lab/data/*.json            downloadable source
 site/design-lab/illustration/          six prompt/scene/manifest packages
@@ -110,7 +111,7 @@ site/design-lab/residences/            six-home comparison
 site/design-lab/editor/                editor
 ```
 
-The existing `data/cabin-a.json` remains authoritative for Cabin A. The interior model is documented in [`docs/interior-spatial-model.md`](docs/interior-spatial-model.md); the Phase 3 audit and limitations are in [`docs/phase-3-audit.md`](docs/phase-3-audit.md) and [`docs/phase-3-implementation-report.md`](docs/phase-3-implementation-report.md). `tools/lib/design-adapter.mjs` provides an explicit, reported conversion in both directions; it never writes Cabin A data and lists everything it cannot preserve.
+Page-splitting, lazy-loading and download-compression decisions are recorded in [`docs/page-weight-refactor.md`](docs/page-weight-refactor.md). The existing `data/cabin-a.json` remains authoritative for Cabin A. The interior model is documented in [`docs/interior-spatial-model.md`](docs/interior-spatial-model.md); the Phase 3 audit and limitations are in [`docs/phase-3-audit.md`](docs/phase-3-audit.md) and [`docs/phase-3-implementation-report.md`](docs/phase-3-implementation-report.md). `tools/lib/design-adapter.mjs` provides an explicit, reported conversion in both directions; it never writes Cabin A data and lists everything it cannot preserve.
 
 ## Assets
 
@@ -173,8 +174,8 @@ Six homes and the common lodge remain inspiration-only. The editor supports one 
 
 ## Next
 
-- Add the six remaining homes and the common lodge to the editable set, one at a time.
-- Add a fully accessible 1.5 m turning-circle variant and verify it against CSA B651.
+- Add the common lodge to the detailed interior set.
+- Professionally verify the two accessible demonstrations, especially the constrained Woodland Cottage, against CSA B651 and applicable Ontario requirements.
 - Add a direct-manipulation plan editor with complete keyboard equivalents and undo/redo.
 - Add structural, envelope, fire, transport and accessibility review workflows with named reviewers.
 - Add a contributor submission process through pull requests, without public write access.

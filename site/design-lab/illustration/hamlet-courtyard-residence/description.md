@@ -1,6 +1,6 @@
 # Courtyard Residence — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash d488beaf
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 76904ecf
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 

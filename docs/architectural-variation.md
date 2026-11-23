@@ -35,20 +35,34 @@ does not require six unrelated construction systems. All six homes share the
 container-first approach, a drained and ventilated exterior assembly, independent
 foundations, and the same review process.
 
+## Phase 3 update
+
+The selected set still contains **three single-storey and three two-storey
+homes**: Woodland Cottage, Courtyard Residence and Accessible Garden Home are
+single-storey; Offset Stack, Cross-Stacked Retreat and Solar Studio Stack are
+two-storey. Two homes are designed as **whole-home wheelchair-accessible
+demonstrations**: Woodland Cottage and Accessible Garden Home. The other four
+are ordinary concept homes and their bathrooms are not held to accessible
+clearances.
+
+The Design Lab now also contains an optional interior spatial model. Authored
+interiors exist for the two accessible homes; the other four use provisional
+room-band geometry. See [`interior-spatial-model.md`](interior-spatial-model.md).
+
 ## The six hamlet residences
 
 | Home | Family | Storeys | Modules | Arrangement | Footprint | Roof | Entrance | Circulation | Ground-floor living |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | A | Woodland Cottage | 1 | 1 × 40 ft | Single | Rectangular | Gable, 24° | South | Single level | Yes, bedroom/bath/kitchen/living |
-| B | Offset Pair | 1 | 2 × 40 ft | Offset pair, 2.6 m | Staggered | Shed, 8° | East | Single level | Yes |
+| B | Offset Stack | 2 | 2 × 40 ft | Offset stack, 2.6 m | Rectangular with overhang | Shed, 8° | South | Internal stair | Yes, but no ground bedroom |
 | C | Courtyard Residence | 1 | 2 × 40 ft | L-shape | L-shaped | Flat with green-roof concept | North | Single level | Yes, bedroom/bath/kitchen/living |
-| D | Cross-Wing House | 1 | 2 × 40 ft | T-wing | T-shaped | Butterfly, 12° | East | Single level | Yes |
-| E | Accessible Garden Home | 1 | 2 × 20 ft | Double-width parallel pair | Wide | Canopy | South | Single level | Yes, bedroom/bath/kitchen/living |
-| F | Solar Studio | 1 | 2 × 20 ft | Offset pair, 0.8 m | Compact | Solar-ready shed, 12° | East | Single level | Yes |
+| D | Cross-Stacked Retreat | 2 | 2 × 40 ft | Perpendicular stack | Cross | Butterfly, 12° | South | Internal stair | Yes, but no ground bedroom |
+| E | Accessible Garden Home | 1 | 2 × 20 ft | Parallel pair | Compact | Canopy | South | Single level | Yes, bedroom/bath/kitchen/living |
+| F | Solar Studio Stack | 2 | 2 × 20 ft | Aligned stack, 0.8 m offset | Rectangular | Solar-ready shed, 12° | South | Internal stair | Yes, but no ground bedroom |
 
 The dimensions and areas are nominal. The **architectural intent** is the
-important part: all six are single-storey, but they are visibly different in
-massing, roof, footprint, entrance and circulation.
+important part: the six are visibly different in storey count, massing, roof,
+footprint and circulation.
 
 ### Home A — Woodland Cottage
 
@@ -58,13 +72,13 @@ This is the control against which the other homes are compared. It is not
 presented as the universally correct answer; it uses more ground than the
 stacked homes and has a simple single-level plan.
 
-### Home B — Offset Pair
+### Home B — Offset Stack
 
-Two 40-foot modules on one level. The second module is shifted 2.6 m east and
-abuts the first, producing a stepped plan and sheltered corners. Living, kitchen
-and a bathroom occupy the first module; bedroom, bathroom, studio and storage
-occupy the second. The original Offset Stack is retained in the Experimental
-archive.
+A ground module with a second module shifted 2.6 m east. The offset creates a
+covered ground-floor outdoor room. The upper module is only partly carried by
+the ground module. The model reports the geometric support overlap and flags the
+unsupported portion for engineering review; it does not pretend the offset is
+structurally resolved.
 
 ### Home C — Courtyard Residence
 
@@ -74,29 +88,29 @@ with a green-roof **concept**; saturated load, drainage, fire and maintenance
 are explicitly unresolved. This is the deliberate counter-example to “smaller
 footprint is always better”.
 
-### Home D — Cross-Wing House
+### Home D — Cross-Stacked Retreat
 
-Two 40-foot modules meet in a single-storey T. The long living wing runs
-east-west; the bedroom/studio wing abuts it to the south. The butterfly roof
-preserves the original cross silhouette. The original two-storey Cross-Stacked
-Retreat is retained in the Experimental archive with its former structural
-review concerns.
+A ground bar crossed by a perpendicular upper bar. The silhouette is strong, but
+the upper module bears on only the crossing area. The structural review register
+flags the unsupported area, lateral stability, transfer loads and fire
+separation. It is the clearest example of “geometrically representable does not
+mean structurally feasible”.
 
 ### Home E — Accessible Garden Home
 
-Two 20-foot modules side by side, forming a **double-width** plan. The extra
-width supports a 1.0 m entrance door, a 1.2 m circulation route and a 3.0 m
-bathroom with a 1.5 m turning circle. The other selected homes are not designed
-as accessible units and their bathrooms are not held to this target. The home is
-still a concept; the classification is a design target, not a compliance
-finding, and the shared-path grades are not surveyed.
+Two 20-foot modules side by side, organised around a step-free route. The design
+records a 1.0 m entrance door, 1.2 m circulation target, ground-floor bedroom,
+adaptable bathroom and adaptable kitchen. Accessibility is treated as a
+whole-home property, not a feature added to one room. The home is still a
+concept; the classification is a design target, not a compliance finding.
 
-### Home F — Solar Studio
+### Home F — Solar Studio Stack
 
-Two 20-foot modules on one level, offset 0.8 m east and abutting side by side.
-The shed roof is solar-ready and the south facade is shaded. The compact plan
-keeps the solar and studio identity without an upper floor or stair. The original
-Solar Studio Stack is retained in the Experimental archive.
+Two 20-foot modules stacked with a slight offset. The ground floor holds essential
+living and a bathroom; the upper floor is a studio and sleeping space. The shed
+roof is solar-ready and the south facade is shaded. The small footprint reduces
+ground coverage, but the home adds stairs, structure, a more complex envelope and
+a stair-only upper floor.
 
 ## Legacy concepts and families
 

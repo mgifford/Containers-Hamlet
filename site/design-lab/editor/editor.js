@@ -25,7 +25,8 @@
     return;
   }
 
-  var EDITABLE = DATA.concepts.filter(function (c) { return c.editable; });
+  var EDITABLE = DATA.concepts.filter(function (c) { return c.editable; }).concat(DATA.archivePresets || []);
+  var archiveLoading = null;
   var DEFAULT_PRESET_ID = 'hamlet-woodland-cottage';
   var state = {
     design: null,
@@ -95,8 +96,39 @@
     if ($('redo')) $('redo').disabled = state.future.length === 0;
   }
 
+  function allConcepts() {
+    return DATA.concepts.concat((window.DesignLabArchiveConcepts && window.DesignLabArchiveConcepts.concepts) || []);
+  }
+  function loadArchive() {
+    if (window.DesignLabArchiveConcepts) return Promise.resolve();
+    if (archiveLoading) return archiveLoading;
+    archiveLoading = new Promise(function (resolve, reject) {
+      var script = document.createElement('script');
+      script.src = '../concepts-archive.js';
+      script.onload = function () {
+        if (window.DesignLabArchiveConcepts && window.DesignLabArchiveConcepts.concepts) {
+          var known = {};
+          DATA.concepts.forEach(function (c) { known[c.id] = true; });
+          window.DesignLabArchiveConcepts.concepts.forEach(function (c) { if (!known[c.id]) DATA.concepts.push(c); });
+        }
+        resolve();
+      };
+      script.onerror = function () { archiveLoading = null; reject(new Error('The archive preset script did not load.')); };
+      document.head.appendChild(script);
+    });
+    return archiveLoading;
+  }
   function loadPreset(id, silent) {
-    var concept = EDITABLE.filter(function (c) { return c.id === id; })[0] || EDITABLE.filter(function (c) { return c.id === DEFAULT_PRESET_ID; })[0] || EDITABLE[0];
+    var concept = allConcepts().filter(function (c) { return c.id === id; })[0];
+    if (!concept) {
+      var meta = EDITABLE.filter(function (c) { return c.id === id; })[0];
+      if (meta) {
+        announce('Loading archive preset ' + meta.name + '…');
+        loadArchive().then(function () { loadPreset(id, silent); }).catch(function (err) { announce(err.message); });
+        return;
+      }
+      concept = allConcepts().filter(function (c) { return c.id === DEFAULT_PRESET_ID; })[0] || allConcepts()[0];
+    }
     if (!concept) return;
     state.preset = concept.id;
     state.design = clone(concept);
@@ -442,7 +474,7 @@
       'container-layout-plan.svg': Model.containerSchematicSVG(state.design, { mode: 'plan', idPrefix: 'package-container-layout' }),
       'container-layout-elevation.svg': Model.containerSchematicSVG(state.design, { mode: 'elevation', idPrefix: 'package-container-layout-elevation' }),
       'plan-ground.svg': Model.renderPlan(state.design, { idPrefix: 'package-plan-ground', storey: 0 }),
-      'interior-plan.svg': state.design.interior ? Interior.planSVG(state.design, { idPrefix: 'package-interior-plan' }) : '',
+      'interior-plan.svg': state.design.interior ? Interior.planSVG(state.design, { idPrefix: 'package-interior-plan', storey: 0 }) : '',
       'roof-plan.svg': Model.roofPlanSVG(state.design, { idPrefix: 'package-roof-plan' }),
       'elevation-south.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-south', side: 'south' }),
       'elevation-north.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-north', side: 'north' }),
@@ -452,6 +484,7 @@
       'isometric.svg': Model.renderAxo(state.design, { idPrefix: 'package-isometric' })
     };
     if (state.design.levels.length > 1) drawings['plan-upper.svg'] = Model.renderPlan(state.design, { idPrefix: 'package-plan-upper', storey: 1 });
+    if (state.design.levels.length > 1 && state.design.interior) drawings['interior-plan-upper.svg'] = Interior.planSVG(state.design, { idPrefix: 'package-interior-plan-upper', storey: 1 });
     Object.keys(drawings).forEach(function (name) { files['drawings/' + name] = drawings[name]; });
     files['references/exterior-reference.svg'] = state.illustrationReferenceSvg || Model.renderReference(state.design, { view: config.view.type, rotationDeg: scene.camera.renderRotationDeg, idPrefix: 'package-reference' });
     files['illustrations/README.md'] = '# Illustrations\n\nNo AI-generated image is included. Use `prompts/exterior.md` and `references/exterior-reference.svg` with an external image-generation tool. Treat the result as an interpretation, not a measured architectural drawing.\n';
@@ -979,7 +1012,7 @@
       if ($('solar-summer')) $('solar-summer').innerHTML = Model.renderSolarStudy(d, { idPrefix: 'editor-solar-summer', season: 'summer' });
       if ($('solar-winter')) $('solar-winter').innerHTML = Model.renderSolarStudy(d, { idPrefix: 'editor-solar-winter', season: 'winter' });
       if ($('massing')) $('massing').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-massing' });
-      if ($('interior-plan')) $('interior-plan').innerHTML = d.interior ? Interior.planSVG(d, { idPrefix: 'editor-interior-plan' }) : '<p class="small">No interior model. Create one from the room bands or import an interior design.</p>';
+      if ($('interior-plan')) { var interiorStorey = state.planStorey === 'all' ? 0 : Number(state.planStorey); $('interior-plan').innerHTML = d.interior ? Interior.planSVG(d, { idPrefix: 'editor-interior-plan', storey: interiorStorey }) : '<p class="small">No interior model. Create one from the room bands or import an interior design.</p>'; }
     } catch (err) {
       announce('The view could not be drawn: ' + err.message);
     }
@@ -1736,7 +1769,7 @@
     var requested = params.get('preset');
     var initial = EDITABLE.filter(function (c) { return c.id === requested; })[0] || EDITABLE.filter(function (c) { return c.id === DEFAULT_PRESET_ID; })[0] || EDITABLE[0];
     loadPreset(initial.id, true);
-    renderArrangementFromState();
+    if (state.design) renderArrangementFromState();
     announce('Loaded ' + initial.name + '. Six hamlet residences and three archive concepts are editable; the gallery also preserves six inspiration concepts.');
 
     $('preset').addEventListener('change', function () { if ($('preset').value) loadPreset($('preset').value); });

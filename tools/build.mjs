@@ -6,6 +6,7 @@
 //
 // No dependencies beyond Node.js 22+ (CI pins 26 LTS in .nvmrc). MIT licence.
 import fs from 'node:fs';
+import { gzipSync } from 'node:zlib';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -96,7 +97,13 @@ export function generate() {
     sizes[id] = {};
     for (const [name, content] of Object.entries(outs)) {
       put(`models/${id}/${name}`, content);
-      put(`site/models/${id}/${name}`, content);
+      if (name.endsWith('.obj')) {
+        const gz = gzipSync(Buffer.from(content), { mtime: 0 });
+        gz[9] = 255;
+        put(`site/models/${id}/${name}.gz`, gz);
+      } else {
+        put(`site/models/${id}/${name}`, content);
+      }
       sizes[id][name] = { kb: kb(content), ...(name.endsWith('.svg') ? svgSize(content) : {}) };
     }
   }
@@ -104,7 +111,7 @@ export function generate() {
   put('site/assets/site-plan.svg', sitePlan);
   const impression = renderImpression(site);
   put('site/assets/lake-impression.svg', impression);
-  for (const f of DATA_FILES) put(`site/data/${f}`, readText(`data/${f}`));
+  for (const f of DATA_FILES) put(`site/data/${f}`, f === 'site.json' ? JSON.stringify(JSON.parse(readText(`data/${f}`))) + '\n' : readText(`data/${f}`));
 
   const grid = terrainGrid(site, 5);
   const terrainPublic = {
@@ -115,7 +122,7 @@ export function generate() {
     grid,
     hash: analysis.terrain_hash,
   };
-  put('site/data/terrain.json', JSON.stringify(terrainPublic, null, 2) + '\n');
+  put('site/data/terrain.json', JSON.stringify(terrainPublic) + '\n');
   const HOME_META = {
     a: { slug: 'Cedar-1-simple', name: 'Cedar', configuration: 'One container · simple' },
     b: { slug: 'Birch-2-wide', name: 'Birch', configuration: 'Two containers · wide pair' },
@@ -171,7 +178,7 @@ export function generate() {
     })),
     design_lab_reconciliation: siteReconciliation,
   };
-  put('site/data/homes.json', JSON.stringify(homesPublic, null, 2) + '\n');
+  put('site/data/homes.json', JSON.stringify(homesPublic) + '\n');
   homesPublic.buildings.forEach((h) => {
     const meta = HOME_META[h.id] || {};
     const kind = h.model === 'lodge' ? 'lodge' : meta.slug.indexOf('-2-') >= 0 ? 'pair' : meta.slug.indexOf('compact') >= 0 ? 'compact' : 'single';
@@ -188,11 +195,13 @@ export function generate() {
   });
 
   /* ---------------- Container Home Design Lab ---------------- */
-  if (!designLab.concepts || designLab.concepts.length !== 19) issues.push({ level: 'error', message: 'data/design-lab.json must contain nine legacy concepts, six selected single-storey residences, three experimental archive concepts and the common lodge' });
+  if (!designLab.concepts || designLab.concepts.length !== 16) issues.push({ level: 'error', message: 'data/design-lab.json must contain nine legacy concepts, six selected residences and the common lodge' });
   const hamletSelected = designLab.concepts.filter((c) => c.role === 'hamlet-selected');
   if (hamletSelected.length !== 6) issues.push({ level: 'error', message: 'data/design-lab.json must contain six hamlet-selected residences' });
   if (designLab.concepts.some((c) => c.modules.some((m) => m.storey > 1))) issues.push({ level: 'error', message: 'a residence may not exceed two occupied storeys' });
-  if (hamletSelected.some((c) => c.levels.length !== 1 || c.modules.some((m) => m.storey !== 0))) issues.push({ level: 'error', message: 'all six selected hamlet residences must be single-storey' });
+  if (hamletSelected.filter((c) => c.levels.length === 1).length !== 3 || hamletSelected.filter((c) => c.levels.length === 2).length !== 3) issues.push({ level: 'error', message: 'the six selected residences must include three single-storey and three two-storey homes' });
+  const accessibleSelected = hamletSelected.filter((c) => c.access && c.access.target === 'accessible');
+  if (accessibleSelected.length !== 2 || accessibleSelected.some((c) => c.levels.length !== 1)) issues.push({ level: 'error', message: 'exactly two selected homes must be whole-home wheelchair-accessible and single-storey' });
   const designViews = {};
   const illustrationEntries = [];
   designLab.concepts.forEach((concept) => {
@@ -230,19 +239,20 @@ export function generate() {
       _illusConfig = DesignIllustration.defaultConfig(concept);
       _scene = DesignIllustration.sceneSpec(concept, _illusConfig, site);
       views['site-facing'] = DesignModel.renderReference(concept, { idPrefix: `${prefix}-site-facing`, view: 'exterior-three-quarter', rotationDeg: _scene.camera.renderRotationDeg });
-      if (concept.interior) views['interior-plan'] = DesignInterior.planSVG(concept, { idPrefix: `${prefix}-interior-plan` });
+      if (concept.interior) views['interior-plan'] = DesignInterior.planSVG(concept, { idPrefix: `${prefix}-interior-plan`, storey: 0 });
+      if (concept.interior && concept.levels.length > 1) views['interior-plan-upper'] = DesignInterior.planSVG(concept, { idPrefix: `${prefix}-interior-plan-upper`, storey: 1 });
     }
     Object.entries(views).forEach(([name, svg]) => put(`site/design-lab/views/${concept.id}-${name}.svg`, svg));
     if (concept.role === 'hamlet-selected') {
       const base = `site/design-lab/illustration/${concept.id}`;
       const files = {
-        'design.json': JSON.stringify(concept, null, 2) + '\n',
+        'design.json': JSON.stringify(concept) + '\n',
         'description.md': _scene.description.text + '\n',
         'prompt.md': _scene.prompt.text + '\n',
         'interior.md': _scene.interiorPrompt.text + '\n',
         'negative.md': _scene.negativePrompt.text + '\n',
-        'config.json': JSON.stringify(_illusConfig, null, 2) + '\n',
-        'scene.json': JSON.stringify(_scene, null, 2) + '\n'
+        'config.json': JSON.stringify(_illusConfig) + '\n',
+        'scene.json': JSON.stringify(_scene) + '\n'
       };
       Object.entries(files).forEach(([name, content]) => put(`${base}/${name}`, content));
       const artifacts = DesignIllustration.artifactPlan(_scene).map((a) => {
@@ -255,7 +265,7 @@ export function generate() {
         if (!content && a.path.indexOf('references/') === 0) content = views['site-facing'] || views['exterior'] || '';
         return { ...a, hash: DesignIllustration.hashString(content || a.path + ':' + concept.id) };
       });
-      put(`${base}/manifest.json`, JSON.stringify(DesignIllustration.manifest(_scene, concept, artifacts, designLab.generated || '2026-11-22'), null, 2) + '\n');
+      put(`${base}/manifest.json`, JSON.stringify(DesignIllustration.manifest(_scene, concept, artifacts, designLab.generated || '2026-11-22')) + '\n');
       illustrationEntries.push({ concept, scene: _scene, config: _illusConfig, views });
     }
     put(`site/design-lab/data/${concept.id}.json`, JSON.stringify(concept) + '\n');
@@ -315,7 +325,11 @@ export function generate() {
     const concept = designLab.concepts.find((c) => c.envelope && c.envelope.assembly === assembly) || designLab.concepts[0];
     put(`site/design-lab/systems/wall-${assembly}.svg`, DesignModel.wallSectionSVG(concept, concept.modules[0].id, { idPrefix: `system-wall-${assembly}`, title: 'Exterior wall section · ' + DesignModel.ENVELOPE_LABEL[assembly] }));
   });
-  put('site/design-lab/concepts.js', `/* Generated by tools/build.mjs from data/design-lab.json. Concept data: CC BY-SA 4.0. */\nwindow.DesignLabConcepts = ${JSON.stringify({ schema: designLab.schema, version: designLab.version, licence: designLab.licence, concepts: designLab.concepts })};\n`);
+  const selectedConceptData = designLab.concepts.filter((c) => c.role === 'hamlet-selected');
+  const archiveConceptData = designLab.concepts.filter((c) => c.role !== 'hamlet-selected');
+  const archivePresets = archiveConceptData.filter((c) => c.editable).map((c) => ({ id: c.id, name: c.name }));
+  put('site/design-lab/concepts-selected.js', `/* Generated by tools/build.mjs from data/design-lab.json. Concept data: CC BY-SA 4.0. */\nwindow.DesignLabConcepts = ${JSON.stringify({ schema: designLab.schema, version: designLab.version, licence: designLab.licence, concepts: selectedConceptData, archivePresets })};\n`);
+  put('site/design-lab/concepts-archive.js', `/* Generated by tools/build.mjs from data/design-lab.json. Concept data: CC BY-SA 4.0. */\nwindow.DesignLabArchiveConcepts = ${JSON.stringify({ schema: designLab.schema, version: designLab.version, licence: designLab.licence, concepts: archiveConceptData })};\nwindow.DesignLabConcepts = window.DesignLabConcepts || { schema: designLab.schema, version: designLab.version, licence: designLab.licence, concepts: [], archivePresets: [] };\nwindow.DesignLabConcepts.concepts = window.DesignLabConcepts.concepts.concat(window.DesignLabArchiveConcepts.concepts.filter(function (c) { return !window.DesignLabConcepts.concepts.some(function (x) { return x.id === c.id; }); }));\n`);
   const siteForLab = {
     map: site.map,
     parcel: site.parcel.polygon,
@@ -346,21 +360,29 @@ export function generate() {
     heading: 'Six intentionally different hamlet residences',
     headingId: 'hamlet-residences',
     idPrefix: 'hamlet-',
-    intro: 'Each selected home is single-storey and has its own massing, roof, arrangement, interior and relationship to the ground. They share construction principles, not a single look. The three historical two-storey studies are kept separately in the Experimental archive.'
+    intro: 'Each selected home has its own massing, roof, arrangement, interior and relationship to the ground. Three are single-storey and three are two-storey. They share construction principles, not a single look. Two homes are designed as whole-home wheelchair-accessible demonstrations; the others are not held to that target.'
   });
   const archiveConcepts = designLab.concepts.filter((c) => c.role !== 'hamlet-selected');
   const archiveGallery = galleryCards(archiveConcepts, summaryOf, {
+    base: '../',
     heading: 'Concept archive and the common lodge',
     headingId: 'concept-archive',
     idPrefix: 'archive-',
     intro: 'The original nine concepts are preserved, migrated to the current schema and clearly separated from the six hamlet-selected homes. No source concept was deleted.'
   });
-  const gallery = hamletGallery + '\n' + archiveGallery + '\n' + arrangementCards();
+  const archivePagePath = 'site/design-lab/concepts/index.html';
+  const archiveTemplate = readText(archivePagePath);
+  const archiveLink = '<p class="notice"><strong>Looking for the legacy concepts?</strong> The nine original concepts, the common lodge and four arrangement studies are on the <a href="concepts/">concept archive page</a>. The main gallery now carries only the six selected homes.</p>';
+  const gallery = hamletGallery + '\n' + archiveLink;
   ['stacked','cantilever','courtyard','creek'].forEach((k) => put(`site/design-lab/arrangements/${k}.svg`, arrangementSVG(k)));
   const galleryTemplateWithNav = galleryTemplate.replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(1, 'gallery'));
   const galleryOut = galleryTemplateWithNav.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${gallery}\n<!-- /gen:gallery -->`);
   if (!galleryTemplate.includes('<!-- gen:gallery -->') || !galleryTemplate.includes('<!-- /gen:gallery -->')) issues.push({ level: 'error', message: 'site/design-lab/index.html is missing the gen:gallery markers' });
   put(galleryPagePath, galleryOut.replace(/[ \t]+$/gm, ''));
+  const archiveNav = archiveTemplate.replace('<!-- gen:nav -->', designShellNav(2, 'gallery'));
+  const archiveOut = archiveNav.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${archiveGallery}\n${arrangementCards('../')}\n<!-- /gen:gallery -->`);
+  if (!archiveTemplate.includes('<!-- gen:gallery -->') || !archiveTemplate.includes('<!-- /gen:gallery -->')) issues.push({ level: 'error', message: 'site/design-lab/concepts/index.html is missing the gen:gallery markers' });
+  put(archivePagePath, archiveOut.replace(/[ \t]+$/gm, ''));
   put('site/design-lab/guides/index.html', guidesPage());
   const editorPath = 'site/design-lab/editor/index.html';
   const editorHtml = readText(editorPath).replace(/<header class="site-header">[\s\S]*?<\/header>(?:\s*<nav class="subnav"[\s\S]*?<\/nav>)?/, designShellNav(2, 'editor'));
@@ -440,7 +462,7 @@ export function generate() {
       [`models/${id}/section.svg`, 'Section and wall build-up', 'SVG'],
       [`models/${id}/axonometric.svg`, 'Exterior axonometric', 'SVG'],
       [`models/${id}/cutaway.svg`, 'Cutaway axonometric', 'SVG'],
-      [`models/${id}/${id}.obj`, '3D geometry for Blender or FreeCAD', 'OBJ, metres, Y up'],
+      [`models/${id}/${id}.obj.gz`, '3D geometry for Blender or FreeCAD', 'OBJ, gzip-compressed, metres, Y up; decompress before importing'],
       [`models/${id}/${id}.mtl`, 'Material colours for the OBJ', 'MTL'],
       [`data/${id}.json`, 'Parametric source data', 'JSON'],
     ]]),
@@ -503,8 +525,8 @@ function main() {
   const stale = [];
   for (const [p, content] of files) {
     const abs = path.join(ROOT, p);
-    const current = fs.existsSync(abs) ? fs.readFileSync(abs, 'utf8') : null;
-    if (current === content) continue;
+    const current = fs.existsSync(abs) ? fs.readFileSync(abs) : null;
+    if (Buffer.isBuffer(content) ? (current && Buffer.compare(current, content) === 0) : current && current.toString('utf8') === content) continue;
     if (check) stale.push(p);
     else {
       fs.mkdirSync(path.dirname(abs), { recursive: true });

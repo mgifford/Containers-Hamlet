@@ -1,31 +1,30 @@
-# Cross-Wing House — illustration reference
+# Cross-Stacked Retreat — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 7198cfa0
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 65f38afd
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
 ## Architectural facts
-- 1 occupied storey
+- 2 occupied storeys
 - 2 container modules (40ft, 40ft)
 - butterfly roof at 12 degrees
 - 59.5 m2 gross floor area
-- 59.5 m2 ground coverage
-- 5.22 m to the roof
+- 53.5 m2 ground coverage
+- 8.26 m to the roof
 
 ## Modules
 - **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding.
-- **m2** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 90°, timber cladding.
+- **m2** — storey 2, 12.192 × 2.438 m, base 3.896 m, rotation 90°, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.
 
 ## Openings
 - m1 / North window — north window, 1.2 × 1.2 m, sill 1 m.
 - m1 / Living doors — south sliding-door, 2.8 × 2.1 m, sill 0 m.
 - m1 / Entry door — east door, 0.95 × 2.1 m, sill 0 m.
 - m1 / West window — west window, 1.2 × 1.3 m, sill 0.9 m.
-- m2 / Studio window — north window, 1.6 × 1.4 m, sill 0.8 m.
-- m2 / Bedroom window — south window, 1.6 × 1.4 m, sill 0.8 m.
-- m2 / Workshop door — east door, 0.9 × 2.1 m, sill 0 m.
-- m2 / Workshop window — west window, 1.2 × 1.2 m, sill 1 m.
-- m2 / Garden door — south door, 0.95 × 2.1 m, sill 0 m.
+- m2 / Upper studio window — north window, 1.6 × 1.4 m, sill 0.8 m.
+- m2 / Upper bedroom window — south window, 1.6 × 1.4 m, sill 0.8 m.
+- m2 / Upper balcony door — east door, 0.9 × 2.1 m, sill 0 m.
+- m2 / Upper window — west window, 1.2 × 1.2 m, sill 1 m.
 
 ## Rooms and zones
 - m1 / Living — living, 0–5 m. Ground-floor essential living.
@@ -38,8 +37,7 @@ This description is generated from the canonical design model. The reference SVG
 - m2 / Storage — storage, 10.4–12 m. Upper storage.
 
 ## Outdoor spaces
-- p1: 3 × 2.8 m covered porch on the south face of m1.
-- p2: 2.4 × 1.4 m covered porch on the south face of m2.
+- p1: 4.2 × 2.8 m covered porch on the south face of m1.
 
 ## Site and camera
 - Assigned site: Cabin D (site rotation 16°).
@@ -67,6 +65,7 @@ This description is generated from the canonical design model. The reference SVG
 
 ## Unresolved matters
 - **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- **unmodeled-balcony**: The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.
 - **interior-ceiling**: The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.
 - **site-approach**: The site path approach is north while the design entrance is east. The generated prompt does not call any side the main approach without qualification.
 - **provisional-interior**: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.

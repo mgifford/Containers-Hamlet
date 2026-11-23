@@ -3,16 +3,16 @@ import { esc } from './svg.mjs';
 
 const n = (v, d = 1) => Number(v).toFixed(d);
 
-function images(id) {
+function images(id, base = '') {
   return {
-    plan: `views/${id}-plan.svg`,
-    'plan-ground': `views/${id}-plan-ground.svg`,
-    'plan-upper': `views/${id}-plan-upper.svg`,
-    exterior: `views/${id}-exterior.svg`,
-    cutaway: `views/${id}-cutaway.svg`,
-    'elevation-south': `views/${id}-elevation-south.svg`,
-    section: `views/${id}-section.svg`,
-    exploded: `views/${id}-exploded.svg`,
+    plan: `${base}views/${id}-plan.svg`,
+    'plan-ground': `${base}views/${id}-plan-ground.svg`,
+    'plan-upper': `${base}views/${id}-plan-upper.svg`,
+    exterior: `${base}views/${id}-exterior.svg`,
+    cutaway: `${base}views/${id}-cutaway.svg`,
+    'elevation-south': `${base}views/${id}-elevation-south.svg`,
+    section: `${base}views/${id}-section.svg`,
+    exploded: `${base}views/${id}-exploded.svg`,
   };
 }
 
@@ -31,10 +31,10 @@ function roofLabel(concept) {
   return (concept.roof_form && concept.roof_form.type ? concept.roof_form.type : 'flat').replace(/-/g, ' ');
 }
 
-const GROUP_ORDER = ['Single storey', 'Experimental archive', 'One container', 'Two containers', 'Three containers', 'Common lodge'];
+const GROUP_ORDER = ['Single storey', 'Two storeys', 'One container', 'Two containers', 'Three containers', 'Common lodge'];
 const GROUP_TEXT = {
-  'Single storey': 'Ground-level homes. They differ in footprint, roof, arrangement and relationship to the garden, not just in colour.',
-  'Experimental archive': 'Historical two-storey studies retained for provenance and comparison. They are not selected homes and are not part of the single-storey hamlet.',
+  'Single storey': 'Single-storey homes. Two are whole-home accessibility demonstrations; the others are ordinary concept homes.',
+  'Two storeys': 'Container homes with an occupied upper level. They add stairs, structure, fire separation and vertical-access questions.',
   'One container': 'Archived one-module concepts. Preserved for provenance and comparison, not removed.',
   'Two containers': 'Archived two-module concepts. Some are editable; others remain inspiration only.',
   'Three containers': 'Archived three-module concepts, including the courtyard studies.',
@@ -50,9 +50,9 @@ export function galleryCards(concepts, summaryOf, opts = {}) {
   <h3 id="${groupId}">${esc(group)}</h3>
   <p class="small">${esc(GROUP_TEXT[group] || '')}</p>
   <div class="concept-grid">
-${items.map((c) => {
+${items.map((c, i) => {
       const s = summaryOf(c);
-      const imgs = images(c.id);
+      const imgs = images(c.id, opts.base || '');
       const editable = c.editable === true;
       const hamlet = c.role === 'hamlet-selected';
       const badge = hamlet ? 'Hamlet selected · Editable' : c.role === 'archive-experimental' ? 'Experimental archive · not selected' : editable ? 'Editable archive concept' : 'Inspiration only';
@@ -60,7 +60,7 @@ ${items.map((c) => {
       const upper = c.levels && c.levels.length > 1;
       return `    <article class="concept-card" id="concept-${esc(c.id)}">
       <div class="concept-card-media">
-        <img src="${imgs.exterior}" width="1040" height="700" alt="Illustrative exterior concept of ${esc(c.name)}: ${esc(c.tagline)}" loading="eager" decoding="async">
+        <img src="${imgs.exterior}" width="1040" height="700" alt="Illustrative exterior concept of ${esc(c.name)}: ${esc(c.tagline)}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async">
       </div>
       <div class="concept-card-body">
         <span class="concept-badge${badgeClass ? ' ' + badgeClass : ''}">${badge}</span>
@@ -89,7 +89,7 @@ ${items.map((c) => {
             <figure><img src="${imgs.cutaway}" width="1040" height="700" alt="Roof-off cutaway of ${esc(c.name)} showing the interior zones in the same geometry as the plan." loading="lazy" decoding="async"><figcaption>Roof-off cutaway with the same geometry and interior zones.</figcaption></figure>
           </div>
           <ul class="concept-files">
-            <li><a href="data/${esc(c.id)}.json" download>Design JSON (${esc(c.schema)})</a></li>
+            <li><a href="${opts.base || ''}data/${esc(c.id)}.json" download>Design JSON (${esc(c.schema)})</a></li>
             <li><a href="${imgs.plan}" download>Combined concept plan SVG</a></li>
             <li><a href="${imgs['plan-ground']}" download>Ground-floor plan SVG</a></li>
             ${upper ? `<li><a href="${imgs['plan-upper']}" download>Upper-floor plan SVG</a></li>` : ''}
@@ -99,9 +99,9 @@ ${items.map((c) => {
           </ul>
         </details>
         <div class="card-actions">
-          <a class="action" href="architecture/${esc(c.id)}/">Architectural gallery: plans, elevations, section</a>
+          <a class="action" href="${opts.base || ''}architecture/${esc(c.id)}/">Architectural gallery: plans, elevations, section</a>
           ${editable
-            ? `<a class="action secondary" href="editor/?preset=${esc(c.id)}">Customize ${esc(c.name)}</a>`
+            ? `<a class="action secondary" href="${opts.base || ''}editor/?preset=${esc(c.id)}">Customize ${esc(c.name)}</a>`
             : `<p class="small"><strong>Not editable.</strong> This concept is preserved with source files, generated views and a comparison entry.</p>`}
         </div>
         <p class="small">Concept only. Not reviewed by an architect, engineer, building official or accessibility consultant.</p>

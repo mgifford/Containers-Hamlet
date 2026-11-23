@@ -1,20 +1,20 @@
-# Offset Pair — illustration reference
+# Offset Stack — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash adf74f01
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash d33d6863
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
 ## Architectural facts
-- 1 occupied storey
+- 2 occupied storeys
 - 2 container modules (40ft, 40ft)
 - shed roof at 8 degrees
 - 59.5 m2 gross floor area
-- 59.5 m2 ground coverage
-- 4.38 m to the roof
+- 36.1 m2 ground coverage
+- 7.33 m to the roof
 
 ## Modules
 - **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.
-- **m2** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding.
+- **m2** — storey 2, 12.192 × 2.438 m, base 3.896 m, rotation 0°, metal cladding. m2 is offset 2.6 m east relative to m1.
 
 ## Openings
 - m1 / Stair window — north window, 0.9 × 1.2 m, sill 1 m.
@@ -24,9 +24,8 @@ This description is generated from the canonical design model. The reference SVG
 - m1 / West window — west window, 1 × 1.2 m, sill 1 m.
 - m2 / Bedroom window — north window, 1.4 × 1.3 m, sill 0.9 m.
 - m2 / Studio window — south window, 1.6 × 1.4 m, sill 0.8 m.
-- m2 / Studio entry door — east door, 0.9 × 2.1 m, sill 0 m.
+- m2 / Balcony door — east door, 0.9 × 2.1 m, sill 0 m.
 - m2 / Stair window — west window, 0.8 × 1.2 m, sill 1.2 m.
-- m2 / Garden door — south door, 0.95 × 2.1 m, sill 0 m.
 
 ## Rooms and zones
 - m1 / Living — living, 0–4.6 m. Ground-floor essential living function.
@@ -39,7 +38,7 @@ This description is generated from the canonical design model. The reference SVG
 - m2 / Storage — storage, 10.2–12 m. Upper storage.
 
 ## Outdoor spaces
-- p1: 4 × 2.6 m covered porch on the north face of m1.
+- p1: 4 × 2.6 m covered porch on the south face of m1.
 - p2: 2.4 × 1.4 m covered porch on the south face of m2.
 
 ## Site and camera
@@ -49,16 +48,16 @@ This description is generated from the canonical design model. The reference SVG
 - Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 173°.
 
 ## Interior schedule
-- Living (living) — 9.88 m², m1, authored, fixtures: sofa, table.
-- Kitchen (kitchen) — 6.2 m², m1, authored, fixtures: counter.
-- Bathroom (bathroom) — 5.29 m², m1, authored, fixtures: wc, sink, shower.
-- Hall (circulation) — 5.75 m², m1, authored.
-- Bedroom (sleeping) — 10.34 m², m2, authored.
-- Bathroom 2 (bathroom) — 4.14 m², m2, authored, fixtures: wc, sink.
-- Studio (work) — 9.19 m², m2, authored.
-- Storage (storage) — 3.45 m², m2, authored.
-- Partitions: 7 · doors: 7 · fixtures: 8.
-- Validation: 0 invalid, 0 unresolved, 11 review.
+- Living (living) — 10.25 m², m1, inferred-from-zone.
+- Kitchen (kitchen) — 6.11 m², m1, inferred-from-zone.
+- Bathroom (bathroom) — 3.81 m², m1, inferred-from-zone.
+- Stair (circulation) — 6.11 m², m1, inferred-from-zone.
+- Sleeping (sleeping) — 9.33 m², m2, inferred-from-zone.
+- Bathroom (bathroom) — 4.27 m², m2, inferred-from-zone.
+- Studio (work) — 8.87 m², m2, inferred-from-zone.
+- Storage (storage) — 3.81 m², m2, inferred-from-zone.
+- Partitions: 0 · doors: 0 · fixtures: 0.
+- Validation: 0 invalid, 10 unresolved, 8 review.
 
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
@@ -67,7 +66,19 @@ This description is generated from the canonical design model. The reference SVG
 
 ## Unresolved matters
 - **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- **unmodeled-balcony**: The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.
+- **balcony-access**: The upper porch p2 has no recorded door on the same south face. Do not show it as an accessible balcony; access is unresolved.
 - **site-approach**: The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.
+- **provisional-interior**: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
+- **inferred-room**: Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
+- **inferred-room**: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
+- **inferred-room**: Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
+- **inferred-room**: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
+- **inferred-room**: Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.
+- **inferred-room**: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
+- **inferred-room**: Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.
+- **inferred-room**: Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.
+- **doors-missing**: No interior doors are modeled. Room connectivity cannot be assessed.
 
 ## Capability notes
 - Exterior reference: available

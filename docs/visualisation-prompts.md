@@ -7,6 +7,15 @@ features that are not described.
 
 Use the shared base and negative prompt with every shot. Then copy the shot text.
 
+## Phase 3 status
+
+The selected set remains three single-storey homes (Woodland Cottage, Courtyard
+Residence, Accessible Garden Home) and three two-storey homes (Offset Stack,
+Cross-Stacked Retreat, Solar Studio Stack). Woodland Cottage and Accessible
+Garden Home are the two whole-home wheelchair-accessibility demonstrations.
+The generated pipeline in [`illustration-pipeline.md`](illustration-pipeline.md)
+is authoritative for current geometry and interior prompts.
+
 ## Shared base prompt
 
 > Photorealistic architectural visualisation of a concept container home in a
@@ -26,22 +35,6 @@ Use the shared base and negative prompt with every shot. Then copy the shot text
 > construction equipment, cranes, text, labels, logos, watermarks, oversaturated
 > colours, distorted perspective, warped straight lines, duplicate openings,
 > missing railings, unsafe stairs, fake snow, tropical plants.
-
-## Phase 3 single-storey status
-
-The selected hamlet homes are now all **single-storey**:
-
-- Woodland Cottage;
-- **Offset Pair** (formerly Offset Stack);
-- Courtyard Residence;
-- **Cross-Wing House** (formerly Cross-Stacked Retreat);
-- Accessible Garden Home;
-- **Solar Studio** (formerly Solar Studio Stack).
-
-Sections **B**, **D** and **F** below are retained as creative source for the
-archived two-storey studies. They are not descriptions of the selected homes.
-The generated pipeline in [`illustration-pipeline.md`](illustration-pipeline.md)
-is authoritative for the selected models and now includes interior room prompts.
 
 ## Source-data corrections
 
@@ -144,7 +137,7 @@ through shoreline cedar and pine to the water, with a low far shore.
 
 ---
 
-# B. Offset Stack (archived two-storey study)
+# B. Offset Stack
 
 **Architecture:** two 40-foot modules, two storeys. Ground module timber with
 living, kitchen, bathroom and stair. Upper module pale salvaged metal, offset
@@ -329,7 +322,7 @@ sky.
 
 ---
 
-# D. Cross-Stacked Retreat (archived two-storey study)
+# D. Cross-Stacked Retreat
 
 **Architecture:** two 40-foot modules, two storeys. Ground module dark metal with
 living, kitchen, bathroom and stair. Upper module pale timber, rotated 90° to
@@ -479,7 +472,7 @@ of lake light; more forest than water.
 
 ---
 
-# F. Solar Studio Stack (archived two-storey study)
+# F. Solar Studio Stack
 
 **Architecture:** two 20-foot modules, two storeys. Ground module timber with
 living, kitchen, bathroom and compact stair. Upper module pale metal with studio
