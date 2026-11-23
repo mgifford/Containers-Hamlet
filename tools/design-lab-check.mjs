@@ -166,6 +166,29 @@ try {
   ok(patternNojsState.cards === 20 && patternNojsState.controls === 'none' && patternNojsState.site && patternNojsState.key && patternNojsState.note, 'pattern Explorer remains readable without JavaScript, includes the site plan/key, and hides the inert filters');
   await patternNojs.context.close();
 
+  section('Scenario comparison');
+  const scenarios = await open('design-lab/scenarios/');
+  ok(scenarios.errors.length === 0, `scenarios: no console errors${scenarios.errors.length ? ': ' + scenarios.errors.join(' | ') : ''}`);
+  const scenarioState = await scenarios.page.evaluate(() => ({ cards: document.querySelectorAll('.scenario-card').length, left: document.querySelector('#scenario-left').value, right: document.querySelector('#scenario-right').value, status: document.querySelector('#scenario-status').textContent, baseline: !!document.querySelector('a[href="../../assets/site-plan.svg"]') }));
+  ok(scenarioState.cards === 3 && scenarioState.left === 'distributed' && scenarioState.right === 'central-clearing' && /Comparing A/.test(scenarioState.status) && scenarioState.baseline, 'scenario page lists three cards and opens comparing the baseline with the central clearing');
+  await scenarios.page.selectOption('#scenario-left', 'woodland-spine');
+  await scenarios.page.waitForTimeout(250);
+  ok(/Comparing C/.test(await scenarios.page.textContent('#scenario-status')) && /left=woodland-spine/.test(scenarios.page.url()), 'scenario select updates the comparison and shareable URL');
+  await scenarios.page.locator('#scenario-reset').click();
+  await scenarios.page.waitForTimeout(250);
+  ok(await scenarios.page.evaluate(() => document.querySelector('#scenario-left').value === 'distributed' && document.querySelector('#scenario-right').value === 'distributed' && /Comparing A/.test(document.querySelector('#scenario-status').textContent)), 'Restore baseline returns both sides to the current arrangement');
+  await scenarios.page.locator('.scenario-card').last().scrollIntoViewIfNeeded();
+  await scenarios.page.waitForTimeout(500);
+  ok(await scenarios.page.locator('.scenario-card img').last().evaluate((i) => i.naturalWidth > 0 && i.alt.length > 40), 'scenario diagrams load with meaningful text alternatives');
+  await axe(scenarios.page, 'scenario comparison');
+  await shot(scenarios.page, 'scenario-comparison');
+  await scenarios.context.close();
+
+  const scenarioNojs = await open('design-lab/scenarios/', { javaScriptEnabled: false });
+  const scenarioNojsState = await scenarioNojs.page.evaluate(() => ({ cards: document.querySelectorAll('.scenario-card').length, compare: getComputedStyle(document.querySelector('#scenario-compare')).display, baseline: !!document.querySelector('a[href="../../assets/site-plan.svg"]') }));
+  ok(scenarioNojsState.cards === 3 && scenarioNojsState.compare === 'none' && scenarioNojsState.baseline, 'scenario page remains complete without JavaScript and hides the inert comparator');
+  await scenarioNojs.context.close();
+
   section('Architectural gallery and accessible slideshow');
   let arch = await open('design-lab/architecture/common-lodge/');
   ok(arch.errors.length === 0, `architecture: no console errors${arch.errors.length ? ': ' + arch.errors.join(' | ') : ''}`);
@@ -796,6 +819,11 @@ try {
   ok(await smallGallery.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'gallery has no horizontal scrolling at 320 px');
   await axe(smallGallery.page, 'gallery at 320 px');
   await smallGallery.context.close();
+  const smallScenario = await open('design-lab/scenarios/', { viewport: { width: 320, height: 640 } });
+  await smallScenario.page.waitForTimeout(300);
+  ok(await smallScenario.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'scenario comparison has no horizontal scrolling at 320 px');
+  await axe(smallScenario.page, 'scenario comparison at 320 px');
+  await smallScenario.context.close();
   const smallPattern = await open('design-lab/pattern-language/', { viewport: { width: 320, height: 640 } });
   await smallPattern.page.waitForTimeout(300);
   ok(await smallPattern.page.evaluate(() => document.documentElement.scrollWidth <= 320), 'Pattern Language Explorer has no horizontal scrolling at 320 px');

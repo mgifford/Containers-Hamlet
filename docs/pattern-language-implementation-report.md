@@ -84,17 +84,25 @@ configuration guide at `/design-lab/patterns/`.
 
 | Command | Result |
 | --- | --- |
-| `node tools/build.mjs --check` | OK — 499 generated files current |
-| `node tools/check.mjs` | 517 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,517 passed, 0 failed |
+| `node tools/build.mjs --check` | OK — 503 generated files current |
+| `node tools/check.mjs` | 520 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,526 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
-| `node tools/design-lab-check.mjs` | 252 passed, 0 failed |
+| `node tools/design-lab-check.mjs` | 261 passed, 0 failed |
 
 Browser tests cover search, scale and evidence filters, reset, shareable
 fragments, related-pattern links, live status, no-JS readability, axe-core and
 320 px reflow.
 
-The published site is about **6294 KB**, under the 6.25 MB budget.
+The published site is about **6332 KB**, under the 6.25 MB budget.
+
+## Phase 3 scenario comparison
+
+- Added `data/scenarios/site-layouts.json` with the baseline and two conceptual arrangements.
+- Added `/design-lab/scenarios/` with baseline link, two-sided comparison, shareable URL, baseline restore and full no-JS alternatives.
+- Added three original schematic SVGs with titles, descriptions, licence and “not to scale / not a site plan” caveats.
+- Added validation that requires three arrangements, a single baseline, trade-offs, questions, pattern references and no “best/winning” label.
+- Added browser tests for comparison, URL, reset, no-JS, axe and 320 px reflow.
 
 ## What remains uncertain
 

@@ -150,11 +150,12 @@ ${designShellNav(2, 'pattern-language')}
     <ul>
       <li><a href="../">Design Lab gallery</a> — the six selected homes.</li>
       <li><a href="../architecture/hamlet-woodland-cottage/">Woodland Cottage drawings</a> — the canonical SVG reference.</li>
+      <li><a href="../scenarios/">Site scenarios</a> — baseline and two conceptual arrangements.</li>
       <li><a href="../illustration/">Illustration pipeline</a> — scene, prompt and manifest rules.</li>
       <li><a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-language.md">Pattern-language method and copyright notes</a></li>
       <li><a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/pattern-methodology.md">Evaluation methodology and evidence policy</a></li>
     </ul>
-    <p class="small">This Explorer now includes the Phase 2 site-plan highlighting layer. Scenario comparison, lodge/cabin annotations, resident scenarios and structured evaluation records remain later phases. They are not implied by this page.</p>
+    <p class="small">This Explorer includes the Phase 2 site-plan highlighting layer. The Phase 3 scenario comparison is at <a href="../scenarios/">/design-lab/scenarios/</a>. Lodge/cabin annotations, resident scenarios and structured evaluation records remain later phases; they are not implied by this page.</p>
   </section>
 </main>
 <footer class="site-footer"><p><a href="../../index.html">Containers Hamlet</a> · <a href="../index.html">Design Lab</a> · <a href="../LICENSE.txt">AGPL-3.0-or-later</a> · <a href="../CONTENT-LICENSE.md">CC BY-SA 4.0 content</a></p></footer>

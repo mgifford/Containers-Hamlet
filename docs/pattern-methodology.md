@@ -83,5 +83,6 @@ numbers. It does not claim to reproduce the book's complete network.
 
 Phase 1 implements definitions, validation, public explanation and Explorer
 navigation. Phase 2 adds stable site-element mappings, map highlighting and text
-alternatives. Scenario comparison, annotations, resident scenarios and
-evaluation records remain later phases.
+alternatives. Phase 3 adds three schematic arrangements and a baseline-preserving
+comparison. Annotations, resident scenarios and evaluation records remain later
+phases.
