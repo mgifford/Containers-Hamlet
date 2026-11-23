@@ -98,7 +98,9 @@ export function generate() {
     for (const [name, content] of Object.entries(outs)) {
       put(`models/${id}/${name}`, content);
       if (name.endsWith('.obj')) {
-        put(`site/models/${id}/${name}.gz`, gzipSync(Buffer.from(content), { mtime: 0 }));
+        const gz = gzipSync(Buffer.from(content), { mtime: 0 });
+        gz[9] = 255;
+        put(`site/models/${id}/${name}.gz`, gz);
       } else {
         put(`site/models/${id}/${name}`, content);
       }
