@@ -142,7 +142,15 @@ Each generated image gets an entry with:
 A generated draft is not publishable until a human has reviewed it against the
 description and recorded the specific deviations — invented dormer, wrong width,
 added steps, missing PV, etc. A generic "not a construction drawing" caption is
-not enough.
+not enough. Worked examples of that review are in
+[`image-review-woodland-cottage-2026-11-23.md`](image-review-woodland-cottage-2026-11-23.md)
+for the first home,
+[`image-review-offset-stack-2026-11-23.md`](image-review-offset-stack-2026-11-23.md)
+for the Offset Stack and
+[`image-review-accessible-garden-home-2026-11-23.md`](image-review-accessible-garden-home-2026-11-23.md)
+for the Accessible Garden Home and
+[`image-review-courtyard-residence-2026-11-23.md`](image-review-courtyard-residence-2026-11-23.md)
+for the Courtyard Residence.
 
 ## Checks
 
