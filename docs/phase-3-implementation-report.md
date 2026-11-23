@@ -102,7 +102,7 @@ No separate experimental archive duplicates the selected homes.
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 236 passed, 0 failed |
 
-Published site: about 6130 KB, under the 6 MB budget.
+Published site: about 6130 KB, under the 6.25 MB budget.
 
 ## Screenshots
 

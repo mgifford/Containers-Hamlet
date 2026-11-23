@@ -77,7 +77,7 @@ configuration guide at `/design-lab/patterns/`.
 | --- | --- |
 | `node tools/build.mjs --check` | OK — 499 generated files current |
 | `node tools/check.mjs` | 517 passed, 0 failed |
-| `node tools/check-design-lab.mjs` | 2,499 passed, 0 failed |
+| `node tools/check-design-lab.mjs` | 2,508 passed, 0 failed |
 | `node tools/browser-check.mjs` | 107 passed, 0 failed |
 | `node tools/design-lab-check.mjs` | 249 passed, 0 failed |
 
@@ -85,7 +85,7 @@ Browser tests cover search, scale and evidence filters, reset, shareable
 fragments, related-pattern links, live status, no-JS readability, axe-core and
 320 px reflow.
 
-The published site is about **6136 KB**, under the 6 MB budget.
+The published site is about **6277 KB**, under the 6.25 MB budget.
 
 ## What remains uncertain
 

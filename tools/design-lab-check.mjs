@@ -173,12 +173,13 @@ try {
     wall: !!document.querySelector('.assembly-section img'),
     veg: !!document.querySelector('.vegetation-section'),
     solar: !!document.querySelector('.solar-section img'),
-    foundation: !!document.querySelector('.foundation-section img')
+    foundation: !!document.querySelector('.foundation-section img'),
+    services: !!document.querySelector('.services-section') && /Fire and water services/.test(document.querySelector('.services-section').textContent) && /daily tank is not a fire reserve/.test(document.querySelector('.services-section').textContent)
   }));
   ok(archState.slides >= 12 && archState.current === 1 && archState.visible === 1 && archState.controls, `architecture: ${archState.slides} slides, one current and visible controls`);
   ok(archState.geometry >= 9 && archState.illustrative >= 2, 'architecture: geometry-backed drawings and illustrative studies are labelled');
   ok(archState.caps && archState.imgs && (await arch.page.evaluate(() => document.querySelector('[data-slide].is-current img').naturalWidth > 0)), 'architecture: every view has a descriptive caption and alt text');
-  ok(archState.seasonal >= 2 && archState.wall && archState.veg && archState.solar && archState.foundation, 'architecture: seasonal pair, wall, solar, foundation and vegetation sections are present');
+  ok(archState.seasonal >= 2 && archState.wall && archState.veg && archState.solar && archState.foundation && archState.services, 'architecture: seasonal pair, wall, solar, foundation, vegetation and fire/water sections are present');
   for (const sel of ['.season-pair', '.assembly-section', '.solar-section', '.foundation-section']) { await arch.page.locator(sel).first().scrollIntoViewIfNeeded(); await arch.page.waitForTimeout(250); }
   ok(await arch.page.evaluate(() => [...document.querySelectorAll('.season-pair img, .assembly-section img, .solar-section img, .foundation-section img')].every((i) => i.naturalWidth > 0)), 'architecture: seasonal, wall-section, solar and foundation images load');
   await arch.page.waitForTimeout(900);
@@ -358,7 +359,7 @@ try {
   await page.click('#illus-generate');
   await page.waitForTimeout(400);
   const illusFirst = await page.evaluate(() => ({ prompt: document.querySelector('#illustration-prompt').textContent, status: document.querySelector('#illustration-status').textContent, svg: !!document.querySelector('#illustration-reference svg') }));
-  ok(illusFirst.svg && /front approach/i.test(illusFirst.prompt) && /Woodland Cottage/.test(illusFirst.prompt), 'Generate produces a reference SVG and a prompt from the current design');
+  ok(illusFirst.svg && /front approach/i.test(illusFirst.prompt) && /Woodland Cottage/.test(illusFirst.prompt) && /Fire and water services/.test(illusFirst.prompt) && /single rain barrel/.test(illusFirst.prompt), 'Generate produces a reference SVG and a fire/water-aware prompt from the current design');
   ok(/current for design hash/.test(illusFirst.status), 'generated illustration is marked current');
   const illusPromptBefore = illusFirst.prompt;
   await page.fill('#roof-pitch', '30');

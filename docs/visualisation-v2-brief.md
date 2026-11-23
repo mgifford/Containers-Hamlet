@@ -72,10 +72,14 @@ The following cannot be made to disappear:
 
 ### Envelope, water, fire and snow
 
-- Gutters and downspouts with rain-barrel overflow and drainage away from piles.
+- Gutters and downspouts, leaf guards, first-flush diverter and a cistern with level gauge, freeze protection and overflow to a rain garden/swale.
+- A **separate** fire reserve with a tested fire-service connection; never present a single rain barrel as the system or as fire water.
+- Non-potable rainwater labelled as such unless treatment and testing are modelled.
 - Ember-resistant foundation/roof vents and a non-combustible edge.
 - Metal roof snow guards above the entry/porch.
-- Firewood, propane and battery storage separated from the sleeping zone.
+- Firewood, propane and battery storage separated from the sleeping zone and the porch.
+- Noncombustible deck/porch or an explicit unresolved note; no combustible storage under the floor.
+- Building separation, fire-rated assemblies and protected egress only where modelled; no "fireproof" claim.
 - Pile caps, rock anchors and cross-bracing that read as structural, not decorative.
 
 ### Container expression

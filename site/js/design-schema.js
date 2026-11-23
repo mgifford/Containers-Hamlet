@@ -439,6 +439,15 @@
       if (c.door_type && ['none','insulated-sliding','folding','garage'].indexOf(c.door_type) < 0) err('Connection ' + c.id + ' has an unknown door type.');
       if (!isNum(c.glazing_area_m2) || c.glazing_area_m2 < 0) err('Connection ' + c.id + ' has an invalid glazing area.');
     });
+    if (d.water !== undefined && d.water !== null) {
+      if (!d.water || d.water.schema !== 'containers-hamlet-water/v1') err('water.schema must be containers-hamlet-water/v1.');
+      if (d.water) {
+        if (['conceptual', 'designed', 'verified', 'not-assessed'].indexOf(d.water.status) < 0) err('water.status must be conceptual, designed, verified or not-assessed.');
+        if (!d.water.treatment || typeof d.water.treatment.potable !== 'boolean') err('water.treatment.potable must be an explicit boolean.');
+        if (!d.water.fireReserve || d.water.fireReserve.separate !== true) err('water.fireReserve.separate must be true; a daily rain barrel cannot be the fire reserve.');
+        if (d.water.storage && d.water.storage.volume_L !== null && (!Number.isFinite(d.water.storage.volume_L) || d.water.storage.volume_L <= 0)) err('water.storage.volume_L must be null or a positive number.');
+      }
+    }
     if (d.interior !== undefined && d.interior !== null) {
       if (!d.interior || d.interior.schema !== 'containers-hamlet-interior/v1') err('interior.schema must be containers-hamlet-interior/v1.');
       if (d.interior) {

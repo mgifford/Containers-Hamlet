@@ -877,6 +877,45 @@
           "source": "design-lab",
           "verification": "None. Conceptual; not a professional accessibility assessment."
         }
+      },
+      "water": {
+        "schema": "containers-hamlet-water/v1",
+        "status": "conceptual",
+        "catchment": {
+          "roof": "standing-seam metal",
+          "area_m2": null,
+          "efficiency": "not-calculated"
+        },
+        "collection": {
+          "gutters": "required",
+          "downspouts": 2,
+          "leafGuards": "required",
+          "firstFlush": "required"
+        },
+        "storage": {
+          "type": "cistern",
+          "location": "not-resolved",
+          "volume_L": null,
+          "freezeProtection": "required",
+          "overflow": "required",
+          "access": "required"
+        },
+        "treatment": {
+          "potable": false,
+          "filtration": "required",
+          "disinfection": "not-designed",
+          "testing": "not-designed"
+        },
+        "fireReserve": {
+          "separate": true,
+          "volume_L": null,
+          "connection": "not-designed",
+          "verified": false
+        },
+        "demand": {
+          "status": "not-evaluated"
+        },
+        "note": "Conceptual system intent. No tank size, location, yield, freeze protection, treatment or fire-service connection is designed. A rain barrel is not a system and is not a fire reserve."
       }
     },
     {
@@ -1724,6 +1763,45 @@
           "source": "design-lab room zones",
           "verification": "None. Provisional geometry."
         }
+      },
+      "water": {
+        "schema": "containers-hamlet-water/v1",
+        "status": "conceptual",
+        "catchment": {
+          "roof": "standing-seam metal",
+          "area_m2": null,
+          "efficiency": "not-calculated"
+        },
+        "collection": {
+          "gutters": "required",
+          "downspouts": 2,
+          "leafGuards": "required",
+          "firstFlush": "required"
+        },
+        "storage": {
+          "type": "cistern",
+          "location": "not-resolved",
+          "volume_L": null,
+          "freezeProtection": "required",
+          "overflow": "required",
+          "access": "required"
+        },
+        "treatment": {
+          "potable": false,
+          "filtration": "required",
+          "disinfection": "not-designed",
+          "testing": "not-designed"
+        },
+        "fireReserve": {
+          "separate": true,
+          "volume_L": null,
+          "connection": "not-designed",
+          "verified": false
+        },
+        "demand": {
+          "status": "not-evaluated"
+        },
+        "note": "Conceptual system intent. No tank size, location, yield, freeze protection, treatment or fire-service connection is designed. A rain barrel is not a system and is not a fire reserve."
       }
     },
     {
@@ -2603,6 +2681,45 @@
           "source": "design-lab room zones",
           "verification": "None. Provisional geometry."
         }
+      },
+      "water": {
+        "schema": "containers-hamlet-water/v1",
+        "status": "conceptual",
+        "catchment": {
+          "roof": "standing-seam metal",
+          "area_m2": null,
+          "efficiency": "not-calculated"
+        },
+        "collection": {
+          "gutters": "required",
+          "downspouts": 2,
+          "leafGuards": "required",
+          "firstFlush": "required"
+        },
+        "storage": {
+          "type": "cistern",
+          "location": "not-resolved",
+          "volume_L": null,
+          "freezeProtection": "required",
+          "overflow": "required",
+          "access": "required"
+        },
+        "treatment": {
+          "potable": false,
+          "filtration": "required",
+          "disinfection": "not-designed",
+          "testing": "not-designed"
+        },
+        "fireReserve": {
+          "separate": true,
+          "volume_L": null,
+          "connection": "not-designed",
+          "verified": false
+        },
+        "demand": {
+          "status": "not-evaluated"
+        },
+        "note": "Conceptual system intent. No tank size, location, yield, freeze protection, treatment or fire-service connection is designed. A rain barrel is not a system and is not a fire reserve."
       }
     },
     {
@@ -3427,6 +3544,45 @@
           "source": "design-lab room zones",
           "verification": "None. Provisional geometry."
         }
+      },
+      "water": {
+        "schema": "containers-hamlet-water/v1",
+        "status": "conceptual",
+        "catchment": {
+          "roof": "standing-seam metal",
+          "area_m2": null,
+          "efficiency": "not-calculated"
+        },
+        "collection": {
+          "gutters": "required",
+          "downspouts": 2,
+          "leafGuards": "required",
+          "firstFlush": "required"
+        },
+        "storage": {
+          "type": "cistern",
+          "location": "not-resolved",
+          "volume_L": null,
+          "freezeProtection": "required",
+          "overflow": "required",
+          "access": "required"
+        },
+        "treatment": {
+          "potable": false,
+          "filtration": "required",
+          "disinfection": "not-designed",
+          "testing": "not-designed"
+        },
+        "fireReserve": {
+          "separate": true,
+          "volume_L": null,
+          "connection": "not-designed",
+          "verified": false
+        },
+        "demand": {
+          "status": "not-evaluated"
+        },
+        "note": "Conceptual system intent. No tank size, location, yield, freeze protection, treatment or fire-service connection is designed. A rain barrel is not a system and is not a fire reserve."
       }
     },
     {
@@ -4388,6 +4544,45 @@
           "source": "design-lab",
           "verification": "None. Conceptual; not a professional accessibility assessment."
         }
+      },
+      "water": {
+        "schema": "containers-hamlet-water/v1",
+        "status": "conceptual",
+        "catchment": {
+          "roof": "standing-seam metal",
+          "area_m2": null,
+          "efficiency": "not-calculated"
+        },
+        "collection": {
+          "gutters": "required",
+          "downspouts": 2,
+          "leafGuards": "required",
+          "firstFlush": "required"
+        },
+        "storage": {
+          "type": "cistern",
+          "location": "not-resolved",
+          "volume_L": null,
+          "freezeProtection": "required",
+          "overflow": "required",
+          "access": "required"
+        },
+        "treatment": {
+          "potable": false,
+          "filtration": "required",
+          "disinfection": "not-designed",
+          "testing": "not-designed"
+        },
+        "fireReserve": {
+          "separate": true,
+          "volume_L": null,
+          "connection": "not-designed",
+          "verified": false
+        },
+        "demand": {
+          "status": "not-evaluated"
+        },
+        "note": "Conceptual system intent. No tank size, location, yield, freeze protection, treatment or fire-service connection is designed. A rain barrel is not a system and is not a fire reserve."
       }
     },
     {
@@ -5122,6 +5317,45 @@
           "source": "design-lab room zones",
           "verification": "None. Provisional geometry."
         }
+      },
+      "water": {
+        "schema": "containers-hamlet-water/v1",
+        "status": "conceptual",
+        "catchment": {
+          "roof": "standing-seam metal",
+          "area_m2": null,
+          "efficiency": "not-calculated"
+        },
+        "collection": {
+          "gutters": "required",
+          "downspouts": 2,
+          "leafGuards": "required",
+          "firstFlush": "required"
+        },
+        "storage": {
+          "type": "cistern",
+          "location": "not-resolved",
+          "volume_L": null,
+          "freezeProtection": "required",
+          "overflow": "required",
+          "access": "required"
+        },
+        "treatment": {
+          "potable": false,
+          "filtration": "required",
+          "disinfection": "not-designed",
+          "testing": "not-designed"
+        },
+        "fireReserve": {
+          "separate": true,
+          "volume_L": null,
+          "connection": "not-designed",
+          "verified": false
+        },
+        "demand": {
+          "status": "not-evaluated"
+        },
+        "note": "Conceptual system intent. No tank size, location, yield, freeze protection, treatment or fire-service connection is designed. A rain barrel is not a system and is not a fire reserve."
       }
     },
     {

@@ -159,6 +159,22 @@ patterns, element references, evidence states and required content. Evaluation
 records and resident scenarios are separate future data, not fields of a pattern
 definition.
 
+## Water and fire-service schema
+
+Selected designs may carry an optional `containers-hamlet-water/v1` object:
+
+- metal-roof catchment and collection components;
+- storage type, unresolved volume/location, freeze protection and overflow;
+- potable/non-potable treatment status;
+- a **separate** fire reserve with volume/connection/verification status;
+- demand status and limitations.
+
+The validator requires an explicit `treatment.potable` boolean, a separate fire
+reserve and a null-or-positive storage volume. It never infers a tank size. The
+illustration scene includes `services.fire` and `services.water`; prompts and
+negative prompts carry the unresolved fire-water, potable-water and rain-barrel
+limits. See [`water-fire-services.md`](water-fire-services.md).
+
 ## Design Lab illustration schemas
 
 Two additive schemas sit beside the architectural design model:
