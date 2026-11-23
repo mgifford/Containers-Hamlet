@@ -32,6 +32,14 @@ The page includes an illustrative calculator:
 
 It deliberately does not size a real system.
 
+## Current model status
+
+All six selected homes now carry a `containers-hamlet-water/v1` intent with a
+conceptual metal-roof catchment, required gutters/first flush, an unsized cistern
+with no resolved location, non-potable treatment, and a separate but unverified
+fire reserve. `fire.water_access` remains false. This is a prompt/visual layer,
+not a sized system. See [`water-fire-services.md`](water-fire-services.md).
+
 ## Validation
 
 | Check | Result |

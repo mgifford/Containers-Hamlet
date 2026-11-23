@@ -15,8 +15,17 @@ Site: Cabin E. Principal view: Fern, hemlock and a distant plane of lake light. 
 Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 315 degrees.
 Presentation: late summer, late afternoon, clear, no people.
 Material policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.
+Fire and water services:
+- Fire: roof class A, closed noncombustible eaves intended, ember-resistant vents intended, tempered glazing intended, noncombustible deck not recorded, defensible space 10 m (conceptual), fire water access not confirmed.
+- Rainwater: status conceptual; catchment standing-seam metal; gutters/leaf guards/first flush required; storage cistern with volume/location not resolved; potable no; fire reserve separate true, verified false.
+- Do not depict a single rain barrel as a complete system. Do not show a confirmed hydrant, fire cistern, potable supply or fire-resistance rating.
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
-- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- Interior partitions, fixtures and camera geometry are conceptual or provisional. Do not claim a spatially accurate perspective or verified clearance.
 - The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+- Rainwater collection is a conceptual intent only. Tank size, location, yield, freeze protection, overflow, filtration and treatment are not designed.
+- The fire reserve is separate in intent but no volume, connection or fire-service verification is recorded. Do not show a confirmed hydrant or cistern.
+- The rainwater system is not recorded as potable. Do not imply drinking-water safety; treatment and testing are unresolved.
+- Fire-service water access is not confirmed. Do not draw a working hydrant, cistern or draft point as if verified.
+- The deck/porch is not recorded as noncombustible. Combustible decking, stored firewood and under-floor storage are fire risks; do not present them as resolved.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.

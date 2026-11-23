@@ -478,6 +478,19 @@ ok(Illustration.designHash(changedInterior) !== designHashBefore, 'interior geom
 const styleOnly = Illustration.defaultConfig(selectedHomes[1]); styleOnly.presentation.style = 'neutral-material-study';
 ok(Illustration.presentationHash(styleOnly) !== Illustration.presentationHash(Illustration.defaultConfig(selectedHomes[1])) && Illustration.designHash(selectedHomes[1]) === designHashBefore, 'presentation changes do not change the architectural design hash');
 
+const waterHomes = selectedHomes;
+ok(waterHomes.every((c) => c.water && c.water.schema === 'containers-hamlet-water/v1' && c.water.status === 'conceptual'), 'all selected homes carry an explicit conceptual water schema');
+ok(waterHomes.every((c) => c.water.treatment.potable === false && c.water.fireReserve.separate === true && c.water.fireReserve.verified === false && c.water.storage.volume_L === null), 'rainwater is non-potable, unsized, and the fire reserve is separate and unverified');
+ok(waterHomes.every((c) => c.fire && c.fire.water_access === false && c.fire.noncombustible_deck === false), 'existing fire data still records unconfirmed fire water and a noncombustible-deck gap');
+const waterScene = Illustration.sceneSpec(waterHomes.find((c) => c.id === 'hamlet-woodland-cottage'), Illustration.defaultConfig(waterHomes.find((c) => c.id === 'hamlet-woodland-cottage')), siteData);
+ok(waterScene.services && waterScene.services.fire && waterScene.services.water, 'illustration scene exposes fire and water services');
+ok(/Fire and water services/.test(waterScene.prompt.text) && /Do not depict a single rain barrel as a complete system/.test(waterScene.prompt.text), 'generated prompt states the rainwater/fire-water limits');
+ok(/single rain barrel presented as a complete system/.test(waterScene.negativePrompt.text) && /confirmed hydrant/.test(waterScene.negativePrompt.text), 'negative prompt rejects decorative rain barrels and unverified hydrants');
+ok(waterScene.unresolved.some((u) => u.code === 'fire-water-not-verified') && waterScene.unresolved.some((u) => u.code === 'combustible-deck') && waterScene.unresolved.some((u) => u.code === 'fire-water-access-unconfirmed'), 'scene reports fire-water verification and combustible deck/access gaps');
+const woodlandArch = read('site/design-lab/architecture/hamlet-woodland-cottage/index.html');
+ok(/Fire and water services/.test(woodlandArch) && /a daily tank is not a fire reserve/.test(woodlandArch) && /No building separation/.test(woodlandArch), 'architecture page carries the fire and water service schedule and limits');
+ok(exists(`site/design-lab/illustration/hamlet-woodland-cottage/prompt.md`) && /Fire and water services/.test(read(`site/design-lab/illustration/hamlet-woodland-cottage/prompt.md`)), 'published illustration prompt includes the fire/water limits');
+
 const homesPublic = JSON.parse(read('site/data/homes.json'));
 ok(homesPublic.design_lab_reconciliation.length === 7, 'site reconciliation covers the six selected homes and the lodge');
 ok(homesPublic.design_lab_reconciliation.filter((r) => r.storeys === 1).length === 4 && homesPublic.design_lab_reconciliation.filter((r) => r.storeys === 2).length === 3, 'site reconciliation includes single-storey and two-storey selected homes');

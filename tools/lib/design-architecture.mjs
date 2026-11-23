@@ -219,6 +219,21 @@ ${slides}
     <p class="small">Planting is independently supported where practical. Fire, moisture, structural loads, irrigation, plant selection and maintenance require professional review. <a href="../../vegetation/">Compare the four vegetation systems</a>.</p>
   </section>
 
+  <section class="assembly-section services-section" aria-labelledby="services-title">
+    <h2 id="services-title">Fire and water services</h2>
+    <p><strong>These are intents and unknowns, not approvals.</strong> The model does not calculate fire-resistance ratings, building separation, radiant heat, sprinkler performance, WUI compliance, rainwater yield, tank sizing, potable-water safety or fire-service water supply.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Fire and water service intents"><table class="exposure-table"><caption>Recorded fire and water intents. A blank or unchecked row is an unresolved question, not a pass.</caption><thead><tr><th scope="col">Service</th><th scope="col">Recorded intent</th><th scope="col">Status</th></tr></thead><tbody>
+      <tr><th scope="row">Roof / eave / vent / glazing</th><td>${c.fire ? 'Class ' + esc(c.fire.roof_class) + ' roof; closed noncombustible eaves ' + (c.fire.noncombustible_eaves ? 'intended' : 'not recorded') + '; ember-resistant vents ' + (c.fire.ember_resistant_vents ? 'intended' : 'not recorded') + '; tempered glazing ' + (c.fire.tempered_glazing ? 'intended' : 'not recorded') : 'Not recorded'}</td><td>Concept intent; not a fire-resistance rating</td></tr>
+      <tr><th scope="row">Deck / porch / storage</th><td>${c.fire ? 'Noncombustible deck ' + (c.fire.noncombustible_deck ? 'intended' : 'not recorded') + '; exterior shutters ' + (c.fire.exterior_shutters ? 'intended' : 'not recorded') : 'Not recorded'}</td><td>${c.fire && c.fire.noncombustible_deck ? 'Intent' : 'Unresolved — combustible deck/storage risk'}</td></tr>
+      <tr><th scope="row">Defensible space</th><td>${c.fire ? esc(String(c.fire.defensible_space_m)) + ' m concept distance' : 'Not recorded'}</td><td>Concept; requires site/fire review</td></tr>
+      <tr><th scope="row">Fire-service water</th><td>${c.fire && c.fire.water_access ? 'Recorded as available' : 'Not confirmed'}</td><td>Unresolved; confirm with fire department</td></tr>
+      <tr><th scope="row">Rainwater catchment</th><td>${c.water ? esc(c.water.catchment && c.water.catchment.roof ? 'Metal roof catchment; gutters, leaf guards and first flush required' : 'Recorded') : 'Not recorded'}</td><td>${c.water ? esc(c.water.status) : 'Unresolved'}</td></tr>
+      <tr><th scope="row">Storage / treatment</th><td>${c.water && c.water.storage ? esc(c.water.storage.type) + '; volume ' + (c.water.storage.volume_L === null ? 'not sized' : esc(String(c.water.storage.volume_L)) + ' L') + '; potable ' + (c.water.treatment && c.water.treatment.potable ? 'claimed' : 'no') : 'Not recorded'}</td><td>No yield, freeze, overflow or water-quality design claimed</td></tr>
+      <tr><th scope="row">Fire reserve</th><td>${c.water && c.water.fireReserve ? 'Separate: ' + (c.water.fireReserve.separate ? 'yes' : 'no') + '; connection: ' + esc(c.water.fireReserve.connection) + '; verified: ' + (c.water.fireReserve.verified ? 'yes' : 'no') : 'Not recorded'}</td><td>Unresolved; a daily tank is not a fire reserve</td></tr>
+    </tbody></table></div>
+    <p class="small">See <a href="../../fire/">fire resilience</a> and <a href="../../water/">water and resilience</a>. No building separation, inter-storey fire separation, cavity barrier, hydrant flow, cistern volume or potable-water treatment is designed here.</p>
+  </section>
+
   <section class="architecture-facts" aria-labelledby="facts-title">
     <h2 id="facts-title">Concept facts</h2>
     <dl class="fact-grid">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
