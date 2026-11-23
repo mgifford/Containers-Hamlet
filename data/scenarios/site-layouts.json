@@ -1,0 +1,107 @@
+{
+  "schema": "containers-hamlet-site-scenarios/v1",
+  "baselineId": "distributed",
+  "note": "Conceptual arrangement comparison. The baseline is the current illustrative site assignment. Scenarios B and C are schematic propositions, not georeferenced plans, surveys or construction layouts. No scenario is a winner.",
+  "scenarios": [
+    {
+      "id": "distributed",
+      "label": "A",
+      "title": "Distributed woodland retreats",
+      "status": "baseline",
+      "geometryStatus": "existing illustrative site assignment",
+      "summary": "Keep the six homes dispersed across the property, each with its own relationship to rock, trees and view. The lodge remains near the entrance and shared parking.",
+      "advantages": [
+        "Greater separation and visual privacy between households.",
+        "Individual orientations and distinct identities for each home.",
+        "Shared outdoor life is optional rather than constantly visible."
+      ],
+      "disadvantages": [
+        "Longer pedestrian and service connections.",
+        "More dispersed infrastructure and maintenance.",
+        "Fewer spontaneous social encounters.",
+        "Possible additional ecological disturbance from paths and services."
+      ],
+      "patterns": [37, 36, 120, 129],
+      "evaluationQuestions": [
+        "Can every home reach the lodge and a shared outdoor place without a car?",
+        "Are the paths short and legible enough for ordinary visits?",
+        "Does dispersal protect privacy without making shared life impractical?"
+      ],
+      "evidenceStatus": "conceptual",
+      "diagram": {
+        "homes": [[100, 90], [255, 65], [430, 95], [535, 235], [340, 305], [125, 300]],
+        "lodge": [515, 105],
+        "paths": [[[100, 90], [180, 120], [255, 65]], [[255, 65], [330, 95], [430, 95]], [[430, 95], [515, 105], [535, 235]], [[535, 235], [455, 275], [340, 305]], [[340, 305], [220, 300], [125, 300]], [[125, 300], [90, 210], [100, 90]]],
+        "common": [],
+        "pockets": []
+      }
+    },
+    {
+      "id": "central-clearing",
+      "label": "B",
+      "title": "Shared central clearing",
+      "status": "alternative",
+      "geometryStatus": "schematic concept; no site coordinates",
+      "summary": "Arrange the homes around a recognisable common clearing with the lodge and shared outdoor rooms at the centre.",
+      "advantages": [
+        "Communal activity is visible and easy to reach.",
+        "More opportunities for informal contact.",
+        "Shorter connections between homes and common facilities."
+      ],
+      "disadvantages": [
+        "Reduced visual and acoustic privacy.",
+        "Noise and activity concentrate in one place.",
+        "The clearing may disturb sensitive land or existing trees.",
+        "The arrangement may feel suburban rather than woodland-based."
+      ],
+      "patterns": [37, 61, 129, 36, 106],
+      "evaluationQuestions": [
+        "Can a resident withdraw without feeling watched?",
+        "Does the central clearing damage a sensitive ecological feature?",
+        "Can the lodge be used for one small task without joining an event?"
+      ],
+      "evidenceStatus": "conceptual",
+      "diagram": {
+        "homes": [[175, 75], [350, 55], [510, 115], [520, 285], [330, 330], [145, 270]],
+        "lodge": [320, 195],
+        "paths": [[[175, 75], [230, 120], [320, 195]], [[350, 55], [335, 120], [320, 195]], [[510, 115], [430, 150], [320, 195]], [[520, 285], [430, 250], [320, 195]], [[330, 330], [325, 260], [320, 195]], [[145, 270], [220, 235], [320, 195]]],
+        "common": [[320, 195, 128, 105]],
+        "pockets": []
+      }
+    },
+    {
+      "id": "woodland-spine",
+      "label": "C",
+      "title": "Woodland spine with social pockets",
+      "status": "alternative",
+      "geometryStatus": "schematic concept; no site coordinates",
+      "summary": "Retain dispersed homes but connect them with a clear pedestrian spine and several modest shared pockets rather than one central clearing.",
+      "advantages": [
+        "Balances privacy with repeat social contact.",
+        "Multiple scales of participation.",
+        "The walking experience can respond to terrain and trees.",
+        "Small shared places can be maintained in stages."
+      ],
+      "disadvantages": [
+        "A more complex pedestrian network.",
+        "Several shared places need maintenance.",
+        "Routes may conflict with private edges and winter access.",
+        "A spine can become a corridor if it is over-designed."
+      ],
+      "patterns": [120, 61, 69, 36, 129],
+      "evaluationQuestions": [
+        "Does the spine connect real destinations rather than passing private windows?",
+        "Can each pocket be used by one or two people without booking an event?",
+        "Is the route usable in winter and by people with reduced mobility?"
+      ],
+      "evidenceStatus": "conceptual",
+      "diagram": {
+        "homes": [[105, 95], [205, 70], [215, 300], [405, 300], [470, 95], [545, 235]],
+        "lodge": [485, 185],
+        "paths": [[[105, 95], [170, 130], [205, 70], [330, 180], [405, 300], [470, 95], [545, 235]]],
+        "common": [],
+        "pockets": [[170, 205], [330, 145], [445, 265]]
+      }
+    }
+  ]
+}

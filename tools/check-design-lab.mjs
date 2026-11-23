@@ -13,6 +13,7 @@ const Model = require('../site/js/design-model.js');
 const Illustration = require('../site/js/design-illustration.js');
 const Interior = require('../site/js/design-interior.js');
 const { validatePatterns, validateSiteElements, VERIFIED_TITLES } = require('./lib/patterns.mjs');
+const { validateScenarios } = require('./lib/scenarios.mjs');
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const exists = (p) => fs.existsSync(path.join(ROOT, p));
@@ -216,6 +217,20 @@ ok(patternData.patterns.every((p) => p.sourceVerified && p.relatedPatterns.lengt
 ok(patternData.patterns.every((p) => patternData.patterns.some((q) => q.number !== p.number && q.relatedPatterns.includes(p.number))), 'no catalogue pattern is completely isolated from the relationship graph');
 ok(patternData.patterns.every((p) => p.evaluationQuestions.length >= 2 && p.limitations.length >= 1), 'every pattern records questions and limitations');
 ok(JSON.parse(read('data/patterns/schema.json')).properties.patterns.maxItems === 20, 'the pattern JSON Schema documents the catalogue bound');
+const scenarioData = JSON.parse(read('data/scenarios/site-layouts.json'));
+const scenarioValidation = validateScenarios(scenarioData, patternData);
+ok(scenarioValidation.ok, `scenario comparison validates${scenarioValidation.errors.length ? ': ' + scenarioValidation.errors.join('; ') : ''}`);
+ok(scenarioData.scenarios.length === 3 && scenarioData.scenarios.filter((s) => s.status === 'baseline').length === 1 && scenarioData.baselineId === 'distributed', 'scenario data has exactly three arrangements and one preserved baseline');
+const scenarioPage = read('site/design-lab/scenarios/index.html');
+ok((scenarioPage.match(/class="scenario-card"/g) || []).length === 3 && scenarioPage.includes('id="scenario-left"') && scenarioPage.includes('id="scenario-right"'), 'scenario page publishes three cards and a two-sided comparison');
+ok(scenarioPage.includes('Restore baseline') && scenarioPage.includes('No scenario is automatically ranked') && !/winning|best arrangement|preferred option/i.test(scenarioPage), 'scenario page preserves the baseline and does not declare a winner');
+ok(/not a site plan/i.test(scenarioPage) && /not to scale/i.test(scenarioPage) && scenarioPage.includes('No scenario has been tested with residents'), 'scenario page states the schematic and evidence limits');
+ok(scenarioPage.includes('Open the baseline site plan') && scenarioPage.includes('site-plan.svg'), 'scenario page links back to the canonical baseline site plan');
+scenarioData.scenarios.forEach((s) => {
+  const svg = read(`site/design-lab/scenarios/${s.id}.svg`);
+  ok(new RegExp('data-scenario-diagram="' + s.id + '"').test(svg) && /<title/.test(svg) && /<desc/.test(svg) && /CC BY-SA 4\.0/.test(svg) && /not to scale|not a construction layout/.test(svg), `scenario ${s.id} SVG has an accessible title, description, licence and schematic caveat`);
+});
+
 const patternPage = read('site/design-lab/pattern-language/index.html');
 const siteElementData = JSON.parse(read('data/patterns/site-elements.json'));
 const siteValidation = validateSiteElements(siteElementData, patternData);
