@@ -8,9 +8,9 @@
  * Code licence: AGPL-3.0-or-later.
  */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./design-schema.js'), require('./design-model.js'));
-  else root.DesignIllustration = factory(root.DesignSchema, root.DesignModel);
-})(typeof self !== 'undefined' ? self : this, function (Schema, Model) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./design-schema.js'), require('./design-model.js'), require('./design-interior.js'));
+  else root.DesignIllustration = factory(root.DesignSchema, root.DesignModel, root.DesignInterior);
+})(typeof self !== 'undefined' ? self : this, function (Schema, Model, Interior) {
   'use strict';
 
   var ILLUSTRATION_SCHEMA = 'containers-hamlet-illustration/v1';
@@ -237,8 +237,15 @@
     var arch = Model.architectureFeatures(design);
     var access = Model.accessibilityProfile(design);
     var review = Model.structuralReview(design);
+    var interiorValidation = Interior ? Interior.validate(design) : null;
+    var interiorSchedule = Interior ? Interior.schedule(design) : null;
+    var interiorAccess = Interior ? Interior.accessibilityEvidence(design) : null;
     var azimuth = viewAzimuth(design, config, siteData);
     var unresolved = unresolvedFor(design, siteData);
+    if (interiorValidation) {
+      interiorValidation.invalid.forEach(function (i) { unresolved.push({ code: i.code, severity: 'invalid-interior', message: i.message }); });
+      interiorValidation.unresolved.forEach(function (i) { unresolved.push({ code: i.code, severity: 'unresolved', message: i.message }); });
+    }
     var scene = {
       schema: SCENE_SCHEMA,
       designId: design.id,
@@ -286,6 +293,25 @@
       openings: openingRows(design),
       outdoor: outdoorRows(design),
       spaces: zoneRows(design),
+      interior: {
+        schema: design.interior ? design.interior.schema : null,
+        status: design.interior ? design.interior.status : 'absent',
+        rooms: design.interior ? clone(design.interior.rooms || []) : [],
+        partitions: design.interior ? clone(design.interior.partitions || []) : [],
+        doors: design.interior ? clone(design.interior.doors || []) : [],
+        fixtures: design.interior ? clone(design.interior.fixtures || []) : [],
+        clearances: design.interior ? clone(design.interior.clearances || []) : [],
+        schedule: interiorSchedule,
+        validation: interiorValidation,
+        accessibilityEvidence: interiorAccess,
+        capabilities: {
+          detailedFloorPlan: !!(design.interior && design.interior.rooms && design.interior.rooms.length),
+          interiorIllustrationPrompt: !!(design.interior && design.interior.rooms && design.interior.rooms.length),
+          interiorPerspective: false,
+          roomZonePlan: true,
+          note: 'Room polygons and fixtures support a detailed interior prompt and plan. No interior camera or perspective renderer is implemented, so perspective accuracy is not claimed.'
+        }
+      },
       materials: { modules: materialRows(design), palette: (design.materials || []).map(function (x) { return { component: x.component, material: x.material, disclosure: x.disclosure }; }), roofFinish: design.roof_form.type, windowFrames: design.modules.map(function (m) { return m.frame_colour || null; }) },
       environment: {
         siteId: site ? site.id : (design.site && design.site.homesite) || null,
@@ -309,7 +335,11 @@
       },
       capabilities: {
         exteriorReference: true,
+        interiorZoneDiagram: true,
+        interiorGeometry: !!(design.interior && design.interior.rooms && design.interior.rooms.length),
+        detailedFloorPlan: !!(design.interior && design.interior.rooms && design.interior.rooms.length),
         interiorPerspective: false,
+        interiorIllustrationPrompt: !!(design.interior && design.interior.rooms && design.interior.rooms.length),
         roomZonePlan: true,
         roofPlan: true,
         containerSchematic: true
@@ -338,6 +368,7 @@
     if (design.roof_form && design.roof_form.green_roof) scene.intentions.push('Green roof is a concept with unresolved load, drainage, fire and maintenance questions.');
     if (design.roof_form && design.roof_form.type === 'butterfly') scene.intentions.push('Butterfly roof is an exterior form; the interior ceiling is not resolved.');
     scene.prompt = promptFor(scene);
+    scene.interiorPrompt = interiorPromptFor(scene);
     scene.negativePrompt = negativeFor(scene);
     scene.description = descriptionFor(scene);
     scene.validation = validateScene(scene, design);
@@ -379,7 +410,42 @@
       scene.unresolved.forEach(function (u) { lines.push('- ' + u.message); });
     }
     lines.push('This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.');
-    return { text: lines.join('\n'), lines: lines };
+    return { text: lines.join('\n').replace(/[ \t]+$/gm, ''), lines: lines };
+  }
+
+  function interiorPromptFor(scene) {
+    var interior = scene.interior || {};
+    var lines = [];
+    lines.push('# Interior illustration prompt — ' + scene.name);
+    lines.push('');
+    lines.push('Use the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.');
+    if (!interior.rooms || !interior.rooms.length) {
+      lines.push('');
+      lines.push('No interior room geometry is modeled. Only a room-zone plan is available. Do not invent walls, doors, fixtures or furniture.');
+      return { text: lines.join('\n').replace(/[ \t]+$/gm, '') + '\n', lines: lines };
+    }
+    lines.push('');
+    lines.push('Rooms:');
+    (interior.schedule ? interior.schedule.rooms : []).forEach(function (r) {
+      lines.push('- ' + r.name + ' (' + r.type + ', ' + r.id + '): ' + r.area_m2 + ' m², ' + r.module + ', ' + r.provenance + (r.fixtures.length ? ', fixtures: ' + r.fixtures.join(', ') : '') + '.');
+    });
+    lines.push('');
+    lines.push('Partitions and doors: ' + (interior.partitions || []).length + ' partitions and ' + (interior.doors || []).length + ' doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.');
+    lines.push('Fixtures: ' + ((interior.fixtures || []).map(function (f) { return f.type + ' in ' + f.room; }).join('; ') || 'none recorded') + '.');
+    lines.push('Windows: the room polygons reference the documented opening ids. Do not add windows or move them.');
+    lines.push('');
+    lines.push('Camera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.');
+    lines.push('Presentation: ' + scene.presentation.season.replace(/-/g, ' ') + ', ' + scene.presentation.time.replace(/-/g, ' ') + ', ' + (scene.presentation.people ? 'people may be shown' : 'no people') + '.');
+    lines.push('');
+    lines.push('Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.');
+    if (interior.validation && interior.validation.items.length) {
+      lines.push('');
+      lines.push('Unresolved interior matters:');
+      interior.validation.items.forEach(function (i) { lines.push('- ' + i.code + ': ' + i.message); });
+    }
+    lines.push('');
+    lines.push('No accessibility, code or construction claim is made.');
+    return { text: lines.join('\n').replace(/[ \t]+$/gm, '') + '\n', lines: lines };
   }
 
   function negativeFor(scene) {
@@ -432,6 +498,13 @@
     lines.push('- Path approach: ' + scene.environment.pathApproach);
     lines.push('- Camera: ' + scene.camera.viewLabel + ', ' + scene.camera.height_m + ' m, ' + scene.camera.lens_mm + ' mm, bearing ' + scene.camera.azimuth_deg + '°.');
     lines.push('');
+    if (scene.interior && scene.interior.rooms && scene.interior.rooms.length) {
+      lines.push('## Interior schedule');
+      (scene.interior.schedule ? scene.interior.schedule.rooms : []).forEach(function (r) { lines.push('- ' + r.name + ' (' + r.type + ') — ' + r.area_m2 + ' m², ' + r.module + ', ' + r.provenance + (r.fixtures.length ? ', fixtures: ' + r.fixtures.join(', ') : '') + '.'); });
+      lines.push('- Partitions: ' + (scene.interior.partitions || []).length + ' · doors: ' + (scene.interior.doors || []).length + ' · fixtures: ' + (scene.interior.fixtures || []).length + '.');
+      if (scene.interior.validation) lines.push('- Validation: ' + scene.interior.validation.invalid.length + ' invalid, ' + scene.interior.validation.unresolved.length + ' unresolved, ' + scene.interior.validation.review.length + ' review.');
+      lines.push('');
+    }
     lines.push('## Intentions');
     if (!scene.intentions.length) lines.push('- None recorded.');
     scene.intentions.forEach(function (i) { lines.push('- ' + i); });
@@ -442,13 +515,13 @@
     lines.push('');
     lines.push('## Capability notes');
     lines.push('- Exterior reference: ' + (scene.capabilities.exteriorReference ? 'available' : 'not available'));
-    lines.push('- Interior perspective: ' + (scene.capabilities.interiorPerspective ? 'available' : 'not available — rooms are longitudinal zones, not modeled volumes'));
+    lines.push('- Interior perspective: ' + (scene.capabilities.interiorPerspective ? 'available' : 'not available — no interior camera or perspective renderer is implemented'));
     lines.push('- Room-zone plan: ' + (scene.capabilities.roomZonePlan ? 'available' : 'not available'));
     lines.push('- Roof plan: ' + (scene.capabilities.roofPlan ? 'available' : 'not available'));
     lines.push('');
     lines.push('## Licence and status');
     lines.push('Concept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.');
-    return { text: lines.join('\n'), lines: lines };
+    return { text: lines.join('\n').replace(/[ \t]+$/gm, ''), lines: lines };
   }
 
   function validateScene(scene, designInput) {
@@ -471,6 +544,8 @@
     if (scene.constraints.allowAdditionalStoreys !== false) errors.push('Scene must not allow additional storeys.');
     if (scene.constraints.allowAdditionalOpenings !== false) errors.push('Scene must not allow additional openings.');
     if (scene.capabilities.interiorPerspective && !scene.capabilities.interiorGeometry) warnings.push('Interior perspective is claimed without modeled partitions or camera geometry.');
+    if (scene.interior && scene.interior.validation && !scene.interior.validation.ok) errors.push('Interior spatial model has invalid geometry.');
+    if (scene.interior && scene.interior.rooms && scene.interior.rooms.length && !scene.capabilities.interiorIllustrationPrompt) errors.push('Interior prompt capability is missing despite modeled rooms.');
     if (scene.presentation.people !== false) warnings.push('People are enabled; this is a presentation choice, not an architectural fact.');
     if (scene.materialPolicy === 'exploratory') warnings.push('Exploratory materials are non-authoritative.');
     return { ok: errors.length === 0, errors: errors, warnings: warnings };
@@ -511,6 +586,7 @@
       { id: 'container-layout-plan', path: 'drawings/container-layout-plan.svg', type: 'drawing', dependencies: ['design'] },
       { id: 'container-layout-elevation', path: 'drawings/container-layout-elevation.svg', type: 'drawing', dependencies: ['design'] },
       { id: 'plan-ground', path: 'drawings/plan-ground.svg', type: 'drawing', dependencies: ['design'] },
+      { id: 'interior-plan', path: 'drawings/interior-plan.svg', type: 'drawing', dependencies: ['design', 'interior'] },
       { id: 'roof-plan', path: 'drawings/roof-plan.svg', type: 'drawing', dependencies: ['design', 'roof'] },
       { id: 'elevation-south', path: 'drawings/elevation-south.svg', type: 'drawing', dependencies: ['design'] },
       { id: 'section', path: 'drawings/section.svg', type: 'drawing', dependencies: ['design'] },
@@ -526,7 +602,7 @@
     stableStringify: stableStringify, hashString: hashString, designHash: designHash, presentationHash: presentationHash, sceneHash: sceneHash,
     defaultConfig: defaultConfig, validateConfig: validateConfig, siteFor: siteFor, principalView: principalView,
     worldAzimuth: worldAzimuth, entranceBearing: entranceBearing, viewAzimuth: viewAzimuth, referenceRotation: referenceRotation,
-    sceneSpec: sceneSpec, promptFor: promptFor, negativeFor: negativeFor, descriptionFor: descriptionFor,
+    sceneSpec: sceneSpec, promptFor: promptFor, interiorPromptFor: interiorPromptFor, negativeFor: negativeFor, descriptionFor: descriptionFor,
     validateScene: validateScene, manifest: manifest, artifactPlan: artifactPlan, unresolvedFor: unresolvedFor
   };
 });

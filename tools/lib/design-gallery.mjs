@@ -31,10 +31,10 @@ function roofLabel(concept) {
   return (concept.roof_form && concept.roof_form.type ? concept.roof_form.type : 'flat').replace(/-/g, ' ');
 }
 
-const GROUP_ORDER = ['Single storey', 'Two storeys', 'One container', 'Two containers', 'Three containers', 'Common lodge'];
+const GROUP_ORDER = ['Single storey', 'Experimental archive', 'One container', 'Two containers', 'Three containers', 'Common lodge'];
 const GROUP_TEXT = {
   'Single storey': 'Ground-level homes. They differ in footprint, roof, arrangement and relationship to the garden, not just in colour.',
-  'Two storeys': 'Stacked homes. A second storey adds floor area on a smaller footprint, but also adds stairs, structure, fire separation and accessibility constraints.',
+  'Experimental archive': 'Historical two-storey studies retained for provenance and comparison. They are not selected homes and are not part of the single-storey hamlet.',
   'One container': 'Archived one-module concepts. Preserved for provenance and comparison, not removed.',
   'Two containers': 'Archived two-module concepts. Some are editable; others remain inspiration only.',
   'Three containers': 'Archived three-module concepts, including the courtyard studies.',
@@ -55,7 +55,7 @@ ${items.map((c) => {
       const imgs = images(c.id);
       const editable = c.editable === true;
       const hamlet = c.role === 'hamlet-selected';
-      const badge = hamlet ? 'Hamlet selected · Editable' : editable ? 'Editable archive concept' : 'Inspiration only';
+      const badge = hamlet ? 'Hamlet selected · Editable' : c.role === 'archive-experimental' ? 'Experimental archive · not selected' : editable ? 'Editable archive concept' : 'Inspiration only';
       const badgeClass = hamlet ? 'hamlet' : editable ? 'editable' : '';
       const upper = c.levels && c.levels.length > 1;
       return `    <article class="concept-card" id="concept-${esc(c.id)}">

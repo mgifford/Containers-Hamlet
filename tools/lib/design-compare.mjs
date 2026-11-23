@@ -53,7 +53,7 @@ export function panel(p, c) {
 
 export function table(profiles, concepts) {
   return `<div class="table-wrap"><table>
-    <caption>All sixteen concepts at a glance. Areas are approximate nominal geometry; thermal notes are qualitative. No cost, carbon or energy figure is calculated.</caption>
+    <caption>All nineteen concepts at a glance. Areas are approximate nominal geometry; thermal notes are qualitative. No cost, carbon or energy figure is calculated.</caption>
     <thead><tr><th scope="col">Concept</th><th scope="col">Storeys</th><th scope="col">Containers</th><th scope="col">Gross floor m²</th><th scope="col">Ground cover m²</th><th scope="col">Conditioned m²</th><th scope="col">Glazing m²</th><th scope="col">Envelope</th><th scope="col">Accessibility</th><th scope="col">Structural review</th></tr></thead>
     <tbody>${profiles.map((p) => {
       const c = concepts.find((x) => x.id === p.id);
@@ -100,7 +100,7 @@ ${designShellNav(2, 'compare')}
     ${panel(b, bConcept)}
   </div>
   <details class="all-concepts" open>
-    <summary>All sixteen concepts at a glance</summary>
+    <summary>All nineteen concepts at a glance</summary>
     ${table(profiles, concepts)}
   </details>
   <p class="small">The comparison is qualitative. It does not calculate heating load, energy use, carbon, cost, structural capacity or code compliance. A support reference is design intent, not a verified load path. Existing authoritative Cabin A and lodge models are unchanged.</p>

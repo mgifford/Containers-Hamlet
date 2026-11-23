@@ -42,16 +42,17 @@
     <div class="table-wrap"><table><caption>Output types and their authority.</caption><thead><tr><th scope="col">Output</th><th scope="col">Source</th><th scope="col">Authority</th></tr></thead><tbody>
       <tr><th scope="row">Container schematic</th><td>Design geometry</td><td>Deterministic concept schematic</td></tr>
       <tr><th scope="row">Plans, elevations, section, roof plan</th><td>Design geometry</td><td>Deterministic concept drawings</td></tr>
+      <tr><th scope="row">Interior floor plan</th><td>Room polygons, partitions, doors, fixtures, clearances</td><td>Deterministic concept spatial model; inferred rooms are marked</td></tr>
       <tr><th scope="row">Exterior/site reference</th><td>Design geometry + camera</td><td>Deterministic concept reference; not a measured photograph</td></tr>
       <tr><th scope="row">Description and prompt</th><td>Scene specification</td><td>Generated interpretation; facts are checked against the model</td></tr>
       <tr><th scope="row">AI illustration</th><td>Prompt + reference package</td><td>Generative interpretation; never an authoritative drawing</td></tr>
     </tbody></table></div>
-    <p class="small">The pipeline refuses to invent storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. If a feature is not modeled, the prompt says so. Interior perspective is not claimed because the model has longitudinal room zones, not partitions and camera geometry.</p>
+    <p class="small">The pipeline refuses to invent storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. If a feature is not modeled, the prompt says so. The selected homes are single-storey. Interior room polygons and fixtures are modeled for the demonstration homes and inferred provisionally for the others; a spatially accurate interior perspective is still not claimed because no interior camera or perspective renderer exists.</p>
   </section>
 
   <section aria-labelledby="packages-title">
     <h2 id="packages-title">Six residence packages</h2>
-    <p>Each package contains the design JSON, a generated description, the exterior prompt, the negative prompt, the illustration configuration, the scene specification and a manifest with hashes and dependencies. The drawings and reference views are shared from the same generated model.</p>
+    <p>Each package contains the design JSON, a generated description, the exterior and interior prompts, the negative prompt, the illustration configuration, the scene specification and a manifest with hashes and dependencies. The drawings, interior plans and reference views are shared from the same generated model.</p>
     <div class="concept-grid"><article class="concept-card illustration-card" id="illustration-hamlet-woodland-cottage">
       <div class="concept-card-media"><img src="../views/hamlet-woodland-cottage-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Woodland Cottage. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
       <div class="concept-card-body">
@@ -77,13 +78,20 @@ Material policy: strict documented. Preserve the documented materials. Do not in
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
 - The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+- Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
+- Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
+- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- No interior doors are modeled. Room connectivity cannot be assessed.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
-        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>accessibility-verification:</strong> Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.</li><li><strong>site-approach:</strong> The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
-        <p class="small"><strong>3</strong> unresolved/limitation notes · design hash <code>908e19a3</code></p>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>site-approach:</strong> The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li><li><strong>provisional-interior:</strong> Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.</li><li><strong>room-coverage:</strong> Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.</li><li><strong>doors-missing:</strong> No interior doors are modeled. Room connectivity cannot be assessed.</li></ul></details>
+        <p class="small"><strong>9</strong> unresolved/limitation notes · design hash <code>a6428e88</code></p>
         <div class="button-row">
           <a class="action" href="hamlet-woodland-cottage/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-woodland-cottage/interior.md" download>Interior prompt</a>
           <a class="action secondary" href="hamlet-woodland-cottage/scene.json" download>Scene JSON</a>
           <a class="action secondary" href="hamlet-woodland-cottage/description.md" download>Description</a>
           <a class="action secondary" href="hamlet-woodland-cottage/manifest.json" download>Manifest</a>
@@ -92,25 +100,25 @@ This is an interpretation for communication. It is not a construction drawing an
       </div>
     </article>
 <article class="concept-card illustration-card" id="illustration-hamlet-offset-stack">
-      <div class="concept-card-media"><img src="../views/hamlet-offset-stack-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Offset Stack. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-media"><img src="../views/hamlet-offset-stack-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Offset Pair. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
       <div class="concept-card-body">
         <span class="concept-badge hamlet">Illustration package</span>
-        <h2>Offset Stack</h2>
-        <p class="small"><strong>2 storeys</strong> · 2 modules · shed roof · Cabin B</p>
-        <p>Two 40-foot modules stacked with a deliberate offset, creating a covered ground-floor room and a distinct upper volume.</p>
-        <details><summary>Generated prompt for Offset Stack</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Offset Stack residence.
+        <h2>Offset Pair</h2>
+        <p class="small"><strong>1 storey</strong> · 2 modules · shed roof · Cabin B</p>
+        <p>Two 40-foot modules staggered on one level around a sheltered outdoor room.</p>
+        <details><summary>Generated prompt for Offset Pair</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Offset Pair residence.
 Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
-The building has 2 occupied storeys and 2 container modules.
+The building has 1 occupied storey and 2 container modules.
 Module geometry:
 - m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
-- m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 0 degrees, metal cladding. m2 is offset 2.6 m east relative to m1.
+- m2: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.
 Roof: shed at 8 degrees, 0.7 m overhang, installed PV array.
 Openings:
 - m1: north window &quot;Stair window&quot; at 9.6 m, 0.9 x 1.2 m, sill 1 m; south sliding-door &quot;Living doors&quot; at 3.2 m, 2.4 x 2.1 m, sill 0 m; south window &quot;Kitchen window&quot; at 8.4 m, 1.2 x 1.2 m, sill 1 m; east door &quot;Entry door&quot; at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window &quot;West window&quot; at 1.4 m, 1 x 1.2 m, sill 1 m.
-- m2: north window &quot;Bedroom window&quot; at 2.4 m, 1.4 x 1.3 m, sill 0.9 m; south window &quot;Studio window&quot; at 7 m, 1.6 x 1.4 m, sill 0.8 m; east door &quot;Balcony door&quot; at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window &quot;Stair window&quot; at 1.2 m, 0.8 x 1.2 m, sill 1.2 m.
+- m2: north window &quot;Bedroom window&quot; at 2.4 m, 1.4 x 1.3 m, sill 0.9 m; south window &quot;Studio window&quot; at 7 m, 1.6 x 1.4 m, sill 0.8 m; east door &quot;Studio entry door&quot; at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window &quot;Stair window&quot; at 1.2 m, 0.8 x 1.2 m, sill 1.2 m; south door &quot;Garden door&quot; at 8.4 m, 0.95 x 2.1 m, sill 0 m.
 Outdoor spaces:
-- p1: 4 m x 2.6 m covered porch on the south face of m1, roofed.
-- p2: 2.4 m x 1.4 m covered porch on the south face of m2, open.
+- p1: 4 m x 2.6 m covered porch on the north face of m1, roofed.
+- p2: 2.4 m x 1.4 m covered porch on the south face of m2, roofed.
 Site: Cabin B. Principal view: A sunlit birch glade and a low rock shoulder, with the forest floor visible beneath the trunks. Path approach recorded as south-west.
 Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 173 degrees.
 Presentation: late summer, late afternoon, clear, no people.
@@ -118,13 +126,16 @@ Material policy: strict documented. Preserve the documented materials. Do not in
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.
-- The upper porch p2 has no recorded door on the same south face. Do not show it as an accessible balcony; access is unresolved.
+- The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.
+- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- Bathroom b-bath has no modeled 1.5 m turning circle.
+- Bathroom b-bath2 has no modeled 1.5 m turning circle.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
-        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>unmodeled-balcony:</strong> The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.</li><li><strong>balcony-access:</strong> The upper porch p2 has no recorded door on the same south face. Do not show it as an accessible balcony; access is unresolved.</li></ul></details>
-        <p class="small"><strong>3</strong> unresolved/limitation notes · design hash <code>4cecbf83</code></p>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>site-approach:</strong> The site path approach is south-west while the design entrance is east. The generated prompt does not call any side the main approach without qualification.</li><li><strong>room-coverage:</strong> Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.</li><li><strong>bathroom-turning-circle:</strong> Bathroom b-bath has no modeled 1.5 m turning circle.</li><li><strong>bathroom-turning-circle:</strong> Bathroom b-bath2 has no modeled 1.5 m turning circle.</li></ul></details>
+        <p class="small"><strong>5</strong> unresolved/limitation notes · design hash <code>1dfe5d1e</code></p>
         <div class="button-row">
           <a class="action" href="hamlet-offset-stack/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-offset-stack/interior.md" download>Interior prompt</a>
           <a class="action secondary" href="hamlet-offset-stack/scene.json" download>Scene JSON</a>
           <a class="action secondary" href="hamlet-offset-stack/description.md" download>Description</a>
           <a class="action secondary" href="hamlet-offset-stack/manifest.json" download>Manifest</a>
@@ -160,13 +171,23 @@ Material policy: strict documented. Preserve the documented materials. Do not in
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
-- The site path approach is east while the design entrance is north. The generated prompt does not call any side the main approach without qualification.
+- Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
+- Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.
+- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- No interior doors are modeled. Room connectivity cannot be assessed.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
-        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>accessibility-verification:</strong> Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.</li><li><strong>site-approach:</strong> The site path approach is east while the design entrance is north. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
-        <p class="small"><strong>3</strong> unresolved/limitation notes · design hash <code>0c17aa9c</code></p>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>provisional-interior:</strong> Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.</li><li><strong>room-coverage:</strong> Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.</li><li><strong>doors-missing:</strong> No interior doors are modeled. Room connectivity cannot be assessed.</li></ul></details>
+        <p class="small"><strong>12</strong> unresolved/limitation notes · design hash <code>570e7410</code></p>
         <div class="button-row">
           <a class="action" href="hamlet-courtyard-residence/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-courtyard-residence/interior.md" download>Interior prompt</a>
           <a class="action secondary" href="hamlet-courtyard-residence/scene.json" download>Scene JSON</a>
           <a class="action secondary" href="hamlet-courtyard-residence/description.md" download>Description</a>
           <a class="action secondary" href="hamlet-courtyard-residence/manifest.json" download>Manifest</a>
@@ -175,24 +196,25 @@ This is an interpretation for communication. It is not a construction drawing an
       </div>
     </article>
 <article class="concept-card illustration-card" id="illustration-hamlet-cross-stacked-retreat">
-      <div class="concept-card-media"><img src="../views/hamlet-cross-stacked-retreat-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Cross-Stacked Retreat. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-media"><img src="../views/hamlet-cross-stacked-retreat-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Cross-Wing House. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
       <div class="concept-card-body">
         <span class="concept-badge hamlet">Illustration package</span>
-        <h2>Cross-Stacked Retreat</h2>
-        <p class="small"><strong>2 storeys</strong> · 2 modules · butterfly roof · Cabin D</p>
-        <p>A ground-floor living bar crossed by a perpendicular upper volume, producing a strong silhouette and a shaded outdoor room.</p>
-        <details><summary>Generated prompt for Cross-Stacked Retreat</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Cross-Stacked Retreat residence.
+        <h2>Cross-Wing House</h2>
+        <p class="small"><strong>1 storey</strong> · 2 modules · butterfly roof · Cabin D</p>
+        <p>Two 40-foot wings meet in a single-storey T beneath a butterfly roof.</p>
+        <details><summary>Generated prompt for Cross-Wing House</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Cross-Wing House residence.
 Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
-The building has 2 occupied storeys and 2 container modules.
+The building has 1 occupied storey and 2 container modules.
 Module geometry:
 - m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.
-- m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 90 degrees, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.
+- m2: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 90 degrees, timber cladding.
 Roof: butterfly at 12 degrees, 0.8 m overhang, installed PV array.
 Openings:
 - m1: north window &quot;North window&quot; at 2 m, 1.2 x 1.2 m, sill 1 m; south sliding-door &quot;Living doors&quot; at 6 m, 2.8 x 2.1 m, sill 0 m; east door &quot;Entry door&quot; at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window &quot;West window&quot; at 1.4 m, 1.2 x 1.3 m, sill 0.9 m.
-- m2: north window &quot;Upper studio window&quot; at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window &quot;Upper bedroom window&quot; at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door &quot;Upper balcony door&quot; at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window &quot;Upper window&quot; at 1 m, 1.2 x 1.2 m, sill 1 m.
+- m2: north window &quot;Studio window&quot; at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window &quot;Bedroom window&quot; at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door &quot;Workshop door&quot; at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window &quot;Workshop window&quot; at 1 m, 1.2 x 1.2 m, sill 1 m; south door &quot;Garden door&quot; at 9.4 m, 0.95 x 2.1 m, sill 0 m.
 Outdoor spaces:
-- p1: 4.2 m x 2.8 m covered porch on the south face of m1, roofed.
+- p1: 3 m x 2.8 m covered porch on the south face of m1, roofed.
+- p2: 2.4 m x 1.4 m covered porch on the south face of m2, roofed.
 Site: Cabin D. Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond. Path approach recorded as north.
 Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 231 degrees.
 Presentation: late summer, late afternoon, clear, no people.
@@ -200,14 +222,25 @@ Material policy: strict documented. Preserve the documented materials. Do not in
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.
 - The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.
-- The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+- The site path approach is north while the design entrance is east. The generated prompt does not call any side the main approach without qualification.
+- Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
+- Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.
+- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- No interior doors are modeled. Room connectivity cannot be assessed.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
-        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>unmodeled-balcony:</strong> The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.</li><li><strong>interior-ceiling:</strong> The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.</li><li><strong>site-approach:</strong> The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
-        <p class="small"><strong>4</strong> unresolved/limitation notes · design hash <code>e83cde44</code></p>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>interior-ceiling:</strong> The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.</li><li><strong>site-approach:</strong> The site path approach is north while the design entrance is east. The generated prompt does not call any side the main approach without qualification.</li><li><strong>provisional-interior:</strong> Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.</li><li><strong>room-coverage:</strong> Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.</li><li><strong>doors-missing:</strong> No interior doors are modeled. Room connectivity cannot be assessed.</li></ul></details>
+        <p class="small"><strong>14</strong> unresolved/limitation notes · design hash <code>29558665</code></p>
         <div class="button-row">
           <a class="action" href="hamlet-cross-stacked-retreat/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-cross-stacked-retreat/interior.md" download>Interior prompt</a>
           <a class="action secondary" href="hamlet-cross-stacked-retreat/scene.json" download>Scene JSON</a>
           <a class="action secondary" href="hamlet-cross-stacked-retreat/description.md" download>Description</a>
           <a class="action secondary" href="hamlet-cross-stacked-retreat/manifest.json" download>Manifest</a>
@@ -242,13 +275,15 @@ Material policy: strict documented. Preserve the documented materials. Do not in
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
 - The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- Bathroom e-bath has no modeled 1.5 m turning circle.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
-        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>accessibility-verification:</strong> Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.</li><li><strong>site-approach:</strong> The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
-        <p class="small"><strong>3</strong> unresolved/limitation notes · design hash <code>8b20cafe</code></p>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>site-approach:</strong> The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li><li><strong>room-coverage:</strong> Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.</li><li><strong>bathroom-turning-circle:</strong> Bathroom e-bath has no modeled 1.5 m turning circle.</li></ul></details>
+        <p class="small"><strong>4</strong> unresolved/limitation notes · design hash <code>641cb707</code></p>
         <div class="button-row">
           <a class="action" href="hamlet-accessible-garden-home/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-accessible-garden-home/interior.md" download>Interior prompt</a>
           <a class="action secondary" href="hamlet-accessible-garden-home/scene.json" download>Scene JSON</a>
           <a class="action secondary" href="hamlet-accessible-garden-home/description.md" download>Description</a>
           <a class="action secondary" href="hamlet-accessible-garden-home/manifest.json" download>Manifest</a>
@@ -257,24 +292,25 @@ This is an interpretation for communication. It is not a construction drawing an
       </div>
     </article>
 <article class="concept-card illustration-card" id="illustration-hamlet-solar-studio-stack">
-      <div class="concept-card-media"><img src="../views/hamlet-solar-studio-stack-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Solar Studio Stack. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
+      <div class="concept-card-media"><img src="../views/hamlet-solar-studio-stack-site-facing.svg" width="1040" height="700" alt="Deterministic site-facing reference view of Solar Studio. It is a concept reference, not a photograph or construction drawing." loading="lazy" decoding="async"></div>
       <div class="concept-card-body">
         <span class="concept-badge hamlet">Illustration package</span>
-        <h2>Solar Studio Stack</h2>
-        <p class="small"><strong>2 storeys</strong> · 2 modules · solar-ready roof · Cabin F</p>
-        <p>Two 20-foot modules stacked with a slight offset, giving a compact footprint, a solar-ready roof and an upper studio.</p>
-        <details><summary>Generated prompt for Solar Studio Stack</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Solar Studio Stack residence.
+        <h2>Solar Studio</h2>
+        <p class="small"><strong>1 storey</strong> · 2 modules · solar-ready roof · Cabin F</p>
+        <p>Two 20-foot modules offset on one level under a solar-ready shed roof.</p>
+        <details><summary>Generated prompt for Solar Studio</summary><pre class="prompt-preview">Create a photorealistic architectural illustration of the Solar Studio residence.
 Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.
-The building has 2 occupied storeys and 2 container modules.
+The building has 1 occupied storey and 2 container modules.
 Module geometry:
 - m1: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
-- m2: 2 storey, 6.06 m x 2.44 m, base elevation 3.9 m, rotation 0 degrees, metal cladding. m2 is offset 0.8 m east relative to m1.
+- m2: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.
 Roof: solar-ready at 12 degrees, 0.9 m overhang, installed PV array.
 Openings:
-- m1: south sliding-door &quot;Living doors&quot; at 2 m, 2 x 2.1 m, sill 0 m; south door &quot;Entry door&quot; at 4.4 m, 0.95 x 2.1 m, sill 0 m; north window &quot;Kitchen window&quot; at 1.8 m, 1.2 x 1.2 m, sill 1.1 m; west window &quot;Bathroom window&quot; at 1.2 m, 0.8 x 1 m, sill 1.4 m.
-- m2: south window &quot;Studio glazing&quot; at 3 m, 2.4 x 1.6 m, sill 0.6 m; north window &quot;Studio window&quot; at 2 m, 1.2 x 1.2 m, sill 0.9 m; east door &quot;Balcony door&quot; at 1.2 m, 0.9 x 2.1 m, sill 0 m.
+- m1: south sliding-door &quot;Living doors&quot; at 2 m, 2 x 2.1 m, sill 0 m; south window &quot;Living window&quot; at 4.4 m, 0.95 x 1.3 m, sill 0.9 m; north window &quot;Kitchen window&quot; at 1.8 m, 1.2 x 1.2 m, sill 1.1 m; west window &quot;Bathroom window&quot; at 1.2 m, 0.8 x 1 m, sill 1.4 m; east door &quot;Entry door&quot; at 1.2 m, 0.95 x 2.1 m, sill 0 m.
+- m2: south window &quot;Studio glazing&quot; at 3 m, 2.4 x 1.6 m, sill 0.6 m; north window &quot;Studio window&quot; at 2 m, 1.2 x 1.2 m, sill 0.9 m; east door &quot;Workshop door&quot; at 1.2 m, 0.9 x 2.1 m, sill 0 m; south door &quot;Garden door&quot; at 5 m, 0.95 x 2.1 m, sill 0 m.
 Outdoor spaces:
-- p1: 4.4 m x 2.4 m covered porch on the south face of m1, roofed.
+- p1: 4.4 m x 2.4 m covered porch on the north face of m1, roofed.
+- p2: 2.4 m x 1.4 m covered porch on the south face of m2, roofed.
 Site: Cabin F. Principal view: The southern cove of Heron Lake through juniper and cedar, with the opposite shore close enough to read the rock. Path approach recorded as north-east.
 Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 295 degrees.
 Presentation: late summer, late afternoon, clear, no people.
@@ -282,14 +318,21 @@ Material policy: strict documented. Preserve the documented materials. Do not in
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.
-- The alternating-tread stair is recorded but its usability and code acceptability are unresolved. Do not present it as an acceptable permanent-residence solution.
-- The site path approach is north-east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+- Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
+- Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.
+- Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.
+- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- No interior doors are modeled. Room connectivity cannot be assessed.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.</pre></details>
-        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>unmodeled-balcony:</strong> The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.</li><li><strong>alternating-tread-stair:</strong> The alternating-tread stair is recorded but its usability and code acceptability are unresolved. Do not present it as an acceptable permanent-residence solution.</li><li><strong>site-approach:</strong> The site path approach is north-east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.</li></ul></details>
-        <p class="small"><strong>4</strong> unresolved/limitation notes · design hash <code>37368d3b</code></p>
+        <details><summary>Negative prompt and unresolved matters</summary><pre class="prompt-preview">extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs, garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded, warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos, tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction, missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation</pre><ul><li><strong>interior-partitions:</strong> Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.</li><li><strong>provisional-interior:</strong> Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.</li><li><strong>inferred-room:</strong> Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.</li><li><strong>room-coverage:</strong> Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.</li><li><strong>doors-missing:</strong> No interior doors are modeled. Room connectivity cannot be assessed.</li></ul></details>
+        <p class="small"><strong>10</strong> unresolved/limitation notes · design hash <code>1bfe2c66</code></p>
         <div class="button-row">
           <a class="action" href="hamlet-solar-studio-stack/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="hamlet-solar-studio-stack/interior.md" download>Interior prompt</a>
           <a class="action secondary" href="hamlet-solar-studio-stack/scene.json" download>Scene JSON</a>
           <a class="action secondary" href="hamlet-solar-studio-stack/description.md" download>Description</a>
           <a class="action secondary" href="hamlet-solar-studio-stack/manifest.json" download>Manifest</a>

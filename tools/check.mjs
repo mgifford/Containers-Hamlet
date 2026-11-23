@@ -347,7 +347,7 @@ let total = 0;
 const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).forEach((e) => { const f = path.join(d, e.name); if (e.isDirectory()) walk(f); else total += fs.statSync(f).size; });
 walk(path.join(ROOT, 'site'));
 console.log(`       whole published site: ${(total / 1024).toFixed(0)} KB`);
-ok(total <= 6 * 1024 * 1024, 'whole published site stays under the 6 MB budget for sixteen concepts, reference views and six illustration packages');
+ok(total <= 7 * 1024 * 1024, 'whole published site stays under the 7 MB budget for nineteen concepts, interior plans, reference views and six illustration packages');
 ok(/loading="lazy"/.test(html), 'below-the-fold drawings load lazily');
 ok(!/@import|@font-face|url\(http/.test(read('site/style.css')), 'no web fonts or remote CSS');
 

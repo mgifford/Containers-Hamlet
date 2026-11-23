@@ -37,7 +37,7 @@
   var FOUNDATION_SYSTEMS = ['helical-piles', 'ground-screws', 'concrete-piers', 'timber-posts', 'bedrock-anchors'];
   var SUPPORT_TYPES = ['ground', 'module', 'engineered-transfer', 'not-assessed'];
   var REVIEW_STATUSES = ['not-assessed', 'requires-review', 'conceptually-resolved', 'professionally-verified'];
-  var ACCESS_CLASSIFICATIONS = ['fully-accessible-single-storey', 'ground-floor-accessible-living', 'potentially-adaptable', 'unresolved-vertical-access', 'not-assessed'];
+  var ACCESS_CLASSIFICATIONS = ['fully-accessible-single-storey', 'single-storey-step-free-candidate', 'ground-floor-accessible-living', 'potentially-adaptable', 'unresolved-vertical-access', 'not-assessed'];
   var STAIR_TYPES = ['straight-run', 'dog-leg', 'spiral', 'alternating-tread', 'external', 'none'];
   var INTER_STOREY_FLOOR_M = 0.4;
 
@@ -439,12 +439,27 @@
       if (c.door_type && ['none','insulated-sliding','folding','garage'].indexOf(c.door_type) < 0) err('Connection ' + c.id + ' has an unknown door type.');
       if (!isNum(c.glazing_area_m2) || c.glazing_area_m2 < 0) err('Connection ' + c.id + ' has an invalid glazing area.');
     });
+    if (d.interior !== undefined && d.interior !== null) {
+      if (!d.interior || d.interior.schema !== 'containers-hamlet-interior/v1') err('interior.schema must be containers-hamlet-interior/v1.');
+      if (d.interior) {
+        if (!Array.isArray(d.interior.rooms)) err('interior.rooms must be an array.');
+        if (!Array.isArray(d.interior.partitions)) err('interior.partitions must be an array.');
+        if (!Array.isArray(d.interior.doors)) err('interior.doors must be an array.');
+        if (!Array.isArray(d.interior.fixtures)) err('interior.fixtures must be an array.');
+        if (!Array.isArray(d.interior.clearances)) err('interior.clearances must be an array.');
+        if (d.interior.status !== 'authored' && d.interior.status !== 'provisional') err('interior.status must be authored or provisional.');
+        (d.interior.rooms || []).forEach(function (r) {
+          if (!r.id || !r.module || !Array.isArray(r.polygon) || r.polygon.length < 3) err('Interior room needs id, module and a polygon with at least three points.');
+          if (!(d.modules || []).some(function (m) { return m.id === r.module; })) err('Interior room ' + r.id + ' references an unknown module.');
+        });
+      }
+    }
     return {
       ok: errors.length === 0,
       errors: errors,
       warnings: warnings,
       unknownKeys: Object.keys(d).filter(function (k) {
-        return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal','envelope','vegetation','roof_form','solar_array','entry_shelter','paint','fire','levels','maxOccupiedStoreys','support','review','access','architecture','storeys','role'].indexOf(k) < 0;
+        return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal','envelope','vegetation','roof_form','solar_array','entry_shelter','paint','fire','levels','maxOccupiedStoreys','support','review','access','architecture','storeys','role','interior','formerName'].indexOf(k) < 0;
       })
     };
   }

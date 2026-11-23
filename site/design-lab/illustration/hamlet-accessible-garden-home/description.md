@@ -1,6 +1,6 @@
 # Accessible Garden Home — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 8b20cafe
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 641cb707
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -13,8 +13,8 @@ This description is generated from the canonical design model. The reference SVG
 - 3.75 m to the roof
 
 ## Modules
-- **m1** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding. 
-- **m2** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding. 
+- **m1** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.
+- **m2** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.
 
 ## Openings
 - m1 / Internal opening to bedroom module — south opening, 1.4 × 2.1 m, sill 0 m.
@@ -44,6 +44,15 @@ This description is generated from the canonical design model. The reference SVG
 - Path approach: east
 - Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 315°.
 
+## Interior schedule
+- Living (living) — 6.89 m², m1, authored, fixtures: table.
+- Kitchen (kitchen) — 6.43 m², m1, authored, fixtures: counter.
+- Bedroom (sleeping) — 6.89 m², m2, authored, fixtures: bed.
+- Bathroom (bathroom) — 3.91 m², m2, authored, fixtures: wc, sink, shower.
+- Storage (storage) — 2.53 m², m2, authored.
+- Partitions: 4 · doors: 4 · fixtures: 6.
+- Validation: 0 invalid, 2 unresolved, 7 review.
+
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
 - Adaptable bathroom is a design intent, not a verified layout.
@@ -51,12 +60,13 @@ This description is generated from the canonical design model. The reference SVG
 
 ## Unresolved matters
 - **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- **accessibility-verification**: Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
 - **site-approach**: The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- **bathroom-turning-circle**: Bathroom e-bath has no modeled 1.5 m turning circle.
 
 ## Capability notes
 - Exterior reference: available
-- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes
+- Interior perspective: not available — no interior camera or perspective renderer is implemented
 - Room-zone plan: available
 - Roof plan: available
 

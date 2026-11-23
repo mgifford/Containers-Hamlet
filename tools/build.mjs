@@ -46,6 +46,7 @@ const EcoModel = require('../site/js/model.js');
 const DesignSchema = require('../site/js/design-schema.js');
 const DesignModel = require('../site/js/design-model.js');
 const DesignIllustration = require('../site/js/design-illustration.js');
+const DesignInterior = require('../site/js/design-interior.js');
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BUILDINGS = ['cabin-a', 'cabin-20', 'lodge'];
@@ -124,6 +125,37 @@ export function generate() {
     f: { slug: 'Juniper-1-compact', name: 'Juniper', configuration: 'One 20-ft container · compact' },
     lodge: { slug: 'Lodge-3-community', name: 'Common-Lodge', configuration: 'Two containers + hall · community' }
   };
+  const designLab = JSON.parse(readText('data/design-lab.json'));
+  const selectedBySite = {};
+  designLab.concepts.filter((c) => c.role === 'hamlet-selected').forEach((c) => { selectedBySite[c.site.homesite] = c; });
+  const siteReconciliation = site.buildings.filter((b) => b.design_lab_home).map((b) => {
+    const c = designLab.concepts.find((x) => x.id === b.design_lab_home);
+    if (!c) return { building: b.id, design: b.design_lab_home, conflict: ['selected design not found'] };
+    const m = DesignModel.metrics(c);
+    const f = DesignModel.architectureFeatures(c);
+    const siteAnalysis = analysis.buildings.find((r) => r.id === b.id);
+    const corners = c.modules.flatMap((mod) => DesignModel.moduleCorners(mod));
+    const a = (b.rotation_deg || 0) * Math.PI / 180;
+    const reach = Math.max.apply(null, corners.map((p) => Math.hypot(p[0] * Math.cos(a) - p[1] * Math.sin(a), p[0] * Math.sin(a) + p[1] * Math.cos(a)))) + Math.max.apply(null, (c.porches || []).map((p) => p.depth_m || 0));
+    const margin = (b.clearing_radius_m || 0) - reach;
+    const porchArea = (c.porches || []).reduce((sum, p) => sum + (p.length_m || 0) * (p.depth_m || 0), 0);
+    const toSite = (p) => [b.x_m + p[0] * Math.cos(a) - p[1] * Math.sin(a), b.y_m + p[0] * Math.sin(a) + p[1] * Math.cos(a)];
+    const moduleFootprints = c.modules.map((mod) => ({ id: mod.id, storey: mod.storey, polygon: DesignModel.moduleCorners(mod).map(toSite) }));
+    const conflicts = [];
+    if (margin < 0) conflicts.push('footprint reaches ' + Math.abs(margin).toFixed(1) + ' m beyond the recorded clearing radius');
+    if (f.entrance_orientation !== (b.orientation && b.orientation.path_approach || '').split('-')[0]) conflicts.push('design entrance ' + f.entrance_orientation + ' does not match the recorded path approach ' + (b.orientation && b.orientation.path_approach || 'not recorded'));
+    return {
+      building: b.id, site_name: b.name, design: c.id, design_name: c.name,
+      site_footprint_m2: siteAnalysis ? siteAnalysis.footprint_m2 : null,
+      design_footprint_m2: m.groundCoverage_m2, difference_pct: siteAnalysis ? Math.round((m.groundCoverage_m2 - siteAnalysis.footprint_m2) / siteAnalysis.footprint_m2 * 1000) / 10 : null,
+      design_height_m: m.buildingHeight_m, storeys: m.storeyCount, entrance: f.entrance_orientation, path_approach: b.orientation && b.orientation.path_approach || null,
+      primary_view_deg: b.views && b.views.main ? b.views.main.azimuth_deg : null,
+      porch_area_m2: Math.round(porchArea * 10) / 10, clearing_radius_m: b.clearing_radius_m,
+      design_reach_m: Math.round(reach * 10) / 10, clearance_margin_m: Math.round(margin * 10) / 10,
+      module_footprints: moduleFootprints,
+      conflicts
+    };
+  });
   const homesPublic = {
     generated_by: 'tools/build.mjs',
     fictional: true,
@@ -134,7 +166,10 @@ export function generate() {
     buildings: site.buildings.map((b) => ({
       ...b,
       analysis: analysis.buildings.find((r) => r.id === b.id),
+      design_lab_metrics: siteReconciliation.find((r) => r.building === b.id) || null,
+      design_lab_geometry: (siteReconciliation.find((r) => r.building === b.id) || {}).module_footprints ? { modules: siteReconciliation.find((r) => r.building === b.id).module_footprints } : null,
     })),
+    design_lab_reconciliation: siteReconciliation,
   };
   put('site/data/homes.json', JSON.stringify(homesPublic, null, 2) + '\n');
   homesPublic.buildings.forEach((h) => {
@@ -153,11 +188,11 @@ export function generate() {
   });
 
   /* ---------------- Container Home Design Lab ---------------- */
-  const designLab = JSON.parse(readText('data/design-lab.json'));
-  if (!designLab.concepts || designLab.concepts.length !== 16) issues.push({ level: 'error', message: 'data/design-lab.json must contain nine archived concepts, six hamlet residences and the common lodge' });
+  if (!designLab.concepts || designLab.concepts.length !== 19) issues.push({ level: 'error', message: 'data/design-lab.json must contain nine legacy concepts, six selected single-storey residences, three experimental archive concepts and the common lodge' });
   const hamletSelected = designLab.concepts.filter((c) => c.role === 'hamlet-selected');
   if (hamletSelected.length !== 6) issues.push({ level: 'error', message: 'data/design-lab.json must contain six hamlet-selected residences' });
   if (designLab.concepts.some((c) => c.modules.some((m) => m.storey > 1))) issues.push({ level: 'error', message: 'a residence may not exceed two occupied storeys' });
+  if (hamletSelected.some((c) => c.levels.length !== 1 || c.modules.some((m) => m.storey !== 0))) issues.push({ level: 'error', message: 'all six selected hamlet residences must be single-storey' });
   const designViews = {};
   const illustrationEntries = [];
   designLab.concepts.forEach((concept) => {
@@ -195,6 +230,7 @@ export function generate() {
       _illusConfig = DesignIllustration.defaultConfig(concept);
       _scene = DesignIllustration.sceneSpec(concept, _illusConfig, site);
       views['site-facing'] = DesignModel.renderReference(concept, { idPrefix: `${prefix}-site-facing`, view: 'exterior-three-quarter', rotationDeg: _scene.camera.renderRotationDeg });
+      if (concept.interior) views['interior-plan'] = DesignInterior.planSVG(concept, { idPrefix: `${prefix}-interior-plan` });
     }
     Object.entries(views).forEach(([name, svg]) => put(`site/design-lab/views/${concept.id}-${name}.svg`, svg));
     if (concept.role === 'hamlet-selected') {
@@ -203,6 +239,7 @@ export function generate() {
         'design.json': JSON.stringify(concept, null, 2) + '\n',
         'description.md': _scene.description.text + '\n',
         'prompt.md': _scene.prompt.text + '\n',
+        'interior.md': _scene.interiorPrompt.text + '\n',
         'negative.md': _scene.negativePrompt.text + '\n',
         'config.json': JSON.stringify(_illusConfig, null, 2) + '\n',
         'scene.json': JSON.stringify(_scene, null, 2) + '\n'
@@ -210,6 +247,7 @@ export function generate() {
       Object.entries(files).forEach(([name, content]) => put(`${base}/${name}`, content));
       const artifacts = DesignIllustration.artifactPlan(_scene).map((a) => {
         let content = files[a.path];
+        if (!content && a.path === 'prompts/interior.md') content = files['interior.md'];
         if (!content && a.path.indexOf('drawings/') === 0) {
           const viewName = a.path.replace('drawings/', '').replace('.svg', '');
           content = views[viewName] || '';
@@ -235,7 +273,7 @@ export function generate() {
     const alt = DesignModel.singleStoreyAlternative(concept);
     if (alt) alternatives[p.id] = DesignModel.designProfile(alt);
   });
-  put('site/design-lab/residences/index.html', residencesPage(hamletProfiles, hamletSelected, alternatives).replace(/[ \t]+$/gm, ''));
+  put('site/design-lab/residences/index.html', residencesPage(hamletProfiles, hamletSelected, alternatives, siteReconciliation).replace(/[ \t]+$/gm, ''));
   put('site/design-lab/vegetation/index.html', vegetationPage(designLab.concepts));
   put('site/design-lab/ground/index.html', groundPage(designLab.concepts));
   put('site/design-lab/patterns/index.html', patternsPage());
@@ -308,7 +346,7 @@ export function generate() {
     heading: 'Six intentionally different hamlet residences',
     headingId: 'hamlet-residences',
     idPrefix: 'hamlet-',
-    intro: 'Each home has its own massing, roof, arrangement and relationship to the ground. They share construction principles, not a single look. Two are single-storey and two-storey alternatives are shown explicitly so the trade-offs are visible.'
+    intro: 'Each selected home is single-storey and has its own massing, roof, arrangement, interior and relationship to the ground. They share construction principles, not a single look. The three historical two-storey studies are kept separately in the Experimental archive.'
   });
   const archiveConcepts = designLab.concepts.filter((c) => c.role !== 'hamlet-selected');
   const archiveGallery = galleryCards(archiveConcepts, summaryOf, {

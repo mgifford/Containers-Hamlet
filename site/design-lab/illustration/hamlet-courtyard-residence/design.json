@@ -102,7 +102,7 @@
     "verification": "None. No architect, engineer or accessibility consultant has reviewed this concept."
   },
   "site": {
-    "homesite": "a",
+    "homesite": "c",
     "rotation_deg": 0,
     "note": "Illustrative placement only; not part of the published community layout."
   },
@@ -115,7 +115,9 @@
   "visual_seed": 43,
   "architecture": {
     "family": "Courtyard Residence",
-    "intent": "Single-storey L-shaped courtyard home with multiple orientations."
+    "intent": "Single-storey L-shaped courtyard home with multiple orientations.",
+    "arrangement": "l-shape",
+    "footprint_type": "l-shaped"
   },
   "roof_form": {
     "type": "flat",
@@ -159,7 +161,7 @@
         "type": "ground",
         "references": [],
         "verified": false,
-        "note": "Ground-bearing design intent."
+        "note": "Single-storey ground-bearing design intent."
       },
       "openings": [
         {
@@ -305,7 +307,7 @@
         "type": "ground",
         "references": [],
         "verified": false,
-        "note": "Ground-bearing design intent."
+        "note": "Single-storey ground-bearing design intent."
       },
       "openings": [
         {
@@ -442,17 +444,17 @@
       "present": false,
       "type": "none",
       "module": "",
-      "location": "not recorded",
+      "location": "not applicable",
       "width_m": 0,
       "run_m": 0,
       "rise_m": 0,
       "landing": false,
       "lift_reserve": false,
-      "note": "No stair recorded."
+      "note": "Removed in the single-storey conversion."
     },
-    "classification": "fully-accessible-single-storey",
+    "classification": "potentially-adaptable",
     "standards": "Project targets informed by the Ontario Building Code and CSA B651. No code compliance, licence or professional accessibility review is claimed.",
-    "assessment": "not-assessed"
+    "assessment": "not-verified"
   },
   "features": {
     "solar": "Solar-ready roof intent; no energy production is calculated.",
@@ -584,5 +586,293 @@
     "tool": "Containers Hamlet Design Lab",
     "version": "2.0.0"
   },
-  "professional_review_required": true
+  "professional_review_required": true,
+  "interior": {
+    "schema": "containers-hamlet-interior/v1",
+    "status": "provisional",
+    "clearances": [],
+    "rooms": [
+      {
+        "id": "room-m1-m1-z1",
+        "name": "Sleeping",
+        "type": "sleeping",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -6.026,
+            -1.149
+          ],
+          [
+            -2.366,
+            -1.149
+          ],
+          [
+            -2.366,
+            1.149
+          ],
+          [
+            -6.026,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z1",
+        "openingIds": [
+          "m1-n2",
+          "m1-s1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Ground-floor bedroom."
+        }
+      },
+      {
+        "id": "room-m1-m1-z2",
+        "name": "Bathroom",
+        "type": "bathroom",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -2.2260000000000004,
+            -1.149
+          ],
+          [
+            -0.1660000000000001,
+            -1.149
+          ],
+          [
+            -0.1660000000000001,
+            1.149
+          ],
+          [
+            -2.2260000000000004,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z2",
+        "openingIds": [],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Adaptable bathroom target."
+        }
+      },
+      {
+        "id": "room-m1-m1-z3",
+        "name": "Dining",
+        "type": "dining",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -0.02600000000000008,
+            -1.149
+          ],
+          [
+            2.4339999999999997,
+            -1.149
+          ],
+          [
+            2.4339999999999997,
+            1.149
+          ],
+          [
+            -0.02600000000000008,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z3",
+        "openingIds": [
+          "m1-n1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Courtyard doors; step-free."
+        }
+      },
+      {
+        "id": "room-m1-m1-z4",
+        "name": "Living",
+        "type": "living",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            2.5739999999999994,
+            -1.149
+          ],
+          [
+            5.834,
+            -1.149
+          ],
+          [
+            5.834,
+            1.149
+          ],
+          [
+            2.5739999999999994,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z4",
+        "openingIds": [
+          "m1-s2"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Partial wall opening to the courtyard; framing review required."
+        }
+      },
+      {
+        "id": "room-m2-m2-z1",
+        "name": "Kitchen",
+        "type": "kitchen",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            -6.026,
+            -1.149
+          ],
+          [
+            -2.766,
+            -1.149
+          ],
+          [
+            -2.766,
+            1.149
+          ],
+          [
+            -6.026,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m2-z1",
+        "openingIds": [
+          "m2-n1",
+          "m2-s1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Kitchen with a courtyard window."
+        }
+      },
+      {
+        "id": "room-m2-m2-z2",
+        "name": "Workspace",
+        "type": "work",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            -2.6260000000000003,
+            -1.149
+          ],
+          [
+            1.2340000000000002,
+            -1.149
+          ],
+          [
+            1.2340000000000002,
+            1.149
+          ],
+          [
+            -2.6260000000000003,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m2-z2",
+        "openingIds": [
+          "m2-n2"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Flexible workspace or accessible bedroom."
+        }
+      },
+      {
+        "id": "room-m2-m2-z3",
+        "name": "Storage",
+        "type": "storage",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            1.3740000000000003,
+            -1.149
+          ],
+          [
+            3.2340000000000004,
+            -1.149
+          ],
+          [
+            3.2340000000000004,
+            1.149
+          ],
+          [
+            1.3740000000000003,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m2-z3",
+        "openingIds": [
+          "m2-n3",
+          "m2-s2"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Storage."
+        }
+      },
+      {
+        "id": "room-m2-m2-z4",
+        "name": "Circulation",
+        "type": "circulation",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            3.374,
+            -1.149
+          ],
+          [
+            5.834,
+            -1.149
+          ],
+          [
+            5.834,
+            1.149
+          ],
+          [
+            3.374,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m2-z4",
+        "openingIds": [],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Covered link to the courtyard and main module."
+        }
+      }
+    ],
+    "partitions": [],
+    "doors": [],
+    "fixtures": [],
+    "circulation": [],
+    "service": [],
+    "provenance": {
+      "method": "Inferred from longitudinal room bands. No partition or door positions were invented.",
+      "source": "design-lab room zones",
+      "verification": "None. Provisional geometry."
+    }
+  }
 }

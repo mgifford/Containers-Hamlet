@@ -255,6 +255,25 @@
   function lateralNote(stacked, multi) { return stacked ? 'Stacked modules need a designed lateral system; container corner posts alone are not a lateral-force strategy.' : multi ? 'Connected single-storey modules need a designed lateral system across the links.' : 'A single module still needs its container frame, foundation and cladding to act as a designed lateral system.'; }
   function metricsHeight(d) { return d.modules.reduce(function (t, m) { return Math.max(t, moduleTop(m)); }, 0); }
 
+  function interiorAccessEvidence(d) {
+    if (!d.interior || !Array.isArray(d.interior.rooms) || !d.interior.rooms.length) return null;
+    var rooms = d.interior.rooms;
+    var doors = d.interior.doors || [];
+    var clearances = d.interior.clearances || [];
+    var bathrooms = rooms.filter(function (r) { return r.type === 'bathroom'; });
+    var kitchens = rooms.filter(function (r) { return r.type === 'kitchen'; });
+    var essential = ['living', 'kitchen', 'bathroom', 'sleeping'].every(function (t) { return rooms.some(function (r) { return r.type === t; }); });
+    var doorWidths = doors.map(function (x) { return x.width_m; });
+    var minDoor = doorWidths.length ? Math.min.apply(null, doorWidths) : null;
+    var turning = bathrooms.length > 0 && bathrooms.every(function (r) { return clearances.some(function (c) { return c.room === r.id && c.type === 'turning-circle' && num(c.diameter_m, 0) >= 1.5; }); });
+    var work = kitchens.length > 0 && kitchens.every(function (r) { return clearances.some(function (c) { return c.room === r.id && c.type === 'work-zone'; }); });
+    var pathOk = !!(d.access && d.access.path_connection && !/not (surveyed|assessed|verified|measured)/i.test(d.access.path_connection) && /(surveyed|assessed|verified|measured)/i.test(d.access.path_connection));
+    var entrance = num(d.access && d.access.entrance_door_width_m, 0);
+    var circulation = Math.max(0, num(d.access && d.access.circulation_width_m, 0));
+    var complete = !!(d.interior.status === 'authored' && d.access && d.access.step_free_entrance && essential && doors.length && minDoor >= 0.86 && turning && work && pathOk && entrance >= 0.86 && circulation >= 0.9);
+    return { rooms: rooms.length, doors: doors.length, essential: essential, minDoorWidth_m: minDoor, bathroomTurningCircle: turning, kitchenWorkZone: work, pathConnection: pathOk, entranceWidth_m: entrance, circulation_m: circulation, complete: complete, status: d.interior.status };
+  }
+
   function accessibilityProfile(input) {
     var d = Schema.canonicalize(input);
     var a = d.access;
@@ -287,11 +306,19 @@
       else if (a.stair && a.stair.present) classification = 'potentially-adaptable';
       else classification = 'unresolved-vertical-access';
     }
+    var evidence = interiorAccessEvidence(d);
     if (storeyCount > 1 && classification === 'fully-accessible-single-storey') classification = 'unresolved-vertical-access';
+    if (storeyCount === 1 && evidence) {
+      if (evidence.complete) classification = 'single-storey-step-free-candidate';
+      else if (a.step_free_entrance && evidence.essential) classification = 'potentially-adaptable';
+      else classification = 'not-assessed';
+    }
+    if (storeyCount === 1 && !evidence && classification === 'fully-accessible-single-storey') classification = 'potentially-adaptable';
     var labels = {
       'fully-accessible-single-storey': 'Single-storey, step-free concept. This is a design target, not a verified fully accessible dwelling.',
+      'single-storey-step-free-candidate': 'Single-storey, step-free candidate. Recorded geometry supports the design targets, but no professional accessibility assessment has been completed.',
       'ground-floor-accessible-living': 'Ground-floor accessible living arrangement; the upper floor is reached by stairs and is not accessible.',
-      'potentially-adaptable': 'Potentially adaptable, but vertical access and some essential functions are not resolved.',
+      'potentially-adaptable': 'Potentially adaptable, but some essential functions, clearances or vertical access are unresolved.',
       'unresolved-vertical-access': 'Unresolved vertical-access barrier. Do not describe this home as accessible.',
       'not-assessed': 'Accessibility not assessed.'
     };
@@ -313,6 +340,7 @@
       notes: notes,
       standards: a.standards,
       assessment: a.assessment,
+      interiorEvidence: evidence,
       note: 'Qualitative accessibility review against project targets informed by CSA B651 and the Ontario Building Code. No compliance, licence or professional accessibility assessment is claimed.'
     };
   }
@@ -361,7 +389,7 @@
     alt.access.circulation_width_m = d.access.circulation_width_m;
     alt.access.path_connection = d.access.path_connection;
     alt.access.vertical_access_strategy = 'Derived single-storey alternative; no internal stair.';
-    alt.access.classification = d.access.step_free_entrance ? 'fully-accessible-single-storey' : 'not-assessed';
+    alt.access.classification = d.access.step_free_entrance ? 'single-storey-step-free-candidate' : 'not-assessed';
     alt.access.stair = { present: false, type: 'none', module: '', location: 'not applicable', width_m: 0, run_m: 0, rise_m: 0, landing: false, lift_reserve: false, note: 'Removed in the single-storey translation.' };
     alt.id = d.id + '-single-storey-alternative';
     alt.name = d.name + ' — single-storey translation';
@@ -389,11 +417,14 @@
     var footprint = metrics(d).groundCoverage_m2;
     var b = bounds(d);
     var ratio = b.height ? b.width / b.height : 1;
-    var footprintType = arrangement === 'courtyard-or-linked' ? 'courtyard' : arrangement === 'l-shape' ? 'l-shaped' : arrangement === 'perpendicular-stack' ? 'cross' : ratio > 3 ? 'linear' : ratio < 1.4 ? 'compact' : 'rectangular';
+    var footprintType = arrangement === 'courtyard-or-linked' ? 'courtyard' : arrangement === 'l-shape' ? 'l-shaped' : arrangement === 't-wing' ? 't-shaped' : arrangement === 'perpendicular-stack' ? 'cross' : ratio > 3 ? 'linear' : ratio < 1.4 ? 'compact' : 'rectangular';
+    if (d.architecture && d.architecture.footprint_type) footprintType = d.architecture.footprint_type;
+    if (d.architecture && d.architecture.arrangement) arrangement = d.architecture.arrangement;
     var roof = d.roof_form.type;
     var entrance = 'south';
     var door = null;
-    d.modules.forEach(function (m) { (m.openings || []).forEach(function (o) { if (!door && (o.type === 'door' || o.type === 'sliding-door')) door = { m: m, o: o }; }); });
+    d.modules.forEach(function (m) { (m.openings || []).forEach(function (o) { if (!door && o.type === 'door') door = { m: m, o: o }; }); });
+    if (!door) d.modules.forEach(function (m) { (m.openings || []).forEach(function (o) { if (!door && o.type === 'sliding-door') door = { m: m, o: o }; }); });
     if (door) entrance = worldFace(door.m, door.o.face);
     var circulation = storeys > 1 ? (d.access.stair && d.access.stair.present ? 'internal-stair' : 'unresolved-vertical-access') : 'single-level';
     return {
@@ -648,7 +679,7 @@
       if (transportWidth > 3.0 || transportHeight > 3.2) warn('transport', m.id + ' is about ' + n(transportWidth) + ' m wide and ' + n(transportHeight) + ' m high after insulation and roof. Oversize transport permits and route surveys are likely.', 'engineering');
       if (m.openings.some(function (o) { return o.type === 'door' && o.width_m < 0.86; })) warn('door-width', m.id + ' has a door narrower than the 0.86 m project target.', 'accessibility');
       (m.zones || []).filter(function (z) { return z.type === 'bathroom'; }).forEach(function (z) {
-        if (z.end_m - z.start_m < 2.4) warn('bathroom-clearance', 'Bathroom ' + z.name + ' is ' + n(z.end_m - z.start_m) + ' m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.', 'accessibility');
+        if (z.end_m - z.start_m < 2.4) warn('bathroom-clearance', (z.name === 'Bathroom' ? 'Bathroom' : 'Bathroom ' + z.name) + ' is ' + n(z.end_m - z.start_m) + ' m long. Verify a 1.5 m turning circle, transfer space, grab bars and door clearance against CSA B651 and the applicable code.', 'accessibility');
       });
     });
     d.porches.forEach(function (p) {
@@ -2205,7 +2236,7 @@
     moduleCorners: moduleCorners, connectionCorners: connectionCorners, porchCorners: porchCorners, deckCorners: deckCorners,
     openingSegment: openingSegment, faceNormalWorld: faceNormalWorld, faceLength: faceLength,
     polygonsOverlap: polygonsOverlap, overlapArea: overlapArea, bounds: bounds,
-    moduleBase: moduleBase, moduleTop: moduleTop, moduleBox3D: moduleBox3D, boxOverlap3D: boxOverlap3D, verticalGap: verticalGap,
+    moduleBase: moduleBase, moduleTop: moduleTop, moduleBox3D: moduleBox3D, boxOverlap3D: boxOverlap3D, verticalGap: verticalGap, transformModulePoint: transform,
     supportAnalysis: supportAnalysis, metrics: metrics, roofGeometry: roofGeometry, structuralReview: structuralReview,
     accessibilityProfile: accessibilityProfile, architectureFeatures: architectureFeatures, architecturalSimilarity: architecturalSimilarity,
     findSimilarHomes: findSimilarHomes, sustainabilityProfile: sustainabilityProfile, singleStoreyAlternative: singleStoreyAlternative,

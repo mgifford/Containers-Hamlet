@@ -87,6 +87,30 @@
       <button type="button" id="apply-arrangement">Apply arrangement</button>
     </section>
 
+    <section class="control-block" aria-labelledby="interior-title">
+      <h2 id="interior-title">Interior floor plan</h2>
+      <p class="small">Rooms are polygons in module-local metres. The simple room bands are preserved as a fallback; a provisional interior can be inferred from them, with partitions, doors and fixtures authored separately. The plan is a spatial model, not a construction drawing or an accessibility certificate.</p>
+      <div class="field-grid">
+        <label>Editing mode
+          <select id="edit-mode">
+            <option value="arrangement">Simple container arrangement</option>
+            <option value="interior">Detailed interior plan</option>
+          </select>
+        </label>
+      </div>
+      <p id="interior-status" class="status" role="status" aria-live="polite"></p>
+      <div id="interior-rooms"></div>
+      <div class="button-row">
+        <button type="button" id="add-interior-room" class="secondary">Add room</button>
+        <button type="button" id="add-partition" class="secondary">Add partition</button>
+        <button type="button" id="add-door" class="secondary">Add interior door</button>
+        <button type="button" id="add-fixture" class="secondary">Add fixture</button>
+        <button type="button" id="migrate-interior" class="secondary">Create provisional interior from room bands</button>
+      </div>
+      <h3>Partitions, doors and fixtures</h3>
+      <div id="interior-details"></div>
+    </section>
+
     <section class="control-block" aria-labelledby="illustrate-title">
       <h2 id="illustrate-title">Illustrate</h2>
       <p class="small">Generate an illustration prompt and a deterministic reference view from this design. The architectural model is authoritative. Presentation settings change the illustration, never the geometry. No image is generated here and no design is uploaded.</p>
@@ -286,6 +310,12 @@
       <p class="view-caption">Nominal container geometry. Dimensions are not verified clearances. Openings are shown as blue windows and brown doors. Modules on other levels are muted outlines.</p>
     </section>
 
+    <section class="view-block" aria-labelledby="interior-plan-title">
+      <h2 id="interior-plan-title">Interior floor plan</h2>
+      <div id="interior-plan" class="view-svg"></div>
+      <p class="small">Generated from room polygons, partitions, doors, fixtures and clearances. Inferred rooms are hatched. Room areas and clearance checks are conceptual; no code or accessibility certification is claimed.</p>
+    </section>
+
     <div class="view-grid">
       <section class="view-block" aria-labelledby="exterior-title">
         <h2 id="exterior-title">Exterior concept</h2>
@@ -404,6 +434,7 @@
 </footer>
 <script src="../../js/design-schema.js"></script>
 <script src="../../js/design-model.js"></script>
+<script src="../../js/design-interior.js"></script>
 <script src="../../js/design-illustration.js"></script>
 <script src="../concepts.js"></script>
 <script src="../site-data.js"></script>

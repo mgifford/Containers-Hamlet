@@ -16,6 +16,12 @@ Material policy: strict documented. Preserve the documented materials. Do not in
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
 - The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+- Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
+- Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
+- Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
+- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- No interior doors are modeled. Room connectivity cannot be assessed.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.

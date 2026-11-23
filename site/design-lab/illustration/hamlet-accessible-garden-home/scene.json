@@ -4,7 +4,7 @@
   "name": "Accessible Garden Home",
   "revision": "2.0.0",
   "designSchema": "containers-hamlet-design/v2.0",
-  "designHash": "8b20cafe",
+  "designHash": "641cb707",
   "sceneType": "exterior-three-quarter",
   "camera": {
     "view": "exterior-three-quarter",
@@ -282,6 +282,629 @@
       "accessibility": "Storage and utility."
     }
   ],
+  "interior": {
+    "schema": "containers-hamlet-interior/v1",
+    "status": "authored",
+    "rooms": [
+      {
+        "id": "e-living",
+        "name": "Living",
+        "type": "living",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -2.9,
+            -1.149
+          ],
+          [
+            0.1,
+            -1.149
+          ],
+          [
+            0.1,
+            1.149
+          ],
+          [
+            -2.9,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m1-n1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-kitchen",
+        "name": "Kitchen",
+        "type": "kitchen",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            0.1,
+            -1.149
+          ],
+          [
+            2.9,
+            -1.149
+          ],
+          [
+            2.9,
+            1.149
+          ],
+          [
+            0.1,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m1-n2"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-bed",
+        "name": "Bedroom",
+        "type": "sleeping",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            -2.9,
+            -1.149
+          ],
+          [
+            0.1,
+            -1.149
+          ],
+          [
+            0.1,
+            1.149
+          ],
+          [
+            -2.9,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m2-n1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-bath",
+        "name": "Bathroom",
+        "type": "bathroom",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            0.1,
+            -1.149
+          ],
+          [
+            1.8,
+            -1.149
+          ],
+          [
+            1.8,
+            1.149
+          ],
+          [
+            0.1,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m2-w1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-store",
+        "name": "Storage",
+        "type": "storage",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            1.8,
+            -1.149
+          ],
+          [
+            2.9,
+            -1.149
+          ],
+          [
+            2.9,
+            1.149
+          ],
+          [
+            1.8,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      }
+    ],
+    "partitions": [
+      {
+        "id": "e-p1",
+        "module": "m1",
+        "from": [
+          0.1,
+          -1.149
+        ],
+        "to": [
+          0.1,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "e-p2",
+        "module": "m2",
+        "from": [
+          0.1,
+          -1.149
+        ],
+        "to": [
+          0.1,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "e-p3",
+        "module": "m2",
+        "from": [
+          1.8,
+          -1.149
+        ],
+        "to": [
+          1.8,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "e-link",
+        "module": "m1",
+        "from": [
+          -2.959,
+          1.149
+        ],
+        "to": [
+          2.959,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      }
+    ],
+    "doors": [
+      {
+        "id": "e-d1",
+        "partition": "e-p1",
+        "type": "swing",
+        "width_m": 0.9,
+        "position_m": 0.5,
+        "connects": [
+          "e-living",
+          "e-kitchen"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "e-d2",
+        "partition": "e-p2",
+        "type": "swing",
+        "width_m": 0.85,
+        "position_m": 0.5,
+        "connects": [
+          "e-bed",
+          "e-bath"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "e-d3",
+        "partition": "e-p3",
+        "type": "swing",
+        "width_m": 0.8,
+        "position_m": 0.5,
+        "connects": [
+          "e-bath",
+          "e-store"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "e-d4",
+        "partition": "e-link",
+        "type": "swing",
+        "width_m": 0.95,
+        "position_m": 0.5,
+        "connects": [
+          "e-kitchen",
+          "e-bed"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      }
+    ],
+    "fixtures": [
+      {
+        "id": "e-wc",
+        "room": "e-bath",
+        "type": "wc",
+        "position_m": [
+          1.55,
+          0.85
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.45,
+          0.5
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-sink",
+        "room": "e-bath",
+        "type": "sink",
+        "position_m": [
+          0.45,
+          0.95
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.4,
+          0.3
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-shower",
+        "room": "e-bath",
+        "type": "shower",
+        "position_m": [
+          1,
+          -0.55
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.7,
+          0.7
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-counter",
+        "room": "e-kitchen",
+        "type": "counter",
+        "position_m": [
+          1.5,
+          0.85
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          2.3,
+          0.55
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-bedf",
+        "room": "e-bed",
+        "type": "bed",
+        "position_m": [
+          -0.6,
+          0
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          1.4,
+          1.9
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-table",
+        "room": "e-living",
+        "type": "table",
+        "position_m": [
+          -1.5,
+          0
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.7,
+          0.7
+        ],
+        "provenance": "authored"
+      }
+    ],
+    "clearances": [
+      {
+        "id": "e-work",
+        "room": "e-kitchen",
+        "type": "work-zone",
+        "center_m": [
+          1.5,
+          0
+        ],
+        "size_m": [
+          1.2,
+          0.6
+        ],
+        "status": "not-verified"
+      }
+    ],
+    "schedule": {
+      "rooms": [
+        {
+          "id": "e-living",
+          "name": "Living",
+          "type": "living",
+          "module": "m1",
+          "level": 0,
+          "area_m2": 6.89,
+          "provenance": "authored",
+          "fixtures": [
+            "table"
+          ]
+        },
+        {
+          "id": "e-kitchen",
+          "name": "Kitchen",
+          "type": "kitchen",
+          "module": "m1",
+          "level": 0,
+          "area_m2": 6.43,
+          "provenance": "authored",
+          "fixtures": [
+            "counter"
+          ]
+        },
+        {
+          "id": "e-bed",
+          "name": "Bedroom",
+          "type": "sleeping",
+          "module": "m2",
+          "level": 0,
+          "area_m2": 6.89,
+          "provenance": "authored",
+          "fixtures": [
+            "bed"
+          ]
+        },
+        {
+          "id": "e-bath",
+          "name": "Bathroom",
+          "type": "bathroom",
+          "module": "m2",
+          "level": 0,
+          "area_m2": 3.91,
+          "provenance": "authored",
+          "fixtures": [
+            "wc",
+            "sink",
+            "shower"
+          ]
+        },
+        {
+          "id": "e-store",
+          "name": "Storage",
+          "type": "storage",
+          "module": "m2",
+          "level": 0,
+          "area_m2": 2.53,
+          "provenance": "authored",
+          "fixtures": []
+        }
+      ],
+      "total_area_m2": 26.65
+    },
+    "validation": {
+      "ok": true,
+      "invalid": [],
+      "unresolved": [
+        {
+          "category": "unresolved-design",
+          "code": "room-coverage",
+          "message": "Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "bathroom-turning-circle",
+          "message": "Bathroom e-bath has no modeled 1.5 m turning circle."
+        }
+      ],
+      "review": [
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-living accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-kitchen accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-bed accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-bath accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-store accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "door-clearance",
+          "message": "Door e-d2 is narrower than the 0.86 m project target."
+        },
+        {
+          "category": "review-required",
+          "code": "door-clearance",
+          "message": "Door e-d3 is narrower than the 0.86 m project target."
+        }
+      ],
+      "items": [
+        {
+          "category": "unresolved-design",
+          "code": "room-coverage",
+          "message": "Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "bathroom-turning-circle",
+          "message": "Bathroom e-bath has no modeled 1.5 m turning circle."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-living accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-kitchen accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-bed accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-bath accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-store accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "door-clearance",
+          "message": "Door e-d2 is narrower than the 0.86 m project target."
+        },
+        {
+          "category": "review-required",
+          "code": "door-clearance",
+          "message": "Door e-d3 is narrower than the 0.86 m project target."
+        }
+      ]
+    },
+    "accessibilityEvidence": {
+      "classification": "potentially-adaptable",
+      "stepFree": true,
+      "singleStorey": true,
+      "essentialFunctions": true,
+      "entranceWidth_m": 1,
+      "minDoorWidth_m": 0.8,
+      "minCirculationWidth_m": 1.2,
+      "bathroomTurningCircle": false,
+      "kitchenApproach": true,
+      "pathConnection": false,
+      "turningCircles": 0,
+      "workZones": 1,
+      "issues": [
+        {
+          "category": "unresolved-design",
+          "code": "room-coverage",
+          "message": "Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "bathroom-turning-circle",
+          "message": "Bathroom e-bath has no modeled 1.5 m turning circle."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-living accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-kitchen accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-bed accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-bath accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room e-store accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "door-clearance",
+          "message": "Door e-d2 is narrower than the 0.86 m project target."
+        },
+        {
+          "category": "review-required",
+          "code": "door-clearance",
+          "message": "Door e-d3 is narrower than the 0.86 m project target."
+        }
+      ],
+      "note": "Automated evidence only. No code compliance, CSA B651 conformity or professional accessibility assessment is claimed."
+    },
+    "capabilities": {
+      "detailedFloorPlan": true,
+      "interiorIllustrationPrompt": true,
+      "interiorPerspective": false,
+      "roomZonePlan": true,
+      "note": "Room polygons and fixtures support a detailed interior prompt and plan. No interior camera or perspective renderer is implemented, so perspective accuracy is not claimed."
+    }
+  },
   "materials": {
     "modules": [
       {
@@ -358,7 +981,11 @@
   },
   "capabilities": {
     "exteriorReference": true,
+    "interiorZoneDiagram": true,
+    "interiorGeometry": true,
+    "detailedFloorPlan": true,
     "interiorPerspective": false,
+    "interiorIllustrationPrompt": true,
     "roomZonePlan": true,
     "roofPlan": true,
     "containerSchematic": true
@@ -383,14 +1010,19 @@
       "message": "Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective."
     },
     {
-      "code": "accessibility-verification",
-      "severity": "review",
-      "message": "Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured."
-    },
-    {
       "code": "site-approach",
       "severity": "unresolved",
       "message": "The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification."
+    },
+    {
+      "code": "room-coverage",
+      "severity": "unresolved",
+      "message": "Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved."
+    },
+    {
+      "code": "bathroom-turning-circle",
+      "severity": "unresolved",
+      "message": "Bathroom e-bath has no modeled 1.5 m turning circle."
     }
   ],
   "presentation": {
@@ -402,7 +1034,7 @@
   },
   "materialPolicy": "strict-documented",
   "prompt": {
-    "text": "Create a photorealistic architectural illustration of the Accessible Garden Home residence.\nUse the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.\nThe building has 1 occupied storey and 2 container modules.\nModule geometry:\n- m1: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.\n- m2: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.\nRoof: canopy at 0 degrees, 1.2 m overhang.\nOpenings:\n- m1: south opening \"Internal opening to bedroom module\" at 3 m, 1.4 x 2.1 m, sill 0 m; north window \"Living window\" at 1.6 m, 1.4 x 1.3 m, sill 0.8 m; north window \"Kitchen window\" at 4.6 m, 1 x 1.2 m, sill 1.1 m; west window \"West window\" at 1 m, 1 x 1.3 m, sill 0.9 m.\n- m2: north opening \"Internal opening to living module\" at 3 m, 1.4 x 2.1 m, sill 0 m; south door \"Step-free entrance\" at 1.6 m, 1 x 2.1 m, sill 0 m; south sliding-door \"Garden doors\" at 4.4 m, 2.4 x 2.1 m, sill 0 m; west window \"Bathroom window\" at 1 m, 0.8 x 1 m, sill 1.4 m; east door \"Utility door\" at 1 m, 0.95 x 2.1 m, sill 0 m.\nOutdoor spaces:\n- p1: 4.6 m x 2.8 m covered porch on the south face of m2, roofed.\n- d1: deck beyond p1, projecting 1.2 m.\nSite: Cabin E. Principal view: Fern, hemlock and a distant plane of lake light. The view is more forest than water. Path approach recorded as east.\nCamera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 315 degrees.\nPresentation: late summer, late afternoon, clear, no people.\nMaterial policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.\nRestrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.\nUnresolved matters to carry into the illustration notes:\n- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.\n- The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\nThis is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.",
+    "text": "Create a photorealistic architectural illustration of the Accessible Garden Home residence.\nUse the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.\nThe building has 1 occupied storey and 2 container modules.\nModule geometry:\n- m1: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.\n- m2: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.\nRoof: canopy at 0 degrees, 1.2 m overhang.\nOpenings:\n- m1: south opening \"Internal opening to bedroom module\" at 3 m, 1.4 x 2.1 m, sill 0 m; north window \"Living window\" at 1.6 m, 1.4 x 1.3 m, sill 0.8 m; north window \"Kitchen window\" at 4.6 m, 1 x 1.2 m, sill 1.1 m; west window \"West window\" at 1 m, 1 x 1.3 m, sill 0.9 m.\n- m2: north opening \"Internal opening to living module\" at 3 m, 1.4 x 2.1 m, sill 0 m; south door \"Step-free entrance\" at 1.6 m, 1 x 2.1 m, sill 0 m; south sliding-door \"Garden doors\" at 4.4 m, 2.4 x 2.1 m, sill 0 m; west window \"Bathroom window\" at 1 m, 0.8 x 1 m, sill 1.4 m; east door \"Utility door\" at 1 m, 0.95 x 2.1 m, sill 0 m.\nOutdoor spaces:\n- p1: 4.6 m x 2.8 m covered porch on the south face of m2, roofed.\n- d1: deck beyond p1, projecting 1.2 m.\nSite: Cabin E. Principal view: Fern, hemlock and a distant plane of lake light. The view is more forest than water. Path approach recorded as east.\nCamera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 315 degrees.\nPresentation: late summer, late afternoon, clear, no people.\nMaterial policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.\nRestrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.\nUnresolved matters to carry into the illustration notes:\n- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\n- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.\n- Bathroom e-bath has no modeled 1.5 m turning circle.\nThis is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.",
     "lines": [
       "Create a photorealistic architectural illustration of the Accessible Garden Home residence.",
       "Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.",
@@ -424,8 +1056,9 @@
       "Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.",
       "Unresolved matters to carry into the illustration notes:",
       "- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
-      "- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.",
       "- The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.",
+      "- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.",
+      "- Bathroom e-bath has no modeled 1.5 m turning circle.",
       "This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance."
     ]
   },
@@ -455,11 +1088,11 @@
     ]
   },
   "description": {
-    "text": "# Accessible Garden Home — illustration reference\n\nDesign revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 8b20cafe\n\nThis description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.\n\n## Architectural facts\n- 1 occupied storey\n- 2 container modules (20ft, 20ft)\n- canopy roof at 0 degrees\n- 29.5 m2 gross floor area\n- 29.5 m2 ground coverage\n- 3.75 m to the roof\n\n## Modules\n- **m1** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding. \n- **m2** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding. \n\n## Openings\n- m1 / Internal opening to bedroom module — south opening, 1.4 × 2.1 m, sill 0 m.\n- m1 / Living window — north window, 1.4 × 1.3 m, sill 0.8 m.\n- m1 / Kitchen window — north window, 1 × 1.2 m, sill 1.1 m.\n- m1 / West window — west window, 1 × 1.3 m, sill 0.9 m.\n- m2 / Internal opening to living module — north opening, 1.4 × 2.1 m, sill 0 m.\n- m2 / Step-free entrance — south door, 1 × 2.1 m, sill 0 m.\n- m2 / Garden doors — south sliding-door, 2.4 × 2.1 m, sill 0 m.\n- m2 / Bathroom window — west window, 0.8 × 1 m, sill 1.4 m.\n- m2 / Utility door — east door, 0.95 × 2.1 m, sill 0 m.\n\n## Rooms and zones\n- m1 / Living — living, 0–3.2 m. 1.5 m turning space target; step-free garden doors.\n- m1 / Kitchen — kitchen, 3.2–6 m. Adaptable kitchen: knee space, varied work heights and a clear approach.\n- m2 / Sleeping — sleeping, 0–2.8 m. Ground-floor bedroom with a 1.5 m turning circle target.\n- m2 / Bathroom — bathroom, 2.8–4.6 m. Adaptable bathroom: transfer space, grab-bar blocking and a 0.9 m door.\n- m2 / Storage — storage, 4.6–6 m. Storage and utility.\n\n## Outdoor spaces\n- p1: 4.6 × 2.8 m covered porch on the south face of m2.\n- d1: deck beyond p1, 1.2 m.\n\n## Site and camera\n- Assigned site: Cabin E (site rotation 100°).\n- Principal view: Fern, hemlock and a distant plane of lake light. The view is more forest than water.\n- Path approach: east\n- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 315°.\n\n## Intentions\n- Step-free entrance is a design intent, not a verified measurement.\n- Adaptable bathroom is a design intent, not a verified layout.\n- Adaptable kitchen is a design intent, not a verified layout.\n\n## Unresolved matters\n- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- **accessibility-verification**: Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.\n- **site-approach**: The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\n\n## Capability notes\n- Exterior reference: available\n- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes\n- Room-zone plan: available\n- Roof plan: available\n\n## Licence and status\nConcept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.",
+    "text": "# Accessible Garden Home — illustration reference\n\nDesign revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 641cb707\n\nThis description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.\n\n## Architectural facts\n- 1 occupied storey\n- 2 container modules (20ft, 20ft)\n- canopy roof at 0 degrees\n- 29.5 m2 gross floor area\n- 29.5 m2 ground coverage\n- 3.75 m to the roof\n\n## Modules\n- **m1** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.\n- **m2** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.\n\n## Openings\n- m1 / Internal opening to bedroom module — south opening, 1.4 × 2.1 m, sill 0 m.\n- m1 / Living window — north window, 1.4 × 1.3 m, sill 0.8 m.\n- m1 / Kitchen window — north window, 1 × 1.2 m, sill 1.1 m.\n- m1 / West window — west window, 1 × 1.3 m, sill 0.9 m.\n- m2 / Internal opening to living module — north opening, 1.4 × 2.1 m, sill 0 m.\n- m2 / Step-free entrance — south door, 1 × 2.1 m, sill 0 m.\n- m2 / Garden doors — south sliding-door, 2.4 × 2.1 m, sill 0 m.\n- m2 / Bathroom window — west window, 0.8 × 1 m, sill 1.4 m.\n- m2 / Utility door — east door, 0.95 × 2.1 m, sill 0 m.\n\n## Rooms and zones\n- m1 / Living — living, 0–3.2 m. 1.5 m turning space target; step-free garden doors.\n- m1 / Kitchen — kitchen, 3.2–6 m. Adaptable kitchen: knee space, varied work heights and a clear approach.\n- m2 / Sleeping — sleeping, 0–2.8 m. Ground-floor bedroom with a 1.5 m turning circle target.\n- m2 / Bathroom — bathroom, 2.8–4.6 m. Adaptable bathroom: transfer space, grab-bar blocking and a 0.9 m door.\n- m2 / Storage — storage, 4.6–6 m. Storage and utility.\n\n## Outdoor spaces\n- p1: 4.6 × 2.8 m covered porch on the south face of m2.\n- d1: deck beyond p1, 1.2 m.\n\n## Site and camera\n- Assigned site: Cabin E (site rotation 100°).\n- Principal view: Fern, hemlock and a distant plane of lake light. The view is more forest than water.\n- Path approach: east\n- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 315°.\n\n## Interior schedule\n- Living (living) — 6.89 m², m1, authored, fixtures: table.\n- Kitchen (kitchen) — 6.43 m², m1, authored, fixtures: counter.\n- Bedroom (sleeping) — 6.89 m², m2, authored, fixtures: bed.\n- Bathroom (bathroom) — 3.91 m², m2, authored, fixtures: wc, sink, shower.\n- Storage (storage) — 2.53 m², m2, authored.\n- Partitions: 4 · doors: 4 · fixtures: 6.\n- Validation: 0 invalid, 2 unresolved, 7 review.\n\n## Intentions\n- Step-free entrance is a design intent, not a verified measurement.\n- Adaptable bathroom is a design intent, not a verified layout.\n- Adaptable kitchen is a design intent, not a verified layout.\n\n## Unresolved matters\n- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- **site-approach**: The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\n- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.\n- **bathroom-turning-circle**: Bathroom e-bath has no modeled 1.5 m turning circle.\n\n## Capability notes\n- Exterior reference: available\n- Interior perspective: not available — no interior camera or perspective renderer is implemented\n- Room-zone plan: available\n- Roof plan: available\n\n## Licence and status\nConcept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.",
     "lines": [
       "# Accessible Garden Home — illustration reference",
       "",
-      "Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 8b20cafe",
+      "Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 641cb707",
       "",
       "This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.",
       "",
@@ -503,6 +1136,15 @@
       "- Path approach: east",
       "- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 315°.",
       "",
+      "## Interior schedule",
+      "- Living (living) — 6.89 m², m1, authored, fixtures: table.",
+      "- Kitchen (kitchen) — 6.43 m², m1, authored, fixtures: counter.",
+      "- Bedroom (sleeping) — 6.89 m², m2, authored, fixtures: bed.",
+      "- Bathroom (bathroom) — 3.91 m², m2, authored, fixtures: wc, sink, shower.",
+      "- Storage (storage) — 2.53 m², m2, authored.",
+      "- Partitions: 4 · doors: 4 · fixtures: 6.",
+      "- Validation: 0 invalid, 2 unresolved, 7 review.",
+      "",
       "## Intentions",
       "- Step-free entrance is a design intent, not a verified measurement.",
       "- Adaptable bathroom is a design intent, not a verified layout.",
@@ -510,17 +1152,55 @@
       "",
       "## Unresolved matters",
       "- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
-      "- **accessibility-verification**: Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.",
       "- **site-approach**: The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.",
+      "- **room-coverage**: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.",
+      "- **bathroom-turning-circle**: Bathroom e-bath has no modeled 1.5 m turning circle.",
       "",
       "## Capability notes",
       "- Exterior reference: available",
-      "- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes",
+      "- Interior perspective: not available — no interior camera or perspective renderer is implemented",
       "- Room-zone plan: available",
       "- Roof plan: available",
       "",
       "## Licence and status",
       "Concept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0."
+    ]
+  },
+  "interiorPrompt": {
+    "text": "# Interior illustration prompt — Accessible Garden Home\n\nUse the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.\n\nRooms:\n- Living (living, e-living): 6.89 m², m1, authored, fixtures: table.\n- Kitchen (kitchen, e-kitchen): 6.43 m², m1, authored, fixtures: counter.\n- Bedroom (sleeping, e-bed): 6.89 m², m2, authored, fixtures: bed.\n- Bathroom (bathroom, e-bath): 3.91 m², m2, authored, fixtures: wc, sink, shower.\n- Storage (storage, e-store): 2.53 m², m2, authored.\n\nPartitions and doors: 4 partitions and 4 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.\nFixtures: wc in e-bath; sink in e-bath; shower in e-bath; counter in e-kitchen; bed in e-bed; table in e-living.\nWindows: the room polygons reference the documented opening ids. Do not add windows or move them.\n\nCamera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.\nPresentation: late summer, late afternoon, no people.\n\nRestrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.\n\nUnresolved interior matters:\n- room-coverage: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.\n- bathroom-turning-circle: Bathroom e-bath has no modeled 1.5 m turning circle.\n- room-accessibility: Room e-living accessibility is not professionally verified.\n- room-accessibility: Room e-kitchen accessibility is not professionally verified.\n- room-accessibility: Room e-bed accessibility is not professionally verified.\n- room-accessibility: Room e-bath accessibility is not professionally verified.\n- room-accessibility: Room e-store accessibility is not professionally verified.\n- door-clearance: Door e-d2 is narrower than the 0.86 m project target.\n- door-clearance: Door e-d3 is narrower than the 0.86 m project target.\n\nNo accessibility, code or construction claim is made.\n",
+    "lines": [
+      "# Interior illustration prompt — Accessible Garden Home",
+      "",
+      "Use the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.",
+      "",
+      "Rooms:",
+      "- Living (living, e-living): 6.89 m², m1, authored, fixtures: table.",
+      "- Kitchen (kitchen, e-kitchen): 6.43 m², m1, authored, fixtures: counter.",
+      "- Bedroom (sleeping, e-bed): 6.89 m², m2, authored, fixtures: bed.",
+      "- Bathroom (bathroom, e-bath): 3.91 m², m2, authored, fixtures: wc, sink, shower.",
+      "- Storage (storage, e-store): 2.53 m², m2, authored.",
+      "",
+      "Partitions and doors: 4 partitions and 4 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.",
+      "Fixtures: wc in e-bath; sink in e-bath; shower in e-bath; counter in e-kitchen; bed in e-bed; table in e-living.",
+      "Windows: the room polygons reference the documented opening ids. Do not add windows or move them.",
+      "",
+      "Camera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.",
+      "Presentation: late summer, late afternoon, no people.",
+      "",
+      "Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.",
+      "",
+      "Unresolved interior matters:",
+      "- room-coverage: Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.",
+      "- bathroom-turning-circle: Bathroom e-bath has no modeled 1.5 m turning circle.",
+      "- room-accessibility: Room e-living accessibility is not professionally verified.",
+      "- room-accessibility: Room e-kitchen accessibility is not professionally verified.",
+      "- room-accessibility: Room e-bed accessibility is not professionally verified.",
+      "- room-accessibility: Room e-bath accessibility is not professionally verified.",
+      "- room-accessibility: Room e-store accessibility is not professionally verified.",
+      "- door-clearance: Door e-d2 is narrower than the 0.86 m project target.",
+      "- door-clearance: Door e-d3 is narrower than the 0.86 m project target.",
+      "",
+      "No accessibility, code or construction claim is made."
     ]
   },
   "validation": {

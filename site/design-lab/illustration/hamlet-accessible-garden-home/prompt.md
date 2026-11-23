@@ -18,6 +18,7 @@ Material policy: strict documented. Preserve the documented materials. Do not in
 Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
-- Accessibility is a design target, not a verified assessment. Turning circles, thresholds, fixtures and clearances have not been measured.
 - The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
+- Room polygons cover less than 55% of the clear interior. Unassigned floor area may be unresolved.
+- Bathroom e-bath has no modeled 1.5 m turning circle.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.

@@ -3,8 +3,8 @@
   "designId": "hamlet-solar-studio-stack",
   "designRevision": "2.0.0",
   "designSchema": "containers-hamlet-design/v2.0",
-  "designHash": "37368d3b",
-  "sceneHash": "c0c0f3e0",
+  "designHash": "1bfe2c66",
+  "sceneHash": "f89a78e5",
   "presentationHash": "81e87100",
   "generatorVersion": "1.0.0",
   "generatedAt": "2026",
@@ -16,7 +16,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "9daac075"
+      "hash": "e4009a74"
     },
     {
       "id": "description",
@@ -26,7 +26,7 @@
         "design",
         "scene"
       ],
-      "hash": "3677c8e1"
+      "hash": "9c4ccf20"
     },
     {
       "id": "exterior-prompt",
@@ -48,7 +48,7 @@
         "scene",
         "presentation"
       ],
-      "hash": "7eb05e0b"
+      "hash": "ef41a0bf"
     },
     {
       "id": "negative-prompt",
@@ -77,7 +77,7 @@
         "design",
         "presentation"
       ],
-      "hash": "a3e21990"
+      "hash": "a6d25cd3"
     },
     {
       "id": "container-layout-plan",
@@ -95,7 +95,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "649b8fa8"
+      "hash": "96d33f79"
     },
     {
       "id": "plan-ground",
@@ -104,7 +104,17 @@
       "dependencies": [
         "design"
       ],
-      "hash": "b876a113"
+      "hash": "b577adc5"
+    },
+    {
+      "id": "interior-plan",
+      "path": "drawings/interior-plan.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design",
+        "interior"
+      ],
+      "hash": "1b5c28bf"
     },
     {
       "id": "roof-plan",
@@ -114,7 +124,7 @@
         "design",
         "roof"
       ],
-      "hash": "c014c30a"
+      "hash": "bdfbda20"
     },
     {
       "id": "elevation-south",
@@ -123,7 +133,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "7d13ac84"
+      "hash": "c3759e42"
     },
     {
       "id": "section",
@@ -132,7 +142,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "cabbd118"
+      "hash": "072f2872"
     },
     {
       "id": "isometric",
@@ -152,7 +162,7 @@
         "design",
         "camera"
       ],
-      "hash": "e626e903"
+      "hash": "6eb2ec8a"
     }
   ],
   "limitations": [
