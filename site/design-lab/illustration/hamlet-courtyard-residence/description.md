@@ -1,6 +1,6 @@
 # Courtyard Residence — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 76904ecf
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 30eb578a
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -62,6 +62,11 @@ This description is generated from the canonical design model. The reference SVG
 - Partitions: 0 · doors: 0 · fixtures: 0.
 - Validation: 0 invalid, 10 unresolved, 8 review.
 
+## Fire and water services
+- Fire intent: roof class A; noncombustible deck: false; fire-water access confirmed: false; defensible space: 10 m (conceptual).
+- Rainwater: conceptual; storage cistern; potable: false; fire reserve separate: true; fire connection verified: false.
+- Fire protection, fire-water access and rainwater collection are conceptual intents/unknowns. No fire-resistance rating, WUI approval, tank sizing, potable-water testing or fire-service connection is designed.
+
 ## Intentions
 - Step-free entrance is a design intent, not a verified measurement.
 - Adaptable bathroom is a design intent, not a verified layout.
@@ -69,7 +74,12 @@ This description is generated from the canonical design model. The reference SVG
 - Green roof is a concept with unresolved load, drainage, fire and maintenance questions.
 
 ## Unresolved matters
-- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
+- **interior-partitions**: Interior partitions, fixtures and camera geometry are conceptual or provisional. Do not claim a spatially accurate perspective or verified clearance.
+- **water-system-conceptual**: Rainwater collection is a conceptual intent only. Tank size, location, yield, freeze protection, overflow, filtration and treatment are not designed.
+- **fire-water-not-verified**: The fire reserve is separate in intent but no volume, connection or fire-service verification is recorded. Do not show a confirmed hydrant or cistern.
+- **non-potable-water**: The rainwater system is not recorded as potable. Do not imply drinking-water safety; treatment and testing are unresolved.
+- **fire-water-access-unconfirmed**: Fire-service water access is not confirmed. Do not draw a working hydrant, cistern or draft point as if verified.
+- **combustible-deck**: The deck/porch is not recorded as noncombustible. Combustible decking, stored firewood and under-floor storage are fire risks; do not present them as resolved.
 - **provisional-interior**: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
 - **inferred-room**: Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
 - **inferred-room**: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.

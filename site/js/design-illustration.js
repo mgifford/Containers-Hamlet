@@ -196,7 +196,7 @@
   function unresolvedFor(design, siteData) {
     var out = [];
     var zones = zoneRows(design);
-    if (zones.length) out.push({ code: 'interior-partitions', severity: 'limitation', message: 'Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.' });
+    if (zones.length) out.push({ code: 'interior-partitions', severity: 'limitation', message: 'Interior partitions, fixtures and camera geometry are conceptual or provisional. Do not claim a spatially accurate perspective or verified clearance.' });
     design.modules.forEach(function (m) {
       (m.openings || []).forEach(function (o) {
         if (!/balcony/i.test(String(o.name || '') + ' ' + String(o.id || ''))) return;
@@ -221,6 +221,15 @@
       if (path.indexOf(entrance) < 0) out.push({ code: 'site-approach', severity: 'unresolved', message: 'The site path approach is ' + path + ' while the design entrance is ' + entrance + '. The generated prompt does not call any side the main approach without qualification.' });
     }
     if (!main) out.push({ code: 'site-view', severity: 'unresolved', message: 'No principal site view is recorded. Use the design primary view direction and say the site view is unspecified.' });
+    if (!design.water) out.push({ code: 'water-system-not-recorded', severity: 'unresolved', message: 'No rainwater or fire-water system is recorded. Do not invent a tank, cistern, hydrant or potable supply.' });
+    else {
+      if (design.water.status === 'conceptual' || design.water.status === 'not-assessed') out.push({ code: 'water-system-conceptual', severity: 'unresolved', message: 'Rainwater collection is a conceptual intent only. Tank size, location, yield, freeze protection, overflow, filtration and treatment are not designed.' });
+      if (!design.water.fireReserve || design.water.fireReserve.verified !== true) out.push({ code: 'fire-water-not-verified', severity: 'unresolved', message: 'The fire reserve is separate in intent but no volume, connection or fire-service verification is recorded. Do not show a confirmed hydrant or cistern.' });
+      if (!design.water.treatment || design.water.treatment.potable !== true) out.push({ code: 'non-potable-water', severity: 'limitation', message: 'The rainwater system is not recorded as potable. Do not imply drinking-water safety; treatment and testing are unresolved.' });
+    }
+    if (design.fire && design.fire.water_access !== true) out.push({ code: 'fire-water-access-unconfirmed', severity: 'unresolved', message: 'Fire-service water access is not confirmed. Do not draw a working hydrant, cistern or draft point as if verified.' });
+    if (design.fire && design.fire.noncombustible_deck === false) out.push({ code: 'combustible-deck', severity: 'unresolved', message: 'The deck/porch is not recorded as noncombustible. Combustible decking, stored firewood and under-floor storage are fire risks; do not present them as resolved.' });
+    if (design.levels.length > 1) out.push({ code: 'fire-separation-not-assessed', severity: 'unresolved', message: 'Inter-storey and inter-module fire separation, protected egress and cavity barriers are not assessed. Do not imply a fire-resistance rating.' });
     var installedPv = !!(design.solar_array && design.solar_array.enabled) || design.modules.some(function (m) { return m.solar && m.solar.enabled; });
     if (!installedPv && design.roof_form && design.roof_form.type === 'solar-ready') out.push({ code: 'solar-ready-only', severity: 'unresolved', message: 'The roof is solar-ready but no installed array is recorded. Do not show installed PV panels.' });
     return out;
@@ -311,6 +320,11 @@
           roomZonePlan: true,
           note: 'Room polygons and fixtures support a detailed interior prompt and plan. No interior camera or perspective renderer is implemented, so perspective accuracy is not claimed.'
         }
+      },
+      services: {
+        fire: design.fire ? clone(design.fire) : null,
+        water: design.water ? clone(design.water) : null,
+        note: 'Fire protection, fire-water access and rainwater collection are conceptual intents/unknowns. No fire-resistance rating, WUI approval, tank sizing, potable-water testing or fire-service connection is designed.'
       },
       materials: { modules: materialRows(design), palette: (design.materials || []).map(function (x) { return { component: x.component, material: x.material, disclosure: x.disclosure }; }), roofFinish: design.roof_form.type, windowFrames: design.modules.map(function (m) { return m.frame_colour || null; }) },
       environment: {
@@ -404,6 +418,15 @@
     lines.push('Camera: ' + scene.camera.viewLabel + ', ' + scene.camera.height_m + ' m eye height, ' + scene.camera.lens_mm + ' mm lens, world bearing ' + scene.camera.azimuth_deg + ' degrees.');
     lines.push('Presentation: ' + scene.presentation.season.replace(/-/g, ' ') + ', ' + scene.presentation.time.replace(/-/g, ' ') + ', ' + scene.presentation.weather.replace(/-/g, ' ') + ', ' + (scene.presentation.people ? 'people may be shown' : 'no people') + '.');
     lines.push('Material policy: ' + scene.materialPolicy.replace(/-/g, ' ') + '. Preserve the documented materials. ' + (scene.materialPolicy === 'strict-documented' ? 'Do not invent a material for an unspecified element.' : scene.materialPolicy === 'neutral-unspecified' ? 'Show unspecified materials neutrally, without a new claim.' : 'Exploratory materials are not authoritative; label them as exploratory in the accompanying notes.'));
+    lines.push('Fire and water services:');
+    if (scene.services && scene.services.fire) {
+      lines.push('- Fire: roof class ' + scene.services.fire.roof_class + ', closed noncombustible eaves ' + (scene.services.fire.noncombustible_eaves ? 'intended' : 'not recorded') + ', ember-resistant vents ' + (scene.services.fire.ember_resistant_vents ? 'intended' : 'not recorded') + ', tempered glazing ' + (scene.services.fire.tempered_glazing ? 'intended' : 'not recorded') + ', noncombustible deck ' + (scene.services.fire.noncombustible_deck ? 'intended' : 'not recorded') + ', defensible space ' + scene.services.fire.defensible_space_m + ' m (conceptual), fire water access ' + (scene.services.fire.water_access ? 'recorded' : 'not confirmed') + '.');
+    } else lines.push('- Fire: no fire-resilience data recorded. Do not add a fire rating, hydrant or fire barrier claim.');
+    if (scene.services && scene.services.water) {
+      var w = scene.services.water;
+      lines.push('- Rainwater: status ' + w.status + '; catchment ' + (w.catchment && w.catchment.roof) + '; gutters/leaf guards/first flush ' + (w.collection ? 'required' : 'not recorded') + '; storage ' + (w.storage ? w.storage.type : 'not recorded') + ' with volume/location ' + (w.storage && w.storage.volume_L === null ? 'not resolved' : 'not recorded') + '; potable ' + (w.treatment && w.treatment.potable ? 'claimed' : 'no') + '; fire reserve separate ' + (w.fireReserve && w.fireReserve.separate) + ', verified ' + (w.fireReserve && w.fireReserve.verified) + '.');
+      lines.push('- Do not depict a single rain barrel as a complete system. Do not show a confirmed hydrant, fire cistern, potable supply or fire-resistance rating.');
+    } else lines.push('- Rainwater/fire water: not recorded. Do not invent a tank, cistern, hydrant or potable supply.');
     lines.push('Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.');
     if (scene.unresolved.length) {
       lines.push('Unresolved matters to carry into the illustration notes:');
@@ -454,7 +477,7 @@
       { category: 'architectural additions', text: 'garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded' },
       { category: 'rendering artifacts', text: 'warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos' },
       { category: 'environmental contradictions', text: 'tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction' },
-      { category: 'safety-related visual errors', text: 'missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation' }
+      { category: 'safety-related visual errors', text: 'missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation, wood deck presented as noncombustible, firewood stored against the house, missing chimney, missing stove outside-air duct, confirmed hydrant without a verified supply, single rain barrel presented as a complete system, potable-water claim without treatment' }
     ];
     var text = groups.map(function (g) { return g.text; }).join(', ');
     return { text: text, groups: groups };
@@ -503,6 +526,13 @@
       (scene.interior.schedule ? scene.interior.schedule.rooms : []).forEach(function (r) { lines.push('- ' + r.name + ' (' + r.type + ') — ' + r.area_m2 + ' m², ' + r.module + ', ' + r.provenance + (r.fixtures.length ? ', fixtures: ' + r.fixtures.join(', ') : '') + '.'); });
       lines.push('- Partitions: ' + (scene.interior.partitions || []).length + ' · doors: ' + (scene.interior.doors || []).length + ' · fixtures: ' + (scene.interior.fixtures || []).length + '.');
       if (scene.interior.validation) lines.push('- Validation: ' + scene.interior.validation.invalid.length + ' invalid, ' + scene.interior.validation.unresolved.length + ' unresolved, ' + scene.interior.validation.review.length + ' review.');
+      lines.push('');
+    }
+    if (scene.services) {
+      lines.push('## Fire and water services');
+      if (scene.services.fire) lines.push('- Fire intent: roof class ' + scene.services.fire.roof_class + '; noncombustible deck: ' + scene.services.fire.noncombustible_deck + '; fire-water access confirmed: ' + scene.services.fire.water_access + '; defensible space: ' + scene.services.fire.defensible_space_m + ' m (conceptual).');
+      if (scene.services.water) lines.push('- Rainwater: ' + scene.services.water.status + '; storage ' + (scene.services.water.storage ? scene.services.water.storage.type : 'not recorded') + '; potable: ' + (scene.services.water.treatment ? scene.services.water.treatment.potable : 'not recorded') + '; fire reserve separate: ' + (scene.services.water.fireReserve ? scene.services.water.fireReserve.separate : 'not recorded') + '; fire connection verified: ' + (scene.services.water.fireReserve ? scene.services.water.fireReserve.verified : 'not recorded') + '.');
+      lines.push('- ' + scene.services.note);
       lines.push('');
     }
     lines.push('## Intentions');
@@ -566,7 +596,9 @@
       artifacts: artifacts || [],
       limitations: [
         'Reference SVG views are deterministic concept references, not measured photographs.',
-        'Interior perspective is not available; rooms are longitudinal zones.',
+        'Interior drawings are conceptual or provisional; no interior perspective or verified clearances are claimed.',
+        'Fire protection, fire separation, hydrant/cistern supply and WUI performance are not designed or verified.',
+        'Rainwater storage, tank sizing, freeze protection, potable treatment and fire-reserve volume are not designed or verified.',
         'Illustrations generated from the prompt are interpretations, not authoritative drawings.',
         'No structural, accessibility, energy or code compliance is verified.'
       ]
