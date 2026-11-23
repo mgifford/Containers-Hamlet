@@ -95,7 +95,9 @@
   "visual_seed": 41,
   "architecture": {
     "family": "Woodland Cottage",
-    "intent": "Single-storey baseline with a pitched roof and a covered garden porch."
+    "intent": "Single-storey baseline with a pitched roof and a covered garden porch.",
+    "arrangement": "single",
+    "footprint_type": "rectangular"
   },
   "roof_form": {
     "type": "gable",
@@ -253,7 +255,7 @@
         "type": "ground",
         "references": [],
         "verified": false,
-        "note": "Bears on the foundation; foundation design still needs geotechnical and structural review."
+        "note": "Single-storey ground-bearing design intent."
       }
     }
   ],
@@ -286,17 +288,18 @@
       "present": false,
       "type": "none",
       "module": "",
-      "location": "not recorded",
+      "location": "not applicable",
       "width_m": 0,
       "run_m": 0,
       "rise_m": 0,
       "landing": false,
       "lift_reserve": false,
-      "note": "No stair recorded."
+      "note": "Removed in the single-storey conversion."
     },
-    "classification": "fully-accessible-single-storey",
+    "classification": "potentially-adaptable",
     "standards": "Project targets informed by the Ontario Building Code and CSA B651. No code compliance, licence or professional accessibility review is claimed.",
-    "assessment": "not-assessed"
+    "assessment": "not-verified",
+    "target": "adaptable"
   },
   "features": {
     "solar": "South roof slope is solar-ready; no production is calculated.",
@@ -425,5 +428,159 @@
     "tool": "Containers Hamlet Design Lab",
     "version": "2.0.0"
   },
-  "professional_review_required": true
+  "professional_review_required": true,
+  "interior": {
+    "schema": "containers-hamlet-interior/v1",
+    "status": "provisional",
+    "clearances": [],
+    "rooms": [
+      {
+        "id": "room-m1-m1-z1",
+        "name": "Sleeping",
+        "type": "sleeping",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -6.026,
+            -1.149
+          ],
+          [
+            -2.766,
+            -1.149
+          ],
+          [
+            -2.766,
+            1.149
+          ],
+          [
+            -6.026,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z1",
+        "openingIds": [
+          "m1-n1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Ground-floor bedroom; verify a 1.5 m turning circle and a 0.9 m route."
+        }
+      },
+      {
+        "id": "room-m1-m1-z2",
+        "name": "Bathroom",
+        "type": "bathroom",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -2.6260000000000003,
+            -1.149
+          ],
+          [
+            -0.7659999999999998,
+            -1.149
+          ],
+          [
+            -0.7659999999999998,
+            1.149
+          ],
+          [
+            -2.6260000000000003,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z2",
+        "openingIds": [
+          "m1-s1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Adaptable bathroom intent; verify transfer space, grab-bar blocking and door clearance."
+        }
+      },
+      {
+        "id": "room-m1-m1-z3",
+        "name": "Kitchen",
+        "type": "kitchen",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -0.6259999999999997,
+            -1.149
+          ],
+          [
+            1.8339999999999999,
+            -1.149
+          ],
+          [
+            1.8339999999999999,
+            1.149
+          ],
+          [
+            -0.6259999999999997,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z3",
+        "openingIds": [
+          "m1-n2",
+          "m1-s3"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Provide a lowered work section and clear approach."
+        }
+      },
+      {
+        "id": "room-m1-m1-z4",
+        "name": "Living",
+        "type": "living",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            1.974,
+            -1.149
+          ],
+          [
+            5.834,
+            -1.149
+          ],
+          [
+            5.834,
+            1.149
+          ],
+          [
+            1.974,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z4",
+        "openingIds": [
+          "m1-s2"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Direct step-free garden doors."
+        }
+      }
+    ],
+    "partitions": [],
+    "doors": [],
+    "fixtures": [],
+    "circulation": [],
+    "service": [],
+    "provenance": {
+      "method": "Inferred from longitudinal room bands. No partition or door positions were invented.",
+      "source": "design-lab room zones",
+      "verification": "None. Provisional geometry."
+    }
+  }
 }

@@ -109,14 +109,16 @@ Physical accessibility is a separate question from WCAG. Each concept records:
 - the connection to the shared hamlet path
 - a vertical-access strategy
 
-A two-storey home is **not** described as fully accessible because its entrance
-is step-free. The model distinguishes:
+A home is **not** described as fully accessible because its entrance is
+step-free or because it is single-storey. The model distinguishes:
 
 | Classification | Meaning |
 | --- | --- |
-| `fully-accessible-single-storey` | A single-storey, step-free concept. A design target, not a verified fully accessible dwelling. |
+| `fully-accessible-single-storey` | Legacy label. No selected home is assigned this label. It requires documented professional evidence, not just a single storey. |
+| `single-storey-step-free-candidate` | All modeled evidence targets are met: single storey, step-free, essential rooms, door/circulation widths, bathroom turning space, kitchen approach and path connection. Still not a professional certification. |
 | `ground-floor-accessible-living` | Essential living and a bathroom are on the ground floor; the upper floor is reached by stairs and is not accessible. |
-| `potentially-adaptable` | Some functions or vertical access remain unresolved. |
+| `potentially-adaptable` | The home is single-storey and step-free, but an adaptable/accessibility target or evidence item remains unresolved. |
+| `accessibility-not-required` | Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present. |
 | `unresolved-vertical-access` | A material vertical-access barrier exists. Do not describe the home as accessible. |
 | `not-assessed` | Accessibility has not been recorded. |
 
@@ -126,11 +128,31 @@ ground-floor bedroom or essential functions, a narrow entrance, a raised
 threshold or an unresolved path connection. These are project targets informed
 by CSA B651 and the Ontario Building Code, not a compliance assessment.
 
-The **Accessible Garden Home** and **Woodland Cottage** are single-storey
-step-free concepts. The **Offset Stack**, **Cross-Stacked Retreat** and **Solar
-Studio Stack** are ground-floor accessible living arrangements; their upper
-floors are stair-only. The **Courtyard Residence** is single-storey but has a
-larger footprint and courtyard thresholds that still need detailing.
+All six selected homes are single-storey: **Woodland Cottage**, **Offset Pair**,
+**Courtyard Residence**, **Cross-Wing House**, **Accessible Garden Home** and
+**Solar Studio**. Their classification is derived from the interior evidence.
+At this milestone none meets every candidate condition, so they report
+`potentially-adaptable`, not `fully-accessible-single-storey`.
+
+Accessibility is a **per-building target**, not a universal requirement:
+
+- **Accessible Garden Home** is the only selected home designed as an
+  accessible unit (`access.target: "accessible"`). It is a double-width pair of
+  20-foot modules and now has a 3.0 m bathroom with a modeled 1.5 m turning
+  circle. The circle fits and the recorded door widths are at least 0.9 m. The
+  home remains `potentially-adaptable` because the shared-path grades, transfers
+  and professional review are not complete—not because the washroom is missing.
+- The other five selected homes use `access.target: "adaptable"`. They keep
+  step-free entrances and adaptable features, but they are **not failed** for
+  lacking an accessible bathroom. Their bathrooms are ordinary concept
+  bathrooms, not accessible washrooms.
+- No home is described as fully accessible. A future accessible unit should
+  budget for the extra width needed by the 1.5 m turning circle, door clearances
+  and circulation; the model now demonstrates this with the double-width
+  Accessible Garden Home.
+
+The three historical two-storey studies are retained in the Experimental
+archive. They are not selected homes and are not presented as accessible.
 
 A future lift is not assumed to be feasible. A concept must reserve space and
 record structural implications before a lift can be considered. The model does

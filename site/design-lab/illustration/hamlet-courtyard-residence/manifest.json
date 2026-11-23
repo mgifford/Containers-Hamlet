@@ -3,8 +3,8 @@
   "designId": "hamlet-courtyard-residence",
   "designRevision": "2.0.0",
   "designSchema": "containers-hamlet-design/v2.0",
-  "designHash": "0c17aa9c",
-  "sceneHash": "3e3950cf",
+  "designHash": "d488beaf",
+  "sceneHash": "0aa79e99",
   "presentationHash": "40f40162",
   "generatorVersion": "1.0.0",
   "generatedAt": "2026",
@@ -16,7 +16,7 @@
       "dependencies": [
         "design"
       ],
-      "hash": "8a326aa0"
+      "hash": "23803e83"
     },
     {
       "id": "description",
@@ -26,7 +26,7 @@
         "design",
         "scene"
       ],
-      "hash": "35540ba4"
+      "hash": "8da395a7"
     },
     {
       "id": "exterior-prompt",
@@ -48,7 +48,7 @@
         "scene",
         "presentation"
       ],
-      "hash": "d9995c1a"
+      "hash": "8d50afc6"
     },
     {
       "id": "negative-prompt",
@@ -77,7 +77,7 @@
         "design",
         "presentation"
       ],
-      "hash": "95eb2081"
+      "hash": "609c7535"
     },
     {
       "id": "container-layout-plan",
@@ -105,6 +105,16 @@
         "design"
       ],
       "hash": "61598980"
+    },
+    {
+      "id": "interior-plan",
+      "path": "drawings/interior-plan.svg",
+      "type": "drawing",
+      "dependencies": [
+        "design",
+        "interior"
+      ],
+      "hash": "f5fbd728"
     },
     {
       "id": "roof-plan",

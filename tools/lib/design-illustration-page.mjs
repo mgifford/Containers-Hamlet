@@ -18,6 +18,7 @@ export function illustrationPage(entries, lab) {
         <p class="small"><strong>${unresolved}</strong> unresolved/limitation note${unresolved === 1 ? '' : 's'} · design hash <code>${esc(scene.designHash)}</code></p>
         <div class="button-row">
           <a class="action" href="${esc(concept.id)}/prompt.md" download>Download prompt</a>
+          <a class="action secondary" href="${esc(concept.id)}/interior.md" download>Interior prompt</a>
           <a class="action secondary" href="${esc(concept.id)}/scene.json" download>Scene JSON</a>
           <a class="action secondary" href="${esc(concept.id)}/description.md" download>Description</a>
           <a class="action secondary" href="${esc(concept.id)}/manifest.json" download>Manifest</a>
@@ -52,16 +53,17 @@ ${designShellNav(2, 'illustrate')}
     <div class="table-wrap"><table><caption>Output types and their authority.</caption><thead><tr><th scope="col">Output</th><th scope="col">Source</th><th scope="col">Authority</th></tr></thead><tbody>
       <tr><th scope="row">Container schematic</th><td>Design geometry</td><td>Deterministic concept schematic</td></tr>
       <tr><th scope="row">Plans, elevations, section, roof plan</th><td>Design geometry</td><td>Deterministic concept drawings</td></tr>
+      <tr><th scope="row">Interior floor plan</th><td>Room polygons, partitions, doors, fixtures, clearances</td><td>Deterministic concept spatial model; inferred rooms are marked</td></tr>
       <tr><th scope="row">Exterior/site reference</th><td>Design geometry + camera</td><td>Deterministic concept reference; not a measured photograph</td></tr>
       <tr><th scope="row">Description and prompt</th><td>Scene specification</td><td>Generated interpretation; facts are checked against the model</td></tr>
       <tr><th scope="row">AI illustration</th><td>Prompt + reference package</td><td>Generative interpretation; never an authoritative drawing</td></tr>
     </tbody></table></div>
-    <p class="small">The pipeline refuses to invent storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. If a feature is not modeled, the prompt says so. Interior perspective is not claimed because the model has longitudinal room zones, not partitions and camera geometry.</p>
+    <p class="small">The pipeline refuses to invent storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. If a feature is not modeled, the prompt says so. The selected homes are single-storey. Interior room polygons and fixtures are modeled for the demonstration homes and inferred provisionally for the others; a spatially accurate interior perspective is still not claimed because no interior camera or perspective renderer exists.</p>
   </section>
 
   <section aria-labelledby="packages-title">
     <h2 id="packages-title">Six residence packages</h2>
-    <p>Each package contains the design JSON, a generated description, the exterior prompt, the negative prompt, the illustration configuration, the scene specification and a manifest with hashes and dependencies. The drawings and reference views are shared from the same generated model.</p>
+    <p>Each package contains the design JSON, a generated description, the exterior and interior prompts, the negative prompt, the illustration configuration, the scene specification and a manifest with hashes and dependencies. The drawings, interior plans and reference views are shared from the same generated model.</p>
     <div class="concept-grid">${cards}</div>
   </section>
 

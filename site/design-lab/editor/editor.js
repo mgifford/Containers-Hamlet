@@ -11,6 +11,7 @@
   var DATA = window.DesignLabConcepts;
   var SITE = window.DesignLabSite;
   var Illustration = window.DesignIllustration;
+  var Interior = window.DesignInterior;
   var $ = function (id) { return document.getElementById(id); };
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
   var clone = function (v) { return JSON.parse(JSON.stringify(v)); };
@@ -18,7 +19,7 @@
   var n = function (v, d) { return Number(v).toFixed(d == null ? 1 : d); };
   var slug = function (s) { return String(s || 'container-home').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'container-home'; };
 
-  if (!Schema || !Model || !DATA || !SITE || !Illustration) {
+  if (!Schema || !Model || !DATA || !SITE || !Illustration || !Interior) {
     var missing = $('status');
     if (missing) missing.textContent = 'The Design Lab scripts did not load. Please reload the page.';
     return;
@@ -42,7 +43,8 @@
     illustrationConfig: null,
     illustrationScene: null,
     illustrationGeneratedHash: null,
-    illustrationReferenceSvg: null
+    illustrationReferenceSvg: null,
+    editMode: 'arrangement'
   };
 
   var ZONE_LABEL = { sleeping: 'Sleeping', bathroom: 'Bathroom', kitchen: 'Kitchen', living: 'Living', dining: 'Dining', work: 'Workspace', storage: 'Storage', circulation: 'Circulation' };
@@ -201,6 +203,7 @@
     renderRoofControls();
     renderAccessControls();
     renderIllustrationControls();
+    renderInteriorControls();
     renderOpenings();
     renderZones();
     renderPorches();
@@ -430,6 +433,7 @@
       'description.md': scene.description.text + '\n',
       'scene.json': JSON.stringify(scene, null, 2) + '\n',
       'prompts/exterior.md': scene.prompt.text + '\n',
+      'prompts/interior.md': scene.interiorPrompt.text + '\n',
       'prompts/negative.md': scene.negativePrompt.text + '\n',
       'prompts/illustration-config.json': JSON.stringify(config, null, 2) + '\n',
       'prompts/interior.md': '# Interior illustration prompt\n\n' + (scene.capabilities.interiorPerspective ? 'Interior perspective is available.\n' : 'Interior perspective is not available. The model has longitudinal room zones, not partitions, fixtures or camera geometry. Use the room-zone plan and describe the view as a conceptual interpretation, not a spatially accurate perspective.\n') + '\n' + scene.description.text + '\n'
@@ -438,6 +442,7 @@
       'container-layout-plan.svg': Model.containerSchematicSVG(state.design, { mode: 'plan', idPrefix: 'package-container-layout' }),
       'container-layout-elevation.svg': Model.containerSchematicSVG(state.design, { mode: 'elevation', idPrefix: 'package-container-layout-elevation' }),
       'plan-ground.svg': Model.renderPlan(state.design, { idPrefix: 'package-plan-ground', storey: 0 }),
+      'interior-plan.svg': state.design.interior ? Interior.planSVG(state.design, { idPrefix: 'package-interior-plan' }) : '',
       'roof-plan.svg': Model.roofPlanSVG(state.design, { idPrefix: 'package-roof-plan' }),
       'elevation-south.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-south', side: 'south' }),
       'elevation-north.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-north', side: 'north' }),
@@ -479,6 +484,112 @@
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
     announce('Downloaded the illustration package: design, description, scene, prompts, drawings, reference and manifest.');
+  }
+
+  function interiorRoomBox(r) {
+    var xs = r.polygon.map(function (p) { return p[0]; }), ys = r.polygon.map(function (p) { return p[1]; });
+    return { x: (Math.min.apply(null, xs) + Math.max.apply(null, xs)) / 2, y: (Math.min.apply(null, ys) + Math.max.apply(null, ys)) / 2, w: Math.max.apply(null, xs) - Math.min.apply(null, xs), d: Math.max.apply(null, ys) - Math.min.apply(null, ys) };
+  }
+  function renderInteriorControls() {
+    var d = state.design;
+    var host = $('interior-rooms');
+    var details = $('interior-details');
+    var status = $('interior-status');
+    if (!host || !status) return;
+    if (!d.interior) {
+      status.textContent = 'No interior spatial model. The room bands remain available; create a provisional interior or import one.';
+      host.innerHTML = '<p class="small">No room polygons. Use “Create provisional interior from room bands” to start, then refine rooms, partitions, doors and fixtures.</p>';
+      if (details) details.innerHTML = '';
+      return;
+    }
+    var v = Interior.validate(d);
+    var a = Interior.accessibilityEvidence(d);
+    status.textContent = d.interior.status + ' interior · ' + d.interior.rooms.length + ' rooms · ' + v.invalid.length + ' invalid, ' + v.unresolved.length + ' unresolved, ' + v.review.length + ' review · accessibility: ' + a.classification.replace(/-/g, ' ') + '.';
+    host.innerHTML = d.interior.rooms.map(function (r, i) {
+      var box = interiorRoomBox(r);
+      var base = 'ir-' + i;
+      return '<fieldset class="module-card interior-room-card" data-interior-room="' + esc(r.id) + '"><legend>' + esc(r.name) + ' · ' + esc(r.module) + '</legend><div class="field-grid">' +
+        field('Name', textInput('', r.name, base + '-name', ' maxlength="60" data-interior-room-field="name"'), true) +
+        field('Type', selectInput('', r.type, base + '-type', Interior.ROOM_TYPES.map(function (t) { return option(t, t, r.type); }).join(''))) +
+        field('Centre x (m)', numberInput('', box.x, base + '-x', ' step="0.05" data-interior-room-field="x"')) +
+        field('Centre y (m)', numberInput('', box.y, base + '-y', ' step="0.05" data-interior-room-field="y"')) +
+        field('Width (m)', numberInput('', box.w, base + '-w', ' step="0.05" min="0.3" data-interior-room-field="w"')) +
+        field('Depth (m)', numberInput('', box.d, base + '-d', ' step="0.05" min="0.3" data-interior-room-field="d"')) +
+        '</div><p class="small">' + esc(r.provenance || 'authored') + ' · ' + n(Interior.polygonArea(r.polygon), 2) + ' m² · ' + esc(r.type) + '</p>' +
+        '<button type="button" class="secondary" data-action="remove-interior-room" data-room="' + esc(r.id) + '">Remove ' + esc(r.name) + '</button></fieldset>';
+    }).join('');
+    if (details) {
+      var parts = (d.interior.partitions || []).map(function (p) {
+        return '<div class="interior-detail"><strong>' + esc(p.id) + '</strong> · ' + esc(p.module) + ' · ' + n(p.from[0], 2) + ',' + n(p.from[1], 2) + ' → ' + n(p.to[0], 2) + ',' + n(p.to[1], 2) + ' · ' + n(p.thickness_m, 2) + ' m <button type="button" class="secondary" data-action="remove-partition" data-id="' + esc(p.id) + '">Remove</button></div>';
+      }).join('');
+      var doors = (d.interior.doors || []).map(function (x) {
+        return '<div class="interior-detail"><strong>' + esc(x.id) + '</strong> · ' + esc(x.partition) + ' · ' + n(x.width_m, 2) + ' m · connects ' + esc((x.connects || []).join(' / ')) + ' <button type="button" class="secondary" data-action="remove-door" data-id="' + esc(x.id) + '">Remove</button></div>';
+      }).join('');
+      var fixtures = (d.interior.fixtures || []).map(function (f) {
+        return '<div class="interior-detail"><strong>' + esc(f.id) + '</strong> · ' + esc(f.type) + ' in ' + esc(f.room) + ' · ' + n(f.position_m[0], 2) + ',' + n(f.position_m[1], 2) + ' m <button type="button" class="secondary" data-action="remove-fixture" data-id="' + esc(f.id) + '">Remove</button></div>';
+      }).join('');
+      details.innerHTML = '<h4>Partitions</h4>' + (parts || '<p class="small">None.</p>') + '<h4>Doors</h4>' + (doors || '<p class="small">None.</p>') + '<h4>Fixtures</h4>' + (fixtures || '<p class="small">None.</p>') + '<h4>Validation</h4>' + (v.items.length ? '<ul>' + v.items.map(function (i) { return '<li><strong>' + esc(i.category.replace(/-/g, ' ')) + ' · ' + esc(i.code) + ':</strong> ' + esc(i.message) + '</li>'; }).join('') + '</ul>' : '<p class="small">No validation issues.</p>');
+    }
+  }
+
+  function ensureInterior() {
+    if (state.design.interior) { announce('This design already has an interior spatial model.'); return; }
+    mutate(function () {
+      var migrated = Interior.fromZones(state.design);
+      state.design.interior = migrated;
+    }, 'Provisional interior created from the room bands. Inferred room polygons are marked; partitions, doors and fixtures are not invented.');
+  }
+  function addInteriorRoom() {
+    var d = state.design;
+    if (!d.interior) { ensureInterior(); return; }
+    var m = d.modules[0];
+    mutate(function () {
+      var id = nextId('room', d.interior.rooms.map(function (r) { return r.id; }));
+      d.interior.rooms.push({ id: id, name: 'New room', type: 'living', module: m.id, level: m.storey, polygon: Interior.rectPolygon(0, 0, 1.8, 1.6), provenance: 'authored', openingIds: [], accessibility: { assessment: 'not-verified', notes: '' } });
+      d.interior.status = 'authored';
+    }, 'Room added at the module centre. Adjust its numeric position and size; it may overlap until placed.');
+  }
+  function addPartition() {
+    if (!state.design.interior) { ensureInterior(); return; }
+    var m = state.design.modules[0];
+    var env = Interior.clearEnvelope(m);
+    mutate(function () {
+      var id = nextId('part', state.design.interior.partitions.map(function (p) { return p.id; }));
+      state.design.interior.partitions.push({ id: id, module: m.id, from: [0, env.minY], to: [0, env.maxY], thickness_m: 0.1, type: 'partition' });
+      state.design.interior.status = 'authored';
+    }, 'Partition added at the module centre. Adjust its endpoints and add a door if needed.');
+  }
+  function addInteriorDoor() {
+    var int = state.design.interior;
+    if (!int || !int.partitions.length) { announce('Add a partition before adding a door.'); return; }
+    var p = int.partitions[0];
+    var rooms = int.rooms.filter(function (r) { return r.module === p.module; });
+    if (rooms.length < 2) { announce('Two rooms in the same module are needed before adding a door.'); return; }
+    mutate(function () {
+      var id = nextId('door', int.doors.map(function (x) { return x.id; }));
+      int.doors.push({ id: id, partition: p.id, type: 'swing', width_m: 0.9, position_m: 0.5, connects: [rooms[0].id, rooms[1].id], swing: 'in', provenance: 'authored' });
+      int.status = 'authored';
+    }, 'Interior door added. Check that the two rooms and the partition are correct; the validation will report a blocked or invalid door.');
+  }
+  function addFixture() {
+    var int = state.design.interior;
+    if (!int || !int.rooms.length) { ensureInterior(); return; }
+    var room = int.rooms[0];
+    mutate(function () {
+      var id = nextId('fix', int.fixtures.map(function (f) { return f.id; }));
+      var type = room.type === 'bathroom' ? 'wc' : 'table';
+      int.fixtures.push({ id: id, room: room.id, type: type, position_m: [0, 0], rotation_deg: 0, size_m: type === 'wc' ? [0.45, 0.5] : [0.8, 0.8], provenance: 'authored' });
+      int.status = 'authored';
+    }, 'Fixture added at the room centre. Adjust its position and size; check that it is inside the room and clear of doors.');
+  }
+  function removeInteriorItem(kind, id) {
+    mutate(function () {
+      var int = state.design.interior;
+      if (kind === 'room') { int.rooms = int.rooms.filter(function (r) { return r.id !== id; }); int.doors = int.doors.filter(function (x) { return (x.connects || []).indexOf(id) < 0; }); int.fixtures = int.fixtures.filter(function (f) { return f.room !== id; }); int.clearances = int.clearances.filter(function (c) { return c.room !== id; }); }
+      if (kind === 'partition') { int.partitions = int.partitions.filter(function (p) { return p.id !== id; }); var removed = int.doors.filter(function (d) { return d.partition === id; }).map(function (d) { return d.id; }); int.doors = int.doors.filter(function (d) { return d.partition !== id; }); }
+      if (kind === 'door') int.doors = int.doors.filter(function (d) { return d.id !== id; });
+      if (kind === 'fixture') int.fixtures = int.fixtures.filter(function (f) { return f.id !== id; });
+    }, 'Interior element removed. Undo is available.');
   }
 
   function renderOpenings() {
@@ -868,6 +979,7 @@
       if ($('solar-summer')) $('solar-summer').innerHTML = Model.renderSolarStudy(d, { idPrefix: 'editor-solar-summer', season: 'summer' });
       if ($('solar-winter')) $('solar-winter').innerHTML = Model.renderSolarStudy(d, { idPrefix: 'editor-solar-winter', season: 'winter' });
       if ($('massing')) $('massing').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-massing' });
+      if ($('interior-plan')) $('interior-plan').innerHTML = d.interior ? Interior.planSVG(d, { idPrefix: 'editor-interior-plan' }) : '<p class="small">No interior model. Create one from the room bands or import an interior design.</p>';
     } catch (err) {
       announce('The view could not be drawn: ' + err.message);
     }
@@ -1670,6 +1782,45 @@
     $('illus-download-prompt').addEventListener('click', downloadIllustrationPrompt);
     $('illus-download-config').addEventListener('click', downloadIllustrationConfig);
     $('illus-download-package').addEventListener('click', downloadIllustrationPackage);
+    $('edit-mode').addEventListener('change', function () {
+      state.editMode = $('edit-mode').value;
+      announce(state.editMode === 'interior' ? 'Detailed interior editing. Room polygons, partitions, doors and fixtures are available.' : 'Simple container arrangement editing.');
+    });
+    $('migrate-interior').addEventListener('click', ensureInterior);
+    $('add-interior-room').addEventListener('click', addInteriorRoom);
+    $('add-partition').addEventListener('click', addPartition);
+    $('add-door').addEventListener('click', addInteriorDoor);
+    $('add-fixture').addEventListener('click', addFixture);
+    $('interior-rooms').addEventListener('change', function (event) {
+      var card = event.target.closest ? event.target.closest('[data-interior-room]') : null;
+      var fieldName = event.target.getAttribute && event.target.getAttribute('data-interior-room-field');
+      if (!card || !fieldName) return;
+      var room = state.design.interior.rooms.filter(function (r) { return r.id === card.getAttribute('data-interior-room'); })[0];
+      if (!room) return;
+      mutate(function () {
+        if (fieldName === 'name') room.name = event.target.value;
+        else if (fieldName === 'type') room.type = event.target.value;
+        else {
+          var box = interiorRoomBox(room);
+          box[fieldName] = Number(event.target.value);
+          room.polygon = Interior.rectPolygon(box.x, box.y, Math.max(0.3, box.w), Math.max(0.3, box.d));
+        }
+        room.provenance = 'authored';
+        state.design.interior.status = 'authored';
+      }, 'Interior room updated.');
+    });
+    $('interior-details').addEventListener('click', function (event) {
+      var button = event.target.closest ? event.target.closest('[data-action]') : null;
+      if (!button) return;
+      var action = button.getAttribute('data-action');
+      if (action === 'remove-partition') removeInteriorItem('partition', button.getAttribute('data-id'));
+      if (action === 'remove-door') removeInteriorItem('door', button.getAttribute('data-id'));
+      if (action === 'remove-fixture') removeInteriorItem('fixture', button.getAttribute('data-id'));
+    });
+    $('interior-rooms').addEventListener('click', function (event) {
+      var button = event.target.closest ? event.target.closest('[data-action="remove-interior-room"]') : null;
+      if (button) removeInteriorItem('room', button.getAttribute('data-room'));
+    });
     $('module-controls').addEventListener('change', function (event) {
       var input = event.target;
       if (!input || !input.getAttribute || !input.getAttribute('data-support-refs')) return;

@@ -82,7 +82,7 @@
     "verification": "None. No architect, engineer or accessibility consultant has reviewed this concept."
   },
   "site": {
-    "homesite": "a",
+    "homesite": "e",
     "rotation_deg": 0,
     "note": "Illustrative placement only; not part of the published community layout."
   },
@@ -90,12 +90,14 @@
   "name": "Accessible Garden Home",
   "group": "Single storey",
   "tagline": "Two compact modules side by side, designed around a step-free route, generous circulation and an adaptable bathroom and kitchen.",
-  "description": "Two 20-foot modules sit side by side to make a compact single-storey home. The entrance, garden doors and internal route are step-free, with a ground-floor bedroom, an adaptable bathroom and a kitchen designed for seated use. A roof canopy covers the garden terrace. Accessibility is a design target across the whole home, not a badge on one room.",
+  "description": "A wide, low single-storey home made of two 20-foot container modules placed side by side to create a double-width plan. The extra width supports a step-free entrance, a 1.2 m circulation route and a bathroom with a 1.5 m turning circle. The bathroom and kitchen remain concept layouts; the shared-path grades have not been surveyed.",
   "primary_view_deg": 180,
   "visual_seed": 45,
   "architecture": {
     "family": "Accessible Garden Home",
-    "intent": "Compact single-storey home organised around step-free circulation and adaptability."
+    "intent": "Compact single-storey home organised around step-free circulation and adaptability.",
+    "arrangement": "parallel-pair",
+    "footprint_type": "double-width"
   },
   "roof_form": {
     "type": "canopy",
@@ -139,7 +141,7 @@
         "type": "ground",
         "references": [],
         "verified": false,
-        "note": "Ground-bearing design intent."
+        "note": "Single-storey ground-bearing design intent."
       },
       "openings": [
         {
@@ -249,7 +251,7 @@
         "type": "ground",
         "references": [],
         "verified": false,
-        "note": "Ground-bearing design intent."
+        "note": "Single-storey ground-bearing design intent."
       },
       "openings": [
         {
@@ -378,17 +380,18 @@
       "present": false,
       "type": "none",
       "module": "",
-      "location": "not recorded",
+      "location": "not applicable",
       "width_m": 0,
       "run_m": 0,
       "rise_m": 0,
       "landing": false,
       "lift_reserve": false,
-      "note": "No stair recorded."
+      "note": "Removed in the single-storey conversion."
     },
-    "classification": "fully-accessible-single-storey",
+    "classification": "potentially-adaptable",
     "standards": "Project targets informed by the Ontario Building Code and CSA B651. No code compliance, licence or professional accessibility review is claimed.",
-    "assessment": "not-assessed"
+    "assessment": "not-verified",
+    "target": "accessible"
   },
   "features": {
     "solar": "Solar-ready roof intent; no energy production is calculated.",
@@ -519,5 +522,440 @@
     "tool": "Containers Hamlet Design Lab",
     "version": "2.0.0"
   },
-  "professional_review_required": true
+  "professional_review_required": true,
+  "interior": {
+    "schema": "containers-hamlet-interior/v1",
+    "status": "authored",
+    "clearances": [
+      {
+        "id": "e-work",
+        "room": "e-kitchen",
+        "type": "work-zone",
+        "center_m": [
+          0.85,
+          0
+        ],
+        "size_m": [
+          1.8,
+          0.6
+        ],
+        "status": "not-verified"
+      },
+      {
+        "id": "e-turn",
+        "room": "e-bath",
+        "type": "turning-circle",
+        "center_m": [
+          1.4,
+          0
+        ],
+        "diameter_m": 1.5,
+        "status": "not-verified"
+      }
+    ],
+    "rooms": [
+      {
+        "id": "e-living",
+        "name": "Living",
+        "type": "living",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -2.9,
+            -1.149
+          ],
+          [
+            -0.2,
+            -1.149
+          ],
+          [
+            -0.2,
+            1.149
+          ],
+          [
+            -2.9,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m1-n1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-kitchen",
+        "name": "Kitchen",
+        "type": "kitchen",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -0.2,
+            -1.149
+          ],
+          [
+            1.9,
+            -1.149
+          ],
+          [
+            1.9,
+            1.149
+          ],
+          [
+            -0.2,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m1-n2"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-store",
+        "name": "Storage",
+        "type": "storage",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            1.9,
+            -1.149
+          ],
+          [
+            2.9,
+            -1.149
+          ],
+          [
+            2.9,
+            1.149
+          ],
+          [
+            1.9,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-bed",
+        "name": "Bedroom",
+        "type": "sleeping",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            -2.9,
+            -1.149
+          ],
+          [
+            -0.2,
+            -1.149
+          ],
+          [
+            -0.2,
+            1.149
+          ],
+          [
+            -2.9,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m2-n1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": ""
+        }
+      },
+      {
+        "id": "e-bath",
+        "name": "Bathroom",
+        "type": "bathroom",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            -0.2,
+            -1.149
+          ],
+          [
+            2.9,
+            -1.149
+          ],
+          [
+            2.9,
+            1.149
+          ],
+          [
+            -0.2,
+            1.149
+          ]
+        ],
+        "provenance": "authored",
+        "openingIds": [
+          "m2-w1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Double-width bathroom with a modeled 1.5 m turning circle. Fixtures and transfers still require professional review."
+        }
+      }
+    ],
+    "partitions": [
+      {
+        "id": "e-p1",
+        "module": "m1",
+        "from": [
+          -0.2,
+          -1.149
+        ],
+        "to": [
+          -0.2,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "e-p2",
+        "module": "m2",
+        "from": [
+          -0.2,
+          -1.149
+        ],
+        "to": [
+          -0.2,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "e-p3",
+        "module": "m1",
+        "from": [
+          1.9,
+          -1.149
+        ],
+        "to": [
+          1.9,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      },
+      {
+        "id": "e-link",
+        "module": "m1",
+        "from": [
+          -2.959,
+          1.149
+        ],
+        "to": [
+          2.959,
+          1.149
+        ],
+        "thickness_m": 0.1,
+        "type": "partition"
+      }
+    ],
+    "doors": [
+      {
+        "id": "e-d1",
+        "partition": "e-p1",
+        "type": "swing",
+        "width_m": 0.9,
+        "position_m": 0.5,
+        "connects": [
+          "e-living",
+          "e-kitchen"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "e-d2",
+        "partition": "e-p2",
+        "type": "swing",
+        "width_m": 0.9,
+        "position_m": 0.5,
+        "connects": [
+          "e-bed",
+          "e-bath"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "e-d3",
+        "partition": "e-p3",
+        "type": "swing",
+        "width_m": 0.9,
+        "position_m": 0.5,
+        "connects": [
+          "e-kitchen",
+          "e-store"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      },
+      {
+        "id": "e-d4",
+        "partition": "e-link",
+        "type": "swing",
+        "width_m": 1,
+        "position_m": 0.5,
+        "connects": [
+          "e-kitchen",
+          "e-bed"
+        ],
+        "swing": "in",
+        "provenance": "authored"
+      }
+    ],
+    "fixtures": [
+      {
+        "id": "e-wc",
+        "room": "e-bath",
+        "type": "wc",
+        "position_m": [
+          2.45,
+          0.85
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.3,
+          0.5
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-sink",
+        "room": "e-bath",
+        "type": "sink",
+        "position_m": [
+          0.25,
+          0.95
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.35,
+          0.3
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-shower",
+        "room": "e-bath",
+        "type": "shower",
+        "position_m": [
+          2.45,
+          -0.55
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.45,
+          0.8
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-counter",
+        "room": "e-kitchen",
+        "type": "counter",
+        "position_m": [
+          0.85,
+          0.85
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          1.8,
+          0.55
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-bedf",
+        "room": "e-bed",
+        "type": "bed",
+        "position_m": [
+          -1.5,
+          0
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          1.4,
+          1.9
+        ],
+        "provenance": "authored"
+      },
+      {
+        "id": "e-table",
+        "room": "e-living",
+        "type": "table",
+        "position_m": [
+          -2.2,
+          0
+        ],
+        "rotation_deg": 0,
+        "size_m": [
+          0.7,
+          0.7
+        ],
+        "provenance": "authored"
+      }
+    ],
+    "circulation": [
+      {
+        "id": "e-circ",
+        "rooms": [
+          "e-living",
+          "e-kitchen"
+        ],
+        "width_m": 1.2,
+        "path": [
+          [
+            -2.5,
+            0
+          ],
+          [
+            2.5,
+            0
+          ]
+        ],
+        "status": "not-verified",
+        "note": "Concept 1.2 m route; thresholds, crossfall and turning are not surveyed."
+      }
+    ],
+    "service": [
+      {
+        "id": "e-service",
+        "room": "e-store",
+        "type": "mechanical",
+        "note": "Water heater and electrical service reserve; not sized or located."
+      }
+    ],
+    "provenance": {
+      "method": "Authored concept interior for Phase 3 demonstration.",
+      "source": "design-lab",
+      "verification": "None. Conceptual; not a professional accessibility assessment."
+    }
+  }
 }

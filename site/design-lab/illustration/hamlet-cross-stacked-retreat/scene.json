@@ -1,10 +1,10 @@
 {
   "schema": "containers-hamlet-scene/v1",
   "designId": "hamlet-cross-stacked-retreat",
-  "name": "Cross-Stacked Retreat",
+  "name": "Cross-Wing House",
   "revision": "2.0.0",
   "designSchema": "containers-hamlet-design/v2.0",
-  "designHash": "e83cde44",
+  "designHash": "7198cfa0",
   "sceneType": "exterior-three-quarter",
   "camera": {
     "view": "exterior-three-quarter",
@@ -17,17 +17,17 @@
     "note": "Azimuth is a world bearing from north. Reference SVG rendering is approximate; it is a concept reference, not a measured perspective."
   },
   "building": {
-    "storeys": 2,
+    "storeys": 1,
     "moduleCount": 2,
     "moduleTypes": [
       "40ft",
       "40ft"
     ],
-    "arrangement": "perpendicular-stack",
-    "footprintType": "cross",
+    "arrangement": "t-wing",
+    "footprintType": "t-shaped",
     "grossFloorArea_m2": 59.45,
-    "groundCoverage_m2": 53.5,
-    "buildingHeight_m": 8.26,
+    "groundCoverage_m2": 59.45,
+    "buildingHeight_m": 5.22,
     "roofType": "butterfly",
     "roofPitch_deg": 12,
     "roofOverhang_m": 0.8,
@@ -65,11 +65,11 @@
     {
       "type": "container",
       "sourceId": "m2",
-      "storey": 1,
-      "elevation_m": 3.896,
+      "storey": 0,
+      "elevation_m": 0.6,
       "position_m": [
         0,
-        0
+        7.315
       ],
       "rotation_deg": 90,
       "nominal": {
@@ -78,10 +78,8 @@
         "height_m": 2.896
       },
       "support": {
-        "type": "module",
-        "references": [
-          "m1"
-        ],
+        "type": "ground",
+        "references": [],
         "verified": false
       },
       "cladding": {
@@ -89,7 +87,7 @@
         "colour": "#8c8578"
       },
       "roof": "solar",
-      "offsetNote": "m2 is aligned with m1, rotated 90 degrees clockwise relative to m1."
+      "offsetNote": ""
     }
   ],
   "openings": [
@@ -147,9 +145,9 @@
     },
     {
       "module": "m2",
-      "storey": 1,
+      "storey": 0,
       "id": "m2-n1",
-      "name": "Upper studio window",
+      "name": "Studio window",
       "face": "north",
       "worldFace": "east",
       "type": "window",
@@ -160,9 +158,9 @@
     },
     {
       "module": "m2",
-      "storey": 1,
+      "storey": 0,
       "id": "m2-s1",
-      "name": "Upper bedroom window",
+      "name": "Bedroom window",
       "face": "south",
       "worldFace": "west",
       "type": "window",
@@ -173,9 +171,9 @@
     },
     {
       "module": "m2",
-      "storey": 1,
+      "storey": 0,
       "id": "m2-e1",
-      "name": "Upper balcony door",
+      "name": "Workshop door",
       "face": "east",
       "worldFace": "south",
       "type": "door",
@@ -186,9 +184,9 @@
     },
     {
       "module": "m2",
-      "storey": 1,
+      "storey": 0,
       "id": "m2-w1",
-      "name": "Upper window",
+      "name": "Workshop window",
       "face": "west",
       "worldFace": "north",
       "type": "window",
@@ -196,6 +194,19 @@
       "height_m": 1.2,
       "sill_m": 1,
       "position_m": 1
+    },
+    {
+      "module": "m2",
+      "storey": 0,
+      "id": "m2-s2",
+      "name": "Garden door",
+      "face": "south",
+      "worldFace": "west",
+      "type": "door",
+      "width_m": 0.95,
+      "height_m": 2.1,
+      "sill_m": 0,
+      "position_m": 9.4
     }
   ],
   "outdoor": [
@@ -205,11 +216,23 @@
       "module": "m1",
       "storey": 0,
       "face": "south",
-      "length_m": 4.2,
+      "length_m": 3,
       "depth_m": 2.8,
       "screened": false,
       "roof": true,
-      "note": "Shaded outdoor room beneath the cross volume."
+      "note": "Shaded outdoor room at the east living end."
+    },
+    {
+      "type": "porch",
+      "id": "p2",
+      "module": "m2",
+      "storey": 0,
+      "face": "south",
+      "length_m": 2.4,
+      "depth_m": 1.4,
+      "screened": false,
+      "roof": true,
+      "note": "Garden porch off the bedroom wing."
     }
   ],
   "spaces": [
@@ -255,7 +278,7 @@
     },
     {
       "module": "m2",
-      "storey": 1,
+      "storey": 0,
       "id": "m2-z1",
       "name": "Sleeping",
       "type": "sleeping",
@@ -265,7 +288,7 @@
     },
     {
       "module": "m2",
-      "storey": 1,
+      "storey": 0,
       "id": "m2-z2",
       "name": "Bathroom",
       "type": "bathroom",
@@ -275,7 +298,7 @@
     },
     {
       "module": "m2",
-      "storey": 1,
+      "storey": 0,
       "id": "m2-z3",
       "name": "Studio",
       "type": "work",
@@ -285,7 +308,7 @@
     },
     {
       "module": "m2",
-      "storey": 1,
+      "storey": 0,
       "id": "m2-z4",
       "name": "Storage",
       "type": "storage",
@@ -294,6 +317,671 @@
       "accessibility": "Upper storage."
     }
   ],
+  "interior": {
+    "schema": "containers-hamlet-interior/v1",
+    "status": "provisional",
+    "rooms": [
+      {
+        "id": "room-m1-m1-z1",
+        "name": "Living",
+        "type": "living",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -6.026,
+            -1.149
+          ],
+          [
+            -1.1660000000000001,
+            -1.149
+          ],
+          [
+            -1.1660000000000001,
+            1.149
+          ],
+          [
+            -6.026,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z1",
+        "openingIds": [
+          "m1-n1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Ground-floor essential living."
+        }
+      },
+      {
+        "id": "room-m1-m1-z2",
+        "name": "Kitchen",
+        "type": "kitchen",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            -1.026,
+            -1.149
+          ],
+          [
+            1.6339999999999997,
+            -1.149
+          ],
+          [
+            1.6339999999999997,
+            1.149
+          ],
+          [
+            -1.026,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z2",
+        "openingIds": [
+          "m1-s1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Ground-floor kitchen."
+        }
+      },
+      {
+        "id": "room-m1-m1-z3",
+        "name": "Bathroom",
+        "type": "bathroom",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            1.7739999999999998,
+            -1.149
+          ],
+          [
+            3.4339999999999997,
+            -1.149
+          ],
+          [
+            3.4339999999999997,
+            1.149
+          ],
+          [
+            1.7739999999999998,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z3",
+        "openingIds": [],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Ground-floor bathroom."
+        }
+      },
+      {
+        "id": "room-m1-m1-z4",
+        "name": "Stair",
+        "type": "circulation",
+        "module": "m1",
+        "level": 0,
+        "polygon": [
+          [
+            3.5739999999999994,
+            -1.149
+          ],
+          [
+            5.834,
+            -1.149
+          ],
+          [
+            5.834,
+            1.149
+          ],
+          [
+            3.5739999999999994,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m1-z4",
+        "openingIds": [],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Internal stair; no lift or lift space."
+        }
+      },
+      {
+        "id": "room-m2-m2-z1",
+        "name": "Sleeping",
+        "type": "sleeping",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            -6.026,
+            -1.149
+          ],
+          [
+            -1.7659999999999998,
+            -1.149
+          ],
+          [
+            -1.7659999999999998,
+            1.149
+          ],
+          [
+            -6.026,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m2-z1",
+        "openingIds": [
+          "m2-n1"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Upper bedroom; stair only."
+        }
+      },
+      {
+        "id": "room-m2-m2-z2",
+        "name": "Bathroom",
+        "type": "bathroom",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            -1.6259999999999997,
+            -1.149
+          ],
+          [
+            0.23400000000000026,
+            -1.149
+          ],
+          [
+            0.23400000000000026,
+            1.149
+          ],
+          [
+            -1.6259999999999997,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m2-z2",
+        "openingIds": [],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Upper bathroom; stair only."
+        }
+      },
+      {
+        "id": "room-m2-m2-z3",
+        "name": "Studio",
+        "type": "work",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            0.3740000000000003,
+            -1.149
+          ],
+          [
+            4.234,
+            -1.149
+          ],
+          [
+            4.234,
+            1.149
+          ],
+          [
+            0.3740000000000003,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m2-z3",
+        "openingIds": [
+          "m2-s1",
+          "m2-s2"
+        ],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Upper studio; stair only."
+        }
+      },
+      {
+        "id": "room-m2-m2-z4",
+        "name": "Storage",
+        "type": "storage",
+        "module": "m2",
+        "level": 0,
+        "polygon": [
+          [
+            4.3740000000000006,
+            -1.149
+          ],
+          [
+            5.834,
+            -1.149
+          ],
+          [
+            5.834,
+            1.149
+          ],
+          [
+            4.3740000000000006,
+            1.149
+          ]
+        ],
+        "provenance": "inferred-from-zone",
+        "sourceZoneId": "m2-z4",
+        "openingIds": [],
+        "accessibility": {
+          "assessment": "not-verified",
+          "notes": "Upper storage."
+        }
+      }
+    ],
+    "partitions": [],
+    "doors": [],
+    "fixtures": [],
+    "clearances": [],
+    "schedule": {
+      "rooms": [
+        {
+          "id": "room-m1-m1-z1",
+          "name": "Living",
+          "type": "living",
+          "module": "m1",
+          "level": 0,
+          "area_m2": 11.17,
+          "provenance": "inferred-from-zone",
+          "fixtures": []
+        },
+        {
+          "id": "room-m1-m1-z2",
+          "name": "Kitchen",
+          "type": "kitchen",
+          "module": "m1",
+          "level": 0,
+          "area_m2": 6.11,
+          "provenance": "inferred-from-zone",
+          "fixtures": []
+        },
+        {
+          "id": "room-m1-m1-z3",
+          "name": "Bathroom",
+          "type": "bathroom",
+          "module": "m1",
+          "level": 0,
+          "area_m2": 3.81,
+          "provenance": "inferred-from-zone",
+          "fixtures": []
+        },
+        {
+          "id": "room-m1-m1-z4",
+          "name": "Stair",
+          "type": "circulation",
+          "module": "m1",
+          "level": 0,
+          "area_m2": 5.19,
+          "provenance": "inferred-from-zone",
+          "fixtures": []
+        },
+        {
+          "id": "room-m2-m2-z1",
+          "name": "Sleeping",
+          "type": "sleeping",
+          "module": "m2",
+          "level": 0,
+          "area_m2": 9.79,
+          "provenance": "inferred-from-zone",
+          "fixtures": []
+        },
+        {
+          "id": "room-m2-m2-z2",
+          "name": "Bathroom",
+          "type": "bathroom",
+          "module": "m2",
+          "level": 0,
+          "area_m2": 4.27,
+          "provenance": "inferred-from-zone",
+          "fixtures": []
+        },
+        {
+          "id": "room-m2-m2-z3",
+          "name": "Studio",
+          "type": "work",
+          "module": "m2",
+          "level": 0,
+          "area_m2": 8.87,
+          "provenance": "inferred-from-zone",
+          "fixtures": []
+        },
+        {
+          "id": "room-m2-m2-z4",
+          "name": "Storage",
+          "type": "storage",
+          "module": "m2",
+          "level": 0,
+          "area_m2": 3.36,
+          "provenance": "inferred-from-zone",
+          "fixtures": []
+        }
+      ],
+      "total_area_m2": 52.57
+    },
+    "validation": {
+      "ok": true,
+      "invalid": [],
+      "unresolved": [
+        {
+          "category": "unresolved-design",
+          "code": "provisional-interior",
+          "message": "Interior geometry is provisional. Partitions, doors and fixtures may be incomplete."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z1 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z2 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z3 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z4 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z1 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z2 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z3 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z4 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "doors-missing",
+          "message": "No interior doors are modeled. Room connectivity cannot be assessed."
+        }
+      ],
+      "review": [
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z1 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z2 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z3 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z4 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z1 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z2 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z3 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z4 accessibility is not professionally verified."
+        }
+      ],
+      "items": [
+        {
+          "category": "unresolved-design",
+          "code": "provisional-interior",
+          "message": "Interior geometry is provisional. Partitions, doors and fixtures may be incomplete."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z1 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z2 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z3 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z4 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z1 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z2 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z3 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z4 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "doors-missing",
+          "message": "No interior doors are modeled. Room connectivity cannot be assessed."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z1 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z2 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z3 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z4 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z1 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z2 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z3 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z4 accessibility is not professionally verified."
+        }
+      ]
+    },
+    "accessibilityEvidence": {
+      "classification": "potentially-adaptable",
+      "target": "adaptable",
+      "stepFree": true,
+      "singleStorey": true,
+      "essentialFunctions": true,
+      "entranceWidth_m": 0.95,
+      "minDoorWidth_m": null,
+      "minCirculationWidth_m": null,
+      "bathroomTurningCircle": false,
+      "kitchenApproach": false,
+      "pathConnection": false,
+      "turningCircles": 0,
+      "workZones": 0,
+      "issues": [
+        {
+          "category": "unresolved-design",
+          "code": "provisional-interior",
+          "message": "Interior geometry is provisional. Partitions, doors and fixtures may be incomplete."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z1 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z2 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z3 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m1-m1-z4 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z1 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z2 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z3 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "inferred-room",
+          "message": "Room room-m2-m2-z4 is inferred from a zone band, not an authored layout."
+        },
+        {
+          "category": "unresolved-design",
+          "code": "doors-missing",
+          "message": "No interior doors are modeled. Room connectivity cannot be assessed."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z1 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z2 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z3 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m1-m1-z4 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z1 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z2 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z3 accessibility is not professionally verified."
+        },
+        {
+          "category": "review-required",
+          "code": "room-accessibility",
+          "message": "Room room-m2-m2-z4 accessibility is not professionally verified."
+        }
+      ],
+      "note": "Automated evidence only. No code compliance, CSA B651 conformity or professional accessibility assessment is claimed."
+    },
+    "capabilities": {
+      "detailedFloorPlan": true,
+      "interiorIllustrationPrompt": true,
+      "interiorPerspective": false,
+      "roomZonePlan": true,
+      "note": "Room polygons and fixtures support a detailed interior prompt and plan. No interior camera or perspective renderer is implemented, so perspective accuracy is not claimed."
+    }
+  },
   "materials": {
     "modules": [
       {
@@ -370,18 +1058,22 @@
   },
   "capabilities": {
     "exteriorReference": true,
+    "interiorZoneDiagram": true,
+    "interiorGeometry": true,
+    "detailedFloorPlan": true,
     "interiorPerspective": false,
+    "interiorIllustrationPrompt": true,
     "roomZonePlan": true,
     "roofPlan": true,
     "containerSchematic": true
   },
   "facts": [
-    "2 occupied storeys",
+    "1 occupied storey",
     "2 container modules (40ft, 40ft)",
     "butterfly roof at 12 degrees",
     "59.5 m2 gross floor area",
-    "53.5 m2 ground coverage",
-    "8.26 m to the roof"
+    "59.5 m2 ground coverage",
+    "5.22 m to the roof"
   ],
   "intentions": [
     "Step-free entrance is a design intent, not a verified measurement.",
@@ -396,13 +1088,6 @@
       "message": "Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective."
     },
     {
-      "code": "unmodeled-balcony",
-      "severity": "unresolved",
-      "module": "m2",
-      "opening": "m2-e1",
-      "message": "The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved."
-    },
-    {
       "code": "interior-ceiling",
       "severity": "unresolved",
       "message": "The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside."
@@ -410,7 +1095,57 @@
     {
       "code": "site-approach",
       "severity": "unresolved",
-      "message": "The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification."
+      "message": "The site path approach is north while the design entrance is east. The generated prompt does not call any side the main approach without qualification."
+    },
+    {
+      "code": "provisional-interior",
+      "severity": "unresolved",
+      "message": "Interior geometry is provisional. Partitions, doors and fixtures may be incomplete."
+    },
+    {
+      "code": "inferred-room",
+      "severity": "unresolved",
+      "message": "Room room-m1-m1-z1 is inferred from a zone band, not an authored layout."
+    },
+    {
+      "code": "inferred-room",
+      "severity": "unresolved",
+      "message": "Room room-m1-m1-z2 is inferred from a zone band, not an authored layout."
+    },
+    {
+      "code": "inferred-room",
+      "severity": "unresolved",
+      "message": "Room room-m1-m1-z3 is inferred from a zone band, not an authored layout."
+    },
+    {
+      "code": "inferred-room",
+      "severity": "unresolved",
+      "message": "Room room-m1-m1-z4 is inferred from a zone band, not an authored layout."
+    },
+    {
+      "code": "inferred-room",
+      "severity": "unresolved",
+      "message": "Room room-m2-m2-z1 is inferred from a zone band, not an authored layout."
+    },
+    {
+      "code": "inferred-room",
+      "severity": "unresolved",
+      "message": "Room room-m2-m2-z2 is inferred from a zone band, not an authored layout."
+    },
+    {
+      "code": "inferred-room",
+      "severity": "unresolved",
+      "message": "Room room-m2-m2-z3 is inferred from a zone band, not an authored layout."
+    },
+    {
+      "code": "inferred-room",
+      "severity": "unresolved",
+      "message": "Room room-m2-m2-z4 is inferred from a zone band, not an authored layout."
+    },
+    {
+      "code": "doors-missing",
+      "severity": "unresolved",
+      "message": "No interior doors are modeled. Room connectivity cannot be assessed."
     }
   ],
   "presentation": {
@@ -422,20 +1157,21 @@
   },
   "materialPolicy": "strict-documented",
   "prompt": {
-    "text": "Create a photorealistic architectural illustration of the Cross-Stacked Retreat residence.\nUse the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.\nThe building has 2 occupied storeys and 2 container modules.\nModule geometry:\n- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.\n- m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 90 degrees, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.\nRoof: butterfly at 12 degrees, 0.8 m overhang, installed PV array.\nOpenings:\n- m1: north window \"North window\" at 2 m, 1.2 x 1.2 m, sill 1 m; south sliding-door \"Living doors\" at 6 m, 2.8 x 2.1 m, sill 0 m; east door \"Entry door\" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window \"West window\" at 1.4 m, 1.2 x 1.3 m, sill 0.9 m.\n- m2: north window \"Upper studio window\" at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window \"Upper bedroom window\" at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door \"Upper balcony door\" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window \"Upper window\" at 1 m, 1.2 x 1.2 m, sill 1 m.\nOutdoor spaces:\n- p1: 4.2 m x 2.8 m covered porch on the south face of m1, roofed.\nSite: Cabin D. Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond. Path approach recorded as north.\nCamera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 231 degrees.\nPresentation: late summer, late afternoon, clear, no people.\nMaterial policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.\nRestrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.\nUnresolved matters to carry into the illustration notes:\n- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.\n- The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.\n- The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\nThis is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.",
+    "text": "Create a photorealistic architectural illustration of the Cross-Wing House residence.\nUse the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.\nThe building has 1 occupied storey and 2 container modules.\nModule geometry:\n- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.\n- m2: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 90 degrees, timber cladding.\nRoof: butterfly at 12 degrees, 0.8 m overhang, installed PV array.\nOpenings:\n- m1: north window \"North window\" at 2 m, 1.2 x 1.2 m, sill 1 m; south sliding-door \"Living doors\" at 6 m, 2.8 x 2.1 m, sill 0 m; east door \"Entry door\" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window \"West window\" at 1.4 m, 1.2 x 1.3 m, sill 0.9 m.\n- m2: north window \"Studio window\" at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window \"Bedroom window\" at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door \"Workshop door\" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window \"Workshop window\" at 1 m, 1.2 x 1.2 m, sill 1 m; south door \"Garden door\" at 9.4 m, 0.95 x 2.1 m, sill 0 m.\nOutdoor spaces:\n- p1: 3 m x 2.8 m covered porch on the south face of m1, roofed.\n- p2: 2.4 m x 1.4 m covered porch on the south face of m2, roofed.\nSite: Cabin D. Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond. Path approach recorded as north.\nCamera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 231 degrees.\nPresentation: late summer, late afternoon, clear, no people.\nMaterial policy: strict documented. Preserve the documented materials. Do not invent a material for an unspecified element.\nRestrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.\nUnresolved matters to carry into the illustration notes:\n- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.\n- The site path approach is north while the design entrance is east. The generated prompt does not call any side the main approach without qualification.\n- Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.\n- Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.\n- Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.\n- Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.\n- Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.\n- Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.\n- Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.\n- Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.\n- Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.\n- No interior doors are modeled. Room connectivity cannot be assessed.\nThis is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.",
     "lines": [
-      "Create a photorealistic architectural illustration of the Cross-Stacked Retreat residence.",
+      "Create a photorealistic architectural illustration of the Cross-Wing House residence.",
       "Use the accompanying architectural reference SVG as the authoritative source for building geometry. This is a conceptual architectural illustration, not a photograph of an existing building.",
-      "The building has 2 occupied storeys and 2 container modules.",
+      "The building has 1 occupied storey and 2 container modules.",
       "Module geometry:",
       "- m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.",
-      "- m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 90 degrees, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.",
+      "- m2: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 90 degrees, timber cladding.",
       "Roof: butterfly at 12 degrees, 0.8 m overhang, installed PV array.",
       "Openings:",
       "- m1: north window \"North window\" at 2 m, 1.2 x 1.2 m, sill 1 m; south sliding-door \"Living doors\" at 6 m, 2.8 x 2.1 m, sill 0 m; east door \"Entry door\" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window \"West window\" at 1.4 m, 1.2 x 1.3 m, sill 0.9 m.",
-      "- m2: north window \"Upper studio window\" at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window \"Upper bedroom window\" at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door \"Upper balcony door\" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window \"Upper window\" at 1 m, 1.2 x 1.2 m, sill 1 m.",
+      "- m2: north window \"Studio window\" at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window \"Bedroom window\" at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door \"Workshop door\" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window \"Workshop window\" at 1 m, 1.2 x 1.2 m, sill 1 m; south door \"Garden door\" at 9.4 m, 0.95 x 2.1 m, sill 0 m.",
       "Outdoor spaces:",
-      "- p1: 4.2 m x 2.8 m covered porch on the south face of m1, roofed.",
+      "- p1: 3 m x 2.8 m covered porch on the south face of m1, roofed.",
+      "- p2: 2.4 m x 1.4 m covered porch on the south face of m2, roofed.",
       "Site: Cabin D. Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond. Path approach recorded as north.",
       "Camera: exterior three-quarter view, 1.6 m eye height, 35 mm lens, world bearing 231 degrees.",
       "Presentation: late summer, late afternoon, clear, no people.",
@@ -443,9 +1179,18 @@
       "Restrictions: do not add or remove storeys, modules, windows, doors, stairs, balconies, porches, decks, rooms, roof features or structural supports. Do not change module positions, rotations or offsets. Do not add landscape elements that contradict the assigned site.",
       "Unresolved matters to carry into the illustration notes:",
       "- Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
-      "- The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.",
       "- The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.",
-      "- The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.",
+      "- The site path approach is north while the design entrance is east. The generated prompt does not call any side the main approach without qualification.",
+      "- Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.",
+      "- Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.",
+      "- Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.",
+      "- Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.",
+      "- Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.",
+      "- Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.",
+      "- Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.",
+      "- Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.",
+      "- Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.",
+      "- No interior doors are modeled. Room connectivity cannot be assessed.",
       "This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance."
     ]
   },
@@ -475,35 +1220,36 @@
     ]
   },
   "description": {
-    "text": "# Cross-Stacked Retreat — illustration reference\n\nDesign revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash e83cde44\n\nThis description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.\n\n## Architectural facts\n- 2 occupied storeys\n- 2 container modules (40ft, 40ft)\n- butterfly roof at 12 degrees\n- 59.5 m2 gross floor area\n- 53.5 m2 ground coverage\n- 8.26 m to the roof\n\n## Modules\n- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding. \n- **m2** — storey 2, 12.192 × 2.438 m, base 3.896 m, rotation 90°, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.\n\n## Openings\n- m1 / North window — north window, 1.2 × 1.2 m, sill 1 m.\n- m1 / Living doors — south sliding-door, 2.8 × 2.1 m, sill 0 m.\n- m1 / Entry door — east door, 0.95 × 2.1 m, sill 0 m.\n- m1 / West window — west window, 1.2 × 1.3 m, sill 0.9 m.\n- m2 / Upper studio window — north window, 1.6 × 1.4 m, sill 0.8 m.\n- m2 / Upper bedroom window — south window, 1.6 × 1.4 m, sill 0.8 m.\n- m2 / Upper balcony door — east door, 0.9 × 2.1 m, sill 0 m.\n- m2 / Upper window — west window, 1.2 × 1.2 m, sill 1 m.\n\n## Rooms and zones\n- m1 / Living — living, 0–5 m. Ground-floor essential living.\n- m1 / Kitchen — kitchen, 5–7.8 m. Ground-floor kitchen.\n- m1 / Bathroom — bathroom, 7.8–9.6 m. Ground-floor bathroom.\n- m1 / Stair — circulation, 9.6–12 m. Internal stair; no lift or lift space.\n- m2 / Sleeping — sleeping, 0–4.4 m. Upper bedroom; stair only.\n- m2 / Bathroom — bathroom, 4.4–6.4 m. Upper bathroom; stair only.\n- m2 / Studio — work, 6.4–10.4 m. Upper studio; stair only.\n- m2 / Storage — storage, 10.4–12 m. Upper storage.\n\n## Outdoor spaces\n- p1: 4.2 × 2.8 m covered porch on the south face of m1.\n\n## Site and camera\n- Assigned site: Cabin D (site rotation 16°).\n- Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond.\n- Path approach: north\n- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 231°.\n\n## Intentions\n- Step-free entrance is a design intent, not a verified measurement.\n- Adaptable bathroom is a design intent, not a verified layout.\n- Adaptable kitchen is a design intent, not a verified layout.\n- Butterfly roof is an exterior form; the interior ceiling is not resolved.\n\n## Unresolved matters\n- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- **unmodeled-balcony**: The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.\n- **interior-ceiling**: The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.\n- **site-approach**: The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.\n\n## Capability notes\n- Exterior reference: available\n- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes\n- Room-zone plan: available\n- Roof plan: available\n\n## Licence and status\nConcept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.",
+    "text": "# Cross-Wing House — illustration reference\n\nDesign revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 7198cfa0\n\nThis description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.\n\n## Architectural facts\n- 1 occupied storey\n- 2 container modules (40ft, 40ft)\n- butterfly roof at 12 degrees\n- 59.5 m2 gross floor area\n- 59.5 m2 ground coverage\n- 5.22 m to the roof\n\n## Modules\n- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding.\n- **m2** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 90°, timber cladding.\n\n## Openings\n- m1 / North window — north window, 1.2 × 1.2 m, sill 1 m.\n- m1 / Living doors — south sliding-door, 2.8 × 2.1 m, sill 0 m.\n- m1 / Entry door — east door, 0.95 × 2.1 m, sill 0 m.\n- m1 / West window — west window, 1.2 × 1.3 m, sill 0.9 m.\n- m2 / Studio window — north window, 1.6 × 1.4 m, sill 0.8 m.\n- m2 / Bedroom window — south window, 1.6 × 1.4 m, sill 0.8 m.\n- m2 / Workshop door — east door, 0.9 × 2.1 m, sill 0 m.\n- m2 / Workshop window — west window, 1.2 × 1.2 m, sill 1 m.\n- m2 / Garden door — south door, 0.95 × 2.1 m, sill 0 m.\n\n## Rooms and zones\n- m1 / Living — living, 0–5 m. Ground-floor essential living.\n- m1 / Kitchen — kitchen, 5–7.8 m. Ground-floor kitchen.\n- m1 / Bathroom — bathroom, 7.8–9.6 m. Ground-floor bathroom.\n- m1 / Stair — circulation, 9.6–12 m. Internal stair; no lift or lift space.\n- m2 / Sleeping — sleeping, 0–4.4 m. Upper bedroom; stair only.\n- m2 / Bathroom — bathroom, 4.4–6.4 m. Upper bathroom; stair only.\n- m2 / Studio — work, 6.4–10.4 m. Upper studio; stair only.\n- m2 / Storage — storage, 10.4–12 m. Upper storage.\n\n## Outdoor spaces\n- p1: 3 × 2.8 m covered porch on the south face of m1.\n- p2: 2.4 × 1.4 m covered porch on the south face of m2.\n\n## Site and camera\n- Assigned site: Cabin D (site rotation 16°).\n- Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond.\n- Path approach: north\n- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 231°.\n\n## Interior schedule\n- Living (living) — 11.17 m², m1, inferred-from-zone.\n- Kitchen (kitchen) — 6.11 m², m1, inferred-from-zone.\n- Bathroom (bathroom) — 3.81 m², m1, inferred-from-zone.\n- Stair (circulation) — 5.19 m², m1, inferred-from-zone.\n- Sleeping (sleeping) — 9.79 m², m2, inferred-from-zone.\n- Bathroom (bathroom) — 4.27 m², m2, inferred-from-zone.\n- Studio (work) — 8.87 m², m2, inferred-from-zone.\n- Storage (storage) — 3.36 m², m2, inferred-from-zone.\n- Partitions: 0 · doors: 0 · fixtures: 0.\n- Validation: 0 invalid, 10 unresolved, 8 review.\n\n## Intentions\n- Step-free entrance is a design intent, not a verified measurement.\n- Adaptable bathroom is a design intent, not a verified layout.\n- Adaptable kitchen is a design intent, not a verified layout.\n- Butterfly roof is an exterior form; the interior ceiling is not resolved.\n\n## Unresolved matters\n- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.\n- **interior-ceiling**: The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.\n- **site-approach**: The site path approach is north while the design entrance is east. The generated prompt does not call any side the main approach without qualification.\n- **provisional-interior**: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.\n- **inferred-room**: Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.\n- **inferred-room**: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.\n- **inferred-room**: Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.\n- **inferred-room**: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.\n- **inferred-room**: Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.\n- **inferred-room**: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.\n- **inferred-room**: Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.\n- **inferred-room**: Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.\n- **doors-missing**: No interior doors are modeled. Room connectivity cannot be assessed.\n\n## Capability notes\n- Exterior reference: available\n- Interior perspective: not available — no interior camera or perspective renderer is implemented\n- Room-zone plan: available\n- Roof plan: available\n\n## Licence and status\nConcept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0.",
     "lines": [
-      "# Cross-Stacked Retreat — illustration reference",
+      "# Cross-Wing House — illustration reference",
       "",
-      "Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash e83cde44",
+      "Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 7198cfa0",
       "",
       "This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.",
       "",
       "## Architectural facts",
-      "- 2 occupied storeys",
+      "- 1 occupied storey",
       "- 2 container modules (40ft, 40ft)",
       "- butterfly roof at 12 degrees",
       "- 59.5 m2 gross floor area",
-      "- 53.5 m2 ground coverage",
-      "- 8.26 m to the roof",
+      "- 59.5 m2 ground coverage",
+      "- 5.22 m to the roof",
       "",
       "## Modules",
       "- **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, metal cladding. ",
-      "- **m2** — storey 2, 12.192 × 2.438 m, base 3.896 m, rotation 90°, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.",
+      "- **m2** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 90°, timber cladding. ",
       "",
       "## Openings",
       "- m1 / North window — north window, 1.2 × 1.2 m, sill 1 m.",
       "- m1 / Living doors — south sliding-door, 2.8 × 2.1 m, sill 0 m.",
       "- m1 / Entry door — east door, 0.95 × 2.1 m, sill 0 m.",
       "- m1 / West window — west window, 1.2 × 1.3 m, sill 0.9 m.",
-      "- m2 / Upper studio window — north window, 1.6 × 1.4 m, sill 0.8 m.",
-      "- m2 / Upper bedroom window — south window, 1.6 × 1.4 m, sill 0.8 m.",
-      "- m2 / Upper balcony door — east door, 0.9 × 2.1 m, sill 0 m.",
-      "- m2 / Upper window — west window, 1.2 × 1.2 m, sill 1 m.",
+      "- m2 / Studio window — north window, 1.6 × 1.4 m, sill 0.8 m.",
+      "- m2 / Bedroom window — south window, 1.6 × 1.4 m, sill 0.8 m.",
+      "- m2 / Workshop door — east door, 0.9 × 2.1 m, sill 0 m.",
+      "- m2 / Workshop window — west window, 1.2 × 1.2 m, sill 1 m.",
+      "- m2 / Garden door — south door, 0.95 × 2.1 m, sill 0 m.",
       "",
       "## Rooms and zones",
       "- m1 / Living — living, 0–5 m. Ground-floor essential living.",
@@ -516,13 +1262,26 @@
       "- m2 / Storage — storage, 10.4–12 m. Upper storage.",
       "",
       "## Outdoor spaces",
-      "- p1: 4.2 × 2.8 m covered porch on the south face of m1.",
+      "- p1: 3 × 2.8 m covered porch on the south face of m1.",
+      "- p2: 2.4 × 1.4 m covered porch on the south face of m2.",
       "",
       "## Site and camera",
       "- Assigned site: Cabin D (site rotation 16°).",
       "- Principal view: The beaver meadow: open sedge, alder and standing water, with the south knoll and its rock shoulder beyond.",
       "- Path approach: north",
       "- Camera: exterior three-quarter view, 1.6 m, 35 mm, bearing 231°.",
+      "",
+      "## Interior schedule",
+      "- Living (living) — 11.17 m², m1, inferred-from-zone.",
+      "- Kitchen (kitchen) — 6.11 m², m1, inferred-from-zone.",
+      "- Bathroom (bathroom) — 3.81 m², m1, inferred-from-zone.",
+      "- Stair (circulation) — 5.19 m², m1, inferred-from-zone.",
+      "- Sleeping (sleeping) — 9.79 m², m2, inferred-from-zone.",
+      "- Bathroom (bathroom) — 4.27 m², m2, inferred-from-zone.",
+      "- Studio (work) — 8.87 m², m2, inferred-from-zone.",
+      "- Storage (storage) — 3.36 m², m2, inferred-from-zone.",
+      "- Partitions: 0 · doors: 0 · fixtures: 0.",
+      "- Validation: 0 invalid, 10 unresolved, 8 review.",
       "",
       "## Intentions",
       "- Step-free entrance is a design intent, not a verified measurement.",
@@ -532,18 +1291,76 @@
       "",
       "## Unresolved matters",
       "- **interior-partitions**: Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.",
-      "- **unmodeled-balcony**: The upper east door is not accompanied by a modeled balcony, porch or deck on the same face. Do not draw an accessible balcony; guarding, support and egress are unresolved.",
       "- **interior-ceiling**: The butterfly roof is modeled on the exterior. The interior ceiling geometry is not modeled; do not invent a ridge or valley inside.",
-      "- **site-approach**: The site path approach is north while the design entrance is south. The generated prompt does not call any side the main approach without qualification.",
+      "- **site-approach**: The site path approach is north while the design entrance is east. The generated prompt does not call any side the main approach without qualification.",
+      "- **provisional-interior**: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.",
+      "- **inferred-room**: Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.",
+      "- **inferred-room**: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.",
+      "- **inferred-room**: Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.",
+      "- **inferred-room**: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.",
+      "- **inferred-room**: Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.",
+      "- **inferred-room**: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.",
+      "- **inferred-room**: Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.",
+      "- **inferred-room**: Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.",
+      "- **doors-missing**: No interior doors are modeled. Room connectivity cannot be assessed.",
       "",
       "## Capability notes",
       "- Exterior reference: available",
-      "- Interior perspective: not available — rooms are longitudinal zones, not modeled volumes",
+      "- Interior perspective: not available — no interior camera or perspective renderer is implemented",
       "- Room-zone plan: available",
       "- Roof plan: available",
       "",
       "## Licence and status",
       "Concept only. Not engineered, permit-ready or professionally reviewed. Code AGPL-3.0-or-later; original content CC BY-SA 4.0."
+    ]
+  },
+  "interiorPrompt": {
+    "text": "# Interior illustration prompt — Cross-Wing House\n\nUse the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.\n\nRooms:\n- Living (living, room-m1-m1-z1): 11.17 m², m1, inferred-from-zone.\n- Kitchen (kitchen, room-m1-m1-z2): 6.11 m², m1, inferred-from-zone.\n- Bathroom (bathroom, room-m1-m1-z3): 3.81 m², m1, inferred-from-zone.\n- Stair (circulation, room-m1-m1-z4): 5.19 m², m1, inferred-from-zone.\n- Sleeping (sleeping, room-m2-m2-z1): 9.79 m², m2, inferred-from-zone.\n- Bathroom (bathroom, room-m2-m2-z2): 4.27 m², m2, inferred-from-zone.\n- Studio (work, room-m2-m2-z3): 8.87 m², m2, inferred-from-zone.\n- Storage (storage, room-m2-m2-z4): 3.36 m², m2, inferred-from-zone.\n\nPartitions and doors: 0 partitions and 0 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.\nFixtures: none recorded.\nWindows: the room polygons reference the documented opening ids. Do not add windows or move them.\n\nCamera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.\nPresentation: late summer, late afternoon, no people.\n\nRestrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.\n\nUnresolved interior matters:\n- provisional-interior: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.\n- inferred-room: Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.\n- inferred-room: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.\n- inferred-room: Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.\n- inferred-room: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.\n- inferred-room: Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.\n- inferred-room: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.\n- inferred-room: Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.\n- inferred-room: Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.\n- doors-missing: No interior doors are modeled. Room connectivity cannot be assessed.\n- room-accessibility: Room room-m1-m1-z1 accessibility is not professionally verified.\n- room-accessibility: Room room-m1-m1-z2 accessibility is not professionally verified.\n- room-accessibility: Room room-m1-m1-z3 accessibility is not professionally verified.\n- room-accessibility: Room room-m1-m1-z4 accessibility is not professionally verified.\n- room-accessibility: Room room-m2-m2-z1 accessibility is not professionally verified.\n- room-accessibility: Room room-m2-m2-z2 accessibility is not professionally verified.\n- room-accessibility: Room room-m2-m2-z3 accessibility is not professionally verified.\n- room-accessibility: Room room-m2-m2-z4 accessibility is not professionally verified.\n\nNo accessibility, code or construction claim is made.\n",
+    "lines": [
+      "# Interior illustration prompt — Cross-Wing House",
+      "",
+      "Use the accompanying interior floor plan as the authoritative room-layout reference. This is a conceptual interpretation of a modeled floor plan, not a spatially accurate perspective and not a construction drawing.",
+      "",
+      "Rooms:",
+      "- Living (living, room-m1-m1-z1): 11.17 m², m1, inferred-from-zone.",
+      "- Kitchen (kitchen, room-m1-m1-z2): 6.11 m², m1, inferred-from-zone.",
+      "- Bathroom (bathroom, room-m1-m1-z3): 3.81 m², m1, inferred-from-zone.",
+      "- Stair (circulation, room-m1-m1-z4): 5.19 m², m1, inferred-from-zone.",
+      "- Sleeping (sleeping, room-m2-m2-z1): 9.79 m², m2, inferred-from-zone.",
+      "- Bathroom (bathroom, room-m2-m2-z2): 4.27 m², m2, inferred-from-zone.",
+      "- Studio (work, room-m2-m2-z3): 8.87 m², m2, inferred-from-zone.",
+      "- Storage (storage, room-m2-m2-z4): 3.36 m², m2, inferred-from-zone.",
+      "",
+      "Partitions and doors: 0 partitions and 0 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.",
+      "Fixtures: none recorded.",
+      "Windows: the room polygons reference the documented opening ids. Do not add windows or move them.",
+      "",
+      "Camera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.",
+      "Presentation: late summer, late afternoon, no people.",
+      "",
+      "Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.",
+      "",
+      "Unresolved interior matters:",
+      "- provisional-interior: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.",
+      "- inferred-room: Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.",
+      "- inferred-room: Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.",
+      "- inferred-room: Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.",
+      "- inferred-room: Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.",
+      "- inferred-room: Room room-m2-m2-z1 is inferred from a zone band, not an authored layout.",
+      "- inferred-room: Room room-m2-m2-z2 is inferred from a zone band, not an authored layout.",
+      "- inferred-room: Room room-m2-m2-z3 is inferred from a zone band, not an authored layout.",
+      "- inferred-room: Room room-m2-m2-z4 is inferred from a zone band, not an authored layout.",
+      "- doors-missing: No interior doors are modeled. Room connectivity cannot be assessed.",
+      "- room-accessibility: Room room-m1-m1-z1 accessibility is not professionally verified.",
+      "- room-accessibility: Room room-m1-m1-z2 accessibility is not professionally verified.",
+      "- room-accessibility: Room room-m1-m1-z3 accessibility is not professionally verified.",
+      "- room-accessibility: Room room-m1-m1-z4 accessibility is not professionally verified.",
+      "- room-accessibility: Room room-m2-m2-z1 accessibility is not professionally verified.",
+      "- room-accessibility: Room room-m2-m2-z2 accessibility is not professionally verified.",
+      "- room-accessibility: Room room-m2-m2-z3 accessibility is not professionally verified.",
+      "- room-accessibility: Room room-m2-m2-z4 accessibility is not professionally verified.",
+      "",
+      "No accessibility, code or construction claim is made."
     ]
   },
   "validation": {
