@@ -257,7 +257,39 @@ export function validateImageDescriptions(data, designs, siteData, options) {
         if (p.status === 'not-resolved') errors.push(iwhere + ': placement ' + sid + ' is not resolved and cannot be visible.');
       }
 
-      if (image.status === 'blocked-pending-reconciliation') {
+      if (image.status === 'ready') {
+        const g = image.generation;
+        if (!g || typeof g !== 'object') errors.push(iwhere + ': ready images need a generation object.');
+        else {
+          if (!isString(g.prompt)) errors.push(iwhere + ': generation.prompt required.');
+          if (!isString(g.negativePrompt)) errors.push(iwhere + ': generation.negativePrompt required.');
+          if (!['low', 'medium', 'high'].includes(g.risk)) errors.push(iwhere + ': generation.risk must be low, medium or high.');
+          if (!isString(g.reference)) errors.push(iwhere + ': generation.reference required.');
+          if (typeof g.referenceRequired !== 'boolean') errors.push(iwhere + ': generation.referenceRequired must be boolean.');
+          if (isString(g.prompt)) {
+            const words = g.prompt.trim().split(/\s+/).length;
+            if (words < 40 || words > 230) warnings.push(iwhere + ': generation.prompt is ' + words + ' words; aim for 40–230.');
+            if (!/no people/i.test(g.prompt)) warnings.push(iwhere + ': generation.prompt should end with a no-people constraint.');
+            for (const [term, code] of [['hydrant','no-hydrant'],['fire cistern','no-fire-cistern'],['potable','no-potable'],['wood stove','no-stove'],['chimney','no-chimney'],['battery','no-battery'],['inverter','no-battery'],['snow guard','custom'],['balcony','custom']]) {
+              const re = new RegExp('(^|[^a-z])' + term + '\\b', 'gi');
+              let m;
+              while ((m = re.exec(g.prompt))) {
+                const start = m.index + m[0].toLowerCase().indexOf(term);
+                const before = g.prompt.slice(Math.max(0, start - 10), start).toLowerCase();
+                if (!/(no|not|without)\s+$/.test(before)) {
+                  warnings.push(iwhere + ': generation.prompt may present excluded term "' + term + '" as a positive element.');
+                  break;
+                }
+              }
+            }
+          }
+          if (isString(g.reference)) {
+            const genRef = path.join('site', 'design-lab', 'views', design.id + '-' + g.reference);
+            if (opts.checkFile ? !opts.checkFile(genRef) : !existsSync(genRef)) errors.push(iwhere + ': generation.reference ' + genRef + ' does not exist.');
+          }
+        }
+      } else if (image.status === 'blocked-pending-reconciliation') {
+        if (image.generation) errors.push(iwhere + ': blocked images must not carry a generation prompt.');
         if (!Array.isArray(image.blockedBy) || !image.blockedBy.length) errors.push(iwhere + ': blocked images need a blockedBy list.');
         unresolved.push({ code: 'blocked-image', message: iwhere + ': blocked pending reconciliation — ' + (Array.isArray(image.blockedBy) ? image.blockedBy[0] : 'see description') });
       }

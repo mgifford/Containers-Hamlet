@@ -14,7 +14,8 @@
     "furniture": "Show only the modeled fixtures listed in the interior schedule. Do not add loose furniture, rugs, lamps, art, plants, books or dishes. An empty room is preferable to an invented one.",
     "finishes": "Interior linings, floor finishes, ceiling finishes, joinery and window-frame colours are not documented. Use a neutral pale lining with exposed container steel at reveals and a neutral dark frame; disclose both as illustrative defaults. Do not present a timber species, stain, tile or paint colour as specified.",
     "services": "A service element may appear only where the visible-services layer records a modeled or conceptual placement for that image. Elements marked not-resolved or excluded must not appear as resolved. Conceptual placements must be captioned.",
-    "claim": "No image may claim fire resistance, WUI approval, potable water, water independence, full accessibility, structural capacity or code compliance."
+    "claim": "No image may claim fire resistance, WUI approval, potable water, water independence, full accessibility, structural capacity or code compliance.",
+    "generation": "The mustShow and mustNotShow lists are the review contract. The generation.prompt is a compact model-facing brief; it must agree with the lists and must not introduce an element that the record excludes. Negative prompts are model-dependent: guidance-1 distilled models often ignore them, so critical exclusions must also appear in the positive prompt as positive constraints. A reference drawing is required for geometry-critical images; text alone is not enough. Any generated image is a draft, not a model-verified drawing, and its caption must record known deviations."
   },
   "designs": {
     "hamlet-woodland-cottage": {
@@ -373,6 +374,31 @@
               "item": "a waterfront lawn or a lake immediately at the house",
               "reason": "The site view is through cedar and pine, with the far shore low on the horizon.",
               "check": "custom"
+            },
+            {
+              "item": "a dormer, cross-gable, second gable or loft",
+              "reason": "The model has one 24-degree gable, two roof planes and one occupied storey.",
+              "check": "custom"
+            },
+            {
+              "item": "a stone or concrete foundation, plinth or slab",
+              "reason": "The model uses exposed helical piles with a 0.6 m undercroft; no slab or stone base is modeled.",
+              "check": "custom"
+            },
+            {
+              "item": "steps, a raised deck or a ramp",
+              "reason": "The entrance and deck are recorded as level and step-free.",
+              "check": "custom"
+            },
+            {
+              "item": "a lake or waterfront directly behind the house",
+              "reason": "The site view is through cedar and pine, with the far shore low on the horizon.",
+              "check": "custom"
+            },
+            {
+              "item": "missing or hidden PV panels",
+              "reason": "Installed PV on the south slope is modeled and must be visible when that slope is in view.",
+              "check": "custom"
             }
           ],
           "servicesVisible": [
@@ -394,6 +420,13 @@
             "designHash": "d142126a",
             "sceneHash": "4af580f8",
             "reference": "site-facing.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic architectural visualization of Woodland Cottage: a long, narrow single-storey container home, one 12.19 x 2.44 m module wide (about 5:1 length to width), in cedar and pine. Camera at 1.6 m eye level from the south-west garden approach, 35 mm lens, framing the whole house with the covered south porch and west gable end. Timber-clad ISO container module on a 0.6 m exposed helical-pile base, visible steel corner castings and module joint, one simple 24-degree gable with two roof planes and a 0.8 m overhang, no dormer or cross-gable, installed PV panels clearly visible on the south slope, south bathroom window, flush step-free entrance, level timber deck, garden sliding doors. Conceptual south gutter, east downspout, ember-resistant fine-mesh vent and defensible-space planting with low fuel within 1.5 m; the lake is only a distant glimpse through trunks, not a waterfront. Clear late-afternoon summer light, No people, no text, no watermark.",
+            "negativePrompt": "second storey, second module, balcony, chimney, wood stove, hydrant, fire cistern, potable water label, drinking water claim, rain barrel, battery, inverter, off-grid plant, noncombustible deck claim, firewood, snow guards, accessible ramp, lift, handrail, waterfront lawn, lake against the house, extra buildings, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "site-facing.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -597,6 +630,16 @@
               "item": "snow guards as installed",
               "reason": "Snow guards and entry protection are unresolved.",
               "check": "custom"
+            },
+            {
+              "item": "a louvered vent instead of a fine-mesh ember vent",
+              "reason": "The fire intent is a closed, fine-mesh ember-resistant vent, not an open louver.",
+              "check": "custom"
+            },
+            {
+              "item": "a stone or concrete foundation",
+              "reason": "The model uses exposed helical piles, not a stone plinth.",
+              "check": "custom"
             }
           ],
           "servicesVisible": [
@@ -616,6 +659,13 @@
             "designHash": "d142126a",
             "sceneHash": "4af580f8",
             "reference": "elevation-south.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic wide detail of the Woodland Cottage south-west roof edge and immediate ground plane. Camera at 1.6 m with a 50 mm lens, three-quarter view; the lower third of the frame is ground and wall base, the roof edge sits in the upper third. Standing-seam gable roof with a 0.8 m overhang, closed noncombustible soffit and fascia, one fine stainless-mesh ember-resistant vent (not a louver), tempered glazing, conceptual gutter and downspout, low-fuel ground cover within 1.5 m and reduced fuel to 10 m, exposed helical piles and a clear undercroft, no stone foundation. Soft raking daylight; No people, no text, no watermark.",
+            "negativePrompt": "fire resistance rating, fireproof label, WUI approval sign, chimney, wood stove, hydrant, fire cistern, firewood, underfloor storage, noncombustible deck claim, snow guards, balcony, accessible ramp, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "elevation-south.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -693,6 +743,11 @@
               "item": "a pump, pressure tank or treatment plant",
               "reason": "None is recorded.",
               "check": "custom"
+            },
+            {
+              "item": "a splash block instead of a first-flush device",
+              "reason": "The first-flush device is required; a splash block is not the collection system.",
+              "check": "custom"
             }
           ],
           "servicesVisible": [
@@ -714,6 +769,13 @@
             "designHash": "d142126a",
             "sceneHash": "4af580f8",
             "reference": "elevation-south.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic close view of the Woodland Cottage rainwater-collection edge. Camera at 1.6 m with a 50 mm lens, looking up the south-east downspout and along the garden edge. Standing-seam metal roof, gutter with a fine mesh leaf guard, one downspout at the east end of the south eave, a vertical cylindrical first-flush chamber with a screw cap at its base, and a small inlet pipe turning into the garden soil beyond frame. Timber wall on a 0.6 m exposed pile base, no stone foundation, no splash block. Conceptual collection hardware in clear late-afternoon summer light; No people, no text, no watermark.",
+            "negativePrompt": "cistern in view, water tank, rain barrel, hydrant, fire cistern, draft point, potable tap, water filter, drinking water label, pump, pressure tank, treatment plant, chimney, wood stove, battery, inverter, snow guards, balcony, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "elevation-south.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -808,6 +870,16 @@
               "item": "a sealed service wall with no access",
               "reason": "Every concealed service must have an access panel.",
               "check": "custom"
+            },
+            {
+              "item": "a chimney, flue or gas vent",
+              "reason": "The home is heat-pump heated; no combustion appliance or flue is recorded.",
+              "check": "custom"
+            },
+            {
+              "item": "a mini-split indoor head presented as an HRV",
+              "reason": "The HRV is a ducted balanced unit with a filter and condensate drain, not a single-head heat pump.",
+              "check": "custom"
             }
           ],
           "servicesVisible": [
@@ -827,6 +899,13 @@
             "designHash": "d142126a",
             "sceneHash": "4af580f8",
             "reference": "interior-plan.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic interior visualization of the Woodland Cottage service core. Camera at 1.5 m with a 24 mm lens, standing in the entrance hall with a three-quarter view of a compact utility wall at the kitchen and bathroom end. Neutral pale lining with exposed container steel at the reveals; accessible labelled panels, a rectangular wall-mounted heat-recovery ventilator with two insulated ducts, replaceable filter, frost control and condensate drain, a small electrical panel, and an electric heat-pump water heater with drain and relief valve. Low 200 mm fresh-air intake, high 200 mm exhaust, clear floor in front of every panel. Sealed electric appliances only: no chimney, no flue, no gas vent. Soft interior daylight; No people, no text, no watermark.",
+            "negativePrompt": "wood stove, chimney, stove outside air kit, gas supply, propane tank, combustion appliance, battery, inverter, off-grid plant, recirculating microwave hood, sealed service wall, concealed equipment, equipment brand, pipe route, electrical layout, loose furniture, rug, lamp, indoor plant, wall art, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "high",
+            "reference": "interior-plan.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -921,6 +1000,13 @@
             "designHash": "d142126a",
             "sceneHash": "4af580f8",
             "reference": "elevation-south.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic eye-level view of the Woodland Cottage step-free entrance. Camera at 1.5 m with a 35 mm lens from the garden deck, centred on the open 0.95 m entrance door and the covered south porch. Level deck and flush threshold, no step, porch 5.4 x 2.8 m with roof and posts, continuous slip-resistant surface, clear 1.2 m route through the hall toward the 1.0 m hall-to-kitchen door. Timber cladding, neutral lining and exposed steel reveals beyond. Clear late-afternoon daylight through cedar and pine; No people, no text, no watermark.",
+            "negativePrompt": "ramp, lift, stair, level change, grab bar, handrail, doormat, loose furniture, potted plant, fully accessible claim, code compliance label, snow bank, ice, chimney, wood stove, hydrant, fire cistern, potable tap, battery, inverter, balcony, second storey, second module, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "elevation-south.svg",
+            "referenceRequired": true
           }
         }
       ]
@@ -1159,6 +1245,13 @@
             "designHash": "12ecfb76",
             "sceneHash": "9e294428",
             "reference": "site-facing.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic architectural visualization of the Offset Stack, two 40 ft container modules stacked into two storeys. Camera at 1.6 m on the birch glade approach at the south-east corner, 35 mm lens, framing the whole stack, the upper offset and the ground porch. Timber lower module at 0.6 m, metal upper module at 3.896 m offset 2.6 m east with exposed structural support, 8-degree shed roof with a 0.7 m overhang and installed PV, covered ground porch 4 x 2.6 m, open upper south porch, east entry doors, one visible corner casting and module joint, conceptual gutter, downspout, ember vent and defensible-space planting. Birch and rock shoulder, low sun. One simple 8-degree shed roof, no dormer or cross-gable; exposed helical piles, no stone base; no steps; visible steel corner castings; birch glade, no lake or meadow. No people, no text, no watermark.",
+            "negativePrompt": "third module, third storey, balcony, upper balcony railing, external stair, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, firewood, snow guards, lake, meadow, potable water label, battery, inverter, off-grid plant, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "site-facing.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -1266,6 +1359,13 @@
             "designHash": "12ecfb76",
             "sceneHash": "9e294428",
             "reference": "interior-plan.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic open zone study, no partitions, inside the Offset Stack ground floor. Camera at 1.5 m with a 24 mm lens at the west end looking east down the 12.19 x 2.44 m volume. South sliding door, south kitchen window, north stair window, east entry and west window; a conceptual straight-run stair, 0.9 m wide, at the far east end with a landing. Zone changes in floor finish and ceiling rhythm only, neutral lining and exposed container ribs, flat ceiling. Daylight from the south openings. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. No people, no text, no watermark.",
+            "negativePrompt": "partition walls, interior doors, bathroom enclosure, stair enclosure, bed, sofa, kitchen counter, toilet, fixtures, loose furniture, rug, lamp, indoor plant, unlisted window, kitchen hood, bathroom exhaust, service core, HRV terminal, external stair, sculptural stair, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "high",
+            "reference": "interior-plan.svg",
+            "referenceRequired": true
           }
         }
       ]
@@ -1490,6 +1590,13 @@
             "designHash": "30eb578a",
             "sceneHash": "6669c001",
             "reference": "site-facing.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic architectural visualization of the Courtyard Residence, an L-shaped single-storey home of two 40 ft timber modules. Camera at 1.6 m on the east approach at the courtyard corner, 35 mm lens, framing the whole L, courtyard opening, covered north porch and glazed timber link. Flat roof with a 0.5 m overhang and low green-roof edge, courtyard deck projecting 1.4 m, east entry, courtyard sliding doors and documented windows, one visible corner casting, conceptual ember-resistant vents and defensible-space planting. Pine trunks and a narrow strip of lake light beyond. Soft daylight. One flat roof, no dormer; exposed helical piles, no stone base; no steps; visible steel corner castings; no waterfront. No people, no text, no watermark.",
+            "negativePrompt": "green roof drainage outlet, gutter, downspout, installed PV array, solar panels, second storey, third module, warm roof claim, dry roof claim, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, potable water label, battery, inverter, extra buildings, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "site-facing.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -1595,6 +1702,13 @@
             "designHash": "30eb578a",
             "sceneHash": "6669c001",
             "reference": "interior-plan.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic open zone study, no partitions, inside the Courtyard Residence living and dining side. Camera at 1.5 m with a 24 mm lens at the east end looking west toward the north courtyard sliding doors and the open volume of one module. The courtyard beyond the doors, the 0.8 m and 1.4 m south windows on the opposite wall, and the glazed link at the edge of frame. Neutral lining, flat container ceiling, exposed steel at the reveals, zone bands in floor finish only. Soft daylight from the courtyard. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. No people, no text, no watermark.",
+            "negativePrompt": "partitions, interior walls, interior doors, bathroom enclosure, bed, sofa, dining table, kitchen counter, toilet, fixtures, loose furniture, rug, lamp, indoor plant, kitchen hood, service core, HRV terminal, green roof visible through ceiling, coffered ceiling, pitched ceiling, unlisted window, room layout, fully accessible claim, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "high",
+            "reference": "interior-plan.svg",
+            "referenceRequired": true
           }
         }
       ]
@@ -1829,6 +1943,13 @@
             "designHash": "a8e30d3c",
             "sceneHash": "c59b780d",
             "reference": "site-facing.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic architectural visualization of the Cross-Stacked Retreat, a two-storey cross of two 40 ft modules. Camera at 1.6 m on the beaver-meadow approach at the south-east corner, 35 mm lens, framing the whole cross, butterfly roof, shaded ground porch and upper east door. Metal lower module at 0.6 m, timber upper module at 3.896 m rotated 90 degrees, butterfly roof at 12 degrees with a 0.8 m overhang and installed PV, covered ground porch 4.2 x 2.8 m, exposed steel cross-beam, lower and upper windows, conceptual gutter, downspout, ember vent and defensible-space planting. Beaver meadow, sedge, alder, standing water and the south knoll. Clear late-afternoon summer light. One butterfly roof, no dormer or second gable; exposed helical piles, no stone base; no steps; visible steel corner castings; beaver meadow, no lake. No people, no text, no watermark.",
+            "negativePrompt": "balcony, upper balcony railing, interior butterfly ridge, interior valley, sloping interior ceiling, third module, third storey, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, firewood, lake, boreal waterfront, snow guards, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "site-facing.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -1936,6 +2057,13 @@
             "designHash": "a8e30d3c",
             "sceneHash": "c59b780d",
             "reference": "interior-plan.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic open zone study, no partitions, inside the Cross-Stacked Retreat ground floor beneath the cross. Camera at 1.5 m with a 24 mm lens at the west end looking east through the open volume. South sliding doors, north window, east entry and west window, the flat underside of the upper module where it crosses, and a conceptual dog-leg stair, 0.9 m wide, at the east end with a landing. Neutral lining, exposed container ribs, flat ceiling, zone bands in floor finish only. Daylight from the south doors. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. No people, no text, no watermark.",
+            "negativePrompt": "partitions, interior walls, interior doors, bathroom enclosure, sofa, kitchen counter, bed, fixtures, loose furniture, rug, lamp, indoor plant, interior butterfly ridge, interior valley, sloping ceiling, stair enclosure, external stair, kitchen hood, service core, HRV terminal, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "high",
+            "reference": "interior-plan.svg",
+            "referenceRequired": true
           }
         }
       ]
@@ -2176,6 +2304,13 @@
             "designHash": "98e11bf7",
             "sceneHash": "61536ceb",
             "reference": "site-facing.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic architectural visualization of the Accessible Garden Home, a compact single-storey double-width home of two 20 ft timber modules. Camera at 1.6 m on the garden approach at the south-west corner, 35 mm lens, framing both modules, the canopy roof, covered terrace and level route. Two 6.06 x 2.44 m modules at 0.6 m, canopy with a 1.2 m overhang, covered south terrace 4.6 x 2.8 m, level terrace projecting 1.2 m, south step-free entrance, garden sliding doors, east utility door, internal 1.4 m opening and one corner casting. Conceptual gutter, downspout, ember vent and defensible-space planting; fern, hemlock and distant lake light. Soft daylight. One canopy roof, no dormer; exposed helical piles, no stone base; no steps or ramp; visible steel corner castings; forest, no waterfront. No people, no text, no watermark.",
+            "negativePrompt": "third module, second storey, ramp, lift, stair, level change, fully accessible claim, code compliance label, grab bar, handrail, chimney, wood stove, hydrant, fire cistern, installed PV array, solar panels, noncombustible deck claim, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "site-facing.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -2523,6 +2658,13 @@
             "designHash": "0ac1e7b3",
             "sceneHash": "56dd76bb",
             "reference": "site-facing.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic architectural visualization of the Solar Studio Stack, a two-storey home of two 20 ft modules. Camera at 1.6 m on the cove approach at the south-west corner, 35 mm lens, framing both modules, the upper offset, shed roof, PV, shaded terrace and upper studio glazing. Timber lower module at 0.6 m, metal upper module at 3.896 m offset 0.8 m east, 12-degree solar-ready shed roof with a 0.9 m overhang and installed PV, covered terrace 4.4 x 2.4 m, south sliding doors and entry, upper studio glazing, north window, upper east door, one corner casting, conceptual gutter, downspout, ember vent and defensible-space planting. Juniper, cedar and a rocky cove shore. Soft daylight. One 12-degree shed roof, no dormer or cross-gable; exposed helical piles, no stone base; no steps; visible steel corner castings; rocky cove, no open lake at the door. No people, no text, no watermark.",
+            "negativePrompt": "balcony, upper balcony railing, third module, third storey, wide cabin, single storey bungalow, snow guards, chimney, wood stove, hydrant, fire cistern, noncombustible deck claim, potable water label, battery, inverter, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "medium",
+            "reference": "site-facing.svg",
+            "referenceRequired": true
           }
         },
         {
@@ -2627,6 +2769,13 @@
             "designHash": "0ac1e7b3",
             "sceneHash": "56dd76bb",
             "reference": "interior-plan.svg"
+          },
+          "generation": {
+            "prompt": "Photorealistic open zone study, no partitions, inside the Solar Studio Stack upper floor. Camera at 1.5 m with a 24 mm lens at the east end looking west across the compact 6.06 x 2.44 m volume. South studio glazing 2.4 x 1.6 m with a 0.6 m sill, north window 1.2 x 1.2 m, east door 0.9 x 2.1 m opening directly outside, flat ceiling under the roof, exposed container ribs, neutral lining, zone bands only. Daylight from the south glazing and north window. No walls, no doors, no furniture, no kitchen cabinets, no loose objects. No people, no text, no watermark.",
+            "negativePrompt": "partitions, interior walls, interior doors, sleeping alcove, bed, desk, sofa, fixtures, loose furniture, rug, lamp, indoor plant, balcony, guardrail, outdoor platform, sloping ceiling, butterfly ceiling, kitchen hood, service core, HRV terminal, room layout, people, text, watermark, cartoon, illustration, painting, low resolution, distorted geometry, blurry, oversaturated colors, HDR halos, floating objects, duplicate elements",
+            "risk": "high",
+            "reference": "interior-plan.svg",
+            "referenceRequired": true
           }
         }
       ]

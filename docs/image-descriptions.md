@@ -130,6 +130,27 @@ two records are marked `blocked-pending-reconciliation` and the validator report
 the mismatch. The next step is to correct the interior model or the opening
 positions, then regenerate the scene hashes.
 
+## Generation briefs
+
+Each of the 14 ready records now also carries a `generation` object:
+
+- `prompt` — an 89–150 word model-facing brief, front-loading proportion,
+  container identity and the view's main visual anchors;
+- `negativePrompt` — a model-dependent exclusion list;
+- `risk` — `low`, `medium` or `high`;
+- `reference` and `referenceRequired` — the deterministic drawing that should
+  condition the image, not just prose.
+
+The `mustShow` / `mustNotShow` lists remain the review contract. The generation
+prompt must agree with them and must not introduce an element the record
+excludes. Critical exclusions are repeated in the positive prompt because
+guidance-1 distilled models often ignore a negative prompt.
+
+The local FLUX.2 pilot and the four observed failure cases are recorded in
+[`image-generation-findings.md`](image-generation-findings.md). The main lesson:
+text alone cannot hold a 5:1 container proportion, a specific window layout or an
+open zone plan; the reference drawing is required.
+
 ## What is intentionally excluded
 
 - Loose furniture, rugs, lamps, art, plants, books and dishes. Only the modeled
@@ -153,9 +174,11 @@ node tools/check-image-descriptions.mjs
 ```
 
 The check validates schema, design and scene hashes, geometry counts, room and
-opening provenance, service visibility, exclusions against the model and
-reference-file existence. It reports the two blocked interiors and the
-room-opening mismatches as unresolved rather than failing silently.
+opening provenance, service visibility, exclusions against the model, reference-
+file existence and the generation brief (present for every ready image, absent
+for blocked ones, no positive mention of an excluded service). It reports the two
+blocked interiors and the room-opening mismatches as unresolved rather than
+failing silently.
 
 The image descriptions are not yet wired into the prompt generator. That is the
 next integration step: `promptFor()` should compose the exterior prompt from the
@@ -166,6 +189,7 @@ the status tags and exclusions carried into the text.
 
 - [`visualisation-v2-brief.md`](visualisation-v2-brief.md)
 - [`illustration-pipeline.md`](illustration-pipeline.md)
+- [`image-generation-findings.md`](image-generation-findings.md)
 - [`water-fire-services.md`](water-fire-services.md)
 - [`pattern-lens.md`](pattern-lens.md)
 - [`../data/image-descriptions.json`](../data/image-descriptions.json)

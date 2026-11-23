@@ -41,6 +41,21 @@ ok(rows.filter((r) => r.view === 'detail').length === 4, 'four Woodland Cottage 
 ok(rows.every((r) => r.mustShow > 0 && r.mustNotShow > 0), 'every image has must-show and must-not-show items');
 ok(rows.filter((r) => r.status === 'blocked-pending-reconciliation').every((r) => /interior/.test(r.view)), 'only interior descriptions are blocked');
 
+const ready = data.designs ? Object.values(data.designs).flatMap((d) => d.images).filter((i) => i.status === 'ready') : [];
+const blocked = data.designs ? Object.values(data.designs).flatMap((d) => d.images).filter((i) => i.status === 'blocked-pending-reconciliation') : [];
+ok(ready.every((i) => i.generation && i.generation.prompt && i.generation.negativePrompt && i.generation.reference), 'every ready image has a generation prompt, negative prompt and reference');
+ok(blocked.every((i) => !i.generation), 'blocked images do not carry a generation prompt');
+ok(ready.every((i) => /No people, no text, no watermark\.$/.test(i.generation.prompt.trim())), 'every generation prompt ends with the no-people, no-text, no-watermark constraint');
+const woodlandExt = ready.find((i) => i.id === 'woodland-cottage-exterior-hero');
+ok(/no dormer/i.test(woodlandExt.generation.prompt) && /helical-pile/i.test(woodlandExt.generation.prompt) && /not a waterfront/i.test(woodlandExt.generation.prompt), 'Woodland exterior prompt carries the observed dormer, foundation and waterfront guards');
+const fire = ready.find((i) => i.id === 'woodland-cottage-fire-edge');
+ok(/lower third/i.test(fire.generation.prompt) && /fine stainless-mesh/i.test(fire.generation.prompt), 'fire-edge prompt keeps the ground plane and specifies a fine-mesh vent');
+const water = ready.find((i) => i.id === 'woodland-cottage-water-edge');
+ok(/first-flush chamber/i.test(water.generation.prompt), 'water-edge prompt describes the first-flush device visually');
+const core = ready.find((i) => i.id === 'woodland-cottage-service-core');
+ok(/no chimney, no flue/i.test(core.generation.prompt), 'service-core prompt states no chimney or flue in the positive text');
+ok(ready.filter((i) => i.view === 'interior').every((i) => /No walls, no doors/i.test(i.generation.prompt)), 'provisional interior prompts repeat the no-walls guard');
+
 if (failed) {
   console.error('\n' + failed + ' image-description checks failed.');
   process.exit(1);

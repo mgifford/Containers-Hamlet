@@ -187,7 +187,8 @@ Three additive schemas sit beside the architectural design model:
   unresolved matters, generated prompt, negative prompt and description.
 - **`containers-hamlet-image-descriptions/v1`** — the v2 per-image brief: purpose,
   camera and framing, must-show and must-not-show items, visible service
-  placements, caption, alt text, limitations and source hashes. The visible-
+  placements, caption, alt text, limitations, source hashes and a compact
+  generation brief (`prompt`, `negativePrompt`, `risk`, `reference`). The visible-
   services placements are illustration aids, not a water, fire, ventilation or
   electrical design. `tools/lib/image-descriptions.mjs` validates the set against
   the model. See [`image-descriptions.md`](image-descriptions.md).
