@@ -238,12 +238,20 @@ ok(annotationValidation.ok, `design annotations validate${annotationValidation.e
 const woodlandPage = read('site/design-lab/architecture/hamlet-woodland-cottage/index.html');
 const accessiblePage = read('site/design-lab/architecture/hamlet-accessible-garden-home/index.html');
 const lodgePage = read('site/design-lab/architecture/common-lodge/index.html');
+const offsetPage = read('site/design-lab/architecture/hamlet-offset-stack/index.html');
+const courtyardPage = read('site/design-lab/architecture/hamlet-courtyard-residence/index.html');
+const crossPage = read('site/design-lab/architecture/hamlet-cross-stacked-retreat/index.html');
+const solarPage = read('site/design-lab/architecture/hamlet-solar-studio-stack/index.html');
 const woodlandPlan = read('site/design-lab/views/hamlet-woodland-cottage-interior-plan.svg');
 ok(/Pattern lens/.test(woodlandPage) && (woodlandPage.match(/lens-button/g) || []).length === 5 && woodlandPage.includes('pattern-lens-plan'), 'Woodland architecture page carries the five-pattern lens and interior overlay');
 ok(woodlandPage.includes('Read pattern 127') && woodlandPage.includes('../pattern-language/#pattern-127') && woodlandPage.includes('A reading aid, not a finding'), 'pattern lens links back to the Explorer and states its limits');
 ok(woodlandPlan.includes('id="room-w-hall"') && woodlandPlan.includes('id="room-w-living"') && woodlandPlan.includes('id="room-w-bed"'), 'interior plan carries stable room IDs for the annotation overlay');
 ok(/Pattern lens/.test(accessiblePage) && accessiblePage.includes('room-e-living') && accessiblePage.includes('No entrance hall is modelled'), 'Accessible Garden Home has an evidence-aware pattern lens');
-ok(/Pattern lens/.test(lodgePage) && lodgePage.includes('No authored interior room plan exists') && !lodgePage.includes('pattern-lens-plan'), 'common lodge has text-only annotations without a fabricated interior overlay');
+ok(/Pattern lens/.test(lodgePage) && lodgePage.includes('No interior room model exists') && !lodgePage.includes('pattern-lens-plan') && lodgePage.includes('lens-geometry">text-only'), 'common lodge has text-only annotations without a fabricated interior overlay');
+ok([offsetPage, courtyardPage, crossPage, solarPage].every((page) => (page.match(/lens-button/g) || []).length === 5 && page.includes('provisional inferred room band') && page.includes('pattern-lens-plan')), 'the remaining four homes carry five annotations over provisional room bands');
+ok([offsetPage, courtyardPage, crossPage, solarPage].every((page) => page.includes('provisional plan') && page.includes('not an authored layout')), 'provisional annotations disclose that the highlight is not an authored layout');
+ok(woodlandPage.includes('lens-geometry">authored plan') && accessiblePage.includes('lens-geometry">authored plan'), 'authored annotations disclose their authored geometry');
+ok(Object.keys(annotationData.designs).length === 7 && annotationData.designs['hamlet-offset-stack'].annotations.every((a) => a.geometry === 'inferred'), 'annotations cover all six homes and the lodge with explicit geometry provenance');
 const lensText = (woodlandPage.match(/<section class="assembly-section pattern-lens"[\s\S]*?<\/section>/) || [''])[0];
 ok(!/pattern is satisfied|satisfies the pattern/i.test(lensText + accessiblePage + lodgePage), 'pattern-lens pages do not claim the pattern is satisfied');
 
@@ -530,7 +538,7 @@ ok(interiorScene.interior.rooms.length === 5 && interiorScene.capabilities.inter
 ok(/Bathroom/.test(interiorScene.interiorPrompt.text) && /no interior camera/i.test(interiorScene.interiorPrompt.text), 'interior prompt uses rooms and states the camera limitation');
 ok(interiorScene.interior.validation.invalid.length === 0 && interiorScene.validation.ok, 'illustration scene validation includes the interior model');
 const interiorManifest = JSON.parse(read(`site/design-lab/illustration/${selectedHomes[1].id}/manifest.json`));
-ok(interiorManifest.artifacts.some((a) => a.path === 'prompts/interior.md') && interiorManifest.artifacts.some((a) => a.path === 'drawings/interior-plan.svg'), 'package manifest tracks interior prompt and drawing dependencies');
+ok(interiorManifest.artifacts.some((a) => a.path === 'interior.md') && (interiorManifest.sharedArtifacts || []).some((a) => /interior-plan\.svg$/.test(a.path)), 'package manifest tracks the published interior prompt and the shared interior drawing');
 const designHashBefore = Illustration.designHash(selectedHomes[1]);
 const changedInterior = clone(selectedHomes[1]); changedInterior.interior.rooms[0].polygon = Interior.rectPolygon(-3, 0, 2, 1.8);
 ok(Illustration.designHash(changedInterior) !== designHashBefore, 'interior geometry changes invalidate the design hash');
@@ -585,7 +593,8 @@ for (const c of hamletHomes) {
   ok(exists(`site/design-lab/illustration/${c.id}/prompt.md`) && exists(`site/design-lab/illustration/${c.id}/scene.json`) && exists(`site/design-lab/illustration/${c.id}/manifest.json`), `${c.id}: illustration package files exist`);
   const pkgManifest = JSON.parse(read(`site/design-lab/illustration/${c.id}/manifest.json`));
   ok(pkgManifest.designId === c.id && pkgManifest.designHash === scene.designHash && pkgManifest.sceneHash === Illustration.sceneHash(scene), `${c.id}: package manifest hashes match the scene`);
-  ok(pkgManifest.artifacts.every((a) => a.hash && a.dependencies && a.path), `${c.id}: manifest artifacts have hashes and dependencies`);
+  ok(pkgManifest.artifacts.every((a) => a.hash && a.dependencies && a.path) && pkgManifest.artifacts.every((a) => exists(`site/design-lab/illustration/${c.id}/${a.path}`)) && pkgManifest.artifacts.length === 7, `${c.id}: published manifest artifacts exist, have hashes and dependencies`);
+  ok(Array.isArray(pkgManifest.sharedArtifacts) && pkgManifest.sharedArtifacts.length === 9 && pkgManifest.sharedArtifacts.every((a) => a.hash && a.path && exists(`site/design-lab/illustration/${c.id}/${a.path}`)), `${c.id}: manifest records the nine shared drawings and references`);
   const schematicPlan = Model.containerSchematicSVG(c, { idPrefix: 'test-schematic-' + c.id });
   const schematicElevation = Model.containerSchematicSVG(c, { idPrefix: 'test-schematic-elev-' + c.id, mode: 'elevation' });
   ok(schematicPlan === Model.containerSchematicSVG(c, { idPrefix: 'test-schematic-' + c.id }) && /role="img"/.test(schematicPlan) && /<title id=/.test(schematicPlan) && /<desc id=/.test(schematicPlan) && /data-schematic="plan"/.test(schematicPlan), `${c.id}: container block plan is deterministic and accessible`);
@@ -639,7 +648,9 @@ ok(userScene.designId === 'user-custom-home' && /Custom Home/.test(userScene.pro
 const illManifest = Illustration.manifest(illCottageScene, illCottage, Illustration.artifactPlan(illCottageScene), '2026-11-22T00:00:00.000Z');
 ok(illManifest.designId === illCottage.id && illManifest.generatorVersion === Illustration.GENERATOR_VERSION && illManifest.artifacts.length >= 8, 'package manifest records identity, generator and artifact plan');
 ok(illManifest.limitations.some((l) => /interior/i.test(l)) && illManifest.limitations.some((l) => /interpretation/i.test(l)), 'manifest carries interior and interpretation limitations');
-ok(Illustration.artifactPlan(illCottageScene).some((a) => a.path === 'prompts/exterior.md') && Illustration.artifactPlan(illCottageScene).some((a) => a.path === 'references/exterior-reference.svg'), 'artifact plan includes prompts and references');
+ok(Illustration.artifactPlan(illCottageScene).some((a) => a.path === 'prompts/exterior.md') && Illustration.artifactPlan(illCottageScene).some((a) => a.path === 'references/exterior-reference.svg'), 'ZIP artifact plan includes prompts and references');
+ok(Illustration.publishedArtifactPlan().length === 7 && Illustration.publishedArtifactPlan().every((a) => !/\//.test(a.path)), 'published artifact plan lists the seven files that are actually written');
+ok(Illustration.sharedArtifactPlan(illCottage).length === 9 && Illustration.sharedArtifactPlan(illCottage).every((a) => a.path.indexOf('../../views/') === 0), 'shared artifact plan points at the published views');
 ok(exists('site/design-lab/illustration/index.html') && /Design once/.test(read('site/design-lab/illustration/index.html')), 'public illustration pipeline page is generated');
 
 section('Privacy and remote assets');

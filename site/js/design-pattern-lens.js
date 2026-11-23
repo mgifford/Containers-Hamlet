@@ -41,7 +41,8 @@
       });
     }
     Array.prototype.forEach.call(document.querySelectorAll('.lens-button'), function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lens-pattern') === String(number) ? 'true' : 'false'); });
-    if (status) status.textContent = 'Pattern ' + number + ' — ' + (a.summary || '') + ' Status: ' + a.status + '.';
+    var geometry = a.geometry === 'authored' ? 'authored plan' : a.geometry === 'inferred' ? 'provisional inferred plan' : 'text-only';
+    if (status) status.textContent = 'Pattern ' + number + ' — ' + (a.summary || '') + ' Status: ' + a.status + '. Evidence: ' + geometry + '.';
     if (list) {
       list.textContent = '';
       var obs = document.createElement('li');
@@ -50,7 +51,13 @@
       lim.textContent = 'Limits: ' + a.limits.join(' ');
       var q = document.createElement('li');
       q.textContent = 'Question: ' + a.question;
-      list.appendChild(obs); list.appendChild(lim); list.appendChild(q);
+      var ev = document.createElement('li');
+      ev.textContent = a.geometry === 'inferred'
+        ? 'Evidence: provisional inferred room band, not an authored layout.'
+        : a.geometry === 'authored'
+          ? 'Evidence: authored room polygon.'
+          : 'Evidence: text-only annotation; no room polygon.';
+      list.appendChild(obs); list.appendChild(lim); list.appendChild(q); list.appendChild(ev);
       if (!a.selectors.length) {
         var none = document.createElement('li');
         none.textContent = 'No room polygon is highlighted for this annotation.';

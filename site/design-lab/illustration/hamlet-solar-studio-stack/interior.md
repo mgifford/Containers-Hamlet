@@ -10,14 +10,14 @@ Rooms:
 - Studio (work, room-m2-m2-z1): 7.49 m², m2, inferred-from-zone.
 - Sleeping (sleeping, room-m2-m2-z2): 5.65 m², m2, inferred-from-zone.
 
-Partitions and doors: 0 partitions and 0 doors are modeled. Preserve the room boundaries and door connections shown in the reference plan.
-Fixtures: none recorded.
-Windows: the room polygons reference the documented opening ids. Do not add windows or move them.
+The room bands are provisional: no partitions, doors or fixtures are modeled. Do not invent walls, doorways, furniture or room-specific uses. The zone labels describe areas, not rooms.
+Fixtures: none recorded. Show only these modeled fixtures. Do not add loose furniture, rugs, lamps, art or dishes.
+Windows: only the documented openings listed below exist. Do not add or move a window, and do not assign a window to a room by name.
 
 Camera: no interior camera position is modeled. Choose a plausible eye-level view, but label the result as a conceptual interpretation, not a measured perspective.
 Presentation: late summer, late afternoon, no people.
 
-Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures, furniture or level changes. Do not change room proportions. Do not imply that the view is spatially accurate.
+Restrictions: do not add or remove rooms, partitions, doors, windows, fixtures or level changes. Do not change room proportions. Do not imply that the view is spatially accurate or that the room-opening assignment is resolved.
 
 Unresolved interior matters:
 - provisional-interior: Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.

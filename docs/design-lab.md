@@ -62,9 +62,11 @@ viewpoint, camera, style, season, time, weather, people and material policy,
 without changing the building geometry.
 
 Start with [`illustration-pipeline.md`](illustration-pipeline.md) and the
+[`image descriptions`](image-descriptions.md) for the v2 hero set, and the
 [`audit`](illustration-pipeline-audit.md). The six-home packages are published at
-`/design-lab/illustration/`. Interior perspective is not claimed because the
-model records longitudinal room zones, not partitions and camera geometry.
+`/design-lab/illustration/`. Interior perspective is not claimed: two homes have authored interiors and four
+have longitudinal room bands, but no interior camera or perspective renderer
+exists.
 
 ## Cabin services studies
 

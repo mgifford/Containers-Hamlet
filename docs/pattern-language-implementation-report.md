@@ -94,7 +94,7 @@ Browser tests cover search, scale and evidence filters, reset, shareable
 fragments, related-pattern links, live status, no-JS readability, axe-core and
 320 px reflow.
 
-The published site is about **6380 KB**, under the 6.25 MB budget.
+The published site is about **6437 KB**, under the 6.5 MB budget after adding the four remaining homes and their provisional room-band annotations.
 
 ## Phase 3 scenario comparison
 
@@ -107,11 +107,12 @@ The published site is about **6380 KB**, under the 6.25 MB budget.
 ## Phase 4 pattern lens
 
 - Added annotations for patterns 127, 112, 159, 163 and 180.
-- Woodland Cottage and Accessible Garden Home use authored room polygons; the common lodge is explicitly text-only.
-- Interior plans now carry stable `#room-*` IDs.
+- Woodland Cottage and Accessible Garden Home use authored room polygons; Offset Stack, Courtyard Residence, Cross-Stacked Retreat and Solar Studio Stack use provisional room bands inferred from zones; the common lodge is explicitly text-only.
+- Each annotation declares its evidence geometry (`authored`, `inferred` or `none`); the lens and validation disclose it.
+- Interior plans now carry stable `#room-*` IDs, including the inferred room bands.
 - The lens lists observations, questions, limits and links back to the Explorer.
-- No annotation means a pattern is satisfied.
-- The remaining four homes still need room-level annotations.
+- No annotation claims that a pattern is satisfied.
+- The two authored interiors are marked blocked in the v2 image descriptions because their room polygons and opening positions do not reconcile.
 
 ## Phase 5 evaluation framework
 

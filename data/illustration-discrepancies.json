@@ -31,7 +31,7 @@
       "modelSays": "Upper porch p2 is on the south face of m2; the upper east opening is a door.",
       "decision": "correct-prompt",
       "resolution": "Generated prompts place the upper balcony on the south face. The east upper door remains a door, not a balcony.",
-      "phase3Status": "Resolved for the selected home by the Phase 3 single-storey conversion. The archived Offset Stack retains the two-storey condition."
+      "phase3Status": "The selected Offset Stack remains two-storey. Upper porch p2 is on the south face and has no door on that face; the upper east door has no modeled balcony. Access, guarding and support remain unresolved, and the generated prompt reports both conflicts."
     },
     {
       "id": "courtyard-module-length",
@@ -62,7 +62,7 @@
       "modelSays": "There is an upper east door (m2-e1) but no balcony, porch or deck object attached to the upper module.",
       "decision": "correct-prompt-and-record-unresolved",
       "resolution": "Generated prompts describe the upper east door and explicitly say the balcony is not modeled. Do not show a balcony until the model defines a deck/porch, guarding and support.",
-      "phase3Status": "Resolved for the selected Cross-Wing House by the single-storey conversion. The archived Cross-Stacked Retreat retains the condition."
+      "phase3Status": "The selected Cross-Stacked Retreat remains two-storey. The upper east door has no modeled balcony, deck or guarding; the generated prompt reports the limitation."
     },
     {
       "id": "cross-butterfly-ceiling",
@@ -76,7 +76,7 @@
       "modelSays": "The roof_form is butterfly at 12 degrees. Interior ceiling geometry is not modeled.",
       "decision": "unresolved-design-decision",
       "resolution": "Generated prompts may describe the exterior butterfly roof but must not invent an interior ceiling. The ceiling is an unresolved design decision.",
-      "phase3Status": "The selected Cross-Wing House has a butterfly roof but no modeled interior ceiling; the limitation remains."
+      "phase3Status": "The selected Cross-Stacked Retreat has a butterfly roof and no modeled interior ceiling; the limitation remains and the generated prompt refuses to invent a ridge or valley inside."
     },
     {
       "id": "accessible-garden-claim",
@@ -91,10 +91,10 @@
         "E5"
       ],
       "promptSays": "A fully accessible step-free home with adaptable bathroom and kitchen.",
-      "modelSays": "Two 20-foot modules with a 1.0 m entrance, 1.2 m circulation target, step-free design intent and an accessibility classification of fully-accessible-single-storey. Turning circles, fixtures and thresholds are not geometrically verified.",
+      "modelSays": "Two 20-foot modules with a 1.0 m entrance, 1.2 m circulation target, step-free design intent and a potentially-adaptable classification. Turning circles, fixtures and thresholds are not geometrically verified.",
       "decision": "correct-prompt",
       "resolution": "Generated prompts say step-free design intent and list the recorded features. They do not say fully accessible. A professional accessibility review is still required.",
-      "phase3Status": "Phase 3 removes the fully-accessible label. The selected home is potentially adaptable and reports the unresolved bathroom turning circle."
+      "phase3Status": "Phase 3 removes the fully-accessible label. The selected home is potentially adaptable and carries the unresolved bathroom turning circle. The v2 image description keeps step-free access as a design intent, not a verified assessment."
     },
     {
       "id": "solar-pv-installed",
@@ -123,7 +123,7 @@
       "modelSays": "There is an upper east door (m2-e1) but no balcony, porch or deck object attached to the upper module.",
       "decision": "correct-prompt-and-record-unresolved",
       "resolution": "Generated prompts describe the upper east door and explicitly say the balcony is not modeled.",
-      "phase3Status": "Resolved for the selected Solar Studio by the single-storey conversion. The archived stack retains the condition."
+      "phase3Status": "The selected Solar Studio Stack remains two-storey. The upper east door has no modeled balcony; the generated prompt reports the limitation."
     },
     {
       "id": "solar-alternating-stair",
@@ -137,7 +137,7 @@
       "modelSays": "The access.stair.type is alternating-tread, with a recorded warning about usability and code acceptability.",
       "decision": "record-unresolved",
       "resolution": "Generated prompts describe the stair type and carry the warning. They do not present it as an acceptable permanent-residence solution.",
-      "phase3Status": "The selected Solar Studio is single-storey and has no stair. The archived Solar Studio Stack retains the alternating-tread stair."
+      "phase3Status": "The selected Solar Studio Stack remains two-storey and retains the alternating-tread stair. Usability and code acceptability remain unresolved; the generated prompt carries the warning."
     },
     {
       "id": "interior-perspective-accuracy",
@@ -156,7 +156,7 @@
       "modelSays": "Rooms are longitudinal zones with start/end distances. Partitions, fixtures, door swings and camera geometry are not modeled.",
       "decision": "limit-generated-output",
       "resolution": "The pipeline does not claim a spatially accurate interior perspective. It can generate a room-zone plan and a descriptive prompt labelled as a conceptual interpretation, or refuse the interior view when geometry is insufficient.",
-      "phase3Status": "Phase 3 adds room polygons, partitions, doors and fixtures, and a detailed interior prompt. Interior perspective remains unavailable; the limitation is narrower and evidence-based."
+      "phase3Status": "Phase 3 adds authored interiors for Woodland Cottage and Accessible Garden Home and provisional room bands for the other four. Interior perspective remains unavailable. The v2 image descriptions mark the two authored interiors blocked pending reconciliation of their room polygons and opening positions."
     }
   ]
 }

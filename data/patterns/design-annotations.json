@@ -1,6 +1,6 @@
 {
   "schema": "containers-hamlet-pattern-design-annotations/v1",
-  "note": "Initial Phase 4 annotation pilot. Annotations point at authored room polygons where they exist. They are design readings, not findings that a pattern is satisfied. The common lodge has no authored interior room model, so its annotations are text-only.",
+  "note": "Phase 4 pattern-lens annotations. The lens is a reading aid, not a finding. Woodland Cottage and Accessible Garden Home use authored room polygons. Offset Stack, Courtyard Residence, Cross-Stacked Retreat and Solar Studio Stack use provisional room bands inferred from the model; their annotations are marked with geometry=inferred and must not be read as an authored layout. The common lodge has no interior room model, so its annotations are text-only (geometry=none).",
   "designs": {
     "hamlet-woodland-cottage": {
       "label": "Woodland Cottage",
@@ -9,47 +9,106 @@
           "pattern": 127,
           "status": "conceptual",
           "summary": "The plan moves from the entry hall through the kitchen and living room toward the bedroom, with the bathroom off the hall.",
-          "selectors": ["#room-w-hall", "#room-w-kitchen", "#room-w-living", "#room-w-bed"],
-          "sequence": ["#room-w-hall", "#room-w-kitchen", "#room-w-living", "#room-w-bed"],
-          "observations": ["Entry, shared living and private sleeping are distinct room bands.", "The bathroom sits off the hall rather than opening directly onto the living room.", "The plan does not model door swings, sightlines or acoustic separation."],
-          "limits": ["No visitor or resident has tested the sequence.", "The plan does not prove a gradual transition or privacy."],
-          "question": "Can a visitor stop at the hall without being pulled into the living room?"
+          "selectors": [
+            "#room-w-hall",
+            "#room-w-kitchen",
+            "#room-w-living",
+            "#room-w-bed"
+          ],
+          "sequence": [
+            "#room-w-hall",
+            "#room-w-kitchen",
+            "#room-w-living",
+            "#room-w-bed"
+          ],
+          "observations": [
+            "Entry, shared living and private sleeping are distinct room bands.",
+            "The bathroom sits off the hall rather than opening directly onto the living room.",
+            "The plan does not model door swings, sightlines or acoustic separation."
+          ],
+          "limits": [
+            "No visitor or resident has tested the sequence.",
+            "The plan does not prove a gradual transition or privacy."
+          ],
+          "question": "Can a visitor stop at the hall without being pulled into the living room?",
+          "geometry": "authored"
         },
         {
           "pattern": 112,
           "status": "evidence-needed",
           "summary": "The covered porch and hall form the recorded entry sequence; the plan shows the hall but not the approach or threshold layering.",
-          "selectors": ["#room-w-hall"],
-          "observations": ["A covered, step-free porch is recorded on the south face.", "The entrance hall is a distinct room.", "The approach path and door transition are not modelled in the room plan."],
-          "limits": ["The porch is not shown at interior-plan scale.", "Threshold, lighting, weather protection and wayfinding are not tested."],
-          "question": "Does the arrival feel like a transition rather than a door straight into a shared room?"
+          "selectors": [
+            "#room-w-hall"
+          ],
+          "observations": [
+            "A covered, step-free porch is recorded on the south face.",
+            "The entrance hall is a distinct room.",
+            "The approach path and door transition are not modelled in the room plan."
+          ],
+          "limits": [
+            "The porch is not shown at interior-plan scale.",
+            "Threshold, lighting, weather protection and wayfinding are not tested."
+          ],
+          "question": "Does the arrival feel like a transition rather than a door straight into a shared room?",
+          "geometry": "authored"
         },
         {
           "pattern": 159,
           "status": "not-evaluated",
           "summary": "Openings are recorded on the north, south and west faces, but the room-level daylight condition has not been measured.",
-          "selectors": ["#room-w-living", "#room-w-bed"],
-          "observations": ["The module records windows on three faces and a south sliding door.", "Room polygons are longitudinal bands, not a daylight model.", "No daylight factor, view or glare study exists."],
-          "limits": ["The presence of openings is not proof of light on two sides of a room.", "Furniture, shading and tree cover are not modelled."],
-          "question": "Which rooms actually receive useful light from more than one direction?"
+          "selectors": [
+            "#room-w-living",
+            "#room-w-bed"
+          ],
+          "observations": [
+            "The module records windows on three faces and a south sliding door.",
+            "Room polygons are longitudinal bands, not a daylight model.",
+            "No daylight factor, view or glare study exists."
+          ],
+          "limits": [
+            "The presence of openings is not proof of light on two sides of a room.",
+            "Furniture, shading and tree cover are not modelled."
+          ],
+          "question": "Which rooms actually receive useful light from more than one direction?",
+          "geometry": "authored"
         },
         {
           "pattern": 163,
           "status": "conceptual",
           "summary": "A covered south porch and level garden deck are recorded; the living room opens toward them.",
-          "selectors": ["#room-w-living"],
-          "observations": ["A 5.4 m by 2.8 m covered porch is recorded.", "The porch is step-free and connects to the accessible entrance.", "The interior plan does not draw the porch or deck."],
-          "limits": ["The plan cannot show enclosure, outlook, wind, sun or privacy.", "No resident has tested whether the porch feels like an outdoor room."],
-          "question": "Is the porch a place to stay, or only a covered route to the door?"
+          "selectors": [
+            "#room-w-living"
+          ],
+          "observations": [
+            "A 5.4 m by 2.8 m covered porch is recorded.",
+            "The porch is step-free and connects to the accessible entrance.",
+            "The interior plan does not draw the porch or deck."
+          ],
+          "limits": [
+            "The plan cannot show enclosure, outlook, wind, sun or privacy.",
+            "No resident has tested whether the porch feels like an outdoor room."
+          ],
+          "question": "Is the porch a place to stay, or only a covered route to the door?",
+          "geometry": "authored"
         },
         {
           "pattern": 180,
           "status": "not-evaluated",
           "summary": "The living room has a south sliding door and a north window, but no window seat, alcove or place to pause is modelled.",
-          "selectors": ["#room-w-living"],
-          "observations": ["A 2.4 m south sliding door and a north window are recorded.", "No built-in seat, deep sill or alcove is modelled.", "The plan does not show furniture."],
-          "limits": ["The plan cannot establish a comfortable window place.", "Sill height, glare, privacy and furniture clearance are unresolved."],
-          "question": "Is there a place to sit by a window without blocking circulation or egress?"
+          "selectors": [
+            "#room-w-living"
+          ],
+          "observations": [
+            "A 2.4 m south sliding door and a north window are recorded.",
+            "No built-in seat, deep sill or alcove is modelled.",
+            "The plan does not show furniture."
+          ],
+          "limits": [
+            "The plan cannot establish a comfortable window place.",
+            "Sill height, glare, privacy and furniture clearance are unresolved."
+          ],
+          "question": "Is there a place to sit by a window without blocking circulation or egress?",
+          "geometry": "authored"
         }
       ]
     },
@@ -60,46 +119,100 @@
           "pattern": 127,
           "status": "evidence-needed",
           "summary": "The plan has living, kitchen, storage, bedroom and bathroom rooms, but no separate entrance hall or explicit privacy gradient.",
-          "selectors": ["#room-e-living", "#room-e-kitchen", "#room-e-bed", "#room-e-bath"],
-          "observations": ["The accessible home keeps essential rooms on one level.", "The entry appears to open into the shared living/kitchen area.", "A bathroom and bedroom are distinct rooms."],
-          "limits": ["The plan does not show a visitor threshold or acoustic separation.", "No resident has tested the arrangement."],
-          "question": "Can a visitor arrive without exposing the whole living room?"
+          "selectors": [
+            "#room-e-living",
+            "#room-e-kitchen",
+            "#room-e-bed",
+            "#room-e-bath"
+          ],
+          "observations": [
+            "The accessible home keeps essential rooms on one level.",
+            "The entry appears to open into the shared living/kitchen area.",
+            "A bathroom and bedroom are distinct rooms."
+          ],
+          "limits": [
+            "The plan does not show a visitor threshold or acoustic separation.",
+            "No resident has tested the arrangement."
+          ],
+          "question": "Can a visitor arrive without exposing the whole living room?",
+          "geometry": "authored"
         },
         {
           "pattern": 112,
           "status": "evidence-needed",
           "summary": "The covered terrace and step-free route are recorded, but the interior plan shows a direct entry rather than a layered transition.",
-          "selectors": ["#room-e-living"],
-          "observations": ["A covered, step-free garden terrace is recorded.", "No entrance hall is modelled.", "The approach and door threshold are not shown in the room plan."],
-          "limits": ["A step-free route does not by itself create an entrance transition.", "Weather protection, lighting and wayfinding are not tested."],
-          "question": "Does the direct entry still provide a clear, sheltered arrival?"
+          "selectors": [
+            "#room-e-living"
+          ],
+          "observations": [
+            "A covered, step-free garden terrace is recorded.",
+            "No entrance hall is modelled.",
+            "The approach and door threshold are not shown in the room plan."
+          ],
+          "limits": [
+            "A step-free route does not by itself create an entrance transition.",
+            "Weather protection, lighting and wayfinding are not tested."
+          ],
+          "question": "Does the direct entry still provide a clear, sheltered arrival?",
+          "geometry": "authored"
         },
         {
           "pattern": 159,
           "status": "not-evaluated",
           "summary": "The home has an accessible single-level plan, but room-level daylight from two sides is not established.",
-          "selectors": ["#room-e-living", "#room-e-bed"],
-          "observations": ["The plan is single-level with essential rooms together.", "Openings are not drawn in the interior plan.", "No daylight or view study exists."],
-          "limits": ["Accessibility is not a daylight result.", "No measured daylight factor, glare or view analysis."],
-          "question": "Do the main rooms receive light from more than one direction?"
+          "selectors": [
+            "#room-e-living",
+            "#room-e-bed"
+          ],
+          "observations": [
+            "The plan is single-level with essential rooms together.",
+            "Openings are not drawn in the interior plan.",
+            "No daylight or view study exists."
+          ],
+          "limits": [
+            "Accessibility is not a daylight result.",
+            "No measured daylight factor, glare or view analysis."
+          ],
+          "question": "Do the main rooms receive light from more than one direction?",
+          "geometry": "authored"
         },
         {
           "pattern": 163,
           "status": "conceptual",
           "summary": "A covered, step-free garden terrace is recorded on the south side; it is not drawn in the interior plan.",
-          "selectors": ["#room-e-living"],
-          "observations": ["The terrace is 4.6 m by 2.8 m and covered.", "It is reached without a step.", "The room plan does not show the terrace."],
-          "limits": ["No test of enclosure, wind, sun or privacy.", "The terrace may be a route rather than a room."],
-          "question": "Can the terrace be used as an outdoor room, not only an accessible route?"
+          "selectors": [
+            "#room-e-living"
+          ],
+          "observations": [
+            "The terrace is 4.6 m by 2.8 m and covered.",
+            "It is reached without a step.",
+            "The room plan does not show the terrace."
+          ],
+          "limits": [
+            "No test of enclosure, wind, sun or privacy.",
+            "The terrace may be a route rather than a room."
+          ],
+          "question": "Can the terrace be used as an outdoor room, not only an accessible route?",
+          "geometry": "authored"
         },
         {
           "pattern": 180,
           "status": "not-evaluated",
           "summary": "No window seat, alcove or sill detail is modelled for the accessible home.",
-          "selectors": ["#room-e-living"],
-          "observations": ["The living room is the main shared room.", "No window furniture is modelled.", "Openings are not drawn in the interior plan."],
-          "limits": ["A window place must also preserve accessible circulation and egress.", "No furniture, sill or glare test exists."],
-          "question": "Can a window place be added without narrowing the accessible route?"
+          "selectors": [
+            "#room-e-living"
+          ],
+          "observations": [
+            "The living room is the main shared room.",
+            "No window furniture is modelled.",
+            "Openings are not drawn in the interior plan."
+          ],
+          "limits": [
+            "A window place must also preserve accessible circulation and egress.",
+            "No furniture, sill or glare test exists."
+          ],
+          "question": "Can a window place be added without narrowing the accessible route?",
+          "geometry": "authored"
         }
       ]
     },
@@ -111,27 +224,485 @@
           "status": "not-evaluated",
           "summary": "Two covered entrances and two decks are recorded, but the lodge has no authored interior room model, so the transition cannot be overlaid.",
           "selectors": [],
-          "observations": ["A covered west entrance porch and deck are recorded.", "A generous south veranda is recorded.", "No interior room polygons are authored for the lodge."],
-          "limits": ["Text-only annotation; no room overlay.", "Assembly egress and weather protection are not assessed."],
-          "question": "Do the two entries read clearly and provide a sheltered transition?"
+          "observations": [
+            "A covered west entrance porch and deck are recorded.",
+            "A generous south veranda is recorded.",
+            "No interior room polygons are authored for the lodge."
+          ],
+          "limits": [
+            "Text-only annotation; no room overlay.",
+            "Assembly egress and weather protection are not assessed."
+          ],
+          "question": "Do the two entries read clearly and provide a sheltered transition?",
+          "geometry": "none"
         },
         {
           "pattern": 163,
           "status": "conceptual",
           "summary": "A generous screened south veranda and a covered west entrance porch are recorded as the lodge's outdoor rooms.",
           "selectors": [],
-          "observations": ["The south veranda is 8 m by 3 m and screened.", "The west entrance porch is 4 m by 2 m and covered.", "No room plan exists to test the connection to the interior."],
-          "limits": ["Text-only annotation; no interior overlay.", "Wind, sun, privacy and event use are not tested."],
-          "question": "Can the veranda hold a small group and a quiet individual at the same time?"
+          "observations": [
+            "The south veranda is 8 m by 3 m and screened.",
+            "The west entrance porch is 4 m by 2 m and covered.",
+            "No room plan exists to test the connection to the interior."
+          ],
+          "limits": [
+            "Text-only annotation; no interior overlay.",
+            "Wind, sun, privacy and event use are not tested."
+          ],
+          "question": "Can the veranda hold a small group and a quiet individual at the same time?",
+          "geometry": "none"
         },
         {
           "pattern": 159,
           "status": "not-evaluated",
           "summary": "The lodge modules record windows on multiple faces, but no room-level daylight model exists.",
           "selectors": [],
-          "observations": ["Windows are recorded on north, south, east and west faces.", "The lodge has no authored interior rooms.", "No daylight study exists."],
-          "limits": ["Text-only annotation; opening count is not a daylight finding.", "No measured light, glare or view analysis."],
-          "question": "Do the shared rooms receive useful light from more than one side?"
+          "observations": [
+            "Windows are recorded on north, south, east and west faces.",
+            "The lodge has no authored interior rooms.",
+            "No daylight study exists."
+          ],
+          "limits": [
+            "Text-only annotation; opening count is not a daylight finding.",
+            "No measured light, glare or view analysis."
+          ],
+          "question": "Do the shared rooms receive useful light from more than one side?",
+          "geometry": "none"
+        }
+      ]
+    },
+    "hamlet-offset-stack": {
+      "label": "Offset Stack",
+      "annotations": [
+        {
+          "pattern": 127,
+          "status": "evidence-needed",
+          "geometry": "inferred",
+          "summary": "The stair separates the shared ground floor from the upper sleeping, bathroom and studio zones, but the room bands have no partitions or doors, so the gradient is a plan diagram rather than a demonstrated sequence.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z4",
+            "#room-m2-m2-z1"
+          ],
+          "observations": [
+            "The ground floor groups living, kitchen, bathroom and stair in one 12.19 m band.",
+            "The upper floor places sleeping, bathroom, studio and storage behind the stair.",
+            "No partitions or doors are modeled, so thresholds and acoustic separation cannot be read."
+          ],
+          "limits": [
+            "No resident has tested the sequence.",
+            "The stair is conceptual and its enclosure is not modeled."
+          ],
+          "question": "Does the stair create a clear threshold between shared and private life, or only a level change?"
+        },
+        {
+          "pattern": 112,
+          "status": "trade-off-identified",
+          "geometry": "inferred",
+          "summary": "The east entry door opens into the living band; the covered south porch is a separate outdoor room and does not shelter the entry.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z4"
+          ],
+          "observations": [
+            "The entry door is on the east face at 1.2 m.",
+            "Covered porch p1 is on the south face, 4 x 2.6 m, under the upper offset.",
+            "No entrance hall or vestibule is modeled."
+          ],
+          "limits": [
+            "The site path approach is south-west while the entrance is east.",
+            "Weather protection, lighting and wayfinding at the entry are not tested."
+          ],
+          "question": "Does the east door provide a sheltered arrival, or is the covered porch only a garden room?"
+        },
+        {
+          "pattern": 159,
+          "status": "not-evaluated",
+          "geometry": "inferred",
+          "summary": "Openings are recorded on the south, west and north faces, but the interior is a zone band and no daylight study exists.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m2-m2-z1",
+            "#room-m2-m2-z3"
+          ],
+          "observations": [
+            "The ground living band has a south sliding door and a west window.",
+            "The upper sleeping band has a north window; the upper studio has a south window and an east door.",
+            "No partitions, furniture or shading are modeled."
+          ],
+          "limits": [
+            "Opening count is not a daylight result.",
+            "No daylight factor, glare or view analysis exists."
+          ],
+          "question": "Which ground and upper rooms receive useful light from more than one direction?"
+        },
+        {
+          "pattern": 163,
+          "status": "trade-off-identified",
+          "geometry": "inferred",
+          "summary": "The covered ground porch is created by the upper offset; the recorded upper porch has no door on its south face, so it is not an accessible outdoor room.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m2-m2-z3"
+          ],
+          "observations": [
+            "The ground porch p1 is 4 x 2.6 m and roofed by the upper module.",
+            "The upper porch p2 is 2.4 x 1.4 m, open and unroofed.",
+            "The upper east door is not on the p2 face."
+          ],
+          "limits": [
+            "No guarding, support or access is modeled for p2.",
+            "Enclosure, wind, sun and privacy are not tested."
+          ],
+          "question": "Is the ground porch a sheltered outdoor room, and can the upper porch ever be used without a door and guarding?"
+        },
+        {
+          "pattern": 180,
+          "status": "not-evaluated",
+          "geometry": "inferred",
+          "summary": "The living band has a west window and a south sliding door; the upper sleeping has a north window, but no window seat, alcove or sill detail is modeled.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m2-m2-z1"
+          ],
+          "observations": [
+            "The ground living band has a south sliding door and a west window.",
+            "The upper sleeping band has a north window.",
+            "No built-in seat, deep sill or furniture is modeled."
+          ],
+          "limits": [
+            "Furniture and sill heights are not modeled.",
+            "Glare, privacy and egress at the window are unresolved."
+          ],
+          "question": "Is there a place to sit by a window without blocking the stair or the living route?"
+        }
+      ]
+    },
+    "hamlet-courtyard-residence": {
+      "label": "Courtyard Residence",
+      "annotations": [
+        {
+          "pattern": 127,
+          "status": "evidence-needed",
+          "geometry": "inferred",
+          "summary": "The L separates sleeping and living in one module from kitchen and workspace in the other around a courtyard, but the entry opens into the sleeping band and no partitions or doors are modeled.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z4",
+            "#room-m2-m2-z2",
+            "#room-m2-m2-z4"
+          ],
+          "observations": [
+            "The long module bands are sleeping, bathroom, dining and living.",
+            "The perpendicular module bands are kitchen, workspace, storage and circulation.",
+            "The east entry opens into the sleeping band at 1.2 m."
+          ],
+          "limits": [
+            "No entrance hall or internal doors are modeled.",
+            "No resident has tested the separation."
+          ],
+          "question": "Can a visitor arrive without passing through the sleeping zone?"
+        },
+        {
+          "pattern": 112,
+          "status": "trade-off-identified",
+          "geometry": "inferred",
+          "summary": "The east entry opens directly into the sleeping band; the covered porch is on the north courtyard side, not at the entry.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z4"
+          ],
+          "observations": [
+            "The entry door is on the east face at 1.2 m.",
+            "Covered porch p1 is 6.4 x 2.8 m on the north face of the long module.",
+            "No vestibule or entrance hall is modeled."
+          ],
+          "limits": [
+            "The path approach is east and matches the entrance, but no threshold layering is modeled.",
+            "Weather protection and wayfinding at the entry are not tested."
+          ],
+          "question": "Does the direct entry still provide a clear, sheltered arrival?"
+        },
+        {
+          "pattern": 159,
+          "status": "not-evaluated",
+          "geometry": "inferred",
+          "summary": "The L and the courtyard put openings on several faces, but the rooms are zone bands and no daylight study exists.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z3",
+            "#room-m2-m2-z1",
+            "#room-m2-m2-z2"
+          ],
+          "observations": [
+            "The sleeping band has a north window and a south window.",
+            "Dining has a north sliding door; living has a south window.",
+            "Kitchen and workspace each have north and south windows."
+          ],
+          "limits": [
+            "No partitions or furniture are modeled.",
+            "No daylight factor, glare or courtyard reflectance study exists."
+          ],
+          "question": "Do the main rooms receive light from more than one direction, and does the courtyard improve or block it?"
+        },
+        {
+          "pattern": 163,
+          "status": "conceptual",
+          "geometry": "inferred",
+          "summary": "The covered porch and deck form the north edge of the courtyard, with the L of the two modules enclosing two other sides.",
+          "selectors": [
+            "#room-m1-m1-z3",
+            "#room-m1-m1-z4",
+            "#room-m2-m2-z4"
+          ],
+          "observations": [
+            "Porch p1 is 6.4 x 2.8 m on the north face of the long module.",
+            "Deck d1 projects 1.4 m into the courtyard.",
+            "Glazed link c1 connects the two modules."
+          ],
+          "limits": [
+            "No wind, sun, privacy or acoustic test exists.",
+            "The green roof and its drainage are unresolved."
+          ],
+          "question": "Is the courtyard a sheltered outdoor room, or a passage between the modules?"
+        },
+        {
+          "pattern": 180,
+          "status": "not-evaluated",
+          "geometry": "inferred",
+          "summary": "Dining has a north sliding door and living has a south window; workspace has a courtyard window, but no window seat or alcove is modeled.",
+          "selectors": [
+            "#room-m1-m1-z3",
+            "#room-m2-m2-z2"
+          ],
+          "observations": [
+            "Dining has a 2.6 m north sliding door.",
+            "Living has a 0.8 m south window.",
+            "Workspace has a 1.6 m north courtyard window."
+          ],
+          "limits": [
+            "No furniture, sill or glare test exists.",
+            "Courtyard privacy and outlook are not measured."
+          ],
+          "question": "Is there a place to sit by the courtyard doors without blocking the link or the dining route?"
+        }
+      ]
+    },
+    "hamlet-cross-stacked-retreat": {
+      "label": "Cross-Stacked Retreat",
+      "annotations": [
+        {
+          "pattern": 127,
+          "status": "evidence-needed",
+          "geometry": "inferred",
+          "summary": "The dog-leg stair separates the ground living, kitchen and bathroom bands from the upper sleeping, bathroom, studio and storage bands, but no partitions or doors are modeled.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z4",
+            "#room-m2-m2-z1"
+          ],
+          "observations": [
+            "The ground floor is one 12.19 m band with living, kitchen, bathroom and stair.",
+            "The upper floor has sleeping, bathroom, studio and storage, reached by the east stair.",
+            "The stair is the only vertical link."
+          ],
+          "limits": [
+            "No partitions, doors or stair enclosure are modeled.",
+            "No resident has tested the sequence."
+          ],
+          "question": "Does the stair make a clear threshold between the shared ground floor and the private upper floor?"
+        },
+        {
+          "pattern": 112,
+          "status": "trade-off-identified",
+          "geometry": "inferred",
+          "summary": "The east entry opens into the ground living band; the covered porch is on the south face beneath the cross, so the entry itself is not sheltered by it.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z4"
+          ],
+          "observations": [
+            "The entry door is on the east face at 1.2 m.",
+            "Covered porch p1 is 4.2 x 2.8 m on the south face of the ground module.",
+            "No vestibule or entrance hall is modeled."
+          ],
+          "limits": [
+            "The site path approach is north while the entrance is east.",
+            "Weather protection and wayfinding at the entry are not tested."
+          ],
+          "question": "Does the east entry provide a sheltered arrival, or does the design rely on the south porch as the only outdoor room?"
+        },
+        {
+          "pattern": 159,
+          "status": "not-evaluated",
+          "geometry": "inferred",
+          "summary": "The cross volume and butterfly roof put openings on several faces, but the rooms are zone bands and no daylight study exists.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z2",
+            "#room-m2-m2-z1",
+            "#room-m2-m2-z3"
+          ],
+          "observations": [
+            "The ground living band has a north window, south sliding doors and a west window.",
+            "The upper sleeping has a north window; the upper studio has a south window and an east door.",
+            "The cross volume shades the ground porch."
+          ],
+          "limits": [
+            "Opening count is not a daylight result.",
+            "No daylight factor, glare or cross-volume shading study exists."
+          ],
+          "question": "Do the ground rooms receive light from two sides under the cross, or does the upper volume darken them?"
+        },
+        {
+          "pattern": 163,
+          "status": "trade-off-identified",
+          "geometry": "inferred",
+          "summary": "The cross volume creates a deep shaded ground porch; the upper east door has no balcony, so the upper outdoor room is unresolved.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m2-m2-z3"
+          ],
+          "observations": [
+            "Porch p1 is 4.2 x 2.8 m beneath the upper module.",
+            "The upper east door has no modeled balcony, deck or guardrail.",
+            "The butterfly roof is an exterior form; no interior ceiling is modeled."
+          ],
+          "limits": [
+            "No guarding, support or egress is modeled at the upper door.",
+            "Wind, sun and privacy in the shaded porch are not tested."
+          ],
+          "question": "Is the shaded ground porch usable in cool weather, and can the upper door ever open safely?"
+        },
+        {
+          "pattern": 180,
+          "status": "not-evaluated",
+          "geometry": "inferred",
+          "summary": "The ground living band has a north window, south sliding doors and a west window; the upper studio has a south window, but no window seat is modeled.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m2-m2-z3"
+          ],
+          "observations": [
+            "Living has a north window, south sliding doors and a west window.",
+            "The upper studio has a south window.",
+            "No built-in seat or furniture is modeled."
+          ],
+          "limits": [
+            "No furniture, sill or glare test exists.",
+            "The cross volume shades part of the opening."
+          ],
+          "question": "Is there a place to sit by a window without blocking the stair or the south doors?"
+        }
+      ]
+    },
+    "hamlet-solar-studio-stack": {
+      "label": "Solar Studio Stack",
+      "annotations": [
+        {
+          "pattern": 127,
+          "status": "trade-off-identified",
+          "geometry": "inferred",
+          "summary": "The alternating-tread stair is the only link between the compact ground living, kitchen and bathroom bands and the upper studio and sleeping bands; no partitions or doors are modeled.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z4",
+            "#room-m2-m2-z1",
+            "#room-m2-m2-z2"
+          ],
+          "observations": [
+            "The ground floor is one 6.06 m band with living, kitchen, bathroom and stair.",
+            "The upper floor has studio and sleeping, reached by the east stair.",
+            "The stair is recorded as alternating-tread."
+          ],
+          "limits": [
+            "The stair usability and code acceptability are unresolved.",
+            "No partitions, doors or stair enclosure are modeled."
+          ],
+          "question": "Can the stair serve daily life safely, or does it make the upper floor a specialist space?"
+        },
+        {
+          "pattern": 112,
+          "status": "evidence-needed",
+          "geometry": "inferred",
+          "summary": "The south entry is under the covered terrace but opens into the compact ground band at the bathroom/stair end; no entrance hall is modeled.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m1-m1-z3",
+            "#room-m1-m1-z4"
+          ],
+          "observations": [
+            "The entry door is on the south face at 4.4 m.",
+            "Covered terrace p1 runs 0.4–4.8 m on the south face, so it covers the entry.",
+            "No entrance hall or vestibule is modeled; the entry falls in the bathroom band."
+          ],
+          "limits": [
+            "The bathroom band is inferred; the actual entry sequence is not authored.",
+            "Weather protection and wayfinding are not tested."
+          ],
+          "question": "Does the covered entry provide a transition, or does it open directly into the bathroom zone?"
+        },
+        {
+          "pattern": 159,
+          "status": "not-evaluated",
+          "geometry": "inferred",
+          "summary": "The compact stack has a south studio glazing wall, a north studio window and a south living sliding door, but no daylight study exists.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m2-m2-z1",
+            "#room-m2-m2-z2"
+          ],
+          "observations": [
+            "The upper studio has a 2.4 x 1.6 m south window and a north window.",
+            "The ground living has a 2 m south sliding door and a north kitchen window.",
+            "The upper sleeping band has no recorded opening."
+          ],
+          "limits": [
+            "Opening count is not a daylight result.",
+            "No daylight factor, glare or shading study exists."
+          ],
+          "question": "Does the upper studio receive light from two sides, and does the sleeping band have any useful daylight?"
+        },
+        {
+          "pattern": 163,
+          "status": "conceptual",
+          "geometry": "inferred",
+          "summary": "The covered south terrace is shaded by the upper offset and roof overhang; the upper east door has no balcony, so the upper outdoor space is unresolved.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m2-m2-z1"
+          ],
+          "observations": [
+            "Terrace p1 is 4.4 x 2.4 m on the south face of the ground module.",
+            "The upper east door has no modeled balcony, deck or guardrail.",
+            "The roof overhang is 0.9 m."
+          ],
+          "limits": [
+            "No guarding, support or egress is modeled at the upper door.",
+            "Wind, sun and privacy on the terrace are not tested."
+          ],
+          "question": "Is the terrace a usable outdoor room for two people, and can the upper door open safely?"
+        },
+        {
+          "pattern": 180,
+          "status": "not-evaluated",
+          "geometry": "inferred",
+          "summary": "The upper studio has a 2.4 m south window and a north window; the ground living has a south sliding door and a north kitchen window, but no window seat is modeled.",
+          "selectors": [
+            "#room-m1-m1-z1",
+            "#room-m2-m2-z1"
+          ],
+          "observations": [
+            "The upper studio has south glazing and a north window.",
+            "The ground living has a south sliding door and a north kitchen window.",
+            "No built-in seat, sill or furniture is modeled."
+          ],
+          "limits": [
+            "No furniture, sill or glare test exists.",
+            "The east door has no balcony."
+          ],
+          "question": "Is there a place to sit by the studio glazing without blocking the stair or the east door?"
         }
       ]
     }

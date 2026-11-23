@@ -177,8 +177,16 @@ A package manifest records:
 - design id, revision, schema version and design hash;
 - scene hash and presentation hash;
 - generator version and generation date;
-- artifact paths, types, dependencies and hashes;
+- the seven files that are actually published in the package (`artifacts`);
+- the shared drawings and references under `/design-lab/views/`
+  (`sharedArtifacts`), with relative paths, types, dependencies and hashes;
 - known limitations.
+
+The published manifest is not the same as the editor ZIP plan. The editor ZIP
+uses virtual paths (`prompts/exterior.md`, `drawings/…`, `references/…`) because
+it really contains those files. The published package writes `prompt.md`,
+`interior.md`, `negative.md`, `config.json` and `scene.json` and links to the
+shared views, so its manifest must not claim files that are not there.
 
 The editor's **Download package ZIP** includes the design, description, scene,
 prompt, negative prompt, configuration, drawings, reference and manifest.
@@ -221,8 +229,9 @@ account, API key or network request.
 ## Six-home packages
 
 `/design-lab/illustration/` publishes a package for each hamlet residence:
-prompt, negative prompt, description, configuration, scene and manifest. The
-drawings and references are shared from the same generated model.
+prompt, interior prompt, negative prompt, description, configuration, scene and
+manifest. The drawings and references are shared from the same generated model
+and listed as `sharedArtifacts` in the manifest.
 
 The build does not duplicate all drawings into every package; the editor ZIP
 does so for portability.
@@ -253,6 +262,7 @@ does so for portability.
 
 ## Related documents
 
+- [`image-descriptions.md`](image-descriptions.md)
 - [`illustration-pipeline-audit.md`](illustration-pipeline-audit.md)
 - [`../data/illustration-discrepancies.json`](../data/illustration-discrepancies.json)
 - [`visualisation-prompts.md`](visualisation-prompts.md)

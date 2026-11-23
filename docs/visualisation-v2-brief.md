@@ -6,7 +6,8 @@ model-verified records and must not be used for construction, accessibility or
 service design.
 
 This brief defines what v2 must show before an image can be labelled as a
-selected-home visualisation.
+selected-home visualisation. The per-image descriptions that implement this
+brief are in [`image-descriptions.md`](image-descriptions.md).
 
 ## What v1 gets right
 
