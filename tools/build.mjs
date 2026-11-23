@@ -23,7 +23,7 @@ import { vegetationComparisonSVG } from './lib/design-systems.mjs';
 import { groundPage, footbridgeSVG } from './lib/design-ground.mjs';
 import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { patternLanguagePage } from './lib/pattern-language-page.mjs';
-import { validatePatterns } from './lib/patterns.mjs';
+import { validatePatterns, validateSiteElements } from './lib/patterns.mjs';
 import { homesIndexPage, homePage, homeCards, legacyHomeRedirect } from './lib/home-pages.mjs';
 import { modelPage } from './lib/model-pages.mjs';
 import { accessibleHomePage, accessiblePlanSVG } from './lib/accessible-home.mjs';
@@ -140,6 +140,10 @@ export function generate() {
   const patternCheck = validatePatterns(patternData);
   patternCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'patterns: ' + message }));
   patternCheck.warnings.forEach((message) => issues.push({ level: 'warning', message: 'patterns: ' + message }));
+  const siteElementData = JSON.parse(readText('data/patterns/site-elements.json'));
+  const siteElementCheck = validateSiteElements(siteElementData, patternData);
+  siteElementCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'pattern site elements: ' + message }));
+  siteElementCheck.warnings.forEach((message) => issues.push({ level: 'warning', message: 'pattern site elements: ' + message }));
   const selectedBySite = {};
   designLab.concepts.filter((c) => c.role === 'hamlet-selected').forEach((c) => { selectedBySite[c.site.homesite] = c; });
   const siteReconciliation = site.buildings.filter((b) => b.design_lab_home).map((b) => {
@@ -391,7 +395,7 @@ export function generate() {
   const archiveOut = archiveNav.replace(/<!-- gen:gallery -->[\s\S]*?<!-- \/gen:gallery -->/, `<!-- gen:gallery -->\n${archiveGallery}\n${arrangementCards('../')}\n<!-- /gen:gallery -->`);
   if (!archiveTemplate.includes('<!-- gen:gallery -->') || !archiveTemplate.includes('<!-- /gen:gallery -->')) issues.push({ level: 'error', message: 'site/design-lab/concepts/index.html is missing the gen:gallery markers' });
   put(archivePagePath, archiveOut.replace(/[ \t]+$/gm, ''));
-  put('site/design-lab/pattern-language/index.html', patternLanguagePage(patternData).replace(/\n\s+/g, '\n'));
+  put('site/design-lab/pattern-language/index.html', patternLanguagePage(patternData, siteElementData).replace(/\n\s+/g, '\n'));
   put('site/design-lab/visualisations/index.html', visualisationsPage().replace(/\n\s+/g, '\n'));
   put('site/design-lab/guides/index.html', guidesPage());
   const editorPath = 'site/design-lab/editor/index.html';

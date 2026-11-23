@@ -12,7 +12,7 @@ const Schema = require('../site/js/design-schema.js');
 const Model = require('../site/js/design-model.js');
 const Illustration = require('../site/js/design-illustration.js');
 const Interior = require('../site/js/design-interior.js');
-const { validatePatterns, VERIFIED_TITLES } = require('./lib/patterns.mjs');
+const { validatePatterns, validateSiteElements, VERIFIED_TITLES } = require('./lib/patterns.mjs');
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 const exists = (p) => fs.existsSync(path.join(ROOT, p));
@@ -217,6 +217,19 @@ ok(patternData.patterns.every((p) => patternData.patterns.some((q) => q.number !
 ok(patternData.patterns.every((p) => p.evaluationQuestions.length >= 2 && p.limitations.length >= 1), 'every pattern records questions and limitations');
 ok(JSON.parse(read('data/patterns/schema.json')).properties.patterns.maxItems === 20, 'the pattern JSON Schema documents the catalogue bound');
 const patternPage = read('site/design-lab/pattern-language/index.html');
+const siteElementData = JSON.parse(read('data/patterns/site-elements.json'));
+const siteValidation = validateSiteElements(siteElementData, patternData);
+ok(siteValidation.ok, `pattern site-element mapping validates${siteValidation.errors.length ? ': ' + siteValidation.errors.join('; ') : ''}`);
+ok(siteElementData.elements.every((e) => e.selectors.every((s) => s === 'svg' || read('site/assets/site-plan.svg').includes(`id="${s.slice(1)}"`))), 'every mapped site selector exists in the generated site plan');
+ok(siteElementData.elements.some((e) => e.id === 'common-land') && siteElementData.elements.some((e) => e.id === 'paths') && siteElementData.elements.some((e) => e.id === 'lodge') && siteElementData.elements.some((e) => e.id === 'homes'), 'site mapping covers common land, paths, lodge and homes');
+ok(siteElementData.elements.filter((e) => e.selectors.length === 0).every((e) => /not (shown|legible|highlighted)/i.test(e.note + ' ' + e.description)), 'text-only site elements explain why they cannot be highlighted');
+const sitePlanText = read('site/assets/site-plan.svg');
+ok(siteElementData.elements.every((e) => e.selectors.every((s) => e.selectors.length === 0 || s === 'svg' || new RegExp('id="' + s.slice(1) + '"').test(sitePlanText))), 'site-plan selector IDs are stable generated IDs');
+ok(patternPage.includes('id="pattern-site-plan"') && patternPage.includes('Highlight on site plan') && patternPage.includes('pattern-site-elements'), 'Pattern Explorer exposes the site plan and highlight controls');
+ok(patternPage.includes('Site-element key and limitations') && patternPage.includes('The plan does not prove ownership, tenure or public access'), 'Pattern Explorer publishes a text site-element key and ownership caveat');
+ok(patternPage.includes('No pattern selected') && patternPage.includes('available without JavaScript'), 'site panel has a no-JS status and text alternative');
+ok(!/fetch\(|XMLHttpRequest/.test(read('site/design-lab/pattern-language/patterns.js')), 'site highlighting uses same-origin DOM access, not fetch or XHR');
+
 ok((patternPage.match(/class="pattern-card"/g) || []).length === 20, 'Pattern Language Explorer publishes twenty patterns');
 ok(patternData.patterns.every((p) => patternPage.includes(`id="pattern-${p.number}"`) && patternPage.includes(p.title)), 'every pattern has a stable fragment and title');
 ok(patternPage.includes('Pattern Language Explorer') && patternPage.includes('not a rulebook') && patternPage.includes('Pattern titles/numbers were checked'), 'Explorer explains purpose and source verification');

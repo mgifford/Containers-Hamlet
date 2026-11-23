@@ -1,0 +1,87 @@
+{
+  "schema": "containers-hamlet-pattern-site-elements/v1",
+  "sitePlan": "../../assets/site-plan.svg",
+  "note": "Stable site-plan element identifiers. Selectors point at existing generated SVG layers; no coordinates are duplicated. 'Text only' elements are not legible at site-plan scale and are linked to the relevant building drawings.",
+  "elements": [
+    {
+      "id": "site-plan",
+      "label": "Whole site",
+      "selectors": ["svg"],
+      "description": "The complete fictional parcel: terrain, water, wetland, woodland, rocks, paths, buildings and buffers.",
+      "evidenceStatus": "conceptual",
+      "note": "Fictional site; not a survey or legal plan."
+    },
+    {
+      "id": "landscape",
+      "label": "Landscape",
+      "selectors": ["#site-layer-terrain", "#site-layer-contours", "#site-layer-trees", "#site-layer-woodland", "#site-layer-rocks", "#site-layer-buffers", "#site-marsh", "#site-rock"],
+      "description": "Terrain, contours, woodland, individual tree symbols, rock, wetland and the illustrative buffers.",
+      "evidenceStatus": "evidence-needed",
+      "note": "No tree survey, habitat assessment, hydrology model or legal setback confirmation."
+    },
+    {
+      "id": "common-land",
+      "label": "Common land / gathering places",
+      "selectors": ["#site-layer-clearings"],
+      "description": "Cleared and gathering areas shown on the site plan. The plan does not prove ownership, tenure or public access.",
+      "evidenceStatus": "evidence-needed",
+      "note": "Common ownership, stewardship and legal access are not mapped."
+    },
+    {
+      "id": "paths",
+      "label": "Paths, lanes and access",
+      "selectors": ["#site-layer-access"],
+      "description": "Vehicle lane, parking, accessible arrival, pedestrian paths, trails and emergency/maintenance access.",
+      "evidenceStatus": "evidence-needed",
+      "note": "Widths, grades, surfacing, winter maintenance and accessibility are placeholders."
+    },
+    {
+      "id": "lodge",
+      "label": "Common lodge",
+      "selectors": ["#site-building-lodge"],
+      "description": "The common lodge footprint in the site plan.",
+      "evidenceStatus": "conceptual",
+      "note": "The lodge is a concept; assembly occupancy, egress and fire separation are not assessed."
+    },
+    {
+      "id": "homes",
+      "label": "Individual homes",
+      "selectors": ["#site-building-a", "#site-building-b", "#site-building-c", "#site-building-d", "#site-building-e", "#site-building-f"],
+      "description": "The six selected-home assignment footprints in the illustrative site plan.",
+      "evidenceStatus": "conceptual",
+      "note": "Footprints are illustrative and may conflict with older site-model geometry; see the reconciliation table."
+    },
+    {
+      "id": "porches",
+      "label": "Porches and outdoor rooms",
+      "selectors": [],
+      "description": "Porch and outdoor-room geometry is shown on building plans, not legibly at site-plan scale.",
+      "evidenceStatus": "conceptual",
+      "note": "Not highlighted on the site plan; use the building elevation and plans."
+    },
+    {
+      "id": "interiors",
+      "label": "Interiors",
+      "selectors": [],
+      "description": "Rooms, partitions, fixtures and clearances are building-drawing data, not site-plan layers.",
+      "evidenceStatus": "conceptual",
+      "note": "Not highlighted on the site plan; use the interior plans."
+    },
+    {
+      "id": "shared-workshop",
+      "label": "Shared workshop",
+      "selectors": ["#site-building-lodge"],
+      "description": "The workshop is an activity inside the common lodge; it has no separate site-plan footprint.",
+      "evidenceStatus": "conceptual",
+      "note": "The lodge footprint is highlighted, not a separate workshop building."
+    },
+    {
+      "id": "visitor-arrival",
+      "label": "Visitor arrival",
+      "selectors": ["#site-layer-access", "#site-building-lodge"],
+      "description": "The entrance lane, parking/drop-off and lodge arrival area shown on the site plan.",
+      "evidenceStatus": "conceptual",
+      "note": "Wayfinding, lighting, winter clearing and accessible arrival are not verified."
+    }
+  ]
+}

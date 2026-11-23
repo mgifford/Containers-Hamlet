@@ -96,3 +96,32 @@ export function validatePatterns(data) {
   });
   return { ok: errors.length === 0, errors, warnings };
 }
+
+export const SITE_ELEMENT_SCHEMA = 'containers-hamlet-pattern-site-elements/v1';
+
+export function validateSiteElements(siteData, patterns) {
+  const errors = [];
+  const warnings = [];
+  const err = (m) => errors.push(m);
+  const warn = (m) => warnings.push(m);
+  if (!siteData || siteData.schema !== SITE_ELEMENT_SCHEMA) err('site-elements.schema must be ' + SITE_ELEMENT_SCHEMA);
+  if (!siteData || !/^\.\.\/\.\.\/assets\/site-plan\.svg$/.test(siteData.sitePlan || '')) err('site-elements.sitePlan must point to the existing site plan.');
+  if (!siteData || !Array.isArray(siteData.elements)) { errors.push('site-elements.elements must be an array'); return { ok: false, errors, warnings }; }
+  const ids = new Set();
+  siteData.elements.forEach((e, i) => {
+    const where = 'site-element[' + i + ']';
+    if (!slug(e.id)) err(where + ': invalid id.');
+    if (ids.has(e.id)) err(where + ': duplicate id ' + e.id + '.');
+    ids.add(e.id);
+    ['label', 'description', 'evidenceStatus', 'note'].forEach((k) => { if (!text(e[k])) err(where + ': ' + k + ' is required.'); });
+    if (!EVIDENCE_STATES.includes(e.evidenceStatus)) err(where + ': invalid evidenceStatus.');
+    if (!Array.isArray(e.selectors)) err(where + ': selectors must be an array.');
+    else e.selectors.forEach((s) => { if (!/^(#|svg$)/.test(s) || /javascript:/i.test(s)) err(where + ': invalid selector ' + s + '.'); });
+  });
+  if (patterns && patterns.elements) {
+    patterns.elements.forEach((id) => { if (!ids.has(id)) err('pattern element ' + id + ' has no site-element mapping.'); });
+    siteData.elements.forEach((e) => { if (patterns.elements.indexOf(e.id) < 0) warn('site element ' + e.id + ' is not used by any pattern definition.'); });
+    patterns.patterns.forEach((p) => p.applicableElements.forEach((id) => { if (!ids.has(id)) err(p.id + ': missing site-element mapping for ' + id + '.'); }));
+  }
+  return { ok: errors.length === 0, errors, warnings };
+}

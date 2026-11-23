@@ -153,7 +153,7 @@ curated reference catalogue, not a copy of the book:
 - applicable site/building element IDs;
 - evaluation questions, evidence state and limitations.
 
-`data/patterns/schema.json` documents the structure. `tools/lib/patterns.mjs`
+`data/patterns/site-elements.json` maps pattern element IDs to stable selectors in the generated site plan and records evidence/limitations, including text-only elements that are not legible at site scale. `data/patterns/schema.json` documents the catalogue structure. `tools/lib/patterns.mjs`
 validates unique IDs/numbers, verified titles, source attribution, related
 patterns, element references, evidence states and required content. Evaluation
 records and resident scenarios are separate future data, not fields of a pattern
