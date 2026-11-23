@@ -134,8 +134,10 @@ Ids are stable and reference their module, level and containing room.
 The model distinguishes `invalid-geometry`, `unresolved-design` and
 `review-required`. Accessibility is a per-building target: `accessible`,
 `adaptable` or `not-required`. An accessible bathroom is required only for an
-`accessible` target; other homes keep ordinary bathrooms. Accessibility classification is derived from recorded
-interior evidence and cannot be overridden by a manually supplied
+`accessible` target; other homes keep ordinary bathrooms. Two selected homes
+(Woodland Cottage and Accessible Garden Home) are accessible targets; the other
+four are `not-required`. Two-storey interiors are generated per level.
+Accessibility classification is derived from recorded interior evidence and cannot be overridden by a manually supplied
 `fully-accessible-single-storey` string. See
 [`interior-spatial-model.md`](interior-spatial-model.md).
 

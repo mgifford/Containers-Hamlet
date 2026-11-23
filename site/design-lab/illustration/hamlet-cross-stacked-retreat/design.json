@@ -80,17 +80,15 @@
     "note": "Illustrative placement only; not part of the published community layout."
   },
   "id": "hamlet-cross-stacked-retreat",
-  "name": "Cross-Wing House",
-  "group": "Single storey",
-  "tagline": "Two 40-foot wings meet in a single-storey T beneath a butterfly roof.",
-  "description": "A single-storey T-shaped home. The long living wing runs east-west; a perpendicular bedroom/studio wing abuts it to the south. The butterfly roof gives the home its original silhouette without an occupied upper floor. A shaded porch sits at the east living end.",
+  "name": "Cross-Stacked Retreat",
+  "group": "Two storeys",
+  "tagline": "A ground-floor living bar crossed by a perpendicular upper volume, producing a strong silhouette and a shaded outdoor room.",
+  "description": "A 40-foot ground module runs east-west; a second 40-foot module crosses it at 90 degrees on the upper floor. The cross gives the home a distinctive profile and a shaded ground-floor living area. The upper module bears on only the small crossing area, so most of it is unsupported in this concept. The structural warnings are deliberately explicit.",
   "primary_view_deg": 180,
   "visual_seed": 44,
   "architecture": {
-    "family": "Cross-Wing House",
-    "intent": "Single-storey T-wing plan preserving the original cross silhouette, butterfly roof and shaded outdoor room.",
-    "arrangement": "t-wing",
-    "footprint_type": "t-shaped"
+    "family": "Cross-Stacked Retreat",
+    "intent": "Perpendicular two-storey cross with a large structural review requirement."
   },
   "roof_form": {
     "type": "butterfly",
@@ -134,7 +132,7 @@
         "type": "ground",
         "references": [],
         "verified": false,
-        "note": "Single-storey ground-bearing design intent."
+        "note": "Ground-bearing design intent."
       },
       "openings": [
         {
@@ -234,11 +232,11 @@
     {
       "id": "m2",
       "type": "40ft",
-      "storey": 0,
-      "elevation_m": 0.6,
+      "storey": 1,
+      "elevation_m": 3.896,
       "position_m": [
         0,
-        7.315
+        0
       ],
       "rotation_deg": 90,
       "cladding": {
@@ -253,19 +251,21 @@
       "structure": {
         "openings_reinforced": true,
         "wall_removal": "none",
-        "cantilever_m": 0,
+        "cantilever_m": 1.2,
         "notes": "Perpendicular upper module bears on a small crossing area; transfer, torsional and uplift behaviour need engineering."
       },
       "support": {
-        "type": "ground",
-        "references": [],
+        "type": "module",
+        "references": [
+          "m1"
+        ],
         "verified": false,
-        "note": "Single-storey ground-bearing design intent."
+        "note": "Bearing intent at the crossing only. Most of the upper module is unsupported in this concept."
       },
       "openings": [
         {
           "id": "m2-n1",
-          "name": "Studio window",
+          "name": "Upper studio window",
           "face": "north",
           "type": "window",
           "position_m": 2.4,
@@ -275,7 +275,7 @@
         },
         {
           "id": "m2-s1",
-          "name": "Bedroom window",
+          "name": "Upper bedroom window",
           "face": "south",
           "type": "window",
           "position_m": 7.2,
@@ -285,7 +285,7 @@
         },
         {
           "id": "m2-e1",
-          "name": "Workshop door",
+          "name": "Upper balcony door",
           "face": "east",
           "type": "door",
           "position_m": 1.6,
@@ -295,23 +295,13 @@
         },
         {
           "id": "m2-w1",
-          "name": "Workshop window",
+          "name": "Upper window",
           "face": "west",
           "type": "window",
           "position_m": 1,
           "width_m": 1.2,
           "height_m": 1.2,
           "sill_m": 1
-        },
-        {
-          "id": "m2-s2",
-          "name": "Garden door",
-          "face": "south",
-          "type": "door",
-          "position_m": 9.4,
-          "width_m": 0.95,
-          "height_m": 2.1,
-          "sill_m": 0
         }
       ],
       "zones": [
@@ -373,23 +363,12 @@
       "id": "p1",
       "module": "m1",
       "face": "south",
-      "start_m": 8,
-      "length_m": 3,
+      "start_m": 4.4,
+      "length_m": 4.2,
       "depth_m": 2.8,
       "screened": false,
       "roof": true,
-      "note": "Shaded outdoor room at the east living end."
-    },
-    {
-      "id": "p2",
-      "module": "m2",
-      "face": "south",
-      "start_m": 8.4,
-      "length_m": 2.4,
-      "depth_m": 1.4,
-      "screened": false,
-      "roof": true,
-      "note": "Garden porch off the bedroom wing."
+      "note": "Shaded outdoor room beneath the cross volume."
     }
   ],
   "access": {
@@ -397,29 +376,29 @@
     "entrance_door_width_m": 0.95,
     "entrance_threshold_m": 0,
     "ground_floor_essential_functions": true,
-    "ground_floor_bedroom": true,
+    "ground_floor_bedroom": false,
     "ground_floor_bathroom": true,
     "adaptable_bathroom": true,
     "adaptable_kitchen": true,
     "circulation_width_m": 0.95,
     "path_connection": "Step-free route to the shared path is a design intent; the connection and grades are not surveyed.",
-    "vertical_access_strategy": "Single occupied storey; no internal stair.",
+    "vertical_access_strategy": "Internal stair. No lift is provided and no lift space is reserved.",
     "stair": {
-      "present": false,
-      "type": "none",
-      "module": "",
-      "location": "not applicable",
-      "width_m": 0,
-      "run_m": 0,
-      "rise_m": 0,
-      "landing": false,
+      "present": true,
+      "type": "dog-leg",
+      "module": "m1",
+      "location": "east end",
+      "width_m": 0.9,
+      "run_m": 3,
+      "rise_m": 2.9,
+      "landing": true,
       "lift_reserve": false,
-      "note": "Removed in the single-storey conversion."
+      "note": "Stair dimensions are conceptual; verify headroom, handrails, guarding and egress."
     },
-    "classification": "potentially-adaptable",
+    "classification": "accessibility-not-required",
     "standards": "Project targets informed by the Ontario Building Code and CSA B651. No code compliance, licence or professional accessibility review is claimed.",
-    "assessment": "not-verified",
-    "target": "adaptable"
+    "assessment": "not-assessed",
+    "target": "not-required"
   },
   "features": {
     "solar": "Solar-ready roof intent; no energy production is calculated.",
@@ -432,8 +411,8 @@
       "Sleeping",
       "Studio"
     ],
-    "outdoor": "Shaded junction porch and a garden porch",
-    "accessibility": "Single-storey step-free design intent; wing circulation and bathroom clearances still need verification."
+    "outdoor": "Shaded covered outdoor room beneath the cross volume and a small upper balcony",
+    "accessibility": "Ground-floor living arrangement with a step-free entrance and ground bathroom. Upper floor is stair-only and is not accessible."
   },
   "material_intent": {
     "reclaimed_containers": true,
@@ -533,14 +512,24 @@
       "name": "Ground floor",
       "elevation_m": 0.6,
       "moduleIds": [
-        "m1",
-        "m2"
+        "m1"
       ],
       "top_m": 3.496,
       "split_elevations": false
+    },
+    {
+      "id": "level-1",
+      "storey": 1,
+      "name": "Upper floor",
+      "elevation_m": 3.896,
+      "moduleIds": [
+        "m2"
+      ],
+      "top_m": 6.792,
+      "split_elevations": false
     }
   ],
-  "maxOccupiedStoreys": 1,
+  "maxOccupiedStoreys": 2,
   "licence": {
     "code": "AGPL-3.0-or-later",
     "content": "CC BY-SA 4.0"
@@ -551,7 +540,6 @@
     "version": "2.0.0"
   },
   "professional_review_required": true,
-  "formerName": "Cross-Stacked Retreat",
   "interior": {
     "schema": "containers-hamlet-interior/v1",
     "status": "provisional",
@@ -694,7 +682,7 @@
         "name": "Sleeping",
         "type": "sleeping",
         "module": "m2",
-        "level": 0,
+        "level": 1,
         "polygon": [
           [
             -6.026,
@@ -728,7 +716,7 @@
         "name": "Bathroom",
         "type": "bathroom",
         "module": "m2",
-        "level": 0,
+        "level": 1,
         "polygon": [
           [
             -1.6259999999999997,
@@ -760,7 +748,7 @@
         "name": "Studio",
         "type": "work",
         "module": "m2",
-        "level": 0,
+        "level": 1,
         "polygon": [
           [
             0.3740000000000003,
@@ -782,8 +770,7 @@
         "provenance": "inferred-from-zone",
         "sourceZoneId": "m2-z3",
         "openingIds": [
-          "m2-s1",
-          "m2-s2"
+          "m2-s1"
         ],
         "accessibility": {
           "assessment": "not-verified",
@@ -795,7 +782,7 @@
         "name": "Storage",
         "type": "storage",
         "module": "m2",
-        "level": 0,
+        "level": 1,
         "polygon": [
           [
             4.3740000000000006,

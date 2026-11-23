@@ -442,7 +442,7 @@
       'container-layout-plan.svg': Model.containerSchematicSVG(state.design, { mode: 'plan', idPrefix: 'package-container-layout' }),
       'container-layout-elevation.svg': Model.containerSchematicSVG(state.design, { mode: 'elevation', idPrefix: 'package-container-layout-elevation' }),
       'plan-ground.svg': Model.renderPlan(state.design, { idPrefix: 'package-plan-ground', storey: 0 }),
-      'interior-plan.svg': state.design.interior ? Interior.planSVG(state.design, { idPrefix: 'package-interior-plan' }) : '',
+      'interior-plan.svg': state.design.interior ? Interior.planSVG(state.design, { idPrefix: 'package-interior-plan', storey: 0 }) : '',
       'roof-plan.svg': Model.roofPlanSVG(state.design, { idPrefix: 'package-roof-plan' }),
       'elevation-south.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-south', side: 'south' }),
       'elevation-north.svg': Model.renderElevation(state.design, { idPrefix: 'package-elevation-north', side: 'north' }),
@@ -452,6 +452,7 @@
       'isometric.svg': Model.renderAxo(state.design, { idPrefix: 'package-isometric' })
     };
     if (state.design.levels.length > 1) drawings['plan-upper.svg'] = Model.renderPlan(state.design, { idPrefix: 'package-plan-upper', storey: 1 });
+    if (state.design.levels.length > 1 && state.design.interior) drawings['interior-plan-upper.svg'] = Interior.planSVG(state.design, { idPrefix: 'package-interior-plan-upper', storey: 1 });
     Object.keys(drawings).forEach(function (name) { files['drawings/' + name] = drawings[name]; });
     files['references/exterior-reference.svg'] = state.illustrationReferenceSvg || Model.renderReference(state.design, { view: config.view.type, rotationDeg: scene.camera.renderRotationDeg, idPrefix: 'package-reference' });
     files['illustrations/README.md'] = '# Illustrations\n\nNo AI-generated image is included. Use `prompts/exterior.md` and `references/exterior-reference.svg` with an external image-generation tool. Treat the result as an interpretation, not a measured architectural drawing.\n';
@@ -979,7 +980,7 @@
       if ($('solar-summer')) $('solar-summer').innerHTML = Model.renderSolarStudy(d, { idPrefix: 'editor-solar-summer', season: 'summer' });
       if ($('solar-winter')) $('solar-winter').innerHTML = Model.renderSolarStudy(d, { idPrefix: 'editor-solar-winter', season: 'winter' });
       if ($('massing')) $('massing').innerHTML = Model.renderAxo(d, { idPrefix: 'editor-massing' });
-      if ($('interior-plan')) $('interior-plan').innerHTML = d.interior ? Interior.planSVG(d, { idPrefix: 'editor-interior-plan' }) : '<p class="small">No interior model. Create one from the room bands or import an interior design.</p>';
+      if ($('interior-plan')) { var interiorStorey = state.planStorey === 'all' ? 0 : Number(state.planStorey); $('interior-plan').innerHTML = d.interior ? Interior.planSVG(d, { idPrefix: 'editor-interior-plan', storey: interiorStorey }) : '<p class="small">No interior model. Create one from the room bands or import an interior design.</p>'; }
     } catch (err) {
       announce('The view could not be drawn: ' + err.message);
     }

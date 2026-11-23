@@ -23,14 +23,14 @@ const clone = (v) => JSON.parse(JSON.stringify(v));
 
 section('Concept data and architectural families');
 const data = JSON.parse(read('data/design-lab.json'));
-ok(data.concepts.length === 19, 'nineteen concepts are present: nine legacy, six selected single-storey residences, three experimental archives and the common lodge');
+ok(data.concepts.length === 16, 'sixteen concepts are present: nine legacy, six selected residences and the common lodge');
 const hamlet = data.concepts.filter((c) => c.role === 'hamlet-selected');
 ok(hamlet.length === 6, 'exactly six concepts are hamlet-selected');
-ok(hamlet.every((c) => c.group === 'Single storey' && c.levels.length === 1), 'all six selected residences are single-storey');
+ok(hamlet.filter((c) => c.levels.length === 1).length === 3 && hamlet.filter((c) => c.levels.length === 2).length === 3, 'the six selected residences include three single-storey and three two-storey homes');
 ok(data.concepts.filter((c) => c.role === 'legacy-concept').length === 9, 'the nine original concepts are preserved as legacy concepts');
-ok(data.concepts.filter((c) => c.role === 'archive-experimental').length === 3, 'three historical two-storey selected-home studies are preserved as experimental archive concepts');
+ok(!data.concepts.some((c) => c.role === 'archive-experimental'), 'no separate experimental archive duplicates the selected homes');
 ok(data.concepts.filter((c) => c.role === 'common-lodge').length === 1, 'the common lodge keeps its own role');
-ok(data.concepts.filter((c) => c.editable).length === 12, 'twelve concepts are editable: six selected homes, three legacy presets and three experimental archives');
+ok(data.concepts.filter((c) => c.editable).length === 9, 'nine concepts are editable: six selected homes and three legacy presets');
 ok(data.concepts.every((c) => c.schema === Schema.SCHEMA), 'every concept uses the versioned v2 schema');
 ok(data.concepts.every((c) => c.levels.length <= 2 && c.maxOccupiedStoreys <= 2), 'no residence exceeds two occupied storeys');
 for (const c of data.concepts) {
@@ -50,7 +50,7 @@ const features = hamlet.map((c) => Model.architectureFeatures(c));
 const primary = features.map((f) => [f.storeys, f.arrangement, f.footprint_type, f.roof_type, f.entrance_orientation, f.circulation_type].join('|'));
 ok(new Set(primary).size === 6, 'the six residences differ in every primary architectural feature set');
 ok(new Set(features.map((f) => f.roof_type)).size >= 5, 'at least five distinct roof forms are represented across the six homes');
-ok(features.every((f) => f.storeys === 1), 'all six selected homes have one occupied storey');
+ok(features.filter((f) => f.storeys === 1).length === 3 && features.filter((f) => f.storeys === 2).length === 3, 'the selected set includes three single-storey and three two-storey homes');
 const similar = Model.findSimilarHomes(hamlet, 0.8);
 ok(similar.length === 0, 'no pair of hamlet residences is above the 0.8 similarity heuristic');
 ok(Model.architecturalSimilarity(hamlet[0], hamlet[0]).score === 1, 'a home is identical to itself under the diversity measure');
@@ -207,10 +207,9 @@ for (const c of data.concepts) {
 
 section('Gallery, editor and residences pages');
 const gallery = read('site/design-lab/index.html');
-ok((gallery.match(/class="concept-card"/g) || []).length === 19, 'gallery has nineteen concept cards');
+ok((gallery.match(/class="concept-card"/g) || []).length === 16, 'gallery has sixteen concept cards');
 ok((gallery.match(/class="concept-badge hamlet"/g) || []).length === 6, 'gallery marks the six hamlet residences');
-ok((gallery.match(/Experimental archive/g) || []).length >= 3, 'gallery marks the experimental archive concepts');
-ok((gallery.match(/class="concept-badge editable"/g) || []).length === 6, 'gallery marks the six editable archive and legacy presets');
+ok((gallery.match(/class="concept-badge editable"/g) || []).length === 3, 'gallery marks the three editable legacy presets');
 ok((gallery.match(/Inspiration only/g) || []).length >= 6, 'gallery labels the inspiration-only concepts');
 ok(/Six intentionally different hamlet residences/.test(gallery) && /Concept archive and the common lodge/.test(gallery), 'gallery separates hamlet residences from the preserved archive');
 ok((gallery.match(/<img /g) || []).length >= 16 && [...gallery.matchAll(/<img [^>]*>/g)].every((m) => /alt="[^"]{12,}"/.test(m[0]) && /width="\d+"/.test(m[0]) && /height="\d+"/.test(m[0])), 'gallery images have alt text, width and height');
@@ -251,10 +250,10 @@ for (const c of data.concepts) {
 }
 ok(exists('site/design-lab/architecture.css') && exists('site/design-lab/architecture.js') && !/<script[^>]+src="https?:/i.test(read('site/design-lab/architecture.css')), 'architectural gallery styles and script are local');
 const compare = read('site/design-lab/compare/index.html');
-ok((compare.match(/<option /g) || []).length === 38 && (compare.match(/class="compare-panel"/g) || []).length === 2, 'comparison page offers nineteen concepts and two side-by-side panels');
+ok((compare.match(/<option /g) || []).length === 32 && (compare.match(/class="compare-panel"/g) || []).length === 2, 'comparison page offers sixteen concepts and two side-by-side panels');
 ok(/Storeys and massing/.test(compare) && /Nominal conditioned footprint/.test(compare) && /Accessibility/.test(compare) && /Structural \/ installation review/.test(compare), 'comparison shows massing, area, envelope, accessibility and structural metrics');
 ok(!/\b(kWh|kgCO2|cost \$|\$\d)/i.test(compare), 'comparison contains no invented energy, carbon or cost figures');
-ok(/All nineteen concepts/.test(compare) && /<caption>/.test(compare) && /<th scope="col">/.test(compare), 'comparison includes an accessible all-concepts table');
+ok(/All sixteen concepts/.test(compare) && /<caption>/.test(compare) && /<th scope="col">/.test(compare), 'comparison includes an accessible all-concepts table');
 ok(exists('site/design-lab/compare.css') && exists('site/design-lab/compare.js') && !/fetch\(|localStorage|sessionStorage/.test(read('site/design-lab/compare.js')), 'comparison is local and does not store or transmit data');
 
 const lodge = data.concepts.find((c) => c.id === 'common-lodge');
@@ -351,7 +350,7 @@ for (const c of hamlet) {
 const diversityA = Model.architectureFeatures(cottage);
 ok(diversityA.storeys === 1 && diversityA.roof_type === 'gable' && diversityA.arrangement === 'single', 'diversity features describe the cottage massing');
 const offsetConcept = hamlet.find((c) => c.id === 'hamlet-offset-stack');
-ok(Model.architectureFeatures(offsetConcept).arrangement === 'offset-pair', 'diversity features describe the single-storey offset pair');
+ok(Model.architectureFeatures(offsetConcept).arrangement === 'offset-stack', 'diversity features describe the two-storey offset stack');
 const sim = Model.architecturalSimilarity(cottage, offsetConcept);
 ok(sim.score < 0.8 && sim.matchingFeatures.indexOf('roof_type') < 0, 'the cottage and offset stack are not flagged as similar');
 const colorOnly = clone(offsetConcept);
@@ -385,11 +384,9 @@ ok(JSON.parse(lodgeBefore).id === 'lodge' && exists('models/lodge/floor-plan.svg
 const siteData = JSON.parse(read('data/site.json'));
 section('Phase 3 interior spatial model');
 const selectedHomes = data.concepts.filter((c) => c.role === 'hamlet-selected');
-const archiveHomes = data.concepts.filter((c) => c.role === 'archive-experimental');
-ok(selectedHomes.length === 6 && selectedHomes.every((c) => c.levels.length === 1 && c.modules.every((m) => m.storey === 0)), 'all six selected homes have one occupied storey and only ground-level modules');
-ok(archiveHomes.length === 3 && archiveHomes.every((c) => c.levels.length === 2), 'the three historical two-storey studies are preserved as experimental archive concepts');
-ok(!archiveHomes.some((c) => c.editable === false) && archiveHomes.every((c) => c.role === 'archive-experimental'), 'the experimental archive remains inspectable and is clearly separate from selected homes');
-ok(archiveHomes.every((c) => !exists(`site/design-lab/illustration/${c.id}`)), 'archived two-storey studies are not published as selected illustration packages');
+ok(selectedHomes.length === 6 && selectedHomes.filter((c) => c.levels.length === 1).length === 3 && selectedHomes.filter((c) => c.levels.length === 2).length === 3, 'the selected set has three single-storey and three two-storey homes');
+ok(selectedHomes.filter((c) => c.access.target === 'accessible').length === 2 && selectedHomes.filter((c) => c.access.target === 'accessible').every((c) => c.levels.length === 1), 'exactly two selected homes are whole-home accessible demonstrations and both are single-storey');
+ok(!data.concepts.some((c) => c.role === 'archive-experimental'), 'no duplicate experimental archive is retained after the two-storey selected homes are restored');
 for (const c of selectedHomes) {
   const v = Interior.validate(c);
   const a = Interior.accessibilityEvidence(c);
@@ -397,22 +394,22 @@ for (const c of selectedHomes) {
   ok(c.interior.rooms.length >= 4, `${c.id}: interior has at least four rooms`);
   ok(v.invalid.length === 0, `${c.id}: interior geometry has no invalid contradictions${v.invalid.length ? ': ' + v.invalid.map((i) => i.code).join(', ') : ''}`);
   ok(typeof a.classification === 'string' && a.classification !== 'fully-accessible-single-storey', `${c.id}: accessibility is not overclaimed as fully accessible`);
-  ok(a.singleStorey && a.stepFree, `${c.id}: accessibility evidence records single-storey step-free intent`);
+  ok(c.levels.length === 1 ? a.singleStorey : !a.singleStorey, `${c.id}: accessibility evidence records the correct storey condition`);
   const plan = Interior.planSVG(c, { idPrefix: 'test-interior-' + c.id });
   ok(plan === Interior.planSVG(c, { idPrefix: 'test-interior-' + c.id }) && /data-interior-plan="true"/.test(plan) && /<title id=/.test(plan) && /<desc id=/.test(plan), `${c.id}: interior plan is deterministic and accessible`);
   ok(exists(`site/design-lab/views/${c.id}-interior-plan.svg`) && exists(`site/design-lab/illustration/${c.id}/interior.md`), `${c.id}: interior plan and prompt are published`);
 }
 const authoredHomes = selectedHomes.filter((c) => c.interior.status === 'authored');
-ok(authoredHomes.length >= 2 && authoredHomes.some((c) => c.id === 'hamlet-offset-stack') && authoredHomes.some((c) => c.id === 'hamlet-accessible-garden-home'), 'Offset Pair and Accessible Garden Home have authored interior geometries');
-const offsetInterior = selectedHomes.find((c) => c.id === 'hamlet-offset-stack').interior;
-ok(offsetInterior.rooms.length === 8 && offsetInterior.doors.length >= 7 && offsetInterior.fixtures.length >= 5, 'Offset Pair has rooms, doors and fixtures');
+ok(authoredHomes.length === 2 && authoredHomes.some((c) => c.id === 'hamlet-woodland-cottage') && authoredHomes.some((c) => c.id === 'hamlet-accessible-garden-home'), 'Woodland Cottage and Accessible Garden Home have authored interior geometries');
+const offsetInterior = selectedHomes.find((c) => c.id === 'hamlet-woodland-cottage').interior;
+ok(offsetInterior.rooms.length === 5 && offsetInterior.doors.length === 4 && offsetInterior.fixtures.length >= 5, 'Woodland Cottage has rooms, doors and fixtures');
 const eHome = selectedHomes.find((c) => c.id === 'hamlet-accessible-garden-home');
 const eV = Interior.validate(eHome);
 ok(eV.invalid.length === 0 && !eV.unresolved.some((i) => i.code === 'bathroom-turning-circle') && eHome.access.target === 'accessible', 'Accessible Garden Home has a modeled accessible bathroom because it is the accessible design target');
 const eAccess = Interior.accessibilityEvidence(eHome);
 ok(eAccess.classification === 'potentially-adaptable' && eAccess.bathroomTurningCircle, 'Accessible Garden Home has a modeled turning circle but remains potentially adaptable pending path and professional review');
 const nonAccessibleHome = selectedHomes.find((c) => c.id === 'hamlet-offset-stack');
-ok(nonAccessibleHome.access.target === 'adaptable' && !Interior.validate(nonAccessibleHome).unresolved.some((i) => i.code === 'bathroom-turning-circle'), 'a non-accessible home is not failed for lacking an accessible bathroom');
+ok(nonAccessibleHome.access.target === 'not-required' && !Interior.validate(nonAccessibleHome).unresolved.some((i) => i.code === 'bathroom-turning-circle'), 'a non-accessible home is not failed for lacking an accessible bathroom');
 const notRequired = clone(nonAccessibleHome); notRequired.access.target = 'not-required';
 ok(Model.accessibilityProfile(notRequired).classification === 'accessibility-not-required', 'a home with no accessibility target is not assessed against accessible-washroom requirements');
 const overclaim = clone(eHome); overclaim.access.classification = 'fully-accessible-single-storey';
@@ -424,20 +421,20 @@ ok(interiorMigrated.report.ok && interiorMigrated.design.interior.rooms.length >
 ok(interiorMigrated.design.interior.rooms.every((r) => r.provenance === 'inferred-from-zone' && r.sourceZoneId) && interiorMigrated.design.interior.partitions.length === 0 && interiorMigrated.design.interior.doors.length === 0, 'migration preserves source zone ids and does not invent partitions or doors');
 ok(interiorMigrated.report.preserved.indexOf('source zone ids') >= 0 && interiorMigrated.report.unmapped.indexOf('partitions were not present') >= 0, 'migration report records preserved and unmapped data');
 ok(zoneSource.interior === undefined, 'migration does not mutate the source object in place');
-const badRoom = clone(selectedHomes.find((c) => c.id === 'hamlet-offset-stack')); badRoom.interior.rooms[0].polygon = [[99, 99], [100, 99], [100, 100], [99, 100]];
+const badRoom = clone(selectedHomes.find((c) => c.id === 'hamlet-woodland-cottage')); badRoom.interior.rooms[0].polygon = [[99, 99], [100, 99], [100, 100], [99, 100]];
 ok(Interior.validate(badRoom).invalid.some((i) => i.code === 'room-bounds'), 'a room outside the clear interior is rejected');
-const overlapRoom = clone(selectedHomes.find((c) => c.id === 'hamlet-offset-stack')); overlapRoom.interior.rooms[1].polygon = clone(overlapRoom.interior.rooms[0].polygon);
+const overlapRoom = clone(selectedHomes.find((c) => c.id === 'hamlet-woodland-cottage')); overlapRoom.interior.rooms[1].polygon = clone(overlapRoom.interior.rooms[0].polygon);
 ok(Interior.validate(overlapRoom).invalid.some((i) => i.code === 'room-overlap'), 'overlapping rooms are rejected');
-const badFixture = clone(selectedHomes.find((c) => c.id === 'hamlet-offset-stack')); badFixture.interior.fixtures[0].position_m = [99, 99];
+const badFixture = clone(selectedHomes.find((c) => c.id === 'hamlet-woodland-cottage')); badFixture.interior.fixtures[0].position_m = [99, 99];
 ok(Interior.validate(badFixture).invalid.some((i) => i.code === 'fixture-outside-room'), 'a fixture outside its room is rejected');
-const badDoor = clone(selectedHomes.find((c) => c.id === 'hamlet-offset-stack')); badDoor.interior.doors[0].partition = 'missing';
+const badDoor = clone(selectedHomes.find((c) => c.id === 'hamlet-woodland-cottage')); badDoor.interior.doors[0].partition = 'missing';
 ok(Interior.validate(badDoor).invalid.some((i) => i.code === 'door-partition'), 'a door without a partition is rejected');
-const movedRoom = clone(selectedHomes.find((c) => c.id === 'hamlet-offset-stack')); movedRoom.interior.rooms[0].polygon = Interior.rectPolygon(-3, 0, 2, 1.8);
+const movedRoom = clone(selectedHomes.find((c) => c.id === 'hamlet-woodland-cottage')); movedRoom.interior.rooms[0].polygon = Interior.rectPolygon(-3, 0, 2, 1.8);
 ok(Interior.planSVG(movedRoom, { idPrefix: 'moved' }) !== Interior.planSVG(selectedHomes.find((c) => c.id === 'hamlet-offset-stack'), { idPrefix: 'moved' }), 'moving a room changes the interior plan');
 const interiorRoundTrip = JSON.parse(JSON.stringify(selectedHomes.find((c) => c.id === 'hamlet-offset-stack')));
 ok(JSON.stringify(interiorRoundTrip.interior) === JSON.stringify(selectedHomes.find((c) => c.id === 'hamlet-offset-stack').interior) && Schema.validateSchema(interiorRoundTrip).ok, 'interior JSON survives a round trip and still validates');
-const interiorScene = Illustration.sceneSpec(selectedHomes.find((c) => c.id === 'hamlet-offset-stack'), Illustration.defaultConfig(selectedHomes.find((c) => c.id === 'hamlet-offset-stack')), siteData);
-ok(interiorScene.interior.rooms.length === 8 && interiorScene.capabilities.interiorIllustrationPrompt && interiorScene.capabilities.interiorPerspective === false, 'illustration scene exposes interior rooms and a detailed prompt without claiming perspective');
+const interiorScene = Illustration.sceneSpec(selectedHomes.find((c) => c.id === 'hamlet-woodland-cottage'), Illustration.defaultConfig(selectedHomes.find((c) => c.id === 'hamlet-woodland-cottage')), siteData);
+ok(interiorScene.interior.rooms.length === 5 && interiorScene.capabilities.interiorIllustrationPrompt && interiorScene.capabilities.interiorPerspective === false, 'illustration scene exposes interior rooms and a detailed prompt without claiming perspective');
 ok(/Bathroom/.test(interiorScene.interiorPrompt.text) && /no interior camera/i.test(interiorScene.interiorPrompt.text), 'interior prompt uses rooms and states the camera limitation');
 ok(interiorScene.interior.validation.invalid.length === 0 && interiorScene.validation.ok, 'illustration scene validation includes the interior model');
 const interiorManifest = JSON.parse(read(`site/design-lab/illustration/${selectedHomes[1].id}/manifest.json`));
@@ -450,7 +447,7 @@ ok(Illustration.presentationHash(styleOnly) !== Illustration.presentationHash(Il
 
 const homesPublic = JSON.parse(read('site/data/homes.json'));
 ok(homesPublic.design_lab_reconciliation.length === 7, 'site reconciliation covers the six selected homes and the lodge');
-ok(homesPublic.design_lab_reconciliation.filter((r) => r.storeys === 1).length === 7, 'every reconciled design is single-storey');
+ok(homesPublic.design_lab_reconciliation.filter((r) => r.storeys === 1).length === 4 && homesPublic.design_lab_reconciliation.filter((r) => r.storeys === 2).length === 3, 'site reconciliation includes single-storey and two-storey selected homes');
 ok(homesPublic.design_lab_reconciliation.some((r) => r.conflicts.length > 0), 'site reconciliation records at least one unresolved placement conflict');
 ok(homesPublic.design_lab_reconciliation.every((r) => r.site_footprint_m2 != null && r.design_footprint_m2 > 0 && Number.isFinite(r.clearance_margin_m)), 'site reconciliation records both footprints and the clearing margin');
 ok(homesPublic.design_lab_reconciliation.every((r) => Array.isArray(r.module_footprints) && r.module_footprints.length > 0 && r.module_footprints.every((m) => m.polygon.length === 4)), 'site reconciliation carries each selected module footprint in site coordinates');
@@ -511,12 +508,12 @@ const illSolarScene = Illustration.sceneSpec(illSolar, Illustration.defaultConfi
 ok(illCottageScene.environment.siteName === 'Cabin A' && illOffsetScene.environment.siteName === 'Cabin B' && illCourtyardScene.environment.siteName === 'Cabin C' && illCrossScene.environment.siteName === 'Cabin D' && illAccessibleScene.environment.siteName === 'Cabin E' && illSolarScene.environment.siteName === 'Cabin F', 'the six homes use their assigned site views');
 ok(near(illCottageScene.camera.azimuth_deg, (245 + 35) % 360, 0.2) && near(illOffsetScene.camera.azimuth_deg, (138 + 35) % 360, 0.2), 'camera azimuth is a world bearing from the site principal view');
 ok(illOffsetScene.outdoor.some((o) => o.type === 'porch' && o.module === 'm2' && o.face === 'south'), 'Offset Stack upper porch is recorded on the south face');
-ok(!illOffsetScene.unresolved.some((u) => u.code === 'unmodeled-balcony') && illOffsetScene.building.storeys === 1, 'Offset Pair is single-storey and has no unmodeled upper balcony');
+ok(illOffsetScene.unresolved.some((u) => u.code === 'unmodeled-balcony') && illOffsetScene.unresolved.some((u) => u.code === 'balcony-access') && illOffsetScene.building.storeys === 2, 'Offset Stack is two-storey and reports its upper balcony access inconsistency');
 ok(illCourtyardScene.building.moduleTypes.every((t) => t === '40ft'), 'Courtyard Residence is described as two 40-foot modules');
-ok(illCrossScene.unresolved.some((u) => u.code === 'interior-ceiling') && illCrossScene.building.storeys === 1, 'Cross-Wing House is single-storey and its butterfly interior ceiling limitation is explicit');
+ok(illCrossScene.unresolved.some((u) => u.code === 'unmodeled-balcony') && illCrossScene.unresolved.some((u) => u.code === 'interior-ceiling') && illCrossScene.building.storeys === 2, 'Cross-Stacked Retreat is two-storey and its balcony and butterfly-ceiling limitations are explicit');
 ok(!/fully accessible/i.test(illAccessibleScene.prompt.text) && illAccessibleScene.interior.accessibilityEvidence.bathroomTurningCircle && !illAccessibleScene.interior.validation.unresolved.some((u) => u.code === 'bathroom-turning-circle'), 'Accessible Garden Home prompt does not claim full accessibility and its accessible bathroom is modeled');
 ok(illSolarScene.building.installedPv === true && /installed PV array/i.test(illSolarScene.prompt.text), 'Solar Studio Stack prompt may show installed PV');
-ok(illSolarScene.building.storeys === 1 && !illSolarScene.unresolved.some((u) => u.code === 'alternating-tread-stair'), 'Solar Studio is single-storey and no longer carries the archived alternating stair');
+ok(illSolarScene.building.storeys === 2 && illSolarScene.unresolved.some((u) => u.code === 'alternating-tread-stair'), 'Solar Studio Stack is two-storey and carries the alternating-stair usability concern');
 ok(/path approach recorded as east/i.test(illCottageScene.prompt.text) && !/main south approach/i.test(illCottageScene.prompt.text), 'Woodland Cottage prompt records the east site path approach and does not call it the main approach');
 ok(illCottageScene.unresolved.some((u) => u.code === 'site-approach'), 'Woodland Cottage site approach discrepancy is reported');
 const cottageMoved = clone(illCottage); cottageMoved.modules[0].position_m = [1.2, 0.4];

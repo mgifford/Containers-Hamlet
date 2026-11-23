@@ -73,24 +73,24 @@ It does **not** calculate:
 * fire-resistance ratings or egress time
 * corrosion rates or moisture accumulation
 
+## Phase 3 update
+
+Offset Stack, Cross-Stacked Retreat and Solar Studio Stack remain two-storey and
+retain their inter-storey, cantilever and stair review concerns. Woodland Cottage,
+Courtyard Residence and Accessible Garden Home are single-storey. Interior room
+polygons are authored for Woodland Cottage and Accessible Garden Home and
+provisional for the other four; they do not resolve any structural question.
+
 ## Interpreting the six homes
 
 | Home | Structural character | Main review issues |
 | --- | --- | --- |
 | Woodland Cottage | Single-storey gable | Openings, roof-to-wall connection, foundation, wind uplift. |
-| Offset Pair | Two ground modules, 2.6 m stagger | Independent foundations, shared link, roof junction, wind uplift. |
+| Offset Stack | Upper module offset 2.6 m | Partial support, transfer/cantilever, lateral stability, inter-storey connections. |
 | Courtyard Residence | Two ground modules, L-shape, partial wall removal | Corner connection, large opening framing, flat green roof loads and drainage. |
-| Cross-Wing House | Two ground modules, T-wing | Junction transfer, roof valley, lateral stability, foundation on slope. |
+| Cross-Stacked Retreat | Perpendicular upper module | Small bearing area, torsion, transfer, lateral stability, fire separation. |
 | Accessible Garden Home | Two ground 20-foot modules | Shared-wall connection, wide opening framing, canopy uplift. |
-| Solar Studio | Two ground 20-foot modules, 0.8 m offset | Shared connection, roof PV fixing, uplift, compact foundation. |
-
-## Experimental archive
-
-The historical two-storey **Offset Stack**, **Cross-Stacked Retreat** and **Solar
-Studio Stack** are retained in the Experimental archive. Their previous
-inter-storey, cantilever and stair concerns remain documented there; they are
-not current selected homes and are not covered by the Phase 3 single-storey
-geometry.
+| Solar Studio Stack | Aligned 20-foot stack with 0.8 m offset | Partial support, compact stair, roof PV fixing, uplift. |
 
 ## Professional evidence
 

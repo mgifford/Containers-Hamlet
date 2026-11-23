@@ -328,7 +328,11 @@
     var d = Schema.canonicalize(designInput);
     if (!d.interior || !d.interior.rooms || !d.interior.rooms.length) return '';
     var W = 1200, H = 820, pad = 96;
-    var polys = d.modules.map(Model.moduleCorners);
+    var storey = opts.storey == null ? null : Number(opts.storey);
+    var modules = d.modules.filter(function (m) { return storey == null || m.storey === storey; });
+    var rooms = d.interior.rooms.filter(function (r) { return storey == null || r.level === storey; });
+    if (!modules.length || !rooms.length) return '';
+    var polys = modules.map(Model.moduleCorners);
     var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     polys.forEach(function (poly) { poly.forEach(function (p) { minX = Math.min(minX, p[0]); maxX = Math.max(maxX, p[0]); minY = Math.min(minY, p[1]); maxY = Math.max(maxY, p[1]); }); });
     var scale = Math.min((W - 2 * pad) / Math.max(1, maxX - minX), (H - 2 * pad - 10) / Math.max(1, maxY - minY));
@@ -336,8 +340,8 @@
     var oy = (H - (maxY - minY) * scale) / 2 - minY * scale;
     var P = function (p) { return [ox + p[0] * scale, oy + p[1] * scale]; };
     var pre = opts.idPrefix || 'interior-plan';
-    var title = d.name + ' · interior floor plan';
-    var desc = 'Concept interior floor plan for ' + d.name + '. ' + d.interior.rooms.length + ' rooms, ' + (d.interior.partitions || []).length + ' partitions, ' + (d.interior.doors || []).length + ' doors and ' + (d.interior.fixtures || []).length + ' fixtures. Inferred rooms are hatched. The plan is a conceptual spatial model, not a construction drawing or a verified accessibility assessment.';
+    var title = d.name + ' · ' + (storey == null || d.levels.length === 1 ? 'interior floor plan' : 'Level ' + storey + ' interior floor plan');
+    var desc = 'Concept interior floor plan for ' + d.name + '. ' + rooms.length + ' rooms, ' + (d.interior.partitions || []).length + ' partitions, ' + (d.interior.doors || []).length + ' doors and ' + (d.interior.fixtures || []).length + ' fixtures. Inferred rooms are hatched. The plan is a conceptual spatial model, not a construction drawing or a verified accessibility assessment.';
     var out = [];
     var typeFill = { sleeping: '#c8d7ea', bathroom: '#b9d9d2', kitchen: '#ead7b3', living: '#d8dfbf', dining: '#e5cfa7', work: '#cdc6de', storage: '#ddd4c2', circulation: '#eee8d9', entry: '#e2d6c3', utility: '#d5d8d2' };
     out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d" data-interior-plan="true">');
@@ -346,11 +350,11 @@
     out.push('<rect width="' + W + '" height="' + H + '" fill="#faf8f2"/>');
     out.push('<text x="30" y="42" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#1d392c">' + esc(title) + '</text>');
     out.push('<text x="30" y="64" font-family="system-ui, sans-serif" font-size="12" fill="#3f5a4c">' + (d.interior.status === 'authored' ? 'Authored interior' : 'Provisional interior inferred from zones') + ' · ' + (d.interior.rooms.length) + ' rooms · conceptual / not for construction</text>');
-    d.modules.forEach(function (m) {
+    modules.forEach(function (m) {
       var corners = Model.moduleCorners(m).map(P);
       out.push('<path d="M' + corners.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="none" stroke="#253a33" stroke-width="5"/>');
     });
-    d.interior.rooms.forEach(function (r) {
+    rooms.forEach(function (r) {
       var m = moduleById(d, r.module);
       if (!m) return;
       var world = r.polygon.map(function (p) { return Model.transformModulePoint(m, p); });

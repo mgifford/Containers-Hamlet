@@ -452,10 +452,10 @@
       "lift_reserve": false,
       "note": "Removed in the single-storey conversion."
     },
-    "classification": "potentially-adaptable",
+    "classification": "accessibility-not-required",
     "standards": "Project targets informed by the Ontario Building Code and CSA B651. No code compliance, licence or professional accessibility review is claimed.",
-    "assessment": "not-verified",
-    "target": "adaptable"
+    "assessment": "not-assessed",
+    "target": "not-required"
   },
   "features": {
     "solar": "Solar-ready roof intent; no energy production is calculated.",

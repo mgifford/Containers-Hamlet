@@ -1,8 +1,8 @@
 # Illustration pipeline implementation report
 
 > **Historical note:** PR #19 introduced the pipeline while the selected homes
-> were still partly two-storey. Phase 3 updates the scenes and prompts for the
-> single-storey models and adds interior room prompts. See
+> were still partly two-storey. Phase 3 updates the scenes and prompts for the current mixed
+> single/two-storey selected models and adds interior room prompts. See
 > [`phase-3-implementation-report.md`](phase-3-implementation-report.md).
 
 ## Mission

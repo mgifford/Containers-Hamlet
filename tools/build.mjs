@@ -188,11 +188,13 @@ export function generate() {
   });
 
   /* ---------------- Container Home Design Lab ---------------- */
-  if (!designLab.concepts || designLab.concepts.length !== 19) issues.push({ level: 'error', message: 'data/design-lab.json must contain nine legacy concepts, six selected single-storey residences, three experimental archive concepts and the common lodge' });
+  if (!designLab.concepts || designLab.concepts.length !== 16) issues.push({ level: 'error', message: 'data/design-lab.json must contain nine legacy concepts, six selected residences and the common lodge' });
   const hamletSelected = designLab.concepts.filter((c) => c.role === 'hamlet-selected');
   if (hamletSelected.length !== 6) issues.push({ level: 'error', message: 'data/design-lab.json must contain six hamlet-selected residences' });
   if (designLab.concepts.some((c) => c.modules.some((m) => m.storey > 1))) issues.push({ level: 'error', message: 'a residence may not exceed two occupied storeys' });
-  if (hamletSelected.some((c) => c.levels.length !== 1 || c.modules.some((m) => m.storey !== 0))) issues.push({ level: 'error', message: 'all six selected hamlet residences must be single-storey' });
+  if (hamletSelected.filter((c) => c.levels.length === 1).length !== 3 || hamletSelected.filter((c) => c.levels.length === 2).length !== 3) issues.push({ level: 'error', message: 'the six selected residences must include three single-storey and three two-storey homes' });
+  const accessibleSelected = hamletSelected.filter((c) => c.access && c.access.target === 'accessible');
+  if (accessibleSelected.length !== 2 || accessibleSelected.some((c) => c.levels.length !== 1)) issues.push({ level: 'error', message: 'exactly two selected homes must be whole-home wheelchair-accessible and single-storey' });
   const designViews = {};
   const illustrationEntries = [];
   designLab.concepts.forEach((concept) => {
@@ -230,7 +232,8 @@ export function generate() {
       _illusConfig = DesignIllustration.defaultConfig(concept);
       _scene = DesignIllustration.sceneSpec(concept, _illusConfig, site);
       views['site-facing'] = DesignModel.renderReference(concept, { idPrefix: `${prefix}-site-facing`, view: 'exterior-three-quarter', rotationDeg: _scene.camera.renderRotationDeg });
-      if (concept.interior) views['interior-plan'] = DesignInterior.planSVG(concept, { idPrefix: `${prefix}-interior-plan` });
+      if (concept.interior) views['interior-plan'] = DesignInterior.planSVG(concept, { idPrefix: `${prefix}-interior-plan`, storey: 0 });
+      if (concept.interior && concept.levels.length > 1) views['interior-plan-upper'] = DesignInterior.planSVG(concept, { idPrefix: `${prefix}-interior-plan-upper`, storey: 1 });
     }
     Object.entries(views).forEach(([name, svg]) => put(`site/design-lab/views/${concept.id}-${name}.svg`, svg));
     if (concept.role === 'hamlet-selected') {
@@ -346,7 +349,7 @@ export function generate() {
     heading: 'Six intentionally different hamlet residences',
     headingId: 'hamlet-residences',
     idPrefix: 'hamlet-',
-    intro: 'Each selected home is single-storey and has its own massing, roof, arrangement, interior and relationship to the ground. They share construction principles, not a single look. The three historical two-storey studies are kept separately in the Experimental archive.'
+    intro: 'Each selected home has its own massing, roof, arrangement, interior and relationship to the ground. Three are single-storey and three are two-storey. They share construction principles, not a single look. Two homes are designed as whole-home wheelchair-accessible demonstrations; the others are not held to that target.'
   });
   const archiveConcepts = designLab.concepts.filter((c) => c.role !== 'hamlet-selected');
   const archiveGallery = galleryCards(archiveConcepts, summaryOf, {

@@ -1,4 +1,10 @@
-# Phase 3 audit: single-storey residences and spatially accurate interiors
+# Phase 3 audit: interiors, storeys and accessibility
+
+> **Scope correction:** This audit records the pre-change baseline and the
+> original all-six-single-storey proposal. The final milestone keeps three
+> single-storey and three two-storey homes, and only Woodland Cottage and
+> Accessible Garden Home are whole-home wheelchair-accessible demonstrations.
+> See [`phase-3-implementation-report.md`](phase-3-implementation-report.md).
 
 **Status:** Audit before Phase 3 changes. Baseline is `main` after PR #19
 (illustration pipeline). Phase 3 is built as a stacked branch on PR #19 because

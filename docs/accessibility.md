@@ -128,31 +128,30 @@ ground-floor bedroom or essential functions, a narrow entrance, a raised
 threshold or an unresolved path connection. These are project targets informed
 by CSA B651 and the Ontario Building Code, not a compliance assessment.
 
-All six selected homes are single-storey: **Woodland Cottage**, **Offset Pair**,
-**Courtyard Residence**, **Cross-Wing House**, **Accessible Garden Home** and
-**Solar Studio**. Their classification is derived from the interior evidence.
-At this milestone none meets every candidate condition, so they report
-`potentially-adaptable`, not `fully-accessible-single-storey`.
-
+The selected set has three single-storey and three two-storey homes.
 Accessibility is a **per-building target**, not a universal requirement:
 
-- **Accessible Garden Home** is the only selected home designed as an
-  accessible unit (`access.target: "accessible"`). It is a double-width pair of
-  20-foot modules and now has a 3.0 m bathroom with a modeled 1.5 m turning
-  circle. The circle fits and the recorded door widths are at least 0.9 m. The
-  home remains `potentially-adaptable` because the shared-path grades, transfers
-  and professional review are not complete—not because the washroom is missing.
-- The other five selected homes use `access.target: "adaptable"`. They keep
-  step-free entrances and adaptable features, but they are **not failed** for
-  lacking an accessible bathroom. Their bathrooms are ordinary concept
-  bathrooms, not accessible washrooms.
+- **Woodland Cottage** and **Accessible Garden Home** are the two
+  whole-home wheelchair-accessible demonstrations (`access.target: "accessible"`).
+  Both are single-storey, with an authored interior, 1.5 m bathroom turning
+  circle, 0.9 m or wider internal doors and a modeled circulation route.
+- **Accessible Garden Home** is a double-width pair of 20-foot modules with a
+  3.0 m bathroom. **Woodland Cottage** is a constrained single 40-foot module
+  with a 2.8 m bathroom; its accessible layout is tighter and needs professional
+  review. Both remain `potentially-adaptable` because shared-path grades,
+  transfers and professional review are incomplete—not because the washroom is
+  missing.
+- **Offset Stack**, **Cross-Stacked Retreat**, **Solar Studio Stack** and
+  **Courtyard Residence** use `access.target: "not-required"`. They are ordinary
+  concept homes, not accessible units. Their bathrooms are not failed for
+  lacking a turning circle, and the two-storey homes are not presented as
+  wheelchair accessible.
 - No home is described as fully accessible. A future accessible unit should
   budget for the extra width needed by the 1.5 m turning circle, door clearances
-  and circulation; the model now demonstrates this with the double-width
-  Accessible Garden Home.
+  and circulation.
 
-The three historical two-storey studies are retained in the Experimental
-archive. They are not selected homes and are not presented as accessible.
+The two-storey selected homes are not presented as wheelchair accessible.
+Their ground floors may be step-free, but the upper floors are stair-only.
 
 A future lift is not assumed to be feasible. A concept must reserve space and
 record structural implications before a lift can be considered. The model does

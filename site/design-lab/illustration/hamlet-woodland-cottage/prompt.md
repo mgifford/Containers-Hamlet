@@ -17,10 +17,4 @@ Restrictions: do not add or remove storeys, modules, windows, doors, stairs, bal
 Unresolved matters to carry into the illustration notes:
 - Rooms are longitudinal zones. Partitions, fixtures, door swings and interior camera geometry are not modeled. Do not claim a spatially accurate interior perspective.
 - The site path approach is east while the design entrance is south. The generated prompt does not call any side the main approach without qualification.
-- Interior geometry is provisional. Partitions, doors and fixtures may be incomplete.
-- Room room-m1-m1-z1 is inferred from a zone band, not an authored layout.
-- Room room-m1-m1-z2 is inferred from a zone band, not an authored layout.
-- Room room-m1-m1-z3 is inferred from a zone band, not an authored layout.
-- Room room-m1-m1-z4 is inferred from a zone band, not an authored layout.
-- No interior doors are modeled. Room connectivity cannot be assessed.
 This is an interpretation for communication. It is not a construction drawing and must not be used to verify dimensions, structure, accessibility or code compliance.

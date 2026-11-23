@@ -402,19 +402,19 @@
         "building": "b",
         "site_name": "Cabin B",
         "design": "hamlet-offset-stack",
-        "design_name": "Offset Pair",
+        "design_name": "Offset Stack",
         "site_footprint_m2": 66.3,
-        "design_footprint_m2": 59.45,
-        "difference_pct": -10.3,
-        "design_height_m": 4.38,
-        "storeys": 1,
+        "design_footprint_m2": 36.06,
+        "difference_pct": -45.6,
+        "design_height_m": 7.33,
+        "storeys": 2,
         "entrance": "east",
         "path_approach": "south-west",
         "primary_view_deg": 138,
         "porch_area_m2": 13.8,
         "clearing_radius_m": 11,
-        "design_reach_m": 12,
-        "clearance_margin_m": -1,
+        "design_reach_m": 11.4,
+        "clearance_margin_m": -0.4,
         "module_footprints": [
           {
             "id": "m1",
@@ -440,29 +440,29 @@
           },
           {
             "id": "m2",
-            "storey": 0,
+            "storey": 1,
             "polygon": [
               [
-                218.21763589928247,
-                53.24517414208751
+                216.58629548097957,
+                51.433387057573626
+              ],
+              [
+                225.64671719319998,
+                43.27534670484643
               ],
               [
                 227.27805761150287,
                 45.08713378936031
               ],
               [
-                228.90939802980577,
-                46.8989208738742
-              ],
-              [
-                219.84897631758537,
-                55.056961226601395
+                218.21763589928247,
+                53.24517414208751
               ]
             ]
           }
         ],
         "conflicts": [
-          "footprint reaches 1.0 m beyond the recorded clearing radius",
+          "footprint reaches 0.4 m beyond the recorded clearing radius",
           "design entrance east does not match the recorded path approach south-west"
         ]
       },
@@ -492,23 +492,23 @@
           },
           {
             "id": "m2",
-            "storey": 0,
+            "storey": 1,
             "polygon": [
               [
-                218.21763589928247,
-                53.24517414208751
+                216.58629548097957,
+                51.433387057573626
+              ],
+              [
+                225.64671719319998,
+                43.27534670484643
               ],
               [
                 227.27805761150287,
                 45.08713378936031
               ],
               [
-                228.90939802980577,
-                46.8989208738742
-              ],
-              [
-                219.84897631758537,
-                55.056961226601395
+                218.21763589928247,
+                53.24517414208751
               ]
             ]
           }
@@ -940,19 +940,19 @@
         "building": "d",
         "site_name": "Cabin D",
         "design": "hamlet-cross-stacked-retreat",
-        "design_name": "Cross-Wing House",
+        "design_name": "Cross-Stacked Retreat",
         "site_footprint_m2": 66.3,
-        "design_footprint_m2": 59.45,
-        "difference_pct": -10.3,
-        "design_height_m": 5.22,
-        "storeys": 1,
+        "design_footprint_m2": 53.5,
+        "difference_pct": -19.3,
+        "design_height_m": 8.26,
+        "storeys": 2,
         "entrance": "east",
         "path_approach": "north",
         "primary_view_deg": 196,
         "porch_area_m2": 11.8,
         "clearing_radius_m": 11,
-        "design_reach_m": 16.3,
-        "clearance_margin_m": -5.3,
+        "design_reach_m": 9,
+        "clearance_margin_m": 2,
         "module_footprints": [
           {
             "id": "m1",
@@ -978,29 +978,28 @@
           },
           {
             "id": "m2",
-            "storey": 0,
+            "storey": 1,
             "polygon": [
               [
-                255.83577607060786,
-                146.50777994408975
+                257.8520633284092,
+                139.47615063830094
               ],
               [
-                252.47520542848702,
-                158.22748254096973
+                254.49149268628835,
+                151.19585323518092
               ],
               [
-                250.1316494137894,
-                157.55547866748788
+                252.14793667159074,
+                150.52384936169906
               ],
               [
-                253.49222005591025,
-                145.8357760706079
+                255.50850731371162,
+                138.80414676481908
               ]
             ]
           }
         ],
         "conflicts": [
-          "footprint reaches 5.3 m beyond the recorded clearing radius",
           "design entrance east does not match the recorded path approach north"
         ]
       },
@@ -1030,23 +1029,23 @@
           },
           {
             "id": "m2",
-            "storey": 0,
+            "storey": 1,
             "polygon": [
               [
-                255.83577607060786,
-                146.50777994408975
+                257.8520633284092,
+                139.47615063830094
               ],
               [
-                252.47520542848702,
-                158.22748254096973
+                254.49149268628835,
+                151.19585323518092
               ],
               [
-                250.1316494137894,
-                157.55547866748788
+                252.14793667159074,
+                150.52384936169906
               ],
               [
-                253.49222005591025,
-                145.8357760706079
+                255.50850731371162,
+                138.80414676481908
               ]
             ]
           }
@@ -1485,19 +1484,19 @@
         "building": "f",
         "site_name": "Cabin F",
         "design": "hamlet-solar-studio-stack",
-        "design_name": "Solar Studio",
+        "design_name": "Solar Studio Stack",
         "site_footprint_m2": 18.27,
-        "design_footprint_m2": 29.54,
-        "difference_pct": 61.7,
-        "design_height_m": 4.92,
-        "storeys": 1,
-        "entrance": "east",
+        "design_footprint_m2": 16.72,
+        "difference_pct": -8.5,
+        "design_height_m": 7.69,
+        "storeys": 2,
+        "entrance": "south",
         "path_approach": "north-east",
         "primary_view_deg": 260,
-        "porch_area_m2": 13.9,
+        "porch_area_m2": 10.6,
         "clearing_radius_m": 10,
-        "design_reach_m": 7.7,
-        "clearance_margin_m": 2.3,
+        "design_reach_m": 6.4,
+        "clearance_margin_m": 3.6,
         "module_footprints": [
           {
             "id": "m1",
@@ -1523,29 +1522,29 @@
           },
           {
             "id": "m2",
-            "storey": 0,
+            "storey": 1,
             "polygon": [
               [
-                118.41245756105853,
-                173.01654064711178
+                120.81341886290228,
+                172.5931863899598
+              ],
+              [
+                121.86537952320855,
+                178.55915175770775
               ],
               [
                 119.4644182213648,
                 178.98250601485972
               ],
               [
-                117.06345691952103,
-                179.4058602720117
-              ],
-              [
-                116.01149625921477,
-                173.43989490426375
+                118.41245756105853,
+                173.01654064711178
               ]
             ]
           }
         ],
         "conflicts": [
-          "design entrance east does not match the recorded path approach north-east"
+          "design entrance south does not match the recorded path approach north-east"
         ]
       },
       "design_lab_geometry": {
@@ -1574,23 +1573,23 @@
           },
           {
             "id": "m2",
-            "storey": 0,
+            "storey": 1,
             "polygon": [
               [
-                118.41245756105853,
-                173.01654064711178
+                120.81341886290228,
+                172.5931863899598
+              ],
+              [
+                121.86537952320855,
+                178.55915175770775
               ],
               [
                 119.4644182213648,
                 178.98250601485972
               ],
               [
-                117.06345691952103,
-                179.4058602720117
-              ],
-              [
-                116.01149625921477,
-                173.43989490426375
+                118.41245756105853,
+                173.01654064711178
               ]
             ]
           }
@@ -1971,19 +1970,19 @@
       "building": "b",
       "site_name": "Cabin B",
       "design": "hamlet-offset-stack",
-      "design_name": "Offset Pair",
+      "design_name": "Offset Stack",
       "site_footprint_m2": 66.3,
-      "design_footprint_m2": 59.45,
-      "difference_pct": -10.3,
-      "design_height_m": 4.38,
-      "storeys": 1,
+      "design_footprint_m2": 36.06,
+      "difference_pct": -45.6,
+      "design_height_m": 7.33,
+      "storeys": 2,
       "entrance": "east",
       "path_approach": "south-west",
       "primary_view_deg": 138,
       "porch_area_m2": 13.8,
       "clearing_radius_m": 11,
-      "design_reach_m": 12,
-      "clearance_margin_m": -1,
+      "design_reach_m": 11.4,
+      "clearance_margin_m": -0.4,
       "module_footprints": [
         {
           "id": "m1",
@@ -2009,29 +2008,29 @@
         },
         {
           "id": "m2",
-          "storey": 0,
+          "storey": 1,
           "polygon": [
             [
-              218.21763589928247,
-              53.24517414208751
+              216.58629548097957,
+              51.433387057573626
+            ],
+            [
+              225.64671719319998,
+              43.27534670484643
             ],
             [
               227.27805761150287,
               45.08713378936031
             ],
             [
-              228.90939802980577,
-              46.8989208738742
-            ],
-            [
-              219.84897631758537,
-              55.056961226601395
+              218.21763589928247,
+              53.24517414208751
             ]
           ]
         }
       ],
       "conflicts": [
-        "footprint reaches 1.0 m beyond the recorded clearing radius",
+        "footprint reaches 0.4 m beyond the recorded clearing radius",
         "design entrance east does not match the recorded path approach south-west"
       ]
     },
@@ -2106,19 +2105,19 @@
       "building": "d",
       "site_name": "Cabin D",
       "design": "hamlet-cross-stacked-retreat",
-      "design_name": "Cross-Wing House",
+      "design_name": "Cross-Stacked Retreat",
       "site_footprint_m2": 66.3,
-      "design_footprint_m2": 59.45,
-      "difference_pct": -10.3,
-      "design_height_m": 5.22,
-      "storeys": 1,
+      "design_footprint_m2": 53.5,
+      "difference_pct": -19.3,
+      "design_height_m": 8.26,
+      "storeys": 2,
       "entrance": "east",
       "path_approach": "north",
       "primary_view_deg": 196,
       "porch_area_m2": 11.8,
       "clearing_radius_m": 11,
-      "design_reach_m": 16.3,
-      "clearance_margin_m": -5.3,
+      "design_reach_m": 9,
+      "clearance_margin_m": 2,
       "module_footprints": [
         {
           "id": "m1",
@@ -2144,29 +2143,28 @@
         },
         {
           "id": "m2",
-          "storey": 0,
+          "storey": 1,
           "polygon": [
             [
-              255.83577607060786,
-              146.50777994408975
+              257.8520633284092,
+              139.47615063830094
             ],
             [
-              252.47520542848702,
-              158.22748254096973
+              254.49149268628835,
+              151.19585323518092
             ],
             [
-              250.1316494137894,
-              157.55547866748788
+              252.14793667159074,
+              150.52384936169906
             ],
             [
-              253.49222005591025,
-              145.8357760706079
+              255.50850731371162,
+              138.80414676481908
             ]
           ]
         }
       ],
       "conflicts": [
-        "footprint reaches 5.3 m beyond the recorded clearing radius",
         "design entrance east does not match the recorded path approach north"
       ]
     },
@@ -2241,19 +2239,19 @@
       "building": "f",
       "site_name": "Cabin F",
       "design": "hamlet-solar-studio-stack",
-      "design_name": "Solar Studio",
+      "design_name": "Solar Studio Stack",
       "site_footprint_m2": 18.27,
-      "design_footprint_m2": 29.54,
-      "difference_pct": 61.7,
-      "design_height_m": 4.92,
-      "storeys": 1,
-      "entrance": "east",
+      "design_footprint_m2": 16.72,
+      "difference_pct": -8.5,
+      "design_height_m": 7.69,
+      "storeys": 2,
+      "entrance": "south",
       "path_approach": "north-east",
       "primary_view_deg": 260,
-      "porch_area_m2": 13.9,
+      "porch_area_m2": 10.6,
       "clearing_radius_m": 10,
-      "design_reach_m": 7.7,
-      "clearance_margin_m": 2.3,
+      "design_reach_m": 6.4,
+      "clearance_margin_m": 3.6,
       "module_footprints": [
         {
           "id": "m1",
@@ -2279,29 +2277,29 @@
         },
         {
           "id": "m2",
-          "storey": 0,
+          "storey": 1,
           "polygon": [
             [
-              118.41245756105853,
-              173.01654064711178
+              120.81341886290228,
+              172.5931863899598
+            ],
+            [
+              121.86537952320855,
+              178.55915175770775
             ],
             [
               119.4644182213648,
               178.98250601485972
             ],
             [
-              117.06345691952103,
-              179.4058602720117
-            ],
-            [
-              116.01149625921477,
-              173.43989490426375
+              118.41245756105853,
+              173.01654064711178
             ]
           ]
         }
       ],
       "conflicts": [
-        "design entrance east does not match the recorded path approach north-east"
+        "design entrance south does not match the recorded path approach north-east"
       ]
     },
     {
