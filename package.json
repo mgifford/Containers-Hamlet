@@ -15,7 +15,8 @@
     "screenshots": "node tools/screenshots.mjs screenshots",
     "test:design-lab": "node tools/design-lab-check.mjs",
     "generate:references": "node tools/generate-reference-images.mjs",
-    "check:references": "node tools/check-reference-generation.mjs"
+    "check:references": "node tools/check-reference-generation.mjs",
+    "briefs": "node tools/export-generation-briefs.mjs"
   },
   "devDependencies": {
     "axe-core": "4.14.0",

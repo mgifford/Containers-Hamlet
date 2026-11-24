@@ -1,7 +1,8 @@
 # Image review summary: six homes, changes and recommendations
 
 **Status:** Synthesis of the seven image reviews and the poster review, written
-2026-11-23. **No image, model or PDF was changed.** The only repository changes
+2026-11-23. **Addendum:** the six-view prompt test and its learnings are in
+[`image-generation-learnings-2026-11-23.md`](image-generation-learnings-2026-11-23.md). **No image, model or PDF was changed.** The only repository changes
 are the review records and a link from the reference-generation document. This
 document summarises what was found, what was suggested, and what to do next.
 
