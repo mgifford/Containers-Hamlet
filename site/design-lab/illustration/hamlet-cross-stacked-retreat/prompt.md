@@ -5,6 +5,10 @@ Module geometry:
 - m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, metal cladding.
 - m2: 2 storey, 12.19 m x 2.44 m, base elevation 3.9 m, rotation 90 degrees, timber cladding. m2 is aligned with m1, rotated 90 degrees clockwise relative to m1.
 Roof: butterfly at 12 degrees, 0.8 m overhang, installed PV array.
+Solar: exactly 16 installed 450 W panels (7.2 kWp, 32 m²) in total. This viewpoint shows 16 of them. Do not add, remove, merge or rearrange panels.
+- pv-a: 8 panels in 2 row(s) x 4 column(s), 39° tilt, 180° from north, roof tilted on the roof surface; group string-a.
+- pv-b: 8 panels in 2 row(s) x 4 column(s), 39° tilt, 180° from north, roof tilted on the roof surface; group string-b.
+Panel snow: pv-a sheds to south with snow guards; pv-b sheds to south with snow guards. Do not draw snow discharging onto an entrance or accessible route.
 Openings:
 - m1: north window "North window" at 2 m, 1.2 x 1.2 m, sill 1 m; south sliding-door "Living doors" at 6 m, 2.8 x 2.1 m, sill 0 m; east door "Entry door" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window "West window" at 1.4 m, 1.2 x 1.3 m, sill 0.9 m.
 - m2: north window "Upper studio window" at 2.4 m, 1.6 x 1.4 m, sill 0.8 m; south window "Upper bedroom window" at 7.2 m, 1.6 x 1.4 m, sill 0.8 m; east door "Upper balcony door" at 1.6 m, 0.9 x 2.1 m, sill 0 m; west window "Upper window" at 1 m, 1.2 x 1.2 m, sill 1 m.

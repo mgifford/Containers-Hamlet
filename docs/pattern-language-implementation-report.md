@@ -94,7 +94,7 @@ Browser tests cover search, scale and evidence filters, reset, shareable
 fragments, related-pattern links, live status, no-JS readability, axe-core and
 320 px reflow.
 
-The published site is about **6437 KB**, under the 6.5 MB budget after adding the four remaining homes and their provisional room-band annotations.
+The published site was about **6437 KB** when this phase was completed; it is now about **7696 KB**, under the revised 7.75 MB budget after the energy and heat-pump work.
 
 ## Phase 3 scenario comparison
 
@@ -151,3 +151,25 @@ The published site is about **6437 KB**, under the 6.5 MB budget after adding th
 
 Do not treat the Phase 1 Explorer as evidence that the hamlet or any home
 satisfies a pattern, code or accessibility requirement.
+
+## Energy-pattern extensions
+
+Ten original patterns were added under `patterns.extensions`, clearly separated
+from the numbered Alexander catalogue:
+
+- Right-Sized Energy
+- Solar Outdoor Rooms
+- Shared Energy Infrastructure
+- Winter Resilience
+- Essential Electrical Services
+- Repairable Technology
+- Woodland Preservation
+- Seasonal Adaptation
+- Accessible Service Infrastructure
+- Low-Energy Domestic Life
+
+They are labelled as project extensions, not Christopher Alexander patterns, and
+the interface states that attribution explicitly. Each links only to Alexander
+pattern numbers/titles already verified in the catalogue. The extension
+attribution is validated in `tools/lib/patterns.mjs` and the page is checked in
+`tools/check-energy.mjs` and the browser tests.

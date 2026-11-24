@@ -26,12 +26,14 @@
 </header>
 <nav class="subnav" aria-label="Design Lab sections">
   <a href="../../design-lab/">Gallery</a>
-  <a href="../../design-lab/pattern-language/">Pattern language</a>
+  <a href="../../design-lab/pattern-language/">Patterns</a>
   <a href="../../design-lab/residences/">Residences</a>
+  <a href="../../design-lab/energy/">Energy</a>
+  <a href="../../design-lab/heat-pumps/">Heat pumps</a>
   <a href="../../design-lab/scenarios/">Scenarios</a>
   <a href="../../design-lab/evaluation/">Evaluation</a>
   <a href="../../design-lab/illustration/">Illustrate</a>
-  <a href="../../design-lab/visualisations/">Visualisations</a>
+  <a href="../../design-lab/visualisations/">Visuals</a>
   <a href="../../design-lab/editor/" aria-current="page">Editor</a>
   <a href="../../design-lab/guides/">Guides</a>
   <a href="../../design-lab/compare/">Compare</a>
@@ -248,7 +250,15 @@
       <h2 id="solar-title">Solar</h2>
       <p class="small">Roof-mounted solar is tilted. The default is 39° facing true south for Ottawa, within the 36–39° year-round range; winter ≈60° and summer ≈30° are options. Snow shedding, wind uplift, shading, roof structure and electrical design need review.</p>
       <div id="solar-section" class="wall-section" tabindex="0" role="group" aria-label="Solar tilt and azimuth section diagram. Scroll horizontally if needed."></div>
-      <p class="small">No energy production, snow-shedding or code compliance is calculated.</p>
+      <p class="small">The arrays on the drawings and in the energy calculation come from the same canonical geometry. Snow-shedding and code compliance are not calculated.</p>
+    </section>
+
+    <section class="control-block" aria-labelledby="energy-title">
+      <h2 id="energy-title">Energy, solar and battery</h2>
+      <p class="small">These controls edit the canonical residential energy model. Panel count, dimensions, tilt, orientation, mounting surface, placement offset and battery capacity all change the drawings and the calculation together. Moving a module or changing a roof revalidates placement and shows warnings; panels are never silently deleted.</p>
+      <div id="energy-controls"></div>
+      <div id="energy-report" class="support-report" role="status" aria-live="polite"></div>
+      <p class="small">A conceptual model only. It is not a solar resource assessment, electrical design, structural design or off-grid guarantee.</p>
     </section>
 
     <section class="control-block" aria-labelledby="fire-title">
@@ -437,6 +447,7 @@
   <p><a href="../index.html">Design gallery</a> · <a href="../compare/">Compare</a> · <a href="../../index.html">Containers Hamlet</a> · <a href="https://github.com/mgifford/Containers-Hamlet/tree/main/site/design-lab">Design Lab source</a></p>
 </footer>
 <script src="../../js/design-schema.js"></script>
+<script src="../../js/design-energy.js"></script>
 <script src="../../js/design-model.js"></script>
 <script src="../../js/design-interior.js"></script>
 <script src="../../js/design-illustration.js"></script>

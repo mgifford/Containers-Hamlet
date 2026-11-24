@@ -71,6 +71,10 @@
     (design.trellises || []).forEach(function (t) { ids.push(t.id); });
     (design.vegetation || []).forEach(function (v) { ids.push(v.id); });
     (design.connections || []).forEach(function (c) { ids.push(c.id); });
+    if (design.energy && design.energy.solar) {
+      (design.energy.solar.arrays || []).forEach(function (a) { ids.push(a.id); });
+      (design.energy.solar.canopies || []).forEach(function (c) { ids.push(c.id); });
+    }
     return ids;
   }
 
@@ -187,6 +191,21 @@
     d.fire = Object.assign({ roof_class: 'A', noncombustible_eaves: true, ember_resistant_vents: true, tempered_glazing: true, noncombustible_deck: false, exterior_shutters: true, defensible_space_m: 10, water_access: false, note: 'Fire measures are design intentions, not a fire-resistance rating, WUI approval or insurance guarantee.' }, d.fire || {});
     d.entry_shelter = Object.assign({ enabled: false, side: 'north', width_m: 2.2, projection_m: 1.2, security_shutters: true, note: 'Reused container-door leaves can form a shelter and shutters; hinges, wind uplift, egress, fire and security need review.' }, d.entry_shelter || {});
     if (d.solar_array) d.solar_array = Object.assign({ enabled: false, tilt_deg: 39, azimuth_deg: 180, season_mode: 'year-round', side: 'south', mounting: 'tilted racks on a south roof slope', source: 'SolarCalculator.CA Ottawa', note: 'True south; review required.' }, d.solar_array);
+    /* The optional residential energy model is versioned separately. It is
+       normalized in site/js/design-energy.js, which is the single calculation
+       path for the drawings, the comparison, the explorer and the tests. */
+    if (d.energy && typeof d.energy === 'object') {
+      d.energy.version = d.energy.version || '1.0';
+      d.energy.solar = d.energy.solar || {};
+      d.energy.solar.arrays = Array.isArray(d.energy.solar.arrays) ? d.energy.solar.arrays : [];
+      d.energy.solar.canopies = Array.isArray(d.energy.solar.canopies) ? d.energy.solar.canopies : [];
+      d.energy.loads = Array.isArray(d.energy.loads) ? d.energy.loads : [];
+      d.energy.profiles = Array.isArray(d.energy.profiles) ? d.energy.profiles : [];
+      d.energy.optional_profiles = Array.isArray(d.energy.optional_profiles) ? d.energy.optional_profiles : [];
+      d.energy.scenarios = Array.isArray(d.energy.scenarios) ? d.energy.scenarios : [];
+    } else {
+      d.energy = d.energy === undefined ? null : d.energy;
+    }
     d.connections.forEach(function (c) { c.glazed = !!c.glazed; c.door_type = c.door_type || 'none'; c.glazing_area_m2 = isNum(c.glazing_area_m2) ? c.glazing_area_m2 : 0; });
     d.materials = Array.isArray(d.materials) ? d.materials : [];
 
@@ -463,12 +482,57 @@
         });
       }
     }
+    if (d.energy !== undefined && d.energy !== null) {
+      if (typeof d.energy !== 'object') err('energy must be an object when present.');
+      else {
+        if (d.energy.version !== '1.0') err('energy.version must be 1.0.');
+        var em = d.energy.solar || {};
+        if (!Array.isArray(em.arrays)) err('energy.solar.arrays must be an array.');
+        else {
+          var totalPanels = 0;
+          em.arrays.forEach(function (a) {
+            if (!a.id) err('An energy array has no id.');
+            var maxPanels = d.role === 'common-lodge' ? 60 : 16;
+            if (!isNum(a.module_count) || a.module_count < 1 || a.module_count > maxPanels) err('Energy array ' + (a.id || '?') + ' must declare one to ' + maxPanels + ' panels.');
+            else totalPanels += a.module_count;
+            if (!isNum(a.rows) || a.rows < 1 || !isNum(a.columns) || a.columns < 1) err('Energy array ' + (a.id || '?') + ' needs positive rows and columns.');
+            if (isNum(a.rows) && isNum(a.columns) && isNum(a.module_count) && a.rows * a.columns !== a.module_count) err('Energy array ' + (a.id || '?') + ' row and column counts do not equal its panel count.');
+            if (!isNum(a.tilt_deg) || a.tilt_deg < 0 || a.tilt_deg > 75) err('Energy array ' + (a.id || '?') + ' tilt must be 0-75 degrees.');
+            if (!isNum(a.azimuth_deg) || a.azimuth_deg < 0 || a.azimuth_deg > 360) err('Energy array ' + (a.id || '?') + ' azimuth must be 0-360 degrees.');
+            if (!a.surface || ['roof', 'canopy', 'porch', 'ground'].indexOf(a.surface.kind) < 0) err('Energy array ' + (a.id || '?') + ' has no supported mounting surface.');
+          });
+          if (d.role !== 'common-lodge' && totalPanels > 0 && (totalPanels < 6 || totalPanels > 16)) warnings.push({ code: 'schema', message: 'The residential panel total of ' + totalPanels + ' is outside the initial six-to-sixteen range; document the reason.' });
+        }
+        var bat = d.energy.battery;
+        if (!bat || !isNum(bat.nominal_kwh) || bat.nominal_kwh <= 0) err('An energy battery with positive nominal kWh is required.');
+        else {
+          if (!isNum(bat.usable_kwh) || bat.usable_kwh <= 0 || bat.usable_kwh > bat.nominal_kwh) err('Battery usable kWh must be positive and no greater than nominal.');
+          if (!isNum(bat.min_soc_pct) || !isNum(bat.max_soc_pct) || bat.min_soc_pct < 0 || bat.max_soc_pct > 100 || bat.min_soc_pct >= bat.max_soc_pct) err('Battery SOC limits are inconsistent.');
+          if (!isNum(bat.charge_efficiency) || bat.charge_efficiency <= 0.5 || bat.charge_efficiency > 1) err('Battery charge efficiency must be between 0.5 and 1.');
+          if (!isNum(bat.discharge_efficiency) || bat.discharge_efficiency <= 0.5 || bat.discharge_efficiency > 1) err('Battery discharge efficiency must be between 0.5 and 1.');
+        }
+        var minLoads = d.role === 'common-lodge' ? 4 : 8;
+        if (!Array.isArray(d.energy.loads) || d.energy.loads.length < minLoads) err('An energy model needs a documented load list of at least ' + minLoads + ' items.');
+        else d.energy.loads.forEach(function (l) {
+          if (!l.id || !l.name) err('Every energy load needs an id and a name.');
+          if (!isNum(l.rated_w) || l.rated_w < 0) err('Load ' + (l.id || '?') + ' needs a positive rated power.');
+          if (!l.hours || !isNum(l.hours.summer) || !isNum(l.hours.shoulder) || !isNum(l.hours.winter)) err('Load ' + (l.id || '?') + ' needs summer, shoulder and winter hours.');
+          if (!isNum(l.duty_cycle) || l.duty_cycle < 0 || l.duty_cycle > 1) err('Load ' + (l.id || '?') + ' needs a duty cycle between 0 and 1.');
+          if (['ac', 'dc', 'either'].indexOf(l.ac_dc) < 0) err('Load ' + (l.id || '?') + ' needs an AC or DC supply.');
+          if (['essential-continuous', 'essential-intermittent', 'discretionary', 'high-demand', 'accessibility'].indexOf(l.class) < 0) err('Load ' + (l.id || '?') + ' has an unknown class.');
+          if (['low', 'medium', 'high'].indexOf(l.confidence) < 0) err('Load ' + (l.id || '?') + ' needs a confidence level.');
+          if (typeof l.source !== 'string' || l.source.length < 4) err('Load ' + (l.id || '?') + ' needs an assumption source.');
+        });
+        if (!Array.isArray(d.energy.profiles) || d.energy.profiles.length < 3) err('An energy model needs summer, winter and unoccupied profiles.');
+        if (!d.energy.occupancy || !Array.isArray(d.energy.occupancy.suitable_patterns)) err('Energy occupancy needs a list of suitable patterns.');
+      }
+    }
     return {
       ok: errors.length === 0,
       errors: errors,
       warnings: warnings,
       unknownKeys: Object.keys(d).filter(function (k) {
-        return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal','envelope','vegetation','roof_form','solar_array','entry_shelter','paint','fire','levels','maxOccupiedStoreys','support','review','access','architecture','storeys','role','interior','formerName'].indexOf(k) < 0;
+        return ['schema','id','name','group','editable','visual_seed','tagline','description','primary_view_deg','modules','connections','porches','decks','foundation','features','materials','provenance','licence','authorship','status','units','professional_review_required','site','assessment','trellises','material_intent','thermal','envelope','vegetation','roof_form','solar_array','entry_shelter','paint','fire','levels','maxOccupiedStoreys','support','review','access','architecture','storeys','role','interior','energy','formerName'].indexOf(k) < 0;
       })
     };
   }

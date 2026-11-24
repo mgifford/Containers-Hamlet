@@ -7,9 +7,9 @@
  * Code licence: AGPL-3.0-or-later.
  */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./design-schema.js'));
-  else root.DesignModel = factory(root.DesignSchema);
-})(typeof self !== 'undefined' ? self : this, function (Schema) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./design-schema.js'), require('./design-energy.js'));
+  else root.DesignModel = factory(root.DesignSchema, root.DesignEnergy);
+})(typeof self !== 'undefined' ? self : this, function (Schema, Energy) {
   'use strict';
 
   var DEG = Math.PI / 180;
@@ -211,11 +211,74 @@
     return {
       type: rf.type, pitch_deg: pitch, overhang_m: oh,
       minX: minX, minY: minY, maxX: maxX, maxY: maxY, width: width, depth: depth,
-      base_m: base, top_m: top, ridge_m: top, eave_m: base,
+      base_m: base, top_m: top, ridge_m: top, eave_m: base, ridgeY: (minY + maxY) / 2,
       roofArea_m2: roofArea, solarArea_m2: rf.type === 'flat' || rf.type === 'canopy' ? planArea * 0.55 : Math.max(0, southRun * width),
       green: !!rf.green_roof || rf.type === 'green',
       drainage: rf.drainage, snow: rf.snow, wind: rf.wind, maintenance: rf.maintenance
     };
+  }
+
+  /* ---------------- residential energy geometry (one source for every view) ---------------- */
+
+  function energyPanels(d) {
+    if (!Energy) return { arrays: [], panels: [], total_panels: 0, capacity_kwp: 0, area_m2: 0, warnings: [] };
+    return Energy.panelGeometry(d, roofGeometry(d));
+  }
+  function azimuthFaces(azimuth, side) {
+    var target = { south: 180, east: 90, west: 270, north: 0 }[side];
+    if (target == null) return false;
+    var a = ((azimuth % 360) + 360) % 360;
+    var diff = Math.abs(((a - target + 540) % 360) - 180);
+    return diff <= 60;
+  }
+  function canopyCorners(c) {
+    var a = (c.rotation_deg || 0) * DEG, hw = c.length_m / 2, hd = c.depth_m / 2;
+    return [[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd]].map(function (q) {
+      return [c.position_m[0] + q[0] * Math.cos(a) - q[1] * Math.sin(a), c.position_m[1] + q[0] * Math.sin(a) + q[1] * Math.cos(a)];
+    });
+  }
+  function canopyList(d) { return (d.energy && d.energy.solar && d.energy.solar.canopies) || []; }
+  function energyLabel(d) {
+    var g = energyPanels(d);
+    if (!g.total_panels) return '';
+    return g.total_panels + ' panel' + (g.total_panels === 1 ? '' : 's') + ' · ' + n(g.capacity_kwp, 1) + ' kWp · ' + n(g.area_m2, 1) + ' m²';
+  }
+  function panelQuad(p, S) {
+    return '<path d="M' + polyScreen(p.corners, S) + 'Z" fill="#123b4d" stroke="#0b2530" stroke-width="0.9"/>';
+  }
+  function panelArrayDraw(array, S, opts) {
+    opts = opts || {};
+    var out = [];
+    var all = array.panels;
+    if (!all.length) return '';
+    if (array.surface_kind === 'ground') {
+      var z0 = Math.min.apply(null, all.map(function (p) { return Math.min.apply(null, p.corners.map(function (c) { return c[2]; })); }));
+      var post = all[0].corners.filter(function (c) { return c[2] <= z0 + 0.01; });
+      post.forEach(function (c) {
+        out.push('<line x1="' + n(S([c[0], c[1], 0])[0]) + '" y1="' + n(S([c[0], c[1], 0])[1]) + '" x2="' + n(S([c[0], c[1], c[2]])[0]) + '" y2="' + n(S([c[0], c[1], c[2]])[1]) + '" stroke="#5d6f6a" stroke-width="3"/>');
+      });
+    }
+    all.forEach(function (p) { out.push(panelQuad(p, S)); });
+    if (opts.label !== false) {
+      var c = all[Math.floor(all.length / 2)].centre;
+      out.push('<text x="' + n(S(c)[0]) + '" y="' + n(S(c)[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" fill="#eaf6f9" stroke="#123b4d" stroke-width="2.6" paint-order="stroke">' + esc(array.id + ' · ' + array.module_count + ' × ' + all[0].watts + ' W · ' + n(array.tilt_deg, 0) + '°') + '</text>');
+    }
+    return out.join('');
+  }
+  function canopyDraw(c, S, opts) {
+    opts = opts || {};
+    var poly = canopyCorners(c);
+    var z = c.height_m;
+    var out = [];
+    out.push('<path d="M' + polyScreen(poly.map(function (q) { return [q[0], q[1], z]; }), S) + 'Z" fill="#6d5b49" fill-opacity="0.55" stroke="#4f4337" stroke-width="1.2"/>');
+    poly.forEach(function (q) {
+      out.push('<line x1="' + n(S([q[0], q[1], 0])[0]) + '" y1="' + n(S([q[0], q[1], 0])[1]) + '" x2="' + n(S([q[0], q[1], z])[0]) + '" y2="' + n(S([q[0], q[1], z])[1]) + '" stroke="#5d6f6a" stroke-width="2.4"/>');
+    });
+    if (opts.label !== false) {
+      var mid = poly[2];
+      out.push('<text x="' + n(S([mid[0], mid[1], z])[0]) + '" y="' + n(S([mid[0], mid[1], z])[1] - 6) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#3f2f1e" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke">' + esc(c.label || 'solar canopy') + '</text>');
+    }
+    return out.join('');
   }
 
   function structuralReview(input) {
@@ -809,7 +872,14 @@
       var category = sev === 'accessibility' ? 'accessibility' : sev === 'review' ? 'professional-review' : 'structural';
       items.push({ category: category, code: w.code, message: w.message });
     });
-    var invalid = items.filter(function (i) { return i.category === 'invalid-data' || i.category === 'invalid-geometry'; });
+    if (Energy && design.energy) {
+      var ev = Energy.validate(design);
+      ev.issues.forEach(function (i) {
+        var category = i.category === 'invalid-geometry' ? 'invalid-geometry' : i.category === 'unresolved-assumption' ? 'unresolved-assumption' : i.category === 'energy-shortfall' ? 'energy-shortfall' : 'professional-review';
+        items.push({ category: category, code: i.code, message: i.message, severity: i.severity });
+      });
+    }
+    var invalid = items.filter(function (i) { return i.category === 'invalid-data' || i.category === 'invalid-geometry' || (i.category === 'professional-review' && i.severity === 'error'); });
     return { ok: invalid.length === 0, items: items, warnings: geo.warnings, invalid: invalid };
   }
 
@@ -1065,6 +1135,14 @@
       var c = P([(poly[0][0] + poly[2][0]) / 2, (poly[0][1] + poly[2][1]) / 2]);
       planLabels.push(text(c[0] - 34, c[1] - 2, (p.screened ? 'screened porch' : 'covered porch'), 10, ' fill="#31573f" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
       planLabels.push(text(c[0] - 34, c[1] + 12, n(p.length_m) + ' × ' + n(p.depth_m) + ' m', 10, ' fill="#31573f" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
+    });
+    // independent solar canopies: shown on the floor plan as an overhead outline
+    canopyList(d).forEach(function (c) {
+      var cp = canopyCorners(c);
+      out.push('<path d="' + path(cp) + '" fill="#6d5b49" fill-opacity="0.13" stroke="#4f4337" stroke-width="1.8" stroke-dasharray="7 4"/>');
+      var cc = P(c.position_m);
+      planLabels.push(text(cc[0] - 40, cc[1] - 2, (c.label || 'solar canopy') + ' above', 9, ' fill="#3f2f1e" stroke="#faf8f2" stroke-width="2.4" paint-order="stroke"'));
+      planLabels.push(text(cc[0] - 40, cc[1] + 12, n(c.length_m) + ' × ' + n(c.depth_m) + ' m · posts clear of route', 8.5, ' fill="#5c4c34" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke"'));
     });
     // trellises
     (d.trellises || []).forEach(function (t) {
@@ -1340,10 +1418,23 @@
       out.push('<line x1="' + n(p0[0]) + '" y1="' + n(p0[1]) + '" x2="' + n(p1[0]) + '" y2="' + n(p1[1]) + '" stroke="#245a73" stroke-width="2.2"/>');
       out.push('<text x="' + n(p0[0]) + '" y="' + n(p0[1] - 8) + '" font-family="system-ui, sans-serif" font-size="10" fill="#245a73">slope / drainage direction</text>');
     }
-    if (rg.solarArea_m2 > 0 && (d.solar_array && d.solar_array.enabled)) {
-      var solar = [[rg.minX + rg.width * 0.2, rg.minY + rg.depth * 0.2], [rg.maxX - rg.width * 0.2, rg.minY + rg.depth * 0.2], [rg.maxX - rg.width * 0.2, rg.maxY - rg.depth * 0.45], [rg.minX + rg.width * 0.2, rg.maxY - rg.depth * 0.45]];
-      out.push('<path d="M' + solar.map(function (p) { var q = P(p); return n(q[0]) + ' ' + n(q[1]); }).join('L') + 'Z" fill="#245a73" fill-opacity="0.28" stroke="#123b4d" stroke-width="1.4" stroke-dasharray="5 3"/>');
-      out.push('<text x="' + n(P([(solar[0][0] + solar[1][0]) / 2, (solar[0][1] + solar[3][1]) / 2])[0]) + '" y="' + n(P([(solar[0][0] + solar[1][0]) / 2, (solar[0][1] + solar[3][1]) / 2])[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#123b4d">PV array intent</text>');
+    canopyList(d).forEach(function (c) {
+      var cp = canopyCorners(c);
+      out.push('<path d="M' + cp.map(function (q) { var w = P(q); return n(w[0]) + ' ' + n(w[1]); }).join('L') + 'Z" fill="#6d5b49" fill-opacity="0.18" stroke="#4f4337" stroke-width="1.6" stroke-dasharray="7 4"/>');
+      out.push('<text x="' + n(P([c.position_m[0], c.position_m[1]])[0]) + '" y="' + n(P([c.position_m[0], c.position_m[1]])[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#3f2f1e">' + esc((c.label || 'solar canopy') + ' · ' + n(c.length_m, 1) + ' × ' + n(c.depth_m, 1) + ' m') + '</text>');
+    });
+    var eg = energyPanels(d);
+    eg.panels.forEach(function (pan) {
+      out.push('<path d="M' + pan.corners.map(function (q) { var w = P([q[0], q[1]]); return n(w[0]) + ' ' + n(w[1]); }).join('L') + 'Z" fill="#245a73" fill-opacity="0.82" stroke="#0e2c3a" stroke-width="0.9"/>');
+    });
+    eg.arrays.forEach(function (a) {
+      if (!a.panels.length) return;
+      var q = a.panels[Math.floor(a.panels.length / 2)].centre;
+      var w = P([q[0], q[1]]);
+      out.push('<text x="' + n(w[0]) + '" y="' + n(w[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#eaf6f9" stroke="#123b4d" stroke-width="2.4" paint-order="stroke">' + esc(a.id + ' · ' + a.module_count + ' × ' + a.panels[0].watts + ' W · ' + n(a.tilt_deg, 0) + '°') + '</text>');
+    });
+    if (eg.total_panels) {
+      out.push('<text x="30" y="' + (H - 32) + '" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#123b4d">' + esc(energyLabel(d) + ' · placed from the canonical array geometry') + '</text>');
     }
     out.push('<g aria-hidden="true"><circle cx="' + (W - 44) + '" cy="44" r="23" fill="#fffdf7" stroke="#b9c3b2"/><path d="M' + (W - 44) + ' 27l6 32l-6 -8l-6 8z" fill="#1d392c"/><text x="' + (W - 44) + '" y="78" text-anchor="middle" font-size="11" font-weight="700" font-family="system-ui, sans-serif" fill="#1d392c">N</text></g>');
     out.push('<text x="30" y="' + (H - 14) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Concept roof plan · roof geometry is independent of the occupied storeys · drainage, snow, wind and structure need review · CC BY-SA 4.0</text>');
@@ -1638,21 +1729,16 @@
         }
         return rs;
       } });
-      if (d.solar_array && d.solar_array.enabled && !isFlat) {
-        var tilt = Math.max(0, Math.min(75, d.solar_array.tilt_deg || 39));
-        var pdl = Math.min(7.0, (rmaxX - rminX) * 0.72);
-        var southRun = isGable ? rmaxY - ridgeY : rmaxY - rminY;
-        var pdd = Math.min(1.8, southRun * 0.42);
-        var cx = (rminX + rmaxX) / 2, yLow = rmaxY - 0.85, yHigh = yLow - pdd;
-        var zLow = zAtSouth(yLow) + 0.22;
-        var zHigh = zAtSouth(yHigh) + 0.22 + pdd * Math.tan(tilt * Math.PI / 180);
-        var pCorners = [[cx - pdl / 2, yLow, zLow], [cx + pdl / 2, yLow, zLow], [cx + pdl / 2, yHigh, zHigh], [cx - pdl / 2, yHigh, zHigh]];
-        objects.push({ kind: 'solar-array', depth: 2000, draw: function () {
-          var ps = panelGridSVG(pCorners, 3, 2, S);
-          ps += '<text x="' + n(S([cx, (yLow + yHigh) / 2, (zLow + zHigh) / 2])[0]) + '" y="' + n(S([cx, (yLow + yHigh) / 2, (zLow + zHigh) / 2])[1]) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" font-weight="800" fill="#eaf6f9" stroke="#123b4d" stroke-width="2.4" paint-order="stroke">PV ' + n(tilt, 0) + '° / ' + n(d.solar_array.azimuth_deg || 180, 0) + '°</text>';
-          return ps;
-        } });
-      }
+      var eg = energyPanels(d);
+      canopyList(d).forEach(function (c) {
+        objects.push({ kind: 'solar-canopy', depth: c.position_m[0] + c.position_m[1] + 2.4, draw: function () { return canopyDraw(c, S); } });
+      });
+      eg.arrays.forEach(function (a) {
+        if (!a.panels.length) return;
+        var cx = a.panels.reduce(function (t, p) { return t + p.centre[0]; }, 0) / a.panels.length;
+        var cy = a.panels.reduce(function (t, p) { return t + p.centre[1]; }, 0) / a.panels.length;
+        objects.push({ kind: 'solar-array', depth: cx + cy + 3.2, draw: function () { return panelArrayDraw(a, S); } });
+      });
     }
     d.porches.forEach(function (p) {
       var m = moduleById(d, p.module);
@@ -1733,6 +1819,11 @@
     var rg = roofGeometry(d);
     var uValues = [];
     boxes.forEach(function (b) { b.corners.forEach(function (p) { uValues.push(side === 'east' || side === 'west' ? p[1] : p[0]); }); });
+    canopyList(d).forEach(function (c) { canopyCorners(c).forEach(function (p) { uValues.push(side === 'east' || side === 'west' ? p[1] : p[0]); }); });
+    var egBounds = energyPanels(d);
+    egBounds.panels.forEach(function (pan) {
+      pan.corners.forEach(function (p) { uValues.push(side === 'east' || side === 'west' ? p[1] : p[0]); });
+    });
     if (!uValues.length) uValues = [0, 1];
     var uMin = Math.min.apply(null, uValues), uMax = Math.max.apply(null, uValues);
     if (side === 'east' || side === 'west') { uMin = Math.min(uMin, rg.minY); uMax = Math.max(uMax, rg.maxY); }
@@ -1822,6 +1913,36 @@
       var ridgeU = prof.w / 2;
       out.push('<line x1="' + n(X(ridgeU)) + '" y1="' + n(Y(rg.top_m)) + '" x2="' + n(X(ridgeU)) + '" y2="' + n(Y(rg.top_m - 0.3)) + '" stroke="#faf8f2" stroke-width="2"/>');
     }
+    // independent canopies and their supports
+    canopyList(d).forEach(function (c) {
+      var cp = canopyCorners(c);
+      var us = cp.map(function (q) { return uOf(q); });
+      var cu0 = Math.min.apply(null, us), cu1 = Math.max.apply(null, us);
+      cp.forEach(function (q) {
+        var cu = uOf(q);
+        out.push('<line x1="' + n(X(cu)) + '" y1="' + n(Y(0)) + '" x2="' + n(X(cu)) + '" y2="' + n(Y(c.height_m)) + '" stroke="#5d6f6a" stroke-width="3"/>');
+      });
+      out.push('<rect x="' + n(X(cu0)) + '" y="' + n(Y(c.height_m + 0.12)) + '" width="' + n(Math.max(3, (cu1 - cu0) * scale)) + '" height="' + n(0.12 * scale) + '" fill="#6d5b49" stroke="#4f4337" stroke-width="1.2"/>');
+      out.push('<text x="' + n(X((cu0 + cu1) / 2)) + '" y="' + n(Y(c.height_m + 0.4)) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#3f2f1e" stroke="#faf8f2" stroke-width="2.2" paint-order="stroke">' + esc(c.label || 'solar canopy') + '</text>');
+    });
+    /* Panels are drawn from the same canonical array geometry as the roof plan,
+       axonometric and section. A panel is only drawn when its face is visible
+       from this elevation; hidden panels are not invented. */
+    var egElev = energyPanels(d);
+    var visArrays = egElev.arrays.filter(function (a) { return a.panels.length && azimuthFaces(a.azimuth_deg, side); });
+    visArrays.forEach(function (a) {
+      a.panels.forEach(function (pan) {
+        var us = pan.corners.map(function (q) { return uOf(q); });
+        var zs = pan.corners.map(function (q) { return q[2]; });
+        var u0 = Math.min.apply(null, us), u1 = Math.max.apply(null, us);
+        var z0 = Math.min.apply(null, zs), z1 = Math.max.apply(null, zs);
+        out.push('<rect x="' + n(X(u0)) + '" y="' + n(Y(z1)) + '" width="' + n(Math.max(2, (u1 - u0) * scale)) + '" height="' + n(Math.max(2, (z1 - z0) * scale)) + '" fill="#123b4d" stroke="#0b2530" stroke-width="1"/>');
+      });
+      var mid = a.panels[Math.floor(a.panels.length / 2)];
+      var mu = uOf(mid.centre);
+      var maxZ = Math.max.apply(null, a.panels.map(function (pan) { return Math.max.apply(null, pan.corners.map(function (q) { return q[2]; })); }));
+      out.push('<text x="' + n(X(mu)) + '" y="' + n(Y(maxZ) - 5) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#123b4d" stroke="#faf8f2" stroke-width="2.6" paint-order="stroke">' + esc(a.id + ' · ' + a.module_count + ' panels · ' + n(a.tilt_deg, 0) + '°') + '</text>');
+    });
     // level lines and dimension
     d.levels.forEach(function (l) {
       out.push('<line x1="24" y1="' + n(Y(l.elevation_m)) + '" x2="' + (W - 130) + '" y2="' + n(Y(l.elevation_m)) + '" stroke="#8f5a21" stroke-width="1" stroke-dasharray="6 4"/>');
@@ -1830,6 +1951,8 @@
     var dimX = W - 52;
     out.push('<line x1="' + dimX + '" y1="' + n(Y(0)) + '" x2="' + dimX + '" y2="' + n(Y(rg.top_m)) + '" stroke="#435a4a" stroke-width="1.2"/>');
     out.push('<text x="' + (dimX - 6) + '" y="' + n(Y(rg.top_m / 2)) + '" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#1d392c">' + n(rg.top_m, 2) + ' m</text>');
+    if (egElev.total_panels && !visArrays.length) out.push('<text x="' + (W - 32) + '" y="' + (H - 40) + '" text-anchor="end" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#123b4d">PV is installed on south-facing surfaces and is not visible from this elevation.</text>');
+    if (egElev.total_panels) out.push('<text x="32" y="' + (H - 34) + '" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#123b4d">' + esc(energyLabel(d) + ' · only panels visible from this view are drawn') + '</text>');
     out.push('<text x="32" y="' + (H - 16) + '" font-family="system-ui, sans-serif" font-size="9" fill="#5e6a58">Concept elevation · generated from the same module geometry as the plan · not for construction · Containers Hamlet Design Lab · CC BY-SA 4.0</text>');
     out.push('</svg>');
     return out.join('');
@@ -1898,6 +2021,39 @@
     var base = profAxis === 'x' ? rg.minX : rg.minY;
     var pts = prof.points.map(function (p) { return [X(base + p[0]), Y(p[1])]; });
     out.push('<path d="M' + pts.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="#245244" fill-opacity="0.95" stroke="#17392e" stroke-width="2"/>');
+    var egSection = energyPanels(d);
+    var cutPanels = egSection.panels.filter(function (pan) {
+      var vals = pan.corners.map(function (q) { return axis === 'y' ? q[1] : q[0]; });
+      return cut >= Math.min.apply(null, vals) - 0.01 && cut <= Math.max.apply(null, vals) + 0.01;
+    });
+    cutPanels.forEach(function (pan) {
+      var hs = pan.corners.map(function (q) { return axis === 'y' ? q[0] : q[1]; });
+      var zs = pan.corners.map(function (q) { return q[2]; });
+      var h0 = Math.min.apply(null, hs), h1 = Math.max.apply(null, hs);
+      var z0 = Math.min.apply(null, zs), z1 = Math.max.apply(null, zs);
+      out.push('<rect x="' + n(X(h0)) + '" y="' + n(Y(z1)) + '" width="' + n(Math.max(2, (h1 - h0) * scale)) + '" height="' + n(Math.max(1.5, (z1 - z0) * scale)) + '" fill="#123b4d" stroke="#0b2530" stroke-width="1"/>');
+    });
+    canopyList(d).forEach(function (c) {
+      var cp = canopyCorners(c);
+      var hs = cp.map(function (q) { return axis === 'y' ? q[0] : q[1]; });
+      var h0 = Math.min.apply(null, hs), h1 = Math.max.apply(null, hs);
+      out.push('<line x1="' + n(X(h0)) + '" y1="' + n(Y(0)) + '" x2="' + n(X(h0)) + '" y2="' + n(Y(c.height_m)) + '" stroke="#5d6f6a" stroke-width="3"/>');
+      out.push('<line x1="' + n(X(h1)) + '" y1="' + n(Y(0)) + '" x2="' + n(X(h1)) + '" y2="' + n(Y(c.height_m)) + '" stroke="#5d6f6a" stroke-width="3"/>');
+      out.push('<rect x="' + n(X(h0)) + '" y="' + n(Y(c.height_m + 0.12)) + '" width="' + n(Math.max(3, (h1 - h0) * scale)) + '" height="' + n(0.12 * scale) + '" fill="#6d5b49" stroke="#4f4337" stroke-width="1.2"/>');
+    });
+    if (cutPanels.length) {
+      out.push('<text x="' + (W - 32) + '" y="' + (Y(rg.top_m + 0.4)) + '" text-anchor="end" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#123b4d">' + esc(cutPanels.length + ' panel' + (cutPanels.length === 1 ? '' : 's') + ' cut by this section · ' + egSection.total_panels + ' installed in total') + '</text>');
+    } else if (egSection.total_panels) {
+      var beyond = egSection.arrays.filter(function (a) { return a.panels.length && azimuthFaces(a.azimuth_deg, 'south'); })[0];
+      if (beyond) {
+        var bh = beyond.panels.map(function (pan) { return pan.corners.map(function (q) { return axis === 'y' ? q[0] : q[1]; }); });
+        var bz = beyond.panels.map(function (pan) { return pan.corners.map(function (q) { return q[2]; }); });
+        var bh0 = Math.min.apply(null, bh.map(function (v) { return Math.min.apply(null, v); })), bh1 = Math.max.apply(null, bh.map(function (v) { return Math.max.apply(null, v); }));
+        var bz0 = Math.min.apply(null, bz.map(function (v) { return Math.min.apply(null, v); })), bz1 = Math.max.apply(null, bz.map(function (v) { return Math.max.apply(null, v); }));
+        out.push('<rect x="' + n(X(bh0)) + '" y="' + n(Y(bz1)) + '" width="' + n(Math.max(3, (bh1 - bh0) * scale)) + '" height="' + n(Math.max(2, (bz1 - bz0) * scale)) + '" fill="#245a73" fill-opacity="0.18" stroke="#123b4d" stroke-width="1.4" stroke-dasharray="7 4"/>');
+        out.push('<text x="' + n(X((bh0 + bh1) / 2)) + '" y="' + n(Y(bz0) - 6) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="700" fill="#123b4d">' + esc(egSection.total_panels + ' panels beyond the cut · shown dashed') + '</text>');
+      }
+    }
     d.levels.forEach(function (l) {
       out.push('<line x1="24" y1="' + n(Y(l.elevation_m)) + '" x2="' + (W - 130) + '" y2="' + n(Y(l.elevation_m)) + '" stroke="#8f5a21" stroke-width="1" stroke-dasharray="6 4"/>');
       out.push('<text x="28" y="' + n(Y(l.elevation_m) - 5) + '" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#8f5a21">' + esc(l.name + ' +' + n(l.elevation_m, 2) + ' m') + '</text>');
@@ -1939,7 +2095,7 @@
     var Y = function (z) { return oy - z * scale; };
     var pre = opts.idPrefix || ('solar-study-' + season);
     var title = d.name + ' · ' + season + ' solar study';
-    var desc = 'Concept ' + season + ' solar study for ' + d.name + '. A ' + altitude + ' degree sun altitude is shown against the south facade, roof overhang and glazing. It is a qualitative shading diagram, not an energy, daylight, glare or overheating calculation.';
+    var desc = 'Concept ' + season + ' solar study for ' + d.name + '. A ' + altitude + ' degree sun altitude is shown against the south facade, roof overhang, glazing and the installed south-facing panels. The panel divisions match the canonical array count. It is a qualitative shading diagram; monthly energy estimates are published separately.';
     var out = [];
     out.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-labelledby="' + pre + '-t ' + pre + '-d">');
     out.push('<title id="' + pre + '-t">' + esc(title) + '</title><desc id="' + pre + '-d">' + esc(desc) + '</desc>');
@@ -1955,6 +2111,35 @@
     var prof = roofProfile(rg, 'x');
     var pts = prof.points.map(function (p) { return [X(p[0]), Y(p[1])]; });
     out.push('<path d="M' + pts.map(function (p) { return n(p[0]) + ' ' + n(p[1]); }).join('L') + 'Z" fill="#245244" stroke="#17392e" stroke-width="2"/>');
+    /* Installed panels are shown as a roof band with one division per module, so
+       the count in the drawing matches the count used in the energy model. The
+       exact panel geometry is published in the roof plan, elevations and section. */
+    var egStudy = energyPanels(d);
+    var studyArrays = egStudy.arrays.filter(function (a) { return a.panels.length && azimuthFaces(a.azimuth_deg, 'south'); });
+    var roofZAt = function (x) {
+      var pts = prof.points;
+      for (var pi = 0; pi < pts.length - 1; pi++) {
+        var a0 = pts[pi], a1 = pts[pi + 1];
+        if (x >= Math.min(a0[0], a1[0]) && x <= Math.max(a0[0], a1[0])) {
+          var t = (x - a0[0]) / Math.max(0.0001, a1[0] - a0[0]);
+          return a0[1] + (a1[1] - a0[1]) * t;
+        }
+      }
+      return rg.base_m;
+    };
+    studyArrays.forEach(function (a, ai) {
+      var xA = width * (0.54 - ai * 0.06), xB = width * (0.9 - ai * 0.06);
+      var zA = roofZAt((xA + xB) / 2) + 0.12 + ai * 0.1;
+      var run = Math.max(0.8, xB - xA);
+      var rise = Math.min(0.85, Math.tan(a.tilt_deg * DEG) * run);
+      var x0p = X(xA), x1p = X(xB), y0p = Y(zA), y1p = Y(zA + rise);
+      for (var k = 0; k < a.module_count; k++) {
+        var t0 = k / a.module_count, t1 = (k + 1) / a.module_count;
+        var qx0 = x0p + (x1p - x0p) * t0, qx1 = x0p + (x1p - x0p) * t1;
+        out.push('<path d="M' + n(qx0) + ' ' + n(y0p) + 'L' + n(qx1) + ' ' + n(y0p) + 'L' + n(qx1) + ' ' + n(y1p) + 'L' + n(qx0) + ' ' + n(y1p) + 'Z" fill="#123b4d" stroke="#eaf6f9" stroke-width="0.7"/>');
+      }
+      out.push('<text x="' + n((x0p + x1p) / 2) + '" y="' + n(y0p - 6) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="9" font-weight="800" fill="#123b4d">' + esc(a.id + ' · ' + a.module_count + ' panels at ' + n(a.tilt_deg, 0) + '°') + '</text>');
+    });
     // sun ray from south (left)
     var sunX = 40, sunY = 100;
     var reach = 620;
@@ -2220,6 +2405,8 @@
       thermal: thermal,
       envelope: { assembly: d.envelope.assembly, layers: d.envelope.layers, version: d.envelope.version },
       solar: d.solar_array ? [{ id: 'roof', tilt_deg: d.solar_array.tilt_deg, azimuth_deg: d.solar_array.azimuth_deg, season_mode: d.solar_array.season_mode, mounting: d.solar_array.mounting }] : d.modules.filter(function (m) { return m.solar && m.solar.enabled; }).map(function (m) { return { id: m.id, tilt_deg: m.solar.tilt_deg, azimuth_deg: m.solar.azimuth_deg, season_mode: m.solar.season_mode, mounting: m.solar.mounting }; }),
+      energy: Energy ? Energy.summary(d) : null,
+      energy_validation: Energy ? Energy.validate(d) : null,
       vegetation: (d.vegetation || []).map(function (v) { return { id: v.id, type: v.type, name: v.name, module: v.module, face: v.face, length_m: v.length_m, height_m: v.height_m, seasonal_foliage: v.seasonal_foliage, irrigation: v.irrigation, maintenance: v.maintenance }; }),
       exposure: exposureProfile(d),
       accessibility: accessibility,

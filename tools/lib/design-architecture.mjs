@@ -1,5 +1,12 @@
 // Code: MIT.
 import { designShellNav } from './design-nav.mjs';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const DesignEnergy = require('../../site/js/design-energy.js');
+const DesignThermal = require('../../site/js/design-thermal.js');
+const f2 = (v) => (v == null || !Number.isFinite(Number(v)) ? '—' : (Math.round(Number(v) * 100) / 100).toFixed(2));
+const f1 = (v) => (v == null || !Number.isFinite(Number(v)) ? '—' : (Math.round(Number(v) * 10) / 10).toFixed(1));
+const f0 = (v) => (v == null || !Number.isFinite(Number(v)) ? '—' : (Math.round(Number(v))).toString());
 import { patternLensSection } from './design-annotations.mjs';
 // // Generated page content: CC BY-SA 4.0.
 const esc = (v) => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -42,6 +49,121 @@ function slide(c, kind, title, src, size) {
           <img src="${src}" alt="${esc(alt)}" width="${size.width}" height="${size.height}" loading="${kind === 'exterior' ? 'eager' : 'lazy'}" decoding="async">
           <figcaption><span class="badge ${badgeClass}">${badge}</span> <strong>${esc(title)}</strong> ${esc(viewCaption(c, kind))}</figcaption>
         </figure>`;
+}
+
+
+function energySection(c, profile) {
+  if (!c.energy || !profile.energy) return '';
+  const e = DesignEnergy.normalizeEnergy(c).energy;
+  const s = profile.energy;
+  const summer = DesignEnergy.loadsForProfile(c, 'summer');
+  const winter = DesignEnergy.loadsForProfile(c, 'winter-full-time');
+  const summerById = Object.fromEntries(summer.rows.map((r) => [r.id, r]));
+  const winterById = Object.fromEntries(winter.rows.map((r) => [r.id, r]));
+  const arrays = e.solar.arrays || [];
+  const canopies = e.solar.canopies || [];
+  const scenarios = s.scenarios || [];
+  const b = e.battery;
+  const loadRows = e.loads.map((l) => {
+    const a = summerById[l.id] || { daily_kwh: 0, hours: 0 };
+    const w = winterById[l.id] || { daily_kwh: 0, hours: 0 };
+    return `<tr>
+      <th scope="row">${esc(l.name)}</th>
+      <td>${esc(l.class.replace(/-/g, ' '))}${l.essential ? ' · essential' : ''}</td>
+      <td>${f1(l.rated_w)} W${l.quantity > 1 ? ' × ' + l.quantity : ''}</td>
+      <td>${f1(a.hours)} / ${f1(l.hours.shoulder)} / ${f1(w.hours)} h</td>
+      <td>${f1(l.duty_cycle * 100)}%</td>
+      <td>${f2(a.daily_kwh)}</td>
+      <td>${f2(w.daily_kwh)}</td>
+      <td>${esc(l.ac_dc.toUpperCase())}</td>
+      <td>${l.deferrable ? 'Yes' : 'No'}</td>
+      <td>${esc(l.confidence)}</td>
+      <td>${esc(l.source)} ${l.notes ? '<br><span class="small">' + esc(l.notes) + '</span>' : ''}</td>
+    </tr>`;
+  }).join('');
+  const monthlyRows = s.generation.months.map((m) => {
+    const use = m.season === 'summer' ? s.consumption.summer_daily_kwh : m.season === 'winter' ? s.consumption.winter_full_time_daily_kwh : s.consumption.shoulder_daily_kwh;
+    const bal = m.kwh_per_day - use;
+    return `<tr><th scope="row">${esc(m.label)}</th><td>${f1(m.kwh)}</td><td>${f1(m.kwh_per_day)}</td><td>${f1(use)}</td><td>${bal >= 0 ? '+' : ''}${f1(bal)}</td><td>${f1(m.shade_pct)}%</td><td>${f2(m.snow_availability)}</td></tr>`;
+  }).join('');
+  const scenarioRows = scenarios.map((sc) => `<tr>
+    <th scope="row">${esc(sc.label)}</th>
+    <td>${sc.days}</td>
+    <td>${f1(sc.total.load)}</td>
+    <td>${f1(sc.total.generation)}</td>
+    <td>${f1(sc.total.supplemental)}</td>
+    <td>${f1(sc.total.unserved)}</td>
+    <td>${sc.end_soc_pct}%</td>
+    <td>${esc(sc.status)}</td>
+  </tr>`).join('');
+  return `<section class="assembly-section energy-section" aria-labelledby="energy-title" id="energy">
+    <h2 id="energy-title">Residential energy model</h2>
+    <p><strong>${s.panels} panels · ${f1(s.capacity_kwp)} kWp · ${f1(s.panel_area_m2)} m² of module surface · ${f1(s.battery.nominal_kwh)} kWh battery (${f1(s.battery.usable_kwh)} kWh usable).</strong> ${esc(s.occupancy.label)}. Suitable for: ${esc((s.suitable_patterns || []).join('; '))}.</p>
+    <p>${esc(s.occupancy.notes)}</p>
+    <p class="notice">This is a conceptual daily and hourly energy balance, not a solar resource assessment, electrical design, structural design or off-grid guarantee. The load list, array geometry and battery limits are the canonical inputs; the drawings and this table are generated from them. <a href="../../energy/">Open the energy explorer</a> to test another configuration.</p>
+    <h3>Arrays and mounting</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Photovoltaic arrays for ${esc(c.name)}"><table class="exposure-table"><caption>Every installed panel is placed in the canonical geometry. The count here is the count used in the energy calculation and in every drawing.</caption><thead><tr><th scope="col">Array</th><th scope="col">Panels</th><th scope="col">Tilt / azimuth</th><th scope="col">Mounting</th><th scope="col">Supporting surface</th><th scope="col">Electrical group</th><th scope="col">Maintenance</th><th scope="col">Snow</th></tr></thead><tbody>
+      ${arrays.map((a) => `<tr><th scope="row">${esc(a.label)} <span class="small">(${esc(a.id)})</span></th><td>${a.module_count} × ${a.module.watts} W</td><td>${a.tilt_deg}° / ${a.azimuth_deg}°</td><td>${esc(a.mounting.replace(/-/g, ' '))}</td><td>${esc((a.surface.kind || '') + (a.surface.module ? ' · ' + a.surface.module : '') + (a.surface.canopy ? ' · ' + a.surface.canopy : '') + (a.surface.porch ? ' · ' + a.surface.porch : ''))}</td><td>${esc(a.electrical_group)}</td><td>${esc(a.maintenance.access)}; ${esc(a.maintenance.note)}</td><td>${esc(a.snow.note)}</td></tr>`).join('')}
+    </tbody></table></div>
+    ${canopies.length ? `<h3>Independent canopies</h3><ul>${canopies.map((cp) => `<li><strong>${esc(cp.label)}</strong>: ${f1(cp.length_m)} × ${f1(cp.depth_m)} m, ${f1(cp.height_m)} m high, at (${f1(cp.position_m[0])}, ${f1(cp.position_m[1])}) m. ${esc(cp.note)}</li>`).join('')}</ul>` : ''}
+    <h3>Battery and inverter</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Battery and inverter assumptions"><table class="exposure-table"><caption>Battery assumptions. Usable capacity, SOC limits and efficiencies are equipment-dependent and require confirmation.</caption><tbody>
+      <tr><th scope="row">Technology / architecture</th><td>${esc(b.technology)} · ${b.architecture_v} V</td></tr>
+      <tr><th scope="row">Nominal / usable</th><td>${f1(b.nominal_kwh)} kWh / ${f1(b.usable_kwh)} kWh</td></tr>
+      <tr><th scope="row">SOC window</th><td>${b.min_soc_pct}%–${b.max_soc_pct}%</td></tr>
+      <tr><th scope="row">Charge / discharge efficiency</th><td>${Math.round(b.charge_efficiency * 100)}% / ${Math.round(b.discharge_efficiency * 100)}%</td></tr>
+      <tr><th scope="row">Max charge / discharge</th><td>${f1(b.max_charge_kw)} kW / ${f1(b.max_discharge_kw)} kW</td></tr>
+      <tr><th scope="row">Inverter / standby</th><td>${f1(b.inverter_kw)} kW / ${f1(b.inverter_standby_w)} W</td></tr>
+      <tr><th scope="row">Essential reserve / target</th><td>${f1(b.essential_reserve_kwh)} kWh / ${b.target_autonomy_days} days</td></tr>
+      <tr><th scope="row">Temperature and enclosure</th><td>Charge min ${b.temp_limits.charge_min_c} °C · discharge min ${b.temp_limits.discharge_min_c} °C · ${b.heated_enclosure ? 'heated enclosure' : 'no heated enclosure'}</td></tr>
+      <tr><th scope="row">Location</th><td>${esc(b.location)}</td></tr>
+    </tbody></table></div>
+    <p class="small">${esc(b.note)}</p>
+    <h3>Autonomy and winter resilience</h3>
+    <p>Essential autonomy: <strong>${s.autonomy.essential_days == null ? '—' : f1(s.autonomy.essential_days) + ' days'}</strong>. Ordinary autonomy: <strong>${s.autonomy.ordinary_days == null ? '—' : f1(s.autonomy.ordinary_days) + ' days'}</strong> (the essential reserve stays intact). The figures below are deterministic synthetic scenarios; weather is not a forecast.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Energy resilience scenarios"><table class="exposure-table"><caption>Ten repeatable resilience scenarios. A positive unserved value is a design result, not a software failure.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Load (kWh)</th><th scope="col">Generation (kWh)</th><th scope="col">Shared supply (kWh)</th><th scope="col">Unserved (kWh)</th><th scope="col">End SOC</th><th scope="col">Status</th></tr></thead><tbody>${scenarioRows}</tbody></table></div>
+    <p class="small">The five-day cloudy result without shared electricity is <strong>${f1(s.supplementary_daily_kwh)} kWh/day</strong> unserved. A battery that lasts three days is not sufficient if the array cannot recharge it while supplying the household. ${esc(s.winter_risk.note)}</p>
+    <h3>Monthly generation and consumption</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Monthly generation and consumption"><table class="exposure-table"><caption>Monthly estimates. Snow availability reduces winter generation; the shading column is the modelled monthly shade loss. Losses are applied once and are listed in the model assumptions.</caption><thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Per day</th><th scope="col">Consumption per day</th><th scope="col">Balance per day</th><th scope="col">Shading</th><th scope="col">Snow availability</th></tr></thead><tbody>${monthlyRows}</tbody></table></div>
+    <details class="energy-loads"><summary>Load list and calculation for ${esc(c.name)}</summary>
+      <p>Daily consumption is calculated from rated power, quantity, hours, duty cycle and the profile's class factor. It is not assigned from floor area. Summer and winter columns show the full-time profiles; the intermittent winter profile reduces discretionary and high-demand loads.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Residential load list"><table class="exposure-table"><caption>Every load present in the residence. "Summer" and "winter" are daily kWh for the full-time profile. The assumption source and confidence are part of the record.</caption><thead><tr><th scope="col">Load</th><th scope="col">Class</th><th scope="col">Rated power</th><th scope="col">Summer / shoulder / winter hours</th><th scope="col">Duty</th><th scope="col">Summer kWh/day</th><th scope="col">Winter kWh/day</th><th scope="col">Supply</th><th scope="col">Deferrable</th><th scope="col">Confidence</th><th scope="col">Source and note</th></tr></thead><tbody>${loadRows}</tbody></table></div>
+    </details>
+    <h3>Heating, hot water and other excluded loads</h3>
+    <p>The base estimate excludes electric resistance space heating, conventional electric domestic hot water, electric laundry, additional cooking appliances and electric vehicle charging. These optional profiles are shown separately:</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Optional energy profiles"><table class="exposure-table"><caption>Optional loads and their indicative daily demand. Enabling any of them changes the required array and battery; the note explains the consequence.</caption><thead><tr><th scope="col">Optional profile</th><th scope="col">Summer</th><th scope="col">Shoulder</th><th scope="col">Winter</th><th scope="col">Consequence</th></tr></thead><tbody>${(e.optional_profiles || []).map((o) => `<tr><th scope="row">${esc(o.label)}</th><td>${f1(o.daily_kwh.summer)} kWh</td><td>${f1(o.daily_kwh.shoulder)} kWh</td><td>${f1(o.daily_kwh.winter)} kWh</td><td>${esc(o.note)}</td></tr>`).join('')}</tbody></table></div>
+    <p class="small">A heat pump would change the system substantially. The project does not quietly absorb heating into the residential totals; the shared lodge is the preferred location for higher-energy services such as laundry and emergency charging.</p>
+    <h3>Shared community electricity</h3>
+    <p>The primary configuration is <strong>${esc(e.shared.primary_configuration.replace(/-/g, ' '))}</strong>. Shared electricity is an option, not an unexplained assumption.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Shared electricity configurations"><table class="exposure-table"><caption>Three configurations compared. A microgrid shares supply and demand but does not remove the effect of region-wide winter cloud or snow.</caption><thead><tr><th scope="col">Configuration</th><th scope="col">Description</th><th scope="col">Supplementary (kWh/day)</th><th scope="col">Distribution loss</th><th scope="col">Note</th></tr></thead><tbody>${(e.shared.options || []).map((o) => `<tr><th scope="row">${esc(o.label)}</th><td>${esc(o.description)}</td><td>${f1(o.supplemental_kwh_per_day)}</td><td>${o.distribution_loss_pct}%</td><td>${esc(o.note)}</td></tr>`).join('')}</tbody></table></div>
+    <p class="small">${esc(e.shared.governance_note)}</p>
+    <h3>Validation and required reviews</h3>
+    <ul>${(profile.energy_validation.issues || []).map((i) => `<li><strong>${esc(i.category.replace(/-/g, ' '))}:</strong> ${esc(i.message)}</li>`).join('')}</ul>
+    <p class="small">${esc((e.evidence && e.evidence.uncertainties || []).join(' '))}</p>
+  </section>`;
+}
+
+
+function heatPumpSection(c) {
+  if (!c.energy || !c.energy.thermal) return '';
+  const s = DesignThermal.summary(c);
+  if (!s) return '';
+  const p = s.additional.panels_ashp, b = s.additional.battery_ashp, inv = s.additional.inverter;
+  const tRows = s.ashp.table.map((r) => `<tr><th scope="row">${esc(r.label)} (${r.outdoor_c} °C)</th><td>${f1(r.heating_kwh_day)}</td><td>${f1(r.heating_peak_w / 1000)}</td><td>${f2(r.cop)}</td><td>${f1(r.capacity_kw)}</td><td>${f1(r.supplemental_kwh_day)}</td><td>${f1(r.electrical_kwh_day)}</td><td>${r.meets_design_load ? 'Capacity covers the load' : 'Supplemental heat needed'}</td></tr>`).join('');
+  const stratRows = s.strategies.strategies.map((r) => `<tr><th scope="row">${esc(r.id)} · ${esc(r.label)}</th><td>${f0(r.hp_electric_kwh)}</td><td>${r.additional_panels}</td><td>${r.additional_battery_kwh}</td><td>${f0(r.wood_thermal_kwh)}</td><td>${f0(r.unserved_thermal_kwh)}</td></tr>`).join('');
+  const resilRows = s.resilience.scenarios.map((r) => `<tr><th scope="row">${esc(r.label)}</th><td>${r.days}</td><td>${r.outdoor_c} °C</td><td>${f1(r.heat_pump_electric_kwh_day)}</td><td>${f1(r.generation_kwh_day)}</td><td>${r.end_soc_pct}%</td><td>${f1(r.unserved_household_kwh)}</td><td>${f1(r.unserved_heat_kwh)}</td><td>${esc(r.status)}</td></tr>`).join('');
+  return `<section class="assembly-section heat-pump-section" aria-labelledby="heat-pump-title" id="heat-pump">
+    <h2 id="heat-pump-title">Heat-pump assessment</h2>
+    <p><strong>Design heat load at −30 °C: ${f1(s.monthly.design_heat_load_w / 1000)} kW.</strong> Annual heating ${f0(s.monthly.annual_heating_kwh)} kWh thermal; annual cooling ${f0(s.monthly.annual_cooling_kwh)} kWh. An air-source heat pump would use about <strong>${f0(s.ashp.monthly.annual_heating_electric_kwh)} kWh/year for heating</strong> and ${f0(s.ashp.monthly.annual_cooling_electric_kwh)} kWh/year for cooling, in addition to the household load.</p>
+    <p class="notice">The existing household demand and reference array are unchanged. Full-time heat-pump heating would require about <strong>${p.additional_panels} additional winter-critical panels</strong> (${f1(p.additional_area_m2)} m²), ${b.three_day_kwh} kWh of additional battery for three days and a combined peak of ${f1(inv.total_peak_kw)} kW. ${p.fits_existing_roof ? 'The additional area is within the remaining roof area in principle.' : 'That panel area exceeds the remaining roof area; a ground array, canopy or shared array would be required.'} This is why the project does not present full-time electric heating as a drop-in off-grid service.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump performance at six temperatures"><table class="exposure-table"><caption>Air-source heat-pump performance. COP is the compressor COP; electrical energy includes parasitics and supplemental resistance. These are illustrative curves, not a selected product.</caption><thead><tr><th scope="col">Condition</th><th scope="col">Heating demand (kWh/day)</th><th scope="col">Peak load (kW)</th><th scope="col">COP</th><th scope="col">Available capacity (kW)</th><th scope="col">Resistance backup (kWh/day)</th><th scope="col">Electrical (kWh/day)</th><th scope="col">Capacity result</th></tr></thead><tbody>${tRows}</tbody></table></div>
+    <h3>Operating strategies</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump operating strategies"><table class="exposure-table"><caption>Annual energy balances for six strategies. Strategy D is the full-electric case; it is not the recommended default.</caption><thead><tr><th scope="col">Strategy</th><th scope="col">HP electricity (kWh/yr)</th><th scope="col">Additional panels</th><th scope="col">Additional battery (kWh)</th><th scope="col">Wood heat (kWh thermal)</th><th scope="col">Unserved heat (kWh thermal)</th></tr></thead><tbody>${stratRows}</tbody></table></div>
+    <h3>Passive design and resilience</h3>
+    <p>A plausible passive package would reduce annual heating by ${f0(s.passive.reduction.annual_heating_kwh)} kWh, avoid about ${f0(s.passive.reduction.hp_electric_kwh)} kWh/year of heat-pump electricity and avoid ${s.passive.reduction.panels_avoided} additional panels. It does not remove the winter cloud risk.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump resilience scenarios"><table class="exposure-table"><caption>Synthetic heat-pump resilience scenarios. Household electricity is prioritised over heating when supply is short.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Outdoor</th><th scope="col">HP electricity (kWh/day)</th><th scope="col">Generation (kWh/day)</th><th scope="col">End SOC</th><th scope="col">Household unserved</th><th scope="col">Heat unserved</th><th scope="col">Status</th></tr></thead><tbody>${resilRows}</tbody></table></div>
+    <p class="small">${esc(s.note)} Wood heat is a design intent and is not appropriate for every resident. See <a href="../../heat-pumps/">the heat-pump assessment</a> for the method, charts and the interactive explorer.</p>
+  </section>`;
 }
 
 export function architecturePage(c, sizes, profile, annotationData, patterns) {
@@ -102,6 +224,7 @@ export function architecturePage(c, sizes, profile, annotationData, patterns) {
   <link rel="stylesheet" href="../../../style.css">
   <link rel="stylesheet" href="../../style.css">
   <link rel="stylesheet" href="../../architecture.css">
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 </head>
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -208,8 +331,10 @@ ${slides}
   <section class="solar-section" aria-labelledby="solar-title">
     <h2 id="solar-title">Solar tilt and azimuth</h2>
     ${(() => { const sm = c.solar_array || (c.modules.find((m) => m.solar && m.solar.enabled) || c.modules[0]).solar; return `<p><strong>${sm.tilt_deg}° tilt</strong> · ${sm.azimuth_deg}° azimuth · ${esc(sm.season_mode)} strategy. ${esc(sm.note || '')}</p>${c.roof_form ? `<p class="small">Roof: one ${c.roof_form.pitch_deg}° ${c.roof_form.type.replace(/-/g, ' ')} roof${c.roof_form.type === 'gable' ? ' with a clear ridge' : ''}. Solar is mounted only on the south slope; the north slope has no array. Array azimuth is true south, independent of building rotation.</p>` : ''}<img src="../../systems/solar-${sm.tilt_deg}.svg" width="1040" height="400" alt="Explanatory solar section with a ${sm.tilt_deg} degree tilted array facing azimuth ${sm.azimuth_deg} degrees." loading="lazy" decoding="async">`; })()}
-    <p class="small">Ottawa reference: the year-round fixed range is 36–39° (SolarCalculator.CA reports 39° optimal), winter is about 60° and summer about 30°, facing true south within a few degrees. No energy production, snow-shedding, wind-uplift or code compliance is calculated.</p>
+    <p class="small">The array layout, tilt and azimuth shown in the drawings come from the same canonical energy model that calculates monthly generation. The tilt range 30–45° is an annual-production exploration range; 55–70° is the winter-oriented range. Orientation is measured from geographic north, independent of the SVG canvas or building rotation. Snow-shedding, wind uplift, roof structure and electrical design still require professional review.</p>
   </section>
+  ${energySection(c, profile)}
+  ${heatPumpSection(c)}
 
   <section class="vegetation-section" aria-labelledby="vegetation-title">
     <h2 id="vegetation-title">Vegetation systems</h2>
@@ -243,7 +368,7 @@ ${slides}
       <a class="action" href="../../data/${c.id}.json" download>Download source JSON</a>
       ${editable ? `<a class="action secondary" href="../../editor/?preset=${c.id}">Open in the editor</a>` : '<a class="action secondary" href="../../editor/">Open the editor</a>'}
       <a class="action secondary" href="../../compare/?a=${c.id}">Compare this concept</a>
-      ${c.role === 'hamlet-selected' ? `<a class="action secondary" href="../../illustration/${esc(c.id)}/">Illustration package</a>` : ''}
+      ${c.role === 'hamlet-selected' ? `<a class="action secondary" href="../../illustration/${esc(c.id)}/description.md">Illustration package</a>` : ''}
       <a class="action secondary" href="../../residences/">Compare the six hamlet homes</a>
       <a class="action secondary" href="../../index.html">Back to the gallery</a>
     </div>

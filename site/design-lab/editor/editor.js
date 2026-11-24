@@ -7,6 +7,7 @@
   'use strict';
 
   var Schema = window.DesignSchema;
+  var Energy = window.DesignEnergy;
   var Model = window.DesignModel;
   var DATA = window.DesignLabConcepts;
   var SITE = window.DesignLabSite;
@@ -19,7 +20,7 @@
   var n = function (v, d) { return Number(v).toFixed(d == null ? 1 : d); };
   var slug = function (s) { return String(s || 'container-home').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'container-home'; };
 
-  if (!Schema || !Model || !DATA || !SITE || !Illustration || !Interior) {
+  if (!Schema || !Energy || !Model || !DATA || !SITE || !Illustration || !Interior) {
     var missing = $('status');
     if (missing) missing.textContent = 'The Design Lab scripts did not load. Please reload the page.';
     return;
@@ -227,6 +228,7 @@
     $('homesite').innerHTML = SITE.buildings.map(function (b) { return option(b.id, b.name + (b.short_name ? ' · ' + b.short_name : ''), d.site.homesite); }).join('');
     $('site-rotation').value = d.site.rotation_deg || 0;
     $('season').value = state.season;
+    renderEnergyControls();
     renderSolarSection();
     renderFoundation();
     renderFinish();
@@ -822,6 +824,64 @@
     panel.innerHTML = Model.solarSectionSVG(state.design, m.id, { idPrefix: 'editor-solar' });
   }
 
+  function renderEnergyControls() {
+    var panel = $('energy-controls');
+    if (!panel) return;
+    var d = state.design;
+    var e = d.energy;
+    if (!e) {
+      panel.innerHTML = '<p class="small">This archive concept has no residential energy model. The six hamlet residences carry one; choose a residence preset to edit energy, solar and battery parameters.</p>';
+      return;
+    }
+    var rm = e.reference_module || {};
+    var a = (e.solar.arrays || [])[0] || null;
+    var b = e.battery || {};
+    var patterns = ['summer', 'shoulder', 'three-season', 'intermittent-winter', 'full-time'];
+    var patternValue = e.occupancy.pattern === 'seasonal' ? 'summer' : e.occupancy.pattern;
+    panel.innerHTML = '<div class="field-grid">' +
+      field('Household size', numberInput('energy.occupancy.household_size', e.occupancy.household_size, 'en-occupants', ' step="1" min="1" max="6"')) +
+      field('Intended occupancy', selectInput('energy.occupancy.pattern', patternValue, 'en-pattern', patterns.map(function (p) { return option(p, p.replace(/-/g, ' '), patternValue); }).join(''))) +
+      field('Panel count (first array)', a ? numberInput('energy.solar.arrays.0.module_count', a.module_count, 'en-panels', ' step="1" min="1" max="16"') : '<span class="small">No array</span>') +
+      field('Panel capacity (W each)', numberInput('energy.reference_module.watts', rm.watts || 450, 'en-watts', ' step="5" min="250" max="700"')) +
+      field('Panel length (m)', numberInput('energy.reference_module.length_m', rm.length_m || 1.762, 'en-length', ' step="0.001" min="1" max="2.4"')) +
+      field('Panel width (m)', numberInput('energy.reference_module.width_m', rm.width_m || 1.134, 'en-width', ' step="0.001" min="0.8" max="1.4"')) +
+      (a ? field('Tilt (degrees)', numberInput('energy.solar.arrays.0.tilt_deg', a.tilt_deg, 'en-tilt', ' step="1" min="0" max="75"')) : '') +
+      (a ? field('Azimuth (degrees from north)', numberInput('energy.solar.arrays.0.azimuth_deg', a.azimuth_deg, 'en-azimuth', ' step="5" min="0" max="360"')) : '') +
+      (a ? field('Mounting', selectInput('energy.solar.arrays.0.mounting', a.mounting, 'en-mounting', ['roof-flush', 'roof-tilted', 'roof-ballasted', 'solar-canopy', 'porch-canopy', 'ground-mount'].map(function (m) { return option(m, m.replace(/-/g, ' '), a.mounting); }).join(''))) : '') +
+      (a && a.surface && a.surface.kind === 'roof' ? field('Roof surface module', selectInput('energy.solar.arrays.0.surface.module', a.surface.module, 'en-surface', d.modules.map(function (m) { return option(m.id, m.id + ' · level ' + (m.storey + 1), a.surface.module); }).join(''))) : '') +
+      (a ? field('Rows', numberInput('energy.solar.arrays.0.rows', a.rows, 'en-rows', ' step="1" min="1" max="4"')) : '') +
+      (a ? field('Up-slope offset (m)', numberInput('energy.solar.arrays.0.offset_m', a.offset_m || 0, 'en-offset', ' step="0.1" min="0" max="6"')) : '') +
+      (a ? field('Edge clearance (m)', numberInput('energy.solar.arrays.0.edge_clearance_m', a.edge_clearance_m, 'en-edge', ' step="0.05" min="0" max="1"')) : '') +
+      field('Battery nominal (kWh)', numberInput('energy.battery.nominal_kwh', b.nominal_kwh, 'en-battery', ' step="1" min="2" max="40"')) +
+      field('Essential reserve (kWh)', numberInput('energy.battery.essential_reserve_kwh', b.essential_reserve_kwh, 'en-reserve', ' step="0.5" min="0" max="20"')) +
+      '</div>' +
+      '<p class="small">Changing the panel count or row count re-lays out the first array and keeps the installed count. It does not add panels elsewhere. Usable capacity is recalculated at 90% of nominal.</p>';
+    renderEnergyReport();
+  }
+
+  function renderEnergyReport() {
+    var report = $('energy-report');
+    if (!report || !state.design) return;
+    var d = state.design;
+    if (!d.energy) { report.innerHTML = ''; return; }
+    var s = Energy.summary(d);
+    var v = Energy.validate(d);
+    var g = Energy.panelGeometry(d);
+    var warnings = v.issues.filter(function (i) {
+      return i.category === 'invalid-geometry' || /panel|array|surface|snow|obstacle|tilt|azimuth|battery|range/.test(i.code);
+    });
+    report.innerHTML = '<h3>Modelled system</h3>' +
+      '<p><strong>' + s.panels + ' panels · ' + n(s.capacity_kwp, 1) + ' kWp · ' + n(s.panel_area_m2, 1) + ' m².</strong> ' +
+      'Summer generation ' + n(s.generation.summer_daily_kwh, 1) + ' kWh/day; winter ' + n(s.generation.winter_daily_kwh, 1) + ' kWh/day. ' +
+      'Summer use ' + n(s.consumption.summer_daily_kwh, 1) + ' kWh/day; winter full-time ' + n(s.consumption.winter_full_time_daily_kwh, 1) + ' kWh/day.</p>' +
+      '<p>' + (s.battery.technology || 'Battery') + ' ' + n(s.battery.nominal_kwh, 0) + ' kWh nominal, ' + n(s.battery.usable_kwh, 1) + ' kWh usable; ' +
+      (s.autonomy.essential_days == null ? 'essential autonomy not calculated' : n(s.autonomy.essential_days, 1) + ' days essential autonomy') + ', ' +
+      (s.autonomy.ordinary_days == null ? 'ordinary autonomy not calculated' : n(s.autonomy.ordinary_days, 1) + ' days ordinary autonomy') + '.</p>' +
+      '<p>' + (warnings.length ? '<strong>' + warnings.length + ' placement or assumption warning' + (warnings.length === 1 ? '' : 's') + ':</strong></p><ul>' + warnings.map(function (w) { return '<li>' + esc(w.message) + '</li>'; }).join('') + '</ul>' : '<p class="small">No panel-placement warnings at this configuration. This is not a structural or electrical approval.</p>') +
+      '<p class="small">Arrays: ' + s.arrays.map(function (a) { return esc(a.id + ' · ' + a.panels + ' × ' + a.watts + ' W · ' + a.tilt_deg + '° / ' + a.azimuth_deg + '° · ' + a.mounting); }).join('; ') + '. ' +
+      'Five cloudy winter days without shared electricity: ' + n(s.supplementary_daily_kwh, 1) + ' kWh/day unserved.</p>';
+  }
+
   function renderEnvelope() {
     var d = state.design;
     var env = d.envelope;
@@ -1188,6 +1248,7 @@
     if (!el || !el.getAttribute) return;
     var path = el.getAttribute('data-path');
     if (!path) return;
+    var d0 = state.design;
     if (!state.editBase) state.editBase = clone(state.design);
     if (/^modules\.\d+\.solar\./.test(path)) renderSolarSection();
     var value = el.type === 'checkbox' ? el.checked : el.value;
@@ -1220,7 +1281,16 @@
       setPath(state.design, path, value);
     }
     state.design = Schema.canonicalize(state.design);
+    if (state.design && state.design.energy) {
+      var arr0 = state.design.energy.solar.arrays[0];
+      if (arr0 && arr0.rows > 0) arr0.columns = Math.max(1, Math.ceil(arr0.module_count / arr0.rows));
+      if (state.design.energy.battery && state.design.energy.battery.nominal_kwh) state.design.energy.battery.usable_kwh = Math.round(state.design.energy.battery.nominal_kwh * 0.9 * 10) / 10;
+      if (state.design.energy.reference_module) {
+        state.design.energy.solar.arrays.forEach(function (a) { a.module = Object.assign({}, a.module || {}, { watts: state.design.energy.reference_module.watts, length_m: state.design.energy.reference_module.length_m, width_m: state.design.energy.reference_module.width_m, area_m2: Math.round(state.design.energy.reference_module.length_m * state.design.energy.reference_module.width_m * 1000) / 1000 }); });
+      }
+    }
     renderVisuals();
+    if (/^energy\./.test(path) || /^modules\.\d+\.(position_m|rotation_deg|type|elevation_m|storey|roof)/.test(path) || /^roof_form\./.test(path)) renderEnergyReport();
   }
 
   function onFieldCommit(event) {
@@ -1230,7 +1300,7 @@
     if (!path) return;
     if (state.editBase && JSON.stringify(state.editBase) !== JSON.stringify(state.design)) pushHistory(state.editBase);
     state.editBase = null;
-    if (path.indexOf('.type') >= 0 || path.indexOf('.roof.type') >= 0 || path.indexOf('.storey') >= 0 || path.indexOf('elevation_m') >= 0 || /^modules\.\d+\.solar\./.test(path) || /^roof_form\./.test(path) || /^access\./.test(path)) {
+    if (path.indexOf('.type') >= 0 || path.indexOf('.roof.type') >= 0 || path.indexOf('.storey') >= 0 || path.indexOf('elevation_m') >= 0 || /^modules\.\d+\.solar\./.test(path) || /^roof_form\./.test(path) || /^access\./.test(path) || /^energy\./.test(path) || /^modules\.\d+\.(position_m|rotation_deg)/.test(path)) {
       renderControls();
       renderVisuals();
     }

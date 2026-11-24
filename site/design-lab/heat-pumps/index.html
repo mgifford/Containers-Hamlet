@@ -1,0 +1,1532 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A quantified heat-pump assessment for the six Containers Hamlet residences: heating and cooling demand, incremental electricity, additional solar panels, battery storage, inverter capacity, resilience, hybrid and passive alternatives.">
+  <title>Heat-pump assessment · Containers Hamlet Design Lab</title>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="heat-pumps.css">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body class="lab-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Containers Hamlet</a>
+  <nav aria-label="Main">
+    <a href="../../community/">Community</a>
+    <a href="../../hamlet/">Map</a>
+    <a href="../../homes/">Homes</a>
+    <a href="../../design-lab/" aria-current="page">Design Lab</a>
+    <a href="../../living/">Living Here</a>
+    <a href="../../participate/">Participate</a>
+  </nav>
+</header>
+<nav class="subnav" aria-label="Design Lab sections">
+  <a href="../../design-lab/">Gallery</a>
+  <a href="../../design-lab/pattern-language/">Patterns</a>
+  <a href="../../design-lab/residences/">Residences</a>
+  <a href="../../design-lab/energy/">Energy</a>
+  <a href="../../design-lab/heat-pumps/" aria-current="page">Heat pumps</a>
+  <a href="../../design-lab/scenarios/">Scenarios</a>
+  <a href="../../design-lab/evaluation/">Evaluation</a>
+  <a href="../../design-lab/illustration/">Illustrate</a>
+  <a href="../../design-lab/visualisations/">Visuals</a>
+  <a href="../../design-lab/editor/">Editor</a>
+  <a href="../../design-lab/guides/">Guides</a>
+  <a href="../../design-lab/compare/">Compare</a>
+</nav>
+<main id="main" class="lab-main">
+  <p class="eyebrow">Residential heating and cooling</p>
+  <h1>Heating without wiring the woods</h1>
+  <p class="lede">A heat pump is efficient, but it is not free. This assessment keeps the existing household load and reference solar arrays unchanged and asks a narrower question: <strong>what additional electricity, panels, battery and inverter capacity would each home need for a heat pump, and could passive design or a hybrid strategy avoid it?</strong></p>
+  <p class="notice"><strong>Preliminary assessment, not an HVAC design.</strong> The model uses canonical geometry but assumed U-values, airtightness, gains, solar factors and heat-pump performance. It is not a building-performance simulation, equipment selection, electrical design, ground-loop design, cost estimate or comfort guarantee. Confirm every result with a mechanical designer and the selected equipment data.</p>
+
+  <section aria-labelledby="answer-title">
+    <h2 id="answer-title">The short answer</h2>
+    <p>For the six homes, full-time winter heat-pump heating would add roughly <strong>30–56 panels</strong> beyond the existing reference arrays when sized for the winter-critical month. That is a large increase on arrays of 8–16 panels, and it does not include the additional battery, inverter and enclosure work.</p>
+    <p>The annual energy total alone is misleading. Summer and shoulder-season surplus can run a heat pump for cooling, dehumidification or occasional heating, and a hybrid wood/heat-pump strategy is much smaller. The winter-critical result is the one that determines whether a home can operate off-grid through a cold, cloudy week.</p>
+    <p><strong>Recommendation:</strong> do not size the reference arrays for full-time electric heating. Treat heat pumps as a hybrid or surplus-solar service, improve the envelope and airtightness first, and keep a non-electric heating path. The Accessible Garden Home needs a specific solution because wood handling cannot be assumed.</p>
+  </section>
+
+  <section aria-labelledby="compare-title">
+    <h2 id="compare-title">Six homes, same question</h2>
+    <p>The table keeps household demand separate from heating and cooling. “Additional panels” is the winter-critical count beyond the existing array; “total required” is the sum of the household requirement and the heat-pump requirement, not a replacement array. The existing reference installation is not resized.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump impacts for the six residences">
+      <table id="hp-comparison">
+        <caption>Air-source heat-pump impacts. Design heat load is at −30 °C; annual heating is a steady-state monthly estimate. Panel counts use each home's modelled winter generation per panel. Battery is additional nominal capacity for three days of heat-pump electricity at 80% usable capacity. All figures are conceptual.</caption>
+        <thead><tr>
+          <th scope="col">Home</th><th scope="col">Conditioned floor</th><th scope="col">Design heat load</th><th scope="col">Annual heating</th>
+          <th scope="col">Heat-pump electricity</th><th scope="col">January HP electricity</th><th scope="col">Existing panels</th>
+          <th scope="col">Household-only winter panels</th><th scope="col">HP winter panels</th><th scope="col">Additional panels</th>
+          <th scope="col">Total required</th><th scope="col">Additional panel area</th><th scope="col">Remaining roof area</th>
+          <th scope="col">Additional battery (3 days)</th><th scope="col">Total battery (3 days)</th><th scope="col">Combined peak</th><th scope="col">Key constraint</th>
+        </tr></thead>
+        <tbody><tr>
+    <th scope="row"><a href="../architecture/hamlet-woodland-cottage/">Woodland Cottage</a><br><span class="small">Seasonal summer use with intermittent winter visits</span></th>
+    <td>29.7 m²</td>
+    <td>1.9 kW</td>
+    <td>2190 kWh</td>
+    <td>1637 kWh<br><span class="small">+ 394 cooling</span></td>
+    <td>13.2 kWh/day</td>
+    <td>8</td>
+    <td>10</td>
+    <td>31</td>
+    <td><strong>33</strong></td>
+    <td>41</td>
+    <td>66 m²</td>
+    <td>12 m²<br><span class="small">insufficient</span></td>
+    <td>58 kWh</td>
+    <td>68 kWh</td>
+    <td>3.9 kW</td>
+    <td>Additional panels exceed the remaining roof area; a ground array, canopy or shared array is required.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-offset-stack/">Offset Stack</a><br><span class="small">Three-season use with frequent winter weekends</span></th>
+    <td>59.4 m²</td>
+    <td>3.4 kW</td>
+    <td>4924 kWh</td>
+    <td>2609 kWh<br><span class="small">+ 469 cooling</span></td>
+    <td>21.1 kWh/day</td>
+    <td>10</td>
+    <td>15</td>
+    <td>44</td>
+    <td><strong>49</strong></td>
+    <td>59</td>
+    <td>98 m²</td>
+    <td>42 m²<br><span class="small">insufficient</span></td>
+    <td>92 kWh</td>
+    <td>107 kWh</td>
+    <td>6.2 kW</td>
+    <td>Additional panels exceed the remaining roof area; a ground array, canopy or shared array is required.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-courtyard-residence/">Courtyard Residence</a><br><span class="small">Three-season use with guests and shoulder-season stays</span></th>
+    <td>63.3 m²</td>
+    <td>3.8 kW</td>
+    <td>5168 kWh</td>
+    <td>2721 kWh<br><span class="small">+ 575 cooling</span></td>
+    <td>22.9 kWh/day</td>
+    <td>12</td>
+    <td>16</td>
+    <td>51</td>
+    <td><strong>55</strong></td>
+    <td>67</td>
+    <td>110 m²</td>
+    <td>101 m²<br><span class="small">insufficient</span></td>
+    <td>100 kWh</td>
+    <td>118 kWh</td>
+    <td>7.2 kW</td>
+    <td>Additional panels exceed the remaining roof area; a ground array, canopy or shared array is required.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-cross-stacked-retreat/">Cross-Stacked Retreat</a><br><span class="small">Full-time family occupation</span></th>
+    <td>59.4 m²</td>
+    <td>3.2 kW</td>
+    <td>3871 kWh</td>
+    <td>2267 kWh<br><span class="small">+ 541 cooling</span></td>
+    <td>18.8 kWh/day</td>
+    <td>16</td>
+    <td>25</td>
+    <td>47</td>
+    <td><strong>56</strong></td>
+    <td>72</td>
+    <td>112 m²</td>
+    <td>63 m²<br><span class="small">insufficient</span></td>
+    <td>82 kWh</td>
+    <td>106 kWh</td>
+    <td>7.2 kW</td>
+    <td>Additional panels exceed the remaining roof area; a ground array, canopy or shared array is required.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-accessible-garden-home/">Accessible Garden Home</a><br><span class="small">Full-time occupation with step-free access</span></th>
+    <td>29.5 m²</td>
+    <td>1.9 kW</td>
+    <td>1991 kWh</td>
+    <td>1362 kWh<br><span class="small">+ 424 cooling</span></td>
+    <td>12.7 kWh/day</td>
+    <td>12</td>
+    <td>17</td>
+    <td>30</td>
+    <td><strong>35</strong></td>
+    <td>47</td>
+    <td>70 m²</td>
+    <td>10 m²<br><span class="small">insufficient</span></td>
+    <td>56 kWh</td>
+    <td>74 kWh</td>
+    <td>5.3 kW</td>
+    <td>Additional panels exceed the remaining roof area; a ground array, canopy or shared array is required.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-solar-studio-stack/">Solar Studio Stack</a><br><span class="small">Full-time single-person occupation with occasional guests</span></th>
+    <td>29.5 m²</td>
+    <td>2 kW</td>
+    <td>2355 kWh</td>
+    <td>1709 kWh<br><span class="small">+ 411 cooling</span></td>
+    <td>14.0 kWh/day</td>
+    <td>10</td>
+    <td>12</td>
+    <td>28</td>
+    <td><strong>30</strong></td>
+    <td>40</td>
+    <td>60 m²</td>
+    <td>17 m²<br><span class="small">insufficient</span></td>
+    <td>61 kWh</td>
+    <td>73 kWh</td>
+    <td>4.4 kW</td>
+    <td>Additional panels exceed the remaining roof area; a ground array, canopy or shared array is required.</td>
+  </tr></tbody>
+      </table>
+    </div>
+    <p class="small">The household-only winter panel count can already exceed the existing array in December. That is the baseline winter shortfall, before any heat pump. Adding heating makes it much larger.</p>
+  </section>
+
+  <section aria-labelledby="charts-title">
+    <h2 id="charts-title">The scale of the change</h2>
+    <p>Each chart has a title and description, and the values are repeated in the comparison table and the chart data below. None of the charts is needed to understand the result.</p>
+    <figure class="hp-figure" tabindex="0" role="region" aria-label="Scrollable heat-pump chart">
+      <figcaption><strong>Annual electricity by service.</strong> Household electricity stays the baseline; heat-pump heating and cooling are additional.</figcaption>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 360" role="img" aria-labelledby="hp-chart-electricity-t hp-chart-electricity-d"><title id="hp-chart-electricity-t">Annual household and heat-pump electricity by residence</title><desc id="hp-chart-electricity-d">Grouped bars for each residence showing annual baseline household electricity, additional heat-pump heating electricity and additional cooling electricity in kilowatt-hours. The values are in the table below.</desc><rect width="860" height="360" fill="#faf8f2"/><rect x="190" y="8" width="10" height="10" fill="#245a73"/><text x="205" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Household</text><rect x="340" y="8" width="10" height="10" fill="#b45e1c"/><text x="355" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">HP heating</text><rect x="490" y="8" width="10" height="10" fill="#6f9d5b"/><text x="505" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Cooling</text><rect x="190" y="35.7" width="241.3" height="8.8" fill="#245a73" rx="1"><title>Woodland — Household: 1026</title></rect><rect x="190" y="46.5" width="385.0" height="8.8" fill="#b45e1c" rx="1"><title>Woodland — Heat pump heating: 1637</title></rect><rect x="190" y="57.3" width="92.7" height="8.8" fill="#6f9d5b" rx="1"><title>Woodland — Cooling: 394</title></rect><rect x="190" y="83.4" width="420.9" height="8.8" fill="#245a73" rx="1"><title>Offset — Household: 1789</title></rect><rect x="190" y="94.2" width="613.7" height="8.8" fill="#b45e1c" rx="1"><title>Offset — Heat pump heating: 2609</title></rect><rect x="190" y="105.0" width="110.3" height="8.8" fill="#6f9d5b" rx="1"><title>Offset — Cooling: 469</title></rect><rect x="190" y="131.1" width="424.8" height="8.8" fill="#245a73" rx="1"><title>Courtyard — Household: 1806</title></rect><rect x="190" y="141.9" width="640.0" height="8.8" fill="#b45e1c" rx="1"><title>Courtyard — Heat pump heating: 2721</title></rect><rect x="190" y="152.7" width="135.2" height="8.8" fill="#6f9d5b" rx="1"><title>Courtyard — Cooling: 575</title></rect><rect x="190" y="178.7" width="636.6" height="8.8" fill="#245a73" rx="1"><title>Cross-Stacked — Household: 2706</title></rect><rect x="190" y="189.5" width="533.2" height="8.8" fill="#b45e1c" rx="1"><title>Cross-Stacked — Heat pump heating: 2267</title></rect><rect x="190" y="200.3" width="127.2" height="8.8" fill="#6f9d5b" rx="1"><title>Cross-Stacked — Cooling: 541</title></rect><rect x="190" y="226.4" width="433.7" height="8.8" fill="#245a73" rx="1"><title>Accessible Garden — Household: 1844</title></rect><rect x="190" y="237.2" width="320.4" height="8.8" fill="#b45e1c" rx="1"><title>Accessible Garden — Heat pump heating: 1362</title></rect><rect x="190" y="248.0" width="99.7" height="8.8" fill="#6f9d5b" rx="1"><title>Accessible Garden — Cooling: 424</title></rect><rect x="190" y="274.1" width="363.6" height="8.8" fill="#245a73" rx="1"><title>Solar Studio — Household: 1546</title></rect><rect x="190" y="284.9" width="402.0" height="8.8" fill="#b45e1c" rx="1"><title>Solar Studio — Heat pump heating: 1709</title></rect><rect x="190" y="295.7" width="96.7" height="8.8" fill="#6f9d5b" rx="1"><title>Solar Studio — Cooling: 411</title></rect><text x="182" y="57.8" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Woodland</text><text x="182" y="105.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Offset</text><text x="182" y="153.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Courtyard</text><text x="182" y="200.8" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Cross-Stacked</text><text x="182" y="248.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Accessible Garden</text><text x="182" y="296.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Solar Studio</text><text x="190" y="346" font-family="system-ui,sans-serif" font-size="10" fill="#5e6a58">kWh per year</text></svg>
+    </figure>
+    <figure class="hp-figure" tabindex="0" role="region" aria-label="Scrollable heat-pump chart">
+      <figcaption><strong>Panels: existing, additional and total required.</strong> The total is a winter-critical count, not a recommendation to build it.</figcaption>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 360" role="img" aria-labelledby="hp-chart-panels-t hp-chart-panels-d"><title id="hp-chart-panels-t">Existing, additional and total required solar panels</title><desc id="hp-chart-panels-d">Grouped bars for each residence showing the existing panel count, the additional winter-critical panels for an air-source heat pump and the total required count. The values are in the comparison table.</desc><rect width="860" height="360" fill="#faf8f2"/><rect x="190" y="8" width="10" height="10" fill="#245a73"/><text x="205" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Existing</text><rect x="340" y="8" width="10" height="10" fill="#b45e1c"/><text x="355" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Additional</text><rect x="490" y="8" width="10" height="10" fill="#6f9d5b"/><text x="505" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Total required</text><rect x="190" y="35.7" width="71.1" height="8.8" fill="#245a73" rx="1"><title>Woodland — Existing: 8</title></rect><rect x="190" y="46.5" width="293.3" height="8.8" fill="#b45e1c" rx="1"><title>Woodland — Additional: 33</title></rect><rect x="190" y="57.3" width="364.4" height="8.8" fill="#6f9d5b" rx="1"><title>Woodland — Total required: 41</title></rect><rect x="190" y="83.4" width="88.9" height="8.8" fill="#245a73" rx="1"><title>Offset — Existing: 10</title></rect><rect x="190" y="94.2" width="435.6" height="8.8" fill="#b45e1c" rx="1"><title>Offset — Additional: 49</title></rect><rect x="190" y="105.0" width="524.4" height="8.8" fill="#6f9d5b" rx="1"><title>Offset — Total required: 59</title></rect><rect x="190" y="131.1" width="106.7" height="8.8" fill="#245a73" rx="1"><title>Courtyard — Existing: 12</title></rect><rect x="190" y="141.9" width="488.9" height="8.8" fill="#b45e1c" rx="1"><title>Courtyard — Additional: 55</title></rect><rect x="190" y="152.7" width="595.6" height="8.8" fill="#6f9d5b" rx="1"><title>Courtyard — Total required: 67</title></rect><rect x="190" y="178.7" width="142.2" height="8.8" fill="#245a73" rx="1"><title>Cross-Stacked — Existing: 16</title></rect><rect x="190" y="189.5" width="497.8" height="8.8" fill="#b45e1c" rx="1"><title>Cross-Stacked — Additional: 56</title></rect><rect x="190" y="200.3" width="640.0" height="8.8" fill="#6f9d5b" rx="1"><title>Cross-Stacked — Total required: 72</title></rect><rect x="190" y="226.4" width="106.7" height="8.8" fill="#245a73" rx="1"><title>Accessible Garden — Existing: 12</title></rect><rect x="190" y="237.2" width="311.1" height="8.8" fill="#b45e1c" rx="1"><title>Accessible Garden — Additional: 35</title></rect><rect x="190" y="248.0" width="417.8" height="8.8" fill="#6f9d5b" rx="1"><title>Accessible Garden — Total required: 47</title></rect><rect x="190" y="274.1" width="88.9" height="8.8" fill="#245a73" rx="1"><title>Solar Studio — Existing: 10</title></rect><rect x="190" y="284.9" width="266.7" height="8.8" fill="#b45e1c" rx="1"><title>Solar Studio — Additional: 30</title></rect><rect x="190" y="295.7" width="355.6" height="8.8" fill="#6f9d5b" rx="1"><title>Solar Studio — Total required: 40</title></rect><text x="182" y="57.8" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Woodland</text><text x="182" y="105.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Offset</text><text x="182" y="153.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Courtyard</text><text x="182" y="200.8" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Cross-Stacked</text><text x="182" y="248.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Accessible Garden</text><text x="182" y="296.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Solar Studio</text><text x="190" y="346" font-family="system-ui,sans-serif" font-size="10" fill="#5e6a58">panels</text></svg>
+    </figure>
+    <figure class="hp-figure" tabindex="0" role="region" aria-label="Scrollable heat-pump chart">
+      <figcaption><strong>Battery: existing and additional for one, three and five days.</strong> Nominal capacity; usable capacity is lower.</figcaption>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 360" role="img" aria-labelledby="hp-chart-battery-t hp-chart-battery-d"><title id="hp-chart-battery-t">Existing and additional battery capacity for heat-pump heating</title><desc id="hp-chart-battery-d">Grouped bars for each residence showing the existing nominal battery capacity and the additional nominal capacity for one, three and five days of heat-pump electricity.</desc><rect width="860" height="360" fill="#faf8f2"/><rect x="190" y="8" width="10" height="10" fill="#245a73"/><text x="205" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Existing</text><rect x="340" y="8" width="10" height="10" fill="#8a6a4a"/><text x="355" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">+1 day</text><rect x="490" y="8" width="10" height="10" fill="#b45e1c"/><text x="505" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">+3 days</text><rect x="640" y="8" width="10" height="10" fill="#6f9d5b"/><text x="655" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">+5 days</text><rect x="190" y="35.7" width="38.6" height="6.1" fill="#245a73" rx="1"><title>Woodland — Existing: 10</title></rect><rect x="190" y="43.8" width="77.1" height="6.1" fill="#8a6a4a" rx="1"><title>Woodland — +1 day: 20</title></rect><rect x="190" y="51.9" width="223.6" height="6.1" fill="#b45e1c" rx="1"><title>Woodland — +3 days: 58</title></rect><rect x="190" y="60.0" width="370.1" height="6.1" fill="#6f9d5b" rx="1"><title>Woodland — +5 days: 96</title></rect><rect x="190" y="83.4" width="57.8" height="6.1" fill="#245a73" rx="1"><title>Offset — Existing: 15</title></rect><rect x="190" y="91.5" width="119.5" height="6.1" fill="#8a6a4a" rx="1"><title>Offset — +1 day: 31</title></rect><rect x="190" y="99.6" width="354.7" height="6.1" fill="#b45e1c" rx="1"><title>Offset — +3 days: 92</title></rect><rect x="190" y="107.7" width="589.9" height="6.1" fill="#6f9d5b" rx="1"><title>Offset — +5 days: 153</title></rect><rect x="190" y="131.1" width="69.4" height="6.1" fill="#245a73" rx="1"><title>Courtyard — Existing: 18</title></rect><rect x="190" y="139.2" width="131.1" height="6.1" fill="#8a6a4a" rx="1"><title>Courtyard — +1 day: 34</title></rect><rect x="190" y="147.3" width="385.5" height="6.1" fill="#b45e1c" rx="1"><title>Courtyard — +3 days: 100</title></rect><rect x="190" y="155.4" width="640.0" height="6.1" fill="#6f9d5b" rx="1"><title>Courtyard — +5 days: 166</title></rect><rect x="190" y="178.7" width="92.5" height="6.1" fill="#245a73" rx="1"><title>Cross-Stacked — Existing: 24</title></rect><rect x="190" y="186.8" width="108.0" height="6.1" fill="#8a6a4a" rx="1"><title>Cross-Stacked — +1 day: 28</title></rect><rect x="190" y="194.9" width="316.1" height="6.1" fill="#b45e1c" rx="1"><title>Cross-Stacked — +3 days: 82</title></rect><rect x="190" y="203.0" width="528.2" height="6.1" fill="#6f9d5b" rx="1"><title>Cross-Stacked — +5 days: 137</title></rect><rect x="190" y="226.4" width="69.4" height="6.1" fill="#245a73" rx="1"><title>Accessible Garden — Existing: 18</title></rect><rect x="190" y="234.5" width="73.3" height="6.1" fill="#8a6a4a" rx="1"><title>Accessible Garden — +1 day: 19</title></rect><rect x="190" y="242.6" width="215.9" height="6.1" fill="#b45e1c" rx="1"><title>Accessible Garden — +3 days: 56</title></rect><rect x="190" y="250.7" width="358.6" height="6.1" fill="#6f9d5b" rx="1"><title>Accessible Garden — +5 days: 93</title></rect><rect x="190" y="274.1" width="46.3" height="6.1" fill="#245a73" rx="1"><title>Solar Studio — Existing: 12</title></rect><rect x="190" y="282.2" width="81.0" height="6.1" fill="#8a6a4a" rx="1"><title>Solar Studio — +1 day: 21</title></rect><rect x="190" y="290.3" width="235.2" height="6.1" fill="#b45e1c" rx="1"><title>Solar Studio — +3 days: 61</title></rect><rect x="190" y="298.4" width="393.3" height="6.1" fill="#6f9d5b" rx="1"><title>Solar Studio — +5 days: 102</title></rect><text x="182" y="57.8" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Woodland</text><text x="182" y="105.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Offset</text><text x="182" y="153.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Courtyard</text><text x="182" y="200.8" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Cross-Stacked</text><text x="182" y="248.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Accessible Garden</text><text x="182" y="296.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Solar Studio</text><text x="190" y="346" font-family="system-ui,sans-serif" font-size="10" fill="#5e6a58">kWh nominal</text></svg>
+    </figure>
+    <figure class="hp-figure" tabindex="0" role="region" aria-label="Scrollable heat-pump chart">
+      <figcaption><strong>Conditioned floor area compared with photovoltaic surface area.</strong> When the bars cross, the solar infrastructure is larger than the home.</figcaption>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 360" role="img" aria-labelledby="hp-chart-area-t hp-chart-area-d"><title id="hp-chart-area-t">Conditioned floor area and photovoltaic surface area</title><desc id="hp-chart-area-d">Grouped bars for each residence comparing conditioned floor area, the area of the existing installed panels and the total panel area required for full-time air-source heat-pump heating. The values are in the comparison table.</desc><rect width="860" height="360" fill="#faf8f2"/><rect x="190" y="8" width="10" height="10" fill="#8a9a83"/><text x="205" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Floor area</text><rect x="340" y="8" width="10" height="10" fill="#245a73"/><text x="355" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Existing PV</text><rect x="490" y="8" width="10" height="10" fill="#b45e1c"/><text x="505" y="17" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">Total PV required</text><rect x="190" y="35.7" width="132.2" height="8.8" fill="#8a9a83" rx="1"><title>Woodland — Conditioned floor: 30</title></rect><rect x="190" y="46.5" width="71.2" height="8.8" fill="#245a73" rx="1"><title>Woodland — Existing PV: 16</title></rect><rect x="190" y="57.3" width="364.5" height="8.8" fill="#b45e1c" rx="1"><title>Woodland — Total PV required: 82</title></rect><rect x="190" y="83.4" width="264.4" height="8.8" fill="#8a9a83" rx="1"><title>Offset — Conditioned floor: 59</title></rect><rect x="190" y="94.2" width="89.0" height="8.8" fill="#245a73" rx="1"><title>Offset — Existing PV: 20</title></rect><rect x="190" y="105.0" width="524.7" height="8.8" fill="#b45e1c" rx="1"><title>Offset — Total PV required: 118</title></rect><rect x="190" y="131.1" width="281.7" height="8.8" fill="#8a9a83" rx="1"><title>Courtyard — Conditioned floor: 63</title></rect><rect x="190" y="141.9" width="106.8" height="8.8" fill="#245a73" rx="1"><title>Courtyard — Existing PV: 24</title></rect><rect x="190" y="152.7" width="595.5" height="8.8" fill="#b45e1c" rx="1"><title>Courtyard — Total PV required: 134</title></rect><rect x="190" y="178.7" width="264.4" height="8.8" fill="#8a9a83" rx="1"><title>Cross-Stacked — Conditioned floor: 59</title></rect><rect x="190" y="189.5" width="142.4" height="8.8" fill="#245a73" rx="1"><title>Cross-Stacked — Existing PV: 32</title></rect><rect x="190" y="200.3" width="640.0" height="8.8" fill="#b45e1c" rx="1"><title>Cross-Stacked — Total PV required: 144</title></rect><rect x="190" y="226.4" width="131.3" height="8.8" fill="#8a9a83" rx="1"><title>Accessible Garden — Conditioned floor: 30</title></rect><rect x="190" y="237.2" width="106.8" height="8.8" fill="#245a73" rx="1"><title>Accessible Garden — Existing PV: 24</title></rect><rect x="190" y="248.0" width="417.9" height="8.8" fill="#b45e1c" rx="1"><title>Accessible Garden — Total PV required: 94</title></rect><rect x="190" y="274.1" width="131.3" height="8.8" fill="#8a9a83" rx="1"><title>Solar Studio — Conditioned floor: 30</title></rect><rect x="190" y="284.9" width="89.0" height="8.8" fill="#245a73" rx="1"><title>Solar Studio — Existing PV: 20</title></rect><rect x="190" y="295.7" width="355.6" height="8.8" fill="#b45e1c" rx="1"><title>Solar Studio — Total PV required: 80</title></rect><text x="182" y="57.8" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Woodland</text><text x="182" y="105.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Offset</text><text x="182" y="153.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Courtyard</text><text x="182" y="200.8" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Cross-Stacked</text><text x="182" y="248.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Accessible Garden</text><text x="182" y="296.2" text-anchor="end" font-family="system-ui,sans-serif" font-size="11" fill="#3f5a4c">Solar Studio</text><text x="190" y="346" font-family="system-ui,sans-serif" font-size="10" fill="#5e6a58">m²</text></svg>
+    </figure>
+    <details>
+      <summary>Chart data as a table</summary>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Chart data for annual electricity, panels, battery and area">
+        <table><caption>Values plotted in the four charts. Annual household electricity is the sum of the monthly household profiles.</caption><thead><tr><th scope="col">Home</th><th scope="col">Household kWh/yr</th><th scope="col">HP heating kWh/yr</th><th scope="col">Cooling kWh/yr</th><th scope="col">Existing panels</th><th scope="col">Additional panels</th><th scope="col">Total panels</th><th scope="col">Existing battery kWh</th><th scope="col">+1 day kWh</th><th scope="col">+3 days kWh</th><th scope="col">+5 days kWh</th><th scope="col">Floor m²</th><th scope="col">Existing PV m²</th><th scope="col">Total PV m²</th></tr></thead><tbody>
+          <tr><th scope="row">Woodland Cottage</th><td>1026</td><td>1637</td><td>394</td><td>8</td><td>33</td><td>41</td><td>10</td><td>20</td><td>58</td><td>96</td><td>29.7</td><td>16.0</td><td>81.9</td></tr><tr><th scope="row">Offset Stack</th><td>1789</td><td>2609</td><td>469</td><td>10</td><td>49</td><td>59</td><td>15</td><td>31</td><td>92</td><td>153</td><td>59.4</td><td>20.0</td><td>117.9</td></tr><tr><th scope="row">Courtyard Residence</th><td>1806</td><td>2721</td><td>575</td><td>12</td><td>55</td><td>67</td><td>18</td><td>34</td><td>100</td><td>166</td><td>63.3</td><td>24.0</td><td>133.8</td></tr><tr><th scope="row">Cross-Stacked Retreat</th><td>2706</td><td>2267</td><td>541</td><td>16</td><td>56</td><td>72</td><td>24</td><td>28</td><td>82</td><td>137</td><td>59.4</td><td>32.0</td><td>143.8</td></tr><tr><th scope="row">Accessible Garden Home</th><td>1844</td><td>1362</td><td>424</td><td>12</td><td>35</td><td>47</td><td>18</td><td>19</td><td>56</td><td>93</td><td>29.5</td><td>24.0</td><td>93.9</td></tr><tr><th scope="row">Solar Studio Stack</th><td>1546</td><td>1709</td><td>411</td><td>10</td><td>30</td><td>40</td><td>12</td><td>21</td><td>61</td><td>102</td><td>29.5</td><td>20.0</td><td>79.9</td></tr>
+        </tbody></table>
+      </div>
+    </details>
+  </section>
+
+  <section aria-labelledby="temperatures-title">
+    <h2 id="temperatures-title">What happens as it gets colder</h2>
+    <p>Heating demand rises with the temperature difference, while heat-pump capacity and COP fall. At the extreme condition the compressor may no longer meet the design load, and resistance backup or a second heat source is required.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Temperature scenarios for the six homes">
+      <table id="hp-temperatures">
+        <caption>Air-source heat-pump performance at the six test conditions. Electrical energy includes parasitics and supplemental resistance; COP is the compressor COP before parasitics.</caption>
+        <thead><tr><th scope="col">Home</th><th scope="col">Outdoor temperature</th><th scope="col">Heating demand (kWh/day)</th><th scope="col">Peak heating load</th><th scope="col">COP</th><th scope="col">Available capacity</th><th scope="col">Resistance backup (kWh/day)</th><th scope="col">Heat-pump electricity (kWh/day)</th><th scope="col">Capacity result</th></tr></thead>
+        <tbody>
+          <tr data-home="hamlet-woodland-cottage">
+    <th scope="row">Woodland Cottage · Mild shoulder season<br><span class="small">10 °C</span></th>
+    <td>3.3</td>
+    <td>0.1 kW</td>
+    <td>3.78</td>
+    <td>2.6 kW</td>
+    <td>0.0</td>
+    <td>4.1</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-woodland-cottage">
+    <th scope="row">Cool weather<br><span class="small">5 °C</span></th>
+    <td>8.5</td>
+    <td>0.4 kW</td>
+    <td>3.51</td>
+    <td>2.5 kW</td>
+    <td>0.0</td>
+    <td>5.7</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-woodland-cottage">
+    <th scope="row">Early winter<br><span class="small">0 °C</span></th>
+    <td>13.7</td>
+    <td>0.6 kW</td>
+    <td>2.82</td>
+    <td>2.4 kW</td>
+    <td>0.0</td>
+    <td>8.1</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-woodland-cottage">
+    <th scope="row">Ordinary cold winter<br><span class="small">-10 °C</span></th>
+    <td>24.2</td>
+    <td>1.0 kW</td>
+    <td>1.99</td>
+    <td>2.1 kW</td>
+    <td>0.0</td>
+    <td>15.4</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-woodland-cottage">
+    <th scope="row">Severe winter<br><span class="small">-20 °C</span></th>
+    <td>34.6</td>
+    <td>1.4 kW</td>
+    <td>1.47</td>
+    <td>1.6 kW</td>
+    <td>0.0</td>
+    <td>26.8</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-woodland-cottage">
+    <th scope="row">Extreme winter design<br><span class="small">-30 °C</span></th>
+    <td>45.1</td>
+    <td>1.9 kW</td>
+    <td>1.15</td>
+    <td>1.1 kW</td>
+    <td>18.7</td>
+    <td>44.9</td>
+    <td>Supplemental heat needed</td>
+  </tr><tr data-home="hamlet-offset-stack">
+    <th scope="row">Offset Stack · Mild shoulder season<br><span class="small">10 °C</span></th>
+    <td>9.3</td>
+    <td>0.4 kW</td>
+    <td>3.78</td>
+    <td>3.7 kW</td>
+    <td>0.0</td>
+    <td>5.7</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-offset-stack">
+    <th scope="row">Cool weather<br><span class="small">5 °C</span></th>
+    <td>18.4</td>
+    <td>0.8 kW</td>
+    <td>3.51</td>
+    <td>3.5 kW</td>
+    <td>0.0</td>
+    <td>8.5</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-offset-stack">
+    <th scope="row">Early winter<br><span class="small">0 °C</span></th>
+    <td>27.6</td>
+    <td>1.2 kW</td>
+    <td>2.82</td>
+    <td>3.3 kW</td>
+    <td>0.0</td>
+    <td>13.0</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-offset-stack">
+    <th scope="row">Ordinary cold winter<br><span class="small">-10 °C</span></th>
+    <td>46.0</td>
+    <td>1.9 kW</td>
+    <td>2.21</td>
+    <td>2.9 kW</td>
+    <td>0.0</td>
+    <td>24.1</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-offset-stack">
+    <th scope="row">Severe winter<br><span class="small">-20 °C</span></th>
+    <td>64.4</td>
+    <td>2.7 kW</td>
+    <td>1.47</td>
+    <td>2.2 kW</td>
+    <td>10.6</td>
+    <td>50.4</td>
+    <td>Supplemental heat needed</td>
+  </tr><tr data-home="hamlet-offset-stack">
+    <th scope="row">Extreme winter design<br><span class="small">-30 °C</span></th>
+    <td>82.7</td>
+    <td>3.4 kW</td>
+    <td>1.15</td>
+    <td>1.5 kW</td>
+    <td>45.8</td>
+    <td>81.2</td>
+    <td>Supplemental heat needed</td>
+  </tr><tr data-home="hamlet-courtyard-residence">
+    <th scope="row">Courtyard Residence · Mild shoulder season<br><span class="small">10 °C</span></th>
+    <td>11.1</td>
+    <td>0.5 kW</td>
+    <td>3.78</td>
+    <td>4.2 kW</td>
+    <td>0.0</td>
+    <td>6.2</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-courtyard-residence">
+    <th scope="row">Cool weather<br><span class="small">5 °C</span></th>
+    <td>21.2</td>
+    <td>0.9 kW</td>
+    <td>3.51</td>
+    <td>4.0 kW</td>
+    <td>0.0</td>
+    <td>9.3</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-courtyard-residence">
+    <th scope="row">Early winter<br><span class="small">0 °C</span></th>
+    <td>31.3</td>
+    <td>1.3 kW</td>
+    <td>3.13</td>
+    <td>3.8 kW</td>
+    <td>0.0</td>
+    <td>13.2</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-courtyard-residence">
+    <th scope="row">Ordinary cold winter<br><span class="small">-10 °C</span></th>
+    <td>51.5</td>
+    <td>2.1 kW</td>
+    <td>2.21</td>
+    <td>3.3 kW</td>
+    <td>0.0</td>
+    <td>26.5</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-courtyard-residence">
+    <th scope="row">Severe winter<br><span class="small">-20 °C</span></th>
+    <td>71.7</td>
+    <td>3.0 kW</td>
+    <td>1.47</td>
+    <td>2.6 kW</td>
+    <td>10.2</td>
+    <td>55.3</td>
+    <td>Supplemental heat needed</td>
+  </tr><tr data-home="hamlet-courtyard-residence">
+    <th scope="row">Extreme winter design<br><span class="small">-30 °C</span></th>
+    <td>91.9</td>
+    <td>3.8 kW</td>
+    <td>1.15</td>
+    <td>1.8 kW</td>
+    <td>49.6</td>
+    <td>89.6</td>
+    <td>Supplemental heat needed</td>
+  </tr><tr data-home="hamlet-cross-stacked-retreat">
+    <th scope="row">Cross-Stacked Retreat · Mild shoulder season<br><span class="small">10 °C</span></th>
+    <td>4.9</td>
+    <td>0.2 kW</td>
+    <td>3.78</td>
+    <td>5.3 kW</td>
+    <td>0.0</td>
+    <td>4.5</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-cross-stacked-retreat">
+    <th scope="row">Cool weather<br><span class="small">5 °C</span></th>
+    <td>13.9</td>
+    <td>0.6 kW</td>
+    <td>3.51</td>
+    <td>5.0 kW</td>
+    <td>0.0</td>
+    <td>7.2</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-cross-stacked-retreat">
+    <th scope="row">Early winter<br><span class="small">0 °C</span></th>
+    <td>22.8</td>
+    <td>1.0 kW</td>
+    <td>2.82</td>
+    <td>4.8 kW</td>
+    <td>0.0</td>
+    <td>11.3</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-cross-stacked-retreat">
+    <th scope="row">Ordinary cold winter<br><span class="small">-10 °C</span></th>
+    <td>40.7</td>
+    <td>1.7 kW</td>
+    <td>2.21</td>
+    <td>4.2 kW</td>
+    <td>0.0</td>
+    <td>21.7</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-cross-stacked-retreat">
+    <th scope="row">Severe winter<br><span class="small">-20 °C</span></th>
+    <td>58.6</td>
+    <td>2.4 kW</td>
+    <td>1.47</td>
+    <td>3.2 kW</td>
+    <td>0.0</td>
+    <td>43.1</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-cross-stacked-retreat">
+    <th scope="row">Extreme winter design<br><span class="small">-30 °C</span></th>
+    <td>76.5</td>
+    <td>3.2 kW</td>
+    <td>1.15</td>
+    <td>2.2 kW</td>
+    <td>23.7</td>
+    <td>72.9</td>
+    <td>Supplemental heat needed</td>
+  </tr><tr data-home="hamlet-accessible-garden-home">
+    <th scope="row">Accessible Garden Home · Mild shoulder season<br><span class="small">10 °C</span></th>
+    <td>1.6</td>
+    <td>0.1 kW</td>
+    <td>3.78</td>
+    <td>3.7 kW</td>
+    <td>0.0</td>
+    <td>3.7</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-accessible-garden-home">
+    <th scope="row">Cool weather<br><span class="small">5 °C</span></th>
+    <td>7.0</td>
+    <td>0.3 kW</td>
+    <td>3.51</td>
+    <td>3.5 kW</td>
+    <td>0.0</td>
+    <td>5.2</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-accessible-garden-home">
+    <th scope="row">Early winter<br><span class="small">0 °C</span></th>
+    <td>12.4</td>
+    <td>0.5 kW</td>
+    <td>2.82</td>
+    <td>3.3 kW</td>
+    <td>0.0</td>
+    <td>7.6</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-accessible-garden-home">
+    <th scope="row">Ordinary cold winter<br><span class="small">-10 °C</span></th>
+    <td>23.1</td>
+    <td>1.0 kW</td>
+    <td>1.99</td>
+    <td>2.9 kW</td>
+    <td>0.0</td>
+    <td>14.9</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-accessible-garden-home">
+    <th scope="row">Severe winter<br><span class="small">-20 °C</span></th>
+    <td>33.9</td>
+    <td>1.4 kW</td>
+    <td>1.47</td>
+    <td>2.2 kW</td>
+    <td>0.0</td>
+    <td>26.3</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-accessible-garden-home">
+    <th scope="row">Extreme winter design<br><span class="small">-30 °C</span></th>
+    <td>44.6</td>
+    <td>1.9 kW</td>
+    <td>1.15</td>
+    <td>1.5 kW</td>
+    <td>7.7</td>
+    <td>43.1</td>
+    <td>Supplemental heat needed</td>
+  </tr><tr data-home="hamlet-solar-studio-stack">
+    <th scope="row">Solar Studio Stack · Mild shoulder season<br><span class="small">10 °C</span></th>
+    <td>4.1</td>
+    <td>0.2 kW</td>
+    <td>3.78</td>
+    <td>3.2 kW</td>
+    <td>0.0</td>
+    <td>4.3</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-solar-studio-stack">
+    <th scope="row">Cool weather<br><span class="small">5 °C</span></th>
+    <td>9.7</td>
+    <td>0.4 kW</td>
+    <td>3.51</td>
+    <td>3.0 kW</td>
+    <td>0.0</td>
+    <td>6.0</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-solar-studio-stack">
+    <th scope="row">Early winter<br><span class="small">0 °C</span></th>
+    <td>15.3</td>
+    <td>0.6 kW</td>
+    <td>2.82</td>
+    <td>2.9 kW</td>
+    <td>0.0</td>
+    <td>8.7</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-solar-studio-stack">
+    <th scope="row">Ordinary cold winter<br><span class="small">-10 °C</span></th>
+    <td>26.6</td>
+    <td>1.1 kW</td>
+    <td>1.99</td>
+    <td>2.5 kW</td>
+    <td>0.0</td>
+    <td>16.6</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-solar-studio-stack">
+    <th scope="row">Severe winter<br><span class="small">-20 °C</span></th>
+    <td>37.9</td>
+    <td>1.6 kW</td>
+    <td>1.47</td>
+    <td>1.9 kW</td>
+    <td>0.0</td>
+    <td>29.0</td>
+    <td>Capacity covers the load</td>
+  </tr><tr data-home="hamlet-solar-studio-stack">
+    <th scope="row">Extreme winter design<br><span class="small">-30 °C</span></th>
+    <td>49.1</td>
+    <td>2.0 kW</td>
+    <td>1.15</td>
+    <td>1.3 kW</td>
+    <td>17.4</td>
+    <td>48.2</td>
+    <td>Supplemental heat needed</td>
+  </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small">The −30 °C case is an extreme design condition, not a typical winter day. Ottawa's 1991–2020 January mean is −9.6 °C; extreme minima near −32 °C have been recorded. A heat pump that works at −30 °C may still be operating at low capacity and low COP.</p>
+  </section>
+
+  <section aria-labelledby="configurations-title">
+    <h2 id="configurations-title">Three configurations at two temperatures</h2>
+    <p>This is the comparison the residents actually face: household only, household plus an air-source heat pump, and household plus a ground-source heat pump. The heat-pump electricity is additional in every case.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump configurations at two outdoor temperatures"><table id="hp-configurations"><caption>Household, air-source and ground-source demand at −10 °C and −20 °C. Heat-pump electricity is additional. “Without” is the household load only.</caption><thead><tr><th scope="col">Home</th><th scope="col">Without HP at −10 °C</th><th scope="col">Air-source at −10 °C</th><th scope="col">Ground-source at −10 °C</th><th scope="col">Without HP at −20 °C</th><th scope="col">Air-source at −20 °C</th><th scope="col">Ground-source at −20 °C</th></tr></thead><tbody><tr><th scope="row">Woodland Cottage</th><td>3.2 kWh/day</td><td>18.6 kWh/day<br><span class="small">+15.4 HP</span></td><td>13.9 kWh/day<br><span class="small">+10.7 HP</span></td><td>3.2 kWh/day</td><td>30.0 kWh/day<br><span class="small">+26.8 HP</span></td><td>16.0 kWh/day<br><span class="small">+12.9 HP</span></td></tr><tr><th scope="row">Offset Stack</th><td>5.4 kWh/day</td><td>29.5 kWh/day<br><span class="small">+24.1 HP</span></td><td>21.4 kWh/day<br><span class="small">+16.0 HP</span></td><td>5.4 kWh/day</td><td>55.8 kWh/day<br><span class="small">+50.4 HP</span></td><td>26.5 kWh/day<br><span class="small">+21.1 HP</span></td></tr><tr><th scope="row">Courtyard Residence</th><td>5.5 kWh/day</td><td>32.0 kWh/day<br><span class="small">+26.5 HP</span></td><td>23.0 kWh/day<br><span class="small">+17.5 HP</span></td><td>5.5 kWh/day</td><td>60.8 kWh/day<br><span class="small">+55.3 HP</span></td><td>28.7 kWh/day<br><span class="small">+23.2 HP</span></td></tr><tr><th scope="row">Cross-Stacked Retreat</th><td>8.0 kWh/day</td><td>29.7 kWh/day<br><span class="small">+21.7 HP</span></td><td>22.5 kWh/day<br><span class="small">+14.6 HP</span></td><td>8.0 kWh/day</td><td>51.1 kWh/day<br><span class="small">+43.1 HP</span></td><td>27.5 kWh/day<br><span class="small">+19.5 HP</span></td></tr><tr><th scope="row">Accessible Garden Home</th><td>5.6 kWh/day</td><td>20.4 kWh/day<br><span class="small">+14.9 HP</span></td><td>15.9 kWh/day<br><span class="small">+10.4 HP</span></td><td>5.6 kWh/day</td><td>31.8 kWh/day<br><span class="small">+26.3 HP</span></td><td>18.2 kWh/day<br><span class="small">+12.7 HP</span></td></tr><tr><th scope="row">Solar Studio Stack</th><td>4.6 kWh/day</td><td>21.2 kWh/day<br><span class="small">+16.6 HP</span></td><td>16.1 kWh/day<br><span class="small">+11.5 HP</span></td><td>4.6 kWh/day</td><td>33.6 kWh/day<br><span class="small">+29.0 HP</span></td><td>18.4 kWh/day<br><span class="small">+13.8 HP</span></td></tr></tbody></table></div>
+  </section>
+
+  <section aria-labelledby="seasonal-title">
+    <h2 id="seasonal-title">Seasonal balance</h2>
+    <p>The monthly chart and table for Woodland Cottage show the shape of the problem: household demand is fairly flat, heat-pump electricity peaks in winter, and generation peaks in summer. The battery has to bridge the mismatch.</p>
+    <figure class="hp-figure" tabindex="0" role="region" aria-label="Scrollable seasonal heat-pump chart">
+      <figcaption><strong>Monthly household, heat-pump and generation balance for Woodland Cottage.</strong> Stacked bars are demand; the line is existing generation.</figcaption>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 340" role="img" aria-labelledby="hp-seasonal-t hp-seasonal-d"><title id="hp-seasonal-t">Monthly household, heat-pump and generation balance for Woodland Cottage</title><desc id="hp-seasonal-d">Stacked bars show household electricity, additional heat-pump heating and cooling for each month; the line shows existing photovoltaic generation. The values are in the monthly table below.</desc><rect width="860" height="340" fill="#faf8f2"/><line x1="56" y1="294.0" x2="836" y2="294.0" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="298.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">0.0</text><line x1="56" y1="227.5" x2="836" y2="227.5" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="231.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">4.4</text><line x1="56" y1="161.0" x2="836" y2="161.0" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="165.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">8.7</text><line x1="56" y1="94.5" x2="836" y2="94.5" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="98.5" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">13.1</text><line x1="56" y1="28.0" x2="836" y2="28.0" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="32.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">17.5</text><rect x="67.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>January household: 2.7 kWh/day</title></rect><rect x="67.7" y="52.2" width="41.6" height="201.2" fill="#b45e1c"><title>January heat-pump heating: 13.2 kWh/day</title></rect><rect x="67.7" y="52.2" width="41.6" height="0.0" fill="#6f9d5b"><title>January cooling: 0.0 kWh/day</title></rect><rect x="132.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>February household: 2.7 kWh/day</title></rect><rect x="132.7" y="81.1" width="41.6" height="172.3" fill="#b45e1c"><title>February heat-pump heating: 11.3 kWh/day</title></rect><rect x="132.7" y="81.1" width="41.6" height="0.0" fill="#6f9d5b"><title>February cooling: 0.0 kWh/day</title></rect><rect x="197.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>March household: 2.7 kWh/day</title></rect><rect x="197.7" y="148.4" width="41.6" height="104.9" fill="#b45e1c"><title>March heat-pump heating: 6.9 kWh/day</title></rect><rect x="197.7" y="148.4" width="41.6" height="0.0" fill="#6f9d5b"><title>March cooling: 0.0 kWh/day</title></rect><rect x="262.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>April household: 2.7 kWh/day</title></rect><rect x="262.7" y="200.2" width="41.6" height="53.2" fill="#b45e1c"><title>April heat-pump heating: 3.5 kWh/day</title></rect><rect x="262.7" y="200.2" width="41.6" height="0.0" fill="#6f9d5b"><title>April cooling: 0.0 kWh/day</title></rect><rect x="327.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>May household: 2.7 kWh/day</title></rect><rect x="327.7" y="253.4" width="41.6" height="0.0" fill="#b45e1c"><title>May heat-pump heating: 0.0 kWh/day</title></rect><rect x="327.7" y="253.4" width="41.6" height="0.0" fill="#6f9d5b"><title>May cooling: 0.0 kWh/day</title></rect><rect x="392.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>June household: 2.7 kWh/day</title></rect><rect x="392.7" y="253.4" width="41.6" height="0.0" fill="#b45e1c"><title>June heat-pump heating: 0.0 kWh/day</title></rect><rect x="392.7" y="253.4" width="41.6" height="0.0" fill="#6f9d5b"><title>June cooling: 0.0 kWh/day</title></rect><rect x="457.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>July household: 2.7 kWh/day</title></rect><rect x="457.7" y="253.4" width="41.6" height="0.0" fill="#b45e1c"><title>July heat-pump heating: 0.0 kWh/day</title></rect><rect x="457.7" y="153.3" width="41.6" height="100.1" fill="#6f9d5b"><title>July cooling: 6.6 kWh/day</title></rect><rect x="522.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>August household: 2.7 kWh/day</title></rect><rect x="522.7" y="253.4" width="41.6" height="0.0" fill="#b45e1c"><title>August heat-pump heating: 0.0 kWh/day</title></rect><rect x="522.7" y="159.9" width="41.6" height="93.5" fill="#6f9d5b"><title>August cooling: 6.1 kWh/day</title></rect><rect x="587.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>September household: 2.7 kWh/day</title></rect><rect x="587.7" y="253.4" width="41.6" height="0.0" fill="#b45e1c"><title>September heat-pump heating: 0.0 kWh/day</title></rect><rect x="587.7" y="253.4" width="41.6" height="0.0" fill="#6f9d5b"><title>September cooling: 0.0 kWh/day</title></rect><rect x="652.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>October household: 2.7 kWh/day</title></rect><rect x="652.7" y="203.3" width="41.6" height="50.1" fill="#b45e1c"><title>October heat-pump heating: 3.3 kWh/day</title></rect><rect x="652.7" y="203.3" width="41.6" height="0.0" fill="#6f9d5b"><title>October cooling: 0.0 kWh/day</title></rect><rect x="717.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>November household: 2.7 kWh/day</title></rect><rect x="717.7" y="160.8" width="41.6" height="92.6" fill="#b45e1c"><title>November heat-pump heating: 6.1 kWh/day</title></rect><rect x="717.7" y="160.8" width="41.6" height="0.0" fill="#6f9d5b"><title>November cooling: 0.0 kWh/day</title></rect><rect x="782.7" y="253.4" width="41.6" height="40.6" fill="#245a73"><title>December household: 2.7 kWh/day</title></rect><rect x="782.7" y="101.8" width="41.6" height="151.5" fill="#b45e1c"><title>December heat-pump heating: 10.0 kWh/day</title></rect><rect x="782.7" y="101.8" width="41.6" height="0.0" fill="#6f9d5b"><title>December cooling: 0.0 kWh/day</title></rect><polyline points="88.5,241.1 153.5,216.5 218.5,166.2 283.5,126.2 348.5,96.6 413.5,88.1 478.5,88.2 543.5,108.0 608.5,141.5 673.5,193.6 738.5,238.3 803.5,252.0" fill="none" stroke="#8f5a21" stroke-width="2.3"/><text x="88.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">J</text><text x="153.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">F</text><text x="218.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">M</text><text x="283.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">A</text><text x="348.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">M</text><text x="413.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">J</text><text x="478.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">J</text><text x="543.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">A</text><text x="608.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">S</text><text x="673.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">O</text><text x="738.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">N</text><text x="803.5" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">D</text><text x="56" y="16" font-family="system-ui,sans-serif" font-size="10" fill="#245a73">■ household</text><text x="156" y="16" font-family="system-ui,sans-serif" font-size="10" fill="#b45e1c">■ HP heating</text><text x="261" y="16" font-family="system-ui,sans-serif" font-size="10" fill="#6f9d5b">■ cooling</text><text x="351" y="16" font-family="system-ui,sans-serif" font-size="10" fill="#8f5a21">— generation</text><text x="836" y="330" text-anchor="end" font-family="system-ui,sans-serif" font-size="9" fill="#5e6a58">kWh per day · modelled estimate</text></svg>
+    </figure>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Monthly seasonal balance for Woodland Cottage"><table><caption>Woodland Cottage: monthly household, heat-pump heating, cooling, generation and balance. Daily averages, modelled estimate.</caption><thead><tr><th scope="col">Month</th><th scope="col">Household kWh/day</th><th scope="col">HP heating kWh/day</th><th scope="col">Cooling kWh/day</th><th scope="col">Combined kWh/day</th><th scope="col">Generation kWh/day</th><th scope="col">Balance kWh/day</th></tr></thead><tbody><tr><th scope="row">January</th><td>2.7</td><td>13.2</td><td>0.0</td><td>15.9</td><td>3.5</td><td>-12.4</td></tr><tr><th scope="row">February</th><td>2.7</td><td>11.3</td><td>0.0</td><td>14.0</td><td>5.1</td><td>-8.9</td></tr><tr><th scope="row">March</th><td>2.7</td><td>6.9</td><td>0.0</td><td>9.6</td><td>8.4</td><td>-1.2</td></tr><tr><th scope="row">April</th><td>2.7</td><td>3.5</td><td>0.0</td><td>6.2</td><td>11.0</td><td>+4.9</td></tr><tr><th scope="row">May</th><td>2.7</td><td>0.0</td><td>0.0</td><td>2.7</td><td>13.0</td><td>+10.3</td></tr><tr><th scope="row">June</th><td>2.7</td><td>0.0</td><td>0.0</td><td>2.7</td><td>13.5</td><td>+10.9</td></tr><tr><th scope="row">July</th><td>2.7</td><td>0.0</td><td>6.6</td><td>9.2</td><td>13.5</td><td>+4.3</td></tr><tr><th scope="row">August</th><td>2.7</td><td>0.0</td><td>6.1</td><td>8.8</td><td>12.2</td><td>+3.4</td></tr><tr><th scope="row">September</th><td>2.7</td><td>0.0</td><td>0.0</td><td>2.7</td><td>10.0</td><td>+7.3</td></tr><tr><th scope="row">October</th><td>2.7</td><td>3.3</td><td>0.0</td><td>6.0</td><td>6.6</td><td>+0.6</td></tr><tr><th scope="row">November</th><td>2.7</td><td>6.1</td><td>0.0</td><td>8.7</td><td>3.7</td><td>-5.1</td></tr><tr><th scope="row">December</th><td>2.7</td><td>10.0</td><td>0.0</td><td>12.6</td><td>2.8</td><td>-9.9</td></tr></tbody></table></div>
+  </section>
+
+  <section aria-labelledby="strategies-title">
+    <h2 id="strategies-title">Six operating strategies</h2>
+    <p>The question is not only “which heat pump?” but “when should it run, and what covers the rest?” The strategies are annual energy balances, not control designs.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump operating strategies for the six homes">
+      <table id="hp-strategies">
+        <caption>Operating strategies. The additional panels and battery are indicative; the hybrid strategy still depends on physical wood handling.</caption>
+        <thead><tr><th scope="col">Home and strategy</th><th scope="col">Heat-pump electricity (kWh/yr)</th><th scope="col">Additional panels</th><th scope="col">Additional battery (kWh)</th><th scope="col">Wood heat (kWh thermal)</th><th scope="col">Unserved heat (kWh thermal)</th><th scope="col">Note</th></tr></thead>
+        <tbody><tr>
+    <th scope="row">A · Passive architecture and wood heating</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2190</td>
+    <td>0</td>
+    <td>Baseline. Heat pump is not used. Wood heat must cover the heating load; stove capacity, fuel storage and physical ability are not guaranteed.</td>
+  </tr><tr>
+    <th scope="row">B · Surplus-solar heat pump</th>
+    <td>1105</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2190</td>
+    <td>0</td>
+    <td>Only surplus solar after household demand and reserve is used. Winter and shoulder surplus is credited to heating; summer surplus is credited to cooling. This is not a full winter heating strategy.</td>
+  </tr><tr>
+    <th scope="row">C · Hybrid wood and air-source heating</th>
+    <td>655</td>
+    <td>2</td>
+    <td>20</td>
+    <td>1314</td>
+    <td>0</td>
+    <td>Wood provides about 60% of annual heating; the heat pump displaces the rest. This is the least electricity-intensive compressor strategy, but it still depends on physical wood handling.</td>
+  </tr><tr>
+    <th scope="row">D · Full-time air-source heating</th>
+    <td>1637</td>
+    <td>33</td>
+    <td>58</td>
+    <td>0</td>
+    <td>0</td>
+    <td>The heat pump is the primary heat source. The winter-critical panel count and battery are much larger than the annual averages suggest.</td>
+  </tr><tr>
+    <th scope="row">E · Full-time ground-source heating</th>
+    <td>1363</td>
+    <td>26</td>
+    <td>41</td>
+    <td>0</td>
+    <td>0</td>
+    <td>More efficient in cold weather, but requires a ground loop, drilling or excavation, circulation pumps and a larger capital project. The ground loop is not designed.</td>
+  </tr><tr>
+    <th scope="row">F · Passive cooling with optional mechanical cooling</th>
+    <td>394</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>Cooling is a summer load and coincides with high solar generation. Passive shading, ventilation and ceiling fans are prioritised; the heat pump is supplementary.</td>
+  </tr><tr>
+    <th scope="row">A · Passive architecture and wood heating</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>4200</td>
+    <td>724</td>
+    <td>Baseline. Heat pump is not used. Wood heat must cover the heating load; stove capacity, fuel storage and physical ability are not guaranteed.</td>
+  </tr><tr>
+    <th scope="row">B · Surplus-solar heat pump</th>
+    <td>1170</td>
+    <td>0</td>
+    <td>0</td>
+    <td>4200</td>
+    <td>0</td>
+    <td>Only surplus solar after household demand and reserve is used. Winter and shoulder surplus is credited to heating; summer surplus is credited to cooling. This is not a full winter heating strategy.</td>
+  </tr><tr>
+    <th scope="row">C · Hybrid wood and air-source heating</th>
+    <td>1044</td>
+    <td>3</td>
+    <td>31</td>
+    <td>2954</td>
+    <td>0</td>
+    <td>Wood provides about 60% of annual heating; the heat pump displaces the rest. This is the least electricity-intensive compressor strategy, but it still depends on physical wood handling.</td>
+  </tr><tr>
+    <th scope="row">D · Full-time air-source heating</th>
+    <td>2609</td>
+    <td>49</td>
+    <td>92</td>
+    <td>0</td>
+    <td>0</td>
+    <td>The heat pump is the primary heat source. The winter-critical panel count and battery are much larger than the annual averages suggest.</td>
+  </tr><tr>
+    <th scope="row">E · Full-time ground-source heating</th>
+    <td>2106</td>
+    <td>38</td>
+    <td>63</td>
+    <td>0</td>
+    <td>0</td>
+    <td>More efficient in cold weather, but requires a ground loop, drilling or excavation, circulation pumps and a larger capital project. The ground loop is not designed.</td>
+  </tr><tr>
+    <th scope="row">F · Passive cooling with optional mechanical cooling</th>
+    <td>469</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>Cooling is a summer load and coincides with high solar generation. Passive shading, ventilation and ceiling fans are prioritised; the heat pump is supplementary.</td>
+  </tr><tr>
+    <th scope="row">A · Passive architecture and wood heating</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>4200</td>
+    <td>968</td>
+    <td>Baseline. Heat pump is not used. Wood heat must cover the heating load; stove capacity, fuel storage and physical ability are not guaranteed.</td>
+  </tr><tr>
+    <th scope="row">B · Surplus-solar heat pump</th>
+    <td>1592</td>
+    <td>0</td>
+    <td>0</td>
+    <td>4200</td>
+    <td>0</td>
+    <td>Only surplus solar after household demand and reserve is used. Winter and shoulder surplus is credited to heating; summer surplus is credited to cooling. This is not a full winter heating strategy.</td>
+  </tr><tr>
+    <th scope="row">C · Hybrid wood and air-source heating</th>
+    <td>1088</td>
+    <td>3</td>
+    <td>34</td>
+    <td>3101</td>
+    <td>0</td>
+    <td>Wood provides about 60% of annual heating; the heat pump displaces the rest. This is the least electricity-intensive compressor strategy, but it still depends on physical wood handling.</td>
+  </tr><tr>
+    <th scope="row">D · Full-time air-source heating</th>
+    <td>2721</td>
+    <td>55</td>
+    <td>100</td>
+    <td>0</td>
+    <td>0</td>
+    <td>The heat pump is the primary heat source. The winter-critical panel count and battery are much larger than the annual averages suggest.</td>
+  </tr><tr>
+    <th scope="row">E · Full-time ground-source heating</th>
+    <td>2172</td>
+    <td>41</td>
+    <td>68</td>
+    <td>0</td>
+    <td>0</td>
+    <td>More efficient in cold weather, but requires a ground loop, drilling or excavation, circulation pumps and a larger capital project. The ground loop is not designed.</td>
+  </tr><tr>
+    <th scope="row">F · Passive cooling with optional mechanical cooling</th>
+    <td>575</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>Cooling is a summer load and coincides with high solar generation. Passive shading, ventilation and ceiling fans are prioritised; the heat pump is supplementary.</td>
+  </tr><tr>
+    <th scope="row">A · Passive architecture and wood heating</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>3871</td>
+    <td>0</td>
+    <td>Baseline. Heat pump is not used. Wood heat must cover the heating load; stove capacity, fuel storage and physical ability are not guaranteed.</td>
+  </tr><tr>
+    <th scope="row">B · Surplus-solar heat pump</th>
+    <td>1431</td>
+    <td>0</td>
+    <td>0</td>
+    <td>3871</td>
+    <td>0</td>
+    <td>Only surplus solar after household demand and reserve is used. Winter and shoulder surplus is credited to heating; summer surplus is credited to cooling. This is not a full winter heating strategy.</td>
+  </tr><tr>
+    <th scope="row">C · Hybrid wood and air-source heating</th>
+    <td>907</td>
+    <td>3</td>
+    <td>28</td>
+    <td>2323</td>
+    <td>0</td>
+    <td>Wood provides about 60% of annual heating; the heat pump displaces the rest. This is the least electricity-intensive compressor strategy, but it still depends on physical wood handling.</td>
+  </tr><tr>
+    <th scope="row">D · Full-time air-source heating</th>
+    <td>2267</td>
+    <td>56</td>
+    <td>82</td>
+    <td>0</td>
+    <td>0</td>
+    <td>The heat pump is the primary heat source. The winter-critical panel count and battery are much larger than the annual averages suggest.</td>
+  </tr><tr>
+    <th scope="row">E · Full-time ground-source heating</th>
+    <td>1822</td>
+    <td>46</td>
+    <td>57</td>
+    <td>0</td>
+    <td>0</td>
+    <td>More efficient in cold weather, but requires a ground loop, drilling or excavation, circulation pumps and a larger capital project. The ground loop is not designed.</td>
+  </tr><tr>
+    <th scope="row">F · Passive cooling with optional mechanical cooling</th>
+    <td>541</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>Cooling is a summer load and coincides with high solar generation. Passive shading, ventilation and ceiling fans are prioritised; the heat pump is supplementary.</td>
+  </tr><tr>
+    <th scope="row">A · Passive architecture and wood heating</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1991</td>
+    <td>0</td>
+    <td>Baseline. Heat pump is not used. Wood heat must cover the heating load; stove capacity, fuel storage and physical ability are not guaranteed.</td>
+  </tr><tr>
+    <th scope="row">B · Surplus-solar heat pump</th>
+    <td>1394</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1991</td>
+    <td>0</td>
+    <td>Only surplus solar after household demand and reserve is used. Winter and shoulder surplus is credited to heating; summer surplus is credited to cooling. This is not a full winter heating strategy.</td>
+  </tr><tr>
+    <th scope="row">C · Hybrid wood and air-source heating</th>
+    <td>545</td>
+    <td>2</td>
+    <td>19</td>
+    <td>1195</td>
+    <td>0</td>
+    <td>Wood provides about 60% of annual heating; the heat pump displaces the rest. This is the least electricity-intensive compressor strategy, but it still depends on physical wood handling.</td>
+  </tr><tr>
+    <th scope="row">D · Full-time air-source heating</th>
+    <td>1362</td>
+    <td>35</td>
+    <td>56</td>
+    <td>0</td>
+    <td>0</td>
+    <td>The heat pump is the primary heat source. The winter-critical panel count and battery are much larger than the annual averages suggest.</td>
+  </tr><tr>
+    <th scope="row">E · Full-time ground-source heating</th>
+    <td>1104</td>
+    <td>28</td>
+    <td>40</td>
+    <td>0</td>
+    <td>0</td>
+    <td>More efficient in cold weather, but requires a ground loop, drilling or excavation, circulation pumps and a larger capital project. The ground loop is not designed.</td>
+  </tr><tr>
+    <th scope="row">F · Passive cooling with optional mechanical cooling</th>
+    <td>424</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>Cooling is a summer load and coincides with high solar generation. Passive shading, ventilation and ceiling fans are prioritised; the heat pump is supplementary.</td>
+  </tr><tr>
+    <th scope="row">A · Passive architecture and wood heating</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2355</td>
+    <td>0</td>
+    <td>Baseline. Heat pump is not used. Wood heat must cover the heating load; stove capacity, fuel storage and physical ability are not guaranteed.</td>
+  </tr><tr>
+    <th scope="row">B · Surplus-solar heat pump</th>
+    <td>1197</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2355</td>
+    <td>0</td>
+    <td>Only surplus solar after household demand and reserve is used. Winter and shoulder surplus is credited to heating; summer surplus is credited to cooling. This is not a full winter heating strategy.</td>
+  </tr><tr>
+    <th scope="row">C · Hybrid wood and air-source heating</th>
+    <td>684</td>
+    <td>2</td>
+    <td>21</td>
+    <td>1413</td>
+    <td>0</td>
+    <td>Wood provides about 60% of annual heating; the heat pump displaces the rest. This is the least electricity-intensive compressor strategy, but it still depends on physical wood handling.</td>
+  </tr><tr>
+    <th scope="row">D · Full-time air-source heating</th>
+    <td>1709</td>
+    <td>30</td>
+    <td>61</td>
+    <td>0</td>
+    <td>0</td>
+    <td>The heat pump is the primary heat source. The winter-critical panel count and battery are much larger than the annual averages suggest.</td>
+  </tr><tr>
+    <th scope="row">E · Full-time ground-source heating</th>
+    <td>1413</td>
+    <td>24</td>
+    <td>44</td>
+    <td>0</td>
+    <td>0</td>
+    <td>More efficient in cold weather, but requires a ground loop, drilling or excavation, circulation pumps and a larger capital project. The ground loop is not designed.</td>
+  </tr><tr>
+    <th scope="row">F · Passive cooling with optional mechanical cooling</th>
+    <td>411</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>Cooling is a summer load and coincides with high solar generation. Passive shading, ventilation and ceiling fans are prioritised; the heat pump is supplementary.</td>
+  </tr></tbody>
+      </table>
+    </div>
+    <p class="small">Strategy B uses only surplus solar after household demand and reserve. It is a summer cooling, shoulder-season and occasional winter-day strategy; it is not full winter heating. Strategy C assumes wood provides about 60% of annual heating and the heat pump displaces the rest. Strategy D is the full-electric case that drives the large panel and battery counts.</p>
+  </section>
+
+  <section aria-labelledby="passive-title">
+    <h2 id="passive-title">Passive design first</h2>
+    <p>A plausible passive package — better walls, roof and windows, lower airtightness, better heat recovery and better summer shading — reduces the heating demand before any equipment is added. The table shows the reduction and the panels avoided.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Passive design benefits">
+      <table id="hp-passive">
+        <caption>Effect of a plausible passive package on annual heating, design load, heat-pump electricity and additional panels. Not costed and not a guarantee.</caption>
+        <thead><tr><th scope="col">Home</th><th scope="col">Annual heating before</th><th scope="col">Annual heating after</th><th scope="col">Design load before</th><th scope="col">Design load after</th><th scope="col">HP electricity avoided</th><th scope="col">Panels avoided</th></tr></thead>
+        <tbody><tr><th scope="row">Woodland Cottage</th><td>2190 kWh</td><td>1654 kWh</td><td>1.9 kW</td><td>1.5 kW</td><td>423 kWh</td><td>5</td></tr><tr><th scope="row">Offset Stack</th><td>4924 kWh</td><td>3767 kWh</td><td>3.4 kW</td><td>2.8 kW</td><td>371 kWh</td><td>7</td></tr><tr><th scope="row">Courtyard Residence</th><td>5168 kWh</td><td>4027 kWh</td><td>3.8 kW</td><td>3.1 kW</td><td>401 kWh</td><td>8</td></tr><tr><th scope="row">Cross-Stacked Retreat</th><td>3871 kWh</td><td>2835 kWh</td><td>3.2 kW</td><td>2.6 kW</td><td>536 kWh</td><td>6</td></tr><tr><th scope="row">Accessible Garden Home</th><td>1991 kWh</td><td>1500 kWh</td><td>1.9 kW</td><td>1.5 kW</td><td>211 kWh</td><td>5</td></tr><tr><th scope="row">Solar Studio Stack</th><td>2355 kWh</td><td>1793 kWh</td><td>2.0 kW</td><td>1.7 kW</td><td>435 kWh</td><td>4</td></tr></tbody>
+      </table>
+    </div>
+    <p class="small">The passive package is not a substitute for a heat pump in every home, and it does not solve the winter cloud problem. It reduces the size of the system that would otherwise be needed.</p>
+  </section>
+
+  <section aria-labelledby="resilience-title">
+    <h2 id="resilience-title">Winter resilience, with the heat pump on</h2>
+    <p>These scenarios keep the existing household battery and add the heat-pump load. Household electricity is prioritised over heating when supply is short. Wood heat is limited to the recorded daily stove capability; it is not assumed to run at full output for 24 hours.</p>
+    <details class="hp-resilience"><summary>Woodland Cottage: resilience scenarios</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Woodland Cottage heat-pump resilience scenarios"><table><caption>Woodland Cottage: synthetic heat-pump resilience scenarios. Not a weather forecast.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Outdoor</th><th scope="col">Household kWh/day</th><th scope="col">HP electricity kWh/day</th><th scope="col">Generation kWh/day</th><th scope="col">Wood heat kWh/day</th><th scope="col">End SOC</th><th scope="col">Household unserved</th><th scope="col">Heat unserved</th><th scope="col">Status</th></tr></thead><tbody><tr>
+    <th scope="row">One cloudy winter day</th>
+    <td>1</td>
+    <td>-10 °C</td>
+    <td>3.2</td>
+    <td>15.4</td>
+    <td>1.2</td>
+    <td>22.4</td>
+    <td>37%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Three cloudy winter days</th>
+    <td>3</td>
+    <td>-10 °C</td>
+    <td>3.2</td>
+    <td>15.4</td>
+    <td>1.2</td>
+    <td>22.4</td>
+    <td>35%</td>
+    <td>0.0</td>
+    <td>4.5</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Five cloudy winter days</th>
+    <td>5</td>
+    <td>-10 °C</td>
+    <td>3.2</td>
+    <td>15.4</td>
+    <td>0.9</td>
+    <td>22.4</td>
+    <td>35%</td>
+    <td>0.0</td>
+    <td>10.7</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Snow-covered arrays</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>3.2</td>
+    <td>26.8</td>
+    <td>0.0</td>
+    <td>22.4</td>
+    <td>35%</td>
+    <td>0.0</td>
+    <td>29.5</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Extreme cold with low solar</th>
+    <td>5</td>
+    <td>-30 °C</td>
+    <td>3.2</td>
+    <td>44.9</td>
+    <td>0.7</td>
+    <td>22.4</td>
+    <td>35%</td>
+    <td>0.0</td>
+    <td>113.2</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Partial battery at the start</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>3.2</td>
+    <td>26.8</td>
+    <td>1.0</td>
+    <td>22.4</td>
+    <td>35%</td>
+    <td>0.0</td>
+    <td>31.1</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Heat pump failure</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>3.2</td>
+    <td>0.0</td>
+    <td>1.0</td>
+    <td>22.4</td>
+    <td>35%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Loss of shared community electricity</th>
+    <td>5</td>
+    <td>-20 °C</td>
+    <td>3.2</td>
+    <td>26.8</td>
+    <td>1.0</td>
+    <td>22.4</td>
+    <td>35%</td>
+    <td>8.5</td>
+    <td>58.3</td>
+    <td>household shortfall</td>
+  </tr></tbody></table></div></details><details class="hp-resilience"><summary>Offset Stack: resilience scenarios</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Offset Stack heat-pump resilience scenarios"><table><caption>Offset Stack: synthetic heat-pump resilience scenarios. Not a weather forecast.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Outdoor</th><th scope="col">Household kWh/day</th><th scope="col">HP electricity kWh/day</th><th scope="col">Generation kWh/day</th><th scope="col">Wood heat kWh/day</th><th scope="col">End SOC</th><th scope="col">Household unserved</th><th scope="col">Heat unserved</th><th scope="col">Status</th></tr></thead><tbody><tr>
+    <th scope="row">One cloudy winter day</th>
+    <td>1</td>
+    <td>-10 °C</td>
+    <td>5.4</td>
+    <td>24.1</td>
+    <td>1.7</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>2.6</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Three cloudy winter days</th>
+    <td>3</td>
+    <td>-10 °C</td>
+    <td>5.4</td>
+    <td>24.1</td>
+    <td>1.7</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>27.1</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Five cloudy winter days</th>
+    <td>5</td>
+    <td>-10 °C</td>
+    <td>5.4</td>
+    <td>24.1</td>
+    <td>1.2</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>1.8</td>
+    <td>52.3</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Snow-covered arrays</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.4</td>
+    <td>50.4</td>
+    <td>0.0</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>3.3</td>
+    <td>76.0</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Extreme cold with low solar</th>
+    <td>5</td>
+    <td>-30 °C</td>
+    <td>5.4</td>
+    <td>81.2</td>
+    <td>1.0</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>2.7</td>
+    <td>256.9</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Partial battery at the start</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.4</td>
+    <td>50.4</td>
+    <td>1.5</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>0.4</td>
+    <td>81.7</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Heat pump failure</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.4</td>
+    <td>0.0</td>
+    <td>1.5</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Loss of shared community electricity</th>
+    <td>5</td>
+    <td>-20 °C</td>
+    <td>5.4</td>
+    <td>50.4</td>
+    <td>1.5</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>15.8</td>
+    <td>134.3</td>
+    <td>household shortfall</td>
+  </tr></tbody></table></div></details><details class="hp-resilience"><summary>Courtyard Residence: resilience scenarios</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Courtyard Residence heat-pump resilience scenarios"><table><caption>Courtyard Residence: synthetic heat-pump resilience scenarios. Not a weather forecast.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Outdoor</th><th scope="col">Household kWh/day</th><th scope="col">HP electricity kWh/day</th><th scope="col">Generation kWh/day</th><th scope="col">Wood heat kWh/day</th><th scope="col">End SOC</th><th scope="col">Household unserved</th><th scope="col">Heat unserved</th><th scope="col">Status</th></tr></thead><tbody><tr>
+    <th scope="row">One cloudy winter day</th>
+    <td>1</td>
+    <td>-10 °C</td>
+    <td>5.5</td>
+    <td>26.5</td>
+    <td>1.9</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>3.4</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Three cloudy winter days</th>
+    <td>3</td>
+    <td>-10 °C</td>
+    <td>5.5</td>
+    <td>26.5</td>
+    <td>1.9</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>33.1</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Five cloudy winter days</th>
+    <td>5</td>
+    <td>-10 °C</td>
+    <td>5.5</td>
+    <td>26.5</td>
+    <td>1.4</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>1.5</td>
+    <td>64.1</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Snow-covered arrays</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.5</td>
+    <td>55.3</td>
+    <td>0.0</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>3.5</td>
+    <td>89.1</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Extreme cold with low solar</th>
+    <td>5</td>
+    <td>-30 °C</td>
+    <td>5.5</td>
+    <td>89.6</td>
+    <td>1.1</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>2.6</td>
+    <td>297.1</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Partial battery at the start</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.5</td>
+    <td>55.3</td>
+    <td>1.6</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>0.2</td>
+    <td>96.1</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Heat pump failure</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.5</td>
+    <td>0.0</td>
+    <td>1.6</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Loss of shared community electricity</th>
+    <td>5</td>
+    <td>-20 °C</td>
+    <td>5.5</td>
+    <td>55.3</td>
+    <td>1.6</td>
+    <td>28.0</td>
+    <td>33%</td>
+    <td>15.5</td>
+    <td>157.0</td>
+    <td>household shortfall</td>
+  </tr></tbody></table></div></details><details class="hp-resilience"><summary>Cross-Stacked Retreat: resilience scenarios</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Cross-Stacked Retreat heat-pump resilience scenarios"><table><caption>Cross-Stacked Retreat: synthetic heat-pump resilience scenarios. Not a weather forecast.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Outdoor</th><th scope="col">Household kWh/day</th><th scope="col">HP electricity kWh/day</th><th scope="col">Generation kWh/day</th><th scope="col">Wood heat kWh/day</th><th scope="col">End SOC</th><th scope="col">Household unserved</th><th scope="col">Heat unserved</th><th scope="col">Status</th></tr></thead><tbody><tr>
+    <th scope="row">One cloudy winter day</th>
+    <td>1</td>
+    <td>-10 °C</td>
+    <td>8.0</td>
+    <td>21.7</td>
+    <td>2.3</td>
+    <td>33.6</td>
+    <td>46%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Three cloudy winter days</th>
+    <td>3</td>
+    <td>-10 °C</td>
+    <td>8.0</td>
+    <td>21.7</td>
+    <td>2.3</td>
+    <td>33.6</td>
+    <td>33%</td>
+    <td>1.9</td>
+    <td>12.8</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Five cloudy winter days</th>
+    <td>5</td>
+    <td>-10 °C</td>
+    <td>8.0</td>
+    <td>21.7</td>
+    <td>1.6</td>
+    <td>33.6</td>
+    <td>33%</td>
+    <td>8.2</td>
+    <td>27.3</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Snow-covered arrays</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>8.0</td>
+    <td>43.1</td>
+    <td>0.0</td>
+    <td>33.6</td>
+    <td>33%</td>
+    <td>8.5</td>
+    <td>55.3</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Extreme cold with low solar</th>
+    <td>5</td>
+    <td>-30 °C</td>
+    <td>8.0</td>
+    <td>72.9</td>
+    <td>1.3</td>
+    <td>33.6</td>
+    <td>33%</td>
+    <td>11.7</td>
+    <td>190.3</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Partial battery at the start</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>8.0</td>
+    <td>43.1</td>
+    <td>2.0</td>
+    <td>33.6</td>
+    <td>33%</td>
+    <td>4.5</td>
+    <td>64.9</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Heat pump failure</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>8.0</td>
+    <td>0.0</td>
+    <td>2.0</td>
+    <td>33.6</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Loss of shared community electricity</th>
+    <td>5</td>
+    <td>-20 °C</td>
+    <td>8.0</td>
+    <td>43.1</td>
+    <td>2.0</td>
+    <td>33.6</td>
+    <td>33%</td>
+    <td>24.1</td>
+    <td>101.4</td>
+    <td>household shortfall</td>
+  </tr></tbody></table></div></details><details class="hp-resilience"><summary>Accessible Garden Home: resilience scenarios</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Accessible Garden Home heat-pump resilience scenarios"><table><caption>Accessible Garden Home: synthetic heat-pump resilience scenarios. Not a weather forecast.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Outdoor</th><th scope="col">Household kWh/day</th><th scope="col">HP electricity kWh/day</th><th scope="col">Generation kWh/day</th><th scope="col">Wood heat kWh/day</th><th scope="col">End SOC</th><th scope="col">Household unserved</th><th scope="col">Heat unserved</th><th scope="col">Status</th></tr></thead><tbody><tr>
+    <th scope="row">One cloudy winter day</th>
+    <td>1</td>
+    <td>-10 °C</td>
+    <td>5.6</td>
+    <td>14.9</td>
+    <td>1.8</td>
+    <td>22.4</td>
+    <td>57%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Three cloudy winter days</th>
+    <td>3</td>
+    <td>-10 °C</td>
+    <td>5.6</td>
+    <td>14.9</td>
+    <td>1.8</td>
+    <td>22.4</td>
+    <td>39%</td>
+    <td>0.0</td>
+    <td>4.0</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Five cloudy winter days</th>
+    <td>5</td>
+    <td>-10 °C</td>
+    <td>5.6</td>
+    <td>14.9</td>
+    <td>1.3</td>
+    <td>22.4</td>
+    <td>39%</td>
+    <td>1.5</td>
+    <td>12.2</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Snow-covered arrays</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.6</td>
+    <td>26.3</td>
+    <td>0.0</td>
+    <td>22.4</td>
+    <td>39%</td>
+    <td>3.6</td>
+    <td>27.0</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Extreme cold with low solar</th>
+    <td>5</td>
+    <td>-30 °C</td>
+    <td>5.6</td>
+    <td>43.1</td>
+    <td>1.0</td>
+    <td>22.4</td>
+    <td>39%</td>
+    <td>3.0</td>
+    <td>113.8</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Partial battery at the start</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.6</td>
+    <td>26.3</td>
+    <td>1.6</td>
+    <td>22.4</td>
+    <td>39%</td>
+    <td>0.5</td>
+    <td>34.1</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Heat pump failure</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>5.6</td>
+    <td>0.0</td>
+    <td>1.6</td>
+    <td>22.4</td>
+    <td>39%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Loss of shared community electricity</th>
+    <td>5</td>
+    <td>-20 °C</td>
+    <td>5.6</td>
+    <td>26.3</td>
+    <td>1.6</td>
+    <td>22.4</td>
+    <td>39%</td>
+    <td>16.0</td>
+    <td>53.0</td>
+    <td>household shortfall</td>
+  </tr></tbody></table></div></details><details class="hp-resilience"><summary>Solar Studio Stack: resilience scenarios</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Solar Studio Stack heat-pump resilience scenarios"><table><caption>Solar Studio Stack: synthetic heat-pump resilience scenarios. Not a weather forecast.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Outdoor</th><th scope="col">Household kWh/day</th><th scope="col">HP electricity kWh/day</th><th scope="col">Generation kWh/day</th><th scope="col">Wood heat kWh/day</th><th scope="col">End SOC</th><th scope="col">Household unserved</th><th scope="col">Heat unserved</th><th scope="col">Status</th></tr></thead><tbody><tr>
+    <th scope="row">One cloudy winter day</th>
+    <td>1</td>
+    <td>-10 °C</td>
+    <td>4.6</td>
+    <td>16.6</td>
+    <td>1.8</td>
+    <td>22.4</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Three cloudy winter days</th>
+    <td>3</td>
+    <td>-10 °C</td>
+    <td>4.6</td>
+    <td>16.6</td>
+    <td>1.8</td>
+    <td>22.4</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>8.9</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Five cloudy winter days</th>
+    <td>5</td>
+    <td>-10 °C</td>
+    <td>4.6</td>
+    <td>16.6</td>
+    <td>1.3</td>
+    <td>22.4</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>19.7</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Snow-covered arrays</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>4.6</td>
+    <td>29.0</td>
+    <td>0.0</td>
+    <td>22.4</td>
+    <td>33%</td>
+    <td>1.7</td>
+    <td>37.9</td>
+    <td>household shortfall</td>
+  </tr><tr>
+    <th scope="row">Extreme cold with low solar</th>
+    <td>5</td>
+    <td>-30 °C</td>
+    <td>4.6</td>
+    <td>48.2</td>
+    <td>1.0</td>
+    <td>22.4</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>136.8</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Partial battery at the start</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>4.6</td>
+    <td>29.0</td>
+    <td>1.5</td>
+    <td>22.4</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>40.8</td>
+    <td>heating shortfall</td>
+  </tr><tr>
+    <th scope="row">Heat pump failure</th>
+    <td>3</td>
+    <td>-20 °C</td>
+    <td>4.6</td>
+    <td>0.0</td>
+    <td>1.5</td>
+    <td>22.4</td>
+    <td>33%</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Loss of shared community electricity</th>
+    <td>5</td>
+    <td>-20 °C</td>
+    <td>4.6</td>
+    <td>29.0</td>
+    <td>1.5</td>
+    <td>22.4</td>
+    <td>33%</td>
+    <td>12.4</td>
+    <td>70.0</td>
+    <td>household shortfall</td>
+  </tr></tbody></table></div></details>
+  </section>
+
+  <section id="explorer" aria-labelledby="explorer-title">
+    <h2 id="explorer-title">Heat-pump explorer</h2>
+    <p>Change one assumption at a time. The existing reference array and battery are the starting point; enabling a heat pump adds load rather than resizing the installation. The results never leave your browser.</p>
+    <noscript><p class="notice">The interactive explorer needs JavaScript. The comparison, temperature, configuration, strategy, passive and resilience tables above and below are complete without it.</p></noscript>
+    <form id="hp-form" class="hp-form" novalidate>
+      <fieldset><legend>Home</legend>
+        <div class="hp-field"><label for="hp-residence">Residence</label><select id="hp-residence"><option value="hamlet-woodland-cottage">Woodland Cottage</option><option value="hamlet-offset-stack">Offset Stack</option><option value="hamlet-courtyard-residence">Courtyard Residence</option><option value="hamlet-cross-stacked-retreat">Cross-Stacked Retreat</option><option value="hamlet-accessible-garden-home">Accessible Garden Home</option><option value="hamlet-solar-studio-stack">Solar Studio Stack</option></select></div>
+        <div class="hp-field"><label for="hp-type">Heat pump type</label><select id="hp-type"><option value="air-source">Air-source (cold climate)</option><option value="ground-source">Ground-source</option></select></div>
+        <div class="hp-field"><label for="hp-temperature">Outdoor temperature</label><select id="hp-temperature"><option value="-30">-30 °C</option><option value="-20">-20 °C</option><option value="-10">-10 °C</option><option value="0">0 °C</option><option value="5">5 °C</option><option value="10">10 °C</option><option value="25">25 °C</option><option value="30">30 °C</option></select></div>
+        <div class="hp-field"><label for="hp-indoor">Indoor target temperature (°C)</label><input id="hp-indoor" type="number" min="16" max="22" step="1" value="20"></div>
+      </fieldset>
+      <fieldset><legend>Existing installation and demand</legend>
+        <div class="hp-field"><label for="hp-panels">Existing panels</label><input id="hp-panels" type="number" min="2" max="16" step="1" value="8"></div>
+        <div class="hp-field"><label for="hp-battery">Existing battery (kWh nominal)</label><input id="hp-battery" type="number" min="2" max="40" step="1" value="10"></div>
+        <div class="hp-field"><label for="hp-consumption">Baseline household electricity (kWh/day)</label><input id="hp-consumption" type="number" min="0.5" max="12" step="0.1" value="2.587"><p class="hp-help">Scales the appliance assumptions to this summer daily total. The heat-pump load stays additional.</p></div>
+        <div class="hp-field"><label for="hp-solar">Solar availability for the stress test (%)</label><input id="hp-solar" type="number" min="0" max="100" step="5" value="25"><p class="hp-help">Used for the five-day shortfall only. It does not change the annual panel calculation.</p></div>
+      </fieldset>
+      <fieldset><legend>Envelope and supply</legend>
+        <div class="hp-field"><label for="hp-envelope">Envelope</label><select id="hp-envelope"><option value="baseline">Baseline assumptions</option><option value="passive">Improved passive package</option></select></div>
+        <div class="hp-field"><label for="hp-shading">Exterior summer shading</label><select id="hp-shading"><option value="0.55">Documented shading intent</option><option value="0.35">More effective shading</option><option value="0.75">Limited shading</option></select></div>
+        <div class="hp-field"><label for="hp-cop">Heat-pump COP adjustment (%)</label><input id="hp-cop" type="number" min="60" max="140" step="5" value="100"><p class="hp-help">Use 100% for the illustrative curve; test a lower value for a conservative product or installation.</p></div>
+        <div class="hp-field"><label for="hp-wood">Wood heating</label><select id="hp-wood"><option value="yes">Available</option><option value="no">Not assumed</option></select></div>
+        <div class="hp-field"><label for="hp-shared">Shared electricity</label><select id="hp-shared"><option value="yes">Community backup</option><option value="no">None</option></select></div>
+        <div class="hp-field"><label for="hp-days">Autonomy target (days)</label><input id="hp-days" type="number" min="1" max="5" step="1" value="3"></div>
+        <div class="hp-field"><label for="hp-cloud-days">Cloudy days in the stress test</label><input id="hp-cloud-days" type="number" min="1" max="10" step="1" value="5"></div>
+      </fieldset>
+      <div class="hp-actions"><button type="button" id="hp-reset">Reset</button><button type="button" id="hp-download">Download this result as JSON</button></div>
+    </form>
+    <div id="hp-status" class="hp-status" role="status" aria-live="polite" aria-atomic="true">Showing the baseline air-source case for Woodland Cottage.</div>
+    <div id="hp-results" class="hp-results">
+      <h3>Results for <span id="hp-result-home">Woodland Cottage</span></h3>
+      <dl class="hp-metrics">
+        <div><dt>Heating demand</dt><dd><output id="hp-out-demand">—</output> kWh/day</dd></div>
+        <div><dt>Heat-pump electricity</dt><dd><output id="hp-out-electric">—</output> kWh/day</dd></div>
+        <div><dt>Cooling demand</dt><dd><output id="hp-out-cool-demand">—</output> kWh/day</dd></div>
+        <div><dt>Cooling electricity</dt><dd><output id="hp-out-cool-electric">—</output> kWh/day</dd></div>
+        <div><dt>Resistance backup</dt><dd><output id="hp-out-backup">—</output> kWh/day</dd></div>
+        <div><dt>Household + HP total</dt><dd><output id="hp-out-total">—</output> kWh/day</dd></div>
+        <div><dt>Additional panels</dt><dd><output id="hp-out-panels">—</output></dd></div>
+        <div><dt>Additional panel area</dt><dd><output id="hp-out-area">—</output> m²</dd></div>
+        <div><dt>Remaining roof area</dt><dd><output id="hp-out-roof">—</output> m²</dd></div>
+        <div><dt>Additional battery</dt><dd><output id="hp-out-battery">—</output> kWh</dd></div>
+        <div><dt>Combined peak</dt><dd><output id="hp-out-peak">—</output> kW</dd></div>
+        <div><dt>Five-day shortfall</dt><dd><output id="hp-out-shortfall">—</output> kWh</dd></div>
+      </dl>
+      <p id="hp-summary" class="small">—</p>
+      <div id="hp-warnings"></div>
+    </div>
+    <p class="small">The calculator reports the incremental result at one outdoor temperature and the full winter-critical panel count for the selected home. It does not select equipment, size ductwork or design a ground loop.</p>
+  </section>
+
+  <section aria-labelledby="assumptions-title">
+    <h2 id="assumptions-title">Assumptions, exclusions and reviews</h2>
+    <ul>
+      <li><strong>Baseline unchanged.</strong> Household electricity and the existing reference arrays are unchanged. Heat-pump electricity is additional. No panel is removed or resized automatically.</li>
+      <li><strong>Envelope.</strong> U-values: wall 0.18, roof 0.12, floor 0.15, window 0.95, door 1.2 W/m²K; thermal-bridge allowance 10%; ACH50 1.0–1.5; HRV 85%. These are assumptions, not tested performance.</li>
+      <li><strong>Climate.</strong> Monthly mean temperatures are Ottawa (City) 1991–2020 normals. The −30 °C case is an extreme design condition. The model is a steady-state daily balance, not an hourly simulation.</li>
+      <li><strong>Heat pump.</strong> Illustrative cold-climate COP and capacity curves informed by the NEEP cold-climate specification test points. Confirm the selected model's published table. Ground-source COP is held constant; the ground loop, boreholes and geology are not designed.</li>
+      <li><strong>Excluded.</strong> Ductwork, distribution losses, domestic hot water, laundry, EV charging, cooking changes, cooling humidity, defrost water disposal, noise, refrigerant, maintenance and cost.</li>
+      <li><strong>Wood heat is not universal.</strong> Stove capacity, fuel storage, physical ability, indoor air quality and chimney maintenance are not guaranteed. The Accessible Garden Home cannot rely on wood handling by a resident.</li>
+      <li><strong>Required reviews.</strong> Mechanical design and heat-loss calculation; electrical design and service upgrade; structural review for additional panels and equipment; ground-source geotechnical and hydrogeological review; fire separation for battery and plant; accessibility review; cost and lifecycle assessment.</li>
+    </ul>
+    <p class="small">Sources: Natural Resources Canada heat-pump guidance; NRCan <em>Keeping the Heat In</em>; Environment and Climate Change Canada 1991–2020 climate normals for Ottawa; NEEP cold-climate air-source heat-pump specification; the project's residential energy model. See <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/heat-pump-energy-assessment.md">the full methodology</a>.</p>
+  </section>
+</main>
+<script src="../../js/design-schema.js"></script>
+<script src="../../js/design-energy.js"></script>
+<script src="../../js/design-model.js"></script>
+<script src="../../js/design-thermal.js"></script>
+<script src="../concepts-selected.js"></script>
+<script src="heat-pump-app.js"></script>
+</body>
+</html>

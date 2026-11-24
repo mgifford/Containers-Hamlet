@@ -1,6 +1,6 @@
 # Woodland Cottage — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash d142126a
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 84a24c39
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -14,6 +14,10 @@ This description is generated from the canonical design model. The reference SVG
 
 ## Modules
 - **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.
+
+## Solar array
+- Installed: 8 × 450 W = 3.6 kWp; 16 m² of module surface; 0 visible from this viewpoint.
+- pv-a: 8 panels, 1 × 8, 24° tilt, 180° from north, roof-flush, roof surface, group string-a. Snow sheds south behind guards.
 
 ## Openings
 - m1 / Bedroom window — north window, 1.4 × 1.3 m, sill 0.9 m.
@@ -57,6 +61,7 @@ This description is generated from the canonical design model. The reference SVG
 - Step-free entrance is a design intent, not a verified measurement.
 - Adaptable bathroom is a design intent, not a verified layout.
 - Adaptable kitchen is a design intent, not a verified layout.
+- The illustration must show 8 installed PV panels, not a generic panel pattern. This viewpoint shows 0 of them.
 
 ## Unresolved matters
 - **interior-partitions**: Interior partitions, fixtures and camera geometry are conceptual or provisional. Do not claim a spatially accurate perspective or verified clearance.

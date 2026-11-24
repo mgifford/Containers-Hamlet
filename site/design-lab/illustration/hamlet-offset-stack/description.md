@@ -1,6 +1,6 @@
 # Offset Stack — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 12ecfb76
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash f6d39685
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -15,6 +15,11 @@ This description is generated from the canonical design model. The reference SVG
 ## Modules
 - **m1** — storey 1, 12.192 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.
 - **m2** — storey 2, 12.192 × 2.438 m, base 3.896 m, rotation 0°, metal cladding. m2 is offset 2.6 m east relative to m1.
+
+## Solar array
+- Installed: 10 × 450 W = 4.5 kWp; 20 m² of module surface; 10 visible from this viewpoint.
+- pv-a: 6 panels, 2 × 3, 39° tilt, 180° from north, roof-tilted, roof surface, group string-a. Snow sheds south behind guards.
+- pv-b: 4 panels, 1 × 4, 45° tilt, 180° from north, ground-mount, ground surface, group string-b. Snow sheds south without guards.
 
 ## Openings
 - m1 / Stair window — north window, 0.9 × 1.2 m, sill 1 m.
@@ -68,6 +73,7 @@ This description is generated from the canonical design model. The reference SVG
 - Step-free entrance is a design intent, not a verified measurement.
 - Adaptable bathroom is a design intent, not a verified layout.
 - Adaptable kitchen is a design intent, not a verified layout.
+- The illustration must show 10 installed PV panels, not a generic panel pattern. This viewpoint shows 10 of them.
 
 ## Unresolved matters
 - **interior-partitions**: Interior partitions, fixtures and camera geometry are conceptual or provisional. Do not claim a spatially accurate perspective or verified clearance.

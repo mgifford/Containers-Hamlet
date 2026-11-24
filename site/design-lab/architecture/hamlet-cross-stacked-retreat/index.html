@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../../../style.css">
   <link rel="stylesheet" href="../../style.css">
   <link rel="stylesheet" href="../../architecture.css">
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 </head>
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -24,12 +25,14 @@
 </header>
 <nav class="subnav" aria-label="Design Lab sections">
   <a href="../../../design-lab/" aria-current="page">Gallery</a>
-  <a href="../../../design-lab/pattern-language/">Pattern language</a>
+  <a href="../../../design-lab/pattern-language/">Patterns</a>
   <a href="../../../design-lab/residences/">Residences</a>
+  <a href="../../../design-lab/energy/">Energy</a>
+  <a href="../../../design-lab/heat-pumps/">Heat pumps</a>
   <a href="../../../design-lab/scenarios/">Scenarios</a>
   <a href="../../../design-lab/evaluation/">Evaluation</a>
   <a href="../../../design-lab/illustration/">Illustrate</a>
-  <a href="../../../design-lab/visualisations/">Visualisations</a>
+  <a href="../../../design-lab/visualisations/">Visuals</a>
   <a href="../../../design-lab/editor/">Editor</a>
   <a href="../../../design-lab/guides/">Guides</a>
   <a href="../../../design-lab/compare/">Compare</a>
@@ -224,7 +227,526 @@
   <section class="solar-section" aria-labelledby="solar-title">
     <h2 id="solar-title">Solar tilt and azimuth</h2>
     <p><strong>39° tilt</strong> · 180° azimuth · year-round strategy. True south. Confirm magnetic declination, shading, snow shedding and structural fixing.</p><p class="small">Roof: one 12° butterfly roof. Solar is mounted only on the south slope; the north slope has no array. Array azimuth is true south, independent of building rotation.</p><img src="../../systems/solar-39.svg" width="1040" height="400" alt="Explanatory solar section with a 39 degree tilted array facing azimuth 180 degrees." loading="lazy" decoding="async">
-    <p class="small">Ottawa reference: the year-round fixed range is 36–39° (SolarCalculator.CA reports 39° optimal), winter is about 60° and summer about 30°, facing true south within a few degrees. No energy production, snow-shedding, wind-uplift or code compliance is calculated.</p>
+    <p class="small">The array layout, tilt and azimuth shown in the drawings come from the same canonical energy model that calculates monthly generation. The tilt range 30–45° is an annual-production exploration range; 55–70° is the winter-oriented range. Orientation is measured from geographic north, independent of the SVG canvas or building rotation. Snow-shedding, wind uplift, roof structure and electrical design still require professional review.</p>
+  </section>
+  <section class="assembly-section energy-section" aria-labelledby="energy-title" id="energy">
+    <h2 id="energy-title">Residential energy model</h2>
+    <p><strong>16 panels · 7.2 kWp · 32.0 m² of module surface · 24.0 kWh battery (21.6 kWh usable).</strong> Full-time family occupation. Suitable for: Summer occupation; Three-season occupation; Full-time occupation with supplementary power; Full-time occupation under modeled conditions.</p>
+    <p>The highest-demand residence: four residents, two workstations, a chest freezer and a compact washer. The array is large relative to a cottage but still modest by suburban standards.</p>
+    <p class="notice">This is a conceptual daily and hourly energy balance, not a solar resource assessment, electrical design, structural design or off-grid guarantee. The load list, array geometry and battery limits are the canonical inputs; the drawings and this table are generated from them. <a href="../../energy/">Open the energy explorer</a> to test another configuration.</p>
+    <h3>Arrays and mounting</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Photovoltaic arrays for Cross-Stacked Retreat"><table class="exposure-table"><caption>Every installed panel is placed in the canonical geometry. The count here is the count used in the energy calculation and in every drawing.</caption><thead><tr><th scope="col">Array</th><th scope="col">Panels</th><th scope="col">Tilt / azimuth</th><th scope="col">Mounting</th><th scope="col">Supporting surface</th><th scope="col">Electrical group</th><th scope="col">Maintenance</th><th scope="col">Snow</th></tr></thead><tbody>
+      <tr><th scope="row">East roof group <span class="small">(pv-a)</span></th><td>8 × 450 W</td><td>39° / 180°</td><td>roof tilted</td><td>roof · m2</td><td>string-a</td><td>ladder-with-fall-protection; East group clear of the butterfly valley; roof anchors and a temporary platform are required.</td><td>Snow sheds to the south garden, not the entry. Valley snow is a separate drainage problem.</td></tr><tr><th scope="row">West roof group <span class="small">(pv-b)</span></th><td>8 × 450 W</td><td>39° / 180°</td><td>roof tilted</td><td>roof · m2</td><td>string-b</td><td>ladder-with-fall-protection; West group is further from the valley but closer to the cross volume; confirm safe access.</td><td>Snow sheds to the south garden. Guards protect the lower roof edge.</td></tr>
+    </tbody></table></div>
+
+    <h3>Battery and inverter</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Battery and inverter assumptions"><table class="exposure-table"><caption>Battery assumptions. Usable capacity, SOC limits and efficiencies are equipment-dependent and require confirmation.</caption><tbody>
+      <tr><th scope="row">Technology / architecture</th><td>LiFePO4 · 48 V</td></tr>
+      <tr><th scope="row">Nominal / usable</th><td>24.0 kWh / 21.6 kWh</td></tr>
+      <tr><th scope="row">SOC window</th><td>10%–100%</td></tr>
+      <tr><th scope="row">Charge / discharge efficiency</th><td>96% / 96%</td></tr>
+      <tr><th scope="row">Max charge / discharge</th><td>4.8 kW / 6.0 kW</td></tr>
+      <tr><th scope="row">Inverter / standby</th><td>6.0 kW / 10.0 W</td></tr>
+      <tr><th scope="row">Essential reserve / target</th><td>8.0 kWh / 3 days</td></tr>
+      <tr><th scope="row">Temperature and enclosure</th><td>Charge min 0 °C · discharge min -10 °C · heated enclosure</td></tr>
+      <tr><th scope="row">Location</th><td>Insulated ground-floor plant room, separated from sleeping rooms.</td></tr>
+    </tbody></table></div>
+    <p class="small">The largest battery in the residential set. Fire separation, ventilation, lifting and egress need professional review.</p>
+    <h3>Autonomy and winter resilience</h3>
+    <p>Essential autonomy: <strong>4.9 days</strong>. Ordinary autonomy: <strong>1.7 days</strong> (the essential reserve stays intact). The figures below are deterministic synthetic scenarios; weather is not a forecast.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Energy resilience scenarios"><table class="exposure-table"><caption>Ten repeatable resilience scenarios. A positive unserved value is a design result, not a software failure.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Load (kWh)</th><th scope="col">Generation (kWh)</th><th scope="col">Shared supply (kWh)</th><th scope="col">Unserved (kWh)</th><th scope="col">End SOC</th><th scope="col">Status</th></tr></thead><tbody><tr>
+    <th scope="row">Typical summer day</th>
+    <td>1</td>
+    <td>6.8</td>
+    <td>22.6</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>90%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Typical winter day</th>
+    <td>1</td>
+    <td>8.0</td>
+    <td>6.5</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>85%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Three consecutive cloudy winter days</th>
+    <td>3</td>
+    <td>24.0</td>
+    <td>6.9</td>
+    <td>1.8</td>
+    <td>0.0</td>
+    <td>33%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Five consecutive cloudy winter days</th>
+    <td>5</td>
+    <td>40.0</td>
+    <td>8.2</td>
+    <td>11.3</td>
+    <td>5.2</td>
+    <td>33%</td>
+    <td>shortfall</td>
+  </tr><tr>
+    <th scope="row">Snow-covered solar panels</th>
+    <td>3</td>
+    <td>24.0</td>
+    <td>0.0</td>
+    <td>4.4</td>
+    <td>4.2</td>
+    <td>33%</td>
+    <td>shortfall</td>
+  </tr><tr>
+    <th scope="row">Winter weekend followed by an unoccupied period</th>
+    <td>7</td>
+    <td>15.6</td>
+    <td>22.9</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>99%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Full-time winter occupation</th>
+    <td>7</td>
+    <td>55.9</td>
+    <td>36.5</td>
+    <td>5.9</td>
+    <td>0.0</td>
+    <td>33%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Partial array failure</th>
+    <td>3</td>
+    <td>24.0</td>
+    <td>5.9</td>
+    <td>2.7</td>
+    <td>0.0</td>
+    <td>33%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Loss of shared community electricity</th>
+    <td>5</td>
+    <td>40.0</td>
+    <td>9.8</td>
+    <td>0.0</td>
+    <td>14.8</td>
+    <td>33%</td>
+    <td>shortfall</td>
+  </tr><tr>
+    <th scope="row">Essential-load-only emergency operation</th>
+    <td>5</td>
+    <td>21.9</td>
+    <td>9.8</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>47%</td>
+    <td>served</td>
+  </tr></tbody></table></div>
+    <p class="small">The five-day cloudy result without shared electricity is <strong>3.3 kWh/day</strong> unserved. A battery that lasts three days is not sufficient if the array cannot recharge it while supplying the household. Synthetic scenarios. A positive five-day shortfall means the array cannot recharge the battery while supplying the household.</p>
+    <h3>Monthly generation and consumption</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Monthly generation and consumption"><table class="exposure-table"><caption>Monthly estimates. Snow availability reduces winter generation; the shading column is the modelled monthly shade loss. Losses are applied once and are listed in the model assumptions.</caption><thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Per day</th><th scope="col">Consumption per day</th><th scope="col">Balance per day</th><th scope="col">Shading</th><th scope="col">Snow availability</th></tr></thead><tbody><tr><th scope="row">January</th><td>202.5</td><td>6.5</td><td>8.0</td><td>-1.5</td><td>29.6%</td><td>0.82</td></tr><tr><th scope="row">February</th><td>260.4</td><td>9.3</td><td>8.0</td><td>+1.3</td><td>29.6%</td><td>0.85</td></tr><tr><th scope="row">March</th><td>467.4</td><td>15.1</td><td>7.3</td><td>+7.8</td><td>26.2%</td><td>0.92</td></tr><tr><th scope="row">April</th><td>563.3</td><td>18.8</td><td>7.3</td><td>+11.5</td><td>26.2%</td><td>0.98</td></tr><tr><th scope="row">May</th><td>668.1</td><td>21.6</td><td>7.3</td><td>+14.2</td><td>26.2%</td><td>1.00</td></tr><tr><th scope="row">June</th><td>675.8</td><td>22.5</td><td>6.8</td><td>+15.7</td><td>22.9%</td><td>1.00</td></tr><tr><th scope="row">July</th><td>700.2</td><td>22.6</td><td>6.8</td><td>+15.8</td><td>22.9%</td><td>1.00</td></tr><tr><th scope="row">August</th><td>645.4</td><td>20.8</td><td>6.8</td><td>+14.0</td><td>22.9%</td><td>1.00</td></tr><tr><th scope="row">September</th><td>523.5</td><td>17.5</td><td>7.3</td><td>+10.1</td><td>26.2%</td><td>1.00</td></tr><tr><th scope="row">October</th><td>365.7</td><td>11.8</td><td>7.3</td><td>+4.5</td><td>26.2%</td><td>0.99</td></tr><tr><th scope="row">November</th><td>199.0</td><td>6.6</td><td>8.0</td><td>-1.4</td><td>29.6%</td><td>0.90</td></tr><tr><th scope="row">December</th><td>159.9</td><td>5.2</td><td>8.0</td><td>-2.8</td><td>29.6%</td><td>0.80</td></tr></tbody></table></div>
+    <details class="energy-loads"><summary>Load list and calculation for Cross-Stacked Retreat</summary>
+      <p>Daily consumption is calculated from rated power, quantity, hours, duty cycle and the profile's class factor. It is not assigned from floor area. Summer and winter columns show the full-time profiles; the intermittent winter profile reduces discretionary and high-demand loads.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Residential load list"><table class="exposure-table"><caption>Every load present in the residence. "Summer" and "winter" are daily kWh for the full-time profile. The assumption source and confidence are part of the record.</caption><thead><tr><th scope="col">Load</th><th scope="col">Class</th><th scope="col">Rated power</th><th scope="col">Summer / shoulder / winter hours</th><th scope="col">Duty</th><th scope="col">Summer kWh/day</th><th scope="col">Winter kWh/day</th><th scope="col">Supply</th><th scope="col">Deferrable</th><th scope="col">Confidence</th><th scope="col">Source and note</th></tr></thead><tbody><tr>
+      <th scope="row">Refrigerator, 45–60 L DC compressor</th>
+      <td>essential continuous · essential</td>
+      <td>65.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>40.0%</td>
+      <td>0.62</td>
+      <td>0.62</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>Manufacturer-typical 12/24 V compressor fridge; 35% duty at about 20 °C. <br><span class="small">Food storage is a minimum load even for a small home. Confirm the chosen unit and its duty cycle.</span></td>
+    </tr><tr>
+      <th scope="row">Interior LED lighting</th>
+      <td>essential intermittent · essential</td>
+      <td>140.0 W</td>
+      <td>1.5 / 2.5 / 3.5 h</td>
+      <td>100.0%</td>
+      <td>0.21</td>
+      <td>0.49</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>medium</td>
+      <td>Six to ten 5–9 W LED fixtures, used for the stated hours. <br><span class="small">Assume DC LED luminaires on a 24 V or 48 V bus with local switching.</span></td>
+    </tr><tr>
+      <th scope="row">Exterior LED lighting and entry light</th>
+      <td>essential intermittent · essential</td>
+      <td>12.0 W</td>
+      <td>0.5 / 4.0 / 6.0 h</td>
+      <td>100.0%</td>
+      <td>0.01</td>
+      <td>0.07</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>medium</td>
+      <td>One 12 W entry and path luminaire with timer or manual control. <br><span class="small">Dark-sky friendly, shielded and timed; no continuous floodlighting.</span></td>
+    </tr><tr>
+      <th scope="row">USB-C charging</th>
+      <td>essential intermittent · essential</td>
+      <td>25.0 W × 3</td>
+      <td>2.0 / 2.0 / 3.0 h</td>
+      <td>100.0%</td>
+      <td>0.15</td>
+      <td>0.23</td>
+      <td>DC</td>
+      <td>Yes</td>
+      <td>medium</td>
+      <td>Two 25 W USB-C ports at partial load, two to three hours. <br><span class="small">DC-native; avoids running the inverter for small devices.</span></td>
+    </tr><tr>
+      <th scope="row">Phones and tablets</th>
+      <td>discretionary</td>
+      <td>15.0 W × 4</td>
+      <td>3.0 / 3.0 / 3.0 h</td>
+      <td>100.0%</td>
+      <td>0.18</td>
+      <td>0.18</td>
+      <td>DC</td>
+      <td>Yes</td>
+      <td>medium</td>
+      <td>Two devices at about 15 W average charging power. <br><span class="small">Resident devices; not a site load.</span></td>
+    </tr><tr>
+      <th scope="row">Laptop computer</th>
+      <td>discretionary</td>
+      <td>45.0 W × 4</td>
+      <td>3.0 / 2.5 / 3.0 h</td>
+      <td>100.0%</td>
+      <td>0.54</td>
+      <td>0.54</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>medium</td>
+      <td>One 45 W laptop with mixed charging and use. <br><span class="small">Quantity changes with household size in the explorer.</span></td>
+    </tr><tr>
+      <th scope="row">Internet router and local network</th>
+      <td>essential continuous · essential</td>
+      <td>10.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>100.0%</td>
+      <td>0.24</td>
+      <td>0.24</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>medium</td>
+      <td>10 W router or LTE gateway running continuously. <br><span class="small">Kept on for monitoring and remote communication even when unoccupied.</span></td>
+    </tr><tr>
+      <th scope="row">LTE or fixed-wireless radio</th>
+      <td>essential continuous · essential</td>
+      <td>5.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>100.0%</td>
+      <td>0.12</td>
+      <td>0.12</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>5 W radio modem running continuously. <br><span class="small">No fibre is assumed in the woodland.</span></td>
+    </tr><tr>
+      <th scope="row">HRV or ERV ventilation</th>
+      <td>essential continuous · essential</td>
+      <td>50.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>50.0%</td>
+      <td>0.60</td>
+      <td>0.60</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>medium</td>
+      <td>28 W ECM fan at low speed; 35–50% effective duty with boost periods. <br><span class="small">Required for a tight envelope. Confirm airflow, frost protection and controls.</span></td>
+    </tr><tr>
+      <th scope="row">Ceiling fans</th>
+      <td>discretionary</td>
+      <td>25.0 W</td>
+      <td>5.0 / 1.0 / 0.0 h</td>
+      <td>100.0%</td>
+      <td>0.13</td>
+      <td>0.00</td>
+      <td>DC</td>
+      <td>Yes</td>
+      <td>medium</td>
+      <td>One 25 W DC ceiling fan. <br><span class="small">Reduces the need for active cooling.</span></td>
+    </tr><tr>
+      <th scope="row">Water pressure pump</th>
+      <td>essential intermittent · essential</td>
+      <td>650.0 W</td>
+      <td>0.1 / 0.1 / 0.2 h</td>
+      <td>100.0%</td>
+      <td>0.08</td>
+      <td>0.10</td>
+      <td>AC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>400 W booster pump, about 7–10 minutes per day. <br><span class="small">Rainwater or shallow-well supply with a pressure tank.</span></td>
+    </tr><tr>
+      <th scope="row">Sensors, controllers and freeze monitoring</th>
+      <td>essential continuous · essential</td>
+      <td>3.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>100.0%</td>
+      <td>0.07</td>
+      <td>0.07</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>medium</td>
+      <td>Sensor node, controller and low-power display. <br><span class="small">Supports freeze protection and remote monitoring.</span></td>
+    </tr><tr>
+      <th scope="row">Battery management system</th>
+      <td>essential continuous · essential</td>
+      <td>3.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>100.0%</td>
+      <td>0.07</td>
+      <td>0.07</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>medium</td>
+      <td>BMS and shunts, 3 W. <br><span class="small">Included in the battery system, not the inverter.</span></td>
+    </tr><tr>
+      <th scope="row">Inverter standby</th>
+      <td>essential continuous · essential</td>
+      <td>7.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>100.0%</td>
+      <td>0.17</td>
+      <td>0.17</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>medium</td>
+      <td>7 W standby when the inverter is on; 3 W in eco mode when unoccupied. <br><span class="small">Keep the inverter off at night or when the cabin is empty where the design allows.</span></td>
+    </tr><tr>
+      <th scope="row">Induction cooking</th>
+      <td>high demand</td>
+      <td>1800.0 W</td>
+      <td>0.7 / 0.8 / 0.9 h</td>
+      <td>75.0%</td>
+      <td>0.88</td>
+      <td>1.22</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>medium</td>
+      <td>One portable 1,800 W induction burner at 75% average power while cooking. <br><span class="small">Deferrable within the day; a shared kitchen can absorb larger events.</span></td>
+    </tr><tr>
+      <th scope="row">Electric kettle</th>
+      <td>high demand</td>
+      <td>1200.0 W</td>
+      <td>0.1 / 0.1 / 0.2 h</td>
+      <td>100.0%</td>
+      <td>0.12</td>
+      <td>0.22</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>medium</td>
+      <td>1,200 W kettle, one to three short boils per day. <br><span class="small">High instantaneous load; check inverter surge.</span></td>
+    </tr><tr>
+      <th scope="row">Toaster or small grill</th>
+      <td>high demand</td>
+      <td>800.0 W</td>
+      <td>0.1 / 0.1 / 0.1 h</td>
+      <td>100.0%</td>
+      <td>0.05</td>
+      <td>0.08</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>800 W appliance used briefly. <br><span class="small">Ordinary small appliance.</span></td>
+    </tr><tr>
+      <th scope="row">Blender or hand mixer</th>
+      <td>discretionary</td>
+      <td>300.0 W</td>
+      <td>0.0 / 0.1 / 0.1 h</td>
+      <td>100.0%</td>
+      <td>0.01</td>
+      <td>0.02</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>300 W appliance used for a few minutes. <br><span class="small">Small kitchen appliance.</span></td>
+    </tr><tr>
+      <th scope="row">Battery enclosure heating</th>
+      <td>essential continuous · essential</td>
+      <td>35.0 W</td>
+      <td>0.0 / 0.0 / 24.0 h</td>
+      <td>18.0%</td>
+      <td>0.00</td>
+      <td>0.15</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>Thermostatically controlled 35 W pad; average duty about 18% in winter. <br><span class="small">The enclosure is insulated and kept above freezing. Confirm the heater control and failure mode.</span></td>
+    </tr><tr>
+      <th scope="row">Water treatment (UV and filtration)</th>
+      <td>essential intermittent · essential</td>
+      <td>20.0 W</td>
+      <td>2.0 / 2.0 / 2.5 h</td>
+      <td>100.0%</td>
+      <td>0.04</td>
+      <td>0.05</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>UV lamp and controller rated 20 W, two to three hours per day. <br><span class="small">Required only if the water source needs treatment; confirm with water testing.</span></td>
+    </tr><tr>
+      <th scope="row">Local security camera</th>
+      <td>essential continuous · essential</td>
+      <td>5.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>100.0%</td>
+      <td>0.12</td>
+      <td>0.12</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>medium</td>
+      <td>One local-recording camera, 5 W. <br><span class="small">Local storage only; no cloud service is assumed.</span></td>
+    </tr><tr>
+      <th scope="row">Chest freezer</th>
+      <td>essential continuous · essential</td>
+      <td>65.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>35.0%</td>
+      <td>0.55</td>
+      <td>0.55</td>
+      <td>AC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>55 W chest freezer, 30% duty. <br><span class="small">Raises the essential load. Confirm the appliance and its cold-weather location.</span></td>
+    </tr><tr>
+      <th scope="row">Television or monitor for evening use</th>
+      <td>discretionary</td>
+      <td>70.0 W</td>
+      <td>3.5 / 4.0 / 4.5 h</td>
+      <td>100.0%</td>
+      <td>0.25</td>
+      <td>0.32</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>medium</td>
+      <td>70 W screen, two to three hours. <br><span class="small">Shared or small screen; not assumed to be on all day.</span></td>
+    </tr><tr>
+      <th scope="row">Microwave oven</th>
+      <td>high demand</td>
+      <td>1000.0 W</td>
+      <td>0.1 / 0.1 / 0.1 h</td>
+      <td>80.0%</td>
+      <td>0.05</td>
+      <td>0.08</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>1,000 W microwave, a few minutes per day. <br><span class="small">Optional high-demand appliance; check inverter capacity.</span></td>
+    </tr><tr>
+      <th scope="row">Second monitor</th>
+      <td>discretionary</td>
+      <td>35.0 W × 2</td>
+      <td>3.0 / 3.0 / 4.0 h</td>
+      <td>100.0%</td>
+      <td>0.21</td>
+      <td>0.28</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>medium</td>
+      <td>35 W monitor with the laptop. <br><span class="small">Work or studio use.</span></td>
+    </tr><tr>
+      <th scope="row">Small workshop tools</th>
+      <td>discretionary</td>
+      <td>300.0 W</td>
+      <td>0.6 / 0.7 / 0.6 h</td>
+      <td>100.0%</td>
+      <td>0.18</td>
+      <td>0.18</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>300 W average for short repair and making sessions. <br><span class="small">Repair and maintenance, not production manufacturing.</span></td>
+    </tr><tr>
+      <th scope="row">Compact washing machine (cold wash)</th>
+      <td>high demand</td>
+      <td>500.0 W</td>
+      <td>0.4 / 0.4 / 0.5 h</td>
+      <td>100.0%</td>
+      <td>0.18</td>
+      <td>0.23</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>500 W compact washer, cold wash only, most days. <br><span class="small">A shared lodge laundry is the lower-energy alternative.</span></td>
+    </tr><tr>
+      <th scope="row">Coffee machine</th>
+      <td>high demand</td>
+      <td>900.0 W</td>
+      <td>0.1 / 0.1 / 0.1 h</td>
+      <td>100.0%</td>
+      <td>0.07</td>
+      <td>0.11</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>900 W drip or espresso machine, one short cycle. <br><span class="small">High instantaneous load.</span></td>
+    </tr><tr>
+      <th scope="row">Small dehumidifier (shoulder season)</th>
+      <td>discretionary</td>
+      <td>200.0 W</td>
+      <td>0.5 / 1.5 / 0.0 h</td>
+      <td>100.0%</td>
+      <td>0.10</td>
+      <td>0.00</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>200 W dehumidifier for humid spring and autumn periods. <br><span class="small">Not a cooling appliance. Confirm whether ventilation and wood heat make it unnecessary.</span></td>
+    </tr><tr>
+      <th scope="row">Home server or network storage</th>
+      <td>essential continuous · essential</td>
+      <td>30.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>100.0%</td>
+      <td>0.72</td>
+      <td>0.72</td>
+      <td>DC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>25 W network-attached storage or small home server, continuously available. <br><span class="small">Optional. It supports local backups, media and home automation without a cloud service.</span></td>
+    </tr><tr>
+      <th scope="row">Electric pressure cooker or slow cooker</th>
+      <td>high demand</td>
+      <td>900.0 W</td>
+      <td>0.1 / 0.2 / 0.2 h</td>
+      <td>100.0%</td>
+      <td>0.11</td>
+      <td>0.18</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>900 W appliance used for one short cooking cycle most days. <br><span class="small">An efficient way to cook with electricity; still a high instantaneous load.</span></td>
+    </tr></tbody></table></div>
+    </details>
+    <h3>Heating, hot water and other excluded loads</h3>
+    <p>The base estimate excludes electric resistance space heating, conventional electric domestic hot water, electric laundry, additional cooking appliances and electric vehicle charging. These optional profiles are shown separately:</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Optional energy profiles"><table class="exposure-table"><caption>Optional loads and their indicative daily demand. Enabling any of them changes the required array and battery; the note explains the consequence.</caption><thead><tr><th scope="col">Optional profile</th><th scope="col">Summer</th><th scope="col">Shoulder</th><th scope="col">Winter</th><th scope="col">Consequence</th></tr></thead><tbody><tr><th scope="row">Cold-climate air-source heat pump</th><td>0.3 kWh</td><td>2.0 kWh</td><td>8.0 kWh</td><td>Heating is excluded from the base residential estimates. A heat pump would roughly double or triple winter electricity demand and requires a much larger array and battery, or shared heating.</td></tr><tr><th scope="row">Conventional electric domestic hot water</th><td>2.0 kWh</td><td>2.6 kWh</td><td>3.4 kWh</td><td>Not included in the base. A heat-pump water heater would use roughly one third of this.</td></tr><tr><th scope="row">Heat-pump water heater</th><td>0.7 kWh</td><td>0.9 kWh</td><td>1.2 kWh</td><td>Lower demand than resistance hot water, but it needs a heated, ventilated location and adds compressor noise.</td></tr><tr><th scope="row">Electric laundry (washer and dryer)</th><td>0.5 kWh</td><td>0.6 kWh</td><td>0.8 kWh</td><td>A vented or heat-pump dryer is a large flexible load. The shared lodge is the preferred location.</td></tr><tr><th scope="row">Additional electric cooking appliances</th><td>0.8 kWh</td><td>0.9 kWh</td><td>1.0 kWh</td><td>A second oven or a large induction range increases both daily energy and peak demand.</td></tr><tr><th scope="row">Electric vehicle charging</th><td>3.0 kWh</td><td>3.0 kWh</td><td>4.0 kWh</td><td>Even modest commuting would dominate the residential array. Shared charging at the lodge, with a separate solar canopy, is the sensible location.</td></tr></tbody></table></div>
+    <p class="small">A heat pump would change the system substantially. The project does not quietly absorb heating into the residential totals; the shared lodge is the preferred location for higher-energy services such as laundry and emergency charging.</p>
+    <h3>Shared community electricity</h3>
+    <p>The primary configuration is <strong>community backup</strong>. Shared electricity is an option, not an unexplained assumption.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Shared electricity configurations"><table class="exposure-table"><caption>Three configurations compared. A microgrid shares supply and demand but does not remove the effect of region-wide winter cloud or snow.</caption><thead><tr><th scope="col">Configuration</th><th scope="col">Description</th><th scope="col">Supplementary (kWh/day)</th><th scope="col">Distribution loss</th><th scope="col">Note</th></tr></thead><tbody><tr><th scope="row">Independent residence</th><td>Each residence relies on its own array and battery.</td><td>0.0</td><td>0%</td><td>No shared electricity is assumed. A five-day winter cloud event must be met by load reduction, an emergency generator or accepting a shortfall.</td></tr><tr><th scope="row">Independent with community backup</th><td>The residence keeps essential independent capability but can draw limited supplementary electricity from the common lodge.</td><td>4.0</td><td>6%</td><td>The connection is sized for essential and limited ordinary loads, not for electric heating. It is not guaranteed during a region-wide outage.</td></tr><tr><th scope="row">Shared community microgrid</th><td>Multiple arrays and batteries contribute to a professionally designed shared electrical network.</td><td>10.0</td><td>9%</td><td>A microgrid shares supply and demand but does not remove the effect of region-wide winter cloud, snow or a failed shared inverter.</td></tr></tbody></table></div>
+    <p class="small">Shared infrastructure needs a written governance and cost-allocation agreement that preserves resident autonomy and equitable access.</p>
+    <h3>Validation and required reviews</h3>
+    <ul><li><strong>structural review:</strong> Roof structure, wind uplift, snow drift and fixing for the PV arrays need structural review.</li><li><strong>electrical review:</strong> String sizing, rapid shutdown, disconnects, bonding, grounding, battery enclosure and inspection need a licensed electrical design.</li><li><strong>environmental review:</strong> Keep the array on the roof, canopy or existing clearing. Do not clear mature trees to increase the modelled yield.</li></ul>
+    <p class="small">No surveyed coordinates, measured weather, shading study or solar resource assessment exists for this fictional property. Panel dimensions, efficiency, temperature coefficients, inverter efficiency and battery usable capacity vary by product. Tree height, canopy density and winter snow cover are simplified geometric assumptions. Occupancy and appliance use are assumptions, not metered data. Battery ageing, cold-weather derating and inverter surge are not fully modeled.</p>
+  </section>
+  <section class="assembly-section heat-pump-section" aria-labelledby="heat-pump-title" id="heat-pump">
+    <h2 id="heat-pump-title">Heat-pump assessment</h2>
+    <p><strong>Design heat load at −30 °C: 3.2 kW.</strong> Annual heating 3871 kWh thermal; annual cooling 1159 kWh. An air-source heat pump would use about <strong>2267 kWh/year for heating</strong> and 541 kWh/year for cooling, in addition to the household load.</p>
+    <p class="notice">The existing household demand and reference array are unchanged. Full-time heat-pump heating would require about <strong>56 additional winter-critical panels</strong> (111.8 m²), 82 kWh of additional battery for three days and a combined peak of 7.2 kW. That panel area exceeds the remaining roof area; a ground array, canopy or shared array would be required. This is why the project does not present full-time electric heating as a drop-in off-grid service.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump performance at six temperatures"><table class="exposure-table"><caption>Air-source heat-pump performance. COP is the compressor COP; electrical energy includes parasitics and supplemental resistance. These are illustrative curves, not a selected product.</caption><thead><tr><th scope="col">Condition</th><th scope="col">Heating demand (kWh/day)</th><th scope="col">Peak load (kW)</th><th scope="col">COP</th><th scope="col">Available capacity (kW)</th><th scope="col">Resistance backup (kWh/day)</th><th scope="col">Electrical (kWh/day)</th><th scope="col">Capacity result</th></tr></thead><tbody><tr><th scope="row">Mild shoulder season (10 °C)</th><td>4.9</td><td>0.2</td><td>3.78</td><td>5.3</td><td>0.0</td><td>4.5</td><td>Capacity covers the load</td></tr><tr><th scope="row">Cool weather (5 °C)</th><td>13.9</td><td>0.6</td><td>3.51</td><td>5.0</td><td>0.0</td><td>7.2</td><td>Capacity covers the load</td></tr><tr><th scope="row">Early winter (0 °C)</th><td>22.8</td><td>1.0</td><td>2.82</td><td>4.8</td><td>0.0</td><td>11.3</td><td>Capacity covers the load</td></tr><tr><th scope="row">Ordinary cold winter (-10 °C)</th><td>40.7</td><td>1.7</td><td>2.21</td><td>4.2</td><td>0.0</td><td>21.7</td><td>Capacity covers the load</td></tr><tr><th scope="row">Severe winter (-20 °C)</th><td>58.6</td><td>2.4</td><td>1.47</td><td>3.2</td><td>0.0</td><td>43.1</td><td>Capacity covers the load</td></tr><tr><th scope="row">Extreme winter design (-30 °C)</th><td>76.5</td><td>3.2</td><td>1.15</td><td>2.2</td><td>23.7</td><td>72.9</td><td>Supplemental heat needed</td></tr></tbody></table></div>
+    <h3>Operating strategies</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump operating strategies"><table class="exposure-table"><caption>Annual energy balances for six strategies. Strategy D is the full-electric case; it is not the recommended default.</caption><thead><tr><th scope="col">Strategy</th><th scope="col">HP electricity (kWh/yr)</th><th scope="col">Additional panels</th><th scope="col">Additional battery (kWh)</th><th scope="col">Wood heat (kWh thermal)</th><th scope="col">Unserved heat (kWh thermal)</th></tr></thead><tbody><tr><th scope="row">A · Passive architecture and wood heating</th><td>0</td><td>0</td><td>0</td><td>3871</td><td>0</td></tr><tr><th scope="row">B · Surplus-solar heat pump</th><td>1431</td><td>0</td><td>0</td><td>3871</td><td>0</td></tr><tr><th scope="row">C · Hybrid wood and air-source heating</th><td>907</td><td>3</td><td>28</td><td>2323</td><td>0</td></tr><tr><th scope="row">D · Full-time air-source heating</th><td>2267</td><td>56</td><td>82</td><td>0</td><td>0</td></tr><tr><th scope="row">E · Full-time ground-source heating</th><td>1822</td><td>46</td><td>57</td><td>0</td><td>0</td></tr><tr><th scope="row">F · Passive cooling with optional mechanical cooling</th><td>541</td><td>2</td><td>0</td><td>0</td><td>0</td></tr></tbody></table></div>
+    <h3>Passive design and resilience</h3>
+    <p>A plausible passive package would reduce annual heating by 1036 kWh, avoid about 536 kWh/year of heat-pump electricity and avoid 6 additional panels. It does not remove the winter cloud risk.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump resilience scenarios"><table class="exposure-table"><caption>Synthetic heat-pump resilience scenarios. Household electricity is prioritised over heating when supply is short.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Outdoor</th><th scope="col">HP electricity (kWh/day)</th><th scope="col">Generation (kWh/day)</th><th scope="col">End SOC</th><th scope="col">Household unserved</th><th scope="col">Heat unserved</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">One cloudy winter day</th><td>1</td><td>-10 °C</td><td>21.7</td><td>2.3</td><td>46%</td><td>0.0</td><td>0.0</td><td>served</td></tr><tr><th scope="row">Three cloudy winter days</th><td>3</td><td>-10 °C</td><td>21.7</td><td>2.3</td><td>33%</td><td>1.9</td><td>12.8</td><td>household shortfall</td></tr><tr><th scope="row">Five cloudy winter days</th><td>5</td><td>-10 °C</td><td>21.7</td><td>1.6</td><td>33%</td><td>8.2</td><td>27.3</td><td>household shortfall</td></tr><tr><th scope="row">Snow-covered arrays</th><td>3</td><td>-20 °C</td><td>43.1</td><td>0.0</td><td>33%</td><td>8.5</td><td>55.3</td><td>household shortfall</td></tr><tr><th scope="row">Extreme cold with low solar</th><td>5</td><td>-30 °C</td><td>72.9</td><td>1.3</td><td>33%</td><td>11.7</td><td>190.3</td><td>household shortfall</td></tr><tr><th scope="row">Partial battery at the start</th><td>3</td><td>-20 °C</td><td>43.1</td><td>2.0</td><td>33%</td><td>4.5</td><td>64.9</td><td>household shortfall</td></tr><tr><th scope="row">Heat pump failure</th><td>3</td><td>-20 °C</td><td>0.0</td><td>2.0</td><td>33%</td><td>0.0</td><td>0.0</td><td>served</td></tr><tr><th scope="row">Loss of shared community electricity</th><td>5</td><td>-20 °C</td><td>43.1</td><td>2.0</td><td>33%</td><td>24.1</td><td>101.4</td><td>household shortfall</td></tr></tbody></table></div>
+    <p class="small">Baseline household demand and the existing reference array are unchanged. Heat-pump electricity is additional. All results are preliminary. Wood heat is a design intent and is not appropriate for every resident. See <a href="../../heat-pumps/">the heat-pump assessment</a> for the method, charts and the interactive explorer.</p>
   </section>
 
   <section class="vegetation-section" aria-labelledby="vegetation-title">
@@ -272,7 +794,7 @@
       <a class="action" href="../../data/hamlet-cross-stacked-retreat.json" download>Download source JSON</a>
       <a class="action secondary" href="../../editor/?preset=hamlet-cross-stacked-retreat">Open in the editor</a>
       <a class="action secondary" href="../../compare/?a=hamlet-cross-stacked-retreat">Compare this concept</a>
-      <a class="action secondary" href="../../illustration/hamlet-cross-stacked-retreat/">Illustration package</a>
+      <a class="action secondary" href="../../illustration/hamlet-cross-stacked-retreat/description.md">Illustration package</a>
       <a class="action secondary" href="../../residences/">Compare the six hamlet homes</a>
       <a class="action secondary" href="../../index.html">Back to the gallery</a>
     </div>

@@ -9,13 +9,16 @@
   },
   "scripts": {
     "build": "node tools/build.mjs",
-    "check": "node tools/build.mjs --check && node tools/check.mjs && node tools/check-design-lab.mjs && node tools/check-image-descriptions.mjs && node tools/check-reference-generation.mjs",
+    "check": "node tools/build.mjs --check && node tools/check.mjs && node tools/check-design-lab.mjs && node tools/check-energy.mjs && node tools/check-heat-pump.mjs && node tools/check-image-descriptions.mjs && node tools/check-reference-generation.mjs",
     "test:browser": "node tools/browser-check.mjs",
-    "test": "npm run check && npm run test:browser && npm run test:design-lab",
+    "test": "npm run check && npm run test:browser && npm run test:design-lab && npm run test:energy && npm run test:heat-pumps",
     "screenshots": "node tools/screenshots.mjs screenshots",
     "test:design-lab": "node tools/design-lab-check.mjs",
     "generate:references": "node tools/generate-reference-images.mjs",
-    "check:references": "node tools/check-reference-generation.mjs"
+    "check:references": "node tools/check-reference-generation.mjs",
+    "briefs": "node tools/export-generation-briefs.mjs",
+    "test:energy": "node tools/energy-browser-check.mjs",
+    "test:heat-pumps": "node tools/heat-pump-browser-check.mjs"
   },
   "devDependencies": {
     "axe-core": "4.14.0",

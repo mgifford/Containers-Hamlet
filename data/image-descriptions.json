@@ -1,6 +1,6 @@
 {
   "schema": "containers-hamlet-image-descriptions/v1",
-  "note": "Authoritative description of what each v2 illustration is meant to draw. A description is not an architectural fact: every item carries a status. The design model remains the source for geometry, openings, materials, storeys and site. The visible-services layer is an illustration aid, not a water, fire, ventilation or electrical design.",
+  "note": "Authoritative description of what each v2 illustration is meant to draw. A description is not an architectural fact: every item carries a status. The design model remains the source for geometry, openings, materials, storeys and site. The visible-services layer is an illustration aid, not a water, fire, ventilation or electrical design. The energy and thermal models were added after the image descriptions; their source hashes were refreshed and a per-design note records that the images are not panel-count evidence. Use the solar-aware scene prompts for exact counts.",
   "generatedFrom": "data/design-lab.json, data/site.json, docs/visualisation-v2-brief.md and the Phase 4 fire/water layer",
   "policies": {
     "authority": "The design model is authoritative for geometry, materials, openings, storeys and site. A description adds visual intent; it does not create architecture.",
@@ -28,13 +28,13 @@
           {
             "id": "v-pv",
             "kind": "pv-array",
-            "label": "Installed PV array on the south roof slope",
+            "label": "Installed PV array: 8 panels, 3.6 kWp, 8 at 24°/180° on roof flush",
             "status": "modeled",
             "visibleIn": [
               "woodland-cottage-exterior-hero"
             ],
-            "evidence": "solar_array.enabled = true; solar_array.side = south",
-            "note": "Tilted racks; no production claim."
+            "evidence": "energy.solar.arrays: 8 panels, 3.6 kWp; canonical geometry",
+            "note": "Exact count and placement from the energy model; no production claim."
           },
           {
             "id": "v-gutter-south",
@@ -177,16 +177,16 @@
         ],
         "excluded": [
           {
-            "kind": "stove",
-            "label": "Wood stove",
-            "reason": "No wood stove is recorded; the recorded heating is a cold-climate air-source heat pump.",
-            "check": "no-stove"
+            "kind": "wood-heat",
+            "label": "a certified wood stove, flue or chimney installation",
+            "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+            "check": "custom"
           },
           {
             "kind": "chimney",
-            "label": "Chimney",
-            "reason": "No chimney is recorded or designed.",
-            "check": "no-chimney"
+            "label": "a certified chimney or flue installation",
+            "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+            "check": "custom"
           },
           {
             "kind": "hydrant",
@@ -207,10 +207,10 @@
             "check": "no-potable"
           },
           {
-            "kind": "battery",
-            "label": "Battery or inverter",
-            "reason": "No battery, inverter or off-grid electrical plant is recorded.",
-            "check": "no-battery"
+            "kind": "battery-plant",
+            "label": "a construction-ready battery room, inverter or off-grid plant",
+            "reason": "The energy model includes a conceptual battery and inverter, but no plant-room design, clearances, fire separation or electrical installation. Do not show a finished plant as designed.",
+            "check": "custom"
           },
           {
             "kind": "rain-barrel",
@@ -337,9 +337,9 @@
               "check": "no-extra-geometry"
             },
             {
-              "item": "a chimney or a wood stove",
-              "reason": "Neither is recorded; heating is a heat pump.",
-              "check": "no-stove"
+              "item": "a certified wood stove, flue or chimney installation",
+              "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+              "check": "custom"
             },
             {
               "item": "a hydrant or a fire cistern",
@@ -357,9 +357,9 @@
               "check": "custom"
             },
             {
-              "item": "a battery, inverter or off-grid plant",
-              "reason": "None is recorded.",
-              "check": "no-battery"
+              "item": "a construction-ready battery room, inverter or off-grid plant",
+              "reason": "The energy model includes a conceptual battery and inverter, but no plant-room design, clearances, fire separation or electrical installation. Do not show a finished plant as designed.",
+              "check": "custom"
             },
             {
               "item": "a deck presented as noncombustible, or firewood under the floor or against the wall",
@@ -423,8 +423,8 @@
             "The deck is not recorded as noncombustible; snow guards are unresolved."
           ],
           "source": {
-            "designHash": "d142126a",
-            "sceneHash": "4af580f8",
+            "designHash": "84a24c39",
+            "sceneHash": "dd005d57",
             "reference": "site-facing.svg"
           },
           "generation": {
@@ -520,9 +520,9 @@
           ],
           "mustNotShow": [
             {
-              "item": "a wood stove, chimney, range hood or bathroom exhaust fan",
-              "reason": "None is recorded or designed; heating is a heat pump.",
-              "check": "no-stove"
+              "item": "a certified wood stove, flue or chimney installation",
+              "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+              "check": "custom"
             },
             {
               "item": "loose furniture, rugs, lamps, art, plants, books or dishes",
@@ -560,8 +560,8 @@
             "Accessibility clearances are not professionally verified."
           ],
           "source": {
-            "designHash": "d142126a",
-            "sceneHash": "4af580f8",
+            "designHash": "84a24c39",
+            "sceneHash": "dd005d57",
             "reference": "interior-plan.svg"
           },
           "patterns": [
@@ -640,9 +640,9 @@
               "check": "custom"
             },
             {
-              "item": "a chimney, stove, hydrant or fire cistern",
-              "reason": "None is recorded or verified.",
-              "check": "no-chimney"
+              "item": "a certified chimney or flue installation",
+              "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+              "check": "custom"
             },
             {
               "item": "firewood stacked under the floor or against the house",
@@ -684,8 +684,8 @@
             "The deck and undercroft storage remain unresolved fire risks."
           ],
           "source": {
-            "designHash": "d142126a",
-            "sceneHash": "4af580f8",
+            "designHash": "84a24c39",
+            "sceneHash": "dd005d57",
             "reference": "elevation-south.svg"
           },
           "generation": {
@@ -807,8 +807,8 @@
             "Fire-service water access and the separate fire reserve are unverified."
           ],
           "source": {
-            "designHash": "d142126a",
-            "sceneHash": "4af580f8",
+            "designHash": "84a24c39",
+            "sceneHash": "dd005d57",
             "reference": "elevation-south.svg"
           },
           "generation": {
@@ -895,9 +895,9 @@
           ],
           "mustNotShow": [
             {
-              "item": "a wood stove, chimney or stove OAK",
-              "reason": "No stove is recorded; the recorded heating is a heat pump.",
-              "check": "no-stove"
+              "item": "a certified wood stove, flue or chimney installation",
+              "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+              "check": "custom"
             },
             {
               "item": "a gas supply, propane tank or combustion appliance",
@@ -905,9 +905,9 @@
               "check": "custom"
             },
             {
-              "item": "a battery, inverter or off-grid plant",
-              "reason": "None is recorded.",
-              "check": "no-battery"
+              "item": "a construction-ready battery room, inverter or off-grid plant",
+              "reason": "The energy model includes a conceptual battery and inverter, but no plant-room design, clearances, fire separation or electrical installation. Do not show a finished plant as designed.",
+              "check": "custom"
             },
             {
               "item": "a recirculating microwave presented as kitchen ventilation",
@@ -949,8 +949,8 @@
             "Clearances around panels are a design target, not a verified measurement."
           ],
           "source": {
-            "designHash": "d142126a",
-            "sceneHash": "4af580f8",
+            "designHash": "84a24c39",
+            "sceneHash": "dd005d57",
             "reference": "interior-plan.svg"
           },
           "generation": {
@@ -1060,8 +1060,8 @@
             "Grab bars, transfer space and fixture clearances are not modeled beyond the bathroom turning circle."
           ],
           "source": {
-            "designHash": "d142126a",
-            "sceneHash": "4af580f8",
+            "designHash": "84a24c39",
+            "sceneHash": "dd005d57",
             "reference": "elevation-south.svg"
           },
           "generation": {
@@ -1157,9 +1157,9 @@
               "check": "custom"
             },
             {
-              "item": "a chimney, flue or stove",
-              "reason": "None is recorded; heating is a heat pump.",
-              "check": "no-chimney"
+              "item": "a certified chimney or flue installation",
+              "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+              "check": "custom"
             },
             {
               "item": "an extra storey, module or dormer",
@@ -1186,8 +1186,8 @@
             "referencePath": "site/design-lab/systems/wall-mineral-wool.svg"
           },
           "source": {
-            "designHash": "d142126a",
-            "sceneHash": "4af580f8",
+            "designHash": "84a24c39",
+            "sceneHash": "dd005d57",
             "reference": "section.svg"
           },
           "patterns": [
@@ -1229,6 +1229,21 @@
           }
         ],
         "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      },
+      "energyModelNote": "The canonical energy and thermal models were added after this image description set was authored. The source hashes below were refreshed to the current model. The images remain architectural references; they are not evidence of the exact panel count or heat-pump infrastructure. Use the solar-aware scene prompt for the exact count.",
+      "energySummary": {
+        "panels": 8,
+        "capacity_kwp": 3.6,
+        "battery_kwh": 10,
+        "arrays": [
+          {
+            "id": "pv-a",
+            "panels": 8,
+            "tilt_deg": 24,
+            "azimuth_deg": 180,
+            "mounting": "roof-flush"
+          }
+        ]
       }
     },
     "hamlet-offset-stack": {
@@ -1239,13 +1254,13 @@
           {
             "id": "o-pv",
             "kind": "pv-array",
-            "label": "Installed PV array on the upper south roof slope",
+            "label": "Installed PV array: 10 panels, 4.5 kWp, 6 at 39°/180° on roof tilted; 4 at 45°/180° on ground mount",
             "status": "modeled",
             "visibleIn": [
               "offset-stack-exterior-hero"
             ],
-            "evidence": "solar_array.enabled = true",
-            "note": "Tilted racks; no production claim."
+            "evidence": "energy.solar.arrays: 10 panels, 4.5 kWp; canonical geometry",
+            "note": "Exact count and placement from the energy model; no production claim."
           },
           {
             "id": "o-gutter",
@@ -1294,16 +1309,16 @@
         ],
         "excluded": [
           {
-            "kind": "stove",
-            "label": "Wood stove",
-            "reason": "No stove is recorded.",
-            "check": "no-stove"
+            "kind": "wood-heat",
+            "label": "a certified wood stove, flue or chimney installation",
+            "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+            "check": "custom"
           },
           {
             "kind": "chimney",
-            "label": "Chimney",
-            "reason": "No chimney is recorded.",
-            "check": "no-chimney"
+            "label": "a certified chimney or flue installation",
+            "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+            "check": "custom"
           },
           {
             "kind": "hydrant",
@@ -1324,10 +1339,10 @@
             "check": "no-potable"
           },
           {
-            "kind": "battery",
-            "label": "Battery or inverter",
-            "reason": "None is recorded.",
-            "check": "no-battery"
+            "kind": "battery-plant",
+            "label": "a construction-ready battery room, inverter or off-grid plant",
+            "reason": "The energy model includes a conceptual battery and inverter, but no plant-room design, clearances, fire separation or electrical installation. Do not show a finished plant as designed.",
+            "check": "custom"
           },
           {
             "kind": "noncombustible-deck",
@@ -1436,9 +1451,9 @@
               "check": "custom"
             },
             {
-              "item": "a chimney, stove, hydrant or fire cistern",
-              "reason": "None is recorded or verified.",
-              "check": "no-chimney"
+              "item": "a certified chimney or flue installation",
+              "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+              "check": "custom"
             },
             {
               "item": "a noncombustible deck claim or firewood against the house",
@@ -1467,8 +1482,8 @@
             "Interior is not visible."
           ],
           "source": {
-            "designHash": "12ecfb76",
-            "sceneHash": "9e294428",
+            "designHash": "f6d39685",
+            "sceneHash": "2a088f01",
             "reference": "site-facing.svg"
           },
           "generation": {
@@ -1595,8 +1610,8 @@
             "No service core or ventilation layout is modeled."
           ],
           "source": {
-            "designHash": "12ecfb76",
-            "sceneHash": "9e294428",
+            "designHash": "f6d39685",
+            "sceneHash": "2a088f01",
             "reference": "interior-plan.svg"
           },
           "generation": {
@@ -1659,6 +1674,28 @@
           }
         ],
         "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      },
+      "energyModelNote": "The canonical energy and thermal models were added after this image description set was authored. The source hashes below were refreshed to the current model. The images remain architectural references; they are not evidence of the exact panel count or heat-pump infrastructure. Use the solar-aware scene prompt for the exact count.",
+      "energySummary": {
+        "panels": 10,
+        "capacity_kwp": 4.5,
+        "battery_kwh": 15,
+        "arrays": [
+          {
+            "id": "pv-a",
+            "panels": 6,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "mounting": "roof-tilted"
+          },
+          {
+            "id": "pv-b",
+            "panels": 4,
+            "tilt_deg": 45,
+            "azimuth_deg": 180,
+            "mounting": "ground-mount"
+          }
+        ]
       }
     },
     "hamlet-courtyard-residence": {
@@ -1717,16 +1754,16 @@
             "check": "custom"
           },
           {
-            "kind": "stove",
-            "label": "Wood stove",
-            "reason": "No stove is recorded.",
-            "check": "no-stove"
+            "kind": "wood-heat",
+            "label": "a certified wood stove, flue or chimney installation",
+            "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+            "check": "custom"
           },
           {
             "kind": "chimney",
-            "label": "Chimney",
-            "reason": "No chimney is recorded.",
-            "check": "no-chimney"
+            "label": "a certified chimney or flue installation",
+            "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+            "check": "custom"
           },
           {
             "kind": "hydrant",
@@ -1747,10 +1784,10 @@
             "check": "no-potable"
           },
           {
-            "kind": "battery",
-            "label": "Battery or inverter",
-            "reason": "None is recorded.",
-            "check": "no-battery"
+            "kind": "battery-plant",
+            "label": "a construction-ready battery room, inverter or off-grid plant",
+            "reason": "The energy model includes a conceptual battery and inverter, but no plant-room design, clearances, fire separation or electrical installation. Do not show a finished plant as designed.",
+            "check": "custom"
           },
           {
             "kind": "pv",
@@ -1859,9 +1896,9 @@
               "check": "custom"
             },
             {
-              "item": "a chimney, stove, hydrant or fire cistern",
-              "reason": "None is recorded or verified.",
-              "check": "no-chimney"
+              "item": "a certified chimney or flue installation",
+              "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+              "check": "custom"
             },
             {
               "item": "a noncombustible deck claim",
@@ -1883,8 +1920,8 @@
             "No PV is installed."
           ],
           "source": {
-            "designHash": "30eb578a",
-            "sceneHash": "6669c001",
+            "designHash": "eb955d7d",
+            "sceneHash": "4f776580",
             "reference": "site-facing.svg"
           },
           "generation": {
@@ -2009,8 +2046,8 @@
             "The opening names and the room bands do not fully agree; the windows are described by id, not by room label."
           ],
           "source": {
-            "designHash": "30eb578a",
-            "sceneHash": "6669c001",
+            "designHash": "eb955d7d",
+            "sceneHash": "4f776580",
             "reference": "interior-plan.svg"
           },
           "generation": {
@@ -2072,6 +2109,28 @@
           }
         ],
         "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      },
+      "energyModelNote": "The canonical energy and thermal models were added after this image description set was authored. The source hashes below were refreshed to the current model. The images remain architectural references; they are not evidence of the exact panel count or heat-pump infrastructure. Use the solar-aware scene prompt for the exact count.",
+      "energySummary": {
+        "panels": 12,
+        "capacity_kwp": 5.4,
+        "battery_kwh": 18,
+        "arrays": [
+          {
+            "id": "pv-a",
+            "panels": 8,
+            "tilt_deg": 25,
+            "azimuth_deg": 180,
+            "mounting": "roof-ballasted"
+          },
+          {
+            "id": "pv-b",
+            "panels": 4,
+            "tilt_deg": 20,
+            "azimuth_deg": 180,
+            "mounting": "solar-canopy"
+          }
+        ]
       }
     },
     "hamlet-cross-stacked-retreat": {
@@ -2082,13 +2141,13 @@
           {
             "id": "x-pv",
             "kind": "pv-array",
-            "label": "Installed PV array on the upper south roof slope",
+            "label": "Installed PV array: 16 panels, 7.2 kWp, 8 at 39°/180° on roof tilted; 8 at 39°/180° on roof tilted",
             "status": "modeled",
             "visibleIn": [
               "cross-stacked-retreat-exterior-hero"
             ],
-            "evidence": "solar_array.enabled = true",
-            "note": "Tilted racks; no production claim."
+            "evidence": "energy.solar.arrays: 16 panels, 7.2 kWp; canonical geometry",
+            "note": "Exact count and placement from the energy model; no production claim."
           },
           {
             "id": "x-gutter",
@@ -2137,16 +2196,16 @@
         ],
         "excluded": [
           {
-            "kind": "stove",
-            "label": "Wood stove",
-            "reason": "No stove is recorded.",
-            "check": "no-stove"
+            "kind": "wood-heat",
+            "label": "a certified wood stove, flue or chimney installation",
+            "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+            "check": "custom"
           },
           {
             "kind": "chimney",
-            "label": "Chimney",
-            "reason": "No chimney is recorded.",
-            "check": "no-chimney"
+            "label": "a certified chimney or flue installation",
+            "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+            "check": "custom"
           },
           {
             "kind": "hydrant",
@@ -2167,10 +2226,10 @@
             "check": "no-potable"
           },
           {
-            "kind": "battery",
-            "label": "Battery or inverter",
-            "reason": "None is recorded.",
-            "check": "no-battery"
+            "kind": "battery-plant",
+            "label": "a construction-ready battery room, inverter or off-grid plant",
+            "reason": "The energy model includes a conceptual battery and inverter, but no plant-room design, clearances, fire separation or electrical installation. Do not show a finished plant as designed.",
+            "check": "custom"
           },
           {
             "kind": "noncombustible-deck",
@@ -2275,9 +2334,9 @@
               "check": "no-extra-geometry"
             },
             {
-              "item": "a chimney, stove, hydrant or fire cistern",
-              "reason": "None is recorded or verified.",
-              "check": "no-chimney"
+              "item": "a certified chimney or flue installation",
+              "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+              "check": "custom"
             },
             {
               "item": "a noncombustible deck claim or firewood against the house",
@@ -2306,8 +2365,8 @@
             "No fire rating, fire water or noncombustible deck is designed."
           ],
           "source": {
-            "designHash": "a8e30d3c",
-            "sceneHash": "c59b780d",
+            "designHash": "5780b533",
+            "sceneHash": "2276cfcd",
             "reference": "site-facing.svg"
           },
           "generation": {
@@ -2434,8 +2493,8 @@
             "No service core or ventilation layout is modeled."
           ],
           "source": {
-            "designHash": "a8e30d3c",
-            "sceneHash": "c59b780d",
+            "designHash": "5780b533",
+            "sceneHash": "2276cfcd",
             "reference": "interior-plan.svg"
           },
           "generation": {
@@ -2498,6 +2557,28 @@
           }
         ],
         "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      },
+      "energyModelNote": "The canonical energy and thermal models were added after this image description set was authored. The source hashes below were refreshed to the current model. The images remain architectural references; they are not evidence of the exact panel count or heat-pump infrastructure. Use the solar-aware scene prompt for the exact count.",
+      "energySummary": {
+        "panels": 16,
+        "capacity_kwp": 7.2,
+        "battery_kwh": 24,
+        "arrays": [
+          {
+            "id": "pv-a",
+            "panels": 8,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "mounting": "roof-tilted"
+          },
+          {
+            "id": "pv-b",
+            "panels": 8,
+            "tilt_deg": 39,
+            "azimuth_deg": 180,
+            "mounting": "roof-tilted"
+          }
+        ]
       }
     },
     "hamlet-accessible-garden-home": {
@@ -2564,16 +2645,16 @@
         ],
         "excluded": [
           {
-            "kind": "stove",
-            "label": "Wood stove",
-            "reason": "No stove is recorded.",
-            "check": "no-stove"
+            "kind": "wood-heat",
+            "label": "a certified wood stove, flue or chimney installation",
+            "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+            "check": "custom"
           },
           {
             "kind": "chimney",
-            "label": "Chimney",
-            "reason": "No chimney is recorded.",
-            "check": "no-chimney"
+            "label": "a certified chimney or flue installation",
+            "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+            "check": "custom"
           },
           {
             "kind": "hydrant",
@@ -2594,10 +2675,10 @@
             "check": "no-potable"
           },
           {
-            "kind": "battery",
-            "label": "Battery or inverter",
-            "reason": "None is recorded.",
-            "check": "no-battery"
+            "kind": "battery-plant",
+            "label": "a construction-ready battery room, inverter or off-grid plant",
+            "reason": "The energy model includes a conceptual battery and inverter, but no plant-room design, clearances, fire separation or electrical installation. Do not show a finished plant as designed.",
+            "check": "custom"
           },
           {
             "kind": "pv",
@@ -2707,9 +2788,9 @@
               "check": "custom"
             },
             {
-              "item": "a chimney, stove, hydrant or fire cistern",
-              "reason": "None is recorded or verified.",
-              "check": "no-chimney"
+              "item": "a certified chimney or flue installation",
+              "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+              "check": "custom"
             },
             {
               "item": "an installed PV array",
@@ -2738,8 +2819,8 @@
             "No fire rating, fire water or PV is designed."
           ],
           "source": {
-            "designHash": "98e11bf7",
-            "sceneHash": "61536ceb",
+            "designHash": "2557f1ee",
+            "sceneHash": "4c8259b4",
             "reference": "site-facing.svg"
           },
           "generation": {
@@ -2867,8 +2948,8 @@
             "No service core or ventilation layout is modeled."
           ],
           "source": {
-            "designHash": "98e11bf7",
-            "sceneHash": "61536ceb",
+            "designHash": "2557f1ee",
+            "sceneHash": "4c8259b4",
             "reference": "interior-plan.svg"
           },
           "patterns": [
@@ -2922,6 +3003,28 @@
           }
         ],
         "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      },
+      "energyModelNote": "The canonical energy and thermal models were added after this image description set was authored. The source hashes below were refreshed to the current model. The images remain architectural references; they are not evidence of the exact panel count or heat-pump infrastructure. Use the solar-aware scene prompt for the exact count.",
+      "energySummary": {
+        "panels": 12,
+        "capacity_kwp": 5.4,
+        "battery_kwh": 18,
+        "arrays": [
+          {
+            "id": "pv-a",
+            "panels": 8,
+            "tilt_deg": 20,
+            "azimuth_deg": 180,
+            "mounting": "roof-ballasted"
+          },
+          {
+            "id": "pv-b",
+            "panels": 4,
+            "tilt_deg": 15,
+            "azimuth_deg": 180,
+            "mounting": "porch-canopy"
+          }
+        ]
       }
     },
     "hamlet-solar-studio-stack": {
@@ -2932,13 +3035,13 @@
           {
             "id": "s-pv",
             "kind": "pv-array",
-            "label": "Installed PV array on the upper south roof slope",
+            "label": "Installed PV array: 10 panels, 4.5 kWp, 6 at 40°/180° on roof tilted; 4 at 65°/180° on solar canopy",
             "status": "modeled",
             "visibleIn": [
               "solar-studio-stack-exterior-hero"
             ],
-            "evidence": "solar_array.enabled = true",
-            "note": "Tilted racks; no production claim."
+            "evidence": "energy.solar.arrays: 10 panels, 4.5 kWp; canonical geometry",
+            "note": "Exact count and placement from the energy model; no production claim."
           },
           {
             "id": "s-gutter",
@@ -2987,16 +3090,16 @@
         ],
         "excluded": [
           {
-            "kind": "stove",
-            "label": "Wood stove",
-            "reason": "No stove is recorded.",
-            "check": "no-stove"
+            "kind": "wood-heat",
+            "label": "a certified wood stove, flue or chimney installation",
+            "reason": "Wood heat is a conceptual thermal intent, not a certified appliance, clearance or flue design. Do not show a construction-ready installation.",
+            "check": "custom"
           },
           {
             "kind": "chimney",
-            "label": "Chimney",
-            "reason": "No chimney is recorded.",
-            "check": "no-chimney"
+            "label": "a certified chimney or flue installation",
+            "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+            "check": "custom"
           },
           {
             "kind": "hydrant",
@@ -3017,10 +3120,10 @@
             "check": "no-potable"
           },
           {
-            "kind": "battery",
-            "label": "Battery or inverter",
-            "reason": "None is recorded.",
-            "check": "no-battery"
+            "kind": "battery-plant",
+            "label": "a construction-ready battery room, inverter or off-grid plant",
+            "reason": "The energy model includes a conceptual battery and inverter, but no plant-room design, clearances, fire separation or electrical installation. Do not show a finished plant as designed.",
+            "check": "custom"
           },
           {
             "kind": "noncombustible-deck",
@@ -3130,9 +3233,9 @@
               "check": "custom"
             },
             {
-              "item": "a chimney, stove, hydrant or fire cistern",
-              "reason": "None is recorded or verified.",
-              "check": "no-chimney"
+              "item": "a certified chimney or flue installation",
+              "reason": "A flue is a conceptual intent only; no appliance certification, clearance or chimney design exists.",
+              "check": "custom"
             },
             {
               "item": "a noncombustible deck claim",
@@ -3156,8 +3259,8 @@
             "No fire rating, fire water or noncombustible deck is designed."
           ],
           "source": {
-            "designHash": "0ac1e7b3",
-            "sceneHash": "56dd76bb",
+            "designHash": "32e73c41",
+            "sceneHash": "51825bd8",
             "reference": "site-facing.svg"
           },
           "generation": {
@@ -3281,8 +3384,8 @@
             "No service core or ventilation layout is modeled."
           ],
           "source": {
-            "designHash": "0ac1e7b3",
-            "sceneHash": "56dd76bb",
+            "designHash": "32e73c41",
+            "sceneHash": "51825bd8",
             "reference": "interior-plan.svg"
           },
           "generation": {
@@ -3345,6 +3448,28 @@
           }
         ],
         "note": "Finished dimensions include external insulation, thermal break, drained cavity and cladding; the container nominal dimensions are not the visible massing."
+      },
+      "energyModelNote": "The canonical energy and thermal models were added after this image description set was authored. The source hashes below were refreshed to the current model. The images remain architectural references; they are not evidence of the exact panel count or heat-pump infrastructure. Use the solar-aware scene prompt for the exact count.",
+      "energySummary": {
+        "panels": 10,
+        "capacity_kwp": 4.5,
+        "battery_kwh": 12,
+        "arrays": [
+          {
+            "id": "pv-a",
+            "panels": 6,
+            "tilt_deg": 40,
+            "azimuth_deg": 180,
+            "mounting": "roof-tilted"
+          },
+          {
+            "id": "pv-b",
+            "panels": 4,
+            "tilt_deg": 65,
+            "azimuth_deg": 180,
+            "mounting": "solar-canopy"
+          }
+        ]
       }
     }
   },
@@ -3365,16 +3490,16 @@
       171
     ],
     "cues": {
-      "112": "Entrance Transition: a legible, sheltered arrival with a path, a threshold and a place to pause before the shared room.",
-      "127": "Intimacy Gradient: a public-to-private sequence with a clear threshold between shared and private rooms.",
-      "159": "Light on Two Sides: daylight from more than one direction, with openings on more than one face.",
-      "163": "Outdoor Room: a porch, terrace or courtyard with a floor, shelter, edge and a reason to stay.",
-      "180": "Window Place: a comfortable place to sit at a window, with light, a view and a sense of enclosure.",
       "104": "Site Repair: place the building and its services to avoid damage and repair already disturbed ground.",
       "105": "South Facing Outdoors: put the main outdoor places on the sunny side and shelter them from wind.",
       "106": "Positive Outdoor Space: shape the outdoor space with the buildings so it has a clear form, not leftover space.",
+      "112": "Entrance Transition: a legible, sheltered arrival with a path, a threshold and a place to pause before the shared room.",
+      "127": "Intimacy Gradient: a public-to-private sequence with a clear threshold between shared and private rooms.",
       "155": "Old Age Cottage: a small, accessible dwelling close to community support.",
-      "171": "Tree Places: preserve special trees and make places around them for sitting and gathering."
+      "159": "Light on Two Sides: daylight from more than one direction, with openings on more than one face.",
+      "163": "Outdoor Room: a porch, terrace or courtyard with a floor, shelter, edge and a reason to stay.",
+      "171": "Tree Places: preserve special trees and make places around them for sitting and gathering.",
+      "180": "Window Place: a comfortable place to sit at a window, with light, a view and a sense of enclosure."
     },
     "coverage": {
       "104": [

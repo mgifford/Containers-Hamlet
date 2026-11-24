@@ -4,6 +4,9 @@ The building has 1 occupied storey and 1 container module.
 Module geometry:
 - m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
 Roof: gable at 24 degrees, 0.8 m overhang, installed PV array.
+Solar: exactly 8 installed 450 W panels (3.6 kWp, 16 m²) in total. This viewpoint shows 0 of them. Do not add, remove, merge or rearrange panels.
+- pv-a: 8 panels in 1 row(s) x 8 column(s), 24° tilt, 180° from north, roof flush on the roof surface; group string-a.
+Panel snow: pv-a sheds to south with snow guards. Do not draw snow discharging onto an entrance or accessible route.
 Openings:
 - m1: north window "Bedroom window" at 1.8 m, 1.4 x 1.3 m, sill 0.9 m; north window "Kitchen window" at 6.2 m, 1 x 1.2 m, sill 1.1 m; south window "Bathroom window" at 4.4 m, 0.8 x 1 m, sill 1.4 m; south sliding-door "Garden doors" at 8.4 m, 2.4 x 2.1 m, sill 0 m; south door "Step-free entrance" at 6.1 m, 0.95 x 2.1 m, sill 0 m; west window "Living window" at 1.2 m, 1 x 1.3 m, sill 0.9 m.
 Outdoor spaces:

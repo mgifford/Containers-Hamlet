@@ -23,6 +23,10 @@ jobs:
         run: node tools/check.mjs
       - name: Design Lab schema, gallery and editor checks
         run: node tools/check-design-lab.mjs
+      - name: Residential energy model tests
+        run: node tools/check-energy.mjs
+      - name: Thermal and heat-pump tests
+        run: node tools/check-heat-pump.mjs
   browser:
     name: Accessibility in the browser
     runs-on: ubuntu-latest
@@ -38,6 +42,10 @@ jobs:
         run: node tools/browser-check.mjs screenshots
       - name: Design Lab browser checks
         run: node tools/design-lab-check.mjs screenshots
+      - name: Energy explorer and editor browser checks
+        run: node tools/energy-browser-check.mjs screenshots
+      - name: Heat-pump assessment browser checks
+        run: node tools/heat-pump-browser-check.mjs screenshots
       - uses: actions/upload-artifact@v7
         if: always()
         with:

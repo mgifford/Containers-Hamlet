@@ -1,6 +1,6 @@
 # Solar Studio Stack — illustration reference
 
-Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 0ac1e7b3
+Design revision: 2.0.0 · schema containers-hamlet-design/v2.0 · design hash 32e73c41
 
 This description is generated from the canonical design model. The reference SVG is the authoritative geometric reference. The illustration prompt is an interpretation.
 
@@ -15,6 +15,12 @@ This description is generated from the canonical design model. The reference SVG
 ## Modules
 - **m1** — storey 1, 6.058 × 2.438 m, base 0.6 m, rotation 0°, timber cladding.
 - **m2** — storey 2, 6.058 × 2.438 m, base 3.896 m, rotation 0°, metal cladding. m2 is offset 0.8 m east relative to m1.
+
+## Solar array
+- Installed: 10 × 450 W = 4.5 kWp; 20 m² of module surface; 0 visible from this viewpoint.
+- pv-a: 6 panels, 2 × 3, 40° tilt, 180° from north, roof-tilted, roof surface, group string-a. Snow sheds south behind guards.
+- pv-b: 4 panels, 1 × 4, 65° tilt, 180° from north, solar-canopy, canopy surface, group string-b. Snow sheds south without guards.
+- Canopy canopy-winter: 6 × 1.8 m, 2.2 m high.
 
 ## Openings
 - m1 / Living doors — south sliding-door, 2 × 2.1 m, sill 0 m.
@@ -61,6 +67,7 @@ This description is generated from the canonical design model. The reference SVG
 - Step-free entrance is a design intent, not a verified measurement.
 - Adaptable bathroom is a design intent, not a verified layout.
 - Adaptable kitchen is a design intent, not a verified layout.
+- The illustration must show 10 installed PV panels, not a generic panel pattern. This viewpoint shows 0 of them.
 
 ## Unresolved matters
 - **interior-partitions**: Interior partitions, fixtures and camera geometry are conceptual or provisional. Do not claim a spatially accurate perspective or verified clearance.
