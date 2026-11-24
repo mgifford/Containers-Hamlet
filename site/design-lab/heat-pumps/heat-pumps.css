@@ -1,0 +1,77 @@
+/* Heat-pump assessment. Code: MIT. */
+.hp-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 1rem;
+  margin: 1.2rem 0;
+  align-items: start;
+}
+.hp-form fieldset {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: var(--surface);
+  padding: 0.8rem 1rem 1rem;
+}
+.hp-form legend { font-weight: 800; padding: 0 0.35rem; }
+.hp-field { margin: 0.55rem 0; }
+.hp-field label { display: block; font-weight: 700; margin-bottom: 0.2rem; }
+.hp-field input,
+.hp-field select {
+  width: 100%;
+  max-width: 22rem;
+  padding: 0.42rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+.hp-help { margin: 0.25rem 0 0; max-width: 44ch; font-size: 0.85rem; color: var(--muted); }
+.hp-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.hp-actions button {
+  font: inherit; font-weight: 700; padding: 0.55rem 0.9rem;
+  border: 1px solid var(--button); border-radius: 0.4rem;
+  background: var(--button); color: var(--button-text); cursor: pointer;
+}
+.hp-actions button + button { background: var(--surface); color: var(--text); }
+.hp-actions button:hover { background: var(--button-hover); }
+.hp-actions button + button:hover { background: var(--notice); color: var(--text); }
+.hp-status {
+  margin: 1rem 0 0.4rem; padding: 0.55rem 0.8rem;
+  border-left: 4px solid var(--focus); background: var(--notice);
+  font-weight: 600; max-width: 80ch;
+}
+.hp-results {
+  border: 1px solid var(--border); border-radius: 0.6rem;
+  background: var(--surface); padding: 0.8rem 1rem 1rem; margin: 1rem 0;
+}
+.hp-results h3 { margin-top: 0.2rem; }
+.hp-metrics {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.6rem 1rem; margin: 0.8rem 0;
+}
+.hp-metrics > div { border-top: 1px solid var(--border); padding-top: 0.3rem; }
+.hp-metrics dt { font-size: 0.82rem; font-weight: 700; color: var(--muted); }
+.hp-metrics dd { margin: 0.15rem 0 0; font-size: 1.05rem; font-weight: 700; }
+.hp-figure {
+  margin: 1.2rem 0; padding: 0.7rem 0.8rem 0.9rem;
+  border: 1px solid var(--border); border-radius: 0.6rem;
+  background: var(--surface);
+  color: var(--text);
+  overflow-x: auto;
+}
+.hp-figure figcaption { max-width: 78ch; margin-bottom: 0.4rem; }
+.hp-figure svg { display: block; width: 100%; height: auto; min-width: 38rem; }
+.hp-resilience { margin: 0.8rem 0; }
+.hp-resilience summary { cursor: pointer; font-weight: 700; padding: 0.35rem 0; }
+@media (max-width: 40rem) {
+  .hp-form { grid-template-columns: 1fr; }
+  .hp-figure svg { min-width: 30rem; }
+}
+@media (prefers-reduced-motion: reduce) { .hp-actions button { transition: none; } }
+@media (forced-colors: active) {
+  .hp-form fieldset, .hp-results, .hp-figure, .hp-status { border: 1px solid CanvasText; background: Canvas; color: CanvasText; forced-color-adjust: none; }
+  .hp-actions button { border: 1px solid ButtonText; background: ButtonFace; color: ButtonText; }
+  .hp-figure svg rect[fill="#faf8f2"] { fill: Canvas; }
+}

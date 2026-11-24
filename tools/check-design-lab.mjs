@@ -12,7 +12,7 @@ const Schema = require('../site/js/design-schema.js');
 const Model = require('../site/js/design-model.js');
 const Illustration = require('../site/js/design-illustration.js');
 const Interior = require('../site/js/design-interior.js');
-const { validatePatterns, validateSiteElements, VERIFIED_TITLES } = require('./lib/patterns.mjs');
+const { validatePatterns, validateSiteElements, validateExtensions, VERIFIED_TITLES } = require('./lib/patterns.mjs');
 const { validateScenarios } = require('./lib/scenarios.mjs');
 const { validateDesignAnnotations } = require('./lib/design-annotations.mjs');
 const { validateEvaluation } = require('./lib/evaluation.mjs');
@@ -218,6 +218,11 @@ ok(patternData.patterns.every((p) => VERIFIED_TITLES[p.number] === p.title), 'ev
 ok(patternData.patterns.every((p) => p.sourceVerified && p.relatedPatterns.length > 0 && p.applicableElements.length > 0), 'every pattern has a verified source, related patterns and applicable elements');
 ok(patternData.patterns.every((p) => patternData.patterns.some((q) => q.number !== p.number && q.relatedPatterns.includes(p.number))), 'no catalogue pattern is completely isolated from the relationship graph');
 ok(patternData.patterns.every((p) => p.evaluationQuestions.length >= 2 && p.limitations.length >= 1), 'every pattern records questions and limitations');
+const extensionValidation = validateExtensions(patternData);
+ok(extensionValidation.ok, `energy pattern extensions validate${extensionValidation.errors.length ? ': ' + extensionValidation.errors.join('; ') : ''}`);
+ok(patternData.extensions && patternData.extensions.patterns.length === 10, 'ten original energy-pattern extensions are recorded');
+ok(patternData.extensions.patterns.every((p) => /not Christopher Alexander/i.test(patternData.extensions.attribution)), 'extension attribution explicitly disclaims Christopher Alexander authorship');
+ok(patternData.extensions.patterns.every((p) => p.alexander.every((a) => VERIFIED_TITLES[a.number] === a.title)), 'every extension link to an Alexander pattern uses a verified title');
 ok(JSON.parse(read('data/patterns/schema.json')).properties.patterns.maxItems === 20, 'the pattern JSON Schema documents the catalogue bound');
 const scenarioData = JSON.parse(read('data/scenarios/site-layouts.json'));
 const scenarioValidation = validateScenarios(scenarioData, patternData);
@@ -332,7 +337,7 @@ ok((residences.match(/<tr data-home=/g) || []).length === 6, 'residence comparis
 ok(/id="sort-residences"/.test(residences) && /id="filter-storeys"/.test(residences) && /id="filter-arrangement"/.test(residences), 'residence comparison offers sorting and filtering');
 ok(/Stacked and single-storey alternatives/.test(residences) && /single-storey translation/.test(residences), 'residence comparison includes single-storey alternatives');
 ok(/Architectural diversity assessment/.test(residences) && /0\.8/.test(residences), 'residence comparison includes the rule-based diversity assessment');
-ok(/Gross floor area counts nominal module areas/.test(residences) && /No cost, carbon or energy figure is included/.test(residences), 'residence comparison states its area and evidence boundaries');
+ok(/Gross floor area counts nominal module areas/.test(residences) && /No cost or carbon figure is included/.test(residences) && /separate energy table/.test(residences), 'residence comparison states its area and evidence boundaries');
 ok(exists('site/design-lab/residences/residences.js') && !/fetch\(|localStorage|sessionStorage/.test(read('site/design-lab/residences/residences.js')), 'residence sorting is local and stores nothing');
 
 section('Architectural galleries and comparison');

@@ -790,5 +790,342 @@
       "relationshipNote": "A window place is a small room of one’s own and an alcove at the building edge; it connects the interior to the outdoor room and two-sided light.",
       "sourceVerified": true
     }
-  ]
+  ],
+  "extensions": {
+    "schema": "containers-hamlet-pattern-extensions/v1",
+    "title": "Energy patterns developed for Containers Hamlet",
+    "attribution": "Original extensions developed for this project. These are not Christopher Alexander patterns and are not attributed to him.",
+    "note": "Each extension is a design proposition developed from the residential energy work. The linked Alexander patterns are references to the 1977 book; the extension text is original.",
+    "patterns": [
+      {
+        "id": "right-sized-energy",
+        "title": "Right-Sized Energy",
+        "scale": "building",
+        "summary": "Size the electrical system to the life it serves, not to a showroom ideal. A smaller home with a modest load can be better served by a smaller array and battery than a larger home with a larger system.",
+        "problem": "Solar arrays and batteries are often sized by ambition, available roof area or a generic package rather than by the number of residents, the season of use and the loads that actually exist.",
+        "proposal": "Start from a documented load list and an honest occupancy pattern. Add generation and storage only to meet that demand, including a defined winter reserve. Show the shortfall rather than hiding it in an oversized system.",
+        "hamletInterpretation": "Woodland Cottage carries 8 panels and a 10 kWh battery for one person and seasonal use; Cross-Stacked Retreat carries 16 panels and 24 kWh for four residents. The difference is justified by occupants and loads, not by floor area alone.",
+        "homes": [
+          "hamlet-woodland-cottage",
+          "hamlet-cross-stacked-retreat"
+        ],
+        "alexander": [
+          {
+            "number": 105,
+            "title": "South Facing Outdoors"
+          },
+          {
+            "number": 163,
+            "title": "Outdoor Room"
+          }
+        ],
+        "tradeoffs": "A smaller system costs less and uses fewer materials, but it reduces tolerance for cloudy periods and may constrain future needs. A larger system adds embodied impact and maintenance.",
+        "unresolved": "No metered consumption exists. The load lists are assumptions, not measurements, and the winter shortfall remains a design problem.",
+        "evaluationQuestions": [
+          "Does the system match the documented load list and occupancy?",
+          "Is the winter shortfall visible and planned for?",
+          "Could demand reduction replace another panel or battery?"
+        ],
+        "evidenceStatus": "conceptual"
+      },
+      {
+        "id": "solar-outdoor-rooms",
+        "title": "Solar Outdoor Rooms",
+        "scale": "building",
+        "summary": "A canopy or porch can be both a usable outdoor room and a solar support, provided it does not shade the winter sun the building needs or discharge snow onto a route.",
+        "problem": "Solar canopies are often added as equipment, not as architecture. A canopy in the wrong place shades the building, blocks a path or becomes a maintenance problem.",
+        "proposal": "Design the canopy as an outdoor room first: shelter, shade, a protected route. Then place panels on it where the winter sun is unobstructed and snow can leave safely.",
+        "hamletInterpretation": "Courtyard Residence uses a detached east-path canopy; Solar Studio Stack uses a steep winter canopy beside its east path. Neither is placed across the courtyard’s winter sun.",
+        "homes": [
+          "hamlet-courtyard-residence",
+          "hamlet-solar-studio-stack"
+        ],
+        "alexander": [
+          {
+            "number": 105,
+            "title": "South Facing Outdoors"
+          },
+          {
+            "number": 163,
+            "title": "Outdoor Room"
+          },
+          {
+            "number": 106,
+            "title": "Positive Outdoor Space"
+          }
+        ],
+        "tradeoffs": "A canopy adds structure, wind uplift, snow management and maintenance access. It can improve outdoor use and generation at the same time, or do neither if poorly placed.",
+        "unresolved": "Canopy structure, wind uplift, snow shedding and egress are not engineered. The winter shade geometry is simplified.",
+        "evaluationQuestions": [
+          "Does the canopy shelter a real route or outdoor room?",
+          "Does it shade the building in winter?",
+          "Can snow leave it without crossing an entrance or accessible path?"
+        ],
+        "evidenceStatus": "conceptual"
+      },
+      {
+        "id": "shared-energy-infrastructure",
+        "title": "Shared Energy Infrastructure",
+        "scale": "community",
+        "summary": "Some electrical services are better shared than duplicated: laundry, water pumping, tools, emergency charging and a larger battery that can support several homes.",
+        "problem": "Six independent systems can duplicate expensive equipment and leave each household without a backup. A shared system can also hide dependency and weaken autonomy if it is not governed clearly.",
+        "proposal": "Keep essential independent capability in each home, then add a shared layer for high-demand and emergency services. Define metering, governance, maintenance and failure modes before building it.",
+        "hamletInterpretation": "The common lodge carries a larger shared array, battery and laundry. Each residence keeps its own essential array and battery, and shared electricity is modelled as an option with a stated distribution loss.",
+        "homes": [
+          "hamlet-offset-stack",
+          "hamlet-accessible-garden-home"
+        ],
+        "alexander": [
+          {
+            "number": 67,
+            "title": "Common Land"
+          },
+          {
+            "number": 81,
+            "title": "Small Services Without Red Tape"
+          },
+          {
+            "number": 37,
+            "title": "House Cluster"
+          }
+        ],
+        "tradeoffs": "Sharing reduces duplication and can improve resilience, but adds distribution losses, governance, metering and a single point of failure.",
+        "unresolved": "No shared electrical design, protection scheme, metering or cost allocation exists. The microgrid comparison is a conceptual energy balance.",
+        "evaluationQuestions": [
+          "Which services are genuinely better shared?",
+          "What happens when the shared system fails?",
+          "Is access equitable and is the governance written down?"
+        ],
+        "evidenceStatus": "evidence-needed"
+      },
+      {
+        "id": "winter-resilience",
+        "title": "Winter Resilience",
+        "scale": "building",
+        "summary": "A home is not winter-resilient because its battery lasts three days. It is resilient when the array can recharge the battery while supplying the load, and when the household has a plan for the days it cannot.",
+        "problem": "Average winter generation can look adequate while a five-day cloud sequence, snow cover or a partial array failure leaves the home short.",
+        "proposal": "Test consecutive cloudy days, snow-covered arrays, partial failure and loss of shared supply. State the unserved demand and the planned response: reduce load, use shared backup, run a generator or accept the shortfall.",
+        "hamletInterpretation": "All six homes show a positive five-day shortfall without shared electricity. The smaller cottage has more days of autonomy but the same structural risk; the larger homes have more generation but larger loads.",
+        "homes": [
+          "hamlet-woodland-cottage",
+          "hamlet-solar-studio-stack"
+        ],
+        "alexander": [
+          {
+            "number": 105,
+            "title": "South Facing Outdoors"
+          },
+          {
+            "number": 163,
+            "title": "Outdoor Room"
+          }
+        ],
+        "tradeoffs": "More battery and more array improve tolerance but add cost and embodied impact. Load reduction and shared backup may be cheaper and more robust.",
+        "unresolved": "Weather is synthetic. Snow clearing, battery ageing and cold-weather derating are simplified. No emergency plan is agreed.",
+        "evaluationQuestions": [
+          "What happens on the fifth cloudy day?",
+          "Can the array recharge the battery while serving the load?",
+          "Is the emergency response written down and practiced?"
+        ],
+        "evidenceStatus": "conceptual"
+      },
+      {
+        "id": "essential-electrical-services",
+        "title": "Essential Electrical Services",
+        "scale": "building",
+        "summary": "Separate the loads that must continue from the loads that can wait. A small essential circuit can keep communications, ventilation, water, refrigeration and accessibility equipment alive when the whole-house system cannot.",
+        "problem": "Treating all loads as equal makes the battery larger and the emergency plan less clear. Treating none as essential leaves people without communications, water or refrigeration.",
+        "proposal": "Classify loads as essential continuous, essential intermittent, discretionary, high-demand and accessibility-related. Provide a labelled essential circuit and a reserve that ordinary operation cannot consume.",
+        "hamletInterpretation": "Each residence records an essential reserve and an essential-load autonomy. The Accessible Garden Home carries a larger reserve for communications and accessibility-related equipment without assuming a specific medical device.",
+        "homes": [
+          "hamlet-accessible-garden-home",
+          "hamlet-courtyard-residence"
+        ],
+        "alexander": [
+          {
+            "number": 81,
+            "title": "Small Services Without Red Tape"
+          },
+          {
+            "number": 129,
+            "title": "Common Areas at the Heart"
+          }
+        ],
+        "tradeoffs": "A larger essential reserve reduces ordinary autonomy. Omitting a load from the essential list may be unsafe for a particular resident.",
+        "unresolved": "Residents have not defined their own essential loads. Accessibility needs vary and must not be assumed.",
+        "evaluationQuestions": [
+          "Which loads must continue, and for how long?",
+          "Is the essential circuit labelled and reachable?",
+          "Does the reserve reflect the residents’ actual needs?"
+        ],
+        "evidenceStatus": "conceptual"
+      },
+      {
+        "id": "repairable-technology",
+        "title": "Repairable Technology",
+        "scale": "building",
+        "summary": "Choose equipment that can be inspected, isolated, repaired and replaced by a qualified person without dismantling the building.",
+        "problem": "Solar, battery and inverter systems are often installed as sealed packages with inaccessible isolators, proprietary parts and no service plan.",
+        "proposal": "Keep the service core accessible, label every circuit, use replaceable components and record the maintenance access. Design the array so panels can be reached safely.",
+        "hamletInterpretation": "Woodland Cottage keeps its array in one reachable row at the eave; the Accessible Garden Home puts four panels on a porch roof that can be inspected from the terrace. Neither treats “install and forget” as a plan.",
+        "homes": [
+          "hamlet-woodland-cottage",
+          "hamlet-accessible-garden-home"
+        ],
+        "alexander": [
+          {
+            "number": 81,
+            "title": "Small Services Without Red Tape"
+          },
+          {
+            "number": 129,
+            "title": "Common Areas at the Heart"
+          },
+          {
+            "number": 119,
+            "title": "Arcades"
+          }
+        ],
+        "tradeoffs": "Accessible, repairable equipment can cost more and take more space. Proprietary all-in-one systems may be cheaper but harder to service.",
+        "unresolved": "No equipment has been selected. Maintenance access, spare parts and service intervals are not designed.",
+        "evaluationQuestions": [
+          "Can the inverter and battery be isolated without a ladder?",
+          "Are the array and canopy serviceable safely?",
+          "Are spare parts and a service plan available?"
+        ],
+        "evidenceStatus": "evidence-needed"
+      },
+      {
+        "id": "woodland-preservation",
+        "title": "Woodland Preservation",
+        "scale": "landscape",
+        "summary": "Treat the woodland as the primary infrastructure. Put buildings, arrays and paths in existing clearings, on roofs and on already-disturbed ground before clearing mature trees.",
+        "problem": "A solar calculation can be “improved” by removing trees, quietly trading habitat, shade, privacy and fire resilience for generation.",
+        "proposal": "Model the trees as a constraint. Keep arrays on roofs, canopies and existing clearings. Record the shade loss and accept it rather than clearing the woodland.",
+        "hamletInterpretation": "Offset Stack puts its second array on the ground in the existing east clearing rather than removing trees. The woodland shade is a recorded loss, not a reason to clear.",
+        "homes": [
+          "hamlet-offset-stack",
+          "hamlet-solar-studio-stack"
+        ],
+        "alexander": [
+          {
+            "number": 171,
+            "title": "Tree Places"
+          },
+          {
+            "number": 104,
+            "title": "Site Repair"
+          }
+        ],
+        "tradeoffs": "Keeping trees reduces winter generation and can increase snow and leaf maintenance. Removing them changes habitat, privacy, wind and fire behaviour.",
+        "unresolved": "The tree model is a simplified cylinder scatter, not a survey. Habitat value and fire behaviour are not assessed.",
+        "evaluationQuestions": [
+          "Could the array move to a roof or existing clearing?",
+          "What is the shaded yield, and is it accepted?",
+          "Does the design protect the trees that matter most?"
+        ],
+        "evidenceStatus": "conceptual"
+      },
+      {
+        "id": "seasonal-adaptation",
+        "title": "Seasonal Adaptation",
+        "scale": "building",
+        "summary": "Design for several occupancies, not one: summer, shoulder season, intermittent winter and full-time winter. The same home may need different loads, different rooms and a different relationship to the array.",
+        "problem": "A cottage sized for summer may be presented as a year-round home, or a full-time home may be modelled only in average conditions.",
+        "proposal": "Record separate summer, shoulder, intermittent-winter and unoccupied profiles. Show the consumption, generation and autonomy for each. Let the household choose its pattern honestly.",
+        "hamletInterpretation": "Woodland Cottage is sized for summer and intermittent winter, not full-time winter living. Solar Studio Stack is modelled as a full-time single-person home. Their systems differ because their lives differ.",
+        "homes": [
+          "hamlet-woodland-cottage",
+          "hamlet-solar-studio-stack"
+        ],
+        "alexander": [
+          {
+            "number": 105,
+            "title": "South Facing Outdoors"
+          },
+          {
+            "number": 163,
+            "title": "Outdoor Room"
+          }
+        ],
+        "tradeoffs": "A seasonal home uses fewer resources but may not support ageing in place or a change of circumstances. A full-time home needs more winter capacity.",
+        "unresolved": "Occupancy is assumed. The water system, access and winterization are not fully designed for every pattern.",
+        "evaluationQuestions": [
+          "Which seasons is the home actually used?",
+          "Does the winter profile assume full-time occupation?",
+          "What changes if the household stays all winter?"
+        ],
+        "evidenceStatus": "conceptual"
+      },
+      {
+        "id": "accessible-service-infrastructure",
+        "title": "Accessible Service Infrastructure",
+        "scale": "building",
+        "summary": "Electrical and water controls, battery isolation and maintenance access must be reachable and operable by the people who live there, without climbing and without an unplanned dependence on others.",
+        "problem": "Service rooms, inverters and batteries are often placed in basements, lofts or locked cupboards that an accessible route does not reach.",
+        "proposal": "Put the service core on an accessible route, at a reachable height, with clear labelling and a safe isolation sequence. Keep canopies and arrays out of the step-free route and design snow to leave away from it.",
+        "hamletInterpretation": "The Accessible Garden Home keeps its utility cupboard at the entrance, puts four panels on a porch roof inspectable from the terrace, and uses snow guards. It does not claim that the electrical work is accessible to a resident without training.",
+        "homes": [
+          "hamlet-accessible-garden-home"
+        ],
+        "alexander": [
+          {
+            "number": 81,
+            "title": "Small Services Without Red Tape"
+          },
+          {
+            "number": 155,
+            "title": "Old Age Cottage"
+          },
+          {
+            "number": 112,
+            "title": "Entrance Transition"
+          }
+        ],
+        "tradeoffs": "Accessible service space can consume floor area and cost more. Remote monitoring can reduce the need to reach equipment but adds dependency on communications.",
+        "unresolved": "Controls have not been tested with disabled residents. Maintenance still requires a qualified electrical contractor.",
+        "evaluationQuestions": [
+          "Can a resident reach the main isolation switch without stairs?",
+          "Are controls at a usable height and clearly labelled?",
+          "Does solar infrastructure obstruct a step-free route?"
+        ],
+        "evidenceStatus": "evidence-needed"
+      },
+      {
+        "id": "low-energy-domestic-life",
+        "title": "Low-Energy Domestic Life",
+        "scale": "interior",
+        "summary": "The cheapest kilowatt-hour is the one not used. Efficient appliances, smaller rooms, shared facilities, daylight, clothes drying and modest hot-water use can avoid panels and batteries entirely.",
+        "problem": "Adding generation is more visible than reducing demand, so the array grows while the refrigerator, lighting and standby loads remain inefficient.",
+        "proposal": "Reduce demand first: efficient refrigeration, LED lighting, DC-native devices, shared laundry, short showers, passive cooling and daylight. Then size the array and battery for what remains.",
+        "hamletInterpretation": "The six homes share a modest construction language and a low-energy appliance set. The shared lodge takes laundry and high-demand equipment out of the individual homes. The comparison shows the equivalent panel count that could be avoided by demand reduction.",
+        "homes": [
+          "hamlet-woodland-cottage",
+          "hamlet-courtyard-residence"
+        ],
+        "alexander": [
+          {
+            "number": 129,
+            "title": "Common Areas at the Heart"
+          },
+          {
+            "number": 141,
+            "title": "A Room of One’s Own"
+          },
+          {
+            "number": 67,
+            "title": "Common Land"
+          }
+        ],
+        "tradeoffs": "Reducing demand can mean changing habits, sharing facilities or accepting a smaller appliance. Efficiency improvements have their own embodied impact.",
+        "unresolved": "No lifecycle or carbon assessment is claimed. Appliance efficiencies are assumptions, not measured performance.",
+        "evaluationQuestions": [
+          "Which loads could be reduced or shared before adding panels?",
+          "Are the appliances the most efficient available?",
+          "Does the home make low-energy habits easy?"
+        ],
+        "evidenceStatus": "conceptual"
+      }
+    ]
+  }
 }

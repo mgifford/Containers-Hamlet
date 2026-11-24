@@ -8,9 +8,9 @@
  * Code licence: AGPL-3.0-or-later.
  */
 (function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory(require('./design-schema.js'), require('./design-model.js'), require('./design-interior.js'));
-  else root.DesignIllustration = factory(root.DesignSchema, root.DesignModel, root.DesignInterior);
-})(typeof self !== 'undefined' ? self : this, function (Schema, Model, Interior) {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./design-schema.js'), require('./design-model.js'), require('./design-interior.js'), require('./design-energy.js'));
+  else root.DesignIllustration = factory(root.DesignSchema, root.DesignModel, root.DesignInterior, root.DesignEnergy);
+})(typeof self !== 'undefined' ? self : this, function (Schema, Model, Interior, Energy) {
   'use strict';
 
   var ILLUSTRATION_SCHEMA = 'containers-hamlet-illustration/v1';
@@ -48,6 +48,41 @@
   function norm(deg) { var v = deg % 360; return v < 0 ? v + 360 : v; }
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
   function oneOf(list, v) { return list.indexOf(v) >= 0; }
+  function angleDiff(a, b) { return Math.abs(((a - b + 540) % 360) - 180); }
+  function pvScene(design, cameraAzimuth, viewType) {
+    if (!Energy || !design.energy) return null;
+    var g = Energy.panelGeometry(design);
+    var s = Energy.summary(design);
+    var total = g.total_panels;
+    var visible;
+    if (viewType === 'elevated-isometric' || viewType === 'roof-level' || viewType === 'roof') visible = total;
+    else if (viewType === 'interior-looking-out') visible = 0;
+    else visible = g.panels.filter(function (p) { return angleDiff(p.azimuth_deg, cameraAzimuth) <= 90; }).length;
+    return {
+      totalPanels: total,
+      capacity_kwp: g.capacity_kwp,
+      moduleWatts: design.energy.reference_module.watts,
+      panelArea_m2: g.area_m2,
+      visiblePanels: visible,
+      cameraAzimuth_deg: round(cameraAzimuth, 1),
+      arrays: g.arrays.map(function (a) {
+        return {
+          id: a.id, label: a.label, panelCount: a.module_count, rows: a.rows, columns: a.columns,
+          tilt_deg: a.tilt_deg, azimuth_deg: a.azimuth_deg, mounting: a.mounting,
+          surface: a.surface_kind, electricalGroup: a.electrical_group,
+          panelDimensions_m: { length_m: design.energy.reference_module.length_m, width_m: design.energy.reference_module.width_m },
+          maintenanceAccess: a.maintenance_access,
+          snowShed: a.snow_shed_to,
+          snowGuards: !!a.snow_guards
+        };
+      }),
+      canopies: (design.energy.solar.canopies || []).map(function (c) {
+        return { id: c.id, label: c.label, length_m: c.length_m, depth_m: c.depth_m, height_m: c.height_m, tilt_deg: c.tilt_deg, azimuth_deg: c.azimuth_deg };
+      }),
+      snowNote: 'Snow shedding, guards and clear zones must match the recorded array geometry. Do not draw snow sliding onto an entrance or accessible route.',
+      note: 'The geometric model is authoritative. The illustration must show exactly this many panels on these surfaces and must not invent a different layout.'
+    };
+  }
 
   function stableStringify(value) {
     if (value === null || typeof value !== 'object') return JSON.stringify(value);
@@ -251,6 +286,7 @@
     var interiorAccess = Interior ? Interior.accessibilityEvidence(design) : null;
     var azimuth = viewAzimuth(design, config, siteData);
     var unresolved = unresolvedFor(design, siteData);
+    var pv = pvScene(design, azimuth, config.view.type);
     if (interiorValidation) {
       interiorValidation.invalid.forEach(function (i) { unresolved.push({ code: i.code, severity: 'invalid-interior', message: i.message }); });
       interiorValidation.unresolved.forEach(function (i) { unresolved.push({ code: i.code, severity: 'unresolved', message: i.message }); });
@@ -321,6 +357,7 @@
           note: 'Room polygons and fixtures support a detailed interior prompt and plan. No interior camera or perspective renderer is implemented, so perspective accuracy is not claimed.'
         }
       },
+      solar: pv,
       services: {
         fire: design.fire ? clone(design.fire) : null,
         water: design.water ? clone(design.water) : null,
@@ -380,6 +417,7 @@
     if (design.access && design.access.adaptable_bathroom) scene.intentions.push('Adaptable bathroom is a design intent, not a verified layout.');
     if (design.access && design.access.adaptable_kitchen) scene.intentions.push('Adaptable kitchen is a design intent, not a verified layout.');
     if (design.roof_form && design.roof_form.green_roof) scene.intentions.push('Green roof is a concept with unresolved load, drainage, fire and maintenance questions.');
+    if (pv) scene.intentions.push('The illustration must show ' + pv.totalPanels + ' installed PV panels, not a generic panel pattern. This viewpoint shows ' + pv.visiblePanels + ' of them.');
     if (design.roof_form && design.roof_form.type === 'butterfly') scene.intentions.push('Butterfly roof is an exterior form; the interior ceiling is not resolved.');
     scene.prompt = promptFor(scene);
     scene.interiorPrompt = interiorPromptFor(scene);
@@ -400,6 +438,16 @@
       lines.push('- ' + m.sourceId + ': ' + (m.storey + 1) + ' storey, ' + round(m.nominal.length_m, 2) + ' m x ' + round(m.nominal.width_m, 2) + ' m, base elevation ' + round(m.elevation_m, 2) + ' m, rotation ' + m.rotation_deg + ' degrees, ' + m.cladding.type + ' cladding.' + (m.offsetNote ? ' ' + m.offsetNote : ''));
     });
     lines.push('Roof: ' + b.roofType + ' at ' + b.roofPitch_deg + ' degrees, ' + round(b.roofOverhang_m, 2) + ' m overhang' + (b.roofGreen ? ', green-roof concept' : '') + (b.installedPv ? ', installed PV array' : (b.roofType === 'solar-ready' ? ', solar-ready only — do not show installed panels' : '')) + '.');
+    if (scene.solar) {
+      lines.push('Solar: exactly ' + scene.solar.totalPanels + ' installed ' + scene.solar.moduleWatts + ' W panels (' + round(scene.solar.capacity_kwp, 1) + ' kWp, ' + round(scene.solar.panelArea_m2, 1) + ' m²) in total. This viewpoint shows ' + scene.solar.visiblePanels + ' of them. Do not add, remove, merge or rearrange panels.');
+      scene.solar.arrays.forEach(function (a) {
+        lines.push('- ' + a.id + ': ' + a.panelCount + ' panels in ' + a.rows + ' row(s) x ' + a.columns + ' column(s), ' + a.tilt_deg + '° tilt, ' + a.azimuth_deg + '° from north, ' + a.mounting.replace(/-/g, ' ') + ' on the ' + a.surface + ' surface; group ' + a.electricalGroup + '.');
+      });
+      if (scene.solar.canopies.length) scene.solar.canopies.forEach(function (c) { lines.push('- Solar canopy ' + c.id + ': ' + round(c.length_m, 1) + ' × ' + round(c.depth_m, 1) + ' m at ' + round(c.height_m, 1) + ' m, panels at ' + c.tilt_deg + '°.'); });
+      lines.push('Panel snow: ' + scene.solar.arrays.map(function (a) { return a.id + ' sheds to ' + a.snowShed + (a.snowGuards ? ' with snow guards' : ' without snow guards'); }).join('; ') + '. Do not draw snow discharging onto an entrance or accessible route.');
+    } else if (scene.building.installedPv) {
+      lines.push('Solar: the design records an installed PV array but no canonical panel geometry. Do not invent a panel count; show the array as an unresolved intent and report the omission.');
+    }
     lines.push('Openings:');
     var byModule = {};
     scene.openings.forEach(function (o) { (byModule[o.module] = byModule[o.module] || []).push(o); });
@@ -482,11 +530,13 @@
     var groups = [
       { category: 'geometric contradictions', text: 'extra storeys, extra containers, changed module offsets, changed rotations, missing or duplicated modules, wrong roof form, wrong roof pitch, extra windows, missing windows, extra doors, missing doors, extra balconies, extra stairs' },
       { category: 'architectural additions', text: 'garage, basement, dormers, extra rooms, extra porches, extra decks, structural supports not shown, chimney not recorded, skylights not recorded' },
+      { category: 'solar contradictions', text: 'extra solar panels, missing solar panels, invented panel layout, panels on a north slope, panels floating above the roof, panels through a window, a different panel count from the stated count, panels on a canopy that is not recorded' },
       { category: 'rendering artifacts', text: 'warped straight lines, floating building, impossible cantilever, duplicate openings, inconsistent perspective, text, labels, watermarks, logos' },
       { category: 'environmental contradictions', text: 'tropical plants, wrong season, wrong site view, neighbouring buildings not recorded, lake or meadow in the wrong direction' },
       { category: 'safety-related visual errors', text: 'missing guardrails, unsafe stairs, blocked egress, exposed structural collapse, missing fire separation, wood deck presented as noncombustible, firewood stored against the house, missing chimney, missing stove outside-air duct, confirmed hydrant without a verified supply, single rain barrel presented as a complete system, potable-water claim without treatment' }
     ];
     var text = groups.map(function (g) { return g.text; }).join(', ');
+    if (scene && scene.solar) text += ', solar array with ' + scene.solar.totalPanels + ' panels shown as ' + scene.solar.visiblePanels + ' visible panels from this viewpoint';
     return { text: text, groups: groups };
   }
 
@@ -505,6 +555,14 @@
     scene.requiredElements.forEach(function (m) {
       lines.push('- **' + m.sourceId + '** — storey ' + (m.storey + 1) + ', ' + m.nominal.length_m + ' × ' + m.nominal.width_m + ' m, base ' + m.elevation_m + ' m, rotation ' + m.rotation_deg + '°, ' + m.cladding.type + ' cladding. ' + (m.offsetNote || ''));
     });
+    lines.push('');
+    lines.push('## Solar array');
+    if (scene.solar) {
+      lines.push('- Installed: ' + scene.solar.totalPanels + ' × ' + scene.solar.moduleWatts + ' W = ' + round(scene.solar.capacity_kwp, 1) + ' kWp; ' + round(scene.solar.panelArea_m2, 1) + ' m² of module surface; ' + scene.solar.visiblePanels + ' visible from this viewpoint.');
+      scene.solar.arrays.forEach(function (a) { lines.push('- ' + a.id + ': ' + a.panelCount + ' panels, ' + a.rows + ' × ' + a.columns + ', ' + a.tilt_deg + '° tilt, ' + a.azimuth_deg + '° from north, ' + a.mounting + ', ' + a.surface + ' surface, group ' + a.electricalGroup + '. Snow sheds ' + a.snowShed + (a.snowGuards ? ' behind guards' : ' without guards') + '.'); });
+      scene.solar.canopies.forEach(function (c) { lines.push('- Canopy ' + c.id + ': ' + c.length_m + ' × ' + c.depth_m + ' m, ' + c.height_m + ' m high.'); });
+    } else if (scene.building.installedPv) lines.push('- Installed PV is recorded without canonical panel geometry. Do not invent a panel count.');
+    else lines.push('- No installed PV array.');
     lines.push('');
     lines.push('## Openings');
     if (!scene.openings.length) lines.push('- None recorded.');
@@ -584,6 +642,15 @@
     if (scene.interior && scene.interior.validation && !scene.interior.validation.ok) errors.push('Interior spatial model has invalid geometry.');
     if (scene.interior && scene.interior.rooms && scene.interior.rooms.length && !scene.capabilities.interiorIllustrationPrompt) errors.push('Interior prompt capability is missing despite modeled rooms.');
     if (scene.presentation.people !== false) warnings.push('People are enabled; this is a presentation choice, not an architectural fact.');
+    if (design.energy && Energy) {
+      var pv = Energy.panelGeometry(design);
+      if (!scene.solar) errors.push('Scene does not carry the canonical solar array facts.');
+      else {
+        if (scene.solar.totalPanels !== pv.total_panels) errors.push('Scene solar panel count does not match the canonical array geometry.');
+        if (scene.solar.visiblePanels > scene.solar.totalPanels) errors.push('Scene claims more visible panels than are installed.');
+        if (scene.prompt && scene.prompt.text.indexOf('exactly ' + scene.solar.totalPanels + ' installed') < 0) errors.push('Prompt does not state the exact installed panel count.');
+      }
+    }
     if (scene.materialPolicy === 'exploratory') warnings.push('Exploratory materials are non-authoritative.');
     return { ok: errors.length === 0, errors: errors, warnings: warnings };
   }

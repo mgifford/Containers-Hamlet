@@ -65,7 +65,7 @@ uncompressed because they are tiny.
 | Whole published site | 6370 KB | **5987 KB** |
 | Whole site with concept placeholders, patterns, services and scenarios | 5987 KB | **6380 KB** |
 
-The budget is 6.5 MB in `tools/check.mjs`. The concept images are AVIF at 800 px to keep the addition small; the six-home annotations are kept in the page HTML so the lens works without JavaScript.
+The budget is 7.75 MB in `tools/check.mjs` (raised from 6.5 MB for the energy and heat-pump work). The concept images are AVIF at 800 px to keep the addition small; the six-home annotations are kept in the page HTML so the lens works without JavaScript.
 
 ## Trade-offs
 
@@ -83,3 +83,13 @@ The budget is 6.5 MB in `tools/check.mjs`. The concept images are AVIF at 800 px
 - No external image CDN, backend or runtime dependency.
 - No SVG rasterisation or lossy image conversion.
 - No change to the accessibility, no-JavaScript or print behaviour.
+
+## Energy and heat-pump budget update
+
+The published site budget was raised from 6.5 MB to 7.75 MB after adding the
+canonical energy model, the energy explorer, the heat-pump assessment and the
+per-home energy/thermal tables. The initial page view still loads only the
+existing main-site assets and remains under the 120 KB compressed budget. The
+new pages are separate routes with local scripts only; no dependency, remote
+script or runtime service was added. The largest new cost is the generated
+per-home table content and the four heat-pump charts, not the JavaScript.

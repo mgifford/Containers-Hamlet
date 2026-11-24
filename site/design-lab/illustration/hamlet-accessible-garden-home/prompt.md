@@ -5,6 +5,10 @@ Module geometry:
 - m1: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
 - m2: 1 storey, 6.06 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
 Roof: canopy at 0 degrees, 1.2 m overhang.
+Solar: exactly 12 installed 450 W panels (5.4 kWp, 24 m²) in total. This viewpoint shows 0 of them. Do not add, remove, merge or rearrange panels.
+- pv-a: 8 panels in 2 row(s) x 4 column(s), 20° tilt, 180° from north, roof ballasted on the roof surface; group string-a.
+- pv-b: 4 panels in 2 row(s) x 2 column(s), 15° tilt, 180° from north, porch canopy on the porch surface; group string-b.
+Panel snow: pv-a sheds to south with snow guards; pv-b sheds to south with snow guards. Do not draw snow discharging onto an entrance or accessible route.
 Openings:
 - m1: south opening "Internal opening to bedroom module" at 3 m, 1.4 x 2.1 m, sill 0 m; north window "Living window" at 1.6 m, 1.4 x 1.3 m, sill 0.8 m; north window "Kitchen window" at 4.6 m, 1 x 1.2 m, sill 1.1 m; west window "West window" at 1 m, 1 x 1.3 m, sill 0.9 m.
 - m2: north opening "Internal opening to living module" at 3 m, 1.4 x 2.1 m, sill 0 m; south door "Step-free entrance" at 1.6 m, 1 x 2.1 m, sill 0 m; south sliding-door "Garden doors" at 4.4 m, 2.4 x 2.1 m, sill 0 m; west window "Bathroom window" at 1 m, 0.8 x 1 m, sill 1.4 m; east door "Utility door" at 1 m, 0.95 x 2.1 m, sill 0 m.

@@ -319,9 +319,48 @@ The existing Cabin A and lodge data remain under their existing provenance. The 
 - Envelope, planting, irrigation, fire, moisture, foundation and bridge performance are qualitative; no hygrothermal, geotechnical or structural calculation is performed.
 - No visual drag manipulation; numeric and keyboard controls are the editable route.
 - No full 3D walkthrough, BIM, IFC or DXF.
-- No structural, energy, fire, acoustic, cost or code calculation.
+- No structural, fire, acoustic, cost or code calculation. The energy and heat-pump models are conceptual estimates, not certified simulations or equipment selections.
 - Room zones do not model partitions or fixtures.
 - The hamlet preview is illustrative and does not add a design to the community.
 - No test with screen readers or disabled people yet.
 - The container modifications still need professional engineering review.
 EOF
+## Residential energy and heat-pump extensions
+
+The Design Lab now has three linked public surfaces:
+
+- `/design-lab/residences/` — the six-home comparison, including an energy table
+  (panels, kWp, panel area, mounting, summer/winter generation, daily use,
+  battery, essential and ordinary autonomy, supplementary need, suitable
+  patterns and limitations) and a heat-pump table (design load, annual heating,
+  additional winter panels, additional battery, combined peak and assessment).
+- `/design-lab/energy/` — a static six-home energy comparison, monthly tables,
+  an accessible energy explorer and a heat-pump summary. Controls cover
+  residence, occupants, occupancy pattern, panel count, panel capacity, tilt,
+  origin, shading, battery, consumption, cloudy days, essential-only operation
+  and shared electricity. Results update in-page; a JSON download is available.
+- `/design-lab/heat-pumps/` — a six-home heat-pump assessment with temperature
+  scenarios, operating strategies, passive alternatives, resilience scenarios,
+  four accessible charts and an interactive heat-pump explorer. The explorer
+  keeps the existing array and battery fixed and reports the additional burden.
+
+The architecture page for each selected home carries the full array, battery,
+load, monthly, scenario and heat-pump tables. The editor has an
+**Energy, solar and battery** panel: panel count, panel dimensions, tilt,
+azimuth, mounting, roof surface, rows, placement offset, edge clearance, battery
+capacity, essential reserve and household profile. Moving a module or changing a
+roof revalidates placement; panels are never silently deleted.
+
+The canonical models are `site/js/design-energy.js` and
+`site/js/design-thermal.js`. Both are shared by the Node build and the browser.
+Heat-pump electricity is additional to the baseline; enabling a heat pump does
+not resize the reference array.
+
+Known limitations now include:
+
+- the energy and thermal models are transparent concept estimates, not hourly
+  building-performance simulations;
+- U-values, airtightness, gains, solar factors and heat-pump curves are
+  assumptions;
+- no equipment has been selected, costed or reviewed;
+- ground-source loops, ductwork, controls and service upgrades are not designed.

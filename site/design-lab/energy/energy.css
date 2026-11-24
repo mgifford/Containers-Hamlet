@@ -1,0 +1,159 @@
+/* Residential energy explorer. Code: MIT. */
+.energy-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 1rem;
+  margin: 1.2rem 0;
+  align-items: start;
+}
+.energy-form fieldset {
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: var(--surface);
+  padding: 0.8rem 1rem 1rem;
+}
+.energy-form legend {
+  font-weight: 800;
+  padding: 0 0.35rem;
+}
+.energy-field { margin: 0.55rem 0; }
+.energy-field label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+.energy-field input,
+.energy-field select {
+  width: 100%;
+  max-width: 22rem;
+  padding: 0.42rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+.field-help {
+  margin: 0.25rem 0 0;
+  max-width: 42ch;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.energy-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+.energy-actions button {
+  font: inherit;
+  font-weight: 700;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid var(--button);
+  border-radius: 0.4rem;
+  background: var(--button);
+  color: var(--button-text);
+  cursor: pointer;
+}
+.energy-actions button + button {
+  background: var(--surface);
+  color: var(--text);
+}
+.energy-actions button:hover { background: var(--button-hover); }
+.energy-actions button + button:hover { background: var(--notice); }
+.energy-status {
+  margin: 1rem 0 0.4rem;
+  padding: 0.55rem 0.8rem;
+  border-left: 4px solid var(--focus);
+  background: var(--notice);
+  font-weight: 600;
+  max-width: 80ch;
+}
+.energy-results {
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: var(--surface);
+  padding: 0.8rem 1rem 1rem;
+  margin: 1rem 0;
+}
+.energy-results h3 { margin-top: 0.2rem; }
+.energy-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 0.6rem 1rem;
+  margin: 0.8rem 0;
+}
+.energy-metrics > div {
+  border-top: 1px solid var(--border);
+  padding-top: 0.3rem;
+}
+.energy-metrics dt { font-size: 0.82rem; font-weight: 700; color: var(--muted); }
+.energy-metrics dd { margin: 0.15rem 0 0; font-size: 1.05rem; font-weight: 700; }
+.energy-warnings { margin: 0.6rem 0; }
+.energy-warnings h3 { font-size: 1rem; margin: 0.4rem 0; }
+.energy-warnings ul { margin: 0.2rem 0 0; padding-left: 1.2rem; max-width: 78ch; }
+.energy-chart {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+  margin: 0.6rem 0;
+  overflow-x: auto;
+}
+.energy-chart svg { display: block; width: 100%; height: auto; min-width: 34rem; }
+.energy-monthly { margin: 0.6rem 0; }
+.energy-monthly summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0.4rem 0;
+}
+.energy-compare-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin: 0.8rem 0;
+}
+.energy-compare-controls label { font-weight: 700; }
+.energy-compare-controls select {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  max-width: 100%;
+}
+.energy-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  gap: 1rem;
+}
+.energy-card {
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: var(--surface);
+  padding: 0.9rem 1rem 1rem;
+}
+.energy-card h3 { margin-top: 0.1rem; }
+.energy-card .tagline { color: var(--muted); }
+
+@media (max-width: 40rem) {
+  .energy-form { grid-template-columns: 1fr; }
+  .energy-chart svg { min-width: 28rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .energy-actions button { transition: none; }
+}
+
+@media (forced-colors: active) {
+  .energy-form fieldset,
+  .energy-results,
+  .energy-card,
+  .energy-chart,
+  .energy-status { border: 1px solid CanvasText; forced-color-adjust: none; background: Canvas; color: CanvasText; }
+  .energy-actions button { border: 1px solid ButtonText; background: ButtonFace; color: ButtonText; }
+  .energy-chart svg rect[fill="#faf8f2"] { fill: Canvas; }
+}

@@ -269,3 +269,15 @@ does so for portability.
 - [`visualisation-prompts.md`](visualisation-prompts.md)
 - [`design-lab.md`](design-lab.md)
 - [`data-model.md`](data-model.md)
+
+## Solar-aware scene facts
+
+For a residence with a canonical energy model, `sceneSpec` now includes a
+`solar` object: exact installed panel count, capacity, panel area, visible panel
+count for the camera bearing, per-array count/rows/columns/tilt/azimuth/
+mounting/surface/electrical group, panel dimensions, canopy dimensions,
+maintenance access and snow-shedding. The prompt states the exact count and
+forbids adding, removing, merging or rearranging panels. A viewpoint that cannot
+see the south array reports zero visible panels rather than inventing them. The
+scene validates that the count matches the canonical geometry. Generated images
+that deviate remain discrepancies; the geometric model is authoritative.

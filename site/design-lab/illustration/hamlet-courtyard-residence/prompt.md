@@ -5,6 +5,11 @@ Module geometry:
 - m1: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 0 degrees, timber cladding.
 - m2: 1 storey, 12.19 m x 2.44 m, base elevation 0.6 m, rotation 90 degrees, timber cladding.
 Roof: flat at 0 degrees, 0.5 m overhang, green-roof concept.
+Solar: exactly 12 installed 450 W panels (5.4 kWp, 24 m²) in total. This viewpoint shows 0 of them. Do not add, remove, merge or rearrange panels.
+- pv-a: 8 panels in 1 row(s) x 8 column(s), 25° tilt, 180° from north, roof ballasted on the roof surface; group string-a.
+- pv-b: 4 panels in 1 row(s) x 4 column(s), 20° tilt, 180° from north, solar canopy on the canopy surface; group string-b.
+- Solar canopy canopy-east: 6 × 2.8 m at 2.5 m, panels at 20°.
+Panel snow: pv-a sheds to south without snow guards; pv-b sheds to south with snow guards. Do not draw snow discharging onto an entrance or accessible route.
 Openings:
 - m1: north sliding-door "Courtyard doors" at 6.2 m, 2.6 x 2.1 m, sill 0 m; north window "Dining window" at 3 m, 1.4 x 1.4 m, sill 0.8 m; south window "Bedroom window" at 2 m, 1.4 x 1.3 m, sill 0.9 m; south window "Bathroom window" at 9.6 m, 0.8 x 1 m, sill 1.4 m; east door "Entry door" at 1.2 m, 0.95 x 2.1 m, sill 0 m; west window "Garden window" at 1.4 m, 1.2 x 1.4 m, sill 0.8 m.
 - m2: north window "Kitchen window" at 2.2 m, 1.2 x 1.2 m, sill 1.1 m; north window "Courtyard window" at 4.8 m, 1.6 x 1.4 m, sill 0.8 m; north sliding-door "Studio doors" at 8.2 m, 2 x 2.1 m, sill 0 m; south window "Workspace window" at 2.4 m, 1.2 x 1.3 m, sill 0.9 m; south window "Garden window" at 7.6 m, 1.4 x 1.3 m, sill 0.9 m.

@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare and explore the solar, battery and seasonal electricity systems of the six Containers Hamlet residences. Transparent load assumptions, monthly generation, autonomy and winter resilience scenarios.">
+  <title>Residential energy explorer · Containers Hamlet Design Lab</title>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="energy.css">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+</head>
+<body class="lab-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="../../index.html">Containers Hamlet</a>
+  <nav aria-label="Main">
+    <a href="../../community/">Community</a>
+    <a href="../../hamlet/">Map</a>
+    <a href="../../homes/">Homes</a>
+    <a href="../../design-lab/" aria-current="page">Design Lab</a>
+    <a href="../../living/">Living Here</a>
+    <a href="../../participate/">Participate</a>
+  </nav>
+</header>
+<nav class="subnav" aria-label="Design Lab sections">
+  <a href="../../design-lab/">Gallery</a>
+  <a href="../../design-lab/pattern-language/">Patterns</a>
+  <a href="../../design-lab/residences/">Residences</a>
+  <a href="../../design-lab/energy/" aria-current="page">Energy</a>
+  <a href="../../design-lab/heat-pumps/">Heat pumps</a>
+  <a href="../../design-lab/scenarios/">Scenarios</a>
+  <a href="../../design-lab/evaluation/">Evaluation</a>
+  <a href="../../design-lab/illustration/">Illustrate</a>
+  <a href="../../design-lab/visualisations/">Visuals</a>
+  <a href="../../design-lab/editor/">Editor</a>
+  <a href="../../design-lab/guides/">Guides</a>
+  <a href="../../design-lab/compare/">Compare</a>
+</nav>
+<main id="main" class="lab-main">
+  <p class="eyebrow">Residential energy</p>
+  <h1>Right-sized energy, six different answers</h1>
+  <p class="lede">The six homes share a construction language but not an electrical system. Each has a documented load list, a different panel count, a different mounting strategy and a battery sized against its own occupancy. The reference set is <strong>68 panels, 30.6 kWp and 136 m² of module surface</strong>. That is a design hypothesis for six homes, not a target for any one home.</p>
+  <p class="notice"><strong>Concept model only.</strong> These are illustrative estimates from a fictional site. There is no surveyed solar resource, measured weather, metered consumption, structural design, electrical design or solar installer review. Do not present these figures as guaranteed production or as an off-grid guarantee. See <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/residential-energy-model.md">the residential energy model</a> for the method and unresolved assumptions.</p>
+
+  <section aria-labelledby="compare-title">
+    <h2 id="compare-title">Six systems compared</h2>
+    <p>Read the table as a set of trade-offs, not a ranking. A smaller array serving a smaller home is not worse than a larger array serving a larger household. The question is whether the system fits the life it is meant to support, and whether the winter shortfall has an honest plan.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Six-home energy comparison table">
+      <table id="energy-comparison">
+        <caption>Residential energy comparison. Generation is a modelled average daily estimate; consumption is calculated from the equipment assumptions in each home's load list. "Supplementary" is the unserved demand per day over a synthetic five-day cloudy winter period with no shared electricity.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Home and intended occupancy</th>
+            <th scope="col">Conditioned floor</th>
+            <th scope="col">Occupants</th>
+            <th scope="col">Panels</th>
+            <th scope="col">Installed capacity</th>
+            <th scope="col">Panel surface</th>
+            <th scope="col">Mounting</th>
+            <th scope="col">Summer generation (daily)</th>
+            <th scope="col">Winter generation (daily)</th>
+            <th scope="col">Summer use (daily)</th>
+            <th scope="col">Winter use (daily)</th>
+            <th scope="col">Battery nominal / usable</th>
+            <th scope="col">Essential autonomy</th>
+            <th scope="col">Ordinary autonomy</th>
+            <th scope="col">Supplementary need</th>
+            <th scope="col">Suitable occupancy patterns</th>
+            <th scope="col">Key limitation</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+    <th scope="row"><a href="../architecture/hamlet-woodland-cottage/">Woodland Cottage</a><br><span class="small">Seasonal summer use with intermittent winter visits</span></th>
+    <td>29.7 m²</td>
+    <td>1–2</td>
+    <td>8</td>
+    <td>3.6 kWp</td>
+    <td>16.0 m²</td>
+    <td>roof flush</td>
+    <td>13.1 kWh</td>
+    <td>3.7 kWh</td>
+    <td>2.6 kWh</td>
+    <td>2.3 kWh<br><span class="small">3.2 full-time</span></td>
+    <td>10 / 9.0 kWh</td>
+    <td>5.0 days</td>
+    <td>2.4 days</td>
+    <td>1.1 kWh/day<br><span class="small">five cloudy days, no shared supply</span></td>
+    <td>Summer occupation; Three-season occupation; Intermittent winter occupation</td>
+    <td>Designed for seasonal use; the water system is winterized when the cottage is empty.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-offset-stack/">Offset Stack</a><br><span class="small">Three-season use with frequent winter weekends</span></th>
+    <td>59.5 m²</td>
+    <td>2–3</td>
+    <td>10</td>
+    <td>4.5 kWp</td>
+    <td>20.0 m²</td>
+    <td>roof tilted + ground mount</td>
+    <td>15.4 kWh</td>
+    <td>5.1 kWh</td>
+    <td>4.5 kWh</td>
+    <td>5.4 kWh<br><span class="small">5.4 full-time</span></td>
+    <td>15 / 13.5 kWh</td>
+    <td>4.0 days</td>
+    <td>1.6 days</td>
+    <td>2.3 kWh/day<br><span class="small">five cloudy days, no shared supply</span></td>
+    <td>Summer occupation; Three-season occupation; Intermittent winter occupation; Full-time occupation with supplementary power</td>
+    <td>The upper volume shades much of the lower roof, so half the array is ground-mounted in the existing clearing.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-courtyard-residence/">Courtyard Residence</a><br><span class="small">Three-season use with guests and shoulder-season stays</span></th>
+    <td>63.3 m²</td>
+    <td>2–4</td>
+    <td>12</td>
+    <td>5.4 kWp</td>
+    <td>24.0 m²</td>
+    <td>roof ballasted + solar canopy</td>
+    <td>20.3 kWh</td>
+    <td>5.9 kWh</td>
+    <td>4.6 kWh</td>
+    <td>5.5 kWh<br><span class="small">5.5 full-time</span></td>
+    <td>18 / 16.2 kWh</td>
+    <td>5.4 days</td>
+    <td>1.9 days</td>
+    <td>1.8 kWh/day<br><span class="small">five cloudy days, no shared supply</span></td>
+    <td>Summer occupation; Three-season occupation; Full-time occupation with supplementary power</td>
+    <td>The green roof and solar array compete for the same roof area; the planting is kept to the areas without panels.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-cross-stacked-retreat/">Cross-Stacked Retreat</a><br><span class="small">Full-time family occupation</span></th>
+    <td>59.5 m²</td>
+    <td>4–6</td>
+    <td>16</td>
+    <td>7.2 kWp</td>
+    <td>32.0 m²</td>
+    <td>roof tilted + roof tilted</td>
+    <td>22.0 kWh</td>
+    <td>6.9 kWh</td>
+    <td>6.8 kWh</td>
+    <td>8.0 kWh<br><span class="small">8.0 full-time</span></td>
+    <td>24 / 21.6 kWh</td>
+    <td>4.9 days</td>
+    <td>1.7 days</td>
+    <td>3.3 kWh/day<br><span class="small">five cloudy days, no shared supply</span></td>
+    <td>Summer occupation; Three-season occupation; Full-time occupation with supplementary power; Full-time occupation under modeled conditions</td>
+    <td>The largest residential array and battery in the study; it is justified by four residents, not by floor area.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-accessible-garden-home/">Accessible Garden Home</a><br><span class="small">Full-time occupation with step-free access</span></th>
+    <td>29.5 m²</td>
+    <td>2–3</td>
+    <td>12</td>
+    <td>5.4 kWp</td>
+    <td>24.0 m²</td>
+    <td>roof ballasted + porch canopy</td>
+    <td>20.4 kWh</td>
+    <td>5.6 kWh</td>
+    <td>4.7 kWh</td>
+    <td>5.6 kWh<br><span class="small">5.6 full-time</span></td>
+    <td>18 / 16.2 kWh</td>
+    <td>4.6 days</td>
+    <td>1.7 days</td>
+    <td>2.2 kWh/day<br><span class="small">five cloudy days, no shared supply</span></td>
+    <td>Summer occupation; Three-season occupation; Full-time occupation with supplementary power</td>
+    <td>Maintenance must not depend on climbing: the porch array is reachable from the terrace, but the canopy array still needs a service plan.</td>
+  </tr><tr>
+    <th scope="row"><a href="../architecture/hamlet-solar-studio-stack/">Solar Studio Stack</a><br><span class="small">Full-time single-person occupation with occasional guests</span></th>
+    <td>29.5 m²</td>
+    <td>1–2</td>
+    <td>10</td>
+    <td>4.5 kWp</td>
+    <td>20.0 m²</td>
+    <td>roof tilted + solar canopy</td>
+    <td>14.6 kWh</td>
+    <td>5.2 kWh</td>
+    <td>3.9 kWh</td>
+    <td>4.6 kWh<br><span class="small">4.6 full-time</span></td>
+    <td>12 / 10.8 kWh</td>
+    <td>4.3 days</td>
+    <td>1.5 days</td>
+    <td>1.8 kWh/day<br><span class="small">five cloudy days, no shared supply</span></td>
+    <td>Summer occupation; Three-season occupation; Full-time occupation under modeled conditions</td>
+    <td>The steep winter canopy is a deliberate winter-yield experiment, not a proven product.</td>
+  </tr></tbody>
+      </table>
+    </div>
+    <p class="small">Autonomy is calculated without solar input: essential autonomy uses the whole usable battery, ordinary autonomy keeps the essential reserve intact. A battery that lasts three days is not sufficient if the array cannot recharge it while supplying the house, so read the resilience scenarios as well as the autonomy figures.</p>
+  </section>
+
+  <section aria-labelledby="heat-pump-link-title" id="heat-pump-link">
+    <h2 id="heat-pump-link-title">What about a heat pump?</h2>
+    <p>The energy explorer models ordinary household electricity. A heat pump is <strong>additional</strong> to that load. The separate heat-pump assessment keeps these arrays and batteries fixed and quantifies the extra winter electricity, panels, storage and inverter capacity. It is the honest place to test a heating or cooling scenario.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump impact summary"><table id="heat-pump-summary"><caption>Full-time air-source heat-pump impact at a glance. Additional panels are winter-critical, not annual averages.</caption><thead><tr><th scope="col">Home</th><th scope="col">Design heat load (−30 °C)</th><th scope="col">Heat-pump electricity (heating)</th><th scope="col">Additional winter panels</th><th scope="col">Additional battery (3 days)</th><th scope="col">Combined peak</th></tr></thead><tbody><tr><th scope="row"><a href="../architecture/hamlet-woodland-cottage/#heat-pump">Woodland Cottage</a></th><td>1.9 kW</td><td>1637 kWh/yr</td><td>33</td><td>58 kWh</td><td>3.9 kW</td></tr><tr><th scope="row"><a href="../architecture/hamlet-offset-stack/#heat-pump">Offset Stack</a></th><td>3.4 kW</td><td>2609 kWh/yr</td><td>49</td><td>92 kWh</td><td>6.2 kW</td></tr><tr><th scope="row"><a href="../architecture/hamlet-courtyard-residence/#heat-pump">Courtyard Residence</a></th><td>3.8 kW</td><td>2721 kWh/yr</td><td>55</td><td>100 kWh</td><td>7.2 kW</td></tr><tr><th scope="row"><a href="../architecture/hamlet-cross-stacked-retreat/#heat-pump">Cross-Stacked Retreat</a></th><td>3.2 kW</td><td>2267 kWh/yr</td><td>56</td><td>82 kWh</td><td>7.2 kW</td></tr><tr><th scope="row"><a href="../architecture/hamlet-accessible-garden-home/#heat-pump">Accessible Garden Home</a></th><td>1.9 kW</td><td>1362 kWh/yr</td><td>35</td><td>56 kWh</td><td>5.3 kW</td></tr><tr><th scope="row"><a href="../architecture/hamlet-solar-studio-stack/#heat-pump">Solar Studio Stack</a></th><td>2.0 kW</td><td>1709 kWh/yr</td><td>30</td><td>61 kWh</td><td>4.4 kW</td></tr></tbody></table></div>
+    <p><a href="../heat-pumps/">Open the heat-pump assessment and explorer</a> to change the outdoor temperature, heat-pump type, envelope, wood backup and shared electricity, and to see the operating strategies and passive alternatives.</p>
+  </section>
+
+  <section id="explorer" aria-labelledby="explorer-title">
+    <h2 id="explorer-title">Energy explorer</h2>
+    <p>Change one home or one assumption at a time. The results update in this page and never leave your browser. Every control has a visible label and a text result; the chart has a data table underneath.</p>
+    <form id="energy-form" class="energy-form" novalidate>
+      <fieldset>
+        <legend>Home and household</legend>
+        <div class="energy-field">
+          <label for="residence">Residence</label>
+          <select id="residence" name="residence">
+            <option value="hamlet-woodland-cottage">Woodland Cottage</option><option value="hamlet-offset-stack">Offset Stack</option><option value="hamlet-courtyard-residence">Courtyard Residence</option><option value="hamlet-cross-stacked-retreat">Cross-Stacked Retreat</option><option value="hamlet-accessible-garden-home">Accessible Garden Home</option><option value="hamlet-solar-studio-stack">Solar Studio Stack</option>
+          </select>
+        </div>
+        <div class="energy-field">
+          <label for="occupants">Number of occupants</label>
+          <input id="occupants" name="occupants" type="number" min="1" max="6" step="1" value="1" inputmode="numeric">
+          <p class="field-help" id="occupants-help">Scales the occupant-dependent loads in the model. It does not add a second household.</p>
+        </div>
+        <div class="energy-field">
+          <label for="occupancy">Occupancy pattern</label>
+          <select id="occupancy" name="occupancy">
+            <option value="summer">Summer occupation</option>
+            <option value="shoulder">Three-season occupation</option>
+            <option value="winter-intermittent">Intermittent winter occupation</option>
+            <option value="winter-full-time">Full-time winter occupation</option>
+          </select>
+          <p class="field-help" id="occupancy-help">The comparison figures use the home's intended pattern. The explorer lets you test another pattern.</p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Solar array</legend>
+        <div class="energy-field">
+          <label for="panels">Number of panels</label>
+          <input id="panels" name="panels" type="number" min="2" max="16" step="1" value="8" inputmode="numeric">
+          <p class="field-help" id="panels-help">The first array is resized; other arrays keep their count. Placement warnings appear below when the panels no longer fit.</p>
+        </div>
+        <div class="energy-field">
+          <label for="panel-watts">Panel capacity (W each)</label>
+          <input id="panel-watts" name="panel-watts" type="number" min="250" max="700" step="5" value="450" inputmode="numeric">
+          <p class="field-help" id="panel-watts-help">450 W is the initial reference module. Confirm the chosen product.</p>
+        </div>
+        <div class="energy-field">
+          <label for="tilt">Panel tilt (degrees)</label>
+          <input id="tilt" name="tilt" type="number" min="0" max="75" step="1" value="24" inputmode="numeric">
+          <p class="field-help" id="tilt-help">30–45° is the initial annual-production range; 55–70° is the winter-oriented range.</p>
+        </div>
+        <div class="energy-field">
+          <label for="azimuth">Solar orientation (degrees from north)</label>
+          <input id="azimuth" name="azimuth" type="number" min="0" max="360" step="5" value="180" inputmode="numeric">
+          <p class="field-help" id="azimuth-help">180° is true south. This is geographic orientation, not the drawing orientation.</p>
+        </div>
+        <div class="energy-field">
+          <label for="shading">Approximate shading loss (%)</label>
+          <input id="shading" name="shading" type="number" min="0" max="80" step="1" value="19.2" inputmode="numeric">
+          <p class="field-help" id="shading-help">A simplified annual shading loss applied to every month. The default is the modelled woodland and building shade.</p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Storage and operation</legend>
+        <div class="energy-field">
+          <label for="battery">Battery capacity (kWh nominal)</label>
+          <input id="battery" name="battery" type="number" min="2" max="40" step="1" value="10" inputmode="numeric">
+          <p class="field-help" id="battery-help">Usable capacity is recalculated at 90% of nominal for the explorer.</p>
+        </div>
+        <div class="energy-field">
+          <label for="consumption">Daily consumption override (kWh)</label>
+          <input id="consumption" name="consumption" type="number" min="0" max="12" step="0.1" value="2.587" inputmode="decimal">
+          <p class="field-help" id="consumption-help">Optional. If you change it, the equipment assumptions are scaled to the summer daily total. Clear it to return to the calculated load model.</p>
+        </div>
+        <div class="energy-field">
+          <label for="cloud-days">Consecutive cloudy winter days</label>
+          <input id="cloud-days" name="cloud-days" type="number" min="1" max="10" step="1" value="5" inputmode="numeric">
+          <p class="field-help" id="cloud-days-help">Used for the resilience result. The weather is synthetic, not a forecast.</p>
+        </div>
+        <div class="energy-field">
+          <label for="mode">Operating mode</label>
+          <select id="mode" name="mode">
+            <option value="ordinary">Ordinary household consumption</option>
+            <option value="essential">Essential and accessibility loads only</option>
+          </select>
+        </div>
+        <div class="energy-field">
+          <label for="shared">Shared community electricity</label>
+          <select id="shared" name="shared">
+            <option value="backup">Community backup available</option>
+            <option value="none">No shared electricity</option>
+          </select>
+        </div>
+      </fieldset>
+      <div class="energy-actions">
+        <button type="button" id="reset-energy">Reset to the modelled home</button>
+        <button type="button" id="download-energy">Download this result as JSON</button>
+      </div>
+    </form>
+
+    <div id="energy-status" role="status" aria-live="polite" aria-atomic="true" class="energy-status">Showing the modelled values for Woodland Cottage.</div>
+
+    <div id="energy-results" class="energy-results">
+      <h3>Results for <span id="result-home">Woodland Cottage</span></h3>
+      <dl class="energy-metrics">
+        <div><dt>Installed capacity</dt><dd><output id="out-kwp">3.6</output> kWp</dd></div>
+        <div><dt>Required panel area</dt><dd><output id="out-area">16.0</output> m²</dd></div>
+        <div><dt>Summer generation</dt><dd><output id="out-gen-summer">13.1</output> kWh/day</dd></div>
+        <div><dt>Winter generation</dt><dd><output id="out-gen-winter">3.7</output> kWh/day</dd></div>
+        <div><dt>Summer consumption</dt><dd><output id="out-use-summer">2.6</output> kWh/day</dd></div>
+        <div><dt>Winter consumption</dt><dd><output id="out-use-winter">3.2</output> kWh/day</dd></div>
+        <div><dt>Battery usable</dt><dd><output id="out-battery">9.0</output> kWh</dd></div>
+        <div><dt>Essential autonomy</dt><dd><output id="out-essential">5.0</output> days</dd></div>
+        <div><dt>Ordinary autonomy</dt><dd><output id="out-ordinary">2.4</output> days</dd></div>
+        <div><dt>Cloudy-period shortfall</dt><dd><output id="out-shortfall">1.1</output> kWh/day</dd></div>
+        <div><dt>Surplus after load</dt><dd><output id="out-surplus">0.5</output> kWh/day (winter average)</dd></div>
+        <div><dt>Layout warnings</dt><dd><output id="out-warnings">0</output></dd></div>
+      </dl>
+      <div id="energy-warning-list" class="energy-warnings"></div>
+      <p id="energy-summary" class="small">Woodland Cottage is modelled for seasonal summer use with intermittent winter visits. Designed for seasonal use; the water system is winterized when the cottage is empty.</p>
+    </div>
+
+    <h3 id="chart-title">Monthly generation and consumption</h3>
+    <p class="small">Bars show modelled generation. The line shows the daily consumption for that month. Both values are in kWh per day.</p>
+    <div id="energy-chart" class="energy-chart" tabindex="0" role="region" aria-label="Scrollable monthly generation and consumption chart"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-labelledby="energy-chart-t energy-chart-d">
+    <title id="energy-chart-t">Monthly generation and consumption for Woodland Cottage</title>
+    <desc id="energy-chart-d">A bar chart of estimated daily generation and a line of daily consumption for each month. The same values are in the monthly table below. Generation is highest from May to August and lowest in December and January.</desc>
+    <rect width="720" height="300" fill="#faf8f2"/>
+    <line x1="56" y1="242.0" x2="700" y2="242.0" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="246.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">0.0</text><line x1="56" y1="187.0" x2="700" y2="187.0" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="191.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">3.4</text><line x1="56" y1="132.0" x2="700" y2="132.0" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="136.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">6.8</text><line x1="56" y1="77.0" x2="700" y2="77.0" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="81.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">10.1</text><line x1="56" y1="22.0" x2="700" y2="22.0" stroke="#c9d2c2" stroke-width="1"/><text x="48" y="26.0" text-anchor="end" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">13.5</text>
+    <rect x="65.7" y="185.5" width="34.3" height="56.5" fill="#245a73" rx="1"><title>January: 3.5 kWh/day generation</title></rect><rect x="119.3" y="159.2" width="34.3" height="82.8" fill="#245a73" rx="1"><title>February: 5.1 kWh/day generation</title></rect><rect x="173.0" y="105.5" width="34.3" height="136.5" fill="#245a73" rx="1"><title>March: 8.4 kWh/day generation</title></rect><rect x="226.7" y="62.7" width="34.3" height="179.3" fill="#245a73" rx="1"><title>April: 11.0 kWh/day generation</title></rect><rect x="280.3" y="31.1" width="34.3" height="210.9" fill="#245a73" rx="1"><title>May: 13.0 kWh/day generation</title></rect><rect x="334.0" y="22.0" width="34.3" height="220.0" fill="#245a73" rx="1"><title>June: 13.5 kWh/day generation</title></rect><rect x="387.7" y="22.2" width="34.3" height="219.8" fill="#245a73" rx="1"><title>July: 13.5 kWh/day generation</title></rect><rect x="441.3" y="43.3" width="34.3" height="198.7" fill="#245a73" rx="1"><title>August: 12.2 kWh/day generation</title></rect><rect x="495.0" y="79.1" width="34.3" height="162.9" fill="#245a73" rx="1"><title>September: 10.0 kWh/day generation</title></rect><rect x="548.7" y="134.8" width="34.3" height="107.2" fill="#245a73" rx="1"><title>October: 6.6 kWh/day generation</title></rect><rect x="602.3" y="182.4" width="34.3" height="59.6" fill="#245a73" rx="1"><title>November: 3.7 kWh/day generation</title></rect><rect x="656.0" y="197.1" width="34.3" height="44.9" fill="#245a73" rx="1"><title>December: 2.8 kWh/day generation</title></rect>
+    <polyline points="82.8,190.5 136.5,190.5 190.2,198.6 243.8,198.6 297.5,198.6 351.2,199.9 404.8,199.9 458.5,199.9 512.2,198.6 565.8,198.6 619.5,190.5 673.2,190.5" fill="none" stroke="#b45e1c" stroke-width="2.5"/>
+    <circle cx="82.8" cy="190.5" r="2.6" fill="#b45e1c"><title>January: 3.2 kWh/day consumption</title></circle><circle cx="136.5" cy="190.5" r="2.6" fill="#b45e1c"><title>February: 3.2 kWh/day consumption</title></circle><circle cx="190.2" cy="198.6" r="2.6" fill="#b45e1c"><title>March: 2.7 kWh/day consumption</title></circle><circle cx="243.8" cy="198.6" r="2.6" fill="#b45e1c"><title>April: 2.7 kWh/day consumption</title></circle><circle cx="297.5" cy="198.6" r="2.6" fill="#b45e1c"><title>May: 2.7 kWh/day consumption</title></circle><circle cx="351.2" cy="199.9" r="2.6" fill="#b45e1c"><title>June: 2.6 kWh/day consumption</title></circle><circle cx="404.8" cy="199.9" r="2.6" fill="#b45e1c"><title>July: 2.6 kWh/day consumption</title></circle><circle cx="458.5" cy="199.9" r="2.6" fill="#b45e1c"><title>August: 2.6 kWh/day consumption</title></circle><circle cx="512.2" cy="198.6" r="2.6" fill="#b45e1c"><title>September: 2.7 kWh/day consumption</title></circle><circle cx="565.8" cy="198.6" r="2.6" fill="#b45e1c"><title>October: 2.7 kWh/day consumption</title></circle><circle cx="619.5" cy="190.5" r="2.6" fill="#b45e1c"><title>November: 3.2 kWh/day consumption</title></circle><circle cx="673.2" cy="190.5" r="2.6" fill="#b45e1c"><title>December: 3.2 kWh/day consumption</title></circle>
+    <text x="82.8" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">J</text><text x="136.5" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">F</text><text x="190.2" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">M</text><text x="243.8" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">A</text><text x="297.5" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">M</text><text x="351.2" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">J</text><text x="404.8" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">J</text><text x="458.5" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">A</text><text x="512.2" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">S</text><text x="565.8" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">O</text><text x="619.5" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">N</text><text x="673.2" y="266" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#3f5a4c">D</text>
+    <text x="56" y="16" font-family="system-ui,sans-serif" font-size="11" fill="#245a73">■ generation</text>
+    <text x="166" y="16" font-family="system-ui,sans-serif" font-size="11" fill="#b45e1c">— consumption</text>
+    <text x="700" y="290" text-anchor="end" font-family="system-ui,sans-serif" font-size="9" fill="#5e6a58">kWh per day · modelled estimate</text>
+  </svg></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Monthly generation and consumption table">
+      <table id="energy-monthly-table">
+        <caption>Monthly generation and consumption for <span id="monthly-home">Woodland Cottage</span>. Generation is an estimate; consumption is calculated from the load list.</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh/day)</th><th scope="col">Consumption (kWh/day)</th><th scope="col">Balance (kWh/day)</th><th scope="col">Shading loss</th></tr></thead>
+        <tbody id="energy-monthly-body"><tr><th scope="row">January</th><td>3.5</td><td>3.2</td><td>+0.3</td><td>19%</td></tr><tr><th scope="row">February</th><td>5.1</td><td>3.2</td><td>+1.9</td><td>19%</td></tr><tr><th scope="row">March</th><td>8.4</td><td>2.7</td><td>+5.7</td><td>16%</td></tr><tr><th scope="row">April</th><td>11.0</td><td>2.7</td><td>+8.4</td><td>16%</td></tr><tr><th scope="row">May</th><td>13.0</td><td>2.7</td><td>+10.3</td><td>16%</td></tr><tr><th scope="row">June</th><td>13.5</td><td>2.6</td><td>+10.9</td><td>14%</td></tr><tr><th scope="row">July</th><td>13.5</td><td>2.6</td><td>+10.9</td><td>14%</td></tr><tr><th scope="row">August</th><td>12.2</td><td>2.6</td><td>+9.6</td><td>14%</td></tr><tr><th scope="row">September</th><td>10.0</td><td>2.7</td><td>+7.3</td><td>16%</td></tr><tr><th scope="row">October</th><td>6.6</td><td>2.7</td><td>+3.9</td><td>16%</td></tr><tr><th scope="row">November</th><td>3.7</td><td>3.2</td><td>+0.5</td><td>19%</td></tr><tr><th scope="row">December</th><td>2.8</td><td>3.2</td><td>-0.4</td><td>19%</td></tr></tbody>
+      </table>
+    </div>
+
+    <h3 id="compare-two-title">Compare two configurations</h3>
+    <p>Choose a second residence to see the two systems side by side. This is a comparison of modelled service, not a sustainability ranking.</p>
+    <div class="energy-compare-controls">
+      <label for="compare-home">Compare with</label>
+      <select id="compare-home">
+        <option value="hamlet-woodland-cottage">Woodland Cottage</option><option value="hamlet-offset-stack" selected>Offset Stack</option><option value="hamlet-courtyard-residence">Courtyard Residence</option><option value="hamlet-cross-stacked-retreat">Cross-Stacked Retreat</option><option value="hamlet-accessible-garden-home">Accessible Garden Home</option><option value="hamlet-solar-studio-stack">Solar Studio Stack</option>
+      </select>
+    </div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Two-home comparison table">
+      <table id="compare-two">
+        <caption>Side-by-side modelled comparison of the selected home and the comparison home.</caption>
+        <thead><tr><th scope="col">Measure</th><th scope="col" id="compare-a-head">Woodland Cottage</th><th scope="col" id="compare-b-head">Offset Stack</th></tr></thead>
+        <tbody id="compare-two-body"><tr><th scope="row">Panels</th><td>8</td><td>10</td></tr><tr><th scope="row">Installed capacity (kWp)</th><td>3.6</td><td>4.5</td></tr><tr><th scope="row">Panel surface (m²)</th><td>16.0</td><td>20.0</td></tr><tr><th scope="row">Summer generation (kWh/day)</th><td>13.1</td><td>15.4</td></tr><tr><th scope="row">Winter generation (kWh/day)</th><td>3.7</td><td>5.1</td></tr><tr><th scope="row">Summer consumption (kWh/day)</th><td>2.6</td><td>4.5</td></tr><tr><th scope="row">Winter consumption (kWh/day)</th><td>3.2</td><td>5.4</td></tr><tr><th scope="row">Battery nominal / usable (kWh)</th><td>10 / 9.0</td><td>15 / 13.5</td></tr><tr><th scope="row">Essential autonomy (days)</th><td>5.0</td><td>4.0</td></tr><tr><th scope="row">Ordinary autonomy (days)</th><td>2.4</td><td>1.6</td></tr><tr><th scope="row">Five-cloudy-day shortfall with no shared supply (kWh/day)</th><td>1.1</td><td>2.3</td></tr><tr><th scope="row">Intended occupancy</th><td>Summer occupation; Three-season occupation; Intermittent winter occupation</td><td>Summer occupation; Three-season occupation; Intermittent winter occupation; Full-time occupation with supplementary power</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="cards-title">
+    <h2 id="cards-title">Each home's system in plain language</h2>
+    <div class="energy-cards"><article class="energy-card">
+    <h3>Woodland Cottage</h3>
+    <p class="tagline">A compact, step-free cottage under a pitched roof, with a covered porch and direct garden access.</p>
+    <dl class="concept-facts">
+      <div><dt>Array</dt><dd>Flush south roof array: 8 × 450 W at 24°, 180° (roof flush)</dd></div>
+      <div><dt>Consumption</dt><dd>2.6 kWh/day in summer; 2.3 kWh/day in winter for the stated pattern; 3.2 kWh/day full-time.</dd></div>
+      <div><dt>Battery</dt><dd>10 kWh nominal, 9.0 kWh usable; 5.0 days of essential load and 2.4 days of ordinary load without sun.</dd></div>
+      <div><dt>Five cloudy winter days</dt><dd>1.1 kWh/day unserved without shared electricity; the battery ends at about 35% with shared backup available.</dd></div>
+      <div><dt>Suitable patterns</dt><dd>Summer occupation; Three-season occupation; Intermittent winter occupation</dd></div>
+    </dl>
+    <details><summary>Assumptions, exclusions and reviews for Woodland Cottage</summary>
+      <ul>
+        <li><strong>environmental review:</strong> Flush south roof array can discharge snow toward Garden doors (m1-s2). Snow guards and a protected entry need review.</li><li><strong>environmental review:</strong> Flush south roof array can discharge snow toward Step-free entrance (m1-s3). Snow guards and a protected entry need review.</li><li><strong>structural review:</strong> Roof structure, wind uplift, snow drift and fixing for the PV arrays need structural review.</li><li><strong>electrical review:</strong> String sizing, rapid shutdown, disconnects, bonding, grounding, battery enclosure and inspection need a licensed electrical design.</li><li><strong>environmental review:</strong> Keep the array on the roof, canopy or existing clearing. Do not clear mature trees to increase the modelled yield.</li>
+        <li><strong>Excluded:</strong> electric resistance space heating, conventional electric domestic hot water, electric vehicle charging, and electric laundry are not in the base estimate. Optional profiles show their effect separately.</li>
+      </ul>
+    </details>
+    <details class="energy-monthly">
+    <summary>Woodland Cottage: monthly generation and consumption</summary>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Woodland Cottage: monthly generation and consumption table">
+      <table>
+        <caption>Woodland Cottage: monthly generation and consumption. Monthly generation is an estimate from the shared model, not a guaranteed yield.</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Generation per day (kWh)</th><th scope="col">Consumption per day (kWh)</th><th scope="col">Daily balance (kWh)</th><th scope="col">Shading loss</th></tr></thead>
+        <tbody><tr><th scope="row">January</th><td>107.6</td><td>3.5</td><td>3.2</td><td>+0.3</td><td>19%</td></tr><tr><th scope="row">February</th><td>142.5</td><td>5.1</td><td>3.2</td><td>+1.9</td><td>19%</td></tr><tr><th scope="row">March</th><td>260.1</td><td>8.4</td><td>2.7</td><td>+5.7</td><td>16%</td></tr><tr><th scope="row">April</th><td>330.5</td><td>11.0</td><td>2.7</td><td>+8.4</td><td>16%</td></tr><tr><th scope="row">May</th><td>401.8</td><td>13.0</td><td>2.7</td><td>+10.3</td><td>16%</td></tr><tr><th scope="row">June</th><td>405.7</td><td>13.5</td><td>2.6</td><td>+10.9</td><td>14%</td></tr><tr><th scope="row">July</th><td>418.8</td><td>13.5</td><td>2.6</td><td>+10.9</td><td>14%</td></tr><tr><th scope="row">August</th><td>378.4</td><td>12.2</td><td>2.6</td><td>+9.6</td><td>14%</td></tr><tr><th scope="row">September</th><td>300.4</td><td>10.0</td><td>2.7</td><td>+7.3</td><td>16%</td></tr><tr><th scope="row">October</th><td>204.2</td><td>6.6</td><td>2.7</td><td>+3.9</td><td>16%</td></tr><tr><th scope="row">November</th><td>109.8</td><td>3.7</td><td>3.2</td><td>+0.5</td><td>19%</td></tr><tr><th scope="row">December</th><td>85.6</td><td>2.8</td><td>3.2</td><td>-0.4</td><td>19%</td></tr></tbody>
+      </table>
+    </div>
+    <p class="small">Consumption uses the summer profile in June–August, the shoulder profile in March–May and September–October, and the full-time winter profile in November–February. The balance does not model battery state of charge day by day; use the resilience scenarios for that.</p>
+  </details>
+    <p><a href="../architecture/hamlet-woodland-cottage/">Architecture and full energy tables</a></p>
+  </article><article class="energy-card">
+    <h3>Offset Stack</h3>
+    <p class="tagline">Two 40-foot modules stacked with a deliberate offset, creating a covered ground-floor room and a distinct upper volume.</p>
+    <dl class="concept-facts">
+      <div><dt>Array</dt><dd>Upper south roof array: 6 × 450 W at 39°, 180° (roof tilted); Garden ground array: 4 × 450 W at 45°, 180° (ground mount)</dd></div>
+      <div><dt>Consumption</dt><dd>4.5 kWh/day in summer; 5.4 kWh/day in winter for the stated pattern; 5.4 kWh/day full-time.</dd></div>
+      <div><dt>Battery</dt><dd>15 kWh nominal, 13.5 kWh usable; 4.0 days of essential load and 1.6 days of ordinary load without sun.</dd></div>
+      <div><dt>Five cloudy winter days</dt><dd>2.3 kWh/day unserved without shared electricity; the battery ends at about 33% with shared backup available.</dd></div>
+      <div><dt>Suitable patterns</dt><dd>Summer occupation; Three-season occupation; Intermittent winter occupation; Full-time occupation with supplementary power</dd></div>
+    </dl>
+    <details><summary>Assumptions, exclusions and reviews for Offset Stack</summary>
+      <ul>
+        <li><strong>structural review:</strong> Roof structure, wind uplift, snow drift and fixing for the PV arrays need structural review.</li><li><strong>electrical review:</strong> String sizing, rapid shutdown, disconnects, bonding, grounding, battery enclosure and inspection need a licensed electrical design.</li><li><strong>environmental review:</strong> Keep the array on the roof, canopy or existing clearing. Do not clear mature trees to increase the modelled yield.</li>
+        <li><strong>Excluded:</strong> electric resistance space heating, conventional electric domestic hot water, electric vehicle charging, and electric laundry are not in the base estimate. Optional profiles show their effect separately.</li>
+      </ul>
+    </details>
+    <details class="energy-monthly">
+    <summary>Offset Stack: monthly generation and consumption</summary>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Offset Stack: monthly generation and consumption table">
+      <table>
+        <caption>Offset Stack: monthly generation and consumption. Monthly generation is an estimate from the shared model, not a guaranteed yield.</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Generation per day (kWh)</th><th scope="col">Consumption per day (kWh)</th><th scope="col">Daily balance (kWh)</th><th scope="col">Shading loss</th></tr></thead>
+        <tbody><tr><th scope="row">January</th><td>149.9</td><td>4.8</td><td>5.4</td><td>-0.6</td><td>17%</td></tr><tr><th scope="row">February</th><td>192.0</td><td>6.9</td><td>5.4</td><td>+1.5</td><td>17%</td></tr><tr><th scope="row">March</th><td>336.6</td><td>10.9</td><td>4.7</td><td>+6.1</td><td>15%</td></tr><tr><th scope="row">April</th><td>402.4</td><td>13.4</td><td>4.7</td><td>+8.7</td><td>15%</td></tr><tr><th scope="row">May</th><td>475.5</td><td>15.3</td><td>4.7</td><td>+10.6</td><td>15%</td></tr><tr><th scope="row">June</th><td>471.8</td><td>15.7</td><td>4.5</td><td>+11.2</td><td>13%</td></tr><tr><th scope="row">July</th><td>489.0</td><td>15.8</td><td>4.5</td><td>+11.2</td><td>13%</td></tr><tr><th scope="row">August</th><td>452.1</td><td>14.6</td><td>4.5</td><td>+10.0</td><td>13%</td></tr><tr><th scope="row">September</th><td>375.1</td><td>12.5</td><td>4.7</td><td>+7.8</td><td>15%</td></tr><tr><th scope="row">October</th><td>263.2</td><td>8.5</td><td>4.7</td><td>+3.8</td><td>15%</td></tr><tr><th scope="row">November</th><td>146.6</td><td>4.9</td><td>5.4</td><td>-0.5</td><td>17%</td></tr><tr><th scope="row">December</th><td>118.3</td><td>3.8</td><td>5.4</td><td>-1.6</td><td>17%</td></tr></tbody>
+      </table>
+    </div>
+    <p class="small">Consumption uses the summer profile in June–August, the shoulder profile in March–May and September–October, and the full-time winter profile in November–February. The balance does not model battery state of charge day by day; use the resilience scenarios for that.</p>
+  </details>
+    <p><a href="../architecture/hamlet-offset-stack/">Architecture and full energy tables</a></p>
+  </article><article class="energy-card">
+    <h3>Courtyard Residence</h3>
+    <p class="tagline">Two single-storey modules form an L around a sheltered garden courtyard, with rooms opening in several directions.</p>
+    <dl class="concept-facts">
+      <div><dt>Array</dt><dd>Main flat-roof array: 8 × 450 W at 25°, 180° (roof ballasted); East path solar canopy: 4 × 450 W at 20°, 180° (solar canopy)</dd></div>
+      <div><dt>Consumption</dt><dd>4.6 kWh/day in summer; 5.5 kWh/day in winter for the stated pattern; 5.5 kWh/day full-time.</dd></div>
+      <div><dt>Battery</dt><dd>18 kWh nominal, 16.2 kWh usable; 5.4 days of essential load and 1.9 days of ordinary load without sun.</dd></div>
+      <div><dt>Five cloudy winter days</dt><dd>1.8 kWh/day unserved without shared electricity; the battery ends at about 33% with shared backup available.</dd></div>
+      <div><dt>Suitable patterns</dt><dd>Summer occupation; Three-season occupation; Full-time occupation with supplementary power</dd></div>
+    </dl>
+    <details><summary>Assumptions, exclusions and reviews for Courtyard Residence</summary>
+      <ul>
+        <li><strong>structural review:</strong> Roof structure, wind uplift, snow drift and fixing for the PV arrays need structural review.</li><li><strong>electrical review:</strong> String sizing, rapid shutdown, disconnects, bonding, grounding, battery enclosure and inspection need a licensed electrical design.</li><li><strong>environmental review:</strong> Keep the array on the roof, canopy or existing clearing. Do not clear mature trees to increase the modelled yield.</li>
+        <li><strong>Excluded:</strong> electric resistance space heating, conventional electric domestic hot water, electric vehicle charging, and electric laundry are not in the base estimate. Optional profiles show their effect separately.</li>
+      </ul>
+    </details>
+    <details class="energy-monthly">
+    <summary>Courtyard Residence: monthly generation and consumption</summary>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Courtyard Residence: monthly generation and consumption table">
+      <table>
+        <caption>Courtyard Residence: monthly generation and consumption. Monthly generation is an estimate from the shared model, not a guaranteed yield.</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Generation per day (kWh)</th><th scope="col">Consumption per day (kWh)</th><th scope="col">Daily balance (kWh)</th><th scope="col">Shading loss</th></tr></thead>
+        <tbody><tr><th scope="row">January</th><td>169.3</td><td>5.5</td><td>5.5</td><td>0.0</td><td>15%</td></tr><tr><th scope="row">February</th><td>224.5</td><td>8.0</td><td>5.5</td><td>+2.5</td><td>15%</td></tr><tr><th scope="row">March</th><td>406.6</td><td>13.1</td><td>4.7</td><td>+8.4</td><td>13%</td></tr><tr><th scope="row">April</th><td>517.9</td><td>17.3</td><td>4.7</td><td>+12.5</td><td>13%</td></tr><tr><th scope="row">May</th><td>630.4</td><td>20.3</td><td>4.7</td><td>+15.6</td><td>13%</td></tr><tr><th scope="row">June</th><td>631.3</td><td>21.0</td><td>4.6</td><td>+16.5</td><td>11%</td></tr><tr><th scope="row">July</th><td>651.6</td><td>21.0</td><td>4.6</td><td>+16.5</td><td>11%</td></tr><tr><th scope="row">August</th><td>588.2</td><td>19.0</td><td>4.6</td><td>+14.4</td><td>11%</td></tr><tr><th scope="row">September</th><td>470.2</td><td>15.7</td><td>4.7</td><td>+10.9</td><td>13%</td></tr><tr><th scope="row">October</th><td>319.3</td><td>10.3</td><td>4.7</td><td>+5.6</td><td>13%</td></tr><tr><th scope="row">November</th><td>173.0</td><td>5.8</td><td>5.5</td><td>+0.3</td><td>15%</td></tr><tr><th scope="row">December</th><td>134.7</td><td>4.4</td><td>5.5</td><td>-1.2</td><td>15%</td></tr></tbody>
+      </table>
+    </div>
+    <p class="small">Consumption uses the summer profile in June–August, the shoulder profile in March–May and September–October, and the full-time winter profile in November–February. The balance does not model battery state of charge day by day; use the resilience scenarios for that.</p>
+  </details>
+    <p><a href="../architecture/hamlet-courtyard-residence/">Architecture and full energy tables</a></p>
+  </article><article class="energy-card">
+    <h3>Cross-Stacked Retreat</h3>
+    <p class="tagline">A ground-floor living bar crossed by a perpendicular upper volume, producing a strong silhouette and a shaded outdoor room.</p>
+    <dl class="concept-facts">
+      <div><dt>Array</dt><dd>East roof group: 8 × 450 W at 39°, 180° (roof tilted); West roof group: 8 × 450 W at 39°, 180° (roof tilted)</dd></div>
+      <div><dt>Consumption</dt><dd>6.8 kWh/day in summer; 8.0 kWh/day in winter for the stated pattern; 8.0 kWh/day full-time.</dd></div>
+      <div><dt>Battery</dt><dd>24 kWh nominal, 21.6 kWh usable; 4.9 days of essential load and 1.7 days of ordinary load without sun.</dd></div>
+      <div><dt>Five cloudy winter days</dt><dd>3.3 kWh/day unserved without shared electricity; the battery ends at about 33% with shared backup available.</dd></div>
+      <div><dt>Suitable patterns</dt><dd>Summer occupation; Three-season occupation; Full-time occupation with supplementary power; Full-time occupation under modeled conditions</dd></div>
+    </dl>
+    <details><summary>Assumptions, exclusions and reviews for Cross-Stacked Retreat</summary>
+      <ul>
+        <li><strong>structural review:</strong> Roof structure, wind uplift, snow drift and fixing for the PV arrays need structural review.</li><li><strong>electrical review:</strong> String sizing, rapid shutdown, disconnects, bonding, grounding, battery enclosure and inspection need a licensed electrical design.</li><li><strong>environmental review:</strong> Keep the array on the roof, canopy or existing clearing. Do not clear mature trees to increase the modelled yield.</li>
+        <li><strong>Excluded:</strong> electric resistance space heating, conventional electric domestic hot water, electric vehicle charging, and electric laundry are not in the base estimate. Optional profiles show their effect separately.</li>
+      </ul>
+    </details>
+    <details class="energy-monthly">
+    <summary>Cross-Stacked Retreat: monthly generation and consumption</summary>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Cross-Stacked Retreat: monthly generation and consumption table">
+      <table>
+        <caption>Cross-Stacked Retreat: monthly generation and consumption. Monthly generation is an estimate from the shared model, not a guaranteed yield.</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Generation per day (kWh)</th><th scope="col">Consumption per day (kWh)</th><th scope="col">Daily balance (kWh)</th><th scope="col">Shading loss</th></tr></thead>
+        <tbody><tr><th scope="row">January</th><td>202.5</td><td>6.5</td><td>8.0</td><td>-1.5</td><td>30%</td></tr><tr><th scope="row">February</th><td>260.4</td><td>9.3</td><td>8.0</td><td>+1.3</td><td>30%</td></tr><tr><th scope="row">March</th><td>467.4</td><td>15.1</td><td>7.3</td><td>+7.8</td><td>26%</td></tr><tr><th scope="row">April</th><td>563.3</td><td>18.8</td><td>7.3</td><td>+11.5</td><td>26%</td></tr><tr><th scope="row">May</th><td>668.1</td><td>21.6</td><td>7.3</td><td>+14.2</td><td>26%</td></tr><tr><th scope="row">June</th><td>675.8</td><td>22.5</td><td>6.8</td><td>+15.7</td><td>23%</td></tr><tr><th scope="row">July</th><td>700.2</td><td>22.6</td><td>6.8</td><td>+15.8</td><td>23%</td></tr><tr><th scope="row">August</th><td>645.4</td><td>20.8</td><td>6.8</td><td>+14.0</td><td>23%</td></tr><tr><th scope="row">September</th><td>523.5</td><td>17.5</td><td>7.3</td><td>+10.1</td><td>26%</td></tr><tr><th scope="row">October</th><td>365.7</td><td>11.8</td><td>7.3</td><td>+4.5</td><td>26%</td></tr><tr><th scope="row">November</th><td>199.0</td><td>6.6</td><td>8.0</td><td>-1.4</td><td>30%</td></tr><tr><th scope="row">December</th><td>159.9</td><td>5.2</td><td>8.0</td><td>-2.8</td><td>30%</td></tr></tbody>
+      </table>
+    </div>
+    <p class="small">Consumption uses the summer profile in June–August, the shoulder profile in March–May and September–October, and the full-time winter profile in November–February. The balance does not model battery state of charge day by day; use the resilience scenarios for that.</p>
+  </details>
+    <p><a href="../architecture/hamlet-cross-stacked-retreat/">Architecture and full energy tables</a></p>
+  </article><article class="energy-card">
+    <h3>Accessible Garden Home</h3>
+    <p class="tagline">Two compact modules side by side, designed around a step-free route, generous circulation and an adaptable bathroom and kitchen.</p>
+    <dl class="concept-facts">
+      <div><dt>Array</dt><dd>Canopy roof array: 8 × 450 W at 20°, 180° (roof ballasted); Accessible porch canopy array: 4 × 450 W at 15°, 180° (porch canopy)</dd></div>
+      <div><dt>Consumption</dt><dd>4.7 kWh/day in summer; 5.6 kWh/day in winter for the stated pattern; 5.6 kWh/day full-time.</dd></div>
+      <div><dt>Battery</dt><dd>18 kWh nominal, 16.2 kWh usable; 4.6 days of essential load and 1.7 days of ordinary load without sun.</dd></div>
+      <div><dt>Five cloudy winter days</dt><dd>2.2 kWh/day unserved without shared electricity; the battery ends at about 39% with shared backup available.</dd></div>
+      <div><dt>Suitable patterns</dt><dd>Summer occupation; Three-season occupation; Full-time occupation with supplementary power</dd></div>
+    </dl>
+    <details><summary>Assumptions, exclusions and reviews for Accessible Garden Home</summary>
+      <ul>
+        <li><strong>environmental review:</strong> Canopy roof array can discharge snow toward Step-free entrance (m2-s1). Snow guards and a protected entry need review.</li><li><strong>environmental review:</strong> Canopy roof array can discharge snow toward Garden doors (m2-s2). Snow guards and a protected entry need review.</li><li><strong>structural review:</strong> Roof structure, wind uplift, snow drift and fixing for the PV arrays need structural review.</li><li><strong>electrical review:</strong> String sizing, rapid shutdown, disconnects, bonding, grounding, battery enclosure and inspection need a licensed electrical design.</li><li><strong>environmental review:</strong> Keep the array on the roof, canopy or existing clearing. Do not clear mature trees to increase the modelled yield.</li>
+        <li><strong>Excluded:</strong> electric resistance space heating, conventional electric domestic hot water, electric vehicle charging, and electric laundry are not in the base estimate. Optional profiles show their effect separately.</li>
+      </ul>
+    </details>
+    <details class="energy-monthly">
+    <summary>Accessible Garden Home: monthly generation and consumption</summary>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Accessible Garden Home: monthly generation and consumption table">
+      <table>
+        <caption>Accessible Garden Home: monthly generation and consumption. Monthly generation is an estimate from the shared model, not a guaranteed yield.</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Generation per day (kWh)</th><th scope="col">Consumption per day (kWh)</th><th scope="col">Daily balance (kWh)</th><th scope="col">Shading loss</th></tr></thead>
+        <tbody><tr><th scope="row">January</th><td>161.6</td><td>5.2</td><td>5.6</td><td>-0.3</td><td>16%</td></tr><tr><th scope="row">February</th><td>216.7</td><td>7.7</td><td>5.6</td><td>+2.2</td><td>16%</td></tr><tr><th scope="row">March</th><td>396.6</td><td>12.8</td><td>4.9</td><td>+7.9</td><td>14%</td></tr><tr><th scope="row">April</th><td>514.0</td><td>17.1</td><td>4.9</td><td>+12.3</td><td>14%</td></tr><tr><th scope="row">May</th><td>631.1</td><td>20.4</td><td>4.9</td><td>+15.5</td><td>14%</td></tr><tr><th scope="row">June</th><td>634.2</td><td>21.1</td><td>4.7</td><td>+16.4</td><td>12%</td></tr><tr><th scope="row">July</th><td>653.7</td><td>21.1</td><td>4.7</td><td>+16.4</td><td>12%</td></tr><tr><th scope="row">August</th><td>585.9</td><td>18.9</td><td>4.7</td><td>+14.2</td><td>12%</td></tr><tr><th scope="row">September</th><td>462.9</td><td>15.4</td><td>4.9</td><td>+10.6</td><td>14%</td></tr><tr><th scope="row">October</th><td>311.6</td><td>10.1</td><td>4.9</td><td>+5.2</td><td>14%</td></tr><tr><th scope="row">November</th><td>167.5</td><td>5.6</td><td>5.6</td><td>+0.0</td><td>16%</td></tr><tr><th scope="row">December</th><td>128.9</td><td>4.2</td><td>5.6</td><td>-1.4</td><td>16%</td></tr></tbody>
+      </table>
+    </div>
+    <p class="small">Consumption uses the summer profile in June–August, the shoulder profile in March–May and September–October, and the full-time winter profile in November–February. The balance does not model battery state of charge day by day; use the resilience scenarios for that.</p>
+  </details>
+    <p><a href="../architecture/hamlet-accessible-garden-home/">Architecture and full energy tables</a></p>
+  </article><article class="energy-card">
+    <h3>Solar Studio Stack</h3>
+    <p class="tagline">Two 20-foot modules stacked with a slight offset, giving a compact footprint, a solar-ready roof and an upper studio.</p>
+    <dl class="concept-facts">
+      <div><dt>Array</dt><dd>Upper roof array: 6 × 450 W at 40°, 180° (roof tilted); Winter solar canopy: 4 × 450 W at 65°, 180° (solar canopy)</dd></div>
+      <div><dt>Consumption</dt><dd>3.9 kWh/day in summer; 4.6 kWh/day in winter for the stated pattern; 4.6 kWh/day full-time.</dd></div>
+      <div><dt>Battery</dt><dd>12 kWh nominal, 10.8 kWh usable; 4.3 days of essential load and 1.5 days of ordinary load without sun.</dd></div>
+      <div><dt>Five cloudy winter days</dt><dd>1.8 kWh/day unserved without shared electricity; the battery ends at about 33% with shared backup available.</dd></div>
+      <div><dt>Suitable patterns</dt><dd>Summer occupation; Three-season occupation; Full-time occupation under modeled conditions</dd></div>
+    </dl>
+    <details><summary>Assumptions, exclusions and reviews for Solar Studio Stack</summary>
+      <ul>
+        <li><strong>structural review:</strong> Roof structure, wind uplift, snow drift and fixing for the PV arrays need structural review.</li><li><strong>electrical review:</strong> String sizing, rapid shutdown, disconnects, bonding, grounding, battery enclosure and inspection need a licensed electrical design.</li><li><strong>environmental review:</strong> Keep the array on the roof, canopy or existing clearing. Do not clear mature trees to increase the modelled yield.</li>
+        <li><strong>Excluded:</strong> electric resistance space heating, conventional electric domestic hot water, electric vehicle charging, and electric laundry are not in the base estimate. Optional profiles show their effect separately.</li>
+      </ul>
+    </details>
+    <details class="energy-monthly">
+    <summary>Solar Studio Stack: monthly generation and consumption</summary>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Solar Studio Stack: monthly generation and consumption table">
+      <table>
+        <caption>Solar Studio Stack: monthly generation and consumption. Monthly generation is an estimate from the shared model, not a guaranteed yield.</caption>
+        <thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Generation per day (kWh)</th><th scope="col">Consumption per day (kWh)</th><th scope="col">Daily balance (kWh)</th><th scope="col">Shading loss</th></tr></thead>
+        <tbody><tr><th scope="row">January</th><td>156.2</td><td>5.0</td><td>4.6</td><td>+0.4</td><td>15%</td></tr><tr><th scope="row">February</th><td>197.4</td><td>7.1</td><td>4.6</td><td>+2.4</td><td>15%</td></tr><tr><th scope="row">March</th><td>337.3</td><td>10.9</td><td>4.2</td><td>+6.7</td><td>13%</td></tr><tr><th scope="row">April</th><td>389.8</td><td>13.0</td><td>4.2</td><td>+8.8</td><td>13%</td></tr><tr><th scope="row">May</th><td>454.2</td><td>14.7</td><td>4.2</td><td>+10.5</td><td>13%</td></tr><tr><th scope="row">June</th><td>445.9</td><td>14.9</td><td>3.9</td><td>+11.0</td><td>11%</td></tr><tr><th scope="row">July</th><td>462.6</td><td>14.9</td><td>3.9</td><td>+11.0</td><td>11%</td></tr><tr><th scope="row">August</th><td>432.0</td><td>13.9</td><td>3.9</td><td>+10.1</td><td>11%</td></tr><tr><th scope="row">September</th><td>367.4</td><td>12.3</td><td>4.2</td><td>+8.1</td><td>13%</td></tr><tr><th scope="row">October</th><td>262.3</td><td>8.5</td><td>4.2</td><td>+4.3</td><td>13%</td></tr><tr><th scope="row">November</th><td>149.8</td><td>5.0</td><td>4.6</td><td>+0.4</td><td>15%</td></tr><tr><th scope="row">December</th><td>123.1</td><td>4.0</td><td>4.6</td><td>-0.6</td><td>15%</td></tr></tbody>
+      </table>
+    </div>
+    <p class="small">Consumption uses the summer profile in June–August, the shoulder profile in March–May and September–October, and the full-time winter profile in November–February. The balance does not model battery state of charge day by day; use the resilience scenarios for that.</p>
+  </details>
+    <p><a href="../architecture/hamlet-solar-studio-stack/">Architecture and full energy tables</a></p>
+  </article></div>
+  </section>
+
+  <section aria-labelledby="assumptions-title">
+    <h2 id="assumptions-title">Assumptions, limits and reviews</h2>
+    <ul>
+      <li><strong>No measured data.</strong> The property is fictional. Monthly irradiation is illustrative eastern-Ontario / Canadian Shield data, not a solar resource assessment. Shading comes from simplified tree cylinders derived from the fictional woodland scatter.</li>
+      <li><strong>Losses are applied once.</strong> Shading and snow availability, soiling, mismatch and DC wiring, temperature, inverter conversion and degradation. Battery charge and discharge losses are applied in the storage simulation, not in the generation chain.</li>
+      <li><strong>Heating and hot water are excluded.</strong> Electric resistance heating, conventional electric domestic hot water, electric laundry, extra cooking and electric vehicle charging are separate optional profiles. A heat pump would change the system size substantially.</li>
+      <li><strong>Energy shortfalls are shown.</strong> A positive shortfall is a result to design for, not a software failure. Load reduction, shared backup and an emergency generator are different answers with different costs and governance.</li>
+      <li><strong>Required reviews.</strong> Licensed electrical design and inspection; structural review of roof and canopy loads; building-envelope and mechanical review; accessibility review for the accessible home; fire and building-code review; solar installer review of array layout, fixing and maintenance access.</li>
+    </ul>
+    <p class="small">See <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/residential-energy-model.md">Residential energy model</a> and <a href="https://github.com/mgifford/Containers-Hamlet/blob/main/docs/electrical-solar-battery.md">Electrical, PV and battery architecture</a>. The geometric models and the load lists remain authoritative over any generated image or summary.</p>
+  </section>
+</main>
+<script src="../../js/design-energy.js"></script>
+<script src="../concepts-selected.js"></script>
+<script src="energy-app.js"></script>
+</body>
+</html>

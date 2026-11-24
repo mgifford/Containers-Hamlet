@@ -278,3 +278,50 @@ Edit `data/design-lab.json`, then run `node tools/build.mjs`. A schema error, an
 invalid 3D collision, a three-storey residence, an opening outside its face or a
 porch beyond its module stops the build with a specific message. Generated files
 must be committed; `node tools/build.mjs --check` verifies them.
+
+## Residential energy model (`energy`)
+
+Each selected residence may carry an `energy` object. It is optional for archive
+concepts and required for the six selected homes. It is versioned independently
+as `energy.version: "1.0"` and does not change the v2 architectural schema or
+the v0.1/v1.0 migrations.
+
+```text
+energy
+  reference_module         450 W, dimensions, area, source
+  occupancy                household size, intended pattern, suitable patterns, limitations
+  solar
+    arrays[]               id, panels, rows, columns, orientation, tilt, azimuth,
+                           mounting, surface, offset, edge clearance, group,
+                           maintenance, snow, shading
+    canopies[]             independent canopy geometry used by arrays
+    obstacles[]            simplified tree cylinders (not a survey)
+    losses                 soiling, mismatch, temperature, inverter, degradation
+  loads[]                  rated W, quantity, hours, duty, AC/DC, class,
+                           occupancy dependency, unoccupied W, source,
+                           confidence, deferrable, seasonal variation
+  profiles[]               summer, shoulder, winter-intermittent,
+                           winter-full-time, unoccupied-winter
+  battery                  technology, voltage, nominal/usable kWh, SOC window,
+                           efficiencies, power limits, inverter, reserve,
+                           temperature limits, heated enclosure, location
+  optional_profiles[]      heat pump, hot water, laundry, extra cooking, EV
+  shared                   independent / community-backup / microgrid options
+  scenarios[]              ten repeatable resilience scenarios
+  evidence                 sources, uncertainties, required reviews
+  thermal                  optional thermal and heat-pump assumptions
+```
+
+Panel geometry is derived once by `site/js/design-energy.js` from the array and
+roof/canopy/porch/ground surface. Every view consumes that list. The arrays must
+not be duplicated in a renderer.
+
+The optional `thermal` object records U-values, thermal-bridge allowance,
+airtightness, ventilation, internal gains, solar factors, setpoints, wood-heat
+capacity and the heat-pump capacity/performance assumptions. It is used only by
+`site/js/design-thermal.js`; it does not change the architectural schema.
+
+Validation covers panel count vs placed geometry and capacity, panel fit and
+overlap, unsupported arrays, tilt/azimuth, roof obstacles, snow discharge,
+accessible routes, battery SOC/efficiency consistency, load completeness and
+energy conservation. Energy shortfalls are displayed results, not build errors.

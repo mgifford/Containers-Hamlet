@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../style.css">
   <link rel="stylesheet" href="../compare.css">
   <link rel="stylesheet" href="residences.css">
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 </head>
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -25,12 +26,14 @@
 </header>
 <nav class="subnav" aria-label="Design Lab sections">
   <a href="../../design-lab/">Gallery</a>
-  <a href="../../design-lab/pattern-language/">Pattern language</a>
+  <a href="../../design-lab/pattern-language/">Patterns</a>
   <a href="../../design-lab/residences/" aria-current="page">Residences</a>
+  <a href="../../design-lab/energy/">Energy</a>
+  <a href="../../design-lab/heat-pumps/">Heat pumps</a>
   <a href="../../design-lab/scenarios/">Scenarios</a>
   <a href="../../design-lab/evaluation/">Evaluation</a>
   <a href="../../design-lab/illustration/">Illustrate</a>
-  <a href="../../design-lab/visualisations/">Visualisations</a>
+  <a href="../../design-lab/visualisations/">Visuals</a>
   <a href="../../design-lab/editor/">Editor</a>
   <a href="../../design-lab/guides/">Guides</a>
   <a href="../../design-lab/compare/">Compare</a>
@@ -78,7 +81,7 @@
 
   <section aria-labelledby="table-title">
     <h2 id="table-title">All six residences</h2>
-    <p id="residence-table-desc" class="small">Gross floor area counts nominal module areas plus glazed links. Ground coverage is the projected union of the modules and glazed links. Height is measured to the roof. No cost, carbon or energy figure is included.</p>
+    <p id="residence-table-desc" class="small">Gross floor area counts nominal module areas plus glazed links. Ground coverage is the projected union of the modules and glazed links. Height is measured to the roof. No cost or carbon figure is included; the separate energy table below records the modelled electrical assumptions.</p>
     <div class="table-wrap" tabindex="0" role="region" aria-label="Six residences comparison table"><table id="residence-table" aria-describedby="residence-table-desc">
       <caption>Six hamlet-selected residences</caption>
       <thead><tr><th scope="col">Home</th><th scope="col">Massing</th><th scope="col">Storeys</th><th scope="col">Modules</th><th scope="col">Gross m²</th><th scope="col">Ground m²</th><th scope="col">Roof / height</th><th scope="col">Ground-floor living</th><th scope="col">Accessibility</th><th scope="col">Structural review</th><th scope="col">Sustainability assumption</th><th scope="col">Maturity</th></tr></thead>
@@ -164,6 +167,200 @@
     </table></div>
   </section>
 
+  <section aria-labelledby="energy-title" id="energy">
+    <h2 id="energy-title">Energy, solar and battery comparison</h2>
+    <p>The six homes have <strong>68 panels and 30.6 kWp</strong> in the reference configuration, not a target for any one home. Consumption is calculated from each home's documented equipment list, not from floor area. Generation is a monthly estimate with modelled shading, snow availability and system losses. Read the intended occupancy pattern and the limitation column before comparing capacities.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Residential energy comparison table">
+      <table id="energy-table">
+        <caption>Solar, battery and seasonal electricity assumptions for the six residences. A smaller system serving a smaller home is not automatically worse than a larger system. The modelled winter shortfall is shown rather than hidden.</caption>
+        <thead><tr><th scope="col">Home</th><th scope="col">Occupants / pattern</th><th scope="col">Panels</th><th scope="col">kWp</th><th scope="col">Panel area</th><th scope="col">Mounting</th><th scope="col">Summer generation</th><th scope="col">Winter generation</th><th scope="col">Summer use</th><th scope="col">Winter use</th><th scope="col">Battery nominal / usable</th><th scope="col">Essential autonomy</th><th scope="col">Ordinary autonomy</th><th scope="col">Five-day cloudy shortfall</th><th scope="col">Suitable patterns</th><th scope="col">Key limitation</th></tr></thead>
+        <tbody><tr data-energy-home="hamlet-woodland-cottage" data-panels="8" data-kwp="3.6">
+            <th scope="row"><a href="../architecture/hamlet-woodland-cottage/">Woodland Cottage</a></th>
+            <td>1–2<br><span class="small">intermittent winter</span></td>
+            <td>8</td>
+            <td>3.6</td>
+            <td>16 m²</td>
+            <td>roof flush</td>
+            <td>13.1 kWh/day</td>
+            <td>3.7 kWh/day</td>
+            <td>2.6 kWh/day</td>
+            <td>2.3 kWh/day<br><span class="small">3.2 full-time</span></td>
+            <td>10 / 9 kWh</td>
+            <td>5 days</td>
+            <td>2.4 days</td>
+            <td>1.1 kWh/day</td>
+            <td>Summer occupation; Three-season occupation; Intermittent winter occupation</td>
+            <td>Designed for seasonal use; the water system is winterized when the cottage is empty.</td>
+          </tr><tr data-energy-home="hamlet-offset-stack" data-panels="10" data-kwp="4.5">
+            <th scope="row"><a href="../architecture/hamlet-offset-stack/">Offset Stack</a></th>
+            <td>2–3<br><span class="small">three season</span></td>
+            <td>10</td>
+            <td>4.5</td>
+            <td>20 m²</td>
+            <td>roof tilted + ground mount</td>
+            <td>15.4 kWh/day</td>
+            <td>5.1 kWh/day</td>
+            <td>4.5 kWh/day</td>
+            <td>5.4 kWh/day<br><span class="small">5.4 full-time</span></td>
+            <td>15 / 13.5 kWh</td>
+            <td>4 days</td>
+            <td>1.6 days</td>
+            <td>2.3 kWh/day</td>
+            <td>Summer occupation; Three-season occupation; Intermittent winter occupation; Full-time occupation with supplementary power</td>
+            <td>The upper volume shades much of the lower roof, so half the array is ground-mounted in the existing clearing.</td>
+          </tr><tr data-energy-home="hamlet-courtyard-residence" data-panels="12" data-kwp="5.4">
+            <th scope="row"><a href="../architecture/hamlet-courtyard-residence/">Courtyard Residence</a></th>
+            <td>2–4<br><span class="small">three season</span></td>
+            <td>12</td>
+            <td>5.4</td>
+            <td>24 m²</td>
+            <td>roof ballasted + solar canopy</td>
+            <td>20.3 kWh/day</td>
+            <td>5.9 kWh/day</td>
+            <td>4.6 kWh/day</td>
+            <td>5.5 kWh/day<br><span class="small">5.5 full-time</span></td>
+            <td>18 / 16.2 kWh</td>
+            <td>5.4 days</td>
+            <td>1.9 days</td>
+            <td>1.8 kWh/day</td>
+            <td>Summer occupation; Three-season occupation; Full-time occupation with supplementary power</td>
+            <td>The green roof and solar array compete for the same roof area; the planting is kept to the areas without panels.</td>
+          </tr><tr data-energy-home="hamlet-cross-stacked-retreat" data-panels="16" data-kwp="7.2">
+            <th scope="row"><a href="../architecture/hamlet-cross-stacked-retreat/">Cross-Stacked Retreat</a></th>
+            <td>4–6<br><span class="small">full time</span></td>
+            <td>16</td>
+            <td>7.2</td>
+            <td>32 m²</td>
+            <td>roof tilted + roof tilted</td>
+            <td>22 kWh/day</td>
+            <td>6.9 kWh/day</td>
+            <td>6.8 kWh/day</td>
+            <td>8 kWh/day<br><span class="small">8 full-time</span></td>
+            <td>24 / 21.6 kWh</td>
+            <td>4.9 days</td>
+            <td>1.7 days</td>
+            <td>3.3 kWh/day</td>
+            <td>Summer occupation; Three-season occupation; Full-time occupation with supplementary power; Full-time occupation under modeled conditions</td>
+            <td>The largest residential array and battery in the study; it is justified by four residents, not by floor area.</td>
+          </tr><tr data-energy-home="hamlet-accessible-garden-home" data-panels="12" data-kwp="5.4">
+            <th scope="row"><a href="../architecture/hamlet-accessible-garden-home/">Accessible Garden Home</a></th>
+            <td>2–3<br><span class="small">full time</span></td>
+            <td>12</td>
+            <td>5.4</td>
+            <td>24 m²</td>
+            <td>roof ballasted + porch canopy</td>
+            <td>20.4 kWh/day</td>
+            <td>5.6 kWh/day</td>
+            <td>4.7 kWh/day</td>
+            <td>5.6 kWh/day<br><span class="small">5.6 full-time</span></td>
+            <td>18 / 16.2 kWh</td>
+            <td>4.6 days</td>
+            <td>1.7 days</td>
+            <td>2.2 kWh/day</td>
+            <td>Summer occupation; Three-season occupation; Full-time occupation with supplementary power</td>
+            <td>Maintenance must not depend on climbing: the porch array is reachable from the terrace, but the canopy array still needs a service plan.</td>
+          </tr><tr data-energy-home="hamlet-solar-studio-stack" data-panels="10" data-kwp="4.5">
+            <th scope="row"><a href="../architecture/hamlet-solar-studio-stack/">Solar Studio Stack</a></th>
+            <td>1–2<br><span class="small">full time</span></td>
+            <td>10</td>
+            <td>4.5</td>
+            <td>20 m²</td>
+            <td>roof tilted + solar canopy</td>
+            <td>14.6 kWh/day</td>
+            <td>5.2 kWh/day</td>
+            <td>3.9 kWh/day</td>
+            <td>4.6 kWh/day<br><span class="small">4.6 full-time</span></td>
+            <td>12 / 10.8 kWh</td>
+            <td>4.3 days</td>
+            <td>1.5 days</td>
+            <td>1.8 kWh/day</td>
+            <td>Summer occupation; Three-season occupation; Full-time occupation under modeled conditions</td>
+            <td>The steep winter canopy is a deliberate winter-yield experiment, not a proven product.</td>
+          </tr></tbody>
+      </table>
+    </div>
+    <p class="small">Autonomy is calculated without solar input. Ordinary autonomy keeps the essential reserve intact; essential autonomy can use the whole usable battery. A five-day cloudy period is a synthetic stress test, not a weather forecast. <a href="../energy/">Open the interactive energy explorer</a> to change one home or one assumption at a time.</p>
+  </section>
+
+  <section aria-labelledby="heat-pump-title" id="heat-pumps">
+    <h2 id="heat-pump-title">Heat pumps: the additional burden</h2>
+    <p>A heat pump is additional to the household load, not a replacement for it. The table keeps the existing reference array and battery fixed and shows what full-time winter heating would require. It is a preliminary assessment, not an HVAC design.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Heat-pump comparison for the six residences">
+      <table id="heat-pump-table">
+        <caption>Full-time air-source heat-pump impacts. Additional panels are winter-critical; additional battery is for three days of heat-pump electricity. The existing array is not resized.</caption>
+        <thead><tr><th scope="col">Home</th><th scope="col">Design heat load (−30 °C)</th><th scope="col">Annual heating</th><th scope="col">ASHP electricity (heating)</th><th scope="col">Additional winter panels</th><th scope="col">Total required panels</th><th scope="col">Additional battery (3 days)</th><th scope="col">Total battery</th><th scope="col">Combined peak</th><th scope="col">Assessment</th></tr></thead>
+        <tbody><tr data-hp-home="hamlet-woodland-cottage">
+            <th scope="row"><a href="../architecture/hamlet-woodland-cottage/">Woodland Cottage</a></th>
+            <td>1.9 kW</td>
+            <td>2190 kWh</td>
+            <td>1637 kWh<br><span class="small">+ 394 cooling</span></td>
+            <td>33</td>
+            <td>41</td>
+            <td>58 kWh</td>
+            <td>68 kWh</td>
+            <td>3.9 kW</td>
+            <td>Not recommended as full-time off-grid electric heating. Use a hybrid wood/heat-pump or surplus-solar strategy, and improve the envelope first.</td>
+          </tr><tr data-hp-home="hamlet-offset-stack">
+            <th scope="row"><a href="../architecture/hamlet-offset-stack/">Offset Stack</a></th>
+            <td>3.4 kW</td>
+            <td>4924 kWh</td>
+            <td>2609 kWh<br><span class="small">+ 469 cooling</span></td>
+            <td>49</td>
+            <td>59</td>
+            <td>92 kWh</td>
+            <td>107 kWh</td>
+            <td>6.2 kW</td>
+            <td>Not recommended as full-time off-grid electric heating. Use a hybrid wood/heat-pump or surplus-solar strategy, and improve the envelope first.</td>
+          </tr><tr data-hp-home="hamlet-courtyard-residence">
+            <th scope="row"><a href="../architecture/hamlet-courtyard-residence/">Courtyard Residence</a></th>
+            <td>3.8 kW</td>
+            <td>5168 kWh</td>
+            <td>2721 kWh<br><span class="small">+ 575 cooling</span></td>
+            <td>55</td>
+            <td>67</td>
+            <td>100 kWh</td>
+            <td>118 kWh</td>
+            <td>7.2 kW</td>
+            <td>Not recommended as full-time off-grid electric heating. Use a hybrid wood/heat-pump or surplus-solar strategy, and improve the envelope first.</td>
+          </tr><tr data-hp-home="hamlet-cross-stacked-retreat">
+            <th scope="row"><a href="../architecture/hamlet-cross-stacked-retreat/">Cross-Stacked Retreat</a></th>
+            <td>3.2 kW</td>
+            <td>3871 kWh</td>
+            <td>2267 kWh<br><span class="small">+ 541 cooling</span></td>
+            <td>56</td>
+            <td>72</td>
+            <td>82 kWh</td>
+            <td>106 kWh</td>
+            <td>7.2 kW</td>
+            <td>Not recommended as full-time off-grid electric heating. Use a hybrid wood/heat-pump or surplus-solar strategy, and improve the envelope first.</td>
+          </tr><tr data-hp-home="hamlet-accessible-garden-home">
+            <th scope="row"><a href="../architecture/hamlet-accessible-garden-home/">Accessible Garden Home</a></th>
+            <td>1.9 kW</td>
+            <td>1991 kWh</td>
+            <td>1362 kWh<br><span class="small">+ 424 cooling</span></td>
+            <td>35</td>
+            <td>47</td>
+            <td>56 kWh</td>
+            <td>74 kWh</td>
+            <td>5.3 kW</td>
+            <td>Needs a specific solution: wood handling cannot be assumed. A shared or community heating service and a larger electrical supply should be evaluated.</td>
+          </tr><tr data-hp-home="hamlet-solar-studio-stack">
+            <th scope="row"><a href="../architecture/hamlet-solar-studio-stack/">Solar Studio Stack</a></th>
+            <td>2 kW</td>
+            <td>2355 kWh</td>
+            <td>1709 kWh<br><span class="small">+ 411 cooling</span></td>
+            <td>30</td>
+            <td>40</td>
+            <td>61 kWh</td>
+            <td>73 kWh</td>
+            <td>4.4 kW</td>
+            <td>Not recommended as full-time off-grid electric heating. Use a hybrid wood/heat-pump or surplus-solar strategy, and improve the envelope first.</td>
+          </tr></tbody>
+      </table>
+    </div>
+    <p class="small">The panel count is driven by the winter-critical month, not the annual average. A larger summer array does not solve a cold, cloudy week. <a href="../heat-pumps/">Open the heat-pump assessment</a> for the temperature scenarios, strategies, passive alternatives and interactive explorer.</p>
+  </section>
+
   <section aria-labelledby="alternatives-title">
     <h2 id="alternatives-title">Stacked and single-storey alternatives</h2>
     <p>For each two-storey home, the table below shows a <strong>derived single-storey translation</strong>: the same modules and openings moved to the ground beside the stack, with the stair and stacking structure removed. It is a geometry comparison, not a redesign. It shows why a smaller footprint is not the same as a smaller environmental or accessibility burden.</p>
@@ -205,6 +402,7 @@
         <div><dt>Accessibility</dt><dd>Potentially adaptable, but some essential functions, clearances or vertical access are unresolved.</dd></div>
         <div><dt>Structural review</dt><dd>9 concerns need review. 9 of 17 concerns need review.</dd></div>
         <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</dd></div>
+        <div><dt>Energy</dt><dd>8 panels, 3.6 kWp; 3.7 kWh/day modelled winter generation; 2.3 kWh/day winter use; 10 kWh battery. <a href="../energy/">Explore this system</a>.</dd></div>
       </dl>
       <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li><li><strong>Snow loading and drift:</strong> Roof geometry, valleys, parapets and adjacent taller volumes change snow accumulation and drift.</li></ul></details>
       <div class="card-actions">
@@ -225,6 +423,7 @@
         <div><dt>Accessibility</dt><dd>Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.</dd></div>
         <div><dt>Structural review</dt><dd>16 concerns need review. 16 of 17 concerns need review.</dd></div>
         <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</dd></div>
+        <div><dt>Energy</dt><dd>10 panels, 4.5 kWp; 5.1 kWh/day modelled winter generation; 5.4 kWh/day winter use; 15 kWh battery. <a href="../energy/">Explore this system</a>.</dd></div>
       </dl>
       <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Vertical load transfer:</strong> Stacked modules need an explicit, continuous load path through posts, beams or an engineered transfer structure.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li></ul></details>
       <div class="card-actions">
@@ -245,6 +444,7 @@
         <div><dt>Accessibility</dt><dd>Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.</dd></div>
         <div><dt>Structural review</dt><dd>14 concerns need review. 14 of 17 concerns need review.</dd></div>
         <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</dd></div>
+        <div><dt>Energy</dt><dd>12 panels, 5.4 kWp; 5.9 kWh/day modelled winter generation; 5.5 kWh/day winter use; 18 kWh battery. <a href="../energy/">Explore this system</a>.</dd></div>
       </dl>
       <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li><li><strong>Removed structural walls:</strong> A removed sidewall changes the load path and may require a transfer frame or additional columns.</li></ul></details>
       <div class="card-actions">
@@ -265,6 +465,7 @@
         <div><dt>Accessibility</dt><dd>Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.</dd></div>
         <div><dt>Structural review</dt><dd>17 concerns need review. 17 of 17 concerns need review.</dd></div>
         <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</dd></div>
+        <div><dt>Energy</dt><dd>16 panels, 7.2 kWp; 6.9 kWh/day modelled winter generation; 8 kWh/day winter use; 24 kWh battery. <a href="../energy/">Explore this system</a>.</dd></div>
       </dl>
       <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Vertical load transfer:</strong> Stacked modules need an explicit, continuous load path through posts, beams or an engineered transfer structure.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li></ul></details>
       <div class="card-actions">
@@ -285,6 +486,7 @@
         <div><dt>Accessibility</dt><dd>Potentially adaptable, but some essential functions, clearances or vertical access are unresolved.</dd></div>
         <div><dt>Structural review</dt><dd>12 concerns need review. 12 of 17 concerns need review.</dd></div>
         <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Ground coverage is close to gross floor area; the design does not gain much floor area from stacking.</dd></div>
+        <div><dt>Energy</dt><dd>12 panels, 5.4 kWp; 5.6 kWh/day modelled winter generation; 5.6 kWh/day winter use; 18 kWh battery. <a href="../energy/">Explore this system</a>.</dd></div>
       </dl>
       <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li><li><strong>Lateral stability and racking:</strong> Connected single-storey modules need a designed lateral system across the links.</li></ul></details>
       <div class="card-actions">
@@ -305,6 +507,7 @@
         <div><dt>Accessibility</dt><dd>Physical accessibility is not a design target for this home. Step-free or adaptable features may still be present.</dd></div>
         <div><dt>Structural review</dt><dd>15 concerns need review. 15 of 17 concerns need review.</dd></div>
         <div><dt>Sustainability evidence</dt><dd>Reused containers are the stated module source; inspection, coatings, prior cargo and floor treatment still need evidence. Stacking adds inter-storey structure, lateral bracing, fire separation, crane time and a stair. It is not automatically cheaper or lower-impact.</dd></div>
+        <div><dt>Energy</dt><dd>10 panels, 4.5 kWp; 5.2 kWh/day modelled winter generation; 4.6 kWh/day winter use; 12 kWh battery. <a href="../energy/">Explore this system</a>.</dd></div>
       </dl>
       <details><summary>Why this home needs structural review</summary><ul><li><strong>Corner castings and corner posts:</strong> Openings, lifting points and stacked loads concentrate force at corner castings and posts. Capacity and condition need review.</li><li><strong>Vertical load transfer:</strong> Stacked modules need an explicit, continuous load path through posts, beams or an engineered transfer structure.</li><li><strong>Container orientation and span:</strong> Container side walls are not designed as beams. Orientation, span and opening locations change the structural behaviour.</li><li><strong>Openings through sidewalls:</strong> Large openings and removed walls need engineered framing, headers and corner reinforcement.</li></ul></details>
       <div class="card-actions">
@@ -320,7 +523,7 @@
     <h2 id="boundary-title">What this comparison does not do</h2>
     <ul>
       <li>It does not calculate structural capacity, connection design, foundation reactions or lateral stability.</li>
-      <li>It does not calculate energy use, carbon, cost, daylight, overheating, privacy or acoustic performance.</li>
+      <li>It does not calculate carbon, cost, daylight, overheating, privacy or acoustic performance. Energy use is a separate conceptual model in the energy section and the <a href="../energy/">energy explorer</a>; it is not a measured or certified result.</li>
       <li>It does not claim that container construction is better than a conventional timber-frame comparator.</li>
       <li>It does not treat a support reference as a verified load path.</li>
       <li>It does not claim code compliance or a professional accessibility assessment.</li>

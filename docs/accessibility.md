@@ -158,3 +158,24 @@ record structural implications before a lift can be considered. The model does
 not design a lift or claim that one can be added later.
 
 A qualified accessibility consultant must review any real home.
+
+## Energy and heat-pump interfaces
+
+The energy explorer (`/design-lab/energy/`) and heat-pump explorer
+(`/design-lab/heat-pumps/`) are progressive enhancements over server-rendered
+tables. They use native form controls with visible labels, fieldsets and
+legends, help text, a polite status region, and text results before charts.
+Charts are SVG images with a title and description; the same values are always
+available in a table. Scrollable chart and table regions are keyboard focusable.
+The pages are tested with axe-core in light, dark, forced-colours and
+320 px-reflow states, and the controls are operated by keyboard in the browser
+tests.
+
+The heat-pump assessment keeps the baseline household demand visible and labels
+the additional heating/cooling electricity separately. It does not present a
+single "energy score". The Accessible Garden Home assessment explicitly does not
+assume wood handling or a particular medical device.
+
+Known gaps remain: no screen-reader testing and no testing with disabled
+residents. The number inputs accept direct text entry; a future version should
+add step buttons and a more forgiving numeric entry pattern after user testing.

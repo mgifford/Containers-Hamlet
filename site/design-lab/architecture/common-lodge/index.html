@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../../../style.css">
   <link rel="stylesheet" href="../../style.css">
   <link rel="stylesheet" href="../../architecture.css">
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
 </head>
 <body class="lab-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -24,12 +25,14 @@
 </header>
 <nav class="subnav" aria-label="Design Lab sections">
   <a href="../../../design-lab/" aria-current="page">Gallery</a>
-  <a href="../../../design-lab/pattern-language/">Pattern language</a>
+  <a href="../../../design-lab/pattern-language/">Patterns</a>
   <a href="../../../design-lab/residences/">Residences</a>
+  <a href="../../../design-lab/energy/">Energy</a>
+  <a href="../../../design-lab/heat-pumps/">Heat pumps</a>
   <a href="../../../design-lab/scenarios/">Scenarios</a>
   <a href="../../../design-lab/evaluation/">Evaluation</a>
   <a href="../../../design-lab/illustration/">Illustrate</a>
-  <a href="../../../design-lab/visualisations/">Visualisations</a>
+  <a href="../../../design-lab/visualisations/">Visuals</a>
   <a href="../../../design-lab/editor/">Editor</a>
   <a href="../../../design-lab/guides/">Guides</a>
   <a href="../../../design-lab/compare/">Compare</a>
@@ -212,8 +215,204 @@
   <section class="solar-section" aria-labelledby="solar-title">
     <h2 id="solar-title">Solar tilt and azimuth</h2>
     <p><strong>39° tilt</strong> · 180° azimuth · year-round strategy. Array is aligned to true south regardless of building rotation; it sits only on the south roof slope. Snow shedding, wind uplift, roof structure and electrical design need review.</p><p class="small">Roof: one 10° gable roof with a clear ridge. Solar is mounted only on the south slope; the north slope has no array. Array azimuth is true south, independent of building rotation.</p><img src="../../systems/solar-39.svg" width="1040" height="400" alt="Explanatory solar section with a 39 degree tilted array facing azimuth 180 degrees." loading="lazy" decoding="async">
-    <p class="small">Ottawa reference: the year-round fixed range is 36–39° (SolarCalculator.CA reports 39° optimal), winter is about 60° and summer about 30°, facing true south within a few degrees. No energy production, snow-shedding, wind-uplift or code compliance is calculated.</p>
+    <p class="small">The array layout, tilt and azimuth shown in the drawings come from the same canonical energy model that calculates monthly generation. The tilt range 30–45° is an annual-production exploration range; 55–70° is the winter-oriented range. Orientation is measured from geographic north, independent of the SVG canvas or building rotation. Snow-shedding, wind uplift, roof structure and electrical design still require professional review.</p>
   </section>
+  <section class="assembly-section energy-section" aria-labelledby="energy-title" id="energy">
+    <h2 id="energy-title">Residential energy model</h2>
+    <p><strong>24 panels · 10.8 kWp · 47.9 m² of module surface · 20.0 kWh battery (18.0 kWh usable).</strong> Shared community building. Suitable for: Community use.</p>
+    <p>The common lodge carries a larger shared array and battery for shared laundry, water pumping, tools and emergency charging.</p>
+    <p class="notice">This is a conceptual daily and hourly energy balance, not a solar resource assessment, electrical design, structural design or off-grid guarantee. The load list, array geometry and battery limits are the canonical inputs; the drawings and this table are generated from them. <a href="../../energy/">Open the energy explorer</a> to test another configuration.</p>
+    <h3>Arrays and mounting</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Photovoltaic arrays for Common Lodge"><table class="exposure-table"><caption>Every installed panel is placed in the canonical geometry. The count here is the count used in the energy calculation and in every drawing.</caption><thead><tr><th scope="col">Array</th><th scope="col">Panels</th><th scope="col">Tilt / azimuth</th><th scope="col">Mounting</th><th scope="col">Supporting surface</th><th scope="col">Electrical group</th><th scope="col">Maintenance</th><th scope="col">Snow</th></tr></thead><tbody>
+      <tr><th scope="row">Lodge south roof array <span class="small">(pv-shared)</span></th><td>24 × 450 W</td><td>30° / 180°</td><td>roof tilted</td><td>roof · m2</td><td>shared-a</td><td>service-platform; Lodge roof access needs a designed platform and fall protection.</td><td>Snow sheds onto the veranda roof zone; guards and a clear zone are required.</td></tr>
+    </tbody></table></div>
+
+    <h3>Battery and inverter</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Battery and inverter assumptions"><table class="exposure-table"><caption>Battery assumptions. Usable capacity, SOC limits and efficiencies are equipment-dependent and require confirmation.</caption><tbody>
+      <tr><th scope="row">Technology / architecture</th><td>LiFePO4 · 48 V</td></tr>
+      <tr><th scope="row">Nominal / usable</th><td>20.0 kWh / 18.0 kWh</td></tr>
+      <tr><th scope="row">SOC window</th><td>10%–100%</td></tr>
+      <tr><th scope="row">Charge / discharge efficiency</th><td>96% / 96%</td></tr>
+      <tr><th scope="row">Max charge / discharge</th><td>6.0 kW / 8.0 kW</td></tr>
+      <tr><th scope="row">Inverter / standby</th><td>8.0 kW / 15.0 W</td></tr>
+      <tr><th scope="row">Essential reserve / target</th><td>8.0 kWh / 2 days</td></tr>
+      <tr><th scope="row">Temperature and enclosure</th><td>Charge min 0 °C · discharge min -10 °C · heated enclosure</td></tr>
+      <tr><th scope="row">Location</th><td>Ventilated, fire-separated plant room.</td></tr>
+    </tbody></table></div>
+    <p class="small">Shared battery. A microgrid would need a professionally designed transfer, protection and metering system.</p>
+    <h3>Autonomy and winter resilience</h3>
+    <p>Essential autonomy: <strong>4.8 days</strong>. Ordinary autonomy: <strong>2.1 days</strong> (the essential reserve stays intact). The figures below are deterministic synthetic scenarios; weather is not a forecast.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Energy resilience scenarios"><table class="exposure-table"><caption>Ten repeatable resilience scenarios. A positive unserved value is a design result, not a software failure.</caption><thead><tr><th scope="col">Scenario</th><th scope="col">Days</th><th scope="col">Load (kWh)</th><th scope="col">Generation (kWh)</th><th scope="col">Shared supply (kWh)</th><th scope="col">Unserved (kWh)</th><th scope="col">End SOC</th><th scope="col">Status</th></tr></thead><tbody><tr>
+    <th scope="row">Typical summer day</th>
+    <td>1</td>
+    <td>3.9</td>
+    <td>41.2</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>93%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Typical winter day</th>
+    <td>1</td>
+    <td>4.7</td>
+    <td>11.5</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>90%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Three consecutive cloudy winter days</th>
+    <td>3</td>
+    <td>14.2</td>
+    <td>12.0</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>80%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Five consecutive cloudy winter days</th>
+    <td>5</td>
+    <td>23.7</td>
+    <td>14.3</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>48%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Snow-covered solar panels</th>
+    <td>3</td>
+    <td>14.2</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>2.7</td>
+    <td>40%</td>
+    <td>shortfall</td>
+  </tr><tr>
+    <th scope="row">Winter weekend followed by an unoccupied period</th>
+    <td>7</td>
+    <td>8.5</td>
+    <td>40.1</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>100%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Full-time winter occupation</th>
+    <td>7</td>
+    <td>33.2</td>
+    <td>64.1</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>90%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Partial array failure</th>
+    <td>3</td>
+    <td>14.2</td>
+    <td>10.3</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>74%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Loss of shared community electricity</th>
+    <td>5</td>
+    <td>23.7</td>
+    <td>17.2</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>59%</td>
+    <td>served</td>
+  </tr><tr>
+    <th scope="row">Essential-load-only emergency operation</th>
+    <td>5</td>
+    <td>18.6</td>
+    <td>17.2</td>
+    <td>0.0</td>
+    <td>0.0</td>
+    <td>82%</td>
+    <td>served</td>
+  </tr></tbody></table></div>
+    <p class="small">The five-day cloudy result without shared electricity is <strong>0.0 kWh/day</strong> unserved. A battery that lasts three days is not sufficient if the array cannot recharge it while supplying the household. Synthetic scenarios. A positive five-day shortfall means the array cannot recharge the battery while supplying the household.</p>
+    <h3>Monthly generation and consumption</h3>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Monthly generation and consumption"><table class="exposure-table"><caption>Monthly estimates. Snow availability reduces winter generation; the shading column is the modelled monthly shade loss. Losses are applied once and are listed in the model assumptions.</caption><thead><tr><th scope="col">Month</th><th scope="col">Generation (kWh)</th><th scope="col">Per day</th><th scope="col">Consumption per day</th><th scope="col">Balance per day</th><th scope="col">Shading</th><th scope="col">Snow availability</th></tr></thead><tbody><tr><th scope="row">January</th><td>354.9</td><td>11.5</td><td>4.7</td><td>+6.7</td><td>14.3%</td><td>0.82</td></tr><tr><th scope="row">February</th><td>464.1</td><td>16.6</td><td>4.7</td><td>+11.8</td><td>14.3%</td><td>0.85</td></tr><tr><th scope="row">March</th><td>828.1</td><td>26.7</td><td>4.1</td><td>+22.6</td><td>12.3%</td><td>0.92</td></tr><tr><th scope="row">April</th><td>1030.7</td><td>34.4</td><td>4.1</td><td>+30.2</td><td>12.3%</td><td>0.98</td></tr><tr><th scope="row">May</th><td>1240.9</td><td>40.0</td><td>4.1</td><td>+35.9</td><td>12.3%</td><td>1.00</td></tr><tr><th scope="row">June</th><td>1234.6</td><td>41.2</td><td>3.9</td><td>+37.2</td><td>10.3%</td><td>1.00</td></tr><tr><th scope="row">July</th><td>1276.6</td><td>41.2</td><td>3.9</td><td>+37.3</td><td>10.3%</td><td>1.00</td></tr><tr><th scope="row">August</th><td>1162.7</td><td>37.5</td><td>3.9</td><td>+33.6</td><td>10.3%</td><td>1.00</td></tr><tr><th scope="row">September</th><td>945.4</td><td>31.5</td><td>4.1</td><td>+27.4</td><td>12.3%</td><td>1.00</td></tr><tr><th scope="row">October</th><td>649.6</td><td>21.0</td><td>4.1</td><td>+16.8</td><td>12.3%</td><td>0.99</td></tr><tr><th scope="row">November</th><td>356.5</td><td>11.9</td><td>4.7</td><td>+7.1</td><td>14.3%</td><td>0.90</td></tr><tr><th scope="row">December</th><td>281.4</td><td>9.1</td><td>4.7</td><td>+4.3</td><td>14.3%</td><td>0.80</td></tr></tbody></table></div>
+    <details class="energy-loads"><summary>Load list and calculation for Common Lodge</summary>
+      <p>Daily consumption is calculated from rated power, quantity, hours, duty cycle and the profile's class factor. It is not assigned from floor area. Summer and winter columns show the full-time profiles; the intermittent winter profile reduces discretionary and high-demand loads.</p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Residential load list"><table class="exposure-table"><caption>Every load present in the residence. "Summer" and "winter" are daily kWh for the full-time profile. The assumption source and confidence are part of the record.</caption><thead><tr><th scope="col">Load</th><th scope="col">Class</th><th scope="col">Rated power</th><th scope="col">Summer / shoulder / winter hours</th><th scope="col">Duty</th><th scope="col">Summer kWh/day</th><th scope="col">Winter kWh/day</th><th scope="col">Supply</th><th scope="col">Deferrable</th><th scope="col">Confidence</th><th scope="col">Source and note</th></tr></thead><tbody><tr>
+      <th scope="row">Shared laundry</th>
+      <td>high demand</td>
+      <td>1800.0 W</td>
+      <td>0.4 / 0.5 / 0.6 h</td>
+      <td>70.0%</td>
+      <td>0.50</td>
+      <td>0.76</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>Two machines at about 1.8 kW average, 40–60 minutes per day. <br><span class="small">Shared facility, used by several households.</span></td>
+    </tr><tr>
+      <th scope="row">Shared water pumping and treatment</th>
+      <td>essential continuous · essential</td>
+      <td>750.0 W</td>
+      <td>2.5 / 2.5 / 3.0 h</td>
+      <td>100.0%</td>
+      <td>1.88</td>
+      <td>2.25</td>
+      <td>AC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>Shared well pump, pressure and treatment. <br><span class="small">A shared system can be more efficient than six separate pumps.</span></td>
+    </tr><tr>
+      <th scope="row">Shared tools and workshop</th>
+      <td>discretionary</td>
+      <td>900.0 W</td>
+      <td>0.3 / 0.4 / 0.3 h</td>
+      <td>100.0%</td>
+      <td>0.27</td>
+      <td>0.27</td>
+      <td>AC</td>
+      <td>Yes</td>
+      <td>low</td>
+      <td>Shared workshop tools used briefly. <br><span class="small">Shared rather than duplicated in each home.</span></td>
+    </tr><tr>
+      <th scope="row">Shared community freezer</th>
+      <td>essential continuous · essential</td>
+      <td>120.0 W</td>
+      <td>24.0 / 24.0 / 24.0 h</td>
+      <td>30.0%</td>
+      <td>0.86</td>
+      <td>0.86</td>
+      <td>AC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>A larger shared freezer, 120 W at 30% duty. <br><span class="small">Shared food storage can reduce the number of small freezers.</span></td>
+    </tr><tr>
+      <th scope="row">Emergency charging and communications</th>
+      <td>essential continuous · essential</td>
+      <td>200.0 W</td>
+      <td>2.0 / 2.0 / 3.0 h</td>
+      <td>100.0%</td>
+      <td>0.40</td>
+      <td>0.60</td>
+      <td>AC</td>
+      <td>No</td>
+      <td>low</td>
+      <td>A 200 W resilient charging and communications point. <br><span class="small">A shared resilience asset.</span></td>
+    </tr></tbody></table></div>
+    </details>
+    <h3>Heating, hot water and other excluded loads</h3>
+    <p>The base estimate excludes electric resistance space heating, conventional electric domestic hot water, electric laundry, additional cooking appliances and electric vehicle charging. These optional profiles are shown separately:</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Optional energy profiles"><table class="exposure-table"><caption>Optional loads and their indicative daily demand. Enabling any of them changes the required array and battery; the note explains the consequence.</caption><thead><tr><th scope="col">Optional profile</th><th scope="col">Summer</th><th scope="col">Shoulder</th><th scope="col">Winter</th><th scope="col">Consequence</th></tr></thead><tbody><tr><th scope="row">Shared cold-climate heat pump</th><td>1.0 kWh</td><td>6.0 kWh</td><td>18.0 kWh</td><td>Shared heating is not included in the residential estimates.</td></tr></tbody></table></div>
+    <p class="small">A heat pump would change the system substantially. The project does not quietly absorb heating into the residential totals; the shared lodge is the preferred location for higher-energy services such as laundry and emergency charging.</p>
+    <h3>Shared community electricity</h3>
+    <p>The primary configuration is <strong>community backup</strong>. Shared electricity is an option, not an unexplained assumption.</p>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Shared electricity configurations"><table class="exposure-table"><caption>Three configurations compared. A microgrid shares supply and demand but does not remove the effect of region-wide winter cloud or snow.</caption><thead><tr><th scope="col">Configuration</th><th scope="col">Description</th><th scope="col">Supplementary (kWh/day)</th><th scope="col">Distribution loss</th><th scope="col">Note</th></tr></thead><tbody></tbody></table></div>
+    <p class="small">Shared assets need a written agreement.</p>
+    <h3>Validation and required reviews</h3>
+    <ul><li><strong>environmental review:</strong> Lodge south roof array can discharge snow toward undefined (m2-s1). Snow guards and a protected entry need review.</li><li><strong>structural review:</strong> Roof structure, wind uplift, snow drift and fixing for the PV arrays need structural review.</li><li><strong>electrical review:</strong> String sizing, rapid shutdown, disconnects, bonding, grounding, battery enclosure and inspection need a licensed electrical design.</li><li><strong>environmental review:</strong> Keep the array on the roof, canopy or existing clearing. Do not clear mature trees to increase the modelled yield.</li></ul>
+    <p class="small">Shared demand is an assumption, not metered.</p>
+  </section>
+
 
   <section class="vegetation-section" aria-labelledby="vegetation-title">
     <h2 id="vegetation-title">Vegetation systems</h2>

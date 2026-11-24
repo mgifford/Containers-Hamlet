@@ -40,6 +40,37 @@ function card(p, patterns) {
 </article>`;
 }
 
+function extensionCard(p, patterns) {
+  const links = (p.alexander || []).map((a) => {
+    const inCat = (patterns.patterns || []).some((x) => x.number === a.number);
+    return inCat ? `<a href="#pattern-${a.number}">${a.number} · ${esc(a.title)}</a>` : `<span>${a.number} · ${esc(a.title)}</span>`;
+  }).join(' · ');
+  const homes = (p.homes || []).map((h) => `<a href="../architecture/${esc(h)}/">${esc(h.replace('hamlet-', '').replace(/-/g, ' '))}</a>`).join(' · ');
+  return `<article class="pattern-card extension-card" id="extension-${esc(p.id)}" data-extension data-title="${esc(p.title)}">
+  <header class="pattern-card-header">
+    <p class="eyebrow">Original extension · ${esc(label(SCALE_LABEL, p.scale))}</p>
+    <h3><a href="#extension-${esc(p.id)}">${esc(p.title)}</a></h3>
+    <p class="pattern-badges"><span class="badge extension">Project extension, not an Alexander pattern</span> <span class="badge ${evidenceClass(p.evidenceStatus)}">${esc(label(EVIDENCE_LABEL, p.evidenceStatus))}</span></p>
+  </header>
+  <p class="pattern-summary">${esc(p.summary)}</p>
+  <p><strong>The problem it responds to:</strong> ${esc(p.problem)}</p>
+  <p><strong>What it proposes:</strong> ${esc(p.proposal)}</p>
+  <p><strong>In Containers Hamlet:</strong> ${esc(p.hamletInterpretation)}</p>
+  <details>
+    <summary>Homes, linked patterns, trade-offs and questions</summary>
+    <p><strong>Homes that demonstrate it:</strong> ${homes || 'Not recorded.'}</p>
+    <p><strong>Linked Alexander patterns:</strong> ${links || 'None recorded.'}</p>
+    <p><strong>Trade-offs:</strong> ${esc(p.tradeoffs)}</p>
+    <p><strong>What is unresolved:</strong> ${esc(p.unresolved)}</p>
+    <h4>Questions to ask</h4>
+    <ul>${(p.evaluationQuestions || []).map((q) => `<li>${esc(q)}</li>`).join('')}</ul>
+  </details>
+  <footer class="pattern-card-footer">
+    <p class="small"><strong>Status:</strong> This is an original pattern developed for Containers Hamlet. It is not from <em>A Pattern Language</em> and must not be attributed to Christopher Alexander or the book’s authors.</p>
+  </footer>
+</article>`;
+}
+
 export function patternLanguagePage(patterns, siteElements) {
   const scaleOptions = patterns.scales.map((s) => `<option value="${esc(s)}">${esc(label(SCALE_LABEL, s))}</option>`).join('');
   const elementOptions = patterns.elements.map((e) => `<option value="${esc(e)}">${esc(label(ELEMENT_LABEL, e))}</option>`).join('');
@@ -49,7 +80,7 @@ export function patternLanguagePage(patterns, siteElements) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A curated, source-verified Pattern Language Explorer for Containers Hamlet: 20 patterns on landscape, community, buildings and interiors, with original hamlet interpretations, evidence limits and design questions.">
+<meta name="description" content="A curated, source-verified Pattern Language Explorer for Containers Hamlet: 20 verified Alexander patterns, 10 original energy-pattern extensions, hamlet interpretations, evidence limits and design questions.">
 <meta name="color-scheme" content="light dark">
 <title>Pattern Language Explorer | Containers Hamlet Design Lab</title>
 <link rel="stylesheet" href="../../style.css">
@@ -130,6 +161,15 @@ ${designShellNav(2, 'pattern-language')}
       ${patterns.patterns.map((p) => card(p, patterns)).join('\n')}
     </div>
     <p class="small">A pattern may be partially applicable or deliberately rejected. There are no pass/fail scores and no single “community quality” index. Evidence states describe the <em>current</em> application, not the pattern’s worth.</p>
+  </section>
+
+  <section aria-labelledby="energy-patterns-title" id="energy-patterns">
+    <h2 id="energy-patterns-title">Energy patterns developed for this project</h2>
+    <p class="notice"><strong>These are original extensions, not Christopher Alexander patterns.</strong> They connect the residential energy work to the architectural pattern language. Each is a design proposition developed for Containers Hamlet, deliberately separated from the numbered Alexander patterns. The links back to Alexander patterns use only verified titles.</p>
+    <p>The extensions describe right-sized energy, solar outdoor rooms, shared infrastructure, winter resilience, essential services, repairable technology, woodland preservation, seasonal adaptation, accessible service infrastructure and low-energy domestic life. They are not a checklist and do not replace the measured-energy and professional-review gaps recorded elsewhere.</p>
+    <div class="pattern-grid">
+      ${(patterns.extensions && patterns.extensions.patterns || []).map((p) => extensionCard(p, patterns)).join('\n')}
+    </div>
   </section>
 
   <section aria-labelledby="reading-title">

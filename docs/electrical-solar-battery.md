@@ -48,7 +48,7 @@ converter** for 12 V fans, sensors or legacy devices.
 ### 2.2 Block diagram
 
 ```text
-ROOF PV ARRAY (3.5-4.5 kWp, 6-8 modules)
+ROOF PV ARRAY (2.7-3.6 kWp at 450 W; 6-8 modules)
    |
    |  PV string conductors in surface raceway
    v
@@ -88,17 +88,54 @@ GROUNDING: PV rack + steel shell + battery enclosure + inverter + AC panel
 
 | Item | Concept range | Notes |
 | --- | --- | --- |
-| PV array | **3.5–4.5 kWp** | 6–8 × 450–550 W modules; confirm roof area, chimney/PV clearance, snow and wind uplift |
+| PV array | **2.7–3.6 kWp at 450 W** (3.3–4.4 kWp at 550 W) | 6–8 modules; at 450 W, 6 panels = 2.7 kWp and 8 = 3.6 kWp. The earlier 3.5–4.5 kWp line applies only to 550–580 W modules. Confirm roof area, chimney/PV clearance, snow and wind uplift. |
 | MPPT | **60–100 A** at 24 V | Sized for array Isc and cold-temperature Voc; use a listed controller with battery temperature compensation |
 | Battery | **5–15 kWh LiFePO₄** | 5–10 kWh for essential loads; 10–15 kWh for full-time off-grid winter use; run a load calculation |
 | Inverter/charger | **2–3 kW pure sine** | 24 V input; 120 V output; surge for a fridge/induction; low idle draw |
 | AC sub-panel | **8–12 circuits** | AFCI/GFCI as required; main breaker and a clearly labelled `PV / BATTERY / INVERTER` disconnect group |
 | DC fuse block | **6–8 fused circuits** | Marine-grade, accessible, labelled; separate 24 V and 12 V sections |
 
+At **450 W**, the module-count arithmetic is:
+
+- 6 panels = **2.7 kWp**
+- 8 panels = **3.6 kWp**
+- 10 panels = **4.5 kWp**
+- 12 panels = **5.4 kWp**
+- 14 panels = **6.3 kWp**
+- 16 panels = **7.2 kWp**
+
 Do not size the battery from floor area. Use a load table: fridge, induction,
 kettle, lights, fans, pumps, tools, devices and a 2–3 day autonomy target. A
 wood-heated cabin can use less energy than an all-electric one, but a 5 kWh
 battery will not run an induction burner and a fridge through a cloudy week.
+
+### 2.4 Residential allocation for the six selected homes
+
+The Design Lab now carries a separate per-home energy model. These are the
+canonical residential allocations; they do not change the Cabin A geometry or
+the authoritative `data/cabin-a.json` model.
+
+| Residence | Panels | kWp at 450 W | Battery nominal | Intended occupancy |
+|---|---:|---:|---:|---|
+| Woodland Cottage | 8 | 3.6 | 10 kWh | Seasonal, intermittent winter |
+| Offset Stack | 10 | 4.5 | 15 kWh | Three-season, frequent winter weekends |
+| Courtyard Residence | 12 | 5.4 | 18 kWh | Three-season with guests |
+| Cross-Stacked Retreat | 16 | 7.2 | 24 kWh | Full-time family |
+| Accessible Garden Home | 12 | 5.4 | 18 kWh | Full-time, step-free |
+| Solar Studio Stack | 10 | 4.5 | 12 kWh | Full-time single person |
+
+The six reference systems total **68 panels, 30.6 kWp and 136 m²** of module
+surface. Sixteen panels is the upper end of the initial residential range, not
+a target. The arrays are not derived from floor area; they are tested against
+occupancy, loads, roof geometry, shading and winter autonomy. The full method,
+load lists and monthly estimates are in
+[`residential-energy-model.md`](residential-energy-model.md).
+
+**Heat pumps are excluded from these baseline arrays.** Full-time electric
+heating would require a much larger array and battery; see
+[`heat-pump-energy-assessment.md`](heat-pump-energy-assessment.md). The
+reference arrays support ordinary household services and a non-electric heating
+path, not full-time resistance or heat-pump heating through a Canadian winter.
 
 ## 3. AC/DC separation and the service core
 
@@ -430,16 +467,23 @@ the shell, doorframe or PV rack. Bonding is mandatory, not optional.
 
 - **Cabin F (20 ft, ~13 m²):** 1.5–2.5 kWp PV, 5–10 kWh battery, 1.5–2 kW
   inverter, 24 V DC, single 3/4-inch AC and DC cove runs. The service tower can be
-  smaller (450 × 700 × 250 mm).
-- **Cabins B, D and E (two-container pairs, ~50 m²):** 4–6 kWp PV, 10–20 kWh
-  battery, 3–5 kW inverter, **two** AC/DC cove loops from one service core. Keep
-  the battery inside the conditioned envelope if possible; a pair has more space
-  for a listed bay. Do not run one 3/4-inch conduit for the whole pair.
+  smaller (450 × 700 × 250 mm). At 450 W this is roughly 3–5 panels; at 550 W it
+  is roughly 3–5 panels as well, but confirm the actual module.
+- **Cabins B, D and E (two-container pairs, ~50 m²):** 4–6 kWp PV (roughly 9–13
+  panels at 450 W), 10–20 kWh battery, 3–5 kW inverter, **two** AC/DC cove loops
+  from one service core. Keep the battery inside the conditioned envelope if
+  possible; a pair has more space for a listed bay. Do not run one 3/4-inch
+  conduit for the whole pair.
 - **Common Lodge (~124 m²):** 120/240 V split-phase service, 8–12 kW inverter,
-  20–40 kWh battery or a shared community microgrid, 10–20 kWp PV, a dedicated
-  battery room with fire separation and ventilation, and a licensed electrical
-  engineer. The lodge's kitchen, laundry, heat pump and battery room need a
-  commercial-grade design, not a scaled cabin panel.
+  20–40 kWh battery or a shared community microgrid, 10–20 kWp PV (the Design Lab
+  lodge reference is 24 × 450 W = 10.8 kWp with a 20 kWh shared battery), a
+  dedicated battery room with fire separation and ventilation, and a licensed
+  electrical engineer. The lodge's kitchen, laundry, heat pump and battery room
+  need a commercial-grade design, not a scaled cabin panel.
+
+These earlier Cabin F and pair estimates are schematic. The six selected homes
+supersede them for the Design Lab; do not combine the two sets into one design
+without a new load calculation.
 - A **two-storey lodge** would need a new vertical conduit riser, fire stopping
   and egress design; it is not part of this document.
 

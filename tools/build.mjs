@@ -25,7 +25,7 @@ import { patternsPage, patternsSVG } from './lib/design-patterns.mjs';
 import { patternLanguagePage } from './lib/pattern-language-page.mjs';
 import { scenariosPage as siteScenariosPage, scenarioSVG } from './lib/scenario-page.mjs';
 import { validateScenarios } from './lib/scenarios.mjs';
-import { validatePatterns, validateSiteElements } from './lib/patterns.mjs';
+import { validatePatterns, validateSiteElements, validateExtensions } from './lib/patterns.mjs';
 import { validateDesignAnnotations } from './lib/design-annotations.mjs';
 import { evaluationPage, blankRecordTemplate } from './lib/evaluation-page.mjs';
 import { validateEvaluation } from './lib/evaluation.mjs';
@@ -42,6 +42,8 @@ import { resiliencePage } from './lib/design-resilience.mjs';
 import { waterPage, waterSVG } from './lib/design-water.mjs';
 import { comparePage } from './lib/design-compare.mjs';
 import { residencesPage } from './lib/design-residences.mjs';
+import { energyPage } from './lib/design-energy-page.mjs';
+import { heatPumpPage } from './lib/design-heat-pump-page.mjs';
 import { illustrationPage } from './lib/design-illustration-page.mjs';
 import { visualisationsPage } from './lib/design-visualisations-page.mjs';
 import {
@@ -54,6 +56,8 @@ const require = createRequire(import.meta.url);
 const EcoModel = require('../site/js/model.js');
 const DesignSchema = require('../site/js/design-schema.js');
 const DesignModel = require('../site/js/design-model.js');
+const DesignEnergy = require('../site/js/design-energy.js');
+const DesignThermal = require('../site/js/design-thermal.js');
 const DesignIllustration = require('../site/js/design-illustration.js');
 const DesignInterior = require('../site/js/design-interior.js');
 
@@ -145,6 +149,8 @@ export function generate() {
   const patternCheck = validatePatterns(patternData);
   patternCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'patterns: ' + message }));
   patternCheck.warnings.forEach((message) => issues.push({ level: 'warning', message: 'patterns: ' + message }));
+  const extensionCheck = validateExtensions(patternData);
+  extensionCheck.errors.forEach((message) => issues.push({ level: 'error', message: 'pattern extensions: ' + message }));
   const evaluationScenarios = JSON.parse(readText('data/evaluation/scenarios.json'));
   const evaluationRecords = JSON.parse(readText('data/evaluation/records.json'));
   const evaluationCheck = validateEvaluation(evaluationScenarios, evaluationRecords, patternData, designLab.concepts);
@@ -306,7 +312,17 @@ export function generate() {
     const alt = DesignModel.singleStoreyAlternative(concept);
     if (alt) alternatives[p.id] = DesignModel.designProfile(alt);
   });
-  put('site/design-lab/residences/index.html', residencesPage(hamletProfiles, hamletSelected, alternatives, siteReconciliation).replace(/[ \t]+$/gm, ''));
+  const energyEntries = hamletSelected.map((c) => ({
+    concept: c,
+    summary: DesignEnergy.summary(c),
+    validation: DesignEnergy.validate(c),
+    conditionedArea: profileById[c.id].metrics.grossFloorArea_m2
+  }));
+  const heatPumpEntries = hamletSelected.map((c) => ({ c: c, s: DesignThermal.summary(c) }));
+  const heatPumpByHome = Object.fromEntries(heatPumpEntries.map((e) => [e.c.id, e.s]));
+  put('site/design-lab/residences/index.html', residencesPage(hamletProfiles, hamletSelected, alternatives, siteReconciliation, heatPumpByHome).replace(/[ \t]+$/gm, ''));
+  put('site/design-lab/energy/index.html', energyPage(energyEntries, { heatPumpByHome: heatPumpByHome }).replace(/[ \t]+$/gm, ''));
+  put('site/design-lab/heat-pumps/index.html', heatPumpPage(heatPumpEntries).replace(/[ \t]+$/gm, ''));
   put('site/design-lab/vegetation/index.html', vegetationPage(designLab.concepts));
   put('site/design-lab/ground/index.html', groundPage(designLab.concepts));
   put('site/design-lab/patterns/index.html', patternsPage());
