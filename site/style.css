@@ -430,8 +430,8 @@ details.concept-specs > summary { cursor: pointer; font-weight: 700; min-height:
 /* Consistent top-level header + compact Design Lab sub-navigation */
 .site-header { flex-wrap: wrap; }
 .site-header nav { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem 1rem; }
-.subnav { display: flex; flex-wrap: wrap; gap: .3rem 1rem; padding: .55rem max(1rem, calc((100vw - 72rem) / 2)); background: var(--surface); border-bottom: 1px solid var(--border); }
-.subnav a { font-weight: 700; text-decoration: none; padding: .35rem .1rem; }
+.subnav { display: flex; flex-wrap: wrap; gap: .3rem .75rem; font-size: .92rem; padding: .55rem max(1rem, calc((100vw - 72rem) / 2)); background: var(--surface); border-bottom: 1px solid var(--border); }
+.subnav a { font-weight: 700; text-decoration: none; padding: .35rem .1rem; white-space: nowrap; }
 .subnav a[aria-current="page"] { border-bottom: 3px solid var(--focus); }
 @media (max-width: 750px) { .site-header { align-items: flex-start; } .site-header nav { gap: .2rem .8rem; } .subnav { padding: .5rem 1rem; } }
 
